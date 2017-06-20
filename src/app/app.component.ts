@@ -11,11 +11,9 @@ import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
-import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
 import { SpeakerListPage } from '../pages/home/home';
-import { SupportPage } from '../pages/support/support';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
@@ -50,12 +48,10 @@ export class ConferenceApp {
   ];
   loggedInPages: PageInterface[] = [
     { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
-    { title: 'SUPPORT', name: 'SupportPage', component: SupportPage, icon: 'help' },
     { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-    { title: 'SUPPORT', name: 'SupportPage', component: SupportPage, icon: 'help' },
     { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
   ];
   rootPage: any;
@@ -71,15 +67,7 @@ export class ConferenceApp {
   ) {
 
     // Check if the user has already seen the tutorial
-    this.storage.get('hasSeenTutorial')
-      .then((hasSeenTutorial) => {
-        if (hasSeenTutorial) {
-          this.rootPage = TabsPage;
-        } else {
-          this.rootPage = TutorialPage;
-        }
-        this.platformReady()
-      });
+
 
     // load the conference data
     confData.load();
@@ -121,9 +109,7 @@ export class ConferenceApp {
     }
   }
 
-  openTutorial() {
-    this.nav.setRoot(TutorialPage);
-  }
+
 
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {

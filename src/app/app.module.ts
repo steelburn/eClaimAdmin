@@ -22,8 +22,6 @@ import { SessionDetailPage } from '../pages/session-detail/session-detail';
 import { SignupPage } from '../pages/signup/signup';
 import { SpeakerListPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { TutorialPage } from '../pages/tutorial/tutorial';
-import { SupportPage } from '../pages/support/support';
 import { SetupPage } from '../pages/setup/setup';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -43,9 +41,7 @@ import { UserData } from '../providers/user-data';
     SignupPage,
     SpeakerListPage,
     SetupPage,
-    TabsPage,
-    TutorialPage,
-    SupportPage
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -60,8 +56,6 @@ import { UserData } from '../providers/user-data';
         { component: SetupPage, name: 'Setup', segment: 'Setup' },
         { component: MapPage, name: 'Map', segment: 'map' },
         { component: AboutPage, name: 'About', segment: 'about' },
-        { component: TutorialPage, name: 'Tutorial', segment: 'tutorial' },
-        { component: SupportPage, name: 'SupportPage', segment: 'support' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' }
@@ -83,9 +77,7 @@ import { UserData } from '../providers/user-data';
     SignupPage,
     SetupPage,
     SpeakerListPage,
-    TabsPage,
-    TutorialPage,
-    SupportPage
+    TabsPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
