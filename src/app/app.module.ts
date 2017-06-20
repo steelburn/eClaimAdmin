@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+﻿import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
@@ -20,12 +20,11 @@ import { SchedulePage } from '../pages/schedule/schedule';
 import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../pages/session-detail/session-detail';
 import { SignupPage } from '../pages/signup/signup';
-import { SpeakerDetailPage } from '../pages/speaker-detail/speaker-detail';
-import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
+import { SpeakerListPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
-
+import { SetupPage } from '../pages/setup/setup';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
@@ -42,8 +41,8 @@ import { UserData } from '../providers/user-data';
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
-    SpeakerDetailPage,
     SpeakerListPage,
+    SetupPage,
     TabsPage,
     TutorialPage,
     SupportPage
@@ -57,8 +56,8 @@ import { UserData } from '../providers/user-data';
         { component: SchedulePage, name: 'Schedule', segment: 'schedule' },
         { component: SessionDetailPage, name: 'SessionDetail', segment: 'sessionDetail/:name' },
         { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
-        { component: SpeakerListPage, name: 'SpeakerList', segment: 'speakerList' },
-        { component: SpeakerDetailPage, name: 'SpeakerDetail', segment: 'speakerDetail/:name' },
+        { component: SpeakerListPage, name: 'Home', segment: 'Home' },
+        { component: SetupPage, name: 'Setup', segment: 'Setup' },
         { component: MapPage, name: 'Map', segment: 'map' },
         { component: AboutPage, name: 'About', segment: 'about' },
         { component: TutorialPage, name: 'Tutorial', segment: 'tutorial' },
@@ -82,7 +81,7 @@ import { UserData } from '../providers/user-data';
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
-    SpeakerDetailPage,
+    SetupPage,
     SpeakerListPage,
     TabsPage,
     TutorialPage,

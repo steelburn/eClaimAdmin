@@ -1,0 +1,51 @@
+page-setup {
+ .round {
+      float: left;
+      box-shadow: none !important;
+      width: calc(20% - 20px);
+      margin: 10px !important;
+      cursor: pointer;
+      border-radius: 5px;
+      min-height: 80px;
+    }
+
+    .Subtitle {
+      text-align: center;
+      font-size: 1.12vw;
+    }
+
+    .iconf{
+         font-size: 7vw;
+      color: #ca9b24;
+      transition: all 0.3s ease;
+    }
+
+    .icon {
+      text-align: center;
+    }
+
+ .round:hover {
+        font-weight: bold;
+        
+    }
+
+
+      @media(max-width: 700px) {
+      .round {
+      width: calc(100% - 20px);
+      min-height: 100px;
+    }
+
+
+    .Subtitle {
+      text-align: center;
+      font-size: 3.5vw;
+    
+    }
+
+    .iconf {
+      font-size: 22vw;
+      color: #ca9b24;
+    }
+  }
+}

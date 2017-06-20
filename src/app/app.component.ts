@@ -13,9 +13,9 @@ import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SchedulePage } from '../pages/schedule/schedule';
-import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
+import { SetupPage } from '../pages/setup/setup';
+import { SpeakerListPage } from '../pages/home/home';
 import { SupportPage } from '../pages/support/support';
-
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
@@ -42,20 +42,21 @@ export class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
-    { title: 'Schedule', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'calendar' },
-    { title: 'Speakers', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 1, icon: 'contacts' },
-    { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map' },
-    { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
+    { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
+    { title: 'SCHEDULE', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 2, icon: 'calendar' },
+    { title: 'MAP', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 3, icon: 'map' },
+    { title: 'ABOUT', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 4, icon: 'information-circle' }
   ];
   loggedInPages: PageInterface[] = [
-    { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
-    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
-    { title: 'Logout', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
+    { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
+    { title: 'SUPPORT', name: 'SupportPage', component: SupportPage, icon: 'help' },
+    { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
   ];
   loggedOutPages: PageInterface[] = [
-    { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
-    { title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
+    { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
+    { title: 'SUPPORT', name: 'SupportPage', component: SupportPage, icon: 'help' },
+    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
   ];
   rootPage: any;
 

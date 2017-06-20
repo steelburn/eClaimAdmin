@@ -1,22 +1,22 @@
-<ion-header>
+﻿<ion-header>
 	<ion-navbar>
 		<button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-		<ion-title>Signup</ion-title>
+		<ion-title>SIGNUP</ion-title>
 	</ion-navbar>
 </ion-header>
 
 <ion-content class="login-page">
 
 	<div class="logo">
-		<img src="assets/img/appicon.svg" alt="Ionic Logo">
+		<img src="assets/img/Untitled-1.png" alt="Ionic Logo">
 	</div>
 
-	<form #signupForm="ngForm" novalidate>
-		<ion-list no-lines>
+	<form #signupForm="ngForm" novalidate >
+		<ion-list no-lines >
 			<ion-item>
-				<ion-label stacked color="primary">Username</ion-label>
+				<ion-label floating color="primary">Username</ion-label>
 				<ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" required>
 				</ion-input>
 			</ion-item>
@@ -25,7 +25,7 @@
 			</p>
 
 			<ion-item>
-				<ion-label stacked color="primary">Password</ion-label>
+				<ion-label floating color="primary">Password</ion-label>
 				<ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
 				</ion-input>
 			</ion-item>
