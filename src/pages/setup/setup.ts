@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { BanksetupPage } from '../pages/banksetup/banksetup';
+import { BanksetupPage } from '../banksetup/banksetup';
 
 
 /**
@@ -19,6 +19,10 @@ import { BanksetupPage } from '../pages/banksetup/banksetup';
 export class SetupPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  Banksetup(){
+    this.navCtrl.push(BanksetupPage)
   }
 
   ionViewDidLoad() {
