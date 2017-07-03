@@ -61,9 +61,7 @@ export class SetupPage {
     this.navCtrl.push(DepartmentsetupPage)
   }
 
-    goToMileagesetup(){
-    this.navCtrl.push(MileagesetupPage)
-  }
+ 
 
       goToPaymenttypesetup(){
     this.navCtrl.push(PaymenttypesetupPage)
@@ -85,7 +83,9 @@ export class SetupPage {
     goToTenantsetup(){
     this.navCtrl.push(TenantsetupPage)
   }
-
+      goToMileagesetup(){
+    this.navCtrl.push(MileagesetupPage)
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetupPage');
