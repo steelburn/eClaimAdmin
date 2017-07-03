@@ -16,7 +16,14 @@ import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { BanksetupPage } from '../pages/banksetup/banksetup';
+import { BranchsetupPage } from '../pages/branchsetup/branchsetup';
+import { CashcardsetupPage } from '../pages/cashcardsetup/cashcardsetup';
+import { ClaimtypePage } from '../pages/claimtype/claimtype';
+import { CompanysetupPage } from '../pages/companysetup/companysetup';
+import { DesignationsetupPage } from '../pages/designationsetup/designationsetup';
+import { DepartmentsetupPage } from '../pages/departmentsetup/departmentsetup';
 import { MapPage } from '../pages/map/map';
+import { MileagesetupPage } from '../mileagesetup/mileagesetup';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../pages/session-detail/session-detail';
@@ -43,6 +50,13 @@ import { UserData } from '../providers/user-data';
     SpeakerListPage,
     SetupPage,
     BanksetupPage,
+    BranchsetupPage,
+    CompanysetupPage,
+    DepartmentsetupPage,
+    ClaimtypePage,
+    CashcardsetupPage,
+    DesignationsetupPage,
+    MileagesetupPage,
     TabsPage
   ],
   imports: [
@@ -79,6 +93,13 @@ import { UserData } from '../providers/user-data';
     SignupPage,
     SetupPage,
     BanksetupPage,
+    BranchsetupPage,
+    CompanysetupPage,
+    ClaimtypePage,
+    CashcardsetupPage,
+    DesignationsetupPage,
+    DepartmentsetupPage,
+        MileagesetupPage,
     SpeakerListPage,
     TabsPage
   ],

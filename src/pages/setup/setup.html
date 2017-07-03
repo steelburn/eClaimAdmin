@@ -14,7 +14,7 @@
 
 
 <ion-content padding> 
-  <ion-card class="round" (click)="Banksetup()">
+  <ion-card class="round" (click)="goToBanksetup()">
     <ion-card-header class="icon">
       <ion-icon name="logo-usd" class="iconf"></ion-icon>
     </ion-card-header>
@@ -23,7 +23,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="round">
+  <ion-card class="round" (click)="goToBranchsetup()">
     <ion-card-header class="icon">
       <ion-icon name="git-branch" class="iconf"></ion-icon>
     </ion-card-header>
@@ -32,7 +32,26 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="round">
+  <ion-card class="round" (click)="goToCashcardsetup()">
+    <ion-card-header class="icon">
+      <ion-icon name="cash" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+    CASH CARD 
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card class="round" (click)="goToClaimtypesetup()">
+  <ion-card-header class="icon">
+    <ion-icon name="list" class="iconf"></ion-icon>
+  </ion-card-header>
+  <ion-card-content class="Subtitle">
+    CLAIM TYPE 
+  </ion-card-content>
+</ion-card>
+
+  <ion-card class="round"  (click)="goToCompanysetup()">
     <ion-card-header class="icon">
       <ion-icon name="ios-briefcase" class="iconf"></ion-icon>
     </ion-card-header>
@@ -41,7 +60,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="round">
+  <ion-card class="round" (click)="goToDesignationsetup()">
     <ion-card-header class="icon">
       <ion-icon name="person" class="iconf"></ion-icon>
     </ion-card-header>
@@ -50,7 +69,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="round">
+  <ion-card class="round" (click)="goToDepartmentsetup()">
     <ion-card-header class="icon">
       <ion-icon name="git-pull-request" class="iconf"></ion-icon>
     </ion-card-header>
@@ -59,12 +78,12 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="round">
+    <ion-card class="round"  (click)="goToMileagesetup()">
     <ion-card-header class="icon">
-      <ion-icon name="cash" class="iconf"></ion-icon>
+      <ion-icon name="grid" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
-    CASH CARD 
+     MILEAGE 
     </ion-card-content>
   </ion-card>
 
@@ -77,23 +96,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="round">
-    <ion-card-header class="icon">
-      <ion-icon name="grid" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-     MILLAGE 
-    </ion-card-content>
-  </ion-card>
 
-    <ion-card class="round">
-    <ion-card-header class="icon">
-      <ion-icon name="list" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-     CLAIM TYPE 
-    </ion-card-content>
-  </ion-card>
 
   <ion-card class="round">
     <ion-card-header class="icon">
@@ -123,9 +126,9 @@
   </ion-card>
 
     <ion-card class="round">
-    <ion-card-header class="icon">
+      <ion-card-header class="icon">
               <ion-icon name="list-box" class="iconf"></ion-icon>
-    </ion-card-header>
+       </ion-card-header>
     <ion-card-content class="Subtitle">
      PAYMENT TYPE 
 

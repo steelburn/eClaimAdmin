@@ -14,6 +14,13 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
 import { BanksetupPage } from '../pages/banksetup/banksetup';
+import { BranchsetupPage } from '../pages/branchsetup/branchsetup';
+import { ClaimtypePage } from '../pages/claimtype/claimtype';
+import { CashcardsetupPage } from '../pages/cashcardsetup/cashcardsetup';
+import { CompanysetupPage } from '../pages/companysetup/companysetup';
+import { DepartmentsetupPage } from '../pages/departmentsetup/departmentsetup';
+import { DesignationsetupPage } from '../pages/designationsetup/designationsetup';
+import { MileagesetupPage } from '../pages/mileagesetup/mileagesetup';
 import { SpeakerListPage } from '../pages/home/home';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -81,6 +88,7 @@ export class ConferenceApp {
 
     this.listenToLoginEvents();
   }
+
 
   openPage(page: PageInterface) {
     let params = {};
