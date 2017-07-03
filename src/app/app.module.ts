@@ -15,6 +15,7 @@ import { AboutPage } from '../pages/about/about';
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
+import { BanksetupPage } from '../pages/banksetup/banksetup';
 import { MapPage } from '../pages/map/map';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
@@ -41,6 +42,7 @@ import { UserData } from '../providers/user-data';
     SignupPage,
     SpeakerListPage,
     SetupPage,
+    BanksetupPage,
     TabsPage
   ],
   imports: [
@@ -76,6 +78,7 @@ import { UserData } from '../providers/user-data';
     SessionDetailPage,
     SignupPage,
     SetupPage,
+    BanksetupPage,
     SpeakerListPage,
     TabsPage
   ],

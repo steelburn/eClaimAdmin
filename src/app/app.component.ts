@@ -13,6 +13,7 @@ import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
+import { BanksetupPage } from '../pages/banksetup/banksetup';
 import { SpeakerListPage } from '../pages/home/home';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';

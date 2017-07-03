@@ -15,6 +15,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class BanksetupPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.navCtrl.setRoot(BanksetupPage)
   }
 
   ionViewDidLoad() {
