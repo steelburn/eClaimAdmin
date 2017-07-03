@@ -8,7 +8,11 @@ import { CompanysetupPage } from '../companysetup/companysetup';
 import { DesignationsetupPage } from '../designationsetup/designationsetup';
 import { DepartmentsetupPage } from '../departmentsetup/departmentsetup';
 import { MileagesetupPage } from '../mileagesetup/mileagesetup';
-
+import { PaymenttypesetupPage } from '../paymenttypesetup/paymenttypesetup';
+import { QualificationsetupPage } from '../qualificationsetup/qualificationsetup';
+import { SubsciptionsetupPage } from '../subsciptionsetup/subsciptionsetup';
+import { RolesetupPage } from '../rolesetup/rolesetup';
+import { TenantsetupPage } from '../tenantsetup/tenantsetup';
 /**
  * Generated class for the SetupPage page.
  *
@@ -60,6 +64,28 @@ export class SetupPage {
     goToMileagesetup(){
     this.navCtrl.push(MileagesetupPage)
   }
+
+      goToPaymenttypesetup(){
+    this.navCtrl.push(PaymenttypesetupPage)
+  }
+
+
+      goToSubscriptionsetup(){
+    this.navCtrl.push(SubsciptionsetupPage)
+  }
+
+      goToQualificationsetup(){
+    this.navCtrl.push(QualificationsetupPage)
+  }
+
+      goToRolesetup(){
+    this.navCtrl.push(RolesetupPage)
+  }
+
+    goToTenantsetup(){
+    this.navCtrl.push(TenantsetupPage)
+  }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetupPage');

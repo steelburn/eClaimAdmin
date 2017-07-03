@@ -24,12 +24,17 @@ import { DesignationsetupPage } from '../pages/designationsetup/designationsetup
 import { DepartmentsetupPage } from '../pages/departmentsetup/departmentsetup';
 import { MapPage } from '../pages/map/map';
 import { MileagesetupPage } from '../mileagesetup/mileagesetup';
+import { RolesetupPage } from '../pages/rolesetup/rolesetup';
+import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup';
+import { QualificationsetupPage } from '../pages/qualificationsetup/qualificationsetup';
+import { SubsciptionsetupPage } from '../pages/subsciptionsetup/subsciptionsetup';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../pages/session-detail/session-detail';
 import { SignupPage } from '../pages/signup/signup';
 import { SpeakerListPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { TenantsetupPage } from '../tenantsetup/tenantsetup';
 import { SetupPage } from '../pages/setup/setup';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -57,6 +62,11 @@ import { UserData } from '../providers/user-data';
     CashcardsetupPage,
     DesignationsetupPage,
     MileagesetupPage,
+    RolesetupPage,
+    PaymenttypesetupPage,
+    QualificationsetupPage,
+    SubsciptionsetupPage,
+    TenantsetupPage,
     TabsPage
   ],
   imports: [
@@ -99,7 +109,12 @@ import { UserData } from '../providers/user-data';
     CashcardsetupPage,
     DesignationsetupPage,
     DepartmentsetupPage,
-        MileagesetupPage,
+    MileagesetupPage,
+    RolesetupPage,
+    PaymenttypesetupPage,
+    QualificationsetupPage,
+    SubsciptionsetupPage,
+    TenantsetupPage,
     SpeakerListPage,
     TabsPage
   ],

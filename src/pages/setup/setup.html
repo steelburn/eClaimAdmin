@@ -87,7 +87,37 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="round">
+
+    <ion-card class="round"  (click)="goToPaymenttypesetup()">
+      <ion-card-header class="icon">
+              <ion-icon name="list-box" class="iconf"></ion-icon>
+       </ion-card-header>
+    <ion-card-content class="Subtitle">
+     PAYMENT TYPE 
+
+    </ion-card-content>
+  </ion-card>
+
+    <ion-card class="round"  (click)="goToQualificationsetup()" >
+    <ion-card-header class="icon">
+      <ion-icon name="document" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+    QUALIFICATION 
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card class="round" (click)="goToRolesetup()">
+    <ion-card-header class="icon">
+      <ion-icon name="git-network" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+     ROLE 
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="round" (click)="goToSubscriptionsetup()">
     <ion-card-header class="icon">
       <ion-icon name="card" class="iconf"></ion-icon>
     </ion-card-header>
@@ -98,7 +128,7 @@
 
 
 
-  <ion-card class="round">
+  <ion-card class="round" (click)="goToTenantsetup()">
     <ion-card-header class="icon">
       <ion-icon name="people" class="iconf"></ion-icon>
     </ion-card-header>
@@ -107,31 +137,4 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="round">
-    <ion-card-header class="icon">
-      <ion-icon name="document" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-    QUALIFICATION 
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card class="round">
-    <ion-card-header class="icon">
-      <ion-icon name="git-network" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-     ROLE 
-    </ion-card-content>
-  </ion-card>
-
-    <ion-card class="round">
-      <ion-card-header class="icon">
-              <ion-icon name="list-box" class="iconf"></ion-icon>
-       </ion-card-header>
-    <ion-card-content class="Subtitle">
-     PAYMENT TYPE 
-
-    </ion-card-content>
-  </ion-card>
 </ion-content>
