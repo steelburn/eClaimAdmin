@@ -14,11 +14,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class BanksetupPage {
 
+   public BankRegisterClicked: boolean = false; 
+    // public BankRegisterClick() {
+
+    //     this.BankRegisterClicked = !this.BankRegisterClicked;
+    // }
+
   constructor(public navCtrl: NavController, public navParams: NavParams) 
   {
    
   }
+  BankRegisterClick() {
+     alert('hi');
 
+        //this.BankRegisterClicked = !this.BankRegisterClicked;
+    }
   ionViewDidLoad() {
     console.log('ionViewDidLoad BanksetupPage');
   }
