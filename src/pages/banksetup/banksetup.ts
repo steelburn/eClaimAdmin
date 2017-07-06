@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormControlDirective, FormBuilder, Validators, FormGroup,FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 /**
  * Generated class for the BanksetupPage page.
  *
@@ -14,29 +14,22 @@ import { FormControlDirective, FormBuilder, Validators, FormGroup,FormControl } 
 })
 export class BanksetupPage {
 Bankform: FormGroup;
-   public BankRegisterClicked: boolean = false; 
-    public BankRegisterClick() {
+   public AddBanksClicked: boolean = false; 
+    public AddBanksClick() {
 
-        this.BankRegisterClicked = !this.BankRegisterClicked;
+        this.AddBanksClicked = !this.AddBanksClicked;
     }
 
   constructor(private fb: FormBuilder,public navCtrl: NavController, public navParams: NavParams) 
   {
    this.Bankform = fb.group({
       
-      //fullname: ['', Validators.compose([Validators.maxLength(10),Validators.minLength(5), Validators.pattern('[a-zA-Z ]*'), Validators.required])],        
-      
       bankname:'',
      
     });
   }
-  // BankRegisterClick() {
-  //    alert('hi');
 
-  //       //this.BankRegisterClicked = !this.BankRegisterClicked;
-  //   }
-  
-    
+      
   ionViewDidLoad() {
     console.log('ionViewDidLoad BanksetupPage');
   }
