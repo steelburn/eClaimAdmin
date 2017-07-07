@@ -14,14 +14,14 @@
 
 
 <ion-content padding>
-
     <ion-fab top right edge>
-      <button ion-fab mini ><ion-icon name="add" (click)="AddBanksClick()">
+      <button ion-fab mini (click)="AddBanksClick()"><ion-icon name="add">
         </ion-icon>
 
       </button>
 
     </ion-fab>
+
 
     <ion-list>
 
@@ -44,29 +44,29 @@
 
 
 <!-- add bank form start-->
+<div class="blackcontainer" *ngIf="AddBanksClicked">
+</div>
+  <div class="popup" padding *ngIf="AddBanksClicked">
 
-  <div padding class="fb10 posFixed popupFormCol bgColor-blackOpa fullHeight" *ngIf="AddBanksClicked">
-      <ion-card class="fb4 marginCenter popupFormCard">
-      <ion-card-header class="icTitle headerColor-white posRelative">
-    
-        <div class="icHeaderText">{{"REGISTER_NEW_BANK" | translate}}</div>
-        <button class="posAbsolute fullHeight bgColor-red topZero rightZero btnStyle2" (click)="AddBanksClick()">
-          <ion-icon name="md-close"></ion-icon> 
+      <ion-card>
+      <ion-card-header>
+        <button (click)="CloseBanksClick()">
+          <ion-icon name="md-close" class="btnR"></ion-icon> 
         </button>
       </ion-card-header>
-     <ion-list class="overflowTrue contentHeight">
+     <ion-list>
         <form [formGroup]="Bankform">
           <ion-item>            
-            <ion-label class="fontColor-green" stacked>{{"BANKNAME" | translate}}</ion-label>
-            <ion-input type="text" formControlName="bankname" [(ngModel)]="Bankform.fullname" class="editInput" placeholder="{{'Please fill in the bank name' | translate}}"></ion-input>
+            <ion-label stacked>{{"BANKNAME"}}</ion-label>
+            <ion-input type="text" formControlName="bankname" [(ngModel)]="Bankform.fullname"  placeholder="{{'Please fill in the bank name'}}"></ion-input>
           </ion-item>
-          
+          <div class="btn">
+          <button ion-button>SUBMIT</button></div>
         </form>
      </ion-list>
       </ion-card>
  
  </div>
-
  <!-- add bank form end-->
 </ion-content>
    

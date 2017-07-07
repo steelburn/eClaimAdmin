@@ -15,9 +15,15 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class BanksetupPage {
 Bankform: FormGroup;
    public AddBanksClicked: boolean = false; 
+   
     public AddBanksClick() {
 
-        this.AddBanksClicked = !this.AddBanksClicked;
+        this.AddBanksClicked = true; 
+    }
+
+      public CloseBanksClick() {
+
+        this.AddBanksClicked = false; 
     }
 
   constructor(private fb: FormBuilder,public navCtrl: NavController, public navParams: NavParams) 
