@@ -23,4 +23,33 @@ page-banksetup {
     margin: 10px 0px;
 }
 
-.btnR{float: right;}
+.btnR{
+    width: 33px !important;
+    height: 38px;
+    right: 26px;
+    font-size: 22px !important;
+    top: 26px;
+    background: #ff6b6b;
+    color: #fff;
+    position: absolute !important ;
+}
+
+
+.icHeaderText {
+    font-size: 15px !important;
+    
+}
+
+.icTitle {
+    border-bottom: 1px solid !important;
+    margin-bottom: 10px !important;
+    padding: 10px !important;
+}
+
+
+
+.headerColor-white {
+    background: #ffffff !important;
+    border-color: #e8e8e8 !important;
+    color: #a5a3a3 !important;
+}

@@ -16,7 +16,7 @@
 <ion-content padding>
 
    <ion-fab top right edge>
-      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+      <button ion-fab mini (click)="AddDesignationClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
     <ion-list>
       <ion-list-header>
@@ -37,4 +37,38 @@
       <ion-item>R&D OFFICE</ion-item>
       <ion-item>FINANCE OFFICE</ion-item>
     </ion-list>
+
+
+<!-- add designation form start-->
+<div class="blackcontainer" *ngIf="AddDesignationClicked">
+</div>
+  <div class="popup" padding *ngIf="AddDesignationClicked">
+
+      <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">REGISTER NEW DESIGNATION</div>
+        <button class="btnR" (click)="CloseDesignationClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+      </ion-card-header>
+     <ion-list>
+        <form [formGroup]="Designationform">
+          <ion-item>            
+            <ion-label stacked>{{"TITLE"}}</ion-label>
+            <ion-input type="text" formControlName="designationname" [(ngModel)]="Designationform.fullname"  placeholder="{{'Please fill in the title of the designation'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>            
+            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-input type="text" formControlName="designationname" [(ngModel)]="Designationform.fullname"  placeholder="{{'Please fill in the description'}}"></ion-input>
+          </ion-item>
+          <div class="btn">
+          <button ion-button>SUBMIT</button></div>
+        </form>
+     </ion-list>
+      </ion-card>
+ 
+ </div>
+ <!-- add designation form end-->
 </ion-content>

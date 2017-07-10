@@ -16,7 +16,7 @@
 <ion-content padding>
 
     <ion-fab top right edge>
-      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+      <button ion-fab mini (click)="AddDepartmentClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
   <ion-list>
       <ion-list-header>
@@ -47,4 +47,43 @@
       <ion-item>SERVICE DESK OFFICE</ion-item>
       <ion-item>PROJECT MNAGEMENT OFFICE</ion-item>
     </ion-list>
+
+    <!-- add department form start-->
+<div class="blackcontainer" *ngIf="AddDepartmentClicked">
+</div>
+  <div class="popup" padding *ngIf="AddDepartmentClicked">
+
+      <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">REGISTER NEW DEPARTMENT</div>
+        <button class="btnR" (click)="CloseDepartmentClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+      </ion-card-header>
+     <ion-list>
+        <form [formGroup]="Departmentform">
+          <ion-item>            
+            <ion-label stacked>{{"TITLE"}}</ion-label>
+            <ion-input type="text" formControlName="departmentname" [(ngModel)]="Departmentform.fullname"  placeholder="{{'Please fill in the title of the department'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>            
+            <ion-label stacked>{{"COMPANY"}}</ion-label>
+            <ion-input type="text" formControlName="departmentname" [(ngModel)]="Departmentform.fullname"  placeholder="{{'Please fill in the company name of the department'}}"></ion-input>
+          </ion-item>
+
+
+          <ion-item>            
+            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-input type="text" formControlName="departmentname" [(ngModel)]="Departmentform.fullname"  placeholder="{{'Please fill in the description'}}"></ion-input>
+          </ion-item>
+          <div class="btn">
+          <button ion-button>SUBMIT</button></div>
+        </form>
+     </ion-list>
+      </ion-card>
+ 
+ </div>
+ <!-- add department form end-->
 </ion-content>

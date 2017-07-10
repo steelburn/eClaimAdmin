@@ -15,7 +15,7 @@
 
 <ion-content padding>
     <ion-fab top right edge>
-      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+      <button ion-fab mini (click)="AddBranchsClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
     <ion-list>
@@ -26,4 +26,32 @@
       <ion-item>INDIA</ion-item>
 
     </ion-list>
+
+<!-- add branch form start-->
+<div class="blackcontainer" *ngIf="AddBranchsClicked">
+</div>
+  <div class="popup" padding *ngIf="AddBranchsClicked">
+
+      <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">REGISTER NEW BRANCH</div>
+        <button class="btnR" (click)="CloseBranchsClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+      </ion-card-header>
+     <ion-list>
+        <form [formGroup]="Branchform">
+          <ion-item>            
+            <ion-label stacked>{{"BRANCHNAME"}}</ion-label>
+            <ion-input type="text" formControlName="branchname" [(ngModel)]="Branchform.fullname"  placeholder="{{'Please fill in the branch name'}}"></ion-input>
+          </ion-item>
+          <div class="btn">
+          <button ion-button>SUBMIT</button></div>
+        </form>
+     </ion-list>
+      </ion-card>
+ 
+ </div>
+ <!-- add branch form end-->
 </ion-content>

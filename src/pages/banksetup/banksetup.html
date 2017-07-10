@@ -49,9 +49,11 @@
   <div class="popup" padding *ngIf="AddBanksClicked">
 
       <ion-card>
-      <ion-card-header>
-        <button (click)="CloseBanksClick()">
-          <ion-icon name="md-close" class="btnR"></ion-icon> 
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">REGISTER NEW BANK</div>
+        <button class="btnR" (click)="CloseBanksClick()">
+          <ion-icon name="md-close"></ion-icon> 
         </button>
       </ion-card-header>
      <ion-list>
