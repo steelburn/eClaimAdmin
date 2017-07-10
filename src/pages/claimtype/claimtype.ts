@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 /**
  * Generated class for the ClaimtypePage page.
  *
@@ -14,7 +14,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ClaimtypePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  Claimtypeform: FormGroup;
+   public AddClaimtypeClicked: boolean = false; 
+   
+    public AddClaimtypeClick() {
+
+        this.AddClaimtypeClicked = true; 
+    }
+
+      public CloseClaimtypeClick() {
+
+        this.AddClaimtypeClicked = false; 
+    }
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder) {
+
+     this.Claimtypeform = fb.group({
+      
+      claimname:'',
+     
+    });
   }
 
   ionViewDidLoad() {

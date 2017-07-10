@@ -14,7 +14,7 @@
 
 <ion-content padding>
  <ion-fab top right edge>
-      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+      <button ion-fab mini (click)="AddClaimtypeClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
     <ion-list>
@@ -36,4 +36,37 @@
       <ion-item>ENTERTAINMENT CLAIM</ion-item>
       <ion-item>OVERTIME CLAIM</ion-item>
     </ion-list>
+
+    <!-- add claimtype form start-->
+<div class="blackcontainer" *ngIf="AddClaimtypeClicked">
+</div>
+  <div class="popup" padding *ngIf="AddClaimtypeClicked">
+
+      <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">REGISTER NEW CLAIM TYPE</div>
+        <button class="btnR" (click)="CloseClaimtypeClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+      </ion-card-header>
+     <ion-list>
+        <form [formGroup]="Claimtypeform">
+          <ion-item>            
+            <ion-label stacked>{{"NAME"}}</ion-label>
+            <ion-input type="text" formControlName="claimname" [(ngModel)]="Claimtypeform.fullname"  placeholder="{{'Please fill in the name of claim'}}"></ion-input>
+          </ion-item>
+
+           <ion-item>            
+            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-input type="text" formControlName="claimname" [(ngModel)]="Claimtypeform.fullname"  placeholder="{{'Please fill in the description'}}"></ion-input>
+          </ion-item>
+          <div class="btn">
+          <button ion-button>SUBMIT</button></div>
+        </form>
+     </ion-list>
+      </ion-card>
+ 
+ </div>
+ <!-- add bank form end-->
 </ion-content>

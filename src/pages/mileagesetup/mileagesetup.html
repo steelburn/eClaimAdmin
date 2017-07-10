@@ -16,7 +16,7 @@
 <ion-content padding>
 
       <ion-fab top right edge>
-      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+      <button ion-fab mini (click)="AddMileageClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
     
   <ion-list>
@@ -30,7 +30,7 @@
 
     <ion-list>
       <ion-list-header>
-        MILLEAGE PER UNIT
+        MILEAGE PER UNIT
       </ion-list-header>
       <ion-item>12</ion-item>
       <ion-item>32</ion-item>
@@ -55,4 +55,53 @@
       <ion-item>2/2/1111</ion-item>
 
     </ion-list>
+
+    
+<!-- add mileage form start-->
+<div class="blackcontainer" *ngIf="AddMileageClicked">
+</div>
+  <div class="popup" padding *ngIf="AddMileageClicked">
+
+      <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">REGISTER NEW MILEAGE</div>
+        <button class="btnR" (click)="CloseMileageClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+      </ion-card-header>
+     <ion-list>
+        <form [formGroup]="Mileageform">
+          <ion-item>            
+            <ion-label stacked>{{"CATEGORY"}}</ion-label>
+            <ion-input type="text" formControlName="mileagename" [(ngModel)]="Mileageform.fullname"  placeholder="{{'Please fill in the category of the mileage'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>            
+            <ion-label stacked>{{"MILEAGE PER UNIT"}}</ion-label>
+            <ion-input type="number" formControlName="mileagename" [(ngModel)]="Mileageform.fullname"  placeholder="{{'Please fill in the unit of mileage'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>            
+            <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
+            <ion-select formControlName="mileagename" [(ngModel)]="Mileageform.fullname"  placeholder="{{'Please select the active flag'}}">
+                 <ion-option value="0">ACTIVE</ion-option>
+              <ion-option value="1">INACTIVE</ion-option>
+          
+            </ion-select>
+          </ion-item>
+
+
+          <ion-item>            
+            <ion-label stacked>{{"EFFECTIVE DATE"}}</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="mileagename" [(ngModel)]="Mileageform.fullname"  placeholder="{{'Please choose your effective date'}}"></ion-datetime>
+          </ion-item>
+          <div class="btn">
+          <button ion-button>SUBMIT</button></div>
+        </form>
+     </ion-list>
+      </ion-card>
+ 
+ </div>
+ <!-- add mileage form end-->
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the DesignationsetupPage page.
@@ -14,7 +15,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class DesignationsetupPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+   Designationform: FormGroup;
+   public AddDesignationClicked: boolean = false; 
+   
+    public AddDesignationClick() {
+
+        this.AddDesignationClicked = true; 
+    }
+
+      public CloseDesignationClick() {
+
+        this.AddDesignationClicked = false; 
+    }
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb:FormBuilder) {
+
+        this.Designationform = fb.group({
+      
+      designationname:'',
+     
+    });
   }
 
   ionViewDidLoad() {

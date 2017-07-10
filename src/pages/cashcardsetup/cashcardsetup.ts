@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the CashcardsetupPage page.
@@ -13,8 +14,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'cashcardsetup.html',
 })
 export class CashcardsetupPage {
+Cashform: FormGroup;
+   public AddCashClicked: boolean = false; 
+   
+    public AddCashClick() {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+        this.AddCashClicked = true; 
+    }
+
+      public CloseCashClick() {
+
+        this.AddCashClicked = false; 
+    }
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder) {
+     this.Cashform = fb.group({
+      
+      cashname:'',
+     
+    });
   }
 
   ionViewDidLoad() {

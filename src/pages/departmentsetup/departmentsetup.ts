@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 /**
  * Generated class for the DepartmentsetupPage page.
  *
@@ -14,7 +14,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class DepartmentsetupPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+   Departmentform: FormGroup;
+   public AddDepartmentClicked: boolean = false; 
+   
+    public AddDepartmentClick() {
+
+        this.AddDepartmentClicked = true; 
+    }
+
+      public CloseDepartmentClick() {
+
+        this.AddDepartmentClicked = false; 
+    }
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb:FormBuilder) {
+
+        this.Departmentform = fb.group({
+      
+      departmentname:'',
+     
+    });
+    
   }
 
   ionViewDidLoad() {

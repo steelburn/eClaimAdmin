@@ -15,7 +15,7 @@
 
 <ion-content padding>
     <ion-fab top right edge>
-      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+      <button ion-fab mini (click)="AddCashClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
     <ion-list>
@@ -72,4 +72,55 @@
       <ion-item>DESCRIBE</ion-item>
       <ion-item>DESCRIBE</ion-item>
     </ion-list>
+
+
+<!-- add cash card form start-->
+<div class="blackcontainer" *ngIf="AddCashClicked">
+</div>
+  <div class="popup" padding *ngIf="AddCashClicked">
+
+      <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">REGISTER NEW CASHCARD</div>
+        <button class="btnR" (click)="CloseCashClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+      </ion-card-header>
+     <ion-list>
+        <form [formGroup]="Cashform">
+          <ion-item>            
+            <ion-label stacked>{{"CASHCARD NO."}}</ion-label>
+            <ion-input type="number" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the cash card no.'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>            
+            <ion-label stacked>{{"ACCOUNT NO."}}</ion-label>
+            <ion-input type="number" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the account no.'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>            
+            <ion-label stacked>{{"PASSWORD"}}</ion-label>
+            <ion-input type="password" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in yours password'}}"></ion-input>
+          </ion-item>
+
+
+          <ion-item>            
+            <ion-label stacked>{{"MANAGEMENT URL"}}</ion-label>
+            <ion-input type="text" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the management URL'}}"></ion-input>
+          </ion-item>
+
+
+          <ion-item>            
+            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-input type="text" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the description'}}"></ion-input>
+          </ion-item>
+          <div class="btn">
+          <button ion-button>SUBMIT</button></div>
+        </form>
+     </ion-list>
+      </ion-card>
+ 
+ </div>
+ <!-- add cash card form end-->
 </ion-content>
