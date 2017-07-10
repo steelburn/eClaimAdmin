@@ -14,10 +14,14 @@
 
 
 <ion-content padding>
-
     <ion-fab top right edge>
-      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+      <button ion-fab mini (click)="AddBanksClick()"><ion-icon name="add">
+        </ion-icon>
+
+      </button>
+
     </ion-fab>
+
 
     <ion-list>
 
@@ -37,4 +41,33 @@
       <ion-item>UNITED OVERSEA BANK (MALAYSIA)</ion-item>
     </ion-list>
 
+
+
+<!-- add bank form start-->
+<div class="blackcontainer" *ngIf="AddBanksClicked">
+</div>
+  <div class="popup" padding *ngIf="AddBanksClicked">
+
+      <ion-card>
+      <ion-card-header>
+        <button (click)="CloseBanksClick()">
+          <ion-icon name="md-close" class="btnR"></ion-icon> 
+        </button>
+      </ion-card-header>
+     <ion-list>
+        <form [formGroup]="Bankform">
+          <ion-item>            
+            <ion-label stacked>{{"BANKNAME"}}</ion-label>
+            <ion-input type="text" formControlName="bankname" [(ngModel)]="Bankform.fullname"  placeholder="{{'Please fill in the bank name'}}"></ion-input>
+          </ion-item>
+          <div class="btn">
+          <button ion-button>SUBMIT</button></div>
+        </form>
+     </ion-list>
+      </ion-card>
+ 
+ </div>
+ <!-- add bank form end-->
 </ion-content>
+   
+ 

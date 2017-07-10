@@ -2,30 +2,32 @@ import { Component, ViewChild } from '@angular/core';
 
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Storage } from '@ionic/storage';
+import{ TranslateService } from '@ngx-translate/core';
 
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
-import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
+ import { LoginPage } from '../pages/login/login';
+ import { MapPage } from '../pages/map/map';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
-import { SchedulePage } from '../pages/schedule/schedule';
+ import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
-import { BanksetupPage } from '../pages/banksetup/banksetup';
-import { BranchsetupPage } from '../pages/branchsetup/branchsetup';
-import { ClaimtypePage } from '../pages/claimtype/claimtype';
-import { CashcardsetupPage } from '../pages/cashcardsetup/cashcardsetup';
-import { CompanysetupPage } from '../pages/companysetup/companysetup';
-import { DepartmentsetupPage } from '../pages/departmentsetup/departmentsetup';
-import { DesignationsetupPage } from '../pages/designationsetup/designationsetup';
-import { RolesetupPage } from '../pages/rolesetup/rolesetup';
-import { MileagesetupPage } from '../pages/mileagesetup/mileagesetup';
-import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup';
-import { QualificationsetupPage } from '../pages/qualificationsetup/qualificationsetup';
-import { SubsciptionsetupPage } from '../pages/subsciptionsetup/subsciptionsetup';
-import { TenantsetupPage } from '../pages/tenantsetup/tenantsetup';
+//import { BanksetupPage } from '../pages/banksetup/banksetup';
+// import { BranchsetupPage } from '../pages/branchsetup/branchsetup';
+// import { ClaimtypePage } from '../pages/claimtype/claimtype';
+// import { CashcardsetupPage } from '../pages/cashcardsetup/cashcardsetup';
+// import { CompanysetupPage } from '../pages/companysetup/companysetup';
+// import { DepartmentsetupPage } from '../pages/departmentsetup/departmentsetup';
+// import { DesignationsetupPage } from '../pages/designationsetup/designationsetup';
+// import { RolesetupPage } from '../pages/rolesetup/rolesetup';
+// import { MileagesetupPage } from '../pages/mileagesetup/mileagesetup';
+// import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup';
+// import { QualificationsetupPage } from '../pages/qualificationsetup/qualificationsetup';
+// import { SubsciptionsetupPage } from '../pages/subsciptionsetup/subsciptionsetup';
+// import { TenantsetupPage } from '../pages/tenantsetup/tenantsetup';
 import { SpeakerListPage } from '../pages/home/home';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -74,11 +76,13 @@ export class ConferenceApp {
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
-    public confData: ConferenceData,
-    public storage: Storage,
-    public splashScreen: SplashScreen
+     public confData: ConferenceData,
+     storage: Storage,
+     statusbar:StatusBar,
+     splashScreen: SplashScreen,translate: TranslateService
   ) {
-
+    translate.setDefaultLang('en');
+    platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
     // Check if the user has already seen the tutorial
 
 
@@ -144,12 +148,13 @@ export class ConferenceApp {
     this.menu.enable(!loggedIn, 'loggedOutMenu');
   }
 
-  platformReady() {
-    // Call any initial plugins when ready
-    this.platform.ready().then(() => {
-      this.splashScreen.hide();
-    });
-  }
+  // platformReady() {
+  //   // Call any initial plugins when ready
+  //   this.platform.ready().then(() => {
+  //     this.splashScreen.hide();
+      
+  //   });
+//}
 
   isActive(page: PageInterface) {
     let childNav = this.nav.getActiveChildNav();
