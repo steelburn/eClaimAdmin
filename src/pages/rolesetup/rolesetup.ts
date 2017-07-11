@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 /**
  * Generated class for the RolesetupPage page.
  *
@@ -13,8 +13,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'rolesetup.html',
 })
 export class RolesetupPage {
+Roleform: FormGroup;
+   public AddRoleClicked: boolean = false; 
+   
+    public AddRoleClick() {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+        this.AddRoleClicked = true; 
+    }
+
+      public CloseRoleClick() {
+
+        this.AddRoleClicked = false; 
+    }
+  constructor(public navCtrl: NavController, public navParams: NavParams,fb:FormBuilder) {
+
+    this.Roleform = fb.group({
+      
+      rolename:'',
+     
+    });
   }
 
   ionViewDidLoad() {

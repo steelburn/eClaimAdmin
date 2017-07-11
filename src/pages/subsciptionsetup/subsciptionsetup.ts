@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 /**
  * Generated class for the SubsciptionsetupPage page.
  *
@@ -13,8 +13,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'subsciptionsetup.html',
 })
 export class SubsciptionsetupPage {
+Subscriptionform: FormGroup;
+   public AddSubscriptionClicked: boolean = false; 
+   
+    public AddSubscriptionClick() {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+        this.AddSubscriptionClicked = true; 
+    }
+
+      public CloseSubscriptionClick() {
+
+        this.AddSubscriptionClicked = false; 
+    }
+  constructor(public navCtrl: NavController, public navParams: NavParams,fb:FormBuilder) {
+
+        this.Subscriptionform = fb.group({
+      
+      subscriptionname:'',
+     
+    });
   }
 
   ionViewDidLoad() {

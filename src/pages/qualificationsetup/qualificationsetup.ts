@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
 /**
  * Generated class for the QualificationsetupPage page.
  *
@@ -14,23 +13,23 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: 'qualificationsetup.html',
 })
 export class QualificationsetupPage {
-  Qualificationform: FormGroup;
-   public AddQualificationClicked: boolean = false; 
+Qualifyform: FormGroup;
+   public AddQualifyClicked: boolean = false; 
    
-    public AddQualificationClick() {
+    public AddQualifyClick() {
 
-        this.AddQualificationClicked = true; 
+        this.AddQualifyClicked = true; 
     }
 
-      public CloseQualificationClick() {
+      public CloseQualifyClick() {
 
-        this.AddQualificationClicked = false; 
+        this.AddQualifyClicked = false; 
     }
 
   constructor(public navCtrl: NavController, public navParams: NavParams,fb:FormBuilder) {
-         this.Qualificationform = fb.group({
+    this.Qualifyform = fb.group({
       
-      qualificationtname:'',
+      qualifyname:'',
      
     });
   }
