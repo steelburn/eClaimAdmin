@@ -16,7 +16,7 @@
 <ion-content padding>
 
       <ion-fab top right edge>
-      <button ion-fab mini (click)="AddQualificationClick()"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab mini (click)="AddQualifyClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
  <ion-list>
       <ion-list-header>
@@ -36,29 +36,30 @@
 
     </ion-list>
 
-    <!-- add qualification form start-->
-<div class="blackcontainer" *ngIf="AddQualificationClicked">
+
+<!-- add Qualifyform start-->
+<div class="blackcontainer" *ngIf="AddQualifyClicked">
 </div>
-  <div class="popup" padding *ngIf="AddQualificationClicked">
+  <div class="popup" padding *ngIf="AddQualifyClicked">
 
       <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
         <div class="icHeaderText">REGISTER NEW QUALIFICATION</div>
-        <button class="btnR" (click)="CloseQualificationClick()">
+        <button class="btnR" (click)="CloseQualifyClick()">
           <ion-icon name="md-close"></ion-icon> 
         </button>
       </ion-card-header>
      <ion-list>
-        <form [formGroup]="Qualificationform">
+        <form [formGroup]="Qualifyform">
           <ion-item>            
             <ion-label stacked>{{"QUALIFICATION"}}</ion-label>
-            <ion-input type="text" formControlName="qualificationtname" [(ngModel)]="Qualificationform.fullname"  placeholder="{{'Please fill in the qualification}}"></ion-input>
+            <ion-input type="text" formControlName="qualifyname" [(ngModel)]="Qualifyform.fullname"  placeholder="{{'Please fill in the qualification'}}"></ion-input>
           </ion-item>
 
           <ion-item>            
             <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-            <ion-input type="text" formControlName="qualificationtname" [(ngModel)]="Qualificationform.fullname"  placeholder="{{'Please fill in the description'}}"></ion-input>
+            <ion-input type="text" formControlName="qualifyname" [(ngModel)]="Qualifyform.fullname"  placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
           <div class="btn">
           <button ion-button>SUBMIT</button></div>
@@ -67,5 +68,6 @@
       </ion-card>
  
  </div>
- <!-- add qualification form end-->
+ <!-- add Qualify form end-->
+
 </ion-content>
