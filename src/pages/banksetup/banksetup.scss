@@ -16,6 +16,7 @@ page-banksetup {
     width: 96%;
     top: 60px;
     position: fixed;
+        height: 500px;
 }
 .btn{
 
@@ -52,4 +53,33 @@ page-banksetup {
     background: #ffffff !important;
     border-color: #e8e8e8 !important;
     color: #a5a3a3 !important;
+}
+
+
+.eClaimSubTitle {
+	color: black;
+	font-size: 20px;
+	padding: 10px 0px;
+} 
+
+.eClaimSubTitle1 {
+	color: black;
+	font-size: 16px;
+	margin-left: 20px;
+} 
+
+.eClaimSubTitle2 {
+	color: black;
+	font-size: 16px;
+    margin-left: 20px;
+    margin-top: 10px;
+} 
+
+.scroll{
+    height: calc(100% - 48px);
+    overflow: scroll;
+}
+
+.cm{
+    height: 100%;
 }

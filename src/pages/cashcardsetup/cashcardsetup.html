@@ -22,10 +22,14 @@
       <ion-list-header>
        CASHCARD NO.
       </ion-list-header>
-      <ion-item>1234</ion-item>
-      <ion-item>12345</ion-item>
-      <ion-item>23489</ion-item>
-      <ion-item>958758784</ion-item>
+      <ion-item>1234<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>23489<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>958758784<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
     </ion-list>
 
 
@@ -33,10 +37,14 @@
       <ion-list-header>
        ACCOUNT NO.
       </ion-list-header>
-      <ion-item>1234</ion-item>
-      <ion-item>12345</ion-item>
-      <ion-item>23489</ion-item>
-      <ion-item>958758784</ion-item>
+      <ion-item>1234<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>23489<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>958758784<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
     </ion-list>
 
 
@@ -44,10 +52,14 @@
       <ion-list-header>
        PASSWORD
       </ion-list-header>
-      <ion-item>1234</ion-item>
-      <ion-item>12345</ion-item>
-      <ion-item>23489</ion-item>
-      <ion-item>958758784</ion-item>
+      <ion-item>1234<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>23489<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>958758784<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
     </ion-list>
 
 
@@ -56,10 +68,14 @@
       <ion-list-header>
        MANAGEMENT URL
       </ion-list-header>
-      <ion-item>http://zentranet.zen.com.my/Pages/Home.aspx</ion-item>
-      <ion-item>http://www.zen.com.my/</ion-item>
-      <ion-item>http://intranet.zen.com.my/Pages/Home.aspx</ion-item>
-      <ion-item>http://zentranet.zen.com.my/Pages/Home.aspx</ion-item>
+      <ion-item>http://zentranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>http://www.zen.com.my/<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>http://intranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>http://zentranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
     </ion-list>
 
 
@@ -67,10 +83,14 @@
       <ion-list-header>
        DESCRIPTION
       </ion-list-header>
-      <ion-item>DESCRIBE</ion-item>
-      <ion-item>DESCRIBE</ion-item>
-      <ion-item>DESCRIBE</ion-item>
-      <ion-item>DESCRIBE</ion-item>
+      <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
     </ion-list>
 
 
@@ -91,7 +111,7 @@
         <form [formGroup]="Cashform">
           <ion-item>            
             <ion-label stacked>{{"CASHCARD NO."}}</ion-label>
-            <ion-input type="number" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the cash card no.'}}"></ion-input>
+            <ion-input type="text" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the cash card no.'}}"></ion-input>
           </ion-item>
 
           <ion-item>            
