@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { PopoverController } from 'ionic-angular';
 
 import { PopoverPage } from '../about-popover/about-popover';
-
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html'
 })
 export class AboutPage {
-  conferenceDate = '2047-05-17';
+
+    searchTerm: string = ''; searchControl: FormControl;items: any;
+
 
   constructor(public popoverCtrl: PopoverController) { }
 

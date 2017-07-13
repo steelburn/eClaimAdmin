@@ -6,7 +6,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { ConferenceData } from '../../providers/conference-data';
 
 import { SessionDetailPage } from '../session-detail/session-detail';
-
+import { AboutPage } from '../about/about';
 
 @Component({
   selector: 'page-speaker-list',
@@ -36,7 +36,9 @@ export class SpeakerListPage {
       session: session
     });
   }
-
+  goToAbout(){
+    this.navCtrl.push(AboutPage)
+  }
 
 
   goToSpeakerTwitter(speaker: any) {

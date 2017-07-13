@@ -35,6 +35,9 @@ export interface PageInterface {
   templateUrl: 'app.template.html'
 })
 export class ConferenceApp {
+
+ 
+
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
@@ -47,7 +50,7 @@ export class ConferenceApp {
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},
     { title: 'SCHEDULE', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 2, icon: 'calendar' },
     { title: 'MAP', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 3, icon: 'map' },
-    { title: 'ABOUT', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 4, icon: 'information-circle' }
+    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 4, icon: 'checkbox-outline' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -60,6 +63,7 @@ export class ConferenceApp {
   rootPage: any;
 
   constructor(
+
     public events: Events,
     public userData: UserData,
     public menu: MenuController,
@@ -68,7 +72,12 @@ export class ConferenceApp {
      storage: Storage,
      statusbar:StatusBar,
      splashScreen: SplashScreen,translate: TranslateService
-  ) {
+  ) { 
+
+
+
+
+
     translate.setDefaultLang('en');
     platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
     // Check if the user has already seen the tutorial
