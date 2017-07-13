@@ -10,7 +10,6 @@ import{ TranslateService } from '@ngx-translate/core';
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
  import { LoginPage } from '../pages/login/login';
- import { MapPage } from '../pages/map/map';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
  import { SchedulePage } from '../pages/schedule/schedule';
@@ -49,8 +48,8 @@ export class ConferenceApp {
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},
     { title: 'SCHEDULE', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 2, icon: 'calendar' },
-    { title: 'MAP', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 3, icon: 'map' },
-    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 4, icon: 'checkbox-outline' }
+  
+    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'checkbox-outline' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },

@@ -24,7 +24,6 @@ import { ClaimtypePage } from '../pages/claimtype/claimtype';
 import { CompanysetupPage } from '../pages/companysetup/companysetup';
 import { DesignationsetupPage } from '../pages/designationsetup/designationsetup';
 import { DepartmentsetupPage } from '../pages/departmentsetup/departmentsetup';
-import { MapPage } from '../pages/map/map';
 import { MileagesetupPage } from '../pages/mileagesetup/mileagesetup';
 import { RolesetupPage } from '../pages/rolesetup/rolesetup';
 import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup';
@@ -48,7 +47,6 @@ import { UserData } from '../providers/user-data';
     AboutPage,
     AccountPage,
     LoginPage,
-    MapPage,
     PopoverPage,
     SchedulePage,
     ScheduleFilterPage,
@@ -90,7 +88,6 @@ import { UserData } from '../providers/user-data';
         { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
         { component: SpeakerListPage, name: 'Home', segment: 'Home' },
         { component: SetupPage, name: 'Setup', segment: 'Setup' },
-        { component: MapPage, name: 'Map', segment: 'map' },
         { component: AboutPage, name: 'About', segment: 'about' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
@@ -105,7 +102,6 @@ import { UserData } from '../providers/user-data';
     AboutPage,
     AccountPage,
     LoginPage,
-    MapPage,
     PopoverPage,
     SchedulePage,
     ScheduleFilterPage,
