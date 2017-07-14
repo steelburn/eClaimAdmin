@@ -59,7 +59,8 @@ export class ConferenceApp {
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
     { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
   ];
-  rootPage: any;
+  rootPage: any = SignupPage;
+  
 
   constructor(
 
@@ -72,7 +73,6 @@ export class ConferenceApp {
      statusbar:StatusBar,
      splashScreen: SplashScreen,translate: TranslateService
   ) { 
-
 
 
 
@@ -148,7 +148,6 @@ export class ConferenceApp {
   //   // Call any initial plugins when ready
   //   this.platform.ready().then(() => {
   //     this.splashScreen.hide();
-      
   //   });
 //}
 
