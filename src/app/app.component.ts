@@ -10,7 +10,6 @@ import{ TranslateService } from '@ngx-translate/core';
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
  import { LoginPage } from '../pages/login/login';
- import { MapPage } from '../pages/map/map';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
  import { SchedulePage } from '../pages/schedule/schedule';
@@ -20,6 +19,7 @@ import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
 export interface PageInterface {
+
   title: string;
   name: string;
   component: any;
@@ -34,6 +34,9 @@ export interface PageInterface {
   templateUrl: 'app.template.html'
 })
 export class ConferenceApp {
+
+ 
+
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
@@ -43,10 +46,10 @@ export class ConferenceApp {
   // the login page disables the left menu
   appPages: PageInterface[] = [
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
+    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},
     { title: 'SCHEDULE', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 2, icon: 'calendar' },
-    { title: 'MAP', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 3, icon: 'map' },
-    { title: 'ABOUT', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 4, icon: 'information-circle' }
+  
+    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'checkbox-outline' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -56,9 +59,11 @@ export class ConferenceApp {
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
     { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
   ];
-  rootPage: any;
+  rootPage: any = SignupPage;
+  
 
   constructor(
+
     public events: Events,
     public userData: UserData,
     public menu: MenuController,
@@ -67,7 +72,11 @@ export class ConferenceApp {
      storage: Storage,
      statusbar:StatusBar,
      splashScreen: SplashScreen,translate: TranslateService
-  ) {
+  ) { 
+
+
+
+
     translate.setDefaultLang('en');
     platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
     // Check if the user has already seen the tutorial
@@ -139,7 +148,6 @@ export class ConferenceApp {
   //   // Call any initial plugins when ready
   //   this.platform.ready().then(() => {
   //     this.splashScreen.hide();
-      
   //   });
 //}
 

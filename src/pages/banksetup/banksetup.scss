@@ -16,6 +16,7 @@ page-banksetup {
     width: 96%;
     top: 60px;
     position: fixed;
+        height: 500px;
 }
 .btn{
 
@@ -53,3 +54,44 @@ page-banksetup {
     border-color: #e8e8e8 !important;
     color: #a5a3a3 !important;
 }
+
+
+.eClaimSubTitle {
+	color: black;
+	font-size: 20px;
+	padding: 10px 0px;
+} 
+
+.eClaimSubTitle1 {
+	color: black;
+	font-size: 16px;
+	margin-left: 20px;
+} 
+
+.eClaimSubTitle2 {
+	color: black;
+	font-size: 16px;
+    margin-left: 20px;
+    margin-top: 10px;
+} 
+
+.scroll{
+    height: calc(100% - 48px);
+    overflow: scroll;
+}
+
+.cm{
+    height: 100%;
+}
+
+
+.col1 {float: left;width: 10%;}
+.col2 {float: left;width: 20%;}
+.col3 {float: left;width: 30%;}
+.col4 {float: left;width: 40%;}
+.col5 {float: left;width: 50%;}
+.col6 {float: left;width: 60%;}
+.col7 {float: left;width: 70%;}
+.col8 {float: left;width: 80%;}
+.col9 {float: left;width: 90%;}
+.col100 {float: left;width: 100%;}

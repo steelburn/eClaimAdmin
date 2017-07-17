@@ -22,50 +22,55 @@
       <ion-list-header>
           NAME
       </ion-list-header>
-      <ion-item>ZEON</ion-item>
-      <ion-item>ZEON</ion-item>
-      <ion-item>ZEON</ion-item>
-      <ion-item>ZEON</ion-item>
+      <ion-item>ZEON<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>ZEON<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+   
     </ion-list>
 
     <ion-list>
       <ion-list-header>
           REG NO.
       </ion-list-header>
-      <ion-item>ZEN12345</ion-item>
-      <ion-item>ZEON2222</ion-item>
-      <ion-item>ZEON45677</ion-item>
-      <ion-item>ZEON66767</ion-item>
+      <ion-item>ZEN12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>ZEON2222<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+
     </ion-list>
 
     <ion-list>
       <ion-list-header>
           ADDRESS
       </ion-list-header>
-      <ion-item>4808-1-28, CBD Perdana 2 Persiaran Flora, Cyber 12 63000 Cyberjaya, Selangor, MALAYSIA	</ion-item>
-      <ion-item>4808-1-28, CBD Perdana 2 Persiaran Flora, Cyber 12 63000 Cyberjaya, Selangor, MALAYSIA	</ion-item>
-      <ion-item>4808-1-28, CBD Perdana 2 Persiaran Flora, Cyber 12 63000 Cyberjaya, Selangor, MALAYSIA	</ion-item>
-      <ion-item>4808-1-28, CBD Perdana 2 Persiaran Flora, Cyber 12 63000 Cyberjaya, Selangor, MALAYSIA	</ion-item>
+      <ion-item>4808-1-28, CBD Perdana 2 Persiaran Flora, Cyber 12 63000 Cyberjaya, Selangor, MALAYSIA	<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>4808-1-28, CBD Perdana 2 Persiaran Flora, Cyber 12 63000 Cyberjaya, Selangor, MALAYSIA<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>	</ion-item>
+   
     </ion-list>
 
     <ion-list>
       <ion-list-header>
        FAX
       </ion-list-header>
-      <ion-item>+603-8686 2298</ion-item>
-      <ion-item>+603-8686 2222</ion-item>
-      <ion-item>+603-8686 2298</ion-item>
-      <ion-item>+603-8686 2298</ion-item>
+      <ion-item>+603-8686 2298<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>+603-8686 2222<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+  
     </ion-list>
 
     <ion-list>
       <ion-list-header>
        PHONE
       </ion-list-header>
-      <ion-item>+603-8686 2268</ion-item>
-      <ion-item>+603-8686 2268</ion-item>
-      <ion-item>+603-8686 2268</ion-item>
-      <ion-item>+603-8686 2268</ion-item>
+      <ion-item>+603-8686 2268<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>+603-8686 2268<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+
     </ion-list>
 
 
@@ -73,10 +78,11 @@
       <ion-list-header>
        EMAIL
       </ion-list-header>
-      <ion-item>eyf@zen.com.my	</ion-item>
-      <ion-item>e0yf@zen.com.my	</ion-item>
-      <ion-item>e8eyf@zen.com.my	</ion-item>
-      <ion-item>0eeyf@zen.com.my	</ion-item>
+      <ion-item>eyf@zen.com.my<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>	</ion-item>
+      <ion-item>e0yf@zen.com.my<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>	</ion-item>
+
     </ion-list>
 
 
@@ -85,7 +91,7 @@
 </div>
   <div class="popup" padding *ngIf="AddCompanyClicked">
 
-      <ion-card>
+      <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">
 
         <div class="icHeaderText">REGISTER NEW COMPANY</div>
@@ -93,7 +99,7 @@
           <ion-icon name="md-close"></ion-icon> 
         </button>
       </ion-card-header>
-     <ion-list>
+     <ion-list class="scroll">
         <form [formGroup]="Companyform">
           <ion-item>            
             <ion-label stacked>{{"NAME"}}</ion-label>
