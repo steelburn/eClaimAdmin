@@ -35,7 +35,6 @@ export interface PageInterface {
 })
 export class ConferenceApp {
 
- 
 
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
@@ -144,12 +143,6 @@ export class ConferenceApp {
     this.menu.enable(!loggedIn, 'loggedOutMenu');
   }
 
-  // platformReady() {
-  //   // Call any initial plugins when ready
-  //   this.platform.ready().then(() => {
-  //     this.splashScreen.hide();
-  //   });
-//}
 
   isActive(page: PageInterface) {
     let childNav = this.nav.getActiveChildNav();
