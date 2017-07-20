@@ -1,6 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+import * as constants from '../../app/config/constants';
+import { BankSetup_Model } from '../../models/banksetup_model';
+import { BankSetup_Service } from '../../services/banksetup_service';
+import { BaseHttpService } from '../../services/base-http';
+
 /**
  * Generated class for the BanksetupPage page.
  *
@@ -10,34 +20,90 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @IonicPage()
 @Component({
   selector: 'page-banksetup',
-  templateUrl: 'banksetup.html',
+  templateUrl: 'banksetup.html', providers: [BankSetup_Service, BaseHttpService]
 })
 export class BanksetupPage {
-Bankform: FormGroup;
-   public AddBanksClicked: boolean = false; 
+  bank_entry: BankSetup_Model = new BankSetup_Model();
+  Bankform: FormGroup;
+  //banks:any;
+  
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/bank_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+	baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+  
+  public banks: BankSetup_Model[] = [];
+
+  public AddBanksClicked: boolean = false; public EditBanksClicked: boolean = false; 
    
     public AddBanksClick() {
 
-        this.AddBanksClicked = true; 
+        this.AddBanksClicked = true;
     }
 
-      public CloseBanksClick() {
-
-        this.AddBanksClicked = false; 
+    public CloseBanksClick() {
+      if (this.AddBanksClicked == true) {
+        this.AddBanksClicked = false;
+      }
+      if (this.EditBanksClicked == true) {
+        this.EditBanksClicked = false;
+      } 
+  }
+    public EditClick(BANK_GUID:any){      
+      alert(BANK_GUID);
+      this.EditBanksClicked = true;
     }
 
-  constructor(private fb: FormBuilder,public navCtrl: NavController, public navParams: NavParams) 
+    public DeleteClick(BANK_GUID:any){
+      alert(BANK_GUID);
+    }
+  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service) 
   {
-   this.Bankform = fb.group({
-      
-      bankname:'',
-     
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.banks = data.resource;
+      });
+    // this.getBankList();
+
+    this.bank_entry.BANK_GUID = '6';
+    this.Bankform = fb.group({      
+      NAME: ["", Validators.required]
     });
   }
 
-      
   ionViewDidLoad() {
     console.log('ionViewDidLoad BanksetupPage');
+  }  
+    
+  Save_Bank() {
+    if (this.Bankform.valid) 
+    {
+      this.bank_entry.DESCRIPTION = 'Savings';
+      this.bank_entry.TENANT_GUID = '1';
+      this.bank_entry.CREATION_TS = new Date().toISOString();
+      this.bank_entry.CREATION_USER_GUID ='1';
+      this.bank_entry.UPDATE_TS = new Date().toISOString();
+      this.bank_entry.UPDATE_USER_GUID = '1';      
+            
+      //alert(JSON.stringify(this.bank_entry));     
+
+      this.banksetupservice.save_bank(this.bank_entry)
+        .subscribe((response) => {
+          if (response.status == 200) 
+          {
+            alert('Bank Registered successfully');
+            location.reload();
+          }
+        })
+    }
   }
 
+  getBankList() {
+    let self = this;
+    let params: URLSearchParams = new URLSearchParams();    
+    self.banksetupservice.get_bank(params)
+      .subscribe((banks: BankSetup_Model[]) => {
+        self.banks = banks;
+      });
+  }
 }
