@@ -127,10 +127,10 @@
         <form [formGroup]="Bankform">
           <ion-item>            
             <ion-label stacked>{{"BANKNAME"}}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="bank_entry.NAME" placeholder="{{'Please fill in the bank name'}}"></ion-input>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="bank_entry.NAME" value="{{bank.NAME}}" placeholder="{{'Please fill in the bank name'}}"></ion-input>
           </ion-item>
           <div class="btn">
-           <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Bankform.valid" (click)="Update_Bank()">{{"SUBMIT" | translate}}</button></div> 
+           <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update_Bank()">{{"SUBMIT" | translate}}</button></div> 
         </form>
      </ion-list>
       </ion-card>

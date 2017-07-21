@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -25,8 +25,9 @@ import { BaseHttpService } from '../../services/base-http';
 export class BanksetupPage {
   bank_entry: BankSetup_Model = new BankSetup_Model();
   Bankform: FormGroup;
-  //banks:any;
-  
+  bank: BankSetup_Model = new BankSetup_Model();
+  current_bankGUID: string = '';
+
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/bank_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 	baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   
@@ -48,14 +49,44 @@ export class BanksetupPage {
       } 
   }
     public EditClick(BANK_GUID:any){      
-      alert(BANK_GUID);
+      this.current_bankGUID = BANK_GUID;        
+        var self = this;
+        this.banksetupservice.get(BANK_GUID).subscribe((bank) => self.bank = bank);
+      
       this.EditBanksClicked = true;
     }
 
     public DeleteClick(BANK_GUID:any){
-      alert(BANK_GUID);
+        let alert = this.alertCtrl.create({
+        title: 'Remove Confirmation',
+        message: 'Do you want to remove ?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'OK',
+            handler: () => {
+              console.log('OK clicked');
+              var self = this;
+              this.banksetupservice.remove(BANK_GUID)
+                  .subscribe(() => {
+                      self.banks = self.banks.filter((item) => {
+                          return item.BANK_GUID != BANK_GUID
+                      });
+                  });        
+              //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            }
+          }
+        ]
+      });alert.present();
     }
-  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service) 
+
+  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController) 
   {
     this.http
       .get(this.baseResourceUrl)
@@ -106,4 +137,6 @@ export class BanksetupPage {
         self.banks = banks;
       });
   }
+
+  
 }

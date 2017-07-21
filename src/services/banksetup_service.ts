@@ -87,4 +87,33 @@ export class BankSetup_Service
 				return banks;
 			}).catch(this.handleError);
 	};
+	
+	remove (id: string) {
+		var queryHeaders = new Headers();
+    	queryHeaders.append('Content-Type', 'application/json');
+    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		return this.httpService.http
+			.delete(this.baseResourceUrl + '/' + id,{ headers: queryHeaders})
+			.map((response) => {
+				var result: any = response.json();
+				//console.log(result.bank_GUID);
+				return result.bank_GUID;
+			});
+	}
+
+	get (id: string, params?: URLSearchParams): Observable<BankSetup_Model> {
+		var queryHeaders = new Headers();
+    	queryHeaders.append('Content-Type', 'application/json');
+    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		
+		return this.httpService.http
+			.get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders})
+			.map((response) => {
+				var result: any = response.json();
+				let bank: BankSetup_Model = BankSetup_Model.fromJson(result);
+				return bank;
+			}).catch(this.handleError);	
+	};
 }
