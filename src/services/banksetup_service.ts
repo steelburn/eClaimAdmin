@@ -61,17 +61,30 @@ export class BankSetup_Service
     	queryHeaders.append('Content-Type', 'application/json');
     	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
     	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-		let options = new RequestOptions({ headers: queryHeaders });		
+		let options = new RequestOptions({ headers: queryHeaders });
 		return this.httpService.http.post(this.baseResourceUrl, bank_main.toJson(true),options)
 			.map((response) => {
 				return response;
 			});
 	}
-	get_bank (params?: URLSearchParams): Observable<BankSetup_Model[]> 
+
+	update_bank (bank_main: BankSetup_Model): Observable<any> 
 	{
 		var queryHeaders = new Headers();
     	queryHeaders.append('Content-Type', 'application/json');
-		
+    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		let options = new RequestOptions({ headers: queryHeaders });
+		return this.httpService.http.patch(this.baseResourceUrl, bank_main.toJson(true),options)
+			.map((response) => {
+				return response;
+			});
+	}
+
+	get_bank (params?: URLSearchParams): Observable<BankSetup_Model[]> 
+	{
+		var queryHeaders = new Headers();
+    	queryHeaders.append('Content-Type', 'application/json');		
     	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
     	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
@@ -82,11 +95,11 @@ export class BankSetup_Service
 				let banks: Array<BankSetup_Model> = [];
 				// result.resource.forEach((bank) => {
 				// 	banks.push(BankSetup_Model.fromJson(bank));
-				// });
+				// });				
 				console.log(banks);
 				return banks;
 			}).catch(this.handleError);
-	};
+	}
 	
 	remove (id: string) {
 		var queryHeaders = new Headers();
@@ -112,7 +125,7 @@ export class BankSetup_Service
 			.get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders})
 			.map((response) => {
 				var result: any = response.json();
-				let bank: BankSetup_Model = BankSetup_Model.fromJson(result);
+				let bank: BankSetup_Model = BankSetup_Model.fromJson(result);// alert(JSON.stringify(bank));
 				return bank;
 			}).catch(this.handleError);	
 	};

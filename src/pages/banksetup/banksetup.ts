@@ -47,12 +47,13 @@ export class BanksetupPage {
       if (this.EditBanksClicked == true) {
         this.EditBanksClicked = false;
       } 
-  }
+    }
+
     public EditClick(BANK_GUID:any){      
       this.current_bankGUID = BANK_GUID;        
         var self = this;
         this.banksetupservice.get(BANK_GUID).subscribe((bank) => self.bank = bank);
-      
+        //alert(this.bank);
       this.EditBanksClicked = true;
     }
 
@@ -94,9 +95,8 @@ export class BanksetupPage {
       .subscribe(data => {
         this.banks = data.resource;
       });
-    // this.getBankList();
+     //this.getBankList();
 
-    this.bank_entry.BANK_GUID = '6';
     this.Bankform = fb.group({      
       NAME: ["", Validators.required]
     });
@@ -109,6 +109,7 @@ export class BanksetupPage {
   Save_Bank() {
     if (this.Bankform.valid) 
     {
+      this.bank_entry.BANK_GUID = '6';
       this.bank_entry.DESCRIPTION = 'Savings';
       this.bank_entry.TENANT_GUID = '1';
       this.bank_entry.CREATION_TS = new Date().toISOString();
@@ -123,7 +124,8 @@ export class BanksetupPage {
           if (response.status == 200) 
           {
             alert('Bank Registered successfully');
-            location.reload();
+            //location.reload();
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         })
     }
@@ -136,7 +138,30 @@ export class BanksetupPage {
       .subscribe((banks: BankSetup_Model[]) => {
         self.banks = banks;
       });
-  }
-
+  } 
   
+  Update_Bank(BANK_GUID:any){      
+    if (this.Bankform.valid) 
+    {      
+      this.bank_entry.BANK_GUID = BANK_GUID;
+      this.bank_entry.DESCRIPTION = 'Savings';
+      this.bank_entry.TENANT_GUID = '1';
+      this.bank_entry.CREATION_TS = new Date().toISOString();
+      this.bank_entry.CREATION_USER_GUID ='1';
+      this.bank_entry.UPDATE_TS = new Date().toISOString();
+      this.bank_entry.UPDATE_USER_GUID = '1';      
+            
+      // alert(JSON.stringify(this.bank_entry));     
+
+      this.banksetupservice.update_bank(this.bank_entry)
+        .subscribe((response) => {
+          if (response.status == 200) 
+          {
+            alert('Bank updated successfully');
+            //location.reload();
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        })
+    }
+  }
 }
