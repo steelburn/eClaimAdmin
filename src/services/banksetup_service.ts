@@ -44,13 +44,13 @@ export class BankSetup_Service
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders})
 			.map((response) => {
-				// var result: any = response.json();
-				// let banks: Array<BankSetup_Model> = [];
+				var result: any = response.json();
+				let banks: Array<BankSetup_Model> = [];
 				
 				// result.resource.forEach((bank) => {
 				// 	banks.push(BankSetup_Model.fromJson(bank));
 				// });  
-				// return banks;
+				return banks;
 				
 			}).catch(this.handleError);
 	};
@@ -85,7 +85,7 @@ export class BankSetup_Service
 	{
 		var queryHeaders = new Headers();
     	queryHeaders.append('Content-Type', 'application/json');		
-    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    	queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
     	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params ,headers: queryHeaders})
@@ -93,13 +93,13 @@ export class BankSetup_Service
 			{
 				var result: any = response.json();
 				let banks: Array<BankSetup_Model> = [];
+				
 				// result.resource.forEach((bank) => {
-				// 	banks.push(BankSetup_Model.fromJson(bank));
-				// });				
-				console.log(banks);
+				//  	banks.push(BankSetup_Model.fromJson(bank));
+				//  });
 				return banks;
 			}).catch(this.handleError);
-	}
+	};
 	
 	remove (id: string) {
 		var queryHeaders = new Headers();
@@ -125,8 +125,8 @@ export class BankSetup_Service
 			.get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders})
 			.map((response) => {
 				var result: any = response.json();
-				let bank: BankSetup_Model = BankSetup_Model.fromJson(result);// alert(JSON.stringify(bank));
-				return bank;
+				let bank: BankSetup_Model = BankSetup_Model.fromJson(result); //alert(JSON.stringify(bank));
+				return bank; 
 			}).catch(this.handleError);	
 	};
 }

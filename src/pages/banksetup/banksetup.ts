@@ -11,6 +11,8 @@ import { BankSetup_Model } from '../../models/banksetup_model';
 import { BankSetup_Service } from '../../services/banksetup_service';
 import { BaseHttpService } from '../../services/base-http';
 
+import { UUID } from 'angular2-uuid';
+
 /**
  * Generated class for the BanksetupPage page.
  *
@@ -50,11 +52,15 @@ export class BanksetupPage {
     }
 
     public EditClick(BANK_GUID:any){      
-      this.current_bankGUID = BANK_GUID;        
-        var self = this;
-        this.banksetupservice.get(BANK_GUID).subscribe((bank) => self.bank = bank);
-        //alert(this.bank);
       this.EditBanksClicked = true;
+
+      this.current_bankGUID = BANK_GUID;        
+      var self = this;
+
+      this.banksetupservice
+        .get(BANK_GUID)
+        .subscribe((bank) => self.bank = bank);
+        return self.bank;
     }
 
     public DeleteClick(BANK_GUID:any){
@@ -109,13 +115,14 @@ export class BanksetupPage {
   Save_Bank() {
     if (this.Bankform.valid) 
     {
-      this.bank_entry.BANK_GUID = '6';
-      this.bank_entry.DESCRIPTION = 'Savings';
-      this.bank_entry.TENANT_GUID = '1';
+      this.bank_entry.BANK_GUID = UUID.UUID(); 
+      this.bank_entry.TENANT_GUID = UUID.UUID();      
+      this.bank_entry.DESCRIPTION = 'Savings';      
       this.bank_entry.CREATION_TS = new Date().toISOString();
       this.bank_entry.CREATION_USER_GUID ='1';
+      
       this.bank_entry.UPDATE_TS = new Date().toISOString();
-      this.bank_entry.UPDATE_USER_GUID = '1';      
+      this.bank_entry.UPDATE_USER_GUID = "";
             
       //alert(JSON.stringify(this.bank_entry));     
 
@@ -140,14 +147,19 @@ export class BanksetupPage {
       });
   } 
   
-  Update_Bank(BANK_GUID:any){      
+  Update_Bank(BANK_GUID:any){
     if (this.Bankform.valid) 
-    {      
+    { 
+      this.bank_entry.DESCRIPTION = this.bank.DESCRIPTION;
+      this.bank_entry.TENANT_GUID = this.bank.TENANT_GUID;
+      this.bank_entry.CREATION_TS = this.bank.CREATION_TS;
+      this.bank_entry.CREATION_USER_GUID = this.bank.CREATION_USER_GUID;      
+      
       this.bank_entry.BANK_GUID = BANK_GUID;
-      this.bank_entry.DESCRIPTION = 'Savings';
-      this.bank_entry.TENANT_GUID = '1';
-      this.bank_entry.CREATION_TS = new Date().toISOString();
-      this.bank_entry.CREATION_USER_GUID ='1';
+      // this.bank_entry.DESCRIPTION = 'Savings';
+      // this.bank_entry.TENANT_GUID = '1';
+      // this.bank_entry.CREATION_TS = new Date().toISOString();
+      // this.bank_entry.CREATION_USER_GUID ='1';
       this.bank_entry.UPDATE_TS = new Date().toISOString();
       this.bank_entry.UPDATE_USER_GUID = '1';      
             
