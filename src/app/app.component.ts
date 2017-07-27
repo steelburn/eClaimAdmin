@@ -12,6 +12,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
 import { SpeakerListPage } from '../pages/home/home';
+import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
