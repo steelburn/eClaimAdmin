@@ -1,20 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
 import { Storage } from '@ionic/storage';
 import{ TranslateService } from '@ngx-translate/core';
-
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
- import { LoginPage } from '../pages/login/login';
+import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
- import { SchedulePage } from '../pages/schedule/schedule';
+import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
 import { SpeakerListPage } from '../pages/home/home';
+import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
@@ -35,7 +33,6 @@ export interface PageInterface {
 })
 export class ConferenceApp {
 
- 
 
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
@@ -47,8 +44,7 @@ export class ConferenceApp {
   appPages: PageInterface[] = [
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},
-    { title: 'SCHEDULE', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 2, icon: 'calendar' },
-  
+    { title: 'SCHEDULE', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 2, icon: 'calendar' },  
     { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'checkbox-outline' }
   ];
   loggedInPages: PageInterface[] = [
@@ -68,19 +64,15 @@ export class ConferenceApp {
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
-     public confData: ConferenceData,
+    public confData: ConferenceData,
      storage: Storage,
      statusbar:StatusBar,
      splashScreen: SplashScreen,translate: TranslateService
   ) { 
 
-
-
-
     translate.setDefaultLang('en');
     platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
     // Check if the user has already seen the tutorial
-
 
     // load the conference data
     confData.load();
@@ -123,8 +115,6 @@ export class ConferenceApp {
     }
   }
 
-
-
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
@@ -143,13 +133,6 @@ export class ConferenceApp {
     this.menu.enable(loggedIn, 'loggedInMenu');
     this.menu.enable(!loggedIn, 'loggedOutMenu');
   }
-
-  // platformReady() {
-  //   // Call any initial plugins when ready
-  //   this.platform.ready().then(() => {
-  //     this.splashScreen.hide();
-  //   });
-//}
 
   isActive(page: PageInterface) {
     let childNav = this.nav.getActiveChildNav();

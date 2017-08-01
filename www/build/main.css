@@ -41785,92 +41785,31 @@ page-account img {
   height: 100%;
 }
 
-.col1 {
-  float: left;
-  width: 10%;
-}
-
-.col2 {
-  float: left;
-  width: 20%;
-}
-
-.col3 {
-  float: left;
-  width: 30%;
-}
-
-.col4 {
-  float: left;
-  width: 40%;
-}
-
-.col5 {
-  float: left;
-  width: 50%;
-}
-
-.col6 {
-  float: left;
-  width: 60%;
-}
-
-.col7 {
-  float: left;
-  width: 70%;
-}
-
-.col8 {
-  float: left;
-  width: 80%;
-}
-
-.col9 {
-  float: left;
-  width: 90%;
-}
-
-.col100 {
-  float: left;
-  width: 100%;
-}
-
-page-speaker-list .card {
-  box-shadow: none !important;
-  cursor: pointer;
-  min-height: 80px;
-  width: calc(20% - 0px);
-  display: inline-block !important;
-}
-
-page-speaker-list .Subtitle {
+.Subtitle {
   text-align: center;
   font-size: 1.12vw;
 }
 
-page-speaker-list .iconf {
+.iconf {
   font-size: 7vw;
   color: #ca9b24;
+  transition: width 2s;
 }
 
-page-speaker-list .iconf:hover {
-  color: #ca7724;
-}
-
-page-speaker-list .icon {
+.icon {
   text-align: center;
 }
 
 @media (max-width: 700px) {
-  page-speaker-list .round {
+  .round {
     width: calc(100% - 20px);
     min-height: 100px;
   }
-  page-speaker-list .Subtitle {
+  .Subtitle {
     text-align: center;
     font-size: 3.5vw;
   }
-  page-speaker-list .iconf {
+  .iconf {
     font-size: 22vw;
     color: #ca9b24;
   }
@@ -41888,6 +41827,10 @@ page-user .logo img {
 
 page-user .list {
   margin-bottom: 0;
+}
+
+page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched {
+  color: white !important;
 }
 
 page-schedule ion-item-sliding[track=ionic] ion-label {
@@ -42034,7 +41977,7 @@ ion-item[track=navigation] .dot {
   margin-right: 10px;
 }
 
-page-setup .round {
+.round {
   float: left;
   box-shadow: none !important;
   width: calc(20% - 20px);
@@ -42044,35 +41987,35 @@ page-setup .round {
   min-height: 80px;
 }
 
-page-setup .Subtitle {
+.Subtitle {
   text-align: center;
   font-size: 1.12vw;
 }
 
-page-setup .iconf {
+.iconf {
   font-size: 7vw;
   color: #ca9b24;
   transition: all 0.3s ease;
 }
 
-page-setup .icon {
+.icon {
   text-align: center;
 }
 
-page-setup .round:hover {
+.round:hover {
   font-weight: bold;
 }
 
 @media (max-width: 700px) {
-  page-setup .round {
+  .round {
     width: calc(100% - 20px);
     min-height: 100px;
   }
-  page-setup .Subtitle {
+  .Subtitle {
     text-align: center;
     font-size: 3.5vw;
   }
-  page-setup .iconf {
+  .iconf {
     font-size: 22vw;
     color: #ca9b24;
   }
