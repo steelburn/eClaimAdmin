@@ -1,12 +1,8 @@
 ﻿page-speaker-list {
 
-    .card {
-      box-shadow: none !important;
-      cursor: pointer;
-      min-height: 80px;
-        width: calc(20% - 0px);
-      display: inline-block !important;
-      }
+   
+
+}
     
 
      
@@ -19,11 +15,10 @@
     .iconf {
       font-size: 7vw;
       color: #ca9b24;
+         transition: width 2s;
     }
 
-    .iconf:hover {
-      color: #ca7724;
-    }
+ 
 
     .icon {
       text-align: center;
@@ -48,5 +43,3 @@
       color: #ca9b24;
     }
   }
-
-}
