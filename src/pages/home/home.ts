@@ -4,7 +4,7 @@ import { ActionSheet, ActionSheetController, Config, NavController } from 'ionic
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { ConferenceData } from '../../providers/conference-data';
-
+import { MedicalclaimPage } from '../medicalclaim/medicalclaim';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { AboutPage } from '../about/about';
 
@@ -29,7 +29,9 @@ export class SpeakerListPage {
       this.speakers = speakers;
     });
   }
-
+  goToMedicalClaim(){
+    this.navCtrl.push(MedicalclaimPage)
+  }
   goToSessionDetail(session: any) {
     this.navCtrl.push(SessionDetailPage, {
       name: session.name,
