@@ -7,7 +7,10 @@ import { ConferenceData } from '../../providers/conference-data';
 import { MedicalclaimPage } from '../medicalclaim/medicalclaim';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { AboutPage } from '../about/about';
-
+import { PrintclaimPage } from '../printclaim/printclaim';
+import { GiftclaimPage } from '../giftclaim/giftclaim';
+import { OvertimeclaimPage } from '../overtimeclaim/overtimeclaim';
+import { EntertainmentclaimPage } from '../entertainmentclaim/entertainmentclaim';
 @Component({
   selector: 'page-speaker-list',
   templateUrl: 'home.html'
@@ -29,9 +32,24 @@ export class SpeakerListPage {
       this.speakers = speakers;
     });
   }
-  
+
   goToMedicalClaim(){
     this.navCtrl.push(MedicalclaimPage)
+  }
+
+    goToPrintingClaim(){
+    this.navCtrl.push(PrintclaimPage)
+  }
+    goToGiftClaim(){
+    this.navCtrl.push(GiftclaimPage)
+  }
+
+     goToOTClaim(){
+    this.navCtrl.push(OvertimeclaimPage)
+  }
+
+     goToEntertainmentClaim(){
+    this.navCtrl.push(EntertainmentclaimPage)
   }
 
   goToSessionDetail(session: any) {

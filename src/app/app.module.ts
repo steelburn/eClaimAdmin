@@ -40,6 +40,10 @@ import { SetupPage } from '../pages/setup/setup';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
+import { PrintclaimPage } from '../pages/printclaim/printclaim';
+import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
+import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
+import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
@@ -54,6 +58,10 @@ import { Camera } from '@ionic-native/camera';
     PopoverPage,
     SchedulePage,
     MedicalclaimPage,
+    PrintclaimPage,
+    GiftclaimPage,
+    EntertainmentclaimPage,
+    OvertimeclaimPage,
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
@@ -114,6 +122,10 @@ import { Camera } from '@ionic-native/camera';
     SignupPage,
     SetupPage,
     MedicalclaimPage,
+    PrintclaimPage,
+    OvertimeclaimPage,
+    EntertainmentclaimPage,
+    GiftclaimPage,
     BanksetupPage,
     BranchsetupPage,
     CompanysetupPage,

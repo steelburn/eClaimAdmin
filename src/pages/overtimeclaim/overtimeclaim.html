@@ -14,5 +14,28 @@
 
 
 <ion-content padding>
+  <ion-list>
+    <form [formGroup]="OTform">
+      <ion-item>
+        <ion-label stacked>{{"DATE"}}</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours date while you OT'}}"></ion-datetime>
+      </ion-item>
 
+      <ion-item>
+        <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>
+        <ion-input type="number" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the amount of yours Overtime Claim'}}"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
+
+      </ion-item>
+
+      <div class="btn">
+        <button ion-button>SUBMIT</button>
+      </div>
+
+    </form>
+  </ion-list>
 </ion-content>
