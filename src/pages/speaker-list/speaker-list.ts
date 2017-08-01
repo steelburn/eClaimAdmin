@@ -12,7 +12,7 @@ import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
   selector: 'page-speaker-list',
   templateUrl: 'speaker-list.html'
 })
-export class SpeakerListPage {
+export class SpeakerListPage { 
   actionSheet: ActionSheet;
   speakers: any[] = [];
 
