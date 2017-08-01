@@ -29,9 +29,11 @@ export class SpeakerListPage {
       this.speakers = speakers;
     });
   }
+  
   goToMedicalClaim(){
     this.navCtrl.push(MedicalclaimPage)
   }
+
   goToSessionDetail(session: any) {
     this.navCtrl.push(SessionDetailPage, {
       name: session.name,

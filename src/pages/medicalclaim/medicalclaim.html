@@ -31,29 +31,23 @@
       <ion-item>
         <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
         <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
-  <h3 [hidden]="lastImage !== null">Please Select Image!</h3>
+        <h3 [hidden]="lastImage !== null">Please Select Image!</h3>
 
- 
-
-
-    <ion-buttons>
-      <button ion-button icon-left (click)="presentActionSheet()">
+        <ion-buttons>
+          <button ion-button icon-left (click)="presentActionSheet()">
         <ion-icon name="camera"></ion-icon>Select Image
       </button>
-      <button ion-button icon-left (click)="uploadImage()" [disabled]="lastImage === null">
+          <button ion-button icon-left (click)="uploadImage()" [disabled]="lastImage === null">
         <ion-icon name="cloud-upload"></ion-icon>Upload
       </button>
-    </ion-buttons>
+        </ion-buttons>
 
       </ion-item>
 
-
-
-
       <div class="btn">
-        <button ion-button>SUBMIT</button></div>
+        <button ion-button>SUBMIT</button>
+      </div>
+
     </form>
   </ion-list>
-
-
 </ion-content>
