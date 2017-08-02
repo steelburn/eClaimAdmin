@@ -15,24 +15,8 @@
 
 <ion-content padding>
 
+    <button ion-button (click)="AddTravelClick()">SUMMARY</button>
 
-  <ion-fab top right edge>
-    <button ion-fab mini (click)="AddTravelClick()"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
-
-  <ion-card>
-
-    <ion-row>
-      <ion-card-header class="graphHeaderStyle fullWidth">
-        TRAVEL CLAIM HISTORY
-
-
-
-      </ion-card-header>
-      <!-- <ion-item>
-        <ion-searchbar type="text" placeholder="{{'SEARCH HERE'}}"></ion-searchbar>
-      </ion-item> -->
-    </ion-row>
       <form [formGroup]="Travelform">
           <ion-item>
             <ion-label stacked>{{"SOC NUMBER"}}</ion-label>
@@ -66,7 +50,7 @@
 
 
           <ion-item>
-            <ion-label stacked>{{"DISTANCE"}}</ion-label>
+            <ion-label stacked>{{"DISTANCE(KM)"}}</ion-label>
             <ion-input type="number" formControlName="travelname" [(ngModel)]="Travelform.fullname" placeholder="{{'Please choose the distance between the trip'}}"></ion-input>
           </ion-item>
 
@@ -94,7 +78,7 @@
         </form>
   
 
-  </ion-card>
+ 
 
   <!-- add Travel form start-->
   <div class="blackcontainer" *ngIf="AddTravelClicked">
@@ -104,7 +88,7 @@
     <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">APPLY NEW TRAVEL CLAIM</div>
+        <div class="icHeaderText">    TRAVEL CLAIM HISTORY</div>
         <button class="btnR" (click)="CloseTravelClick()">
           <ion-icon name="md-close"></ion-icon> 
         </button>
