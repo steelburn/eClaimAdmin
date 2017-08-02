@@ -46,10 +46,7 @@
         "cordova-plugin-wkwebview-engine": "https://github.com/ionic-team/cordova-plugin-wkwebview-engine.git",
         "ionic-angular": "3.3.0",
         "ionic-plugin-keyboard": "^2.2.1",
-        "cordova-plugin-camera": "^2.4.1",
-        "cordova-plugin-file": "^4.3.3",
-        "cordova-plugin-file-transfer": "^1.6.3",
-        "cordova-plugin-filepath": "^1.0.2",
+        "ionic-angular": "3.3.0",
         "ionicons": "3.0.0",
         "ng2-translate": "^5.0.0",
         "rxjs": "5.1.1",
@@ -86,10 +83,5 @@
             "cordova-plugin-whitelist": {},
             "cordova-plugin-wkwebview-engine": {},
             "ionic-plugin-keyboard": {},
-            "cordova-plugin-file-transfer": {},
-            "cordova-plugin-camera": {},
-            "cordova-plugin-file": {},
-            "cordova-plugin-filepath": {}
-        }
     }
 }

@@ -42,7 +42,6 @@ import { UserData } from '../providers/user-data';
 import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 
 
-
 @NgModule({
   declarations: [
     ConferenceApp,
