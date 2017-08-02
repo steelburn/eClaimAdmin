@@ -40,15 +40,13 @@ import { SetupPage } from '../pages/setup/setup';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
+
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
-import { File } from '@ionic-native/file';
-import { Transfer } from '@ionic-native/transfer';
-import { FilePath } from '@ionic-native/file-path';
-import { Camera } from '@ionic-native/camera';
+
 
 @NgModule({
   declarations: [
@@ -149,10 +147,6 @@ import { Camera } from '@ionic-native/camera';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData,
     UserData,
-    File,
-    Transfer,
-    Camera,
-    FilePath,
     InAppBrowser,
     SplashScreen,StatusBar
   ]
