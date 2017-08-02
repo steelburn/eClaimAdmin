@@ -85,3 +85,34 @@ page-banksetup {
 }
 
 
+.Tabler {
+	width: 100%;
+	padding-top: 35px;
+	border-collapse: collapse;
+	 table-layout:fixed; 
+}
+
+	tr.colth {
+		color: white;
+    }
+    
+    th.lgl1 {
+        padding: 13px 5px;
+        border: none;
+	}
+		
+    td.lgl1 {
+        
+        padding: 13px;
+        text-align: center;
+        word-wrap: break-word;
+        border: none;
+        border-bottom: 1px solid gainsboro;
+    }
+
+    .tblBrLeft { border-radius: 5px 0 0 5px;}
+    .tblBrRight { border-radius: 0 5px 5px 0;}
+	
+.tColor {background-color: #ca9b24 !important;}
+.graphHeaderStyle {border-top: 5px solid #ca9b24;border-bottom: 1px solid #d6d6d6;}
+.fullWidth {width: 100% !important;}

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -18,14 +17,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class MedicalclaimPage {
   Mcform: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder) {
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder ) {
     this.Mcform = fb.group({
 
       mcname: '',
 
     });
-
 
   }
 

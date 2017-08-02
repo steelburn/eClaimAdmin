@@ -13,6 +13,11 @@ import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
 import { SpeakerListPage } from '../pages/home/home';
 import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
+import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
+import { PrintclaimPage } from '../pages/printclaim/printclaim';
+import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
+import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
+import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
