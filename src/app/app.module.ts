@@ -44,6 +44,7 @@ import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
+import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
@@ -59,6 +60,7 @@ import { Camera } from '@ionic-native/camera';
     SchedulePage,
     MedicalclaimPage,
     PrintclaimPage,
+    TravelclaimPage,
     GiftclaimPage,
     EntertainmentclaimPage,
     OvertimeclaimPage,
@@ -124,6 +126,7 @@ import { Camera } from '@ionic-native/camera';
     MedicalclaimPage,
     PrintclaimPage,
     OvertimeclaimPage,
+    TravelclaimPage,
     EntertainmentclaimPage,
     GiftclaimPage,
     BanksetupPage,

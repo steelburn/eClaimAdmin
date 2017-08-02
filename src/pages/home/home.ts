@@ -11,6 +11,7 @@ import { PrintclaimPage } from '../printclaim/printclaim';
 import { GiftclaimPage } from '../giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../entertainmentclaim/entertainmentclaim';
+import { TravelclaimPage } from '../travelclaim/travelclaim';
 @Component({
   selector: 'page-speaker-list',
   templateUrl: 'home.html'
@@ -50,6 +51,10 @@ export class SpeakerListPage {
 
      goToEntertainmentClaim(){
     this.navCtrl.push(EntertainmentclaimPage)
+  }
+
+       goToTravelClaim(){
+    this.navCtrl.push(TravelclaimPage)
   }
 
   goToSessionDetail(session: any) {
