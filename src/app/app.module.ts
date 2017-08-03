@@ -40,12 +40,12 @@ import { SetupPage } from '../pages/setup/setup';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
-
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
+
 
 
 @NgModule({
@@ -58,10 +58,10 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     SchedulePage,
     MedicalclaimPage,
     PrintclaimPage,
-    TravelclaimPage,
     GiftclaimPage,
-    EntertainmentclaimPage,
     OvertimeclaimPage,
+    EntertainmentclaimPage,
+    TravelclaimPage,
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
@@ -122,11 +122,11 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     SignupPage,
     SetupPage,
     MedicalclaimPage,
-    PrintclaimPage,
-    OvertimeclaimPage,
     TravelclaimPage,
-    EntertainmentclaimPage,
+     PrintclaimPage,
     GiftclaimPage,
+    OvertimeclaimPage,
+    EntertainmentclaimPage,
     BanksetupPage,
     BranchsetupPage,
     CompanysetupPage,
