@@ -43,6 +43,7 @@ export class MileagesetupPage {
    public AddMileageClicked: boolean = false; 
    public EditMileageClicked: boolean = false; 
    
+   
     public AddMileageClick() {
 
         this.AddMileageClicked = true; 

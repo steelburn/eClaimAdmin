@@ -33,8 +33,7 @@
         <ion-label item-start class="textRight">{{mileage.CATEGORY}}</ion-label>
         <ion-label item-start class="textRight">{{mileage.RATE_PER_UNIT}}</ion-label>
         <ion-label item-start class="textRight">{{mileage.RATE_DATE}}</ion-label>
-       <!-- <ion-label item-start class="textRight">{{mileage.ACTIVATION_FLAG}}</ion-label> -->
-       
+              
          <ion-toggle *ngIf="mileage.ACTIVATION_FLAG==1" checked = true></ion-toggle> 
          <ion-toggle *ngIf="mileage.ACTIVATION_FLAG==0" checked = false></ion-toggle> 
 

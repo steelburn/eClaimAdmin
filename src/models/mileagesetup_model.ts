@@ -1,6 +1,7 @@
 export class MileageSetup_Model {
 	constructor(
 		public MILEAGE_GUID: string = null,
+		
 		public CATEGORY: string = null,
 		public RATE_PER_UNIT: string = null,		
 	 	public RATE_DATE: string = null,
