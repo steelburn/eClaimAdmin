@@ -17,146 +17,63 @@
     <ion-fab top right edge>
         <button ion-fab mini (click)="AddCashClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
-    <!-- <ion-list>
-        <ion-list-header>
-            <div class="row" style="border:2px;">
-                <div class="col">CASHCARD NO</div>
-                <div class="col">ACCOUNT NO</div>
-                <div class="col">PASSWORD</div>
-                <div class="col">MANAGEMENT URL</div>
-                <div class="col">DESCRIPTION</div>
-            </div>
-        </ion-list-header>
-    </ion-list>
 
+    <!-- <ion-list>
+        <ion-item>
+            <table class="Tabler">
+                <tr class=".linedsg">
+                    <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>
+                    <th class="lgl1">CASHCARD NO.</th>
+                    <th class="lgl1">ACCOUNT NO.</th>
+                    <th class="lgl1">PASSWORD</th>
+                    <th class="lgl1">MANAGEMENT URL</th>
+                    <th class="lgl1">DESCRIPTION</th>
+                    <th class="lgl1 tblBrRight" style="width:80px">ACTION</th>
+
+                </tr>
+
+                <tr class="col7">
+                    <ion-item><td class="lgl1">{{i+1}}</td></ion-item>
+                    <td class="lgl1">{{cashcard.CASHCARD_SNO}}</td>
+                    <td class="lgl1">{{cashcard.ACCOUNT_ID}}</td>
+                    <td class="lgl1">{{cashcard.ACCOUNT_PASSWORD}}</td>
+                    <td class="lgl1">{{cashcard.MANAGEMENT_URL}}</td>
+                        <td class="lgl1">{{cashcard.DESCRIPTION}}</td>
+                            <td class="lgl1 fColor">
+                                <button ion-button item-end (click)="EditClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                                <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                            </td>
+                </tr>
+
+
+            </table>
+        </ion-item>
+    </ion-list> -->
+
+    
     <ion-list>
         <ion-item>
-            <div class="row" style="border:2px;">
-                <div class="col">1234</div>
-                <div class="col">1234</div>
-                <div class="col">1234</div>
-                <div class="col">http://www.zen.com.my</div>
-                <div class="col">Test Desc</div>
-                <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-                <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-            </div>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-item>
-            <div class="row" style="border:2px;">
-                <div class="col">1234</div>
-                <div class="col">1234</div>
-                <div class="col">1234</div>
-                <div class="col">http://www.zen.com.my</div>
-                <div class="col">Test Desc</div>
-                <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-                <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-            </div>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-item>
-            <div class="row" style="border:2px;">
-                <div class="col">1234</div>
-                <div class="col">1234</div>
-                <div class="col">1234</div>
-                <div class="col">http://www.zen.com.my</div>
-                <div class="col">Test Desc</div>
-                <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-                <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-            </div>
-        </ion-item>
-    </ion-list>  -->
-    <ion-list>
-        <ion-item class="bgColor-lightGrey">
-            <ion-label>S.No</ion-label>
-            <ion-label class="textRight" item-end>CASHCARD NO.</ion-label>
-            <ion-label class="textRight" item-end>ACCOUNT NO.</ion-label>
-            <ion-label class="textRight" item-end>PASSWORD</ion-label>
-            <ion-label class="textRight" item-end>MANAGEMENT URL</ion-label>
-            <ion-label class="textRight" item-end>DESCRIPTION</ion-label>
+            <ion-label class="lgl1" style="width:60px">S.No</ion-label>
+            <ion-label class="lgl1" item-end>CASHCARD NO.</ion-label>
+            <ion-label class="lgl1" item-end>ACCOUNT NO.</ion-label>
+            <ion-label class="lgl1" item-end>PASSWORD</ion-label>
+            <ion-label class="lgl1" item-end>MANAGEMENT URL</ion-label>
+            <ion-label class="lgl1" item-end>DESCRIPTION</ion-label>
+            <ion-label class="lgl1" item-end>ACTION</ion-label>
         </ion-item>
 
         <ion-item *ngFor="let cashcard of cashcards; let i=index">
-            <ion-label item-start>{{i+1}}</ion-label>
-            <ion-label item-start>{{cashcard.CASHCARD_SNO}}</ion-label>
-            <ion-label item-start class="textRight">{{cashcard.ACCOUNT_ID}}</ion-label>
-            <ion-label item-start class="textRight">{{cashcard.ACCOUNT_PASSWORD}}</ion-label>
-            <ion-label item-start class="textRight">{{cashcard.MANAGEMENT_URL}}</ion-label>
-            <ion-label item-start class="textRight">{{cashcard.DESCRIPTION}}</ion-label>
+            <ion-label item-start class="lgl1" style="width:60px">{{i+1}}</ion-label>
+            <ion-label item-start class="lgl1">{{cashcard.CASHCARD_SNO}}</ion-label>
+            <ion-label item-start class="lgl1">{{cashcard.ACCOUNT_ID}}</ion-label>
+            <ion-label item-start class="lgl1">{{cashcard.ACCOUNT_PASSWORD}}</ion-label>
+            <ion-label item-start class="lgl1">{{cashcard.MANAGEMENT_URL}}</ion-label>
+            <ion-label item-start class="lgl1">{{cashcard.DESCRIPTION}}</ion-label>
 
-
-            <!-- <ion-list>
-        <ion-list-header>
-            CASHCARD NO.            ACCOUNT NO.             PASSWORD            MANAGEMENT URL          DESCRIPTION
-        </ion-list-header> -->
-            <!-- <ion-item *ngFor="let cashcard of cashcards">{{cashcard.CASHCARD_SNO}}          {{cashcard.ACCOUNT_ID}}          {{cashcard.ACCOUNT_PASSWORD}}            {{cashcard.MANAGEMENT_URL}}          {{cashcard.DESCRIPTION}} -->
-            <button ion-button item-end (click)="EditClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button>
+            <button class="lgl1" ion-button item-start (click)="EditClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-create"></ion-icon></button>
+            <button class="lgl1" ion-button item-start (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button>
         </ion-item>
-    </ion-list>
-
-
-    <!-- <ion-list>
-        <ion-list-header>
-            ACCOUNT NO.
-        </ion-list-header>
-        <ion-item>1234<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>23489<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>958758784<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
-
-
-    <ion-list>
-        <ion-list-header>
-            PASSWORD
-        </ion-list-header>
-        <ion-item>1234<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>23489<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>958758784<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
-
-
-
-    <ion-list>
-        <ion-list-header>
-            MANAGEMENT URL
-        </ion-list-header>
-        <ion-item>http://zentranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>http://www.zen.com.my/<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>http://intranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>http://zentranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
-
-
-    <ion-list>
-        <ion-list-header>
-            DESCRIPTION
-        </ion-list-header>
-        <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list> -->
+    </ion-list> 
 
 
     <!-- add cash card form start-->
