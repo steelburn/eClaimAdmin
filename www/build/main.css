@@ -41809,12 +41809,12 @@ tr.colth {
 }
 
 th.lgl1 {
-  padding: 12px 5px;
+  padding: 10px 5px;
   border: none;
 }
 
 td.lgl1 {
-  padding: 8px;
+  padding: 4px;
   text-align: center;
   word-wrap: break-word;
   border: none;
@@ -41837,20 +41837,25 @@ td.lgl2 {
 }
 
 .tblBrLeft {
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 5px !important;
 }
 
 .tblBrRight {
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 5px 0 !important;
+}
+
+.TColor {
+  background: #CB9D2F;
+  color: white;
 }
 
 .linedsg {
-  border: 1px solid;
+  border-bottom: 1px solid gainsboro;
 }
 
 .graphHeaderStyle {
   border-top: 5px solid #ca9b24;
-  border-bottom: 1px solid #d6d6d6;
+  border-bottom: 1px solid gainsboro;
 }
 
 .fullWidth {

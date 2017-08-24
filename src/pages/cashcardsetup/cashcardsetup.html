@@ -18,10 +18,10 @@
         <button ion-fab mini (click)="AddCashClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
-    <!-- <ion-list>
+    <ion-list>
         <ion-item>
-            <table class="Tabler">
-                <tr class=".linedsg">
+            <table class="Tabler ">
+                <tr class="linedsg TColor">
                     <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>
                     <th class="lgl1">CASHCARD NO.</th>
                     <th class="lgl1">ACCOUNT NO.</th>
@@ -32,48 +32,25 @@
 
                 </tr>
 
-                <tr class="col7">
-                    <ion-item><td class="lgl1">{{i+1}}</td></ion-item>
+                <tr class="col7" *ngFor="let cashcard of cashcards; let i=index">
+                    <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{cashcard.CASHCARD_SNO}}</td>
                     <td class="lgl1">{{cashcard.ACCOUNT_ID}}</td>
                     <td class="lgl1">{{cashcard.ACCOUNT_PASSWORD}}</td>
                     <td class="lgl1">{{cashcard.MANAGEMENT_URL}}</td>
-                        <td class="lgl1">{{cashcard.DESCRIPTION}}</td>
-                            <td class="lgl1 fColor">
-                                <button ion-button item-end (click)="EditClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-create"></ion-icon></button>
-                                <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button>
-                            </td>
+                    <td class="lgl1">{{cashcard.DESCRIPTION}}</td>
+                    <td class="lgl1 fColor">
+                        <button ion-button item-end (click)="EditClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                        <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                    </td>
                 </tr>
 
 
             </table>
         </ion-item>
-    </ion-list> -->
+    </ion-list>
 
-    
-    <ion-list>
-        <ion-item>
-            <ion-label class="lgl1" style="width:60px">S.No</ion-label>
-            <ion-label class="lgl1" item-end>CASHCARD NO.</ion-label>
-            <ion-label class="lgl1" item-end>ACCOUNT NO.</ion-label>
-            <ion-label class="lgl1" item-end>PASSWORD</ion-label>
-            <ion-label class="lgl1" item-end>MANAGEMENT URL</ion-label>
-            <ion-label class="lgl1" item-end>DESCRIPTION</ion-label>
-            <ion-label class="lgl1" item-end>ACTION</ion-label>
-        </ion-item>
 
-        <ion-item *ngFor="let cashcard of cashcards; let i=index">
-            <ion-label item-start class="lgl1" style="width:60px">{{i+1}}</ion-label>
-            <ion-label item-start class="lgl1">{{cashcard.CASHCARD_SNO}}</ion-label>
-            <ion-label item-start class="lgl1">{{cashcard.ACCOUNT_ID}}</ion-label>
-            <ion-label item-start class="lgl1">{{cashcard.ACCOUNT_PASSWORD}}</ion-label>
-            <ion-label item-start class="lgl1">{{cashcard.MANAGEMENT_URL}}</ion-label>
-            <ion-label item-start class="lgl1">{{cashcard.DESCRIPTION}}</ion-label>
-
-            <button class="lgl1" ion-button item-start (click)="EditClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-create"></ion-icon></button>
-            <button class="lgl1" ion-button item-start (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
-    </ion-list> 
 
 
     <!-- add cash card form start-->
