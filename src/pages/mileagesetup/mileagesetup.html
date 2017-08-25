@@ -140,8 +140,8 @@
 
           <ion-item>
             <ion-label stacked>{{"ACTIVE"}}</ion-label>
-            <!-- <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>  -->
-            <ion-input type="text" formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG" placeholder="{{'Please fill in the activation flag'}}"></ion-input>
+          
+            <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>
           </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Mileageform.valid" (click)="Update(mileage.MILEAGE_GUID)">{{"SUBMIT" | translate}}</button>
