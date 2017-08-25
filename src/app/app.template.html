@@ -18,7 +18,7 @@
         
         <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
           <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
-        
+          <ion-icon name="ios-arrow-forward" [class.arrowRotate]="processPageClicked" item-end></ion-icon>
           {{p.title}}
           
         </button>
@@ -26,7 +26,7 @@
         
       </ion-list> 
 
-      <ion-list>
+      <!-- <ion-list>
         <ion-list-header>
           Account
         </ion-list-header>
@@ -34,7 +34,7 @@
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
           {{p.title}}
         </button>
-      </ion-list>
+      </ion-list> -->
 
 
     </ion-content>
@@ -62,7 +62,7 @@
         </button>
       </ion-list>
 
-      <ion-list>
+      <!-- <ion-list>
         <ion-list-header>
           Account
         </ion-list-header>
@@ -70,7 +70,7 @@
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
           {{p.title}}
         </button>
-      </ion-list>
+      </ion-list> -->
 
 
 

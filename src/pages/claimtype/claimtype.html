@@ -28,7 +28,7 @@
 
             </tr>
 
-            <tr class="col7" *ngFor="let claimtype of claimtypes">
+            <tr class="col7" *ngFor="let claimtype of claimtypes; let i=index">
                 <td class="lgl1">{{i+1}}</td>
                 <td class="lgl1">{{claimtype.NAME}}</td>
                 <td class="lgl1">{{claimtype.DESCRIPTION}}</td>

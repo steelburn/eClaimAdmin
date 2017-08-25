@@ -18,74 +18,43 @@
   <ion-fab top right edge>
     <button ion-fab mini (click)="AddMileageClick()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
-
-   <ion-list>
-    <ion-item class="bgColor-lightGrey">
-        <ion-label class="textRight" item-end>CATEGORY</ion-label>
-        <ion-label class="textRight" item-end>MILAGE PER UNIT</ion-label>
-        <ion-label class="textRight" item-end>EFFECTIVE DATE</ion-label>
-        <ion-label class="textRight" item-end>ACTIVE FLAG</ion-label>
-        <ion-label class="textRight" item-end>ACTION</ion-label>
-
-      </ion-item>
-      <ion-item *ngFor="let mileage of mileages">
-        
-        <ion-label item-start class="textRight">{{mileage.CATEGORY}}</ion-label>
-        <ion-label item-start class="textRight">{{mileage.RATE_PER_UNIT}}</ion-label>
-        <ion-label item-start class="textRight">{{mileage.RATE_DATE}}</ion-label>
-              
-         <ion-toggle *ngIf="mileage.ACTIVATION_FLAG==1" checked = true></ion-toggle> 
-         <ion-toggle *ngIf="mileage.ACTIVATION_FLAG==0" checked = false></ion-toggle> 
-
-        <button ion-button item-end (click)="EditClick(mileage.MILEAGE_GUID)"><ion-icon name="md-create"></ion-icon></button>
-        <button ion-button item-end (click)="DeleteClick(mileage.MILEAGE_GUID)"><ion-icon name="md-close"></ion-icon></button>
-      </ion-item>
-  </ion-list> 
-
-  <!-- <ion-list>
-    <ion-list-header>
-      CATEGORY
-    </ion-list-header>
-    <ion-item>ABCD<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-      <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    <ion-item>CBDC<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-      <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
-  </ion-list>
-
   <ion-list>
-    <ion-list-header>
-      MILEAGE PER UNIT
-    </ion-list-header>
-    <ion-item>12<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-      <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    <ion-item>32<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-      <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+    <ion-item>
+      <table class="Tabler">
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>
+          <th class="lgl1">CATEGORY</th>
+          <th class="lgl1">MILAGE PER UNIT</th>
+          <th class="lgl1">EFFECTIVE DATE</th>
+          <th class="lgl1">ACTIVE FLAG</th>
+          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
 
+        </tr>
+
+        <tr class="col7" *ngFor="let mileage of mileages; let i=index">
+          <td class="lgl1">{{i+1}}</td>
+          <td class="lgl1">{{mileage.CATEGORY}}</td>
+          <td class="lgl1">{{mileage.RATE_PER_UNIT}}</td>
+          <td class="lgl1">{{mileage.RATE_DATE}}</td>
+          <td class="lgl1">
+            <ion-toggle *ngIf="mileage.ACTIVATION_FLAG==1" checked=true></ion-toggle>
+            <ion-toggle *ngIf="mileage.ACTIVATION_FLAG==0" checked=false></ion-toggle>
+          </td>
+          <td class="lgl1 fColor">
+            <button ion-button item-end (click)="EditClick(mileage.MILEAGE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+            <button ion-button item-end (click)="DeleteClick(mileage.MILEAGE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+          </td>
+        </tr>
+
+
+      </table>
+    </ion-item>
   </ion-list>
 
 
-  <ion-list>
-    <ion-list-header>
-      ACTIVE FLAG
-    </ion-list-header>
-    <ion-item>INACTIVE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-      <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    <ion-item>ACTIVE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-      <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
 
-  </ion-list>
 
-  <ion-list>
-    <ion-list-header>
-      EFFECTIVE DATE
-    </ion-list-header>
-    <ion-item>1/1/2311<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-      <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    <ion-item>2/2/1111<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-      <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
 
-  </ion-list> -->
 
 
   <!-- add mileage form start-->
@@ -124,8 +93,8 @@
           <ion-item>
             <ion-label stacked>{{"ACTIVE"}}</ion-label>
 
-              <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>  
-             <!-- <ion-input type="text" formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG" placeholder="{{'Please fill in the activation flag'}}"></ion-input>  -->
+            <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>
+            <!-- <ion-input type="text" formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG" placeholder="{{'Please fill in the activation flag'}}"></ion-input>  -->
           </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Mileageform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
@@ -137,8 +106,8 @@
   </div>
   <!-- add mileage form end-->
 
-<!-- edit claimtype form start-->
-   <div class="blackcontainer" *ngIf="EditMileageClicked">
+  <!-- edit claimtype form start-->
+  <div class="blackcontainer" *ngIf="EditMileageClicked">
   </div>
   <div class="popup" padding *ngIf="EditMileageClicked">
     <ion-card>
@@ -152,14 +121,15 @@
       <ion-list>
         <form [formGroup]="Mileageform">
           <ion-item>
-            
+
             <ion-label stacked>{{"CATEGORY"}}</ion-label>
             <ion-input type="text" formControlName="CATEGORY" [(ngModel)]="mileage_entry.CATEGORY" value="{{mileage.CATEGORY}}" placeholder="{{'Please fill in the category in the mileage'}}"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"MILEAGE PER UNIT"}}</ion-label>
-            <ion-input type="text" formControlName="RATE_PER_UNIT" [(ngModel)]="mileage_entry.RATE_PER_UNIT" value="{{mileage.RATE_PER_UNIT}}" placeholder="{{'Please fill in the mileage'}}"></ion-input>
+            <ion-input type="text" formControlName="RATE_PER_UNIT" [(ngModel)]="mileage_entry.RATE_PER_UNIT" value="{{mileage.RATE_PER_UNIT}}"
+              placeholder="{{'Please fill in the mileage'}}"></ion-input>
           </ion-item>
 
           <ion-item>
@@ -168,10 +138,10 @@
             <!-- <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="department_entry.DESCRIPTION" value="{{department.DESCRIPTION}}" placeholder="{{'Please fill in the description'}}"></ion-input> -->
           </ion-item>
 
-           <ion-item>
+          <ion-item>
             <ion-label stacked>{{"ACTIVE"}}</ion-label>
-             <!-- <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>  -->
-             <ion-input type="text" formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG" placeholder="{{'Please fill in the activation flag'}}"></ion-input> 
+            <!-- <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>  -->
+            <ion-input type="text" formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG" placeholder="{{'Please fill in the activation flag'}}"></ion-input>
           </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Mileageform.valid" (click)="Update(mileage.MILEAGE_GUID)">{{"SUBMIT" | translate}}</button>
@@ -179,5 +149,5 @@
         </form>
       </ion-list>
     </ion-card>
-   </div>  
+  </div>
 </ion-content>

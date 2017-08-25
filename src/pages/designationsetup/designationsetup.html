@@ -20,6 +20,32 @@
   </ion-fab>
 
   <ion-list>
+    <ion-item>
+        <table class="Tabler">
+            <tr class="linedsg TColor">
+                <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>
+                <th class="lgl1">NAME</th>
+                <th class="lgl1">DESCRIPTION</th>
+                <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+
+            </tr>
+
+            <tr class="col7" *ngFor="let designation of designations; let i=index">
+                <td class="lgl1">{{i+1}}</td>
+                <td class="lgl1">{{designation.NAME}}</td>
+                <td class="lgl1">{{designation.DESCRIPTION}}</td>
+                <td class="lgl1 fColor">
+                    <button ion-button item-end  (click)="EditClick(designation.DESIGNATION_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                    <button ion-button item-end (click)="DeleteClick(designation.DESIGNATION_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                </td>
+            </tr>
+
+
+        </table>
+    </ion-item>
+</ion-list>
+<!-- 
+  <ion-list>
         <ion-item class="bgColor-lightGrey">
             <ion-label class="textRight" item-end>NAME</ion-label>
             <ion-label class="textRight" item-end>DESCRIPTION</ion-label>
@@ -31,7 +57,7 @@
          <button ion-button item-end (click)="EditClick(designation.DESIGNATION_GUID)"><ion-icon name="md-create"></ion-icon></button>
          <button ion-button item-end (click)="DeleteClick(designation.DESIGNATION_GUID)"><ion-icon name="md-close"></ion-icon></button>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
 
 

@@ -14,60 +14,52 @@
 
 
 <ion-content padding>
-    <ion-fab top right edge>
-      <button ion-fab mini (click)="AddRoleClick()"><ion-icon name="add"></ion-icon></button>
-    </ion-fab>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="AddRoleClick()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
-    <ion-list>
-    <ion-item class="bgColor-lightGrey">
-        <ion-label class="textRight" item-end>NAME</ion-label>
-        <ion-label class="textRight" item-end>DESCRIPTION</ion-label>
-        <ion-label class="textRight" item-end>ACTIVE FLAG</ion-label>
-        <ion-label class="textRight" item-end>ACTION</ion-label>
+
+  <ion-list>
+      <ion-item>
+        <table class="Tabler">
+          <tr class="linedsg TColor">
+            <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>
+            <th class="lgl1">NAME</th>
+            <th class="lgl1">DESCRIPTION</th>
+            <th class="lgl1">ACTIVE FLAG</th>
+            <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+  
+          </tr>
+  
+          <tr class="col7" *ngFor="let role of roles; let i=index">
+            <td class="lgl1">{{i+1}}</td>
+            <td class="lgl1">{{role.NAME}}</td>
+            <td class="lgl1">{{role.DESCRIPTION}}</td>
+            <td class="lgl1">
+                <ion-toggle class="tog" *ngIf="role.ACTIVATION_FLAG==1" checked=true></ion-toggle>
+                <ion-toggle  class="tog" *ngIf="role.ACTIVATION_FLAG==0" checked=false></ion-toggle>
+              </td>
+         
+      
+            <td class="lgl1 fColor">
+              <button ion-button item-end (click)="EditClick(role.ROLE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+              <button ion-button item-end (click)="DeleteClick(role.ROLE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+            </td>
+          </tr>
+  
+  
+        </table>
       </ion-item>
-
-      <ion-item *ngFor="let role of roles">
-        
-        <ion-label item-start class="textRight">{{role.NAME}}</ion-label>
-        <ion-label item-start class="textRight">{{role.DESCRIPTION}}</ion-label>
-        <!-- <ion-label item-start class="textRight">{{role.ACTIVATION_FLAG}}</ion-label> -->
-              
-         <ion-toggle *ngIf="role.ACTIVATION_FLAG==1" checked = true></ion-toggle> 
-         <ion-toggle *ngIf="role.ACTIVATION_FLAG==0" checked = false></ion-toggle> 
-        <button ion-button item-end (click)="EditClick(role.ROLE_GUID)"><ion-icon name="md-create"></ion-icon></button>
-        <button ion-button item-end (click)="DeleteClick(role.ROLE_GUID)"><ion-icon name="md-close"></ion-icon></button>
-      </ion-item>
-  </ion-list> 
-
-    <!-- <ion-list>
-      <ion-list-header>
-     NAME
-      </ion-list-header>
-      <ion-item>TEAM MEMBER<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>TEAM LEADER<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
     </ion-list>
-
-    <ion-list>
-      <ion-list-header>
-     DESCRIPTION
-      </ion-list-header>
-      <ion-item>MASTER LEVEL<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>PROFESSIONAL LEVEL<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
-    </ion-list> -->
+  
 
 
-    <!-- add Roleform start-->
-<div class="blackcontainer" *ngIf="AddRoleClicked">
-</div>
+  <!-- add Roleform start-->
+  <div class="blackcontainer" *ngIf="AddRoleClicked">
+  </div>
   <div class="popup" padding *ngIf="AddRoleClicked">
 
-      <ion-card>
+    <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
         <div class="icHeaderText">REGISTER NEW ROLE</div>
@@ -75,34 +67,34 @@
           <ion-icon name="md-close"></ion-icon> 
         </button>
       </ion-card-header>
-     <ion-list>
+      <ion-list>
         <form [formGroup]="Roleform">
-          <ion-item>            
+          <ion-item>
             <ion-label stacked>{{"NAME"}}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="role_entry.NAME"  placeholder="{{'Please fill in the name of the role'}}"></ion-input>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="role_entry.NAME" placeholder="{{'Please fill in the name of the role'}}"></ion-input>
           </ion-item>
 
-          <ion-item>            
+          <ion-item>
             <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="role_entry.DESCRIPTION"  placeholder="{{'Please fill in the description'}}"></ion-input>
+            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="role_entry.DESCRIPTION" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
-          <ion-item>            
+          <ion-item>
             <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
             <!-- <ion-input type="text" formControlName="ACTIVATION_FLAG" [(ngModel)]="role_entry.ACTIVATION_FLAG"></ion-input> -->
-            <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="role_entry.ACTIVATION_FLAG"></ion-toggle>  
+            <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="role_entry.ACTIVATION_FLAG"></ion-toggle>
           </ion-item>
           <div class="btn">
-          <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
         </form>
-     </ion-list>
-      </ion-card>
- 
- </div>
- <!-- add Role form end-->
+      </ion-list>
+    </ion-card>
 
- <!-- edit claimtype form start-->
-   <div class="blackcontainer" *ngIf="EditRoleClicked">
+  </div>
+  <!-- add Role form end-->
+
+  <!-- edit claimtype form start-->
+  <div class="blackcontainer" *ngIf="EditRoleClicked">
   </div>
   <div class="popup" padding *ngIf="EditRoleClicked">
     <ion-card>
@@ -111,12 +103,12 @@
         <button class="btnR" (click)="CloseRoleClick()">
           <ion-icon name="md-close"></ion-icon> 
         </button>
-      </ion-card-header> 
+      </ion-card-header>
 
       <ion-list>
         <form [formGroup]="Roleform">
           <ion-item>
-            
+
             <ion-label stacked>{{"NAME"}}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="role_entry.NAME" value="{{role.NAME}}" placeholder="{{'Please fill in the name in the role'}}"></ion-input>
           </ion-item>
@@ -126,10 +118,10 @@
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="role_entry.DESCRIPTION" value="{{role.DESCRIPTION}}" placeholder="{{'Please fill in the role'}}"></ion-input>
           </ion-item>
 
-           <ion-item>
+          <ion-item>
             <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
-             <!-- <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>  -->
-             <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="role_entry.ACTIVATION_FLAG"></ion-toggle> 
+            <!-- <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>  -->
+            <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="role_entry.ACTIVATION_FLAG"></ion-toggle>
           </ion-item>
 
           <div class="btn">
@@ -138,6 +130,6 @@
         </form>
       </ion-list>
     </ion-card>
-   </div>  
+  </div>
 
 </ion-content>

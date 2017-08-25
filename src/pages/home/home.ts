@@ -5,7 +5,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { ConferenceData } from '../../providers/conference-data';
 import { MedicalclaimPage } from '../medicalclaim/medicalclaim';
-import { SessionDetailPage } from '../session-detail/session-detail';
+
 import { AboutPage } from '../about/about';
 import { PrintclaimPage } from '../printclaim/printclaim';
 import { GiftclaimPage } from '../giftclaim/giftclaim';
@@ -57,12 +57,7 @@ export class SpeakerListPage {
     this.navCtrl.push(TravelclaimPage)
   }
 
-  goToSessionDetail(session: any) {
-    this.navCtrl.push(SessionDetailPage, {
-      name: session.name,
-      session: session
-    });
-  }
+
   goToAbout(){
     this.navCtrl.push(AboutPage)
   }

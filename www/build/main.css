@@ -41862,6 +41862,28 @@ td.lgl2 {
   width: 100% !important;
 }
 
+ion-menu#loggedOutMenu {
+  min-width: 303px !important;
+  max-width: 14%  !important;
+  border-right: 1px solid #dedede;
+  border-left: 0;
+}
+
+ion-toggle.toggle.toggle-md {
+  padding-left: 80px !important;
+  padding-right: 0px !important;
+}
+
+ion-toggle.toggle.toggle-md.tog {
+  padding-left: 123px !important;
+  padding-right: 0px !important;
+}
+
+ion-toggle.toggle.toggle-md.stog {
+  padding-left: 53px !important;
+  padding-right: 0px !important;
+}
+
 .Subtitle {
   text-align: center;
   font-size: 1.12vw;
@@ -41908,150 +41930,6 @@ page-user .list {
 
 page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched {
   color: white !important;
-}
-
-page-schedule ion-item-sliding[track=ionic] ion-label {
-  border-left: 2px solid #ca9b24;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=angular] ion-label {
-  border-left: 2px solid #AC282B;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=communication] ion-label {
-  border-left: 2px solid #8E8D93;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=tooling] ion-label {
-  border-left: 2px solid #FE4C52;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=services] ion-label {
-  border-left: 2px solid #FD8B2D;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=design] ion-label {
-  border-left: 2px solid #FED035;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=workshop] ion-label {
-  border-left: 2px solid #69BB7B;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=food] ion-label {
-  border-left: 2px solid #3BC7C4;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=documentation] ion-label {
-  border-left: 2px solid #B16BE3;
-  padding-left: 10px;
-}
-
-page-schedule ion-item-sliding[track=navigation] ion-label {
-  border-left: 2px solid #6600CC;
-  padding-left: 10px;
-}
-
-.reset-filters {
-  color: #f53d3d;
-}
-
-ion-item[track=ionic] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #ca9b24;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=angular] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #AC282B;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=communication] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #8E8D93;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=tooling] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #FE4C52;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=services] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #FD8B2D;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=design] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #FED035;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=workshop] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #69BB7B;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=food] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #3BC7C4;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=documentation] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #B16BE3;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-ion-item[track=navigation] .dot {
-  height: 10px;
-  display: inline-block;
-  width: 10px;
-  background-color: #6600CC;
-  border-radius: 5px;
-  margin-right: 10px;
 }
 
 .round {

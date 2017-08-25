@@ -29,9 +29,6 @@ import { RolesetupPage } from '../pages/rolesetup/rolesetup';
 import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup';
 import { QualificationsetupPage } from '../pages/qualificationsetup/qualificationsetup';
 import { SubsciptionsetupPage } from '../pages/subsciptionsetup/subsciptionsetup';
-import { SchedulePage } from '../pages/schedule/schedule';
-import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
-import { SessionDetailPage } from '../pages/session-detail/session-detail';
 import { SignupPage } from '../pages/signup/signup';
 import { SpeakerListPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -55,15 +52,12 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     AccountPage,
     LoginPage,
     PopoverPage,
-    SchedulePage,
     MedicalclaimPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
     EntertainmentclaimPage,
     TravelclaimPage,
-    ScheduleFilterPage,
-    SessionDetailPage,
     SignupPage,
     SpeakerListPage,
     SetupPage,
@@ -96,9 +90,6 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
-        { component: SchedulePage, name: 'Schedule', segment: 'schedule' },
-        { component: SessionDetailPage, name: 'SessionDetail', segment: 'sessionDetail/:name' },
-        { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
         { component: SpeakerListPage, name: 'Home', segment: 'Home' },
         { component: SetupPage, name: 'Setup', segment: 'Setup' },
         { component: AboutPage, name: 'About', segment: 'about' },
@@ -116,9 +107,6 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     AccountPage,
     LoginPage,
     PopoverPage,
-    SchedulePage,
-    ScheduleFilterPage,
-    SessionDetailPage,
     SignupPage,
     SetupPage,
     MedicalclaimPage,
