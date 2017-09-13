@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { SpeakerListPage } from '../home/home';
+
 /**
  * Generated class for the EntertainmentclaimPage page.
  *
@@ -22,7 +25,12 @@ export class EntertainmentclaimPage {
 
     });
   }
-
+  public CloseEntertainClick() {
+    
+       
+    this.navCtrl.push(SpeakerListPage)
+      }
+      
   ionViewDidLoad() {
     console.log('ionViewDidLoad EntertainmentclaimPage');
   }

@@ -154,8 +154,9 @@
 
           <ion-item>
             <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
-            <ion-toggle formControlName="ACTIVE_FLAG" [(ngModel)]="Subscription_entry.ACTIVE_FLAG"></ion-toggle>
-         
+            <ion-toggle formControlName="ACTIVE_FLAG" [(ngModel)]="Subscription_entry.ACTIVE_FLAG" ng-value="subscription.ACTIVE_FLAG" ng-true-value="1" ng-false-value="0" ></ion-toggle>
+            <ion-input type="text" formControlName="ACTIVE_FLAG" [(ngModel)]="Subscription_entry.ACTIVE_FLAG"
+            placeholder="{{'Please fill in the duration of the plan'}}"></ion-input>
           </ion-item>
 
           <ion-item>

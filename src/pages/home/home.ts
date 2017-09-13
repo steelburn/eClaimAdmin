@@ -1,6 +1,6 @@
-﻿import { Component } from '@angular/core';
-
-import { ActionSheet, ActionSheetController, Config, NavController } from 'ionic-angular';
+﻿import { Component, ViewChild, Inject} from '@angular/core';
+import { Chart } from 'chart.js';
+import { ActionSheet, ActionSheetController, Config, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { ConferenceData } from '../../providers/conference-data';
@@ -19,6 +19,13 @@ import { TravelclaimPage } from '../travelclaim/travelclaim';
 export class SpeakerListPage {
   actionSheet: ActionSheet;
   speakers: any[] = [];
+
+
+
+
+//  @ViewChild('driverDoughnutCanvas') driverDoughnutCanvas;
+  
+//  driverDoughnutChart: any;
 
   constructor(
     public actionSheetCtrl: ActionSheetController,
@@ -67,6 +74,8 @@ export class SpeakerListPage {
     this.inAppBrowser.create(`https://twitter.com/${speaker.twitter}`, '_blank');
   }
 
+
+  
   openSpeakerShare(speaker: any) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Share ' + speaker.name,
@@ -118,4 +127,6 @@ export class SpeakerListPage {
 
     actionSheet.present();
   }
+
+  
 }
