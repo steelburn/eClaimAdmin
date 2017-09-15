@@ -41761,12 +41761,14 @@ page-account img {
   color: black;
   font-size: 20px;
   padding: 10px 0px;
+  width: 100%;
 }
 
 .eClaimSubTitle1 {
   color: black;
   font-size: 16px;
   margin-left: 20px;
+  width: 100%;
 }
 
 .eClaimSubTitle2 {
@@ -41774,18 +41776,20 @@ page-account img {
   font-size: 16px;
   margin-left: 20px;
   margin-top: 10px;
+  width: 100%;
 }
 
 .eClaimSubTitle3 {
   color: black;
   font-size: 20px;
   padding: 200px 50px;
+  width: 100%;
 }
 
 .eClaimSubTitle4 {
   color: black;
   font-size: 20px;
-  padding: 10px 0px;
+  width: 100%;
 }
 
 .scroll {
@@ -41882,6 +41886,10 @@ ion-toggle.toggle.toggle-md.tog {
 ion-toggle.toggle.toggle-md.stog {
   padding-left: 53px !important;
   padding-right: 0px !important;
+}
+
+.UPContent {
+  width: 100%;
 }
 
 page-entertainmentclaim .blackcontainer {

@@ -59,13 +59,15 @@ page-banksetup {
 .eClaimSubTitle {
 	color: black;
 	font-size: 20px;
-	padding: 10px 0px;
+    padding: 10px 0px;
+    width: 100%;
 } 
 
 .eClaimSubTitle1 {
 	color: black;
 	font-size: 16px;
-	margin-left: 20px;
+    margin-left: 20px;
+    width: 100%;
 } 
 
 .eClaimSubTitle2 {
@@ -73,18 +75,20 @@ page-banksetup {
 	font-size: 16px;
     margin-left: 20px;
     margin-top: 10px;
+    width: 100%;
 } 
 
 .eClaimSubTitle3 {
 	color: black;
 	font-size: 20px;
     padding:200px 50px;
+    width: 100%;
 } 
 
 .eClaimSubTitle4 {
 	color: black;
 	font-size: 20px;
-    padding:10px 0px;
+    width: 100%;
 } 
 .scroll{
     height: calc(100% - 48px);
@@ -166,3 +170,6 @@ ion-toggle.toggle.toggle-md.stog{
     padding-right: 0px !important;
 }
 
+.UPContent{
+    width:100%;
+}
