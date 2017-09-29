@@ -15,137 +15,78 @@
 
 <ion-content padding>
 
-    <div class="blackcontainer" >
-      </div>
-        <div class="popup" padding >
-      
-            <ion-card class="cm">
-            <ion-card-header class="icTitle headerColor-white ">
-      
-              <div class="icHeaderText">APPLY NEW OVERTIME CLAIM</div>
-              <!-- <button class="btnR" (click)="CloseotClick()">
-                <ion-icon name="md-close"></ion-icon> 
-              </button> -->
-            </ion-card-header>
-           <ion-list class="scroll">
-              <form [formGroup]="OTform">
-                  <ion-item>
-                    <ion-label stacked>{{"DATE"}}</ion-label>
-                    <ion-datetime displayFormat="DD/MM/YYYY" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours date while you OT'}}"></ion-datetime>
-                  </ion-item>
-            
-            
-                  <ion-item>
-                    <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>
-                    <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the name of yours customer'}}"></ion-input>
-                  </ion-item>
-            
-            
-            
-                  <ion-item>
-                    <ion-label stacked>{{"SOC NO."}}</ion-label>
-                    <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the SOC number'}}"></ion-input>
-                  </ion-item>
-            
-            
-            
-                  <ion-item>
-                    <ion-label stacked>{{"PROJECT NAME"}}</ion-label>
-                    <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the name of yours project'}}"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>{{"START TIME"}}</ion-label>
-                    <ion-datetime displayFormat="HH:mm:ss" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours starting overtime'}}"></ion-datetime>
-                  </ion-item>
-            
-                  
-                  <ion-item>
-                    <ion-label stacked>{{"END TIME"}}</ion-label>
-                    <ion-datetime displayFormat="HH:mm:ss" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours ending overtime'}}"></ion-datetime>
-                  </ion-item>
-            
-            
-                  <ion-item>
-                    <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>
-                    <ion-input type="number" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the amount of yours Overtime Claim'}}"></ion-input>
-                  </ion-item>
-            
-                  <ion-item>
-                    <ion-label stacked>{{"CALENDAR REF."}}</ion-label>
-            
-                  </ion-item>
-            
-                  <ion-item>
-                    <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
-            
-                  </ion-item>
-            
-                  <div class="btn">
-                    <button ion-button>SUBMIT</button>
-                  </div>
-            
-                </form>
-           </ion-list>
-            </ion-card>
-       
-       </div>
-  <!-- <ion-list>
-    <form [formGroup]="OTform">
-      <ion-item>
-        <ion-label stacked>{{"DATE"}}</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours date while you OT'}}"></ion-datetime>
-      </ion-item>
+  <div class="blackcontainer">
+
+    <div class="popup" padding>
+
+      <ion-card class="cm">
+        <ion-card-header class="icTitle headerColor-white ">
+
+          <div class="icHeaderText">APPLY NEW OVERTIME CLAIM</div>
+
+        </ion-card-header>
+        <ion-list class="scroll">
+          <form [formGroup]="OTform">
+            <ion-item>
+              <ion-label stacked>{{"DATE"}}</ion-label>
+              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours date while you OT'}}"></ion-datetime>
+            </ion-item>
 
 
-      <ion-item>
-        <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>
-        <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the name of yours customer'}}"></ion-input>
-      </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>
+              <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the name of yours customer'}}"></ion-input>
+            </ion-item>
 
 
 
-      <ion-item>
-        <ion-label stacked>{{"SOC NO."}}</ion-label>
-        <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the SOC number'}}"></ion-input>
-      </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"SOC NO."}}</ion-label>
+              <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the SOC number'}}"></ion-input>
+            </ion-item>
 
 
 
-      <ion-item>
-        <ion-label stacked>{{"PROJECT NAME"}}</ion-label>
-        <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the name of yours project'}}"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label stacked>{{"START TIME"}}</ion-label>
-        <ion-datetime displayFormat="HH:mm:ss" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours starting overtime'}}"></ion-datetime>
-      </ion-item>
-
-      
-      <ion-item>
-        <ion-label stacked>{{"END TIME"}}</ion-label>
-        <ion-datetime displayFormat="HH:mm:ss" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours ending overtime'}}"></ion-datetime>
-      </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>
+              <ion-input type="text" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the name of yours project'}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"START TIME"}}</ion-label>
+              <ion-datetime displayFormat="HH:mm:ss" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours starting overtime'}}"></ion-datetime>
+            </ion-item>
 
 
-      <ion-item>
-        <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>
-        <ion-input type="number" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the amount of yours Overtime Claim'}}"></ion-input>
-      </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"END TIME"}}</ion-label>
+              <ion-datetime displayFormat="HH:mm:ss" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please choose yours ending overtime'}}"></ion-datetime>
+            </ion-item>
 
-      <ion-item>
-        <ion-label stacked>{{"CALENDAR REF."}}</ion-label>
 
-      </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>
+              <ion-input type="number" formControlName="otname" [(ngModel)]="OTform.fullname" placeholder="{{'Please fill in the amount of yours Overtime Claim'}}"></ion-input>
+            </ion-item>
 
-      <ion-item>
-        <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
+            <ion-item>
+              <ion-label stacked>{{"CALENDAR REF."}}</ion-label>
 
-      </ion-item>
+            </ion-item>
 
-      <div class="btn">
-        <button ion-button>SUBMIT</button>
-      </div>
+            <ion-item>
+              <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
 
-    </form>
-  </ion-list> -->
+            </ion-item>
+
+            <div class="btn">
+              <button ion-button>SUBMIT</button>
+            </div>
+
+          </form>
+        </ion-list>
+      </ion-card>
+
+    </div>
+  </div>
+
 </ion-content>

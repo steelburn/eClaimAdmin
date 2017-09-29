@@ -14,79 +14,49 @@
 
 
 <ion-content padding>
-    <div class="blackcontainer" >
-      </div>
-        <div class="popup" padding >
-      
-            <ion-card class="cm">
-            <ion-card-header class="icTitle headerColor-white ">
-      
-              <div class="icHeaderText">APPLY NEW MEDICAL CLAIM</div>
-              <!-- <button class="btnR" (click)="CloseMcClick()">
-                <ion-icon name="md-close"></ion-icon> 
-              </button> -->
-            </ion-card-header>
-           <ion-list class="scroll">
-              <form [formGroup]="Mcform">
-                  <ion-item>
-                    <ion-label stacked>{{"DATE"}}</ion-label>
-                    <ion-datetime displayFormat="DD/MM/YYYY" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please choose yours date while you take the medical leave'}}"></ion-datetime>
-                  </ion-item>
-            
-                  <ion-item>
-                    <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>
-                    <ion-input type="number" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please fill in the amount of yours Medical Claim(Max RM50)'}}"></ion-input>
-                  </ion-item>
-            
-            
-                  
-                  <ion-item>
-                    <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-                    <ion-input type="text" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please fill in the description (if you have)'}}"></ion-input>
-                  </ion-item>
-            
-                  <ion-item>
-                    <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
-            
-                  </ion-item>
-            
-                  <div class="btn">
-                    <button ion-button>SUBMIT</button>
-                  </div>
-            
-                </form>
-           </ion-list>
-            </ion-card>
-       
-       </div>
-  <!-- <ion-list>
-    <form [formGroup]="Mcform">
-      <ion-item>
-        <ion-label stacked>{{"DATE"}}</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please choose yours date while you take the medical leave'}}"></ion-datetime>
-      </ion-item>
+  <div class="blackcontainer">
 
-      <ion-item>
-        <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>
-        <ion-input type="number" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please fill in the amount of yours Medical Claim(Max RM50)'}}"></ion-input>
-      </ion-item>
+    <div class="popup" padding>
+
+      <ion-card class="cm">
+        <ion-card-header class="icTitle headerColor-white ">
+
+          <div class="icHeaderText">APPLY NEW MEDICAL CLAIM</div>
+
+        </ion-card-header>
+        <ion-list class="scroll">
+          <form [formGroup]="Mcform">
+            <ion-item>
+              <ion-label stacked>{{"DATE"}}</ion-label>
+              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please choose yours date while you take the medical leave'}}"></ion-datetime>
+            </ion-item>
+
+            <ion-item>
+              <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>
+              <ion-input type="number" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please fill in the amount of yours Medical Claim(Max RM50)'}}"></ion-input>
+            </ion-item>
 
 
-      
-      <ion-item>
-        <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-        <ion-input type="text" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please fill in the description (if you have)'}}"></ion-input>
-      </ion-item>
 
-      <ion-item>
-        <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
+            <ion-item>
+              <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+              <ion-input type="text" formControlName="mcname" [(ngModel)]="Mcform.fullname" placeholder="{{'Please fill in the description (if you have)'}}"></ion-input>
+            </ion-item>
 
-      </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
 
-      <div class="btn">
-        <button ion-button>SUBMIT</button>
-      </div>
+            </ion-item>
 
-    </form>
-  </ion-list> -->
+            <div class="btn">
+              <button ion-button>SUBMIT</button>
+            </div>
+
+          </form>
+        </ion-list>
+      </ion-card>
+
+    </div>
+
+  </div>
 </ion-content>
