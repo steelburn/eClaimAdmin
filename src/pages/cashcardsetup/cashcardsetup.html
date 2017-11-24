@@ -6,141 +6,153 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>CASHCARD SETUP</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>CASHCARD SETUP</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
     <ion-fab top right edge>
-      <button ion-fab mini (click)="AddCashClick()"><ion-icon name="add"></ion-icon></button>
+        <button ion-fab mini (click)="AddCashClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
     <ion-list>
-      <ion-list-header>
-       CASHCARD NO.
-      </ion-list-header>
-      <ion-item>1234<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>23489<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>958758784<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
+        <ion-item>
+            <table class="Tabler ">
+                <tr class="linedsg TColor">
+                    <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+                    <th class="lgl1">CASHCARD NO.</th>
+                    <th class="lgl1">ACCOUNT NO.</th>
+                    <th class="lgl1">PASSWORD</th>
+                    <th class="lgl1">MANAGEMENT URL</th>
+                    <th class="lgl1">DESCRIPTION</th>
+                    <th class="lgl1 tblBrRight" style="width:80px">ACTION</th>
+
+                </tr>
+
+                <tr class="col7" *ngFor="let cashcard of cashcards; let i=index">
+                    <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{cashcard.CASHCARD_SNO}}</td>
+                    <td class="lgl1">{{cashcard.ACCOUNT_ID}}</td>
+                    <td class="lgl1">{{cashcard.ACCOUNT_PASSWORD}}</td>
+                    <td class="lgl1">{{cashcard.MANAGEMENT_URL}}</td>
+                    <td class="lgl1">{{cashcard.DESCRIPTION}}</td>
+                    <td class="lgl1 fColor">
+                        <button ion-button item-end (click)="EditClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                        <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                    </td>
+                </tr>
 
 
-    <ion-list>
-      <ion-list-header>
-       ACCOUNT NO.
-      </ion-list-header>
-      <ion-item>1234<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>23489<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>958758784<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
-
-
-    <ion-list>
-      <ion-list-header>
-       PASSWORD
-      </ion-list-header>
-      <ion-item>1234<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>12345<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>23489<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>958758784<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+            </table>
+        </ion-item>
     </ion-list>
 
 
 
-    <ion-list>
-      <ion-list-header>
-       MANAGEMENT URL
-      </ion-list-header>
-      <ion-item>http://zentranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>http://www.zen.com.my/<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>http://intranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>http://zentranet.zen.com.my/Pages/Home.aspx<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
 
+    <!-- add cash card form start-->
+    <div class="blackcontainer" *ngIf="AddCashClicked">
+    </div>
+    <div class="popup" padding *ngIf="AddCashClicked">
 
-    <ion-list>
-      <ion-list-header>
-       DESCRIPTION
-      </ion-list-header>
-      <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>DESCRIBE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
+        <ion-card>
+            <ion-card-header class="icTitle headerColor-white ">
 
-
-<!-- add cash card form start-->
-<div class="blackcontainer" *ngIf="AddCashClicked">
-</div>
-  <div class="popup" padding *ngIf="AddCashClicked">
-
-      <ion-card>
-      <ion-card-header class="icTitle headerColor-white ">
-
-        <div class="icHeaderText">REGISTER NEW CASHCARD</div>
-        <button class="btnR" (click)="CloseCashClick()">
+                <div class="icHeaderText">REGISTER NEW CASHCARD</div>
+                <button class="btnR" (click)="CloseCashClick()">
           <ion-icon name="md-close"></ion-icon> 
         </button>
-      </ion-card-header>
-     <ion-list>
-        <form [formGroup]="Cashform">
-          <ion-item>            
-            <ion-label stacked>{{"CASHCARD NO."}}</ion-label>
-            <ion-input type="text" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the cash card no.'}}"></ion-input>
-          </ion-item>
+            </ion-card-header>
+            <ion-list>
 
-          <ion-item>            
-            <ion-label stacked>{{"ACCOUNT NO."}}</ion-label>
-            <ion-input type="text" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the account no.'}}"></ion-input>
-          </ion-item>
+                <form [formGroup]="Cashform">
+                    <ion-item>
+                        <ion-label stacked>{{"CASHCARD NO."}}</ion-label>
+                        <ion-input type="text" formControlName="CASHCARD_SNO" [(ngModel)]="CASHCARD_SNO_ngModel_Add" placeholder="{{'Please fill in the cash card no.'}}"></ion-input>
 
-          <ion-item>            
-            <ion-label stacked>{{"PASSWORD"}}</ion-label>
-            <ion-input type="password" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in yours password'}}"></ion-input>
-          </ion-item>
+                    </ion-item>
 
 
-          <ion-item>            
-            <ion-label stacked>{{"MANAGEMENT URL"}}</ion-label>
-            <ion-input type="text" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the management URL'}}"></ion-input>
-          </ion-item>
+                    <ion-item>
+                        <ion-label stacked>{{"ACCOUNT NO."}}</ion-label>
+                        <ion-input type="text" formControlName="ACCOUNT_ID" [(ngModel)]="ACCOUNT_ID_ngModel_Add" placeholder="{{'Please fill in the account no.'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"PASSWORD"}}</ion-label>
+                        <ion-input type="password" formControlName="ACCOUNT_PASSWORD" [(ngModel)]="ACCOUNT_PASSWORD_ngModel_Add" placeholder="{{'Please fill in yours password'}}"></ion-input>
+                    </ion-item>
 
 
-          <ion-item>            
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-            <ion-input type="text" formControlName="cashname" [(ngModel)]="Cashform.fullname"  placeholder="{{'Please fill in the description'}}"></ion-input>
-          </ion-item>
-          <div class="btn">
-          <button ion-button>SUBMIT</button></div>
-        </form>
-     </ion-list>
-      </ion-card>
- 
- </div>
- <!-- add cash card form end-->
+                    <ion-item>
+                        <ion-label stacked>{{"MANAGEMENT URL"}}</ion-label>
+                        <ion-input type="text" formControlName="MANAGEMENT_URL" [(ngModel)]="MANAGEMENT_URL_ngModel_Add" placeholder="{{'Please fill in the management URL'}}"></ion-input>
+                    </ion-item>
+
+
+                    <ion-item>
+                        <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+                        <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
+                    </ion-item>
+                    <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Cashform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
+                </form>
+
+            </ion-list>
+        </ion-card>
+
+    </div>
+    <!-- add cash card form end-->
+
+    <!-- Edit cash card form start-->
+    <div class="blackcontainer" *ngIf="EditCashClicked">
+    </div>
+    <div class="popup" padding *ngIf="EditCashClicked">
+
+        <ion-card>
+            <ion-card-header class="icTitle headerColor-white ">
+
+                <div class="icHeaderText">UPDATE CASHCARD</div>
+                <button class="btnR" (click)="CloseCashClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+            </ion-card-header>
+            <ion-list>
+                <form [formGroup]="Cashform">
+                    <ion-item>
+                        <ion-label stacked>{{"CASHCARD NO."}}</ion-label>
+                        <ion-input type="text" formControlName="CASHCARD_SNO" [(ngModel)]="CASHCARD_SNO_ngModel_Edit" placeholder="{{'Please fill in the cash card no.'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"ACCOUNT NO."}}</ion-label>
+                        <ion-input type="text" formControlName="ACCOUNT_ID" [(ngModel)]="ACCOUNT_ID_ngModel_Edit" placeholder="{{'Please fill in the account no.'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"PASSWORD"}}</ion-label>
+                        <ion-input type="password" formControlName="ACCOUNT_PASSWORD" [(ngModel)]="ACCOUNT_PASSWORD_ngModel_Edit" placeholder="{{'Please fill in yours password'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"MANAGEMENT URL"}}</ion-label>
+                        <ion-input type="text" formControlName="MANAGEMENT_URL" [(ngModel)]="MANAGEMENT_URL_ngModel_Edit" placeholder="{{'Please fill in the management URL'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+                        <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit" placeholder="{{'Please fill in the description'}}"></ion-input>
+                    </ion-item>
+
+                    <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Cashform.valid" (click)="!Update(cashcard_details.CASHCARD_GUID)">{{"SUBMIT" | translate}}</button></div>
+                </form>
+            </ion-list>
+        </ion-card>
+
+    </div>
+    <!-- Edit cash card form end-->
 </ion-content>

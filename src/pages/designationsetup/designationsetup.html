@@ -15,68 +15,130 @@
 
 <ion-content padding>
 
-   <ion-fab top right edge>
-      <button ion-fab mini (click)="AddDesignationClick()"><ion-icon name="add"></ion-icon></button>
-    </ion-fab>
-    <ion-list>
-      <ion-list-header>
-       TITLE
-      </ion-list-header>
-      <ion-item>SYSTEM ENGINEER<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>SALES MANAGER<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>DESIGNER<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>FINANCE MANAGER<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
-
-      <ion-list>
-      <ion-list-header>
-       DESCRIPTION
-      </ion-list-header>
-      <ion-item>PROFESSIONAL SERVICE OFFICE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>BUISNESS DEVELOPMENT OFFICE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>R&D OFFICE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-      <ion-item>FINANCE OFFICE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-    </ion-list>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="AddDesignationClick()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
 
-<!-- add designation form start-->
-<div class="blackcontainer" *ngIf="AddDesignationClicked">
-</div>
+  <ion-list>
+    <ion-item>
+        <table class="Tabler">
+            <tr class="linedsg TColor">
+                <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+                <th class="lgl1">NAME</th>
+                <th class="lgl1">DESCRIPTION</th>
+                <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+
+            </tr>
+
+            <tr class="col7" *ngFor="let designation of designations; let i=index">
+                <td class="lgl1">{{i+1}}</td>
+                <td class="lgl1">{{designation.NAME}}</td>
+                <td class="lgl1">{{designation.DESCRIPTION}}</td>
+                <td class="lgl1 fColor">
+                    <button ion-button item-end  (click)="EditClick(designation.DESIGNATION_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                    <button ion-button item-end (click)="DeleteClick(designation.DESIGNATION_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                </td>
+            </tr>
+
+
+        </table>
+    </ion-item>
+</ion-list>
+<!-- 
+  <ion-list>
+        <ion-item class="bgColor-lightGrey">
+            <ion-label class="textRight" item-end>NAME</ion-label>
+            <ion-label class="textRight" item-end>DESCRIPTION</ion-label>
+        </ion-item>
+
+            </tr>
+
+            <tr class="col7" *ngFor="let designation of designations; let i=index">
+                <td class="lgl1">{{i+1}}</td>
+                <td class="lgl1">{{designation.NAME}}</td>
+                <td class="lgl1">{{designation.DESCRIPTION}}</td>
+                <td class="lgl1 fColor">
+                    <button ion-button item-end  (click)="EditClick(designation.DESIGNATION_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                    <button ion-button item-end (click)="DeleteClick(designation.DESIGNATION_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                </td>
+            </tr>
+
+
+        </table>
+    </ion-item>
+  </ion-list> -->
+
+
+
+  <!-- add designation form start-->
+  <div class="blackcontainer" *ngIf="AddDesignationClicked">
+  </div>
   <div class="popup" padding *ngIf="AddDesignationClicked">
 
-      <ion-card>
+    <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
         <div class="icHeaderText">REGISTER NEW DESIGNATION</div>
         <button class="btnR" (click)="CloseDesignationClick()">
           <ion-icon name="md-close"></ion-icon> 
         </button>
+
       </ion-card-header>
-     <ion-list>
+      <ion-list>
         <form [formGroup]="Designationform">
-          <ion-item>            
+          <ion-item>
             <ion-label stacked>{{"TITLE"}}</ion-label>
-            <ion-input type="text" formControlName="designationname" [(ngModel)]="Designationform.fullname"  placeholder="{{'Please fill in the title of the designation'}}"></ion-input>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" 
+            placeholder="{{'Please fill in the title of the designation'}}"></ion-input>
           </ion-item>
 
-          <ion-item>            
+          <ion-item>
             <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-            <ion-input type="text" formControlName="designationname" [(ngModel)]="Designationform.fullname"  placeholder="{{'Please fill in the description'}}"></ion-input>
+            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" 
+            placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
           <div class="btn">
-          <button ion-button>SUBMIT</button></div>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Designationform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
         </form>
-     </ion-list>
-      </ion-card>
- 
- </div>
- <!-- add designation form end-->
+      </ion-list>
+    </ion-card>
+  </div>
+  <!-- add designation form end-->
+
+  <!-- edit designation form start-->
+  <div class="blackcontainer" *ngIf="EditDesignationClicked">
+  </div>
+  <div class="popup" padding *ngIf="EditDesignationClicked">
+
+    <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">UPDATE DESIGNATION</div>
+        <button class="btnR" (click)="CloseDesignationClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+
+      </ion-card-header>
+      <ion-list>
+        <form [formGroup]="Designationform">
+          <ion-item>
+            <ion-label stacked>{{"TITLE"}}</ion-label>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" 
+             placeholder="{{'Please fill in the title of the designation'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit" 
+              placeholder="{{'Please fill in the description'}}"></ion-input>
+          </ion-item>
+          <div class="btn">
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(designation_details.DESIGNATION_GUID)">{{"SUBMIT" | translate}}</button></div>
+        </form>
+      </ion-list>
+    </ion-card>
+
+  </div>
+  <!-- edit designation form end-->
 </ion-content>

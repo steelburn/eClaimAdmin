@@ -29,9 +29,6 @@ import { RolesetupPage } from '../pages/rolesetup/rolesetup';
 import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup';
 import { QualificationsetupPage } from '../pages/qualificationsetup/qualificationsetup';
 import { SubsciptionsetupPage } from '../pages/subsciptionsetup/subsciptionsetup';
-import { SchedulePage } from '../pages/schedule/schedule';
-import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
-import { SessionDetailPage } from '../pages/session-detail/session-detail';
 import { SignupPage } from '../pages/signup/signup';
 import { SpeakerListPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -45,6 +42,13 @@ import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
+import { UserPage } from '../pages/user/user';
+
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FilePath } from '@ionic-native/file-path';
+import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
+import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 
 
@@ -55,15 +59,12 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     AccountPage,
     LoginPage,
     PopoverPage,
-    SchedulePage,
     MedicalclaimPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
     EntertainmentclaimPage,
     TravelclaimPage,
-    ScheduleFilterPage,
-    SessionDetailPage,
     SignupPage,
     SpeakerListPage,
     SetupPage,
@@ -80,7 +81,8 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     QualificationsetupPage,
     SubsciptionsetupPage,
     TenantsetupPage,
-    TabsPage
+    TabsPage,
+    UserPage
   ],
   imports: [
     BrowserModule,
@@ -96,9 +98,6 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
-        { component: SchedulePage, name: 'Schedule', segment: 'schedule' },
-        { component: SessionDetailPage, name: 'SessionDetail', segment: 'sessionDetail/:name' },
-        { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
         { component: SpeakerListPage, name: 'Home', segment: 'Home' },
         { component: SetupPage, name: 'Setup', segment: 'Setup' },
         { component: AboutPage, name: 'About', segment: 'about' },
@@ -116,9 +115,6 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     AccountPage,
     LoginPage,
     PopoverPage,
-    SchedulePage,
-    ScheduleFilterPage,
-    SessionDetailPage,
     SignupPage,
     SetupPage,
     MedicalclaimPage,
@@ -141,14 +137,22 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
     SubsciptionsetupPage,
     TenantsetupPage,
     SpeakerListPage,
-    TabsPage
+    TabsPage,
+    UserPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData,
     UserData,
     InAppBrowser,
-    SplashScreen,StatusBar
+    SplashScreen,StatusBar,
+
+    Camera,
+    File,
+    FilePath,
+    FileTransfer,
+    //FileUploadOptions,
+    FileTransferObject
   ]
 })
 export class AppModule { }

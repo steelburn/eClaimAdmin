@@ -1,5 +1,6 @@
 <!--
   Generated template for the BranchsetupPage page.
+
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
@@ -45,8 +46,9 @@
       <ion-list>
         <form [formGroup]="Branchform">
           <ion-item>
-            <ion-label stacked>{{"BRANCHNAME"}}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="branch_entry.NAME" placeholder="{{'Please fill in the branch name'}}"></ion-input>
+            <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" 
+            placeholder="{{'Please fill in the branch name'}}"></ion-input>
           </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
@@ -75,10 +77,11 @@
         <form [formGroup]="Branchform">
           <ion-item>
             <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="branch_entry.NAME" value="{{branch.NAME}}" placeholder="{{'Please fill in the branch name'}}"></ion-input>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" 
+            placeholder="{{'Please fill in the branch name'}}"></ion-input>
           </ion-item>
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(branch.BRANCH_GUID)">{{"SUBMIT" | translate}}</button></div>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="!Update(branch_details.BRANCH_GUID)">{{"SUBMIT" | translate}}</button></div>
         </form>
       </ion-list>
     </ion-card>

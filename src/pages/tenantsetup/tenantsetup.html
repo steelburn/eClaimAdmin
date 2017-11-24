@@ -19,161 +19,118 @@
         <button ion-fab mini (click)="AddTenantClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
+  
     <div class="eClaimSubTitle"><b>COMPANY DETAILS</b></div>
     <ion-list>
-        <ion-list-header>
-            NAME
-        </ion-list-header>
+        <ion-item>
+            <table class="Tabler">
+                <tr class="linedsg TColor">
+                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+                    <th class="lgl1">NAME</th>
+                    <th class="lgl1">REG NO.</th>
+<<<<<<< HEAD
 
-        <ion-item>COMPANY A
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
-        <ion-item>COMPANY B
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
-        <ion-item>COMPANY C
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
+                    <th class="lgl1">ADDRESS</th>
+                    <th class="lgl1">EMAIL</th>
+                    <th class="lgl1">CONTACT NUMBER</th>
+                    <th class="lgl1">WEBSITE</th>
+=======
+>>>>>>> master
+                    <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+    
+                </tr>
+    
+                <tr class="col7" *ngFor="let tenant of tenants; let i=index">
+                    <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{tenant.SITE_NAME}}</td>
+                    <td class="lgl1">{{tenant.REGISTRATION_NUM}}</td>
+<<<<<<< HEAD
 
+                    <td class="lgl1">{{tenant.ADDRESS}}</td>
+                    <td class="lgl1">{{tenant.EMAIL}}</td>
+                    <td class="lgl1">{{tenant.CONTACT_NO}}</td>
+                    <td class="lgl1">{{tenant.WEBSITE}}</td>
+=======
+>>>>>>> master
+    
+                    <td class="lgl1 fColor">
+                        <button ion-button item-end  (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                        <button ion-button item-end (click)="DeleteClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                    </td>
+                </tr>
+    
+    
+            </table>
+        </ion-item>
     </ion-list>
 
+
+<<<<<<< HEAD
+
+    <!-- <div class="eClaimSubTitle"><b>HQ DETAILS</b></div>
     <ion-list>
-        <ion-list-header>
-            REG NO.
-        </ion-list-header>
-
-        <ion-item>A12233
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
+        <ion-item>
+            <table class="Tabler">
+                <tr class="linedsg TColor">
+                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+                    <th class="lgl1">ADDRESS</th>
+                    <th class="lgl1">EMAIL</th>
+                    <th class="lgl1">CONTACT NUMBER</th>
+                    <th class="lgl1">WEBSITE</th>
+          
+                    <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+    
+                </tr>
+    
+                <tr class="col7" *ngFor="let tenant of tenants; let i=index">
+                        <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{tenant.ADDRESS1}}</td>
+                    <td class="lgl1">{{tenant.EMAIL}}</td>
+                    <td class="lgl1">{{tenant.CONTACT_NO}}</td>
+                    <td class="lgl1">{{tenant.WEBSITE}}</td>
+    
+                    <td class="lgl1 fColor">
+                        <button ion-button item-end  (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                        <button ion-button item-end (click)="DeleteClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                    </td>
+                </tr>
+    
+    
+            </table>
         </ion-item>
-        <ion-item>B33345
-
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
-        <ion-item>C55766
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
-
-    </ion-list>
-
-    <div class="eClaimSubTitle"><b>HQ DETAILS</b></div>
-
-    <ion-list>
-        <ion-list-header>
-            ADRESS
-        </ion-list-header>
-
-        <ion-item>NO 9,JALAN SS1, TAMAN GGD, 67000 PETALING JAYA,SELANGOR, MALAYSIA
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
-        <ion-item>C1-1 ,CBD 11, PERSIARAN FLOORA, CYBER 12,63000 Cyberjaya, SELANGOR, MALAYSIA
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
-        <ion-item>NO,99, HLN ALAV, TAMAN GUT, 88888, SUBANG JAYA,SELANGOR,MALAYSIA
-            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
-        </ion-item>
-
-    </ion-list>
-
-
-    <ion-list>
-        <ion-list-header>
-            EMAIL
-        </ion-list-header>
-
-        <ion-item>AA@LIVE.COM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>BB@GMAIL.COM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>CC@YAHOO.COM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
-    </ion-list>
-
-    <ion-list>
-        <ion-list-header>
-            CONTACT NUMBER
-        </ion-list-header>
-
-        <ion-item>012-2345678<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>03-12345678<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>06-12345678<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
-    </ion-list>
-
-
-    <ion-list>
-        <ion-list-header>
-            WEBSITE
-        </ion-list-header>
-
-        <ion-item>http://www.hi.com<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>http://www.hiy.com<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>http://www.hiyou.com<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
-    </ion-list>
+    </ion-list> -->
+ 
 
     <div class="eClaimSubTitle"><b>CONTACT DETAILS</b></div>
-
-
     <ion-list>
-        <ion-list-header>
-            NAME
-        </ion-list-header>
-
-        <ion-item>EQUAL<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>ADEE<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>NINAYU<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
-    </ion-list>
-
-    <ion-list>
-        <ion-list-header>
-            CONTACT NUMBER
-        </ion-list-header>
-
-        <ion-item>012-2345678<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>03-12345678<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>06-12345678<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
-    </ion-list>
-
-    <ion-list>
-        <ion-list-header>
-            EMAIL
-        </ion-list-header>
-
-        <ion-item>AA@LIVE.COM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>BB@GMAIL.COM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-        <ion-item>CC@YAHOO.COM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
-
-    </ion-list>
-
-
-
+            <ion-item>
+                <table class="Tabler">
+                    <tr class="linedsg TColor">
+                        <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+                        <th class="lgl1">NAME</th>
+                        <th class="lgl1">CONTACT NUMBER</th>
+                        <th class="lgl1">EMAIL</th>
+                        <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+        
+                    </tr>
+        
+                    <tr class="col7" *ngFor="let tenant of tenants; let i=index">
+                            <td class="lgl1">{{i+1}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON_CONTACT_NO}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON_EMAIL}}</td>
+              
+        
+                        <td class="lgl1 fColor">
+                            <button ion-button item-end  (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                            <button ion-button item-end (click)="DeleteClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                        </td>
+                    </tr>
+        
+        
+                </table>
+            </ion-item>
+        </ion-list>
 
     <!-- add Tenant form start-->
     <div class="blackcontainer" *ngIf="AddTenantClicked">
@@ -194,35 +151,100 @@
                     <div class="eClaimSubTitle1"><b>COMPANY DETAILS</b></div>
                     <ion-item>
                         <ion-label stacked>{{"NAME"}}</ion-label>
-                        <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
+                        <ion-input type="text" formControlName="SITE_NAME" [(ngModel)]="SITE_NAME_ngModel_Add" 
+                        placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>{{"REG.NO"}}</ion-label>
-                        <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the registration number of the tenant'}}"></ion-input>
+                        <ion-input type="text" formControlName="REGISTRATION_NUM" [(ngModel)]="REGISTRATION_NUM_ngModel_Add" 
+                        placeholder="{{'Please fill in the registration number of the tenant'}}"></ion-input>
                     </ion-item>
-                    <div class="eClaimSubTitle2"><b>HQ DETAILS</b></div>
+
                     <ion-item>
                         <ion-label stacked>{{"ADDRESS"}}</ion-label>
-                        <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the HQ address'}}"></ion-input>
+                        <ion-input type="text" formControlName="ADDRESS" [(ngModel)]="ADDRESS_ngModel_Add" 
+                        placeholder="{{'Please fill in the HQ address'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>{{"EMAIL"}}</ion-label>
-                        <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the HQ email address'}}"></ion-input>
+                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="EMAIL_ngModel_Add" 
+                        placeholder="{{'Please fill in the HQ email address'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
-                        <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the HQ contact number'}}"></ion-input>
+                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="CONTACT_NO_ngModel_Add" 
+                        placeholder="{{'Please fill in the HQ contact number'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>{{"WEBSITE"}}</ion-label>
-                        <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the HQ website'}}"></ion-input>
+                        <ion-input type="text" formControlName="WEBSITE" [(ngModel)]="WEBSITE_ngModel_Add" 
+                        placeholder="{{'Please fill in the HQ website'}}"></ion-input>
                     </ion-item>
 
                     <div class="eClaimSubTitle2"><b>CONTACT DETAILS</b></div>
+
+                    <ion-item>
+                        <ion-label stacked>{{"NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="CONTACT_PERSON_ngModel_Add" 
+                        placeholder="{{'Please fill in the name'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_CONTACT_NO" [(ngModel)]="CONTACT_PERSON_CONTACT_NO_ngModel_Add" 
+                        placeholder="{{'Please fill in the contact number'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="CONTACT_PERSON_EMAIL_ngModel_Add" 
+                        placeholder="{{'Please fill in the Email'}}"></ion-input>
+                    </ion-item>
+
+
+                    <!-- <div class="eClaimSubTitle2"><b>HQ DETAILS</b></div>
+                    <ion-item>
+                        <ion-label stacked>{{"ADDRESS"}}</ion-label>
+                        <ion-input type="text" formControlName="ADDRESS1" [(ngModel)]="tenant_entry.ADDRESS1" placeholder="{{'Please fill in the HQ address'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="tenant_entry.EMAIL" placeholder="{{'Please fill in the HQ email address'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="tenant_entry.CONTACT_NO" placeholder="{{'Please fill in the HQ contact number'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"WEBSITE"}}</ion-label>
+                        <ion-input type="text" formControlName="WEBSITE" [(ngModel)]="tenant_entry.WEBSITE" placeholder="{{'Please fill in the HQ website'}}"></ion-input>
+                    </ion-item>
+
+                    <div class="eClaimSubTitle2"><b>CONTACT DETAILS</b></div>
+                    
+                        <ion-item>
+                        <ion-label stacked>{{"NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="tenant_entry.CONTACT_PERSON" placeholder="{{'Please fill in the company name of the contact person'}}"></ion-input>
+                     </ion-item>
+                    
+                      <ion-item>
+                       <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_CONTACT_NO" [(ngModel)]="tenant_entry.CONTACT_PERSON_CONTACT_NO" placeholder="{{'Please fill in the contact number of the contact person'}}"></ion-input>
+                      </ion-item>
+                    
+                      <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="tenant_entry.CONTACT_PERSON_EMAIL" placeholder="{{'Please fill in the email address of the contact person'}}"></ion-input>
+                      </ion-item> -->
+
+                    <!-- <div class="eClaimSubTitle2"><b>CONTACT DETAILS</b></div>
 
                     <ion-item>
                         <ion-label stacked>{{"NAME"}}</ion-label>
@@ -239,15 +261,357 @@
                     <ion-item>
                         <ion-label stacked>{{"EMAIL"}}</ion-label>
                         <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the email address of the contact person'}}"></ion-input>
-                    </ion-item>
+                    </ion-item> -->
 
 
                     <div class="btn">
-                        <button ion-button>SUBMIT</button></div>
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Tenantform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
+=======
+
+    <div class="eClaimSubTitle"><b>HQ DETAILS</b></div>
+    <ion-list>
+        <ion-item>
+            <table class="Tabler">
+                <tr class="linedsg TColor">
+                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+                    <th class="lgl1">ADDRESS</th>
+                    <th class="lgl1">EMAIL</th>
+                    <th class="lgl1">CONTACT NUMBER</th>
+                    <th class="lgl1">WEBSITE</th>
+          
+                    <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+    
+                </tr>
+    
+                <tr class="col7" *ngFor="let tenant of tenants; let i=index">
+                        <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{tenant.ADDRESS1}}</td>
+                    <td class="lgl1">{{tenant.EMAIL}}</td>
+                    <td class="lgl1">{{tenant.CONTACT_NO}}</td>
+                    <td class="lgl1">{{tenant.WEBSITE}}</td>
+    
+                    <td class="lgl1 fColor">
+                        <button ion-button item-end  (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                        <button ion-button item-end (click)="DeleteClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                    </td>
+                </tr>
+    
+    
+            </table>
+        </ion-item>
+    </ion-list>
+ 
+
+    <div class="eClaimSubTitle"><b>CONTACT DETAILS</b></div>
+    <ion-list>
+            <ion-item>
+                <table class="Tabler">
+                    <tr class="linedsg TColor">
+                        <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+                        <th class="lgl1">NAME</th>
+                        <th class="lgl1">CONTACT NUMBER</th>
+                        <th class="lgl1">EMAIL</th>
+                        <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+        
+                    </tr>
+        
+                    <tr class="col7" *ngFor="let tenant of tenants; let i=index">
+                            <td class="lgl1">{{i+1}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON_CONTACT_NO}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON_EMAIL}}</td>
+              
+        
+                        <td class="lgl1 fColor">
+                            <button ion-button item-end  (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                            <button ion-button item-end (click)="DeleteClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                        </td>
+                    </tr>
+        
+        
+                </table>
+            </ion-item>
+        </ion-list>
+
+    
+
+    <!-- add Tenant form start-->
+    <div class="blackcontainer" *ngIf="AddTenantClicked">
+    </div>
+    <div class="popup" padding *ngIf="AddTenantClicked">
+
+        <ion-card class="cm">
+            <ion-card-header class="icTitle headerColor-white ">
+
+                <div class="icHeaderText">REGISTER NEW TENANT</div>
+                <button class="btnR" (click)="CloseTenantClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+            </ion-card-header>
+            <ion-list class="scroll">
+                <form [formGroup]="Tenantform">
+
+                    <div class="eClaimSubTitle1"><b>COMPANY DETAILS</b></div>
+                    <ion-item>
+                        <ion-label stacked>{{"NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="SITE_NAME" [(ngModel)]="tenant_entry.SITE_NAME" placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"REG.NO"}}</ion-label>
+                        <ion-input type="text" formControlName="REGISTRATION_NUM" [(ngModel)]="tenant_entry.REGISTRATION_NUM" placeholder="{{'Please fill in the registration number of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <div class="eClaimSubTitle2"><b>HQ DETAILS</b></div>
+                    <ion-item>
+                        <ion-label stacked>{{"ADDRESS"}}</ion-label>
+                        <ion-input type="text" formControlName="ADDRESS1" [(ngModel)]="tenant_entry.ADDRESS1" placeholder="{{'Please fill in the HQ address'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="tenant_entry.EMAIL" placeholder="{{'Please fill in the HQ email address'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="tenant_entry.CONTACT_NO" placeholder="{{'Please fill in the HQ contact number'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"WEBSITE"}}</ion-label>
+                        <ion-input type="text" formControlName="WEBSITE" [(ngModel)]="tenant_entry.WEBSITE" placeholder="{{'Please fill in the HQ website'}}"></ion-input>
+                    </ion-item>
+
+                    <div class="eClaimSubTitle2"><b>CONTACT DETAILS</b></div>
+                    
+                        <ion-item>
+                        <ion-label stacked>{{"NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="tenant_entry.CONTACT_PERSON" placeholder="{{'Please fill in the company name of the contact person'}}"></ion-input>
+                     </ion-item>
+                    
+                      <ion-item>
+                       <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_CONTACT_NO" [(ngModel)]="tenant_entry.CONTACT_PERSON_CONTACT_NO" placeholder="{{'Please fill in the contact number of the contact person'}}"></ion-input>
+                      </ion-item>
+                    
+                      <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="tenant_entry.CONTACT_PERSON_EMAIL" placeholder="{{'Please fill in the email address of the contact person'}}"></ion-input>
+                      </ion-item>
+
+
+
+                    <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Tenantform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
+
                 </form>
             </ion-list>
         </ion-card>
 
     </div>
     <!-- add Tenant form end-->
+>>>>>>> master
+
+                </form>
+            </ion-list>
+        </ion-card>
+
+    </div>
+    <!-- add Tenant form end-->
+
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> master
+     <!-- edit Tenant form start-->
+     <div class="blackcontainer" *ngIf="EditTenantClicked">
+    </div>
+    <div class="popup" padding *ngIf="EditTenantClicked">
+
+        <ion-card class="cm">
+            <ion-card-header class="icTitle headerColor-white ">
+
+                <div class="icHeaderText">UPDATE TENANT</div>
+                <button class="btnR" (click)="CloseTenantClick()">
+          <ion-icon name="md-close"></ion-icon> 
+        </button>
+            </ion-card-header>
+            <ion-list class="scroll">
+                <form [formGroup]="Tenantform">
+
+                    <!-- <div class="eClaimSubTitle1"><b>COMPANY DETAILS</b></div> -->
+                    <ion-item>
+                        <ion-label stacked>{{"NAME"}}</ion-label>
+<<<<<<< HEAD
+                        <ion-input type="text" formControlName="SITE_NAME" [(ngModel)]="SITE_NAME_ngModel_Edit"  
+                        placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
+=======
+                        <ion-input type="text" formControlName="SITE_NAME" [(ngModel)]="tenant_entry.SITE_NAME"  value="{{tenant.SITE_NAME}}" placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
+>>>>>>> master
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"REG.NO"}}</ion-label>
+<<<<<<< HEAD
+                        <ion-input type="text" formControlName="REGISTRATION_NUM" [(ngModel)]="REGISTRATION_NUM_ngModel_Edit" 
+                        placeholder="{{'Please fill in the registration number of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"ADDRESS"}}</ion-label>
+                        <ion-input type="text" formControlName="ADDRESS" [(ngModel)]="ADDRESS_ngModel_Edit" 
+                        placeholder="{{'Please fill in the HQ address'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="EMAIL_ngModel_Edit" 
+                         placeholder="{{'Please fill in the Email address'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="CONTACT_NO_ngModel_Edit" 
+                        placeholder="{{'Please fill in the HQ contact number'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"WEBSITE"}}</ion-label>
+                        <ion-input type="text" formControlName="WEBSITE" [(ngModel)]="WEBSITE_ngModel_Edit" 
+                        placeholder="{{'Please fill in the HQ website'}}"></ion-input>
+                    </ion-item>
+
+                    <div class="eClaimSubTitle2"><b>CONTACT DETAILS</b></div>
+
+                    <ion-item>
+                        <ion-label stacked>{{"NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="CONTACT_PERSON_ngModel_Edit" 
+                        placeholder="{{'Please fill in the name'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_CONTACT_NO" [(ngModel)]="CONTACT_PERSON_CONTACT_NO_ngModel_Edit" 
+                        placeholder="{{'Please fill in the contact number'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="CONTACT_PERSON_EMAIL_ngModel_Edit" 
+                        placeholder="{{'Please fill in the Email'}}"></ion-input>
+                    </ion-item>
+
+                    
+
+                    <!-- <div class="eClaimSubTitle2"><b>HQ DETAILS</b></div>
+=======
+                        <ion-input type="text" formControlName="REGISTRATION_NUM" [(ngModel)]="tenant_entry.REGISTRATION_NUM" value="{{tenant.REGISTRATION_NUM}}" placeholder="{{'Please fill in the registration number of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <div class="eClaimSubTitle2"><b>HQ DETAILS</b></div>
+>>>>>>> master
+                    
+                     <ion-item>
+                       <ion-label stacked>{{"ADDRESS"}}</ion-label>
+                       <ion-input type="text" formControlName="ADDRESS1" [(ngModel)]="tenant_entry.ADDRESS1" value="{{tenant.ADDRESS1}}" placeholder="{{'Please fill in the HQ address'}}"></ion-input>
+<<<<<<< HEAD
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="tenant_entry.EMAIL"  value="{{tenant.EMAIL}}" placeholder="{{'Please fill in the HQ website address'}}"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="tenant_entry.CONTACT_NO" value="{{tenant.CONTACT_NO}}" placeholder="{{'Please fill in the HQ contact number'}}"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"WEBSITE"}}</ion-label>
+                        <ion-input type="text" formControlName="WEBSITE" [(ngModel)]="tenant_entry.WEBSITE" value="{{tenant.WEBSITE}}" placeholder="{{'Please fill in the HQ website'}}"></ion-input>
+                    </ion-item>
+
+                    <div class="eClaimSubTitle2"><b>CONTACT DETAILS</b></div>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="tenant_entry.CONTACT_PERSON" value="{{tenant.CONTACT_PERSON}}"
+                              placeholder="{{'Please fill in the company name of the contact person'}}"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_CONTACT_NO" [(ngModel)]="tenant_entry.CONTACT_PERSON_CONTACT_NO" value="{{tenant.CONTACT_PERSON_CONTACT_NO}}"
+                          placeholder="{{'Please fill in the contact number of the contact person'}}"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="tenant_entry.CONTACT_PERSON_EMAIL" value="{{tenant.CONTACT_PERSON_EMAIL}}" placeholder="{{'Please fill in the email address of the contact person'}}"></ion-input>
+                    </ion-item> -->
+                    
+
+                    <!-- <div class="eClaimSubTitle2"><b>HQ DETAILS</b></div>
+                    <ion-item>
+                        <ion-label stacked>{{"ADDRESS"}}</ion-label>
+                        <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the HQ address'}}"></ion-input>
+=======
+>>>>>>> master
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="tenant_entry.EMAIL"  value="{{tenant.EMAIL}}" placeholder="{{'Please fill in the HQ website address'}}"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="tenant_entry.CONTACT_NO" value="{{tenant.CONTACT_NO}}" placeholder="{{'Please fill in the HQ contact number'}}"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"WEBSITE"}}</ion-label>
+                        <ion-input type="text" formControlName="WEBSITE" [(ngModel)]="tenant_entry.WEBSITE" value="{{tenant.WEBSITE}}" placeholder="{{'Please fill in the HQ website'}}"></ion-input>
+                    </ion-item>
+
+                    <div class="eClaimSubTitle2"><b>CONTACT DETAILS</b></div>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="tenant_entry.CONTACT_PERSON" value="{{tenant.CONTACT_PERSON}}"
+                              placeholder="{{'Please fill in the company name of the contact person'}}"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"CONTACT NUMBER"}}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_CONTACT_NO" [(ngModel)]="tenant_entry.CONTACT_PERSON_CONTACT_NO" value="{{tenant.CONTACT_PERSON_CONTACT_NO}}"
+                          placeholder="{{'Please fill in the contact number of the contact person'}}"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label stacked>{{"EMAIL"}}</ion-label>
+<<<<<<< HEAD
+                        <ion-input type="text" formControlName="tenantname" [(ngModel)]="Tenantform.fullname" placeholder="{{'Please fill in the email address of the contact person'}}"></ion-input>
+                    </ion-item> -->
+
+
+                    <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="!Update(tenant_details.TENANT_COMPANY_SITE_GUID)">{{"SUBMIT" | translate}}</button></div>
+=======
+                        <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="tenant_entry.CONTACT_PERSON_EMAIL" value="{{tenant.CONTACT_PERSON_EMAIL}}" placeholder="{{'Please fill in the email address of the contact person'}}"></ion-input>
+                    </ion-item>
+                    
+                    <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Tenantform.valid" (click)="Update(tenant.TENANT_COMPANY_SITE_GUID)">{{"SUBMIT" | translate}}</button></div>
+>>>>>>> master
+
+                </form>
+            </ion-list>
+        </ion-card>
+
+    </div>
+    <!-- edit Tenant form end-->
 </ion-content>
