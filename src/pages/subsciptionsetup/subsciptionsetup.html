@@ -58,11 +58,7 @@
 
 
 
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> master
 
   <!-- add Subscription form start-->
   <div class="blackcontainer" *ngIf="AddSubscriptionClicked">
@@ -81,34 +77,21 @@
         <form [formGroup]="Subscriptionform">
           <ion-item>
             <ion-label stacked>{{"PLAN NAME"}}</ion-label>
-<<<<<<< HEAD
             <ion-input type="text" formControlName="PLAN_NAME" [(ngModel)]="PLAN_NAME_ngModel_Add" placeholder="{{'Please fill in the name of the plan'}}"></ion-input>
-=======
-            <ion-input type="text" formControlName="PLAN_NAME" [(ngModel)]="Subscription_entry.PLAN_NAME" placeholder="{{'Please fill in the name of the plan'}}"></ion-input>
->>>>>>> master
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"DURATION"}}</ion-label>
-<<<<<<< HEAD
             <ion-input type="text" formControlName="DURATION" [(ngModel)]="DURATION_ngModel_Add" placeholder="{{'Please fill in the duration of the plan'}}"></ion-input>
-=======
-            <ion-input type="text" formControlName="DURATION" [(ngModel)]="Subscription_entry.DURATION" placeholder="{{'Please fill in the duration of the plan'}}"></ion-input>
->>>>>>> master
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"RATE"}}</ion-label>
-<<<<<<< HEAD
             <ion-input type="text" formControlName="RATE" [(ngModel)]="RATE_ngModel_Add" placeholder="{{'Please fill in the rate of the plan'}}"></ion-input>
-=======
-            <ion-input type="text" formControlName="RATE" [(ngModel)]="Subscription_entry.RATE" placeholder="{{'Please fill in the rate of the plan'}}"></ion-input>
->>>>>>> master
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"EFFECTIVE DATE"}}</ion-label>
-<<<<<<< HEAD
             <ion-datetime displayFormat="DD/MM/YYYY" formControlName="EFFECTIVE_DATE" [(ngModel)]="EFFECTIVE_DATE_ngModel_Add" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
           </ion-item>
 
@@ -172,19 +155,10 @@
           <ion-item>
             <ion-label stacked>{{"EFFECTIVE DATE"}}</ion-label>
             <ion-datetime displayFormat="DD/MM/YYYY" formControlName="EFFECTIVE_DATE" [(ngModel)]="EFFECTIVE_DATE_ngModel_Edit" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
-=======
-            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="EFFECTIVE_DATE" [(ngModel)]="Subscription_entry.EFFECTIVE_DATE" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
-          </ion-item>
-
-          <ion-item>
-            <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
-            <ion-toggle formControlName="ACTIVE_FLAG" [(ngModel)]="Subscription_entry.ACTIVE_FLAG"></ion-toggle>  
->>>>>>> master
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-<<<<<<< HEAD
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit" placeholder="{{'Please fill in the description of the plan'}}"></ion-input>
           </ion-item>
 
@@ -196,86 +170,16 @@
               <ion-option value="1">INACTIVE</ion-option>
           
             </ion-select> -->
-=======
-            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="Subscription_entry.DESCRIPTION" placeholder="{{'Please fill in the description of the plan'}}"></ion-input>
->>>>>>> master
           </ion-item>
 
 
           <div class="btn">
-<<<<<<< HEAD
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="!Update(subscription_details.SUBSCRIPTION_GUID)">{{"SUBMIT" | translate}}</button>
-=======
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Subscriptionform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>        
->>>>>>> master
           </div>
         </form>
       </ion-list>
     </ion-card>
 
   </div>
-<<<<<<< HEAD
-=======
-  <!-- add Subscription form end-->
-
-  <!-- edit subscription form start-->
-  <div class="blackcontainer" *ngIf="EditSubscriptionClicked">
-  </div>
-  <div class="popup" padding *ngIf="EditSubscriptionClicked">
-
-    <ion-card class="cm">
-      <ion-card-header class="icTitle headerColor-white ">
-
-        <div class="icHeaderText">EDIT SUBSCRIPTION</div>
-        <button class="btnR" (click)="CloseSubscriptionClick()">
-          <ion-icon name="md-close"></ion-icon> 
-        </button>
-      </ion-card-header>
-      <ion-list class="scroll">
-        <form [formGroup]="Subscriptionform">
-          <ion-item>
-            <ion-label stacked>{{"PLAN NAME"}}</ion-label>
-            <ion-input type="text" formControlName="PLAN_NAME" [(ngModel)]="Subscription_entry.PLAN_NAME" value="{{subscription.PLAN_NAME}}"
-              placeholder="{{'Please fill in the name of the plan'}}"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label stacked>{{"DURATION"}}</ion-label>
-            <ion-input type="text" formControlName="DURATION" [(ngModel)]="Subscription_entry.DURATION" value="{{subscription.DURATION}}"
-              placeholder="{{'Please fill in the duration of the plan'}}"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label stacked>{{"RATE"}}</ion-label>
-            <ion-input type="text" formControlName="RATE" [(ngModel)]="Subscription_entry.RATE" value="{{subscription.RATE}}" placeholder="{{'Please fill in the rate of the plan'}}"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label stacked>{{"EFFECTIVE DATE"}}</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="EFFECTIVE_DATE" [(ngModel)]="Subscription_entry.EFFECTIVE_DATE"
-              placeholder="{{'Please choose your effective date'}}"></ion-datetime>
-          </ion-item>
-
-          <ion-item>
-            <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
-            <ion-toggle formControlName="ACTIVE_FLAG" [(ngModel)]="Subscription_entry.ACTIVE_FLAG" ng-value="subscription.ACTIVE_FLAG" ng-true-value="1" ng-false-value="0" ></ion-toggle>
-            <ion-input type="text" formControlName="ACTIVE_FLAG" [(ngModel)]="Subscription_entry.ACTIVE_FLAG"
-            placeholder="{{'Please fill in the duration of the plan'}}"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="Subscription_entry.DESCRIPTION" value="{{subscription.DESCRIPTION}}"
-              placeholder="{{'Please fill in the description of the plan'}}"></ion-input>
-          </ion-item>
-          <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Subscriptionform.valid" (click)="Update(subscription.SUBSCRIPTION_GUID)">{{"SUBMIT" | translate}}</button>
-          </div>
-        </form>
-      </ion-list>
-    </ion-card>
-
-  </div>
->>>>>>> master
 
 </ion-content>

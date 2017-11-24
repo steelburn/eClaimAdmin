@@ -4,12 +4,13 @@ import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage';
-import { TranslateService } from '@ngx-translate/core';
+import{ TranslateService } from '@ngx-translate/core';
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
+import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
 import { SpeakerListPage } from '../pages/home/home';
 import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
@@ -48,20 +49,21 @@ export class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
-    { title: 'DASHBOARD', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
-    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 2, icon: 'checkbox-outline' }
+    { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},
+    { title: 'SCHEDULE', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 2, icon: 'calendar' },  
+    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'checkbox-outline' }
   ];
-  // loggedInPages: PageInterface[] = [
-  //   { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
-  //   { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
-  // ];
-  // loggedOutPages: PageInterface[] = [
-  //   { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-  //   { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
-  // ];
+  loggedInPages: PageInterface[] = [
+    { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
+    { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
+  ];
+  loggedOutPages: PageInterface[] = [
+    { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
+    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
+  ];
   rootPage: any = SignupPage;
-
+  
 
   constructor(
 
@@ -70,14 +72,13 @@ export class ConferenceApp {
     public menu: MenuController,
     public platform: Platform,
     public confData: ConferenceData,
-    storage: Storage,
-    statusbar: StatusBar,
-    splashScreen: SplashScreen, translate: TranslateService
-  ) {
-
+     storage: Storage,
+     statusbar:StatusBar,
+     splashScreen: SplashScreen,translate: TranslateService
+  ) { 
 
     translate.setDefaultLang('en');
-    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
+    platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
     // Check if the user has already seen the tutorial
 
     // load the conference data
@@ -91,7 +92,6 @@ export class ConferenceApp {
 
     this.listenToLoginEvents();
   }
-
 
 
   openPage(page: PageInterface) {
@@ -109,8 +109,8 @@ export class ConferenceApp {
     // tabs even if changing them from the menu
     if (this.nav.getActiveChildNav() && page.index != undefined) {
       this.nav.getActiveChildNav().select(page.index);
-      // Set the root of the nav with params if it's a tab index
-    } else {
+    // Set the root of the nav with params if it's a tab index
+  } else {
       this.nav.setRoot(page.name, params).catch((err: any) => {
         console.log(`Didn't set nav root: ${err}`);
       });
@@ -124,15 +124,15 @@ export class ConferenceApp {
 
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
-      this.enableMenu(false);
+      this.enableMenu(true);
     });
 
     this.events.subscribe('user:signup', () => {
-      this.enableMenu(false);
+      this.enableMenu(true);
     });
 
     this.events.subscribe('user:logout', () => {
-      this.enableMenu(true);
+      this.enableMenu(false);
     });
   }
 
@@ -157,7 +157,4 @@ export class ConferenceApp {
     }
     return;
   }
-
-
-  
 }

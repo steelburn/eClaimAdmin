@@ -32,67 +32,62 @@ export class SetupPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  goToBanksetup() {
+  goToBanksetup(){
     this.navCtrl.push(BanksetupPage)
   }
 
-  goToBranchsetup() {
+  goToBranchsetup(){
     this.navCtrl.push(BranchsetupPage)
   }
 
-  goToCashcardsetup() {
+    goToCashcardsetup(){
     this.navCtrl.push(CashcardsetupPage)
   }
 
 
-  goToClaimtypesetup() {
+    goToClaimtypesetup(){
     this.navCtrl.push(ClaimtypePage)
   }
 
-<<<<<<< HEAD
   goToUser(){
     this.navCtrl.push(UserPage)
   }
   
   goToCompanysetup(){
-=======
-
-  goToCompanysetup() {
->>>>>>> master
     this.navCtrl.push(CompanysetupPage)
   }
 
-  goToDesignationsetup() {
+  goToDesignationsetup(){
     this.navCtrl.push(DesignationsetupPage)
   }
 
-  goToDepartmentsetup() {
+  goToDepartmentsetup(){
     this.navCtrl.push(DepartmentsetupPage)
   }
 
+ 
 
-
-  goToPaymenttypesetup() {
+      goToPaymenttypesetup(){
     this.navCtrl.push(PaymenttypesetupPage)
   }
 
 
-  goToSubscriptionsetup() {
+      goToSubscriptionsetup(){
     this.navCtrl.push(SubsciptionsetupPage)
   }
 
-  goToQualificationsetup() {
+      goToQualificationsetup(){
     this.navCtrl.push(QualificationsetupPage)
   }
 
-  goToRolesetup() {
+      goToRolesetup(){
     this.navCtrl.push(RolesetupPage)
   }
 
-  goToTenantsetup() {
+    goToTenantsetup(){
     this.navCtrl.push(TenantsetupPage)
   }
-  goToMileagesetup() {
+      goToMileagesetup(){
     this.navCtrl.push(MileagesetupPage)
   }
 

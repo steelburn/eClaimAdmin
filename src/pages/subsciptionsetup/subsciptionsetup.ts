@@ -26,18 +26,13 @@ import { UUID } from 'angular2-uuid';
 })
 export class SubsciptionsetupPage {
   Subscription_entry: SubsciptionSetup_Model = new SubsciptionSetup_Model();
-<<<<<<< HEAD
   //subscription: SubsciptionSetup_Model = new SubsciptionSetup_Model();
-=======
-  subscription: SubsciptionSetup_Model = new SubsciptionSetup_Model();
->>>>>>> master
   Subscriptionform: FormGroup;
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_subscription' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   public subscriptions: SubsciptionSetup_Model[] = []; 
-<<<<<<< HEAD
 
   public AddSubscriptionClicked: boolean = false; 
   public EditSubscriptionClicked: boolean = false; 
@@ -64,10 +59,6 @@ export class SubsciptionsetupPage {
   public DESCRIPTION_ngModel_Edit:      any;  
   //---------------------------------------------------------------------
 
-=======
-  public AddSubscriptionClicked: boolean = false; 
-  public EditSubscriptionClicked: boolean = false; 
->>>>>>> master
   
    
     public AddSubscriptionClick() {
@@ -132,47 +123,6 @@ export class SubsciptionsetupPage {
     }
   
 
-    public EditClick(SUBSCRIPTION_GUID: any) {
-      //alert(MILEAGE_GUID);
-      this.EditSubscriptionClicked = true;
-      var self = this;
-      this.subscriptionsetupservice
-        .get(SUBSCRIPTION_GUID)
-        .subscribe((subscription) => self.subscription = subscription);
-      return self.subscription;
-    }
-
-    public DeleteClick(SUBSCRIPTION_GUID: any) {
-      let alert = this.alertCtrl.create({
-        title: 'Remove Confirmation',
-        message: 'Do you want to remove ?',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
-            text: 'OK',
-            handler: () => {
-              console.log('OK clicked');
-              var self = this;
-              this.subscriptionsetupservice.remove(SUBSCRIPTION_GUID)
-                .subscribe(() => {
-                  self.subscriptions = self.subscriptions.filter((item) => {
-                    return item.SUBSCRIPTION_GUID != SUBSCRIPTION_GUID
-                  });
-                });
-              //this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          }
-        ]
-      }); alert.present();
-    }
-  
-
       public CloseSubscriptionClick() {
 
         if (this.AddSubscriptionClicked == true) {
@@ -192,7 +142,6 @@ export class SubsciptionsetupPage {
     });
 
     this.Subscriptionform = fb.group({
-<<<<<<< HEAD
       //PLAN_NAME: ["", Validators.required],
       //PLAN_NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])],
       PLAN_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
@@ -213,20 +162,8 @@ export class SubsciptionsetupPage {
       
       ACTIVE_FLAG: ["", Validators.required],
              
-=======
-      PLAN_NAME: ["", Validators.required],
-      DURATION: ["", Validators.required],
-      RATE: ["", Validators.required],
-      EFFECTIVE_DATE: ["", Validators.required],
-      ACTIVE_FLAG: ["", Validators.required],
-      DESCRIPTION: ["", Validators.required],
-       
->>>>>>> master
     });
   }
-
-  
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SubsciptionsetupPage');
@@ -234,7 +171,6 @@ export class SubsciptionsetupPage {
 
   Save() {
     if (this.Subscriptionform.valid) {
-<<<<<<< HEAD
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -256,8 +192,6 @@ export class SubsciptionsetupPage {
               this.Subscription_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
               this.Subscription_entry.ACTIVE_FLAG = this.ACTIVE_FLAG_ngModel_Add;
 
-=======
->>>>>>> master
       this.Subscription_entry.SUBSCRIPTION_GUID = UUID.UUID();
       this.Subscription_entry.CREATION_TS = new Date().toISOString();
       this.Subscription_entry.CREATION_USER_GUID = "1";
@@ -273,7 +207,6 @@ export class SubsciptionsetupPage {
             //location.reload();
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
-<<<<<<< HEAD
         });
     }
   }
@@ -296,36 +229,6 @@ getSubscriptionList() {
     .subscribe((subscriptions: SubsciptionSetup_Model[]) => {
       self.subscriptions = subscriptions;
     });
-=======
-        })
-    }
-  }
-
- Update(SUBSCRIPTION_GUID: any) {  
- if(this.Subscription_entry.PLAN_NAME==null){this.Subscription_entry.PLAN_NAME = this.Subscription_entry.PLAN_NAME;}
- if(this.Subscription_entry.DURATION==null){this.Subscription_entry.DURATION = this.Subscription_entry.DURATION;}
-
-    if (this.Subscriptionform.valid) {
-      this.Subscription_entry.CREATION_TS = this.subscription.CREATION_TS
-      this.Subscription_entry.CREATION_USER_GUID = this.subscription.CREATION_USER_GUID;
-      this.Subscription_entry.UPDATE_TS = this.subscription.UPDATE_TS;
-
-      this.Subscription_entry.SUBSCRIPTION_GUID = SUBSCRIPTION_GUID;
-      this.Subscription_entry.UPDATE_TS = new Date().toISOString();
-      this.Subscription_entry.UPDATE_USER_GUID = '1';
-      
-      this.subscriptionsetupservice.update(this.Subscription_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Subscription updated successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        })
-    }
-  }
-
->>>>>>> master
 }
 
  Update(SUBSCRIPTION_GUID: any) {  

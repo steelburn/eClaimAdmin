@@ -46,6 +46,38 @@
 
 
 
+  <!-- <ion-list>
+    <ion-list-header>
+      NAME DESCRIPTION
+    </ion-list-header>
+    <ion-item *ngFor="let claimtype of claimtypes">
+      {{claimtype.NAME}} {{claimtype.DESCRIPTION}}
+
+      <button ion-button item-end (click)="EditClick(claimtype.CLAIM_TYPE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+      <button ion-button item-end (click)="DeleteClick(claimtype.CLAIM_TYPE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+    </ion-item> -->
+
+    <!-- <ion-item>TRAVEL<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>ENTERTAINMENT<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>OVERTIME<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item> -->
+  
+
+  <!-- <ion-list>
+      <ion-list-header>
+      DESCIPTION
+      </ion-list-header>
+      <ion-item>MEDICAL CLAIM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>TRAVEL CLAIM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>ENTERTAINMENT CLAIM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+      <ion-item>OVERTIME CLAIM<button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+          <button ion-button item-end><ion-icon name="md-close"></ion-icon></button></ion-item>
+    </ion-list> -->
 
   <!-- add claimtype form start-->
   <div class="blackcontainer" *ngIf="AddClaimtypeClicked">
