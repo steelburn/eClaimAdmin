@@ -27,7 +27,7 @@ import { UUID } from 'angular2-uuid';
 })
 export class CompanysetupPage {
   company_entry: CompanySetup_Model = new CompanySetup_Model();
-  company: CompanySetup_Model = new CompanySetup_Model();
+  //company: CompanySetup_Model = new CompanySetup_Model();
    Companyform: FormGroup;
 
    baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_company' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -37,6 +37,28 @@ export class CompanysetupPage {
  
    public AddCompanyClicked: boolean = false; 
    public EditCompanyClicked: boolean = false;
+   public Exist_Record: boolean = false;
+
+   public company_details: any; 
+   public exist_record_details: any;
+
+   //Set the Model Name for Add------------------------------------------
+  public NAME_ngModel_Add: any;
+  public REGISTRATION_NO_ngModel_Add: any;
+  public ADDRESS_ngModel_Add: any;
+  public FAX_ngModel_Add: any;
+  public PHONE_ngModel_Add: any;
+  public EMAIL_ngModel_Add: any;
+  //---------------------------------------------------------------------
+
+  //Set the Model Name for edit------------------------------------------
+  public NAME_ngModel_Edit: any;
+  public REGISTRATION_NO_ngModel_Edit: any;
+  public ADDRESS_ngModel_Edit: any;
+  public FAX_ngModel_Edit: any;
+  public PHONE_ngModel_Edit: any;
+  public EMAIL_ngModel_Edit: any;
+  //---------------------------------------------------------------------
    
     public AddCompanyClick() {
         this.AddCompanyClicked = true; 
@@ -44,14 +66,21 @@ export class CompanysetupPage {
     }
 
     public EditClick(COMPANY_GUID: any) {
-      //alert(DEPARTMENT_GUID)    ;
+      this.ClearControls();
       this.EditCompanyClicked = true;
       var self = this;
       this.companysetupservice
         .get(COMPANY_GUID)
-        .subscribe((company) => self.company = company);
-      return self.company;
-    }
+        .subscribe((data) => {
+          self.company_details = data;
+          this.NAME_ngModel_Edit = self.company_details.NAME; 
+          this.REGISTRATION_NO_ngModel_Edit = self.company_details.REGISTRATION_NO;  localStorage.setItem('Prev_co_Reg', self.company_details.REGISTRATION_NO);
+          this.ADDRESS_ngModel_Edit = self.company_details.ADDRESS;
+          this.FAX_ngModel_Edit = self.company_details.FAX; localStorage.setItem('Prev_co_Fax', self.company_details.FAX);
+          this.PHONE_ngModel_Edit = self.company_details.PHONE;  localStorage.setItem('Prev_co_Phone', self.company_details.PHONE);
+          this.EMAIL_ngModel_Edit = self.company_details.EMAIL;  localStorage.setItem('Prev_co_Email', self.company_details.EMAIL);
+    });
+  }
 
     public DeleteClick(COMPANY_GUID: any) {
       let alert = this.alertCtrl.create({
@@ -95,8 +124,7 @@ export class CompanysetupPage {
     }
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb:FormBuilder, public http: Http, private httpService: BaseHttpService, private companysetupservice: CompanySetup_Service, private alertCtrl: AlertController) {
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private companysetupservice: CompanySetup_Service, private alertCtrl: AlertController) {
     this.http
     .get(this.baseResourceUrl)
     .map(res => res.json())
@@ -105,15 +133,22 @@ export class CompanysetupPage {
     });
 
   this.Companyform = fb.group({
-
-    NAME: ["", Validators.required],
-    REGISTRATION_NO: ["", Validators.required],
-    ADDRESS: ["", Validators.required],
-    FAX: ["", Validators.required],
-    PHONE: ["", Validators.required],
-    EMAIL: ["", Validators.required],
+    //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])],
+    NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
     
+    //NAME: ["", Validators.required],
+    REGISTRATION_NO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+    //REGISTRATION_NO: ["", Validators.required],
+    ADDRESS: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+    //ADDRESS: ["", Validators.required],
+    FAX: [null, Validators.compose([Validators.pattern('^[0-9]*'), Validators.required])],
+    //FAX: ["", Validators.required],
+    //PHONE: [null, Validators.compose([Validators.pattern('^(?!(0))[0-9]*'), Validators.required])],
 
+    PHONE: [null, Validators.compose([Validators.pattern('^[0-9]*'), Validators.required])],
+    //PHONE: ["", Validators.required],
+    EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
+    //EMAIL: ["", Validators.required],
     });
   }
 
@@ -123,10 +158,27 @@ export class CompanysetupPage {
 
   Save() {
     if (this.Companyform.valid) {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      let options = new RequestOptions({ headers: headers }); 
+      let url: string;
+      url = this.baseResource_Url + "main_company?filter=(REGISTRATION_NO=" +  this.REGISTRATION_NO_ngModel_Add + ")OR(FAX=" +  this.FAX_ngModel_Add + ")OR(PHONE=" +  this.PHONE_ngModel_Add + ")OR(EMAIL=" +  this.EMAIL_ngModel_Add + ")&api_key=" + constants.DREAMFACTORY_API_KEY;
+      this.http.get(url, options)
+        .map(res => res.json())
+        .subscribe(
+        data => {
+          let res = data["resource"];
+          if (res.length == 0) {
+            console.log("No records Found");
+            if (this.Exist_Record == false) {
+              this.company_entry.NAME = this.NAME_ngModel_Add;
+              this.company_entry.REGISTRATION_NO = this.REGISTRATION_NO_ngModel_Add;
+              this.company_entry.ADDRESS = this.ADDRESS_ngModel_Add;
+              this.company_entry.FAX = this.FAX_ngModel_Add;
+              this.company_entry.PHONE = this.PHONE_ngModel_Add;
+              this.company_entry.EMAIL = this.EMAIL_ngModel_Add;
+      
       this.company_entry.COMPANY_GUID = UUID.UUID();
-      //this.department_entry.NAME = UUID.UUID();
-      //this.department_entry.COMPANY = new Date().toISOString();
-      //this.department_entry.DESCRIPTION = '1';
       this.company_entry.CREATION_TS = new Date().toISOString();
       this.company_entry.CREATION_USER_GUID = "1";
       this.company_entry.UPDATE_TS = new Date().toISOString();
@@ -139,34 +191,18 @@ export class CompanysetupPage {
             //location.reload();
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
-        })
+        });
     }
   }
-
-  Update(COMPANY_GUID: any) {  
-    if(this.company_entry.NAME==null){this.company_entry.NAME = this.company_entry.NAME;}
-    if(this.company_entry.REGISTRATION_NO==null){this.company_entry.REGISTRATION_NO = this.company_entry.REGISTRATION_NO;}
-
-    if (this.Companyform.valid) {
-      this.company_entry.CREATION_TS = this.company.CREATION_TS
-      this.company_entry.CREATION_USER_GUID = this.company.CREATION_USER_GUID;
-      this.company_entry.UPDATE_TS = this.company.UPDATE_TS;
-
-      this.company_entry.COMPANY_GUID = COMPANY_GUID;
-      this.company_entry.UPDATE_TS = new Date().toISOString();
-      this.company_entry.UPDATE_USER_GUID = '1';
-      
-      this.companysetupservice.update(this.company_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Company Type updated successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        })
-    }
-  }
-
+  else {
+    console.log("Records Found");
+    alert("The Company is already Exist.")   
+  } 
+},
+err => {
+  this.Exist_Record = false;
+  console.log("ERROR!: ", err);
+});
 }
 }
 getCompanyList() {

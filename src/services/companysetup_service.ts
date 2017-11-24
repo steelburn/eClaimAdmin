@@ -31,7 +31,6 @@ export class CompanySetup_Service {
         return Observable.throw(errMsg);
     }    
 
-<<<<<<< HEAD
     query(params?: URLSearchParams): Observable<CompanySetup_Model[]> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
@@ -51,18 +50,12 @@ export class CompanySetup_Service {
             }).catch(this.handleError);
     };
 
-=======
->>>>>>> master
     save(company_main: CompanySetup_Model): Observable<any> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-<<<<<<< HEAD
         let options = new RequestOptions({ headers: queryHeaders });//alert(JSON.stringify(company_main));
-=======
-        let options = new RequestOptions({ headers: queryHeaders });alert(JSON.stringify(company_main));
->>>>>>> master
         return this.httpService.http.post(this.baseResourceUrl, company_main.toJson(true), options)
             .map((response) => {
                 return response;
@@ -81,7 +74,6 @@ export class CompanySetup_Service {
             });
     }
 
-<<<<<<< HEAD
     get_company(params?: URLSearchParams): Observable<CompanySetup_Model[]> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
@@ -99,8 +91,6 @@ export class CompanySetup_Service {
                 return branches;
             }).catch(this.handleError);
     };
-=======
->>>>>>> master
     remove(id: string) {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');

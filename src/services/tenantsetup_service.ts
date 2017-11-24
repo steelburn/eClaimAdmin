@@ -36,11 +36,7 @@ export class TenantSetup_Service {
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-<<<<<<< HEAD
         let options = new RequestOptions({ headers: queryHeaders });//alert(JSON.stringify(tenant_main));
-=======
-        let options = new RequestOptions({ headers: queryHeaders });alert(JSON.stringify(tenant_main));
->>>>>>> master
         return this.httpService.http.post(this.baseResourceUrl, tenant_main.toJson(true), options)
             .map((response) => {
                 return response;
@@ -60,7 +56,6 @@ export class TenantSetup_Service {
             });
     }
 
-<<<<<<< HEAD
     get_tenant(params?: URLSearchParams): Observable<TenantSetup_Model[]> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
@@ -80,8 +75,6 @@ export class TenantSetup_Service {
     };
 
 
-=======
->>>>>>> master
     remove(id: string) {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');

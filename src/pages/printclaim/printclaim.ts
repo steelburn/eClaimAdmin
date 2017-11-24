@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,12 +22,6 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
-=======
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SpeakerListPage } from '../home/home';
->>>>>>> master
 /**
  * Generated class for the PrintclaimPage page.
  *
@@ -80,19 +73,9 @@ export class PrintclaimPage {
       printname: '',
 
     });
-<<<<<<< HEAD
     this.Printing_Date_ngModel = new Date().toISOString();
     //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
     this.GetSocNo();
-=======
-  }
-  
-  public CloseprintClick() {
-    
-       
-    this.navCtrl.push(SpeakerListPage)
-      }
->>>>>>> master
 
     this.Printform.valueChanges.subscribe((v) => {
       this.isReadyToSave = this.Printform.valid;

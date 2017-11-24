@@ -18,7 +18,6 @@
       <button ion-fab mini (click)="AddPaymenttypeClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
-<<<<<<< HEAD
     <ion-list>
       <ion-item>
         <table class="Tabler">
@@ -47,40 +46,6 @@
       </ion-item>
     </ion-list>
 
-=======
-
-
-    <ion-list>
-        <ion-item>
-          <table class="Tabler">
-            <tr class="linedsg TColor">
-              <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-              <th class="lgl1">NAME</th>
-              <th class="lgl1">DESCRIPTION</th>
-           
-              <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
-    
-            </tr>
-    
-            <tr class="col7" *ngFor="let paymenttype of paymenttypes; let i=index">
-              <td class="lgl1">{{i+1}}</td>
-              <td class="lgl1">{{paymenttype.NAME}}</td>
-              <td class="lgl1">{{paymenttype.DESCRIPTION}}</td>
-        
-              <td class="lgl1 fColor">
-                <button ion-button item-end (click)="EditClick(paymenttype.PAYMENT_TYPE_GUID)"><ion-icon name="md-create"></ion-icon></button>
-                <button ion-button item-end (click)="DeleteClick(paymenttype.PAYMENT_TYPE_GUID)"><ion-icon name="md-close"></ion-icon></button>
-              </td>
-            </tr>
-    
-    
-          </table>
-        </ion-item>
-      </ion-list>
-    
-    
-
->>>>>>> master
 <!-- add paymenttype form start-->
 <div class="blackcontainer" *ngIf="AddPaymentTypeClicked">
 </div>
