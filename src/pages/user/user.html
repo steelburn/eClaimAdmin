@@ -21,9 +21,8 @@
         </button>
     </ion-fab>
 
-    <div class="icHeaderText">
-        <b>PERSONAL DETAILS</b>
-    </div>
+    <!-- <div class="icHeaderText"><b>PERSONAL DETAILS</b></div> -->
+    <div class="eClaimSubTitle"><b>PERSONAL DETAILS</b></div>
 
     <ion-list>
         <ion-item>
@@ -72,9 +71,8 @@
 
 
 
-    <div class="icHeaderText">
-        <b>EMPLOYMENT DETAILS</b>
-    </div>
+    <!-- <div class="icHeaderText"><b>EMPLOYMENT DETAILS</b></div> -->
+    <div class="eClaimSubTitle"><b>EMPLOYMENT DETAILS</b></div>
 
     <ion-list>
         <ion-item>
@@ -127,9 +125,8 @@
 
 
 
-    <div class="icHeaderText">
-        <b>RESIDENTIAL ADDRESS</b>
-    </div>
+    <!-- <div class="icHeaderText"><b>RESIDENTIAL ADDRESS</b></div> -->
+    <div class="eClaimSubTitle"><b>RESIDENTIAL ADDRESS</b></div>
 
     <ion-list>
         <ion-item>
@@ -182,7 +179,7 @@
                     <div class="eClaimSubTitle1">
                         <b>PERSONAL DETAILS</b>
                     </div>
-                    <ion-item>
+                    <ion-item class="text">
                         <ion-label stacked>{{"NAME"}}</ion-label>
                         <ion-input type="text" formControlName="FULLNAME" [(ngModel)]="User_Name_ngModel" placeholder="{{'Please fill the name of the user'}}"></ion-input>
                     </ion-item>
@@ -219,7 +216,8 @@
 
                     <ion-item>
                         <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>
-                        <ion-input type="text" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{'Please fill the dob'}}"></ion-input>
+                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
+                        <!-- <ion-input type="text" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{'Please fill the dob'}}"></ion-input> -->
                     </ion-item>
 
                     <ion-item>
@@ -247,12 +245,14 @@
 
                     <ion-item>
                         <ion-label stacked>{{"JOIN DATE"}}</ion-label>
-                        <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{'Please fill the join date'}}"></ion-input>
+                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{'Please fill the join date'}}"></ion-datetime>
+                        <!-- <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{'Please fill the join date'}}"></ion-input> -->
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>
-                        <ion-input type="text" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{'Please fill the confermation date'}}"></ion-input>
+                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{'Please fill the confermation date'}}"></ion-datetime>
+                        <!-- <ion-input type="text" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{'Please fill the confermation date'}}"></ion-input> -->
                     </ion-item>
 
                     <ion-item>
