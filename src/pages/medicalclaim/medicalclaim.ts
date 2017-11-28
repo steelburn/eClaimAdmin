@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,12 +23,6 @@ import { FilePath } from '@ionic-native/file-path';
 
 import {  LoadingController, ActionSheetController,  Platform, Loading, ToastController } from 'ionic-angular';
 
-=======
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SpeakerListPage } from '../home/home';
->>>>>>> master
 
 /**
  * Generated class for the MedicalclaimPage page.
@@ -79,11 +72,6 @@ export class MedicalclaimPage {
 
   }
 
-  public CloseMcClick() {
-    
-       
-    this.navCtrl.push(SpeakerListPage)
-      }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MedicalclaimPage');

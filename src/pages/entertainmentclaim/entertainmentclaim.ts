@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,13 +22,6 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { FilePath } from '@ionic-native/file-path';
 
 import {  LoadingController, ActionSheetController,  Platform, Loading, ToastController } from 'ionic-angular';
-=======
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
-import { SpeakerListPage } from '../home/home';
->>>>>>> master
 
 /**
  * Generated class for the EntertainmentclaimPage page.
@@ -84,6 +76,21 @@ export class EntertainmentclaimPage {
   //public Entertainment_FileUpload_ngModel:any;
   public myDate:any;
   
+  public AddLookupClicked: boolean = false;
+  
+    public AddLookupClick() 
+    {
+   
+      this.AddLookupClicked = true;
+    }
+  
+  
+    public CloseLookupClick() {
+      if (this.AddLookupClicked == true) {
+        this.AddLookupClicked = false;
+      }
+   
+    }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, private camera: Camera,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController ) {
     
     
@@ -120,12 +127,7 @@ export class EntertainmentclaimPage {
     });
    
   }
-  public CloseEntertainClick() {
-    
-       
-    this.navCtrl.push(SpeakerListPage)
-      }
-      
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad EntertainmentclaimPage');
   }

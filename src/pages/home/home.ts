@@ -1,11 +1,11 @@
-﻿import { Component, ViewChild, Inject} from '@angular/core';
-import { Chart } from 'chart.js';
-import { ActionSheet, ActionSheetController, Config, IonicPage, NavController, NavParams } from 'ionic-angular';
+﻿import { Component } from '@angular/core';
+
+import { ActionSheet, ActionSheetController, Config, NavController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { ConferenceData } from '../../providers/conference-data';
 import { MedicalclaimPage } from '../medicalclaim/medicalclaim';
-
+import { SessionDetailPage } from '../session-detail/session-detail';
 import { AboutPage } from '../about/about';
 import { PrintclaimPage } from '../printclaim/printclaim';
 import { GiftclaimPage } from '../giftclaim/giftclaim';
@@ -19,13 +19,6 @@ import { TravelclaimPage } from '../travelclaim/travelclaim';
 export class SpeakerListPage {
   actionSheet: ActionSheet;
   speakers: any[] = [];
-
-
-
-
-//  @ViewChild('driverDoughnutCanvas') driverDoughnutCanvas;
-  
-//  driverDoughnutChart: any;
 
   constructor(
     public actionSheetCtrl: ActionSheetController,
@@ -64,7 +57,12 @@ export class SpeakerListPage {
     this.navCtrl.push(TravelclaimPage)
   }
 
-
+  goToSessionDetail(session: any) {
+    this.navCtrl.push(SessionDetailPage, {
+      name: session.name,
+      session: session
+    });
+  }
   goToAbout(){
     this.navCtrl.push(AboutPage)
   }
@@ -74,8 +72,6 @@ export class SpeakerListPage {
     this.inAppBrowser.create(`https://twitter.com/${speaker.twitter}`, '_blank');
   }
 
-
-  
   openSpeakerShare(speaker: any) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Share ' + speaker.name,
@@ -127,6 +123,4 @@ export class SpeakerListPage {
 
     actionSheet.present();
   }
-
-  
 }

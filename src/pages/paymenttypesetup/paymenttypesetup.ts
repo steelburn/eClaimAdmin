@@ -41,7 +41,7 @@ export class PaymenttypesetupPage {
   public EditPaymentTypeClicked: boolean = false;
   public Exist_Record: boolean = false;
 
-  public paymenttype_details: any; 
+  public paymenttype_details: any;
   public exist_record_details: any;
 
   //Set the Model Name for Add------------------------------------------
@@ -54,23 +54,23 @@ export class PaymenttypesetupPage {
   public DESCRIPTION_ngModel_Edit: any;
   //---------------------------------------------------------------------
 
-    public AddPaymenttypeClick() {
-      this.ClearControls();
-        this.AddPaymentTypeClicked = true; 
-    }
+  public AddPaymenttypeClick() {
+    this.ClearControls();
+    this.AddPaymentTypeClicked = true;
+  }
 
-     public EditClick(PAYMENT_TYPE_GUID: any) {  
-      this.ClearControls();  
+  public EditClick(PAYMENT_TYPE_GUID: any) {
+    this.ClearControls();
     this.EditPaymentTypeClicked = true;
     var self = this;
     this.paymenttypesetupservice
       .get(PAYMENT_TYPE_GUID)
       .subscribe((data) => {
-      self.paymenttype_details = data;
-      this.NAME_ngModel_Edit = self.paymenttype_details.NAME; localStorage.setItem('Prev_pa_Name', self.paymenttype_details.NAME); 
-      this.DESCRIPTION_ngModel_Edit = self.paymenttype_details.DESCRIPTION;
-  });
-}
+        self.paymenttype_details = data;
+        this.NAME_ngModel_Edit = self.paymenttype_details.NAME; localStorage.setItem('Prev_pa_Name', self.paymenttype_details.NAME);
+        this.DESCRIPTION_ngModel_Edit = self.paymenttype_details.DESCRIPTION;
+      });
+  }
 
   public DeleteClick(PAYMENT_TYPE_GUID: any) {
     let alert = this.alertCtrl.create({
@@ -103,15 +103,15 @@ export class PaymenttypesetupPage {
   }
 
 
-      public ClosePaymentTypeClick() {
-        if (this.AddPaymentTypeClicked == true) {
+  public ClosePaymentTypeClick() {
+    if (this.AddPaymentTypeClicked == true) {
       this.AddPaymentTypeClicked = false;
     }
     if (this.EditPaymentTypeClicked == true) {
       this.EditPaymentTypeClicked = false;
     }
-    }
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb:FormBuilder, public http: Http, private httpService: BaseHttpService, private paymenttypesetupservice: PaymentTypeSetup_Service, private alertCtrl: AlertController) {
+  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private paymenttypesetupservice: PaymentTypeSetup_Service, private alertCtrl: AlertController) {
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -120,13 +120,13 @@ export class PaymenttypesetupPage {
       });
 
 
-this.Paymenttypeform = fb.group({
+    this.Paymenttypeform = fb.group({
       //NAME: ["", Validators.required],
       //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
       NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      
+
       //DESCRIPTION: ["", Validators.required],
-      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],      
+      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
       //DESCRIPTION: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
     });
   }
@@ -154,50 +154,50 @@ this.Paymenttypeform = fb.group({
               this.Paymenttype_entry.NAME = this.NAME_ngModel_Add.trim();
               this.Paymenttype_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
 
-      this.Paymenttype_entry.PAYMENT_TYPE_GUID = UUID.UUID();
-      this.Paymenttype_entry.TENANT_GUID = UUID.UUID();
-      this.Paymenttype_entry.CREATION_TS = new Date().toISOString();
-      this.Paymenttype_entry.CREATION_USER_GUID = '1';
-      this.Paymenttype_entry.UPDATE_TS = new Date().toISOString();
-      this.Paymenttype_entry.UPDATE_USER_GUID = "";
+              this.Paymenttype_entry.PAYMENT_TYPE_GUID = UUID.UUID();
+              this.Paymenttype_entry.TENANT_GUID = UUID.UUID();
+              this.Paymenttype_entry.CREATION_TS = new Date().toISOString();
+              this.Paymenttype_entry.CREATION_USER_GUID = '1';
+              this.Paymenttype_entry.UPDATE_TS = new Date().toISOString();
+              this.Paymenttype_entry.UPDATE_USER_GUID = "";
 
-      this.paymenttypesetupservice.save(this.Paymenttype_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Payment Type Registered successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              this.paymenttypesetupservice.save(this.Paymenttype_entry)
+                .subscribe((response) => {
+                  if (response.status == 200) {
+                    alert('Payment Type Registered successfully');
+                    //location.reload();
+                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  }
+                });
+            }
           }
+          else {
+            console.log("Records Found");
+            alert("The PaymentType is already Exist.")
+
+          }
+        },
+        err => {
+          this.Exist_Record = false;
+          console.log("ERROR!: ", err);
         });
     }
   }
-  else {
-    console.log("Records Found");
-    alert("The PaymentType is already Exist.")
-    
-  } 
-},
-err => {
-  this.Exist_Record = false;
-  console.log("ERROR!: ", err);
-});
-}
-}
-getBankList() {
-  let self = this;
-  let params: URLSearchParams = new URLSearchParams();
-  self.paymenttypesetupservice.get_paymenttype(params)
-    .subscribe((paymenttypes: PaymentTypeSetup_Model[]) => {
-      self.paymenttypes = paymenttypes;
-    });
-}
+  getBankList() {
+    let self = this;
+    let params: URLSearchParams = new URLSearchParams();
+    self.paymenttypesetupservice.get_paymenttype(params)
+      .subscribe((paymenttypes: PaymentTypeSetup_Model[]) => {
+        self.paymenttypes = paymenttypes;
+      });
+  }
 
 
-    Update(PAYMENT_TYPE_GUID: any) {  
-      if (this.Paymenttypeform.valid) {  
-    if(this.Paymenttype_entry.NAME==null){this.Paymenttype_entry.NAME = this.NAME_ngModel_Edit.trim();}
-    if(this.Paymenttype_entry.DESCRIPTION==null){this.Paymenttype_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit.trim();}
-    
+  Update(PAYMENT_TYPE_GUID: any) {
+    if (this.Paymenttypeform.valid) {
+      if (this.Paymenttype_entry.NAME == null) { this.Paymenttype_entry.NAME = this.NAME_ngModel_Edit.trim(); }
+      if (this.Paymenttype_entry.DESCRIPTION == null) { this.Paymenttype_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit.trim(); }
+
       this.Paymenttype_entry.TENANT_GUID = this.paymenttype_details.TENANT_GUID;
       this.Paymenttype_entry.CREATION_TS = this.paymenttype_details.CREATION_TS;
       this.Paymenttype_entry.CREATION_USER_GUID = this.paymenttype_details.CREATION_USER_GUID;
@@ -219,7 +219,7 @@ getBankList() {
             if (res.length == 0) {
               console.log("No records Found");
               this.Paymenttype_entry.NAME = this.NAME_ngModel_Edit.trim();
-              
+
               //**************Update service if it is new details*************************
               this.paymenttypesetupservice.update(this.Paymenttype_entry)
                 .subscribe((response) => {
@@ -244,29 +244,28 @@ getBankList() {
         if (this.Paymenttype_entry.NAME == null) { this.Paymenttype_entry.NAME = localStorage.getItem('Prev_pa_Name'); }
         this.Paymenttype_entry.NAME = this.NAME_ngModel_Edit.trim();
         //**************Update service if it is old details*************************
-      
-      this.paymenttypesetupservice.update(this.Paymenttype_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Payment Type updated successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        })
+
+        this.paymenttypesetupservice.update(this.Paymenttype_entry)
+          .subscribe((response) => {
+            if (response.status == 200) {
+              alert('Payment Type updated successfully');
+              //location.reload();
+              this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            }
+          })
+      }
     }
   }
-}
-ClearControls()
-{
-  this.NAME_ngModel_Add = "";
-  this.DESCRIPTION_ngModel_Add = "";
+  ClearControls() {
+    this.NAME_ngModel_Add = "";
+    this.DESCRIPTION_ngModel_Add = "";
 
-  this.NAME_ngModel_Edit = "";
-  this.DESCRIPTION_ngModel_Edit = "";
-}
+    this.NAME_ngModel_Edit = "";
+    this.DESCRIPTION_ngModel_Edit = "";
+  }
 }
 // if (this.Paymenttypeform.valid) {
-      
+
     //         let headers = new Headers();
     //         headers.append('Content-Type', 'application/json');
     //         let options = new RequestOptions({ headers: headers });

@@ -29,11 +29,7 @@ import { UUID } from 'angular2-uuid';
 })
 export class TenantsetupPage {
   tenant_entry: TenantSetup_Model = new TenantSetup_Model();
-<<<<<<< HEAD
  //tenant: TenantSetup_Model = new TenantSetup_Model();
-=======
-  tenant: TenantSetup_Model = new TenantSetup_Model();
->>>>>>> master
   Tenantform: FormGroup;
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -41,7 +37,6 @@ export class TenantsetupPage {
 
   public tenants: TenantSetup_Model[] = [];
 
-<<<<<<< HEAD
   //Set the Model Name for Add------------------------------------------
   public SITE_NAME_ngModel_Add: any;
   public REGISTRATION_NUM_ngModel_Add: any;
@@ -66,12 +61,6 @@ export class TenantsetupPage {
   public CONTACT_PERSON_CONTACT_NO_ngModel_Edit: any;
   public CONTACT_PERSON_EMAIL_ngModel_Edit: any;
   //---------------------------------------------------------------------
-=======
-   public AddTenantClicked: boolean = false;
-   public EditTenantClicked: boolean = false; 
-   
-    public AddTenantClick() {
->>>>>>> master
 
    public AddTenantClicked: boolean = false;
    public EditTenantClicked: boolean = false; 
@@ -86,16 +75,12 @@ export class TenantsetupPage {
     }
 
     public EditClick(TENANT_COMPANY_SITE_GUID: any) {
-<<<<<<< HEAD
       this.ClearControls();
-=======
->>>>>>> master
       console.log(TENANT_COMPANY_SITE_GUID);
       this.EditTenantClicked = true;
       var self = this;
       this.tenantsetupservice
         .get(TENANT_COMPANY_SITE_GUID)
-<<<<<<< HEAD
         .subscribe((data) => {
         self.tenant_details = data;
         this.SITE_NAME_ngModel_Edit = self.tenant_details.SITE_NAME; localStorage.setItem('Prev_ten_Category', self.tenant_details.SITE_NAME); //console.log(self.mileage_details.CATEGORY);
@@ -109,11 +94,6 @@ export class TenantsetupPage {
         this.CONTACT_PERSON_EMAIL_ngModel_Edit = self.tenant_details.CONTACT_PERSON_EMAIL;
     });
   }
-=======
-        .subscribe((tenant) => self.tenant = tenant);
-      return self.tenant;
-    }
->>>>>>> master
    
     public DeleteClick(TENANT_COMPANY_SITE_GUID: any) {
       let alert = this.alertCtrl.create({
@@ -168,7 +148,6 @@ export class TenantsetupPage {
 
   this.Tenantform = fb.group({
 
-<<<<<<< HEAD
     //SITE_NAME: ["", Validators.required],
     //SITE_NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])],
     SITE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
@@ -188,17 +167,6 @@ export class TenantsetupPage {
      CONTACT_PERSON: ["", Validators.required],
      CONTACT_PERSON_CONTACT_NO: ["", Validators.required],
      CONTACT_PERSON_EMAIL: ["", Validators.required],    
-=======
-    SITE_NAME: ["", Validators.required],
-    REGISTRATION_NUM: ["", Validators.required],
-    ADDRESS1: ["", Validators.required],
-    EMAIL: ["", Validators.required],
-    CONTACT_NO: ["", Validators.required],
-    WEBSITE: ["", Validators.required],
-    CONTACT_PERSON: ["", Validators.required],
-    CONTACT_PERSON_CONTACT_NO: ["", Validators.required],
-    CONTACT_PERSON_EMAIL: ["", Validators.required],    
->>>>>>> master
 
     });
   }
@@ -208,7 +176,6 @@ export class TenantsetupPage {
   }
   Save() {
     if (this.Tenantform.valid) {
-<<<<<<< HEAD
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       let options = new RequestOptions({ headers: headers });
@@ -232,8 +199,6 @@ export class TenantsetupPage {
               this.tenant_entry.CONTACT_PERSON_CONTACT_NO = this.CONTACT_PERSON_CONTACT_NO_ngModel_Add.trim();
               this.tenant_entry.CONTACT_PERSON_EMAIL = this.CONTACT_PERSON_EMAIL_ngModel_Add.trim();
 
-=======
->>>>>>> master
       this.tenant_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
       this.tenant_entry.TENANT_COMPANY_GUID = "298204b8-8c85-11e7-91cd-00155de7e742";
       this.tenant_entry.CREATION_TS = new Date().toISOString();
@@ -253,7 +218,6 @@ export class TenantsetupPage {
         })
     }
   }
-<<<<<<< HEAD
   else {
     console.log("Records Found");
     alert("The Tenant is already Exist.")
@@ -337,22 +301,6 @@ getBankList() {
         this.tenant_entry.SITE_NAME = this.SITE_NAME_ngModel_Edit.trim();
 
         //**************Update service if it is old details*************************
-=======
-
-  Update(TENANT_COMPANY_SITE_GUID: any) {  
-    if(this.tenant_entry.SITE_NAME==null){this.tenant_entry.SITE_NAME = this.tenant_entry.SITE_NAME;}
-    if(this.tenant_entry.REGISTRATION_NUM==null){this.tenant_entry.REGISTRATION_NUM = this.tenant_entry.REGISTRATION_NUM;}
-
-    if (this.Tenantform.valid) {
-      this.tenant_entry.CREATION_TS = this.tenant.CREATION_TS;
-      this.tenant_entry.CREATION_USER_GUID = this.tenant.CREATION_USER_GUID;
-      this.tenant_entry.UPDATE_TS = this.tenant.UPDATE_TS;
-      this.tenant_entry.TENANT_COMPANY_GUID = this.tenant.TENANT_COMPANY_GUID;
-
-      this.tenant_entry.TENANT_COMPANY_SITE_GUID = TENANT_COMPANY_SITE_GUID;
-      this.tenant_entry.UPDATE_TS = new Date().toISOString();
-      this.tenant_entry.UPDATE_USER_GUID = "";
->>>>>>> master
       
       this.tenantsetupservice.update(this.tenant_entry)
         .subscribe((response) => {
@@ -361,7 +309,6 @@ getBankList() {
             //location.reload();
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
-<<<<<<< HEAD
         });
     }
   }
@@ -423,9 +370,3 @@ getBankList() {
 // }
 // }
 // }
-=======
-        })
-    }
-  }
- }
->>>>>>> master

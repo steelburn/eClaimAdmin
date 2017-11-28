@@ -29,7 +29,6 @@ export class SubsciptionSetup_Service {
         console.log(errMsg); // log to console instead
         //localStorage.setItem('session_token', '');       
         return Observable.throw(errMsg);
-<<<<<<< HEAD
     }  
     
     query(params?: URLSearchParams): Observable<SubsciptionSetup_Model[]> {
@@ -51,9 +50,6 @@ export class SubsciptionSetup_Service {
             }).catch(this.handleError);
     };
 
-=======
-    }    
->>>>>>> master
 
     save(subsciption_main: SubsciptionSetup_Model): Observable<any> {
         var queryHeaders = new Headers();
@@ -79,7 +75,6 @@ export class SubsciptionSetup_Service {
             });
     }
 
-<<<<<<< HEAD
     get_subscription(params?: URLSearchParams): Observable<SubsciptionSetup_Model[]> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
@@ -98,8 +93,6 @@ export class SubsciptionSetup_Service {
             }).catch(this.handleError);
     };
 
-=======
->>>>>>> master
     remove(id: string) {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');

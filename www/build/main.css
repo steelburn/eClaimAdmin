@@ -41910,6 +41910,14 @@ page-entertainmentclaim .popup {
   height: 500px;
 }
 
+page-entertainmentclaim .popup1 {
+  width: 83%;
+  left: 78px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
 page-entertainmentclaim .btn {
   text-align: center;
   margin: 10px 0px;
@@ -41946,6 +41954,10 @@ page-entertainmentclaim .cm {
   height: 100%;
 }
 
+page-entertainmentclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
+}
+
 page-giftclaim .blackcontainer {
   top: 0;
   left: 0;
@@ -41959,6 +41971,14 @@ page-giftclaim .blackcontainer {
 page-giftclaim .popup {
   width: 50%;
   left: 258px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-giftclaim .popup1 {
+  width: 83%;
+  left: 78px;
   top: 60px;
   position: fixed;
   height: 500px;
@@ -41998,6 +42018,10 @@ page-giftclaim .headerColor-white {
 
 page-giftclaim .cm {
   height: 100%;
+}
+
+page-giftclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
 }
 
 page-speaker-list .Subtitle {
@@ -42066,7 +42090,6 @@ page-medicalclaim .blackcontainer {
   background: black;
   position: fixed;
   opacity: 0.7;
-<<<<<<< HEAD
 }
 
 page-medicalclaim .popup {
@@ -42131,6 +42154,14 @@ page-overtimeclaim .popup {
   height: 500px;
 }
 
+page-overtimeclaim .popup1 {
+  width: 83%;
+  left: 78px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
 page-overtimeclaim .btn {
   text-align: center;
   margin: 10px 0px;
@@ -42167,6 +42198,10 @@ page-overtimeclaim .cm {
   height: 100%;
 }
 
+page-overtimeclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
+}
+
 page-printclaim .blackcontainer {
   top: 0;
   left: 0;
@@ -42180,6 +42215,14 @@ page-printclaim .blackcontainer {
 page-printclaim .popup {
   width: 50%;
   left: 258px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-printclaim .popup1 {
+  width: 83%;
+  left: 78px;
   top: 60px;
   position: fixed;
   height: 500px;
@@ -42219,168 +42262,157 @@ page-printclaim .headerColor-white {
 
 page-printclaim .cm {
   height: 100%;
+}
+
+page-printclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
 }
 
 page-schedule ion-item-sliding[track=ionic] ion-label {
   border-left: 2px solid #ca9b24;
   padding-left: 10px;
-=======
->>>>>>> master
 }
 
-page-medicalclaim .popup {
-  width: 50%;
-  left: 258px;
-  top: 60px;
-  position: fixed;
-  height: 500px;
+page-schedule ion-item-sliding[track=angular] ion-label {
+  border-left: 2px solid #AC282B;
+  padding-left: 10px;
 }
 
-page-medicalclaim .btn {
-  text-align: center;
-  margin: 10px 0px;
+page-schedule ion-item-sliding[track=communication] ion-label {
+  border-left: 2px solid #8E8D93;
+  padding-left: 10px;
 }
 
-page-medicalclaim .btnR {
-  width: 33px !important;
-  height: 38px;
-  right: 26px;
-  font-size: 22px !important;
-  top: 26px;
-  background: #ff6b6b;
-  color: #fff;
-  position: absolute !important;
+page-schedule ion-item-sliding[track=tooling] ion-label {
+  border-left: 2px solid #FE4C52;
+  padding-left: 10px;
 }
 
-page-medicalclaim .icHeaderText {
-  font-size: 15px !important;
+page-schedule ion-item-sliding[track=services] ion-label {
+  border-left: 2px solid #FD8B2D;
+  padding-left: 10px;
 }
 
-page-medicalclaim .icTitle {
-  border-bottom: 1px solid !important;
-  margin-bottom: 10px !important;
-  padding: 10px !important;
+page-schedule ion-item-sliding[track=design] ion-label {
+  border-left: 2px solid #FED035;
+  padding-left: 10px;
 }
 
-page-medicalclaim .headerColor-white {
-  background: #ffffff !important;
-  border-color: #e8e8e8 !important;
-  color: #a5a3a3 !important;
+page-schedule ion-item-sliding[track=workshop] ion-label {
+  border-left: 2px solid #69BB7B;
+  padding-left: 10px;
 }
 
-page-medicalclaim .cm {
-  height: 100%;
+page-schedule ion-item-sliding[track=food] ion-label {
+  border-left: 2px solid #3BC7C4;
+  padding-left: 10px;
 }
 
-page-overtimeclaim .blackcontainer {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  position: fixed;
-  opacity: 0.7;
+page-schedule ion-item-sliding[track=documentation] ion-label {
+  border-left: 2px solid #B16BE3;
+  padding-left: 10px;
 }
 
-page-overtimeclaim .popup {
-  width: 50%;
-  left: 258px;
-  top: 60px;
-  position: fixed;
-  height: 500px;
+page-schedule ion-item-sliding[track=navigation] ion-label {
+  border-left: 2px solid #6600CC;
+  padding-left: 10px;
 }
 
-page-overtimeclaim .btn {
-  text-align: center;
-  margin: 10px 0px;
+.reset-filters {
+  color: #f53d3d;
 }
 
-page-overtimeclaim .btnR {
-  width: 33px !important;
-  height: 38px;
-  right: 26px;
-  font-size: 22px !important;
-  top: 26px;
-  background: #ff6b6b;
-  color: #fff;
-  position: absolute !important;
+ion-item[track=ionic] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #ca9b24;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-overtimeclaim .icHeaderText {
-  font-size: 15px !important;
+ion-item[track=angular] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #AC282B;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-overtimeclaim .icTitle {
-  border-bottom: 1px solid !important;
-  margin-bottom: 10px !important;
-  padding: 10px !important;
+ion-item[track=communication] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #8E8D93;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-overtimeclaim .headerColor-white {
-  background: #ffffff !important;
-  border-color: #e8e8e8 !important;
-  color: #a5a3a3 !important;
+ion-item[track=tooling] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #FE4C52;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-overtimeclaim .cm {
-  height: 100%;
+ion-item[track=services] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #FD8B2D;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-printclaim .blackcontainer {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  position: fixed;
-  opacity: 0.7;
+ion-item[track=design] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #FED035;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-printclaim .popup {
-  width: 50%;
-  left: 258px;
-  top: 60px;
-  position: fixed;
-  height: 500px;
+ion-item[track=workshop] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #69BB7B;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-printclaim .btn {
-  text-align: center;
-  margin: 10px 0px;
+ion-item[track=food] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #3BC7C4;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-printclaim .btnR {
-  width: 33px !important;
-  height: 38px;
-  right: 26px;
-  font-size: 22px !important;
-  top: 26px;
-  background: #ff6b6b;
-  color: #fff;
-  position: absolute !important;
+ion-item[track=documentation] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #B16BE3;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-printclaim .icHeaderText {
-  font-size: 15px !important;
+ion-item[track=navigation] .dot {
+  height: 10px;
+  display: inline-block;
+  width: 10px;
+  background-color: #6600CC;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-page-printclaim .icTitle {
-  border-bottom: 1px solid !important;
-  margin-bottom: 10px !important;
-  padding: 10px !important;
-}
-
-page-printclaim .headerColor-white {
-  background: #ffffff !important;
-  border-color: #e8e8e8 !important;
-  color: #a5a3a3 !important;
-}
-
-page-printclaim .cm {
-  height: 100%;
-}
-
-page-setup .round {
+.round {
   float: left;
   box-shadow: none !important;
   width: calc(20% - 20px);
@@ -42390,57 +42422,37 @@ page-setup .round {
   min-height: 80px;
 }
 
-page-setup .Subtitle {
+.Subtitle {
   text-align: center;
   font-size: 1.12vw;
 }
 
-page-setup .iconf {
+.iconf {
   font-size: 7vw;
   color: #ca9b24;
   transition: all 0.3s ease;
 }
 
-page-setup .icon {
+.icon {
   text-align: center;
 }
 
-page-setup .round:hover {
+.round:hover {
   font-weight: bold;
 }
 
 @media (max-width: 700px) {
-  page-setup .Subtitle {
+  .round {
+    width: calc(100% - 20px);
+    min-height: 100px;
+  }
+  .Subtitle {
     text-align: center;
     font-size: 3.5vw;
   }
-  page-setup .iconf {
+  .iconf {
     font-size: 22vw;
     color: #ca9b24;
-  }
-  page-setup .round {
-    float: left;
-    box-shadow: none !important;
-    width: calc(20% - 20px);
-    margin: 10px !important;
-    cursor: pointer;
-    border-radius: 5px;
-    min-height: 80px;
-  }
-  page-setup .Subtitle {
-    text-align: center;
-    font-size: 1.12vw;
-  }
-  page-setup .iconf {
-    font-size: 7vw;
-    color: #ca9b24;
-    transition: all 0.3s ease;
-  }
-  page-setup .icon {
-    text-align: center;
-  }
-  page-setup .round:hover {
-    font-weight: bold;
   }
 }
 
@@ -42452,4 +42464,70 @@ page-setup .round:hover {
 
 .tab-button {
   max-width: 200px;
+}
+
+page-travelclaim .blackcontainer {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  position: fixed;
+  opacity: 0.7;
+}
+
+page-travelclaim .popup {
+  width: 50%;
+  left: 258px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-travelclaim .popup1 {
+  width: 83%;
+  left: 78px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-travelclaim .btn {
+  text-align: center;
+  margin: 10px 0px;
+}
+
+page-travelclaim .btnR {
+  width: 33px !important;
+  height: 38px;
+  right: 26px;
+  font-size: 22px !important;
+  top: 26px;
+  background: #ff6b6b;
+  color: #fff;
+  position: absolute !important;
+}
+
+page-travelclaim .icHeaderText {
+  font-size: 15px !important;
+}
+
+page-travelclaim .icTitle {
+  border-bottom: 1px solid !important;
+  margin-bottom: 10px !important;
+  padding: 10px !important;
+}
+
+page-travelclaim .headerColor-white {
+  background: #ffffff !important;
+  border-color: #e8e8e8 !important;
+  color: #a5a3a3 !important;
+}
+
+page-travelclaim .cm {
+  height: 100%;
+}
+
+page-travelclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
 }
