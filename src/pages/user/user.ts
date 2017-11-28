@@ -90,6 +90,7 @@ export class UserPage {
    public AddUserClick() {
     
         this.AddUserClicked = true;
+        this.ClearControls();
       }
     
       public CloseUserClick() {
@@ -163,7 +164,6 @@ export class UserPage {
     
         
         if (this.Userform.valid) {
-          alert('hi');
           let headers = new Headers();
           headers.append('Content-Type', 'application/json');
           let options = new RequestOptions({ headers: headers });
@@ -230,7 +230,7 @@ export class UserPage {
                  
                   this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_ngModel.trim();
                    this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_ngModel.trim();
-                  this.userinfo_entry.DEPT_GUID = this.User_Department_ngModel.trim();
+                  this.userinfo_entry.DEPT_GUID = "6d2b85bc-d0e1-11e7-b07d-00155de7e742";
                   this.userinfo_entry.JOIN_DATE = this.User_JoinDate_ngModel.trim();
                   this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_ngModel.trim();
                   this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_ngModel.trim();
@@ -312,7 +312,7 @@ export class UserPage {
               }
               else {
                 console.log("Records Found");
-                alert("The Travelclaim is already Exist.")
+                alert("The User is already Exist.")
     
               }
     
@@ -323,6 +323,32 @@ export class UserPage {
             });
        }
     
+      }
+      ClearControls(){
+        this.User_Name_ngModel = "";
+        this.User_Email_ngModel = "";
+        this.User_PersonalNo_ngModel = "";
+        this.User_CompanyNo_ngModel = "";
+        this.User_Marital_ngModel = "";
+        this.User_StaffID_ngModel = "";
+        this.User_ICNo_ngModel = "";
+        this.User_DOB_ngModel = "";
+        this.User_Gender_ngModel = "";
+        this.User_Designation_ngModel = "";
+        this.User_Company_ngModel = "";
+        this.User_Department_ngModel = "";
+        this.User_JoinDate_ngModel = "";
+        this.User_ConfirmationDate_ngModel = "";
+        this.User_ResignationDate_ngModel = "";
+        this.User_Branch_ngModel = "";
+        this.User_Approver1_ngModel = "";
+        this.User_Approver2_ngModel = "";
+        this.User_EmployeeType_ngModel = "";
+        this.User_Employment_ngModel = "";
+        this.User_Address1_ngModel = "";
+        this.User_Address2_ngModel = "";
+        this.User_Address3_ngModel = "";
+
       }
 
       }

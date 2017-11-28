@@ -42417,3 +42417,7 @@ ion-item[track=navigation] .dot {
 .tab-button {
   max-width: 200px;
 }
+
+page-user .text {
+  background-color: yellowgreen;
+}
