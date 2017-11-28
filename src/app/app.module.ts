@@ -168,6 +168,6 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
   ]
 })
 export class AppModule { }
-export function createTranslateLoader(http:Http) { 
+export function createTranslateLoader(http:Http) {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
 }
