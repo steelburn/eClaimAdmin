@@ -38,6 +38,30 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
   templateUrl: 'user.html', providers: [UserSetup_Service, BaseHttpService, FileTransfer]
 })
 export class UserPage {
+  //selectedValue: number;
+  genders: Array<{ value: number, text: string, checked: boolean }> = [];
+  maritals: Array<{ value: number, text: string, checked: boolean }> = [];
+  emptypes: Array<{ value: number, text: string, checked: boolean }> = [];
+  empstatuss: Array<{ value: number, text: string, checked: boolean }> = [];
+  public designations:any;
+  public companies: any;
+  public departments:any;
+  public branches: any;
+
+  //optionsList:any = [];
+  // categories = [
+  //   {
+  //     title: 'Locked',
+  //     price: 100 
+  //   },
+  //   {
+  //     title: 'Liquid',
+  //     price: 8000
+  //   }];         
+   
+  //   User_Gender_ngModel = this.categories[0]; 
+   
+  //}
   isReadyToSave: boolean;
   userinfo_entry: UserInfo_Model = new UserInfo_Model();
   usermain_entry: UserMain_Model = new UserMain_Model();
@@ -45,7 +69,7 @@ export class UserPage {
   usercompany_entry: UserCompany_Model = new UserCompany_Model();
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
   Userform: FormGroup;
-
+  // gender: string = "0";
   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_info' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   // baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
@@ -58,6 +82,14 @@ export class UserPage {
    baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_address' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
    baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
  
+   baseResourceUrl_designation: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+
+   baseResourceUrl_company: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_company' + '?api_key=' + constants.DREAMFACTORY_API_KEY;   
+
+   baseResourceUrl_department: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_department' + '?api_key=' + constants.DREAMFACTORY_API_KEY;   
+
+   baseResourceUrl_branch: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_branch' + '?api_key=' + constants.DREAMFACTORY_API_KEY;   
+
    public Exist_Record: boolean = false;
    public AddUserClicked: boolean = false;
  
@@ -100,7 +132,12 @@ export class UserPage {
    
       constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
        {
+         this.GetDesignation();
+         this.GetCompany();
+         this.GetDepartment();
+         this.GetBranch();
         this.Userform = fb.group({
+         
           
                 // name: ['', Validators.required],
                 // email: ['', Validators.required],
@@ -117,7 +154,7 @@ export class UserPage {
                 CONTACT_NO: ['', Validators.required],
                 COMAPANY_CONTACT_NO: ['', Validators.required],
                 MARITAL_STATUS: ['', Validators.required],
-                PERSONAL_ID_TYPE: ['', Validators.required],
+                STAFF_ID: ['', Validators.required],
                 PERSONAL_ID: ['', Validators.required],
                 DOB: ['', Validators.required],
                 GENDER: ['', Validators.required],
@@ -154,16 +191,62 @@ export class UserPage {
                 USER_ADDRESS2: ['', Validators.required],
                 USER_ADDRESS3: ['', Validators.required], 
               });
+              this.genders.push({ value: 1, text: 'Male', checked: false });
+              this.genders.push({ value: 0, text: 'Female', checked: false });
+              this.maritals.push({ value: 0, text: 'Single', checked: false });
+              this.maritals.push({ value: 1, text: 'Maried', checked: false });
+              this.emptypes.push({ value: 0, text: 'Permanent', checked: false });
+              this.emptypes.push({ value: 1, text: 'Contract', checked: false });
+              this.emptypes.push({ value: 2, text: 'Temporary', checked: false });
+              this.empstatuss.push({ value: 0, text: 'Probation', checked: false });
+              this.empstatuss.push({ value: 1, text: 'Confirmed', checked: false });
+              this.empstatuss.push({ value: 2, text: 'Terminated', checked: false });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
   }
 
+  GetDesignation(){
+    this.http
+    .get(this.baseResourceUrl_designation)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.designations = data["resource"];    
+    });
+  }
+
+  GetCompany(){
+    this.http
+    .get(this.baseResourceUrl_company)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.companies = data["resource"];    
+    });
+  }
+
+  GetDepartment(){
+    this.http
+    .get(this.baseResourceUrl_department)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.departments = data["resource"];    
+    });
+  }
+
+  GetBranch(){
+    this.http
+    .get(this.baseResourceUrl_branch)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.branches = data["resource"];    
+    });
+  }
+
   Save() {
     
         
-        if (this.Userform.valid) {
+        if (this.Userform) {
           let headers = new Headers();
           headers.append('Content-Type', 'application/json');
           let options = new RequestOptions({ headers: headers });
@@ -188,10 +271,11 @@ export class UserPage {
                    this.usercontact_entry.CONTACT_NO = this.User_PersonalNo_ngModel.trim();
                    this.usercompany_entry.COMAPANY_CONTACT_NO = this.User_CompanyNo_ngModel.trim();
                   this.userinfo_entry.MARITAL_STATUS = this.User_Marital_ngModel.trim();
-                  this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_ngModel.trim();
+                  this.usermain_entry.STAFF_ID = this.User_StaffID_ngModel.trim();
+                  this.userinfo_entry.PERSONAL_ID_TYPE = "s";
                   this.userinfo_entry.PERSONAL_ID = this.User_ICNo_ngModel.trim();
                   this.userinfo_entry.DOB = this.User_DOB_ngModel.trim();
-                  this.userinfo_entry.GENDER = this.User_Gender_ngModel.trim();
+                  this.userinfo_entry.GENDER = this.User_Gender_ngModel;
                   
 
                   this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
@@ -260,12 +344,12 @@ export class UserPage {
                   //  this.userinfo_entry.UPDATE_USER_GUID = "";
     
     
-                 alert(this.User_Name_ngModel.trim())
+                 alert(this.User_Name_ngModel.trim() + this.User_Gender_ngModel)
     
                   this.userservice.save_user_info(this.userinfo_entry)
                     .subscribe((response) => {
                       if (response.status == 200) {
-                        //alert('Travelclaim Registered successfully');
+                        alert('user_info Registered successfully');
                         //location.reload();
                         this.navCtrl.setRoot(this.navCtrl.getActive().component);
                       }
@@ -274,7 +358,7 @@ export class UserPage {
                     this.userservice.save_user_main(this.usermain_entry)
                     .subscribe((response) => {
                       if (response.status == 200) {
-                        //alert('Travelclaim Registered successfully');
+                        alert('user_main Registered successfully');
                         //location.reload();
                         this.navCtrl.setRoot(this.navCtrl.getActive().component);
                       }
@@ -283,7 +367,7 @@ export class UserPage {
                     this.userservice.save_user_contact(this.usercontact_entry)
                     .subscribe((response) => {
                       if (response.status == 200) {
-                        //alert('Travelclaim Registered successfully');
+                        alert('user_contact Registered successfully');
                         //location.reload();
                         this.navCtrl.setRoot(this.navCtrl.getActive().component);
                       }
@@ -292,7 +376,7 @@ export class UserPage {
                     this.userservice.save_user_company(this.usercompany_entry)
                     .subscribe((response) => {
                       if (response.status == 200) {
-                        //alert('Travelclaim Registered successfully');
+                        alert('user_company Registered successfully');
                         //location.reload();
                         this.navCtrl.setRoot(this.navCtrl.getActive().component);
                       }
@@ -302,7 +386,7 @@ export class UserPage {
     
                     .subscribe((response) => {
                       if (response.status == 200) {
-                        alert('Travelclaim Registered successfully');
+                        alert('user_address Registered successfully');
                         //location.reload();
                         this.navCtrl.setRoot(this.navCtrl.getActive().component);
                       }
