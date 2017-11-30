@@ -93,7 +93,7 @@
                     <th class="lgl1">EMPLOYMENT STATUS</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of users; let i=index">
+                <tr class="col7" *ngFor="let user of employees; let i=index">
                     <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{user.DESIGNATION_GUID}}</td>
                     <td class="lgl1">{{user.TENANT_COMPANY_GUID	}}</td>
@@ -138,7 +138,7 @@
                     <th class="lgl1">ADDRESS LINE 3</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of users; let i=index">
+                <tr class="col7" *ngFor="let user of address; let i=index">
                     <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS1}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS2}}</td>
