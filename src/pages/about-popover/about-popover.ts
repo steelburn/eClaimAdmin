@@ -14,7 +14,7 @@ import { App, NavController, ModalController, ViewController } from 'ionic-angul
     </ion-list>
   `
 })
-export class PopoverPage {
+export class PopoverPage { 
 
   constructor(
     public viewCtrl: ViewController,
