@@ -22,7 +22,7 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { UserPage } from '../pages/user/user';
-
+import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 export interface PageInterface {
 
   title: string;

@@ -41910,6 +41910,14 @@ page-entertainmentclaim .popup {
   height: 500px;
 }
 
+page-entertainmentclaim .popup1 {
+  width: 83%;
+  left: 78px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
 page-entertainmentclaim .btn {
   text-align: center;
   margin: 10px 0px;
@@ -41946,6 +41954,10 @@ page-entertainmentclaim .cm {
   height: 100%;
 }
 
+page-entertainmentclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
+}
+
 page-giftclaim .blackcontainer {
   top: 0;
   left: 0;
@@ -41959,6 +41971,14 @@ page-giftclaim .blackcontainer {
 page-giftclaim .popup {
   width: 50%;
   left: 258px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-giftclaim .popup1 {
+  width: 83%;
+  left: 78px;
   top: 60px;
   position: fixed;
   height: 500px;
@@ -41998,6 +42018,10 @@ page-giftclaim .headerColor-white {
 
 page-giftclaim .cm {
   height: 100%;
+}
+
+page-giftclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
 }
 
 page-speaker-list .Subtitle {
@@ -42130,6 +42154,14 @@ page-overtimeclaim .popup {
   height: 500px;
 }
 
+page-overtimeclaim .popup1 {
+  width: 83%;
+  left: 78px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
 page-overtimeclaim .btn {
   text-align: center;
   margin: 10px 0px;
@@ -42166,6 +42198,10 @@ page-overtimeclaim .cm {
   height: 100%;
 }
 
+page-overtimeclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
+}
+
 page-printclaim .blackcontainer {
   top: 0;
   left: 0;
@@ -42179,6 +42215,14 @@ page-printclaim .blackcontainer {
 page-printclaim .popup {
   width: 50%;
   left: 258px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-printclaim .popup1 {
+  width: 83%;
+  left: 78px;
   top: 60px;
   position: fixed;
   height: 500px;
@@ -42218,6 +42262,10 @@ page-printclaim .headerColor-white {
 
 page-printclaim .cm {
   height: 100%;
+}
+
+page-printclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
 }
 
 page-schedule ion-item-sliding[track=ionic] ion-label {
@@ -42418,6 +42466,68 @@ ion-item[track=navigation] .dot {
   max-width: 200px;
 }
 
-page-user .text {
-  background-color: yellowgreen;
+page-travelclaim .blackcontainer {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  position: fixed;
+  opacity: 0.7;
+}
+
+page-travelclaim .popup {
+  width: 50%;
+  left: 258px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-travelclaim .popup1 {
+  width: 83%;
+  left: 78px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-travelclaim .btn {
+  text-align: center;
+  margin: 10px 0px;
+}
+
+page-travelclaim .btnR {
+  width: 33px !important;
+  height: 38px;
+  right: 26px;
+  font-size: 22px !important;
+  top: 26px;
+  background: #ff6b6b;
+  color: #fff;
+  position: absolute !important;
+}
+
+page-travelclaim .icHeaderText {
+  font-size: 15px !important;
+}
+
+page-travelclaim .icTitle {
+  border-bottom: 1px solid !important;
+  margin-bottom: 10px !important;
+  padding: 10px !important;
+}
+
+page-travelclaim .headerColor-white {
+  background: #ffffff !important;
+  border-color: #e8e8e8 !important;
+  color: #a5a3a3 !important;
+}
+
+page-travelclaim .cm {
+  height: 100%;
+}
+
+page-travelclaim .tnUserRow {
+  border-bottom: 2px solid #efefef;
 }

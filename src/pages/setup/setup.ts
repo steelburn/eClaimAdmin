@@ -13,7 +13,8 @@ import { QualificationsetupPage } from '../qualificationsetup/qualificationsetup
 import { SubsciptionsetupPage } from '../subsciptionsetup/subsciptionsetup';
 import { RolesetupPage } from '../rolesetup/rolesetup';
 import { TenantsetupPage } from '../tenantsetup/tenantsetup';
-import { UserPage } from '../user/user'
+import { UserPage } from '../user/user';
+import { SocRegistrationPage } from '../soc-registration/soc-registration';
 /**
  * Generated class for the SetupPage page.
  *
@@ -51,6 +52,10 @@ export class SetupPage {
 
   goToUser(){
     this.navCtrl.push(UserPage)
+  }
+
+  goToSOC(){
+    this.navCtrl.push(SocRegistrationPage)
   }
   
   goToCompanysetup(){

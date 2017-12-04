@@ -74,6 +74,22 @@ export class TravelclaimPage {
 
     this.AddTravelClicked = false;
   }
+
+  public AddLookupClicked: boolean = false;
+  
+    public AddLookupClick() 
+    {
+   
+      this.AddLookupClicked = true;
+    }
+  
+  
+    public CloseLookupClick() {
+      if (this.AddLookupClicked == true) {
+        this.AddLookupClicked = false;
+      }
+   
+    }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private travelservice: TravelClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
   {
     this.Travelform = fb.group({
