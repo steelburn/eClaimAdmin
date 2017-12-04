@@ -46,7 +46,7 @@ import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { UserPage } from '../pages/user/user';
-
+import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
@@ -88,7 +88,8 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     SubsciptionsetupPage,
     TenantsetupPage,
     TabsPage,
-    UserPage
+    UserPage,
+    SocRegistrationPage
   ],
   imports: [
     BrowserModule,
@@ -150,7 +151,8 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     TenantsetupPage,
     SpeakerListPage,
     TabsPage,
-    UserPage
+    UserPage,
+    SocRegistrationPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
