@@ -61,7 +61,7 @@ export class TenantsetupPage {
   public CONTACT_PERSON_CONTACT_NO_ngModel_Edit: any;
   public CONTACT_PERSON_EMAIL_ngModel_Edit: any;
   //---------------------------------------------------------------------
-
+  public AddTUserClicked: boolean = false;
    public AddTenantClicked: boolean = false;
    public EditTenantClicked: boolean = false; 
    public Exist_Record: boolean = false;
@@ -73,6 +73,17 @@ export class TenantsetupPage {
         this.AddTenantClicked = true; 
         this.ClearControls();
     }
+
+    public AddTUserClick() {
+      
+          this.AddTUserClicked = true;
+        }
+      
+        public CloseTUserClick() {
+      
+          this.AddTUserClicked = false;
+        }
+  
 
     public EditClick(TENANT_COMPANY_SITE_GUID: any) {
       this.ClearControls();
