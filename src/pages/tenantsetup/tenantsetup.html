@@ -217,4 +217,54 @@
 
     </div>
     <!-- add TUser end-->
+
+
+      <!-- add tuser form start-->
+      <div class="blackcontainer" *ngIf="AddTTUserClicked">
+    </div>
+    <div class="popup" padding *ngIf="AddTTUserClicked">
+
+        <ion-card class="cm">
+            <ion-card-header class="icTitle headerColor-white ">
+
+                <div class="icHeaderText">ASSIGN USER</div>
+                <button class="btnR" (click)="CloseTTUserClick()">
+                    <ion-icon name="md-close"></ion-icon>
+                </button>
+            </ion-card-header>
+            <ion-list class="scroll">
+
+                    <ion-item>
+                        <ion-label stacked>USER LOGIN ID</ion-label>
+                        <ion-input type="text"  placeholder="{{'Please fill in the user login ID'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>PASSWORD</ion-label>
+                        <ion-input type="password"  placeholder="{{'Please fill in the login password'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>EMAIL</ion-label>
+                        <ion-input type="text"  placeholder="{{'Please fill in the email of the user'}}"></ion-input>
+
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>USER ROLE</ion-label>
+                        <ion-input type="text"  placeholder="{{'Please fill in the role of the user'}}"></ion-input>
+
+                    </ion-item>
+
+
+                    <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" >Submit</button>
+                    </div>
+
+   
+            </ion-list>
+        </ion-card>
+
+    </div>
+    <!-- add tuser form end-->
 </ion-content>

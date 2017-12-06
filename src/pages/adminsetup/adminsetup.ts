@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SubsciptionsetupPage } from '../subsciptionsetup/subsciptionsetup';
 import { TenantsetupPage } from '../tenantsetup/tenantsetup';
+import { TranslatePage } from '../translate/translate'
 /**
  * Generated class for the AdminsetupPage page.
  *
@@ -25,6 +26,10 @@ export class AdminsetupPage {
   
   goToTenantsetup(){
     this.navCtrl.push(TenantsetupPage)
+  }
+
+  goToTranslate(){
+    this.navCtrl.push(TranslatePage)
   }
 
   ionViewDidLoad() {
