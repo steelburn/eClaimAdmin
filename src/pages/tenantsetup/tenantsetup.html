@@ -29,10 +29,10 @@
                     <th class="lgl1">NAME</th>
                     <th class="lgl1">REG NO.</th>
 
-                    <th class="lgl1">ADDRESS</th>
+                    <!-- <th class="lgl1">ADDRESS</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">CONTACT NUMBER</th>
-                    <th class="lgl1">WEBSITE</th>
+                    <th class="lgl1">WEBSITE</th> -->
                     <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
     
                 </tr>
@@ -42,10 +42,10 @@
                     <td class="lgl1">{{tenant.SITE_NAME}}</td>
                     <td class="lgl1">{{tenant.REGISTRATION_NUM}}</td>
 
-                    <td class="lgl1">{{tenant.ADDRESS}}</td>
+                    <!-- <td class="lgl1">{{tenant.ADDRESS}}</td>
                     <td class="lgl1">{{tenant.EMAIL}}</td>
                     <td class="lgl1">{{tenant.CONTACT_NO}}</td>
-                    <td class="lgl1">{{tenant.WEBSITE}}</td>
+                    <td class="lgl1">{{tenant.WEBSITE}}</td> -->
     
                     <td class="lgl1 fColor">
                         <button ion-button item-end  (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
@@ -60,7 +60,7 @@
 
 
 
-    <!-- <div class="eClaimSubTitle"><b>HQ DETAILS</b></div>
+    <div class="eClaimSubTitle"><b>HQ DETAILS</b></div>
     <ion-list>
         <ion-item>
             <table class="Tabler">
@@ -77,7 +77,7 @@
     
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
                         <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{tenant.ADDRESS1}}</td>
+                    <td class="lgl1">{{tenant.ADDRESS}}</td>
                     <td class="lgl1">{{tenant.EMAIL}}</td>
                     <td class="lgl1">{{tenant.CONTACT_NO}}</td>
                     <td class="lgl1">{{tenant.WEBSITE}}</td>
@@ -91,7 +91,7 @@
     
             </table>
         </ion-item>
-    </ion-list> -->
+    </ion-list>
  
 
     <div class="eClaimSubTitle"><b>CONTACT DETAILS</b></div>

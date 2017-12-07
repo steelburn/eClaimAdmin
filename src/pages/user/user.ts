@@ -92,7 +92,10 @@ public address:any;
 
   baseResourceUrl_branch: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_branch' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/personaldetails_emp' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+ 
+ // baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/personaldetails_emp' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+
+  baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   
 
   public users: UserMain_Model[] = [];
@@ -150,7 +153,7 @@ public address:any;
     .map(res => res.json())
     .subscribe(data => {
       this.employees = data.resource;
-      console.table(this.users)
+     // console.table(this.users)
     });
 
     this.http
@@ -159,7 +162,7 @@ public address:any;
     .map(res => res.json())
     .subscribe(data => {
       this.users = data.resource;
-      console.table(this.users)
+      //console.table(this.users)
     });
 
     this.http
