@@ -41,7 +41,7 @@
 
             <ion-item>
               <ion-label stacked>{{"SOC NUMBER"}}</ion-label>
-              <ion-input type="text" placeholder="{{'Please click the button to get your soc number'}}"></ion-input>
+              <ion-input type="text"  [(ngModel)]="Entertainment_SOC_No_ngModel" [ngModelOptions] = "{standalone:true}"  placeholder="{{'Please click the button to get your soc number'}}"></ion-input>
               <button ion-button outline item-end icon-left (click)="AddLookupClick()">
                 <ion-icon name="eye"></ion-icon>
                 LOOKUP
@@ -104,7 +104,7 @@
       </ion-card-header>
       <ion-list>
 
-        <ion-row>
+        <!-- <ion-row>
           <ion-searchbar type="text" #filter (keyup)="0" placeholder="SEARCH SOC NUMBER"></ion-searchbar>
         </ion-row>
         <ion-item class="tnUserRow">
@@ -132,7 +132,34 @@
         <ion-item class="tnUserRow">
           <ion-label>APR10788</ion-label>
 
-        </ion-item>
+        </ion-item> -->
+
+        <ion-item-sliding *ngFor="let soc of SOC_Number">
+          <button ion-item (click)="openItem(soc)">
+            <ion-label> {{soc.SOC_NO}}</ion-label>
+          </button>
+    
+          <!-- <ion-item-options>
+            <button ion-button color="danger" (click)="deleteItem(item)">
+              {{ 'DELETE_BUTTON' | translate }}
+            </button>
+          </ion-item-options> -->
+        </ion-item-sliding>
+
+        <!-- <ion-list-header>
+          SOC NUMBER
+        </ion-list-header>
+        <ion-item *ngFor="let soc of SOC_Number">
+          {{soc.SOC_NO}}
+          
+        </ion-item> -->
+
+
+
+
+
+
+
 
         <!-- <ion-item>
           <table class="Tabler">
