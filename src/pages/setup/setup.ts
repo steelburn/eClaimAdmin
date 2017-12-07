@@ -77,9 +77,7 @@ export class SetupPage {
   }
 
 
-      goToSubscriptionsetup(){
-    this.navCtrl.push(SubsciptionsetupPage)
-  }
+  
 
       goToQualificationsetup(){
     this.navCtrl.push(QualificationsetupPage)
@@ -89,9 +87,6 @@ export class SetupPage {
     this.navCtrl.push(RolesetupPage)
   }
 
-    goToTenantsetup(){
-    this.navCtrl.push(TenantsetupPage)
-  }
       goToMileagesetup(){
     this.navCtrl.push(MileagesetupPage)
   }

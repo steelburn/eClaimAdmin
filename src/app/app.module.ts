@@ -47,6 +47,8 @@ import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmen
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
+import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
+import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
@@ -81,6 +83,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     ClaimtypePage,
     CashcardsetupPage,
     DesignationsetupPage,
+    TranslatePage,
     MileagesetupPage,
     RolesetupPage,
     PaymenttypesetupPage,
@@ -89,7 +92,8 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     TenantsetupPage,
     TabsPage,
     UserPage,
-    SocRegistrationPage
+    SocRegistrationPage,
+    AdminsetupPage
   ],
   imports: [
     BrowserModule,
@@ -145,7 +149,9 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     DepartmentsetupPage,
     MileagesetupPage,
     RolesetupPage,
+    AdminsetupPage,
     PaymenttypesetupPage,
+    TranslatePage,
     QualificationsetupPage,
     SubsciptionsetupPage,
     TenantsetupPage,
