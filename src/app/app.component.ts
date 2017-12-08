@@ -23,6 +23,8 @@ import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
+import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
+import { PeermissionPage } from'../pages/peermission/peermission';
 export interface PageInterface {
 
   title: string;
@@ -40,6 +42,11 @@ export interface PageInterface {
 })
 export class ConferenceApp {
 
+  public setupPageClicked: boolean = false;
+
+  //public setupPageClick() {
+  //  this.setupPageClicked = !this.setupPageClicked;
+  //}
 
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
@@ -50,9 +57,10 @@ export class ConferenceApp {
   // the login page disables the left menu
   appPages: PageInterface[] = [
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},
-    { title: 'SCHEDULE', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 2, icon: 'calendar' },  
-    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'checkbox-outline' }
+    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},  
+    { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 4, icon: 'settings' },
+    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'checkbox-outline' },
+
   ];
   loggedInPages: PageInterface[] = [
     { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -62,9 +70,10 @@ export class ConferenceApp {
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
     { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
   ];
+
+
   rootPage: any = SignupPage;
   
-
   constructor(
 
     public events: Events,
@@ -81,6 +90,7 @@ export class ConferenceApp {
     platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
     // Check if the user has already seen the tutorial
 
+
     // load the conference data
     confData.load();
 
@@ -92,6 +102,8 @@ export class ConferenceApp {
 
     this.listenToLoginEvents();
   }
+
+
 
 
   openPage(page: PageInterface) {

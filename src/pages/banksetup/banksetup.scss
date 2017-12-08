@@ -156,6 +156,14 @@ page-banksetup {
         border-right: 1px solid #dedede;
         border-left: 0;
     }
+
+    ion-menu#loggedInMenu {
+        min-width: 303px !important;
+        max-width: 14%  !important;
+        border-right: 1px solid #dedede;
+        border-left: 0;
+    }
+    
     
     ion-toggle.toggle.toggle-md{
         padding-left: 80px !important;
