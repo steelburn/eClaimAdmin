@@ -102,102 +102,17 @@
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
+
       <ion-list>
-
-        <!-- <ion-row>
-          <ion-searchbar type="text" #filter (keyup)="0" placeholder="SEARCH SOC NUMBER"></ion-searchbar>
-        </ion-row>
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item> -->
 
         <ion-item-sliding *ngFor="let soc of SOC_Number">
           <button ion-item (click)="openItem(soc)">
-            <ion-label> {{soc.SOC_NO}}</ion-label>
+            <ion-label>{{soc.soc}}</ion-label>
+           
           </button>
-    
-          <!-- <ion-item-options>
-            <button ion-button color="danger" (click)="deleteItem(item)">
-              {{ 'DELETE_BUTTON' | translate }}
-            </button>
-          </ion-item-options> -->
+
         </ion-item-sliding>
 
-        <!-- <ion-list-header>
-          SOC NUMBER
-        </ion-list-header>
-        <ion-item *ngFor="let soc of SOC_Number">
-          {{soc.SOC_NO}}
-          
-        </ion-item> -->
-
-
-
-
-
-
-
-
-        <!-- <ion-item>
-          <table class="Tabler">
-              <tr class="colth TColor">
-                <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>
-                <th class="lgl1">SOC NUMBER</th>
-                <th class="lgl1">PROJECT NAME</th>
-                <th class="lgl1 tblBrRight">CUSTOMER NAME</th>
-      
-              </tr>
-      
-              <tr class="col7">
-                <td class="lgl1">1</td>
-                <td class="lgl1">APR17001</td>
-                <td class="lgl1">FLOOR SYSTEM</td>
-                <td class="lgl1">HARTALEGA</td>
-              </tr>
-              
-
-              <tr class="col7">
-                <td class="lgl1">2</td>
-                <td class="lgl1">APR127001</td>
-                <td class="lgl1">FLOOR SYSTEM</td>
-                <td class="lgl1">HARTALEGA</td>
-              </tr>
-      
-
-              <tr class="col7">
-                <td class="lgl1">3</td>
-                <td class="lgl1">APR127001</td>
-                <td class="lgl1">FLOOR SYSTEM</td>
-                <td class="lgl1">HARTALEGA</td>
-              </tr>
-      
-      
-            </table>
-
-          </ion-item> -->
       </ion-list>
     </ion-card>
   </div>
