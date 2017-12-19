@@ -595,7 +595,7 @@ export class UserPage {
       //let request_id = UUID.UUID();
       //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       //url = this.baseResourceUrl2 + "user_main?filter=(USER_GUID=" + request_id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      url = this.baseResourceUrl2_URL + "user_main?filter=(EMAIL=" + this.User_Email_ngModel.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+     url = this.baseResourceUrl2_URL + "user_main?filter=(EMAIL=" + this.User_Email_ngModel.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
       console.log(url);
       this.http.get(url, options)
@@ -648,7 +648,7 @@ export class UserPage {
               this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_ngModel.trim();
               this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_ngModel.trim();
 
-              this.userinfo_entry.DEPT_GUID = this.User_Department_ngModel;
+              this.userinfo_entry.DEPT_GUID = this.User_Department_ngModel.trim();
               this.userinfo_entry.JOIN_DATE = this.User_JoinDate_ngModel.trim();
               this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_ngModel.trim();
               this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_ngModel.trim();
