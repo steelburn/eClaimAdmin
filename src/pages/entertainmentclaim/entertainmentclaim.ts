@@ -57,7 +57,8 @@ export class EntertainmentclaimPage {
   baseResourceUrl_view_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_soc_no' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
  
   public Exist_Record: boolean = false;
-
+  public soc: any;
+  // public ev:any;
   public base64Image: string;
   postTitle: any;
   desc: any;
@@ -97,14 +98,14 @@ export class EntertainmentclaimPage {
    
     }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, private camera: Camera,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController ) {
-    
+    let items=[this.SOC_Number];
     this.http
     .get(this.baseResourceUrl_view_soc)
     .map(res => res.json())
     .subscribe(data => {      
-      this.SOC_Number = data["resource"]
+      this.SOC_Number = data["resource"]      
     });
-
+    
     this.Entertainmentform = fb.group({
       // 'Entertainmentform':['',  Validators.required],
       // profilePic: [''],
@@ -130,7 +131,7 @@ export class EntertainmentclaimPage {
     });
    
     this.Entertainment_Date_ngModel = new Date().toISOString();
-    this.GetSocNo();
+    // this.GetSocNo();
     //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
 
     this.Entertainmentform.valueChanges.subscribe((v) => {
@@ -150,51 +151,65 @@ export class EntertainmentclaimPage {
    this.CloseLookupClick();
   }
 
-  GetSocNo(){
-   // AddLookupClick(){
-    this.http
-    .get(this.baseResourceUrl_view_soc)
-    .map(res => res.json())
-    .subscribe(data => {
+  // getItems(ev) {
+  //   let val = ev.target.value;
+  //   if (!val || !val.trim()) {
+  //     this.SOC_Number = [];
+  //     return;
+  //   }
+  //   this.SOC_Number = 
+  // }
+
+  // GetSocNo(){
+  //  // AddLookupClick(){
+  //   this.http
+  //   .get(this.baseResourceUrl_view_soc)
+  //   .map(res => res.json())
+  //   .subscribe(data => {
       
-      this.socs = data["resource"];
-      console.table(this.socs);
+  //     this.socs = data["resource"];
+  //     console.table(this.socs);
       
-      if (this.Entertainment_SOC_No_ngModel == undefined) { return; }
-      if (this.Entertainment_SOC_No_ngModel != "" || this.Entertainment_SOC_No_ngModel != undefined) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        let options = new RequestOptions({ headers: headers });
-        let url: string;
-        let url1: string;
-        url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Entertainment_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Entertainment_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.http.get(url, options)
-          .map(res => res.json())
-          .subscribe(
-          data => {
-            let res = data["resource"];
+  //     if (this.Entertainment_SOC_No_ngModel == undefined) { return; }
+  //     if (this.Entertainment_SOC_No_ngModel != "" || this.Entertainment_SOC_No_ngModel != undefined) {
+  //       let headers = new Headers();
+  //       headers.append('Content-Type', 'application/json');
+  //       let options = new RequestOptions({ headers: headers });
+  //       let url: string;
+  //       let url1: string;
+  //       url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Entertainment_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+  //       url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Entertainment_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+  //       this.http.get(url, options)
+  //         .map(res => res.json())
+  //         .subscribe(
+  //         data => {
+  //           let res = data["resource"];
   
-            if (res.length > 0) {
-              this.Entertainment_ProjectName_ngModel = res[0].Project;
-               this.Entertainment_CustomerName_ngModel=res[0].customer;
-            }
-            else {
-              alert('please enter valid soc no');
-              //return;
-              this.Entertainment_SOC_No_ngModel = "";
-            }
-          },
-          err => {
-            console.log("ERROR!: ", err);
-          });
-      }
+  //           if (res.length > 0) {
+  //             this.Entertainment_ProjectName_ngModel = res[0].Project;
+  //              this.Entertainment_CustomerName_ngModel=res[0].customer;
+  //           }
+  //           else {
+  //             alert('please enter valid soc no');
+  //             //return;
+  //             this.Entertainment_SOC_No_ngModel = "";
+  //           }
+  //         },
+  //         err => {
+  //           console.log("ERROR!: ", err);
+  //         });
+  //     }
 
 
 
       
-    });
-  }
+  //   });
+  // }
+
+
+
+
+
 
 //   SOC_No_TextBox_Onchange(Entertainment_SOC_No_ngModel: string){
 //     console.log(this.Entertainment_SOC_No_ngModel);

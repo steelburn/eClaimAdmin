@@ -47,6 +47,8 @@
                 LOOKUP
               </button>
             </ion-item>
+
+
             
             <ion-item>
               <ion-label stacked>{{"PROJECT NAME"}}</ion-label>
@@ -102,6 +104,8 @@
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
+      <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ 'SEARCH_PLACEHOLDER' | translate }}"></ion-searchbar>
+      
       <ion-list>
 
         <!-- <ion-row>
@@ -136,7 +140,9 @@
 
         <ion-item-sliding *ngFor="let soc of SOC_Number">
           <button ion-item (click)="openItem(soc)">
-            <ion-label> {{soc.SOC_NO}}</ion-label>
+
+            <!-- <ion-label> {{soc.SOC_NO}}</ion-label> -->
+            <ion-label> {{soc.soc}}</ion-label>
           </button>
     
           <!-- <ion-item-options>
@@ -153,13 +159,6 @@
           {{soc.SOC_NO}}
           
         </ion-item> -->
-
-
-
-
-
-
-
 
         <!-- <ion-item>
           <table class="Tabler">
