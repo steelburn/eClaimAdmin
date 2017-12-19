@@ -31,11 +31,19 @@
             <table class="Tabler">
                 <tr class="linedsg TColor">
                     <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+<<<<<<< HEAD
+=======
+
+>>>>>>> Pratap
                     <th class="lgl1">TENANT ACCOUNT NAME</th>
                     <th class="lgl1">EFFECTIVE DATE</th>
                     <th class="lgl1">ACTIVE FLAG</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Pratap
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
@@ -45,8 +53,13 @@
                     <td class="lgl1">23 - 4- 2222</td>
                     <td class="lgl1">
                         <ion-toggle checked=true></ion-toggle>
+<<<<<<< HEAD
 
                     </td>
+=======
+                    </td>
+
+>>>>>>> Pratap
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)">
                             <ion-icon name="md-create"></ion-icon>
@@ -60,10 +73,78 @@
                     </td>
                 </tr>
 
+<<<<<<< HEAD
 
             </table>
         </ion-item>
     </ion-list>
+=======
+    <div class="eClaimSubTitle"><b>HQ DETAILS</b></div>
+    <ion-list>
+        <ion-item>
+            <table class="Tabler">
+                <tr class="linedsg TColor">
+                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+                    <th class="lgl1">ADDRESS</th>
+                    <th class="lgl1">EMAIL</th>
+                    <th class="lgl1">CONTACT NUMBER</th>
+                    <th class="lgl1">WEBSITE</th>
+          
+                    <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+    
+                </tr>
+    
+                <tr class="col7" *ngFor="let tenant of tenants; let i=index">
+                        <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{tenant.ADDRESS}}</td>
+                    <td class="lgl1">{{tenant.EMAIL}}</td>
+                    <td class="lgl1">{{tenant.CONTACT_NO}}</td>
+                    <td class="lgl1">{{tenant.WEBSITE}}</td>
+    
+                    <td class="lgl1 fColor">
+                        <button ion-button item-end  (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                        <button ion-button item-end (click)="DeleteClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                    </td>
+                </tr>
+    
+    
+            </table>
+        </ion-item>
+    </ion-list>
+ 
+
+    <div class="eClaimSubTitle"><b>CONTACT DETAILS</b></div>
+    <ion-list>
+            <ion-item>
+                <table class="Tabler">
+                    <tr class="linedsg TColor">
+                        <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+                        <th class="lgl1">NAME</th>
+                        <th class="lgl1">CONTACT NUMBER</th>
+                        <th class="lgl1">EMAIL</th>
+                        <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+        
+                    </tr>
+        
+                    <tr class="col7" *ngFor="let tenant of tenants; let i=index">
+                            <td class="lgl1">{{i+1}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON_CONTACT_NO}}</td>
+                        <td class="lgl1">{{tenant.CONTACT_PERSON_EMAIL}}</td>
+              
+        
+                        <td class="lgl1 fColor">
+                            <button ion-button item-end  (click)="EditClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                            <button ion-button item-end (click)="DeleteClick(tenant.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                        </td>
+                    </tr>
+        
+        
+                </table>
+            </ion-item>
+        </ion-list>
+
+>>>>>>> Pratap
 
     <!-- add Tenant form start-->
     <div class="blackcontainer" *ngIf="AddTenantClicked">
