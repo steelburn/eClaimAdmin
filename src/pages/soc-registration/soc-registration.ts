@@ -106,9 +106,6 @@ export class SocRegistrationPage {
           console.log("No records Found");
           if (this.Exist_Record == false) {
 
-           
-
-          
             this.customer_entry.NAME = this.CUSTOMER_NAME_ngModel_Add.trim();
             
             this.customer_entry.CUSTOMER_GUID = UUID.UUID();

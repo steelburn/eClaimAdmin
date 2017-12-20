@@ -68,6 +68,7 @@ export class MileagesetupPage {
       .get(MILEAGE_GUID)
       .subscribe((data) => {
         self.mileage_details = data;
+        console.log(self.mileage_details);
         this.CATEGORY_ngModel_Edit = self.mileage_details.CATEGORY; localStorage.setItem('Prev_mi_Category', self.mileage_details.CATEGORY); //console.log(self.mileage_details.CATEGORY);
         this.RATE_PER_UNIT_ngModel_Edit = self.mileage_details.RATE_PER_UNIT;
         this.RATE_DATE_ngModel_Edit = new Date(self.mileage_details.RATE_DATE).toISOString();
