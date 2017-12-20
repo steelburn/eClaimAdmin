@@ -165,7 +165,7 @@
 
             </table>
         </ion-item>
-    </ion-list> -->
+    </ion-list> 
 
 
     <div class="blackcontainer" *ngIf="AddUserClicked">
@@ -244,7 +244,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"DESIGNATION"}}</ion-label>
                         <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_ngModel" placeholder="{{'Please fill the designation'}}">
-                            <ion-option *ngFor="let designation of designations" selected="true">{{designation.NAME}}</ion-option>
+                            <ion-option *ngFor="let designation of designations" [value]="designation.DESIGNATION_GUID"  selected="true">{{designation.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -259,7 +259,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"DEPARTMENT"}}</ion-label>
                         <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_ngModel" placeholder="{{'Please fill in the Department'}}">
-                            <ion-option *ngFor="let department of departments" selected="true">{{department.NAME }}</ion-option>
+                            <ion-option *ngFor="let department of departments" [value]="department.DEPARTMENT_GUID" selected="true">{{department.NAME }}</ion-option>
                         </ion-select>
                     </ion-item>
                     <!-- [value]="department.DEPARTMENT_GUID" -->
@@ -286,7 +286,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"BRANCH"}}</ion-label>
                         <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{'Please fill in the Branch'}}">
-                            <ion-option *ngFor="let branch of branches" selected="true">{{branch.NAME}}</ion-option>
+                            <ion-option *ngFor="let branch of branches" [value]="branch.BRANCH_GUID" selected="true">{{branch.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 

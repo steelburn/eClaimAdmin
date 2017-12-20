@@ -48,6 +48,7 @@ import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
+import { PeermissionPage } from'../pages/peermission/peermission';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -70,6 +71,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     GiftclaimPage,
     OvertimeclaimPage,
     EntertainmentclaimPage,
+    PeermissionPage,
     TravelclaimPage,
     ScheduleFilterPage,
     SessionDetailPage,
@@ -145,6 +147,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     CompanysetupPage,
     ClaimtypePage,
     CashcardsetupPage,
+    PeermissionPage,
     DesignationsetupPage,
     DepartmentsetupPage,
     MileagesetupPage,

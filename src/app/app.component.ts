@@ -24,6 +24,7 @@ import { UserData } from '../providers/user-data';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
+import { PeermissionPage } from'../pages/peermission/peermission';
 export interface PageInterface {
 
   title: string;
