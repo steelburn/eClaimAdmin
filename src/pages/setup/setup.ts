@@ -13,7 +13,8 @@ import { QualificationsetupPage } from '../qualificationsetup/qualificationsetup
 import { SubsciptionsetupPage } from '../subsciptionsetup/subsciptionsetup';
 import { RolesetupPage } from '../rolesetup/rolesetup';
 import { TenantsetupPage } from '../tenantsetup/tenantsetup';
-import { UserPage } from '../user/user'
+import { UserPage } from '../user/user';
+import { SocRegistrationPage } from '../soc-registration/soc-registration';
 /**
  * Generated class for the SetupPage page.
  *
@@ -52,6 +53,10 @@ export class SetupPage {
   goToUser(){
     this.navCtrl.push(UserPage)
   }
+
+  goToSOC(){
+    this.navCtrl.push(SocRegistrationPage)
+  }
   
   goToCompanysetup(){
     this.navCtrl.push(CompanysetupPage)
@@ -72,9 +77,7 @@ export class SetupPage {
   }
 
 
-      goToSubscriptionsetup(){
-    this.navCtrl.push(SubsciptionsetupPage)
-  }
+  
 
       goToQualificationsetup(){
     this.navCtrl.push(QualificationsetupPage)
@@ -84,9 +87,6 @@ export class SetupPage {
     this.navCtrl.push(RolesetupPage)
   }
 
-    goToTenantsetup(){
-    this.navCtrl.push(TenantsetupPage)
-  }
       goToMileagesetup(){
     this.navCtrl.push(MileagesetupPage)
   }

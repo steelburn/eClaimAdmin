@@ -12,6 +12,7 @@ import { EntertainmentClaim_Model } from '../../models/entertainmentclaim_model'
 import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { EntertainmentClaim_Service } from '../../services/entertainmentclaim_service';
 import { BaseHttpService } from '../../services/base-http';
+import { SOC_Model } from '../../models/soc_model';
 
 import { UUID } from 'angular2-uuid';
 
@@ -42,6 +43,7 @@ export class EntertainmentclaimPage {
   masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
   Entertainmentform: FormGroup;
   private myData: any;
+  
 
   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
@@ -52,6 +54,7 @@ export class EntertainmentclaimPage {
   baseResourceUrl_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
+  baseResourceUrl_view_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_soc_no' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
  
   public Exist_Record: boolean = false;
 
@@ -62,6 +65,7 @@ export class EntertainmentclaimPage {
   imagePath: any;
   imageNewPath: any;
   public imageData: any;
+  SOC_Number:SOC_Model[];
 
   imageURI:any;
   imageFileName:any;
@@ -72,13 +76,34 @@ export class EntertainmentclaimPage {
   public Entertainment_CustomerName_ngModel:any;
   public Entertainment_ClaimAmount_ngModel:any;
   public Entertainment_Description_ngModel:any;
+  public soc_details:any;
   //public Entertainment_Image_ngModel:any;
   //public Entertainment_FileUpload_ngModel:any;
   public myDate:any;
   
+  public AddLookupClicked: boolean = false;
+  
+    public AddLookupClick() 
+    {
+  //  this.GetSocNo();
+      this.AddLookupClicked = true;
+    }
+  
+  
+    public CloseLookupClick() {
+      if (this.AddLookupClicked == true) {
+        this.AddLookupClicked = false;
+      }
+   
+    }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, private camera: Camera,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController ) {
     
-    
+    this.http
+    .get(this.baseResourceUrl_view_soc)
+    .map(res => res.json())
+    .subscribe(data => {      
+      this.SOC_Number = data["resource"]
+    });
 
     this.Entertainmentform = fb.group({
       // 'Entertainmentform':['',  Validators.required],
@@ -89,6 +114,7 @@ export class EntertainmentclaimPage {
 
       entertainment_date: '',
       soc_no: '',
+      //SOC_NO: '',
       project_name: '',
       customer_name: '',
       //description: '',
@@ -117,13 +143,22 @@ export class EntertainmentclaimPage {
     console.log('ionViewDidLoad EntertainmentclaimPage');
   }
 
+  openItem(item: SOC_Model) {
+    this.Entertainment_SOC_No_ngModel = item.soc;
+    this.Entertainment_ProjectName_ngModel = item.project_name;
+    this.Entertainment_CustomerName_ngModel = item.customer_name;
+   this.CloseLookupClick();
+  }
+
   GetSocNo(){
+   // AddLookupClick(){
     this.http
-    .get(this.baseResourceUrl_soc)
+    .get(this.baseResourceUrl_view_soc)
     .map(res => res.json())
     .subscribe(data => {
-      this.socs = data["resource"];
       
+      this.socs = data["resource"];
+      console.table(this.socs);
       
       if (this.Entertainment_SOC_No_ngModel == undefined) { return; }
       if (this.Entertainment_SOC_No_ngModel != "" || this.Entertainment_SOC_No_ngModel != undefined) {
