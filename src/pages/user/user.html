@@ -22,7 +22,7 @@
     </ion-fab>
 
 
-    <div class="eClaimSubTitle">
+    <!-- <div class="eClaimSubTitle">
         <b>PERSONAL DETAILS</b>
     </div>
 
@@ -30,13 +30,12 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
-                    <th class="lgl1">NAME</th>
+               
+                    <th class="lgl1 tblBrLeft">NAME</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">PERSONAL CONTACT NO</th>
                     <th class="lgl1">COMAPANY CONTACT NO</th>
                     <th class="lgl1">MARITAL STATUS</th>
-
                     <th class="lgl1">STAFF ID</th>
                     <th class="lgl1">IC NO</th>
                     <th class="lgl1">DATE OF BIRTH</th>
@@ -45,7 +44,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let user of users; let i=index">
-                    <!-- <td class="lgl1">{{i+1}}</td> -->
+
                     <td class="lgl1">{{user.name}}</td>
                     <td class="lgl1">{{user.email}}</td>
                     <td class="lgl1">{{user.contactno}}</td>
@@ -82,7 +81,7 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
+         
                     <th class="lgl1">DESIGNATION</th>
                     <th class="lgl1">COMPANY</th>
                     <th class="lgl1">DEPARTMENT</th>
@@ -99,7 +98,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let user of employees; let i=index">
-                    <!-- <td class="lgl1">{{i+1}}</td> -->
+          
                     <td class="lgl1">{{user.DESIGNATION_GUID}}</td>
                     <td class="lgl1">{{user.TENANT_COMPANY_GUID }}</td>
                     <td class="lgl1">{{user.DEPT_GUID}}</td>
@@ -138,7 +137,7 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
+
                     <th class="lgl1">ADDRESS LINE 1</th>
                     <th class="lgl1">ADDRESS LINE 2</th>
                     <th class="lgl1">ADDRESS LINE 3</th>
@@ -146,7 +145,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let user of address; let i=index">
-                    <!-- <td class="lgl1">{{i+1}}</td> -->
+
                     <td class="lgl1">{{user.USER_ADDRESS1}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS2}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS3}}</td>
@@ -165,9 +164,9 @@
 
             </table>
         </ion-item>
-    </ion-list> 
+    </ion-list>  -->
 
-
+<!-- 
     <div class="blackcontainer" *ngIf="AddUserClicked">
     </div>
     <div class="popup" padding *ngIf="AddUserClicked">
@@ -179,57 +178,57 @@
                 <button class="btnR" (click)="CloseUserClick()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>
-            </ion-card-header>
-            <ion-list class="scroll">
+            </ion-card-header> -->
+            <ion-list>
                 <form [formGroup]="Userform">
 
                     <div class="eClaimSubTitle1">
                         <b>PERSONAL DETAILS</b>
                     </div>
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"NAME"}}</ion-label>
-                        <ion-input type="text" formControlName="name" [(ngModel)]="User_Name_ngModel" placeholder="{{'Please fill the name of the user'}}"></ion-input>
+                        <ion-input type="text" formControlName="name" [(ngModel)]="User_Name_ngModel" placeholder="{{'Please fill the name of the user'}}" style="color:black !important"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"EMAIL"}}</ion-label>
                         <ion-input type="text" formControlName="email" [(ngModel)]="User_Email_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"PERSONAL CONTACT NO"}}</ion-label>
                         <ion-input type="text" formControlName="contactno" [(ngModel)]="User_PersonalNo_ngModel" placeholder="{{'Please fill the personal contact number'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"COMAPANY CONTACT NO"}}</ion-label>
                         <ion-input type="text" formControlName="companyno" [(ngModel)]="User_CompanyNo_ngModel" placeholder="{{'Please fill in the HQ website'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>
                         <ion-select formControlName="maritalstatus" [(ngModel)]="User_Marital_ngModel" placeholder="{{'Please fill the marital status'}}">
                             <ion-option *ngFor="let marital of maritals" value="{{marital.value}}">{{marital.text}}</ion-option>
                         </ion-select>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"STAFF ID"}}</ion-label>
                         <ion-input type="text" formControlName="personidtype" [(ngModel)]="User_StaffID_ngModel" placeholder="{{'Please fill the staff id'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"IC NO"}}</ion-label>
                         <ion-input type="text" formControlName="personid" [(ngModel)]="User_ICNo_ngModel" placeholder="{{'Please fill the ic no'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dob" [(ngModel)]="User_DOB_ngModel" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
-                        <!-- <ion-input type="text" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{'Please fill the dob'}}"></ion-input> -->
+                     
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{"GENDER"}}</ion-label>
                         <ion-select formControlName="gender" [(ngModel)]="User_Gender_ngModel" placeholder="{{'Please fill the gender'}}">
                             <ion-option *ngFor="let gender of genders" value="{{gender.value}}">{{gender.text}}</ion-option>
@@ -292,7 +291,7 @@
 
                     <ion-item class="text">
                         <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>
-                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_ngModel" placeholder="{{'Please fill in the Email'}}">
+                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_ngModel" placeholder="{{'Please choose the employee type'}}">
                             <ion-option *ngFor="let emptype of emptypes" value="{{emptype.value}}">{{emptype.text}}</ion-option>
                         </ion-select>
                     </ion-item>
@@ -338,12 +337,12 @@
                     <div class="btn">
                         <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Save()">{{"SUBMIT" | translate}}</button>
                     </div>
-                    <!-- [disabled]="!Userform.valid" -->
+       
                 </form>
             </ion-list>
-        </ion-card>
+        <!-- </ion-card>
 
-    </div>
+    </div> -->
     <!-- add Tenant form end-->
 
 
