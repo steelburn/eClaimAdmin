@@ -208,9 +208,11 @@
                     <ion-item>
                         <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>
                         <ion-select formControlName="maritalstatus" [(ngModel)]="User_Marital_ngModel" placeholder="{{'Please fill the marital status'}}">
-                            <ion-option *ngFor="let marital of maritals" value="{{marital.value}}">{{marital.text}}</ion-option>
+                            <ion-option *ngFor="let marital of maritals" [value]="marital.value">{{marital.text}}</ion-option>
                         </ion-select>
                     </ion-item>
+                    
+                    
 
                     <ion-item>
                         <ion-label stacked>{{"STAFF ID"}}</ion-label>
@@ -231,7 +233,7 @@
                     <ion-item>
                         <ion-label stacked>{{"GENDER"}}</ion-label>
                         <ion-select formControlName="gender" [(ngModel)]="User_Gender_ngModel" placeholder="{{'Please fill the gender'}}">
-                            <ion-option *ngFor="let gender of genders" value="{{gender.value}}">{{gender.text}}</ion-option>
+                            <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.text}}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -246,12 +248,13 @@
                             <ion-option *ngFor="let designation of designations" [value]="designation.DESIGNATION_GUID"  selected="true">{{designation.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
+                    <!-- [value]="designation.DESIGNATION_GUID" -->
 
 
                     <ion-item class="text">
                         <ion-label stacked>{{"COMPANY"}}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{'Please fill the company'}}">
-                            <ion-option *ngFor="let company of companies" selected="true">{{company.NAME}}</ion-option>
+                            <ion-option *ngFor="let company of companies" [value]="company.COMPANY_GUID"  selected="true">{{company.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -285,9 +288,10 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"BRANCH"}}</ion-label>
                         <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{'Please fill in the Branch'}}">
-                            <ion-option *ngFor="let branch of branches" [value]="branch.BRANCH_GUID" selected="true">{{branch.NAME}}</ion-option>
+                            <ion-option *ngFor="let branch of branches" selected="true">{{branch.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
+                    <!-- [value]="branch.BRANCH_GUID" -->
 
                     <ion-item class="text">
                         <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>
@@ -418,7 +422,7 @@
                     <ion-item>
                         <ion-label stacked>{{"DESIGNATION"}}</ion-label>
                         <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_Edit_ngModel" placeholder="{{'Please fill the designation'}}">
-                            <ion-option *ngFor="let designation of designations" selected="true">{{designation.NAME}}</ion-option>
+                            <ion-option *ngFor="let designation of designations" value="{{designation.DESIGNATION_GUID}}" selected="true">{{designation.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -426,14 +430,14 @@
                     <ion-item>
                         <ion-label stacked>{{"COMPANY"}}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{'Please fill the company'}}">
-                            <ion-option *ngFor="let company of companies" selected="true">{{company.NAME}}</ion-option>
+                            <ion-option *ngFor="let company of companies"  value="{{company.COMPANY_GUID}}" selected="true">{{company.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>{{"DEPARTMENT"}}</ion-label>
                         <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_Edit_ngModel" placeholder="{{'Please fill in the Department'}}">
-                            <ion-option *ngFor="let department of departments" selected="true">{{department.NAME}}</ion-option>
+                            <ion-option *ngFor="let department of departments" value="{{department.DEPARTMENT_GUID}}" selected="true">{{department.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -509,7 +513,7 @@
 
 
                     <div class="btn">
-                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Save()">{{"SUBMIT" | translate}}</button>
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(view_user_details.USER_GUID)">{{"SUBMIT" | translate}}</button>
                     </div>
                 </form>
 
