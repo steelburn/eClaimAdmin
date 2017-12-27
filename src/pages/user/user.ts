@@ -59,8 +59,11 @@ export class UserPage {
   usercontact_entry: UserContact_Model = new UserContact_Model();
   usercompany_entry: UserCompany_Model = new UserCompany_Model();
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
-  viewuser_entry: ViewUser_Model = new ViewUser_Model(); view_user_details: any; 
+  viewuser_entry: ViewUser_Model = new ViewUser_Model(); 
+  view_user_details: any; 
+  user_details: any;
   Userform: FormGroup; 
+
   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_info' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
   baseResourceUrl2: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -91,7 +94,7 @@ export class UserPage {
   public AddUserClicked: boolean = false;
   public EditUserClicked: boolean = false;
 
-
+  //Set the Model Name for Add------------------------------------------
   public User_Name_ngModel: any;
   public User_Email_ngModel: any;
   public User_PersonalNo_ngModel: any;
@@ -117,8 +120,9 @@ export class UserPage {
   public User_Address1_ngModel: any;
   public User_Address2_ngModel: any;
   public User_Address3_ngModel: any;
+   //---------------------------------------------------------------------
 
-  //Edit
+   //Set the Model Name for edit------------------------------------------
   public User_Name_Edit_ngModel: any;
   public User_Email_Edit_ngModel: any;
   public User_PersonalNo_Edit_ngModel: any;
@@ -153,12 +157,19 @@ export class UserPage {
 
   public CloseUserClick() {
 
-    this.AddUserClicked = false;
+    if (this.AddUserClicked == true) {
+      this.AddUserClicked = false;
+    }
+    if (this.EditUserClicked == true) {
+      this.EditUserClicked = false;
+    }
   }
  
-  public EditClick(id: any) {
-    let url = this.baseResourceUrl2_URL + "view_user_display?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
+  public EditClick1(id: any) {
+    //url = this.baseResource_Url + "main_mileage?filter=(CATEGORY=" + this.CATEGORY_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let url = this.baseResourceUrl2_URL + "view_user_display?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    //let url = this.baseResourceUrl1 + "?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY; 
 
     this.EditUserClicked = true;
     var self = this;
@@ -168,7 +179,7 @@ export class UserPage {
 
         this.view_user_details = data;
         alert(this.view_user_details.name);
-       
+        
 
         this.User_Name_Edit_ngModel = self.viewuser_entry.name;
         this.User_Email_Edit_ngModel = self.viewuser_entry.email;
@@ -195,6 +206,57 @@ export class UserPage {
         this.User_Address1_Edit_ngModel = self.useraddress_entry.USER_ADDRESS1;
         this.User_Address2_Edit_ngModel = self.useraddress_entry.USER_ADDRESS2;
         this.User_Address3_Edit_ngModel = self.useraddress_entry.USER_ADDRESS3;
+      });
+  }
+
+public EditClick(USER_GUID: any) {
+  alert(USER_GUID);
+    this.EditUserClicked = true;
+    var self = this;
+    this.userservice.get(USER_GUID)
+      .subscribe((data) => {
+        self.user_details = data;
+        console.log(self.user_details);
+        // this.User_Name_Edit_ngModel = self.userinfo_entry.FULLNAME; 
+        // this.User_Email_Edit_ngModel = self.usermain_entry.EMAIL; 
+        // this.User_PersonalNo_Edit_ngModel = self.usercontact_entry.CONTACT_NO; 
+        // this.User_CompanyNo_Edit_ngModel = self.usercompany_entry.COMPANY_CONTACT_NO; 
+        // this.User_Marital_Edit_ngModel = self.userinfo_entry.MARITAL_STATUS; 
+        // this.User_StaffID_Edit_ngModel = self.userinfo_entry.PERSONAL_ID_TYPE;
+        // this.User_ICNo_Edit_ngModel = self.userinfo_entry.PERSONAL_ID;
+        // this.User_DOB_Edit_ngModel = self.userinfo_entry.DOB;
+        // this.User_Gender_Edit_ngModel = self.userinfo_entry.GENDER;
+        alert('personal det in user.ts');
+        this.User_Name_Edit_ngModel = self.user_details.name; 
+        this.User_Email_Edit_ngModel = self.user_details.email; 
+        this.User_PersonalNo_Edit_ngModel = self.user_details.contactno; 
+        this.User_CompanyNo_Edit_ngModel = self.user_details.companyno; 
+        this.User_Marital_Edit_ngModel = self.user_details.maritalstatus; 
+        this.User_StaffID_Edit_ngModel = self.user_details.personidtype;
+        this.User_ICNo_Edit_ngModel = self.user_details.personid;
+        this.User_DOB_Edit_ngModel = self.user_details.dob;
+        this.User_Gender_Edit_ngModel = self.user_details.gender;
+        alert(this.User_Name_Edit_ngModel);
+        //this.User_Gender_Edit_ngModel = self.viewuser_entry.gender;
+        alert('emp det in user.ts');
+
+        this.User_Designation_Edit_ngModel = self.user_details.DESIGNATION_GUID;
+        this.User_Company_Edit_ngModel = self.user_details.TENANT_COMPANY_GUID;
+        this.User_Department_Edit_ngModel = self.user_details.DEPT_GUID;
+        this.User_JoinDate_Edit_ngModel = self.user_details.JOIN_DATE;
+        this.User_ConfirmationDate_Edit_ngModel = self.user_details.CONFIRMATION_DATE;
+        this.User_ResignationDate_Edit_ngModel = self.user_details.RESIGNATION_DATE;
+        this.User_Branch_Edit_ngModel = self.user_details.BRANCH;
+        this.User_EmployeeType_Edit_ngModel = self.user_details.EMPLOYEE_TYPE;
+        this.User_Approver1_Edit_ngModel = self.user_details.APPROVER1;
+        this.User_Approver2_Edit_ngModel = self.user_details.APPROVER2;
+        this.User_Employment_Edit_ngModel = self.user_details.EMPLOYEE_STATUS;
+        alert(this.User_Designation_Edit_ngModel);
+
+        alert('addr det in user.ts');
+        this.User_Address1_Edit_ngModel = self.user_details.USER_ADDRESS1;
+        this.User_Address2_Edit_ngModel = self.user_details.USER_ADDRESS2;
+        this.User_Address3_Edit_ngModel = self.user_details.USER_ADDRESS3;
         // alert(self.viewuser_entry.personid);
 
 
@@ -202,10 +264,12 @@ export class UserPage {
       });
   }
 
- 
 
 
+USER_INFO_GUID_FOR_UPDATE :any;
   public EditClick_Personaldetails(id: any) {
+    this.USER_GUID_FOR_UPDATE = id;
+    alert(id);
     this.EditUserClicked = true;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -236,6 +300,7 @@ export class UserPage {
       data => {
         let res = data["resource"];
         this.view_user_details = data["resource"];
+        this.USER_INFO_GUID_FOR_UPDATE =this.view_user_details[0]["USER_INFO_GUID"];
         this.User_Designation_Edit_ngModel = this.view_user_details[0]["DESIGNATION_GUID"];
         this.User_Company_Edit_ngModel = this.view_user_details[0]["TENANT_COMPANY_GUID"];
         this.User_Department_Edit_ngModel = this.view_user_details[0]["DEPT_GUID"];
@@ -376,19 +441,32 @@ export class UserPage {
   }
   public guid: any;
   //public x:any;
+
+  // GetDepartment() {
+  //   this.http
+  //     .get(this.baseResourceUrl_department)
+  //     .map(res => res.json())
+  //     .subscribe(data => {
+  //       this.departments = data["resource"];
+  //       //this.guid=data["resource"].DEPARTMENT_GUID;
+
+  //     });
+  // }
+
   GetDepartment() {
     this.http
       .get(this.baseResourceUrl_department)
       .map(res => res.json())
       .subscribe(data => {
-        this.departments = data["resource"];
-        //this.guid=data["resource"].DEPARTMENT_GUID;
+        this.departments = data["resource"]; 
+        // if (data.length > 0) {
+        //   this.departments = data[0].department;
+        // }
 
       });
-    //alert(this.data);
-    //console.log(this.departments);
-
+      // return;
   }
+
   test(selectedValue: any) {
     alert('selected: ' + selectedValue);
   }
@@ -444,46 +522,84 @@ export class UserPage {
                   if (response.status == 200) {
                     alert('user_main Registered successfully');
                     //location.reload();
+
+                    this.userinfo_entry.FULLNAME = this.User_Name_ngModel.trim();
+                    this.userinfo_entry.MARITAL_STATUS = this.User_Marital_ngModel;
+                    this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_ngModel.trim();
+                    this.userinfo_entry.PERSONAL_ID = this.User_ICNo_ngModel.trim();
+                    this.userinfo_entry.DOB = this.User_DOB_ngModel.trim();
+                    this.userinfo_entry.GENDER = this.User_Gender_ngModel;
+                    this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
+                    this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
+                    //this.userinfo_entry.USER_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
+                    //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
+                    //this.userinfo_entry.TENANT_COMPANY_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
+                    this.userinfo_entry.CREATION_TS = new Date().toISOString();
+                    this.userinfo_entry.CREATION_USER_GUID = "1";
+                    this.userinfo_entry.UPDATE_TS = new Date().toISOString();
+                    this.userinfo_entry.UPDATE_USER_GUID = "";
+                    this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_ngModel.trim();
+                    this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_ngModel.trim();
+      
+                    this.userinfo_entry.DEPT_GUID = this.User_Department_ngModel.trim();
+                    alert(this.User_Department_ngModel.trim());
+                    this.userinfo_entry.JOIN_DATE = this.User_JoinDate_ngModel.trim();
+                    this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_ngModel.trim();
+                    this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_ngModel.trim();
+                    this.userinfo_entry.BRANCH = this.User_Branch_ngModel.trim();
+                    this.userinfo_entry.EMPLOYEE_TYPE = this.User_EmployeeType_ngModel.trim();
+                    this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
+                    this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
+                    this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_ngModel.trim();
+                  
+                    this.userservice.save_user_info(this.userinfo_entry)
+                      .subscribe((response) => {
+                        if (response.status == 200) {
+                          alert('user_info Registered successfully');
+                          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                        }
+                      });
+
                     this.navCtrl.setRoot(this.navCtrl.getActive().component);
                   }
                 });
 
-              this.userinfo_entry.FULLNAME = this.User_Name_ngModel.trim();
-              this.userinfo_entry.MARITAL_STATUS = this.User_Marital_ngModel.trim();
-              this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_ngModel.trim();
-              this.userinfo_entry.PERSONAL_ID = this.User_ICNo_ngModel.trim();
-              this.userinfo_entry.DOB = this.User_DOB_ngModel.trim();
-              this.userinfo_entry.GENDER = this.User_Gender_ngModel;
-              this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
-              this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
-              //this.userinfo_entry.USER_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
-              //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
-              //this.userinfo_entry.TENANT_COMPANY_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
-              this.userinfo_entry.CREATION_TS = new Date().toISOString();
-              this.userinfo_entry.CREATION_USER_GUID = "1";
-              this.userinfo_entry.UPDATE_TS = new Date().toISOString();
-              this.userinfo_entry.UPDATE_USER_GUID = "";
-              this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_ngModel.trim();
-              this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_ngModel.trim();
+              // this.userinfo_entry.FULLNAME = this.User_Name_ngModel.trim();
+              // this.userinfo_entry.MARITAL_STATUS = this.User_Marital_ngModel;
+              // this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_ngModel.trim();
+              // this.userinfo_entry.PERSONAL_ID = this.User_ICNo_ngModel.trim();
+              // this.userinfo_entry.DOB = this.User_DOB_ngModel.trim();
+              // this.userinfo_entry.GENDER = this.User_Gender_ngModel;
+              // this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
+              // this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
+              // //this.userinfo_entry.USER_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
+              // //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
+              // //this.userinfo_entry.TENANT_COMPANY_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
+              // this.userinfo_entry.CREATION_TS = new Date().toISOString();
+              // this.userinfo_entry.CREATION_USER_GUID = "1";
+              // this.userinfo_entry.UPDATE_TS = new Date().toISOString();
+              // this.userinfo_entry.UPDATE_USER_GUID = "";
+              // this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_ngModel.trim();
+              // this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_ngModel.trim();
 
-              this.userinfo_entry.DEPT_GUID = this.User_Department_ngModel.trim();
-              alert(this.User_Department_ngModel.trim());
-              this.userinfo_entry.JOIN_DATE = this.User_JoinDate_ngModel.trim();
-              this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_ngModel.trim();
-              this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_ngModel.trim();
-              this.userinfo_entry.BRANCH = this.User_Branch_ngModel.trim();
-              this.userinfo_entry.EMPLOYEE_TYPE = this.User_EmployeeType_ngModel.trim();
-              this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
-              this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
-              this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_ngModel.trim();
+              // this.userinfo_entry.DEPT_GUID = this.User_Department_ngModel.trim();
+              // alert(this.User_Department_ngModel.trim());
+              // this.userinfo_entry.JOIN_DATE = this.User_JoinDate_ngModel.trim();
+              // this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_ngModel.trim();
+              // this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_ngModel.trim();
+              // this.userinfo_entry.BRANCH = this.User_Branch_ngModel.trim();
+              // this.userinfo_entry.EMPLOYEE_TYPE = this.User_EmployeeType_ngModel.trim();
+              // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
+              // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
+              // this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_ngModel.trim();
             
-              this.userservice.save_user_info(this.userinfo_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('user_info Registered successfully');
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              // this.userservice.save_user_info(this.userinfo_entry)
+              //   .subscribe((response) => {
+              //     if (response.status == 200) {
+              //       alert('user_info Registered successfully');
+              //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              //     }
+              //   });
 
               this.usercontact_entry.CONTACT_NO = this.User_PersonalNo_ngModel.trim();
               this.usercontact_entry.CONTACT_INFO_GUID = UUID.UUID();
@@ -562,56 +678,66 @@ export class UserPage {
 
   }
 
-
-
-  Edit(USER_GUID: any) {
-
-        if (this.Userform) {
-          let headers = new Headers();
-          headers.append('Content-Type', 'application/json');
-          let options = new RequestOptions({ headers: headers });
+USER_GUID_FOR_CONTACT: any;
+USER_GUID_FOR_UPDATE : any;
+  Update(USER_GUID: any) {
+    alert(this.USER_GUID_FOR_UPDATE); 
+   // USER_GUID="069625d6-4d4e-0c38-5faf-887dd63dc013";
+        if (this.Userform) { 
+          // let headers = new Headers();
+          // headers.append('Content-Type', 'application/json');
+          // let options = new RequestOptions({ headers: headers });
 
           let url: string;
           //let request_id = UUID.UUID();
           //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
           //url = this.baseResourceUrl2 + "user_main?filter=(USER_GUID=" + request_id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
           url = this.baseResourceUrl2_URL + "user_main?filter=(EMAIL=" + this.User_Email_Edit_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
-          console.log(url);
-          this.http.get(url, options)
+console.log(url);
+          
+          this.http.get(url)
             .map(res => res.json())
             .subscribe(
             data => {
               let res = data["resource"];
+              
               if (res.length == 0) {
-                console.log("No records Found");
                 if (this.Exist_Record == false) {
-
-                  alert(this.baseResourceUrl2_URL);
-                  //this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel;
-                  this.usermain_entry.EMAIL = this.view_user_details.EMAIL;
-                  //this.usermain_entry.STAFF_ID = this.User_StaffID_ngModel.trim();  
-                  this.usermain_entry.USER_GUID = UUID.UUID();
-                  //this.usermain_entry.USER_GUID = this.userinfo_entry.USER_GUID;
-                  this.usermain_entry.LOGIN_ID = UUID.UUID();
-                  this.usermain_entry.ACTIVATION_FLAG = 1;
+alert(this.USER_GUID_FOR_UPDATE);
+                  
+                  this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel;
+                  this.usermain_entry.USER_GUID = this.USER_GUID_FOR_UPDATE;
+                  //this.usermain_entry.TENANT_GUID = "x";
+                  //this.usermain_entry.STAFF_ID	 = "y";
+                 //this.usermain_entry.PASSWORD = "z";
+                  this.usermain_entry.LOGIN_ID = "925f21cf-7994-0716-b23c-ac8bff3167a4";
+                  //this.usermain_entry.ACTIVATION_FLAG = 1;
                   this.usermain_entry.CREATION_TS = new Date().toISOString();
                   this.usermain_entry.CREATION_USER_GUID = "1";
                   this.usermain_entry.UPDATE_TS = new Date().toISOString();
                   this.usermain_entry.UPDATE_USER_GUID = "";
+                  //this.usermain_entry.EMAIL = this.view_user_details.EMAIL;
+                  //this.usermain_entry.STAFF_ID = this.User_StaffID_ngModel.trim();  
+                 // this.usermain_entry.USER_GUID = UUID.UUID();
+                  //this.usermain_entry.USER_GUID = this.userinfo_entry.USER_GUID;
+                  // this.usermain_entry.LOGIN_ID = UUID.UUID();
+                  // this.usermain_entry.ACTIVATION_FLAG = 1;
+                  // this.usermain_entry.CREATION_TS = new Date().toISOString();
+                  // this.usermain_entry.CREATION_USER_GUID = "1";
+                  // this.usermain_entry.UPDATE_TS = new Date().toISOString();
+                  // this.usermain_entry.UPDATE_USER_GUID = "";
 
 
 
                   this.userservice.edit_user_main(this.usermain_entry)
                     .subscribe((response) => {
                       if (response.status == 200) {
-                        alert('user_main Registered successfully');
+                        alert('user_main updated successfully');
                         //location.reload();
                         this.navCtrl.setRoot(this.navCtrl.getActive().component);
                       }
                     });
 
-          
 
                 }
               }
