@@ -118,9 +118,10 @@ export class MileageSetup_Service {
             .map((response) => {
                 var result: any = response.json();
                 console.log(result);
+               // alert(this.baseResourceUrl);
                 let claimtype: MileageSetup_Model = MileageSetup_Model.fromJson(result);
                 console.log(claimtype);
-                alert(JSON.stringify(claimtype));
+                //alert(JSON.stringify(claimtype));
                 return claimtype;
             }).catch(this.handleError);
     };
