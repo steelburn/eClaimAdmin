@@ -371,6 +371,9 @@ public EditClick(USER_GUID: any) {
   // }
 
 USER_INFO_GUID_FOR_UPDATE :any;
+USER_GUID_FOR_CONTACT: any;
+USER_GUID_FOR_ADDRESS: any;
+USER_GUID_FOR_COMPANY_CONTACT: any;
   public EditClick_Personaldetails(id: any) {
     this.USER_GUID_FOR_UPDATE = id;
     alert(id);
@@ -382,16 +385,23 @@ USER_INFO_GUID_FOR_UPDATE :any;
     let url = this.baseResourceUrl2_URL + "view_user_display?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url2 = this.baseResourceUrl2_URL + "user_info?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url3 = this.baseResourceUrl2_URL + "user_address?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let url4 = this.baseResourceUrl2_URL + "user_contact?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let url5 = this.baseResourceUrl2_URL + "user_company?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http.get(url, options)
       .map(res => res.json())
       .subscribe(
       data => {
         let res = data["resource"];
         this.view_user_details = data["resource"];
+        //this.USER_GUID_FOR_CONTACT =this.view_user_details[0]["CONTACT_INFO_GUID"];
+        alert('edit function');
+        alert(this.view_user_details.CONTACT_INFO_GUID);
         this.User_Name_Edit_ngModel = this.view_user_details[0]["name"];
+        alert(this.view_user_details.name);
         this.User_Email_Edit_ngModel = this.view_user_details[0]["email"];
+        alert(this.view_user_details.email);
         this.User_PersonalNo_Edit_ngModel = this.view_user_details[0]["contactno"];
-        this.User_CompanyNo_Edit_ngModel = this.view_user_details[0]["companyno"];
+        //this.User_CompanyNo_Edit_ngModel = this.view_user_details[0]["companyno"];
         this.User_Marital_Edit_ngModel = this.view_user_details[0]["maritalstatus"];
         this.User_StaffID_Edit_ngModel = this.view_user_details[0]["personidtype"];
         this.User_ICNo_Edit_ngModel = this.view_user_details[0]["personid"];
@@ -405,6 +415,7 @@ USER_INFO_GUID_FOR_UPDATE :any;
         let res = data["resource"];
         this.view_user_details = data["resource"];
         this.USER_INFO_GUID_FOR_UPDATE =this.view_user_details[0]["USER_INFO_GUID"];
+        alert(this.view_user_details.USER_INFO_GUID);
         this.User_Designation_Edit_ngModel = this.view_user_details[0]["DESIGNATION_GUID"];
         this.User_Company_Edit_ngModel = this.view_user_details[0]["TENANT_COMPANY_GUID"];
         this.User_Department_Edit_ngModel = this.view_user_details[0]["DEPT_GUID"];
@@ -423,9 +434,28 @@ USER_INFO_GUID_FOR_UPDATE :any;
       data => {
         let res = data["resource"];
         this.view_user_details = data["resource"];
+        this.USER_GUID_FOR_ADDRESS =  this.view_user_details[0]["USER_ADDRESS_GUID"];
         this.User_Address1_Edit_ngModel = this.view_user_details[0]["USER_ADDRESS1"];
         this.User_Address2_Edit_ngModel = this.view_user_details[0]["USER_ADDRESS2"];
         this.User_Address3_Edit_ngModel = this.view_user_details[0]["USER_ADDRESS3"];
+      });
+      this.http.get(url4, options)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        let res = data["resource"];
+        this.view_user_details = data["resource"];
+        this.USER_GUID_FOR_CONTACT =  this.view_user_details[0]["CONTACT_INFO_GUID"];
+        this.User_PersonalNo_Edit_ngModel = this.view_user_details[0]["CONTACT_NO"];
+      });
+      this.http.get(url5, options)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        let res = data["resource"];
+        this.view_user_details = data["resource"];
+        this.USER_GUID_FOR_COMPANY_CONTACT =  this.view_user_details[0]["USER_COMPANY_GUID"];
+        this.User_CompanyNo_Edit_ngModel = this.view_user_details[0]["COMPANY_CONTACT_NO"];
       });
   }
 
@@ -829,7 +859,7 @@ USER_INFO_GUID_FOR_UPDATE :any;
 
   }
 
-USER_GUID_FOR_CONTACT: any;
+
 USER_GUID_FOR_UPDATE : any;
   Update(USER_GUID: any) {
     alert(this.USER_GUID_FOR_UPDATE); 
@@ -918,13 +948,40 @@ alert(this.USER_GUID_FOR_UPDATE);
                     .subscribe((response) => {
                       if (response.status == 200) {
                         alert('user_info Updated successfully');
+                       // alert(this.USER_INFO_GUID_FOR_UPDATE);
+                       
+
+                  //  this.usercontact_entry.CONTACT_NO = this.User_PersonalNo_Edit_ngModel.trim();
+                  // //this.usercontact_entry.CONTACT_INFO_GUID = this.USER_GUID_FOR_CONTACT;
+                  // this.usercontact_entry.CONTACT_INFO_GUID = this.USER_GUID_FOR_CONTACT;
+                  // this.usercontact_entry.USER_GUID = this.USER_GUID_FOR_UPDATE;
+                  // this.usercontact_entry.CREATION_TS = new Date().toISOString();
+                  // this.usercontact_entry.CREATION_USER_GUID = "1";
+                  // this.usercontact_entry.UPDATE_TS = new Date().toISOString();
+                  // this.usercontact_entry.UPDATE_USER_GUID = "";
+                  // alert('contact alert');
+                  // alert(this.USER_GUID_FOR_UPDATE);
+                  // alert( this.USER_GUID_FOR_CONTACT);
+                  // this.userservice.edit_user_contact(this.usercontact_entry)
+                  //   .subscribe((response) => {
+                  //     if (response.status == 200) {
+                  //       alert('user_contact Registered successfully');
+                  //       //alert(this.usercontact_entry.CONTACT_INFO_GUID);
+                  //       //alert(this.USER_GUID_FOR_CONTACT);
+                  //       alert(this.USER_GUID_FOR_UPDATE);
+                  //       alert('hi');
+                   
+                  //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  //     }
+                  //   });
                        
                         this.navCtrl.setRoot(this.navCtrl.getActive().component);
                       }
                     });
 
                   this.usercontact_entry.CONTACT_NO = this.User_PersonalNo_Edit_ngModel.trim();
-                  this.usercontact_entry.CONTACT_INFO_GUID = this.USER_GUID_FOR_CONTACT;
+                  //this.usercontact_entry.CONTACT_INFO_GUID = this.USER_GUID_FOR_CONTACT;
+                  this.usercontact_entry.CONTACT_INFO_GUID = this. USER_GUID_FOR_CONTACT;
                   this.usercontact_entry.USER_GUID = this.USER_GUID_FOR_UPDATE;
                   this.usercontact_entry.CREATION_TS = new Date().toISOString();
                   this.usercontact_entry.CREATION_USER_GUID = "1";
@@ -941,46 +998,46 @@ alert(this.USER_GUID_FOR_UPDATE);
                     });
 
 
-                  // this.usercompany_entry.COMPANY_CONTACT_NO = this.User_CompanyNo_Edit_ngModel.trim();
+                  this.usercompany_entry.COMPANY_CONTACT_NO = this.User_CompanyNo_Edit_ngModel.trim();
 
-                  // this.usercompany_entry.USER_COMPANY_GUID = UUID.UUID();
+                  this.usercompany_entry.USER_COMPANY_GUID = this.USER_GUID_FOR_COMPANY_CONTACT;
                   
-                  // this.usercompany_entry.USER_GUID = this.usermain_entry.USER_GUID;
-                  // this.usercompany_entry.CREATION_TS = new Date().toISOString();
-                  // this.usercompany_entry.CREATION_USER_GUID = "1";
-                  // this.usercompany_entry.UPDATE_TS = new Date().toISOString();
-                  // this.usercompany_entry.UPDATE_USER_GUID = "";
+                  this.usercompany_entry.USER_GUID =  this.USER_GUID_FOR_UPDATE;
+                  this.usercompany_entry.CREATION_TS = new Date().toISOString();
+                  this.usercompany_entry.CREATION_USER_GUID = "1";
+                  this.usercompany_entry.UPDATE_TS = new Date().toISOString();
+                  this.usercompany_entry.UPDATE_USER_GUID = "";
 
-                  // this.userservice.edit_user_company(this.usercompany_entry)
-                  //   .subscribe((response) => {
-                  //     if (response.status == 200) {
-                  //       alert('user_company Registered successfully');
-                  //       //location.reload();
-                  //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  //     }
-                  //   });
+                  this.userservice.edit_user_company(this.usercompany_entry)
+                    .subscribe((response) => {
+                      if (response.status == 200) {
+                        alert('user_company Registered successfully');
+                        //location.reload();
+                        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                      }
+                    });
 
 
 
-                  //   this.useraddress_entry.USER_ADDRESS1 = this.User_Address1_Edit_ngModel.trim();
-                  //   this.useraddress_entry.USER_ADDRESS2 = this.User_Address2_Edit_ngModel.trim();
-                  //   this.useraddress_entry.USER_ADDRESS3 = this.User_Address3_Edit_ngModel.trim();
-                  //   this.useraddress_entry.USER_ADDRESS_GUID = UUID.UUID();
-                  //   this.useraddress_entry.USER_GUID = this.usermain_entry.USER_GUID;
-                  //   this.useraddress_entry.CREATION_TS = new Date().toISOString();
-                  //   this.useraddress_entry.CREATION_USER_GUID = "1";
-                  //   this.useraddress_entry.UPDATE_TS = new Date().toISOString();
-                  //   this.useraddress_entry.UPDATE_USER_GUID = "";  
+                    this.useraddress_entry.USER_ADDRESS1 = this.User_Address1_Edit_ngModel.trim();
+                    this.useraddress_entry.USER_ADDRESS2 = this.User_Address2_Edit_ngModel.trim();
+                    this.useraddress_entry.USER_ADDRESS3 = this.User_Address3_Edit_ngModel.trim();
+                    this.useraddress_entry.USER_ADDRESS_GUID = this.USER_GUID_FOR_ADDRESS;
+                    this.useraddress_entry.USER_GUID = this.USER_GUID_FOR_UPDATE;
+                    this.useraddress_entry.CREATION_TS = new Date().toISOString();
+                    this.useraddress_entry.CREATION_USER_GUID = "1";
+                    this.useraddress_entry.UPDATE_TS = new Date().toISOString();
+                    this.useraddress_entry.UPDATE_USER_GUID = "";  
 
-                  // this.userservice.edit_user_address(this.useraddress_entry)
+                  this.userservice.edit_user_address(this.useraddress_entry)
 
-                  //   .subscribe((response) => {
-                  //     if (response.status == 200) {
-                  //       alert('user_address Registered successfully');
-                  //       //location.reload();
-                  //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  //     }
-                  //   });
+                    .subscribe((response) => {
+                      if (response.status == 200) {
+                        alert('user_address Registered successfully');
+                        //location.reload();
+                        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                      }
+                    });
 
                 }
               }
