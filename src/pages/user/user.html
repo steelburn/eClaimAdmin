@@ -381,6 +381,16 @@
                     </ion-item>
 
                     <ion-item>
+                        <ion-label stacked>{{"PERSONAL CONTACT NO"}}</ion-label>
+                        <ion-input type="text" formControlName="contactno" [(ngModel)]="User_PersonalNo_Edit_ngModel" placeholder="{{'Please fill the personal contact number'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"COMAPANY CONTACT NO"}}</ion-label>
+                        <ion-input type="text" formControlName="companyno" [(ngModel)]="User_CompanyNo_Edit_ngModel" placeholder="{{'Please fill in the HQ website'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
 
                         <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>
                         <ion-select formControlName="maritalstatus" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}">

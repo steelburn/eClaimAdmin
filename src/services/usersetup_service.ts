@@ -185,7 +185,6 @@ export class UserSetup_Service
 
 	edit_user_info (user_info: UserInfo_Model): Observable<any> 
 	{
-		
 		var queryHeaders = new Headers();
     	queryHeaders.append('Content-Type', 'application/json');
     	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
@@ -204,19 +203,22 @@ export class UserSetup_Service
 
 	edit_user_contact (user_contact: UserContact_Model): Observable<any> 
 	{
-		
+		alert('step1');
 		var queryHeaders = new Headers();
-    	queryHeaders.append('Content-Type', 'application/json');
+		queryHeaders.append('Content-Type', 'application/json');
+		alert('step2');
     	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-		
+		alert('step3');
 		let options = new RequestOptions({ headers: queryHeaders });
+		alert('step4');
 		console.log(JSON.stringify(user_contact));
 		return this.httpService.http.patch(this.baseResourceUrl3, user_contact.toJson(true),options)
 		
 			.map((response) => {
 				//console.log(this.baseResourceUrl2);
 				alert('cpmpl');
+				alert('hey');
 				return response;
 			});
 	}
@@ -234,31 +236,31 @@ export class UserSetup_Service
 	// 		});
 	// }
 
-	// edit_user_company (user_company: UserCompany_Model): Observable<any> 
-	// {
-	// 	var queryHeaders = new Headers();
-    // 	queryHeaders.append('Content-Type', 'application/json');
-    // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-    // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-	// 	let options = new RequestOptions({ headers: queryHeaders });
-	// 	return this.httpService.http.post(this.baseResourceUrl4, user_company.toJson(true),options)
-	// 		.map((response) => {
-	// 			return response;
-	// 		});
-	// }
+	edit_user_company (user_company: UserCompany_Model): Observable<any> 
+	{
+		var queryHeaders = new Headers();
+    	queryHeaders.append('Content-Type', 'application/json');
+    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		let options = new RequestOptions({ headers: queryHeaders });
+		return this.httpService.http.post(this.baseResourceUrl4, user_company.toJson(true),options)
+			.map((response) => {
+				return response;
+			});
+	}
 	
-	// edit_user_address (user_address: UserAddress_Model): Observable<any> 
-	// {
-	// 	var queryHeaders = new Headers();
-    // 	queryHeaders.append('Content-Type', 'application/json');
-    // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-    // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-	// 	let options = new RequestOptions({ headers: queryHeaders });
-	// 	return this.httpService.http.post(this.baseResourceUrl, user_address.toJson(true),options)
-	// 		.map((response) => {
-	// 			return response;
-	// 		});
-	// } 
+	edit_user_address (user_address: UserAddress_Model): Observable<any> 
+	{
+		var queryHeaders = new Headers();
+    	queryHeaders.append('Content-Type', 'application/json');
+    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		let options = new RequestOptions({ headers: queryHeaders });
+		return this.httpService.http.patch(this.baseResourceUrl, user_address.toJson(true),options)
+			.map((response) => {
+				return response;
+			});
+	} 
 
 
 
