@@ -44,23 +44,23 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let user of users; let i=index">
-
-                    <td class="lgl1">{{user.name}}</td>
-                    <td class="lgl1">{{user.email}}</td>
-                    <td class="lgl1">{{user.contactno}}</td>
-                    <td class="lgl1">{{user.companyno}}</td>
-                    <td class="lgl1">{{user.maritalstatus}}</td>
-
-                    <td class="lgl1">{{user.personidtype}}</td>
-                    <td class="lgl1">{{user.personid}}</td>
-                    <td class="lgl1">{{user.dob}}</td>
-                    <td class="lgl1">{{user.gender}}</td>
+                    <!-- <td class="lgl1">{{i+1}}</td> -->
+                    <td class="lgl1">{{user.NAME}}</td>
+                    <td class="lgl1">{{user.EMAIL}}</td>
+                    <td class="lgl1">{{user.CONTACT_NO}}</td>
+                    <td class="lgl1">{{user.COMPANY_CONTACT_NO}}</td>
+                    <td class="lgl1">{{user.MARITAL_STATUS}}</td>
+                    <td class="lgl1">{{user.PERSONAL_ID_TYPE}}</td>
+                    <td class="lgl1">{{user.PERSONAL_ID}}</td>
+                    <td class="lgl1">{{user.DOB}}</td>
+                    <td class="lgl1">{{user.GENDER}}</td>
 
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
                             <ion-icon name="md-create"></ion-icon>
                         </button>
                         <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
+                                <!-- DeleteClick(user.USER_GUID) -->
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </td>
@@ -116,7 +116,7 @@
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
                             <ion-icon name="md-create"></ion-icon>
                         </button>
-                        <button ion-button item-end (click)="DeleteClick(user.USER_INFO_GUID)">
+                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </td>
