@@ -21,8 +21,7 @@
         </button>
     </ion-fab>
 
-
-    <!-- <div class="eClaimSubTitle">
+ <div class="eClaimSubTitle">
         <b>PERSONAL DETAILS</b>
     </div>
 
@@ -41,10 +40,10 @@
                     <th class="lgl1">DATE OF BIRTH</th>
                     <th class="lgl1">GENDER</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
-                </tr>
+                </tr>-->
 
                 <tr class="col7" *ngFor="let user of users; let i=index">
-                    <!-- <td class="lgl1">{{i+1}}</td> -->
+                    <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{user.NAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
                     <td class="lgl1">{{user.CONTACT_NO}}</td>
@@ -164,7 +163,7 @@
 
             </table>
         </ion-item>
-    </ion-list>  -->
+    </ion-list> 
 
 <!-- 
     <div class="blackcontainer" *ngIf="AddUserClicked">
