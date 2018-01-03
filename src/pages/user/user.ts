@@ -52,21 +52,19 @@ export class UserPage {
   public data: any;
   public employees: any;
   public address: any;
- 
+
   isReadyToSave: boolean;
   userinfo_entry: UserInfo_Model = new UserInfo_Model();
   usermain_entry: UserMain_Model = new UserMain_Model();
   usercontact_entry: UserContact_Model = new UserContact_Model();
   usercompany_entry: UserCompany_Model = new UserCompany_Model();
-  // tenantcompany_entry: UserCompany_Model = new UserCompany_Model();
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
   viewuser_entry: ViewUser_Model = new ViewUser_Model(); 
   view_user_details: any; 
   user_details: any;
   Userform: FormGroup; 
- 
+
   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_info' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-  // baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   baseResourceUrl2: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl2_URL: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
@@ -74,7 +72,6 @@ export class UserPage {
 
   baseResourceUrl4: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_company' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  // baseResourceUrl5: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_address' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
@@ -87,8 +84,6 @@ export class UserPage {
 
   baseResourceUrl_branch: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_branch' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-
-  // baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/personaldetails_emp' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
   baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
@@ -153,7 +148,7 @@ export class UserPage {
   public User_Address1_Edit_ngModel: any;
   public User_Address2_Edit_ngModel: any;
   public User_Address3_Edit_ngModel: any;
-  // private _users: any[];
+
   public AddUserClick() {
 
     this.AddUserClicked = true;
@@ -170,15 +165,17 @@ export class UserPage {
     }
   }
  
+
   public EditClick1(id: any) {
     let url = this.baseResourceUrl2_URL + "view_user_display?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     //let url = this.baseResourceUrl1 + "?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY; 
-   
+
     this.EditUserClicked = true;
     var self = this;
     this.userservice.get_bijay(id)
       .subscribe((data) => {
         let res = data;
+
         this.view_user_details = data;
         alert(this.view_user_details.name);
 
@@ -192,6 +189,7 @@ export class UserPage {
         this.User_DOB_Edit_ngModel = self.viewuser_entry.DOB;
         this.User_Gender_Edit_ngModel = self.viewuser_entry.GENDER;
         console.log(self.viewuser_entry.NAME);
+
         this.User_Designation_Edit_ngModel = self.userinfo_entry.DESIGNATION_GUID;
         this.User_Company_Edit_ngModel = self.userinfo_entry.TENANT_COMPANY_GUID;
         this.User_Department_Edit_ngModel = self.userinfo_entry.DEPT_GUID;
@@ -450,8 +448,7 @@ public EditClick(USER_GUID: any) {
     this.GetCompany();
     this.GetDepartment();
     this.GetBranch();
-    //this.GetUserMainData();
-    //this.GetAddressData();
+
     this.http
       .get(this.baseResourceUrl1)
 
@@ -487,7 +484,6 @@ public EditClick(USER_GUID: any) {
     //   this.employees = data.resource;
     //   console.table(this.users)
     // });
-
     this.Userform = fb.group({
       NAME: ['', Validators.required],
       EMAIL: ['', Validators.required],
@@ -520,11 +516,11 @@ public EditClick(USER_GUID: any) {
       APPROVER1: ['', Validators.required],
       APPROVER2: ['', Validators.required],
       EMPLOYEE_STATUS: ['', Validators.required],   
-
       USER_ADDRESS1: ['', Validators.required],
       USER_ADDRESS2: ['', Validators.required],
       USER_ADDRESS3: ['', Validators.required],
     });
+
     this.genders.push({ value: 1, text: 'Male', checked: false });
     this.genders.push({ value: 0, text: 'Female', checked: false });
     this.maritals.push({ value: 0, text: 'Single', checked: false });
@@ -841,6 +837,7 @@ public EditClick(USER_GUID: any) {
                       }
                     });
 
+
                     this.userinfo_entry.FULLNAME = this.User_Name_Edit_ngModel;
                     this.userinfo_entry.MARITAL_STATUS = this.User_Marital_Edit_ngModel;
                     this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_Edit_ngModel;  
@@ -942,7 +939,6 @@ public EditClick(USER_GUID: any) {
         }
       }
   
-
   ClearControls() {
     this.User_Name_ngModel = "";
     this.User_Email_ngModel = "";
