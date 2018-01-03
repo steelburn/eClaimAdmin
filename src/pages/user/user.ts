@@ -548,7 +548,8 @@ public EditClick(USER_GUID: any) {
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.address = data.resource;
+        // this.address = data.resource;
+        this.address = data["resource"];
         console.table(this.address)
       });
   }

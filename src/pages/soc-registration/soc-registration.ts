@@ -290,8 +290,11 @@ public emg(){
          
                 if (this.Exist_Record == false) {
                   
-                  this.view_entry.soc = this.SOC_NO_ngModel_Edit;
+                  this.soc_entry.SOC_NO = this.SOC_NO_ngModel_Edit;
                   this.view_entry.SOC_GUID = this.SOC_GUID_UPDATE;
+                  this.soc_entry.CREATION_TS = new Date().toISOString();
+                  this.soc_entry.CREATION_USER_GUID = "1";
+                  this.soc_entry.UPDATE_TS = new Date().toISOString();
               
 
                   this.socservice.edit_soc(this.view_entry)
