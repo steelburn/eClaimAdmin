@@ -12,7 +12,7 @@ import { EntertainmentClaim_Model } from '../../models/entertainmentclaim_model'
 import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { EntertainmentClaim_Service } from '../../services/entertainmentclaim_service';
 import { BaseHttpService } from '../../services/base-http';
-import { SOC_Model } from '../../models/soc_model';
+import { View_SOC_Model } from '../../models/view_soc_model';
 
 import { UUID } from 'angular2-uuid';
 
@@ -66,7 +66,7 @@ export class EntertainmentclaimPage {
   imagePath: any;
   imageNewPath: any;
   public imageData: any;
-  SOC_Number:SOC_Model[];
+  SOC_Number:View_SOC_Model[];
 
   imageURI:any;
   imageFileName:any;
@@ -144,7 +144,7 @@ export class EntertainmentclaimPage {
     console.log('ionViewDidLoad EntertainmentclaimPage');
   }
 
-  openItem(item: SOC_Model) {
+  openItem(item: View_SOC_Model) {
     this.Entertainment_SOC_No_ngModel = item.soc;
     this.Entertainment_ProjectName_ngModel = item.project_name;
     this.Entertainment_CustomerName_ngModel = item.customer_name;

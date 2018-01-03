@@ -43,7 +43,7 @@ export class SocRegistrationPage {
 
   baseResourceUrl3: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_registration' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  // public socs: SocMain_Model[] = []; 
+  public socs: SocMain_Model[] = []; 
   // public socs: SocProject_Model[] = []; 
   // public socs: SocMain_Model[] = []; 
 
@@ -51,7 +51,7 @@ export class SocRegistrationPage {
   public soc_project: SocProject_Model[] = [];
   public soc_customer: SocCustomer_Model[] = [];
   
-  public socs: any;
+ // public socs: any;
 
   public soc_details_main: any; 
   public soc_details_project: any; 
