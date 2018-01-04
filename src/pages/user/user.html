@@ -233,9 +233,9 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{"GENDER"}}</ion-label>
+                        <ion-label stacked>{{"GENDER" | translate}}</ion-label>
                         <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_ngModel" placeholder="{{'Please fill the gender'}}">
-                            <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.text}}</ion-option>
+                            <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.text | translate}}</ion-option>
                         </ion-select>
                     </ion-item>
 

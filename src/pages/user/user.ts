@@ -27,6 +27,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
+import { elementDef } from '@angular/core/src/view/element';
 
 /**
  * Generated class for the UserPage page.
@@ -50,7 +51,7 @@ export class UserPage {
   public departments: any;
   public branches: any;
   public data: any;
-  public employees: any;
+  //public employees: any;
   public address: any;
  
   isReadyToSave: boolean;
@@ -93,7 +94,12 @@ export class UserPage {
   baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
 
-  public users: UserMain_Model[] = [];
+  //public users: UserMain_Model[] = [];
+  public users: ViewUser_Model[] = [];
+  public users_local:  ViewUser_Model[] = [];
+
+  public employees: UserInfo_Model[] =[];
+  public employees_local: UserInfo_Model[] =[];
 
   public Exist_Record: boolean = false;
   public AddUserClicked: boolean = false;
@@ -457,8 +463,21 @@ public EditClick(USER_GUID: any) {
 
       .map(res => res.json())
       .subscribe(data => {
-        this.employees = data.resource;
-        // console.table(this.users)
+        this.employees_local = data.resource;
+        let i:number=0;
+        this.employees_local.forEach(element =>{
+          let temp:UserInfo_Model =element;
+          if(element.EMPLOYEE_TYPE=='0')temp.EMPLOYEE_TYPE = 'Permanent'
+          else if(element.EMPLOYEE_TYPE=='1')temp.EMPLOYEE_TYPE = 'Contract'
+          else temp.EMPLOYEE_TYPE = 'Temporary';
+
+          if(element.EMPLOYEE_STATUS=='0')temp.EMPLOYEE_TYPE = 'Probation'
+          else if(element.EMPLOYEE_STATUS=='1')temp.EMPLOYEE_STATUS = 'Confirmed'
+          else temp.EMPLOYEE_STATUS = 'Terminated';
+
+
+          this.employees.push(temp);
+        })
       });
 
     this.http
@@ -466,8 +485,18 @@ public EditClick(USER_GUID: any) {
 
       .map(res => res.json())
       .subscribe(data => {
-        this.users = data.resource;
-        console.table(this.users)
+        this.users_local = data.resource;
+        let i:number=0;
+        this.users_local.forEach(element => {
+          let temp:ViewUser_Model = element;
+          if(element.GENDER=='1')temp.GENDER = 'Male'
+          else temp.GENDER = 'Female';
+
+          if(element.MARITAL_STATUS=='1')temp.MARITAL_STATUS = 'Married'
+          else temp.MARITAL_STATUS = 'Single';
+
+          this.users.push(temp);
+        });
       });
 
     this.http
