@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-//import { FormBuilder, FormGroup } from '@angular/forms';
+
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -21,7 +21,6 @@ import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
-//import {Camera} from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
