@@ -32,16 +32,9 @@
               <ion-datetime displayFormat="DD/MM/YYYY" formControlName="entertainment_date" [(ngModel)]="Entertainment_Date_ngModel" placeholder="{{'Please choose yours date while you entertain with customer'}}"></ion-datetime>
             </ion-item>
 
-            <!-- <ion-item>
-                  <ion-label stacked>SOC NUMBER</ion-label>
-                  <ion-select formControlName="soc_no" [(ngModel)]="Entertainment_SOC_No_ngModel" placeholder="SELECT" (ionChange)="GetSocNo()">
-                    <ion-option *ngFor="let soc of socs" selected="true">{{soc.SOC_NO}}</ion-option>
-                  </ion-select>
-              </ion-item> -->
-
             <ion-item>
               <ion-label stacked>{{"SOC NUMBER"}}</ion-label>
-              <ion-input type="text"  [(ngModel)]="Entertainment_SOC_No_ngModel" [ngModelOptions] = "{standalone:true}"  placeholder="{{'Please click the button to get your soc number'}}"></ion-input>
+              <ion-input type="text" [(ngModel)]="Entertainment_SOC_No_ngModel" [ngModelOptions]="{standalone:true}" placeholder="{{'Please click the button to get your soc number'}}"></ion-input>
               <button ion-button outline item-end icon-left (click)="AddLookupClick()">
                 <ion-icon name="eye"></ion-icon>
                 LOOKUP
@@ -49,7 +42,8 @@
             </ion-item>
 
 
-            
+
+
             <ion-item>
               <ion-label stacked>{{"PROJECT NAME"}}</ion-label>
               <ion-input type="text" formControlName="project_name" disabled="true" [(ngModel)]="Entertainment_ProjectName_ngModel" placeholder="{{'Please fill in the name of yours project'}}"></ion-input>
@@ -72,16 +66,17 @@
             </ion-item>
 
 
-
             <ion-item>
-              <input type="file" name="upresume_one" />
-         
+                <div style="font-size:14px;">ATTACHMENT :
+                  
+                    <input type="file" name="upresume_one"/> 
+                </div>
+          
             </ion-item>
 
-  
-
+         
             <div class="btn">
-            
+
               <button ion-button (click)="save()">SUBMIT</button>
             </div>
 
@@ -92,8 +87,8 @@
     </div>
   </div>
 
-   <!-- add lookup form start-->
-   <div class="blackcontainer" *ngIf="AddLookupClicked">
+  <!-- add lookup form start-->
+  <div class="blackcontainer" *ngIf="AddLookupClicked">
   </div>
   <div class="popup1" padding *ngIf="AddLookupClicked">
     <ion-card>
@@ -105,12 +100,15 @@
         </button>
       </ion-card-header>
 
+      <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ 'SEARCH HERE' }}"></ion-searchbar>
+
+
       <ion-list>
 
         <ion-item-sliding *ngFor="let soc of SOC_Number">
           <button ion-item (click)="openItem(soc)">
             <ion-label>{{soc.soc}}</ion-label>
-           
+
           </button>
 
         </ion-item-sliding>
