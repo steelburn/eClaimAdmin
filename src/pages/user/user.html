@@ -40,10 +40,10 @@
                     <th class="lgl1">DATE OF BIRTH</th>
                     <th class="lgl1">GENDER</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
-                </tr>-->
+                </tr>
 
                 <tr class="col7" *ngFor="let user of users; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
+                    <!-- <td class="lgl1">{{i+1}}</td> -->
                     <td class="lgl1">{{user.NAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
                     <td class="lgl1">{{user.CONTACT_NO}}</td>
@@ -165,7 +165,7 @@
         </ion-item>
     </ion-list> 
 
-<!-- 
+
     <div class="blackcontainer" *ngIf="AddUserClicked">
     </div>
     <div class="popup" padding *ngIf="AddUserClicked">
@@ -177,7 +177,7 @@
                 <button class="btnR" (click)="CloseUserClick()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>
-            </ion-card-header> -->
+            </ion-card-header>
             <ion-list>
                 <form [formGroup]="Userform">
 
@@ -343,9 +343,9 @@
        
                 </form>
             </ion-list>
-        <!-- </ion-card>
+        </ion-card>
 
-    </div> -->
+    </div>
     <!-- add Tenant form end-->
 
 
