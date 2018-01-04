@@ -255,8 +255,7 @@ export class BanksetupPage {
 
   this.banksetupservice.update_bank(this.bank_entry)
     .subscribe((response) => {
-      if (response.status == 200) {
-        alert('hi');
+      if (response.status == 200) {        
         alert('Bank updated successfully');
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
