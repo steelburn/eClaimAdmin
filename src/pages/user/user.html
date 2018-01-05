@@ -59,7 +59,7 @@
                             <ion-icon name="md-create"></ion-icon>
                         </button>
                         <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
-                              
+
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </td>
@@ -96,11 +96,14 @@
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of employees; let i=index">
-          
-                    <td class="lgl1">{{user.DESIGNATION_GUID}}</td>
-                    <td class="lgl1">{{user.TENANT_COMPANY_GUID }}</td>
-                    <td class="lgl1">{{user.DEPT_GUID}}</td>
+
+                <tr class="col7" *ngFor="let user of employees; let i=index" >
+                    <!-- <td class="lgl1">{{i+1}}</td> -->
+                    <!-- <td class="lgl1">{{user.DESIGNATION_GUID}}</td> -->
+                    <td class="lgl1" *ngFor="let designation of designations">{{designation.NAME}}</td>
+                    <td class="lgl1" *ngFor="let company of companies">{{company.NAME}}</td>
+                    <td class="lgl1" *ngFor="let department of departments">{{department.NAME}}</td>
+
                     <td class="lgl1">{{user.JOIN_DATE}}</td>
                     <td class="lgl1">{{user.CONFIRMATION_DATE}}</td>
                     <td class="lgl1">{{user.RESIGNATION_DATE}}</td>
@@ -163,9 +166,11 @@
 
             </table>
         </ion-item>
-    </ion-list> 
- -->
-<!-- 
+
+    </ion-list>
+
+
+
     <div class="blackcontainer" *ngIf="AddUserClicked">
     </div>
     <div class="popup" padding *ngIf="AddUserClicked">
@@ -210,8 +215,8 @@
                             <ion-option *ngFor="let marital of maritals" [value]="marital.value">{{marital.text}}</ion-option>
                         </ion-select>
                     </ion-item>
-                    
-                    
+
+
 
                     <ion-item>
                         <ion-label stacked>{{"STAFF ID"}}</ion-label>
@@ -244,7 +249,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"DESIGNATION"}}</ion-label>
                         <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_ngModel" placeholder="{{'Please fill the designation'}}">
-                            <ion-option *ngFor="let designation of designations" [value]="designation.DESIGNATION_GUID"  selected="true">{{designation.NAME}}</ion-option>
+                            <ion-option *ngFor="let designation of designations" [value]="designation.DESIGNATION_GUID" selected="true">{{designation.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
                     <!-- [value]="designation.DESIGNATION_GUID" -->
@@ -253,7 +258,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"COMPANY"}}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{'Please fill the company'}}">
-                            <ion-option *ngFor="let company of companies" [value]="company.COMPANY_GUID"  selected="true">{{company.NAME}}</ion-option>
+                            <ion-option *ngFor="let company of companies" [value]="company.COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -439,7 +444,7 @@
                     <ion-item>
                         <ion-label stacked>{{"COMPANY"}}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{'Please fill the company'}}">
-                            <ion-option *ngFor="let company of companies"  value="{{company.COMPANY_GUID}}" selected="true">{{company.NAME}}</ion-option>
+                            <ion-option *ngFor="let company of companies" value="{{company.COMPANY_GUID}}" selected="true">{{company.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
