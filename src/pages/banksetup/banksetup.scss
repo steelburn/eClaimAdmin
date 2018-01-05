@@ -116,6 +116,7 @@ page-banksetup {
         th.lgl1 {
             padding: 10px 5px;
             border: none;
+            
         }
             
         td.lgl1 {
@@ -125,6 +126,7 @@ page-banksetup {
             word-wrap: break-word;
             border: none;
             border-bottom: 1px solid gainsboro;
+            white-space: normal !important;
         }
     
             th.lgl2 {
@@ -140,6 +142,7 @@ page-banksetup {
             word-wrap: break-word;
             border: none;
             border-bottom: 1px solid gainsboro;
+            white-space: normal !important;
         }
     
         .tblBrLeft { border-radius: 5px 0 0 5px !important;}
@@ -166,7 +169,7 @@ page-banksetup {
     
     
     ion-toggle.toggle.toggle-md{
-        padding-left: 80px !important;
+        padding-left: 101px !important;
         padding-right: 0px !important;
     }
     
@@ -183,3 +186,8 @@ page-banksetup {
     .UPContent{
         width:100%;
     }
+
+    page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched{
+        color: black !important;
+    }
+
