@@ -5,6 +5,7 @@ import * as constants from '../app/config/constants';
 import { SocMain_Model } from '../models/socmain_model';
 import { SocProject_Model } from '../models/soc_project_model';
 import { SocCustomer_Model } from '../models/soc_customer_model';
+import { View_SOC_Model } from '../models/view_soc_model';
 import { BaseHttpService } from './base-http';
 
 import 'rxjs/add/operator/map';
@@ -26,6 +27,8 @@ export class SocMain_Service {
     baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_project';
 
     baseResourceUrl2: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_customer';
+
+    baseResourceUrl3: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_registration';
 
     constructor(private httpService: BaseHttpService, private nav: NavController) { };
 
@@ -93,7 +96,32 @@ export class SocMain_Service {
             });
     }
 
-    update(soc_main: SocCustomer_Model): Observable<any> {
+    update_soc(soc_main: SocMain_Model): Observable<any> {
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+        let options = new RequestOptions({ headers: queryHeaders });
+        return this.httpService.http.patch(this.baseResourceUrl, soc_main.toJson(true), options)
+            .map((response) => {
+                return response;
+            });
+    }
+
+    update_project(soc_project: SocProject_Model): Observable<any> {
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+        let options = new RequestOptions({ headers: queryHeaders });
+        return this.httpService.http.patch(this.baseResourceUrl1, soc_project.toJson(true), options)
+            .map((response) => {
+                return response;
+            });
+    }
+
+
+    update_customer(soc_main: SocCustomer_Model): Observable<any> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
@@ -104,6 +132,22 @@ export class SocMain_Service {
                 return response;
             });
     }
+
+    edit_soc (view_soc: View_SOC_Model): Observable<any> 
+	{
+		var queryHeaders = new Headers();
+		queryHeaders.append('Content-Type', 'application/json');
+    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		let options = new RequestOptions({ headers: queryHeaders });
+		console.log(JSON.stringify(view_soc));
+		return this.httpService.http.patch(this.baseResourceUrl3, view_soc.toJson(true),options)
+		
+			.map((response) => {
+				//console.log(this.baseResourceUrl2);
+				return response;
+			});
+	}
 
     get_soc(params?: URLSearchParams): Observable<SocMain_Model[]> {
         var queryHeaders = new Headers();
@@ -136,7 +180,25 @@ export class SocMain_Service {
             });
     }
 
-    get(id: string, params?: URLSearchParams): Observable<SocMain_Model> {        
+    get1(id: string, params?: URLSearchParams): Observable<View_SOC_Model> {        
+        var queryHeaders = new Headers();
+        alert('service edit1');
+        queryHeaders.append('Content-Type', 'application/json');
+        //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+        alert('service edit2');
+        return this.httpService.http
+            .get(this.baseResourceUrl3 + '/' + id, { search: params, headers: queryHeaders })
+            .map((response) => {
+                var result: any = response.json();
+                let soc: View_SOC_Model = View_SOC_Model.fromJson(result);
+                //alert('service edit3');
+                return soc;
+                
+            }).catch(this.handleError);
+    };
+
+    get2(id: string, params?: URLSearchParams): Observable<SocProject_Model> {        
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
@@ -146,8 +208,23 @@ export class SocMain_Service {
             .get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders })
             .map((response) => {
                 var result: any = response.json();
-                let soc: SocMain_Model = SocMain_Model.fromJson(result);
-                return soc;
+                let soc_project: SocProject_Model = SocProject_Model.fromJson(result);
+                return soc_project;
+            }).catch(this.handleError);
+    };
+
+    get3(id: string, params?: URLSearchParams): Observable<SocCustomer_Model> {        
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+
+        return this.httpService.http
+            .get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders })
+            .map((response) => {
+                var result: any = response.json();
+                let soc_customer: SocCustomer_Model = SocCustomer_Model.fromJson(result);
+                return soc_customer;
             }).catch(this.handleError);
     };
 }

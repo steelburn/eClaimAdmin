@@ -64,7 +64,7 @@ export class UserInfo_Model {
     toJson(stringify?: boolean): any {
 		var doc = {
 			USER_INFO_GUID:this.USER_INFO_GUID,
-			//USER_GUID:this.USER_GUID,
+			USER_GUID:this.USER_GUID,
 			FULLNAME:this.FULLNAME,
             NICKNAME:this.NICKNAME,
             SALUTATION:this.SALUTATION,

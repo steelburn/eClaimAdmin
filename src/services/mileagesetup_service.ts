@@ -117,7 +117,11 @@ export class MileageSetup_Service {
             .get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders })
             .map((response) => {
                 var result: any = response.json();
+                console.log(result);
+               // alert(this.baseResourceUrl);
                 let claimtype: MileageSetup_Model = MileageSetup_Model.fromJson(result);
+                console.log(claimtype);
+                //alert(JSON.stringify(claimtype));
                 return claimtype;
             }).catch(this.handleError);
     };
