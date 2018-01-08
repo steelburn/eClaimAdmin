@@ -15,6 +15,7 @@ import { UserContact_Model } from '../../models/user_contact_model';
 import { UserCompany_Model } from '../../models/user_company_model';
 import { UserAddress_Model } from '../../models/usersetup_address_model';
 import { ViewUser_Model } from '../../models/viewuser_model';
+import { View_Dropdown_Model } from '../../models/view_dropdown';
 import { UserSetup_Service } from '../../services/usersetup_service';
 import { BaseHttpService } from '../../services/base-http';
 
@@ -62,6 +63,7 @@ export class UserPage {
   // tenantcompany_entry: UserCompany_Model = new UserCompany_Model();
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
   viewuser_entry: ViewUser_Model = new ViewUser_Model(); 
+  viewdropdown_entry: View_Dropdown_Model = new View_Dropdown_Model();
   view_user_details: any; 
   user_details: any;
   Userform: FormGroup; 
@@ -93,13 +95,17 @@ export class UserPage {
 
   baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
+  baseResourceView1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_dropdown' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+
 
   //public users: UserMain_Model[] = [];
   public users: ViewUser_Model[] = [];
   public users_local:  ViewUser_Model[] = [];
 
-  public employees: UserInfo_Model[] =[];
-  public employees_local: UserInfo_Model[] =[];
+  //public employees: UserInfo_Model[] =[];
+  public employees: View_Dropdown_Model[] =[];
+  public employees_local: View_Dropdown_Model[] =[];
+  // public employees_local: UserInfo_Model[] =[];
 
   public Exist_Record: boolean = false;
   public AddUserClicked: boolean = false;
@@ -189,7 +195,8 @@ export class UserPage {
     let options = new RequestOptions({ headers: headers });
     //let url: string;
     let url = this.baseResourceUrl2_URL + "view_user_display?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    let url2 = this.baseResourceUrl2_URL + "user_info?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // let url2 = this.baseResourceUrl2_URL + "user_info?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let url2 = this.baseResourceUrl2_URL + "view_dropdown?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url3 = this.baseResourceUrl2_URL + "user_address?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url4 = this.baseResourceUrl2_URL + "user_contact?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url5 = this.baseResourceUrl2_URL + "user_company?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -197,12 +204,12 @@ export class UserPage {
       .map(res => res.json())
       .subscribe(
       data => {
-        let res = data["resource"];
+        // let res = data["resource"];
         this.view_user_details = data["resource"];
         //this.USER_GUID_FOR_CONTACT =this.view_user_details[0]["CONTACT_INFO_GUID"];
         this.User_Name_Edit_ngModel = this.view_user_details[0]["NAME"];
         this.User_Email_Edit_ngModel = this.view_user_details[0]["EMAIL"];
-        this.User_PersonalNo_Edit_ngModel = this.view_user_details[0]["CONTACT_NO"];
+        //this.User_PersonalNo_Edit_ngModel = this.view_user_details[0]["CONTACT_NO"];
         //this.User_CompanyNo_Edit_ngModel = this.view_user_details[0]["companyno"];
         this.User_Marital_Edit_ngModel = this.view_user_details[0]["MARITAL_STATUS"];
         this.User_StaffID_Edit_ngModel = this.view_user_details[0]["PERSONAL_ID_TYPE"];
@@ -214,9 +221,23 @@ export class UserPage {
       .map(res => res.json())
       .subscribe(
       data => {
-        let res = data["resource"];
+        // let res = data["resource"];
         this.view_user_details = data["resource"];
-        this.USER_INFO_GUID_FOR_UPDATE =this.view_user_details[0]["USER_INFO_GUID"];
+        // this.USER_INFO_GUID_FOR_UPDATE =this.view_user_details[0]["USER_INFO_GUID"];
+        // this.User_Designation_Edit_ngModel = this.view_user_details[0]["DESIGNATION_GUID"];
+        // this.User_Company_Edit_ngModel = this.view_user_details[0]["TENANT_COMPANY_GUID"];
+        // this.User_Department_Edit_ngModel = this.view_user_details[0]["DEPT_GUID"];
+        // this.User_JoinDate_Edit_ngModel = this.view_user_details[0]["JOIN_DATE"];
+        // this.User_ConfirmationDate_Edit_ngModel = this.view_user_details[0]["CONFIRMATION_DATE"];
+        // this.User_ResignationDate_Edit_ngModel = this.view_user_details[0]["RESIGNATION_DATE"];
+        // this.User_Branch_Edit_ngModel = this.view_user_details[0]["BRANCH"];
+        // this.User_EmployeeType_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_TYPE"];
+        // this.User_Approver1_Edit_ngModel = this.view_user_details[0]["APPROVER1"];
+        // this.User_Approver2_Edit_ngModel = this.view_user_details[0]["APPROVER2"];
+        // this.User_Employment_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_STATUS"];
+
+        //this.USER_INFO_GUID_FOR_UPDATE =this.view_user_details[0]["USER_INFO_GUID"];
+        this.USER_INFO_GUID_FOR_UPDATE =this.view_user_details[0]["USER_GUID"];
         this.User_Designation_Edit_ngModel = this.view_user_details[0]["DESIGNATION_GUID"];
         this.User_Company_Edit_ngModel = this.view_user_details[0]["TENANT_COMPANY_GUID"];
         this.User_Department_Edit_ngModel = this.view_user_details[0]["DEPT_GUID"];
@@ -224,16 +245,16 @@ export class UserPage {
         this.User_ConfirmationDate_Edit_ngModel = this.view_user_details[0]["CONFIRMATION_DATE"];
         this.User_ResignationDate_Edit_ngModel = this.view_user_details[0]["RESIGNATION_DATE"];
         this.User_Branch_Edit_ngModel = this.view_user_details[0]["BRANCH"];
-        this.User_EmployeeType_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_TYPE"];
+        this.User_EmployeeType_Edit_ngModel = this.view_user_details[0]["EMPLOYE_TYPE"];
         this.User_Approver1_Edit_ngModel = this.view_user_details[0]["APPROVER1"];
         this.User_Approver2_Edit_ngModel = this.view_user_details[0]["APPROVER2"];
-        this.User_Employment_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_STATUS"];
+        this.User_Employment_Edit_ngModel = this.view_user_details[0]["EMPLOYE_STATUS"];
       });
       this.http.get(url3, options)
       .map(res => res.json())
       .subscribe(
       data => {
-        let res = data["resource"];
+        // let res = data["resource"];
         this.view_user_details = data["resource"];
         this.USER_GUID_FOR_ADDRESS =  this.view_user_details[0]["USER_ADDRESS_GUID"];
         this.User_Address1_Edit_ngModel = this.view_user_details[0]["USER_ADDRESS1"];
@@ -244,7 +265,7 @@ export class UserPage {
       .map(res => res.json())
       .subscribe(
       data => {
-        let res = data["resource"];
+        // let res = data["resource"];
         this.view_user_details = data["resource"];
         this.USER_GUID_FOR_CONTACT =  this.view_user_details[0]["CONTACT_INFO_GUID"];
         this.User_PersonalNo_Edit_ngModel = this.view_user_details[0]["CONTACT_NO"];
@@ -253,7 +274,7 @@ export class UserPage {
       .map(res => res.json())
       .subscribe(
       data => {
-        let res = data["resource"];
+        // let res = data["resource"];
         this.view_user_details = data["resource"];
         this.USER_GUID_FOR_COMPANY_CONTACT =  this.view_user_details[0]["USER_COMPANY_GUID"];
         this.User_CompanyNo_Edit_ngModel = this.view_user_details[0]["COMPANY_CONTACT_NO"];
@@ -290,33 +311,37 @@ export class UserPage {
   }
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+    //this.GetDropdown();
     this.GetDesignation();
     this.GetCompany();
     this.GetDepartment();
     this.GetBranch();
     //this.GetUserMainData();
     //this.GetAddressData();
+
+    
+
     this.http
-      .get(this.baseResourceUrl1)
+    .get(this.baseResourceView1)
 
-      .map(res => res.json())
-      .subscribe(data => {
-        this.employees_local = data.resource;
-        let i:number=0;
-        this.employees_local.forEach(element =>{
-          let temp:UserInfo_Model =element;
-          if(element.EMPLOYEE_TYPE=='0')temp.EMPLOYEE_TYPE = 'Permanent'
-          else if(element.EMPLOYEE_TYPE=='1')temp.EMPLOYEE_TYPE = 'Contract'
-          else temp.EMPLOYEE_TYPE = 'Temporary';
+    .map(res => res.json())
+    .subscribe(data => {
+      this.employees_local = data.resource;
+      let i:number=0;
+      this.employees_local.forEach(element =>{
+        let temp:View_Dropdown_Model =element;
+        if(element.EMPLOYEE_TYPE=='0')temp.EMPLOYEE_TYPE = 'Permanent'
+        else if(element.EMPLOYEE_TYPE=='1')temp.EMPLOYEE_TYPE = 'Contract'
+        else temp.EMPLOYEE_TYPE = 'Temporary';
 
-          if(element.EMPLOYEE_STATUS=='0')temp.EMPLOYEE_TYPE = 'Probation'
-          else if(element.EMPLOYEE_STATUS=='1')temp.EMPLOYEE_STATUS = 'Confirmed'
-          else temp.EMPLOYEE_STATUS = 'Terminated';
+        if(element.EMPLOYEE_STATUS=='0')temp.EMPLOYEE_TYPE = 'Probation'
+        else if(element.EMPLOYEE_STATUS=='1')temp.EMPLOYEE_STATUS = 'Confirmed'
+        else temp.EMPLOYEE_STATUS = 'Terminated';
 
 
-          this.employees.push(temp);
-        })
-      });
+        this.employees.push(temp);
+      })
+    });
 
     this.http
       .get(this.baseResourceView)
@@ -368,6 +393,18 @@ export class UserPage {
       APPROVER2: ['', Validators.required],
       EMPLOYEE_STATUS: ['', Validators.required],   
 
+      // DESIGNATION: ['', Validators.required],
+      // COMPANY: ['', Validators.required],
+      // DEPARTMENT: ['', Validators.required],
+      // JOIN_DATE: ['', Validators.required],
+      // CONFIRMATION_DATE: ['', Validators.required],
+      // RESIGNATION_DATE: ['', Validators.required],
+      // BRANCH: ['', Validators.required],
+      // EMPLOYEE_TYPE: ['', Validators.required],
+      // APPROVER1: ['', Validators.required],
+      // APPROVER2: ['', Validators.required],
+      // EMPLOYEE_STATUS: ['', Validators.required],   
+
       USER_ADDRESS1: ['', Validators.required],
       USER_ADDRESS2: ['', Validators.required],
       USER_ADDRESS3: ['', Validators.required],
@@ -388,16 +425,16 @@ export class UserPage {
     console.log('ionViewDidLoad UserPage');
   }
 
-  GetAddressData() {
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        // this.address = data.resource;
-        this.address = data["resource"];
-        console.table(this.address)
-      });
-  }
+  // GetAddressData() {
+  //   this.http
+  //     .get(this.baseResourceUrl)
+  //     .map(res => res.json())
+  //     .subscribe(data => {
+  //       // this.address = data.resource;
+  //       this.address = data["resource"];
+  //       console.table(this.address)
+  //     });
+  // }
 
   GetDesignation() {
     this.http
@@ -426,6 +463,18 @@ export class UserPage {
         this.departments = data["resource"]; 
       });
   }
+
+  // GetDropdown() {
+  //   this.http
+  //     .get(this.baseResourceView1)
+  //     .map(res => res.json())
+  //     .subscribe(data => {
+  //       this.employees = data["resource"];
+  //       console.table(this.employees);
+
+  //     });
+  // }
+
 
   test(selectedValue: any) {
     alert('selected: ' + selectedValue);
