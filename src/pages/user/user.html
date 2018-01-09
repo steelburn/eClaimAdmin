@@ -474,7 +474,7 @@
                     <ion-item>
                         <ion-label stacked>{{"BRANCH"}}</ion-label>
                         <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_Edit_ngModel" placeholder="{{'Please fill in the Branch'}}">
-                            <ion-option *ngFor="let branch of branches" selected="true">{{branch.NAME}}</ion-option>
+                            <ion-option *ngFor="let branch of branches" value="{{branch.BRANCH_GUID}}" selected="true">{{branch.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
