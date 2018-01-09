@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>BRANCH SETUP</ion-title>
+    <ion-title>TENANT SITE SETUP</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,14 +18,42 @@
     <button ion-fab mini (click)="AddBranchsClick()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <ion-list>
+  <!-- <ion-list>
     <ion-list-header>
       BRANCH NAME
     </ion-list-header>
     <ion-item *ngFor="let branch of branchs">
-      <!-- MALAYSIA -->{{branch.NAME}}
+      {{branch.NAME}}
       <button ion-button item-end (click)="EditClick(branch.BRANCH_GUID)"><ion-icon name="md-create"></ion-icon></button>
       <button ion-button item-end (click)="DeleteClick(branch.BRANCH_GUID)"><ion-icon name="md-close"></ion-icon></button>
+    </ion-item>
+  </ion-list> -->
+
+
+  <ion-list>
+    <ion-item>
+      <table class="Tabler">
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+          <th class="lgl1">COMPANY NAME</th>
+          <th class="lgl1">BRANCH NAME</th>
+          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+
+        </tr>
+
+        <tr class="col7" *ngFor="let branch of branchs; let i=index">
+          <td class="lgl1">{{i+1}}</td>
+          <td class="lgl1">AIR ASIA MALAYSIA</td>
+          <td class="lgl1">{{branch.NAME}}</td>
+    
+          <td class="lgl1 fColor">
+            <button ion-button item-end (click)="EditClick(company.COMPANY_GUID)"><ion-icon name="md-create"></ion-icon></button>
+            <button ion-button item-end (click)="DeleteClick(company.COMPANY_GUID)"><ion-icon name="md-close"></ion-icon></button>
+          </td>
+        </tr>
+
+
+      </table>
     </ion-item>
   </ion-list>
 
@@ -45,6 +73,13 @@
       </ion-card-header>
       <ion-list>
         <form [formGroup]="Branchform">
+
+            <ion-item>
+                <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+                <ion-input type="text" formControlName="NAME"
+                placeholder="{{'Please fill in the company name'}}"></ion-input>
+              </ion-item>
+
           <ion-item>
             <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" 
