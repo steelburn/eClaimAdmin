@@ -98,22 +98,20 @@
 
 
                 <tr class="col7" *ngFor="let user of employees; let i=index" >
-                    <!-- <td class="lgl1">{{i+1}}</td> -->
-                    <!-- <td class="lgl1">{{user.DESIGNATION_GUID}}</td> -->
-                    <td class="lgl1" *ngFor="let designation of designations">{{designation.NAME}}</td>
-                    <td class="lgl1" *ngFor="let company of companies">{{company.NAME}}</td>
-                    <td class="lgl1" *ngFor="let department of departments">{{department.NAME}}</td>
+
+                    <td class="lgl1">{{user.DESIGNATION_GUID}}</td>
+                    <td class="lgl1">{{user.TENANT_COMPANY_GUID}}</td>
+                    <td class="lgl1">{{user.DEPT_GUID}}</td>  
 
                     <td class="lgl1">{{user.JOIN_DATE}}</td>
                     <td class="lgl1">{{user.CONFIRMATION_DATE}}</td>
                     <td class="lgl1">{{user.RESIGNATION_DATE}}</td>
 
-                    <td class="lgl1">{{user.BRANCH}}</td>
+                    <td class="lgl1">{{user.BRANCH}}</td> 
                     <td class="lgl1">{{user.EMPLOYEE_TYPE}}</td>
                     <td class="lgl1">{{user.APPROVER1}}</td>
                     <td class="lgl1">{{user.APPROVER2}}</td>
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
-
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
                             <ion-icon name="md-create"></ion-icon>
@@ -292,7 +290,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"BRANCH"}}</ion-label>
                         <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{'Please fill in the Branch'}}">
-                            <ion-option *ngFor="let branch of branches" selected="true">{{branch.NAME}}</ion-option>
+                            <ion-option *ngFor="let branch of branches" selected="true" [value]="branch.BRANCH_GUID">{{branch.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
                     <!-- [value]="branch.BRANCH_GUID" -->
