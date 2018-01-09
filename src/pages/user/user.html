@@ -15,13 +15,13 @@
 
 <ion-content padding>
 
-    <!-- <ion-fab top right edge>
+    <ion-fab top right edge>
         <button ion-fab mini (click)="AddUserClick()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
 
- <div class="eClaimSubTitle">
+    <div class="eClaimSubTitle">
         <b>PERSONAL DETAILS</b>
     </div>
 
@@ -29,30 +29,21 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-               
+
                     <th class="lgl1 tblBrLeft">NAME</th>
                     <th class="lgl1">EMAIL</th>
-                    <th class="lgl1">PERSONAL CONTACT NO</th>
-                    <th class="lgl1">COMAPANY CONTACT NO</th>
-                    <th class="lgl1">MARITAL STATUS</th>
+    
+    
                     <th class="lgl1">STAFF ID</th>
-                    <th class="lgl1">IC NO</th>
-                    <th class="lgl1">DATE OF BIRTH</th>
-                    <th class="lgl1">GENDER</th>
+                
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let user of users; let i=index">
-    
+
                     <td class="lgl1">{{user.NAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
-                    <td class="lgl1">{{user.CONTACT_NO}}</td>
-                    <td class="lgl1">{{user.COMPANY_CONTACT_NO}}</td>
-                    <td class="lgl1">{{user.MARITAL_STATUS}}</td>
                     <td class="lgl1">{{user.PERSONAL_ID_TYPE}}</td>
-                    <td class="lgl1">{{user.PERSONAL_ID}}</td>
-                    <td class="lgl1">{{user.DOB}}</td>
-                    <td class="lgl1">{{user.GENDER}}</td>
 
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
@@ -80,19 +71,13 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-         
-                    <th class="lgl1">DESIGNATION</th>
+                    <th class="lgl1 tblBrLeft">DESIGNATION</th>
                     <th class="lgl1">COMPANY</th>
                     <th class="lgl1">DEPARTMENT</th>
                     <th class="lgl1">JOIN DATE</th>
-                    <th class="lgl1">CONFIRMATION DATE</th>
-                    <th class="lgl1"> RESIGNATION DATE</th>
-
                     <th class="lgl1">BRANCH</th>
-                    <th class="lgl1">EMPLOYEE TYPE</th>
-                    <th class="lgl1">APPROVER1</th>
-                    <th class="lgl1">APPROVER2</th>
-                    <th class="lgl1">EMPLOYMENT STATUS</th>
+                    <th class="lgl1">APPROVER</th>
+                    <th class="lgl1">STATUS</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
@@ -110,7 +95,6 @@
                     <td class="lgl1">{{user.BRANCH}}</td> 
                     <td class="lgl1">{{user.EMPLOYEE_TYPE}}</td>
                     <td class="lgl1">{{user.APPROVER1}}</td>
-                    <td class="lgl1">{{user.APPROVER2}}</td>
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
@@ -138,7 +122,7 @@
             <table class="Tabler">
                 <tr class="linedsg TColor">
 
-                    <th class="lgl1">ADDRESS LINE 1</th>
+                    <th class="lgl1 tblBrLeft">ADDRESS LINE 1</th>
                     <th class="lgl1">ADDRESS LINE 2</th>
                     <th class="lgl1">ADDRESS LINE 3</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
@@ -234,7 +218,7 @@
 
                     <ion-item class="text">
                         <ion-label stacked>{{"GENDER" | translate}}</ion-label>
-           <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_ngModel" placeholder="{{'Please fill the gender'}}">
+                        <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_ngModel" placeholder="{{'Please fill the gender'}}">
                             <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.text | translate}}</ion-option>
                         </ion-select>
                     </ion-item>
@@ -266,25 +250,25 @@
                             <ion-option *ngFor="let department of departments" [value]="department.DEPARTMENT_GUID" selected="true">{{department.NAME }}</ion-option>
                         </ion-select>
                     </ion-item>
-                    
+
 
                     <ion-item class="text">
                         <ion-label stacked>{{"JOIN DATE"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{'Please fill the join date'}}"></ion-datetime>
-                       
+
                     </ion-item>
 
                     <ion-item class="text">
                         <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel"
                             placeholder="{{'Please fill the confermation date'}}"></ion-datetime>
-                       
+
                     </ion-item>
 
                     <ion-item class="text">
                         <ion-label stacked>{{"RESIGNATION DATE"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{'Please fill the Registration date'}}"></ion-datetime>
-                       
+
                     </ion-item>
 
                     <ion-item class="text">
@@ -293,7 +277,7 @@
                             <ion-option *ngFor="let branch of branches" selected="true" [value]="branch.BRANCH_GUID">{{branch.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
-                    <!-- [value]="branch.BRANCH_GUID" -->
+
 
                     <ion-item class="text">
                         <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>
@@ -343,12 +327,12 @@
                     <div class="btn">
                         <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Save()">{{"SUBMIT" | translate}}</button>
                     </div>
-       
+
                 </form>
             </ion-list>
-        <!-- </ion-card>
+        </ion-card>
 
-    </div> -->
+    </div>
     <!-- add Tenant form end-->
 
 
@@ -414,7 +398,7 @@
                     <ion-item>
                         <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_Edit_ngModel" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
-                  
+
                     </ion-item>
 
                     <ion-item>
@@ -456,21 +440,21 @@
                     <ion-item>
                         <ion-label stacked>{{"JOIN DATE"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_Edit_ngModel" placeholder="{{'Please fill the join date'}}"></ion-datetime>
-                        
+
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_Edit_ngModel"
                             placeholder="{{'Please fill the confermation date'}}"></ion-datetime>
-                       
+
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>{{"RESIGNATION DATE"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_Edit_ngModel"
                             placeholder="{{'Please fill the Registration date'}}"></ion-datetime>
-                       
+
                     </ion-item>
 
                     <ion-item>
