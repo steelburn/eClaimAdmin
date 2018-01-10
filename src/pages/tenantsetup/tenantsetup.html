@@ -30,16 +30,18 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
-                    <th class="lgl1">TENANT ACCOUNT NAME</th>
+           
+                    <th class="lgl1 tblBrLeft">TENANT ACCOUNT NAME</th>
+                    <th class="lgl1">TENANNT COMPANY NAME</th>
                     <th class="lgl1">EFFECTIVE DATE</th>
                     <th class="lgl1">ACTIVE FLAG</th>
-                    <th class="lgl1 tblBrRight">ACTION</th>
+                    <th class="lgl1 tblBrRight" style="width:120px">ACTION</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{tenant.SITE_NAME}}</td>
+          
+                    <td class="lgl1">AIR ASIA BERHAD</td>
+                    <td class="lgl1">AIR ASIA MALAYSIA</td>
                     <td class="lgl1">23 - 4- 2222</td>
                     <td class="lgl1">
                         <ion-toggle checked=true></ion-toggle>
@@ -68,8 +70,8 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
-                    <th class="lgl1">ADDRESS</th>
+    
+                    <th class="lgl1 tblBrLeft">ADDRESS</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">CONTACT NUMBER</th>
                     <th class="lgl1">WEBSITE</th>
@@ -79,7 +81,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
+    
                     <td class="lgl1">{{tenant.ADDRESS}}</td>
                     <td class="lgl1">{{tenant.EMAIL}}</td>
                     <td class="lgl1">{{tenant.CONTACT_NO}}</td>
@@ -108,8 +110,8 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
-                    <th class="lgl1">NAME</th>
+             
+                    <th class="lgl1 tblBrLeft">NAME</th>
                     <th class="lgl1">CONTACT NUMBER</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
@@ -117,7 +119,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
+              
                     <td class="lgl1">{{tenant.CONTACT_PERSON}}</td>
                     <td class="lgl1">{{tenant.CONTACT_PERSON_CONTACT_NO}}</td>
                     <td class="lgl1">{{tenant.CONTACT_PERSON_EMAIL}}</td>
