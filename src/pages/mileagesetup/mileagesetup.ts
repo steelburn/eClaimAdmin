@@ -32,6 +32,7 @@ export class MileagesetupPage {
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   public mileages: MileageSetup_Model[] = [];
+  //public mileages: any;
 
   public AddMileageClicked: boolean = false;
   public EditMileageClicked: boolean = false;
@@ -68,9 +69,12 @@ export class MileagesetupPage {
       .get(MILEAGE_GUID)
       .subscribe((data) => {
         self.mileage_details = data;
+        console.log(self.mileage_details);
         this.CATEGORY_ngModel_Edit = self.mileage_details.CATEGORY; localStorage.setItem('Prev_mi_Category', self.mileage_details.CATEGORY); //console.log(self.mileage_details.CATEGORY);
         this.RATE_PER_UNIT_ngModel_Edit = self.mileage_details.RATE_PER_UNIT;
         this.RATE_DATE_ngModel_Edit = new Date(self.mileage_details.RATE_DATE).toISOString();
+       // alert(this.CATEGORY_ngModel_Edit);
+       // alert(self.mileage_details.CATEGORY);
         if (self.mileage_details.ACTIVATION_FLAG == "1") {
           this.ACTIVATION_FLAG_ngModel_Edit = true;
         }
@@ -202,6 +206,7 @@ export class MileagesetupPage {
   }
 
   Update(MILEAGE_GUID: any) {
+    alert(MILEAGE_GUID); 
     if (this.Mileageform.valid) {
       if (this.mileage_entry.CATEGORY == null) { this.mileage_entry.CATEGORY = this.CATEGORY_ngModel_Edit.trim(); }
       if (this.mileage_entry.RATE_PER_UNIT == null) { this.mileage_entry.RATE_PER_UNIT = this.RATE_PER_UNIT_ngModel_Edit; }

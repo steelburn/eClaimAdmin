@@ -38,17 +38,12 @@
             <td class="lgl1">{{soc.project_name}}</td>
             <td class="lgl1">{{soc.customer_name}}</td>
             <td class="lgl1 fColor">
-              <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>
+                <!-- EditClick(soc.SOC_GUID) -->
+              <button ion-button item-end><ion-icon (click)="EditClick(soc.SOC_GUID)" name="md-create"></ion-icon></button>
               <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
           </td>
         </tr>
               
-
- 
-
-
-
- 
       </table>
   </ion-item>
 </ion-list>
@@ -94,6 +89,48 @@
 
 </div>
 <!-- add Tenant form end-->
+
+
+<!-- Edit -->
+<div class="blackcontainer" *ngIf="EditSocClicked">
+</div>
+<div class="popup" padding *ngIf="EditSocClicked">
+
+  <ion-card class="cm">
+      <ion-card-header class="icTitle headerColor-white ">
+
+          <div class="icHeaderText">UPDATE SOC NUMBER</div>
+          <button class="btnR" (click)="CloseSocClick()">
+              <ion-icon name="md-close"></ion-icon>
+          </button>
+      </ion-card-header>
+      <ion-list class="scroll">
+          <form  [formGroup]="Socform">
+
+            <ion-item>
+              <ion-label stacked>SOC NO</ion-label>
+              <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Edit" placeholder="{{'Please fill the soc no'}}"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label stacked>PROJECT NAME</ion-label>
+              <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Edit" placeholder="{{'Please fill the project name'}}"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label stacked>CUSTOMER NAME</ion-label>
+              <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Edit" placeholder="{{'Please fill the project name'}}"></ion-input>
+            </ion-item>
+
+              <div class="btn">
+                  <button ion-button class="bgColor-grey fontColor-white btnStyle1"  (click)="Update(soc_details_main.SOC_GUID)">Submit</button>
+              </div>
+
+          </form>
+      </ion-list>
+  </ion-card>
+
+</div>
 
 
 </ion-content>
