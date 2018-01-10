@@ -111,6 +111,8 @@ export class UserPage {
   //Set the Model Name for Add------------------------------------------
   public User_Name_ngModel: any;
   public User_Email_ngModel: any;
+  public User_LoginId_ngModel: any;
+  public User_Password_ngModel: any;
   public User_PersonalNo_ngModel: any;
   public User_CompanyNo_ngModel: any;
   public User_Marital_ngModel: any;
@@ -139,6 +141,8 @@ export class UserPage {
    //Set the Model Name for edit------------------------------------------
   public User_Name_Edit_ngModel: any;
   public User_Email_Edit_ngModel: any;
+  public User_LoginId_Edit_ngModel: any;
+  public User_Password_Edit_ngModel: any;
   public User_PersonalNo_Edit_ngModel: any;
   public User_CompanyNo_Edit_ngModel: any;
   public User_Marital_Edit_ngModel: any;
@@ -373,6 +377,8 @@ public EditClick(USER_GUID: any) {
         this.User_Name_Edit_ngModel = this.view_user_details[0]["NAME"];
         
         this.User_Email_Edit_ngModel = this.view_user_details[0]["EMAIL"];
+        this.User_LoginId_Edit_ngModel = this.view_user_details[0]["LOGIN_ID"];
+        this.User_Password_Edit_ngModel = this.view_user_details[0]["PASSWORD"];
         //this.User_PersonalNo_Edit_ngModel = this.view_user_details[0]["CONTACT_NO"];
         //this.User_CompanyNo_Edit_ngModel = this.view_user_details[0]["companyno"];
         this.User_Marital_Edit_ngModel = this.view_user_details[0]["MARITAL_STATUS"];
@@ -528,6 +534,8 @@ public EditClick(USER_GUID: any) {
     this.Userform = fb.group({
       NAME: ['', Validators.required],
       EMAIL: ['', Validators.required],
+      LOGIN_ID: ['', Validators.required],
+      PASSWORD: ['', Validators.required],
       CONTACT_NO: ['', Validators.required],
       COMPANY_CONTACT_NO: ['', Validators.required],
       MARITAL_STATUS: ['', Validators.required],
@@ -654,7 +662,8 @@ public EditClick(USER_GUID: any) {
               //this.usermain_entry.STAFF_ID = this.User_StaffID_ngModel.trim();  
               this.usermain_entry.USER_GUID = UUID.UUID();
               //this.usermain_entry.USER_GUID = this.userinfo_entry.USER_GUID;
-              this.usermain_entry.LOGIN_ID = UUID.UUID();
+              this.usermain_entry.LOGIN_ID =this.User_LoginId_ngModel.trim();
+              this.usermain_entry.PASSWORD =this.User_Password_ngModel.trim();
               this.usermain_entry.ACTIVATION_FLAG = 1;
               this.usermain_entry.CREATION_TS = new Date().toISOString();
               this.usermain_entry.CREATION_USER_GUID = "1";
@@ -802,11 +811,12 @@ public EditClick(USER_GUID: any) {
                   
                   this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel;
                   this.usermain_entry.USER_GUID = this.USER_GUID_FOR_UPDATE;
-                  alert(this.USER_GUID_FOR_UPDATE);
                   //this.usermain_entry.TENANT_GUID = "x";
                   //this.usermain_entry.STAFF_ID	 = "y";
                  //this.usermain_entry.PASSWORD = "z";
-                  this.usermain_entry.LOGIN_ID = "925f21cf-7994-0716-b23c-ac8bff3167a4";
+                  //this.usermain_entry.LOGIN_ID = "925f21cf-7994-0716-b23c-ac8bff3167a4";
+                  this.usermain_entry.LOGIN_ID =  this.User_LoginId_Edit_ngModel;
+                  this.usermain_entry.PASSWORD =  this.User_Password_Edit_ngModel;
                   //this.usermain_entry.ACTIVATION_FLAG = 1;
                   this.usermain_entry.CREATION_TS = new Date().toISOString();
                   this.usermain_entry.CREATION_USER_GUID = "1";
