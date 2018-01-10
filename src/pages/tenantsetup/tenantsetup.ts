@@ -47,7 +47,8 @@ export class TenantsetupPage {
 
   Tenantform: FormGroup; TenantUSerform: FormGroup;
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_tenantdetails' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   baseResourceUrl_tenantuser: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_tenantuser' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -117,10 +118,11 @@ export class TenantsetupPage {
     this.ClearControls();
   }
 
-  public AddTUserClick(TENANT_COMPANY_SITE_GUID: any) {
+  public AddTUserClick(TENANT_GUID: any, TENANT_COMPANY_GUID: any, TENANT_COMPANY_SITE_GUID: any) {
     this.AddTUserClicked = true;
     //----------------For tenant User-------------------
-    //this.baseResourceUrl_tenantuser = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/vw_tenantuser?filter=(TENANT_GUID=" + this.tenant_company_site_entry.SITE_NAME + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrl_tenantuser = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/vw_tenantuser?filter=(TENANT_GUID=" + TENANT_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log(this.baseResourceUrl_tenantuser);
     this.http
       .get(this.baseResourceUrl_tenantuser)
       .map(res => res.json())
@@ -128,13 +130,14 @@ export class TenantsetupPage {
         this.tenantusers = data.resource;
         //alert(this.tenantusers[0]["TENANT_GUID"]);
 
+        localStorage.setItem('PREV_TENANT_GUID', TENANT_GUID);
+        localStorage.setItem('PREV_TENANT_COMPANY_GUID', TENANT_COMPANY_GUID);
         localStorage.setItem('PREV_TENANT_COMPANY_SITE_GUID', TENANT_COMPANY_SITE_GUID);
       });
     //--------------------------------------------------
   }
 
   public CloseTUserClick() {
-
     this.AddTUserClicked = false;
   }
 
@@ -211,14 +214,16 @@ export class TenantsetupPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, fb_tenant: FormBuilder, fb_user: FormBuilder, public http: Http, private httpService: BaseHttpService, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private alertCtrl: AlertController) {
-    // if(localStorage.getItem("g_USER_GUID")=="sva"){
-    //   alert("bijay");
-    // }
+    //--------------Clear all required storage------------------------
+    localStorage.removeItem("PREV_TENANT_GUID");
+    localStorage.removeItem("PREV_TENANT_COMPANY_GUID");
+    localStorage.removeItem("PREV_TENANT_COMPANY_SITE_GUID");
+    //----------------------------------------------------------------
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.tenants = data.resource;
+        this.tenants = data.resource;console.log(data.resource);
       });
 
     this.Tenantform = fb_tenant.group({
@@ -253,7 +258,6 @@ export class TenantsetupPage {
 
     this.TenantUSerform = fb_user.group({
       //-------------For Tenant User--------------------
-      //TUTENANTID: [null],
       TULOGINID: ["", Validators.required],
       TUPASSWORD: ["", Validators.required],
       TUEMAIL: ["", Validators.required],
@@ -360,13 +364,8 @@ export class TenantsetupPage {
   }
 
   Save_Tenant_User() {
-    //alert(localStorage.getItem('PREV_TENANT_COMPANY_SITE_GUID'));
-    //alert(this.tenantusers[0]["TENANT_GUID"]);
-
-    this.usermain_entry.USER_GUID = UUID.UUID();
-    this.usermain_entry.TENANT_GUID = this.tenant_main_entry.TENANT_GUID;
-    //this.usermain_entry.TENANT_GUID = this.tenantusers[0]["TENANT_GUID"];
-    this.usermain_entry.TENANT_GUID = localStorage.getItem('PREV_TENANT_COMPANY_SITE_GUID');
+    this.usermain_entry.USER_GUID = UUID.UUID();    
+    this.usermain_entry.TENANT_GUID = localStorage.getItem('PREV_TENANT_GUID');
 
     this.usermain_entry.LOGIN_ID = this.User_Loginid_ngModel_Add.trim();
     this.usermain_entry.PASSWORD = this.User_Password_ngModel_Add.trim();
@@ -393,7 +392,7 @@ export class TenantsetupPage {
   Save_Tenant_User_Info() {
     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
-    this.userinfo_entry.TENANT_COMPANY_GUID = localStorage.getItem('PREV_TENANT_COMPANY_SITE_GUID');
+    this.userinfo_entry.TENANT_COMPANY_GUID = localStorage.getItem('PREV_TENANT_COMPANY_GUID');
     this.userinfo_entry.TENANT_COMPANY_SITE_GUID = localStorage.getItem('PREV_TENANT_COMPANY_SITE_GUID');    
     this.userinfo_entry.CREATION_TS = new Date().toISOString();
     this.userinfo_entry.CREATION_USER_GUID = "sva";

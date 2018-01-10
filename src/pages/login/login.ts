@@ -22,19 +22,12 @@ export class LoginPage {
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   constructor(public navCtrl: NavController, public userData: UserData, public http: Http) {
-
+    localStorage.clear();
+    //localStorage.removeItem("g_USER_GUID");
   }
 
   onLogin(form: NgForm) {
     this.submitted = true;
-
-    localStorage.setItem("g_USER_GUID", null);
-    localStorage.setItem("g_TENANT_GUID", null);
-    localStorage.setItem("g_EMAIL", null);
-    localStorage.setItem("g_FULLNAME", null);
-    localStorage.setItem("g_TENANT_COMPANY_GUID", null);
-    localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", null);
-
     if (form.valid) {
       //Check if the login as super vendor
       // if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
@@ -62,12 +55,12 @@ export class LoginPage {
               this.navCtrl.push(TabsPage);
             }
             else {
-              localStorage.setItem("g_USER_GUID", null);
-              localStorage.setItem("g_TENANT_GUID", null);
-              localStorage.setItem("g_EMAIL", null);
-              localStorage.setItem("g_FULLNAME", null);
-              localStorage.setItem("g_TENANT_COMPANY_GUID", null);
-              localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", null);
+              localStorage.removeItem("g_USER_GUID");
+              localStorage.removeItem("g_TENANT_GUID");
+              localStorage.removeItem("g_EMAIL");
+              localStorage.removeItem("g_FULLNAME");
+              localStorage.removeItem("g_TENANT_COMPANY_GUID");
+              localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
 
               alert("Invalid Login!!")
               this.login.username = "";
