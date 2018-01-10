@@ -33,6 +33,8 @@
                     <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
                     <th class="lgl1">NAME</th>
                     <th class="lgl1">EMAIL</th>
+                    <th class="lgl1">LOGINID</th>
+                    <th class="lgl1">PASSWORD</th>
                     <th class="lgl1">PERSONAL CONTACT NO</th>
                     <th class="lgl1">COMAPANY CONTACT NO</th>
                     <th class="lgl1">MARITAL STATUS</th>
@@ -48,6 +50,8 @@
                     <!-- <td class="lgl1">{{i+1}}</td> -->
                     <td class="lgl1">{{user.NAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
+                    <td class="lgl1">{{user.LOGIN_ID}}</td>
+                    <td class="lgl1">{{user.PASSWORD}}</td>
                     <td class="lgl1">{{user.CONTACT_NO}}</td>
                     <td class="lgl1">{{user.COMPANY_CONTACT_NO}}</td>
                     <td class="lgl1">{{user.MARITAL_STATUS}}</td>
@@ -193,6 +197,16 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"EMAIL"}}</ion-label>
                         <ion-input type="text" formControlName="EMAIL" [(ngModel)]="User_Email_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"LOGINID"}}</ion-label>
+                        <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"PASSWORD"}}</ion-label>
+                        <ion-input type="text" formControlName="PASSWORD" [(ngModel)]="User_Password_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
                     <ion-item class="text">
@@ -378,6 +392,16 @@
                     <ion-item>
                         <ion-label stacked>{{"EMAIL"}}</ion-label>
                         <ion-input type="text" formControlName="EMAIL" [(ngModel)]="User_Email_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"LOGINID"}}</ion-label>
+                        <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>{{"PASSWORD"}}</ion-label>
+                        <ion-input type="text" formControlName="PASSWORD" [(ngModel)]="User_Password_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
