@@ -110,8 +110,8 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
-                    <th class="lgl1">NAME</th>
+             
+                    <th class="lgl1 tblBrLeft">NAME</th>
                     <th class="lgl1">CONTACT NUMBER</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
@@ -119,7 +119,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
+              
                     <td class="lgl1">{{tenant.CONTACT_PERSON}}</td>
                     <td class="lgl1">{{tenant.CONTACT_PERSON_CONTACT_NO}}</td>
                     <td class="lgl1">{{tenant.CONTACT_PERSON_EMAIL}}</td>
