@@ -59,6 +59,7 @@ export class UserPage {
   usermain_entry: UserMain_Model = new UserMain_Model();
   usercontact_entry: UserContact_Model = new UserContact_Model();
   usercompany_entry: UserCompany_Model = new UserCompany_Model();
+  // tenantcompany_entry: UserCompany_Model = new UserCompany_Model();
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
   viewuser_entry: ViewUser_Model = new ViewUser_Model(); 
   viewdropdown_entry: View_Dropdown_Model = new View_Dropdown_Model();
@@ -86,6 +87,8 @@ export class UserPage {
 
   baseResourceUrl_branch: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_branch' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
+
+  // baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/personaldetails_emp' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
   baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
@@ -513,6 +516,14 @@ public EditClick(USER_GUID: any) {
         //console.table(this.address)
       });
 
+      .map(res => res.json())
+      .subscribe(data => {
+        this.users_local = data.resource;
+        let i:number=0;
+        this.users_local.forEach(element => {
+          let temp:ViewUser_Model = element;
+          if(element.GENDER=='1')temp.GENDER = 'Male'
+          else temp.GENDER = 'Female';
 
     this.Userform = fb.group({
       NAME: ['', Validators.required],
