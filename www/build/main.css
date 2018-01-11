@@ -41823,6 +41823,7 @@ td.lgl1 {
   word-wrap: break-word;
   border: none;
   border-bottom: 1px solid gainsboro;
+  white-space: normal !important;
 }
 
 th.lgl2 {
@@ -41838,6 +41839,7 @@ td.lgl2 {
   word-wrap: break-word;
   border: none;
   border-bottom: 1px solid gainsboro;
+  white-space: normal !important;
 }
 
 .tblBrLeft {
@@ -41873,8 +41875,15 @@ ion-menu#loggedOutMenu {
   border-left: 0;
 }
 
+ion-menu#loggedInMenu {
+  min-width: 303px !important;
+  max-width: 14%  !important;
+  border-right: 1px solid #dedede;
+  border-left: 0;
+}
+
 ion-toggle.toggle.toggle-md {
-  padding-left: 80px !important;
+  padding-left: 101px !important;
   padding-right: 0px !important;
 }
 
@@ -41890,6 +41899,10 @@ ion-toggle.toggle.toggle-md.stog {
 
 .UPContent {
   width: 100%;
+}
+
+page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched {
+  color: black !important;
 }
 
 page-entertainmentclaim .blackcontainer {
@@ -42076,10 +42089,6 @@ page-user .logo img {
 
 page-user .list {
   margin-bottom: 0;
-}
-
-page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched {
-  color: white !important;
 }
 
 page-medicalclaim .blackcontainer {
@@ -42466,6 +42475,10 @@ ion-item[track=navigation] .dot {
   max-width: 200px;
 }
 
+page-tenantsetup .divColor {
+  background-color: yellowgreen;
+}
+
 page-travelclaim .blackcontainer {
   top: 0;
   left: 0;
@@ -42530,8 +42543,4 @@ page-travelclaim .cm {
 
 page-travelclaim .tnUserRow {
   border-bottom: 2px solid #efefef;
-}
-
-page-user .text {
-  background-color: yellowgreen;
 }

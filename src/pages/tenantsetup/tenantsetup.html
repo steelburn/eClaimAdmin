@@ -30,7 +30,7 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-           
+
                     <th class="lgl1 tblBrLeft">TENANT ACCOUNT NAME</th>
                     <th class="lgl1">TENANNT COMPANY NAME</th>
                     <th class="lgl1">EFFECTIVE DATE</th>
@@ -39,12 +39,13 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-          
-                    <td class="lgl1">AIR ASIA BERHAD</td>
-                    <td class="lgl1">AIR ASIA MALAYSIA</td>
+
+                    <td class="lgl1">{{tenant.TENANT_ACCOUNT_NAME}}</td>
+                    <td class="lgl1">{{tenant.NAME}}</td>
                     <td class="lgl1">23 - 4- 2222</td>
                     <td class="lgl1">
-                        <ion-toggle checked=true></ion-toggle>
+                        <ion-toggle class="stog" *ngIf="tenant.ACTIVATION_FLAG==1" checked=true></ion-toggle>
+                        <ion-toggle class="stog" *ngIf="tenant.ACTIVATION_FLAG==0" checked=false></ion-toggle>
                     </td>
 
                     <td class="lgl1 fColor">
@@ -54,7 +55,7 @@
                         <button ion-button item-end (click)="DeleteClick(tenant.TENANT_COMPANY_SITE_GUID)">
                             <ion-icon name="md-close"></ion-icon>
                         </button>
-                        <button ion-button item-end (click)="AddTUserClick(tenant.TENANT_COMPANY_SITE_GUID)">
+                        <button ion-button item-end (click)="AddTUserClick(tenant.TENANT_GUID, tenant.TENANT_COMPANY_GUID, tenant.TENANT_COMPANY_SITE_GUID)">
                             <ion-icon name="md-person-add"></ion-icon>
                         </button>
                     </td>
@@ -70,7 +71,7 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-    
+
                     <th class="lgl1 tblBrLeft">ADDRESS</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">CONTACT NUMBER</th>
@@ -81,7 +82,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-    
+
                     <td class="lgl1">{{tenant.ADDRESS}}</td>
                     <td class="lgl1">{{tenant.EMAIL}}</td>
                     <td class="lgl1">{{tenant.CONTACT_NO}}</td>
@@ -110,7 +111,7 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-             
+
                     <th class="lgl1 tblBrLeft">NAME</th>
                     <th class="lgl1">CONTACT NUMBER</th>
                     <th class="lgl1">EMAIL</th>
@@ -119,7 +120,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-              
+
                     <td class="lgl1">{{tenant.CONTACT_PERSON}}</td>
                     <td class="lgl1">{{tenant.CONTACT_PERSON_CONTACT_NO}}</td>
                     <td class="lgl1">{{tenant.CONTACT_PERSON_EMAIL}}</td>
@@ -295,7 +296,7 @@
 
     </div>
     <!-- edit Tenant form end-->
-    
+
 
     <!-- add TUser start-->
     <div class="blackcontainer" *ngIf="AddTUserClicked">
@@ -303,8 +304,7 @@
     <div class="popup" padding *ngIf="AddTUserClicked">
 
         <ion-card class="cm">
-            <ion-card-header class="icTitle headerColor-white ">
-
+            <ion-card-header class="icTitle headerColor-white ">                
                 <div class="icHeaderText">ADD USER</div>
                 <button class="btnR" (click)="CloseTUserClick()">
                     <ion-icon name="md-close"></ion-icon>
@@ -375,7 +375,6 @@
             <ion-list class="scroll">
                 <form [formGroup]="TenantUSerform">
                     <ion-item>
-                        <!-- <ion-label formControlName="TUTENANTID" [(ngModel)]="User_Tenantid_ngModel_Add" style="display: none"></ion-label> -->
                         <ion-label stacked>USER LOGIN ID</ion-label>
                         <ion-input type="text" formControlName="TULOGINID" [(ngModel)]="User_Loginid_ngModel_Add" placeholder="{{'Please fill in the user login ID'}}"></ion-input>
                     </ion-item>
