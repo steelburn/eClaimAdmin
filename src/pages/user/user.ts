@@ -28,6 +28,8 @@ import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
 import { elementDef } from '@angular/core/src/view/element';
+import { ApiDatabaseService } from '../../providers/api-database-service';
+import Encrypt from 'jsencrypt';
 
 /**
  * Generated class for the UserPage page.
