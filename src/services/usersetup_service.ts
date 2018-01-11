@@ -143,7 +143,7 @@ export class UserSetup_Service
 		let options = new RequestOptions({ headers: queryHeaders });
 		return this.httpService.http.post(this.baseResourceUrl, user_address.toJson(true),options)
 			.map((response) => {
-				return response;
+				return response; 
 			});
 	}
 
