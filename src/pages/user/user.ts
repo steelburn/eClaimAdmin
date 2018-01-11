@@ -28,6 +28,8 @@ import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
 import { elementDef } from '@angular/core/src/view/element';
+import { ApiDatabaseService } from '../../providers/api-database-service';
+import Encrypt from 'jsencrypt';
 
 /**
  * Generated class for the UserPage page.
@@ -685,7 +687,7 @@ public EditClick(USER_GUID: any) {
                     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
                     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
                     //this.userinfo_entry.USER_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
-                    //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
+                   
                     //this.userinfo_entry.TENANT_COMPANY_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
                     this.userinfo_entry.CREATION_TS = new Date().toISOString();
                     this.userinfo_entry.CREATION_USER_GUID = "1";
