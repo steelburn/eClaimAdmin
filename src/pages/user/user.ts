@@ -58,7 +58,7 @@ export class UserPage {
   public data: any;
   //public employees: any;
   public address: any;
-
+ 
   isReadyToSave: boolean;
   userinfo_entry: UserInfo_Model = new UserInfo_Model();
   usermain_entry: UserMain_Model = new UserMain_Model();
@@ -70,8 +70,8 @@ export class UserPage {
   viewdropdown_entry: View_Dropdown_Model = new View_Dropdown_Model();
   view_user_details: any;
   user_details: any;
-  Userform: FormGroup;
-
+  Userform: FormGroup; 
+ 
   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_info' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   // baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
@@ -188,7 +188,7 @@ export class UserPage {
     if (this.EditUserClicked == true) {
       this.EditUserClicked = false;
     }
-  }
+  } 
 
   // Edit Function
   USER_INFO_GUID_FOR_UPDATE: any;
@@ -310,13 +310,14 @@ export class UserPage {
   }
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
-
-    if (localStorage.getItem("g_USER_GUID") != null) {
-      //this.GetDropdown();
-      this.GetDesignation();
-      this.GetCompany();
-      this.GetDepartment();
-      this.GetBranch();
+    //this.GetDropdown();
+    this.GetDesignation();
+    this.GetCompany();
+    this.GetDepartment();
+    this.GetBranch();
+    
+    this.http
+    .get(this.baseResourceView1)
 
       this.http
         .get(this.baseResourceView1)
@@ -411,15 +412,6 @@ export class UserPage {
       this.navCtrl.push(LoginPage);
     }
 
-      .map(res => res.json())
-      .subscribe(data => {
-        this.users_local = data.resource;
-        let i:number=0;
-        this.users_local.forEach(element => {
-          let temp:ViewUser_Model = element;
-          if(element.GENDER=='1')temp.GENDER = 'Male'
-          else temp.GENDER = 'Female';
-
     this.Userform = fb.group({
       NAME: ['', Validators.required],
       EMAIL: ['', Validators.required],
@@ -449,7 +441,6 @@ export class UserPage {
       USER_ADDRESS2: ['', Validators.required],
       USER_ADDRESS3: ['', Validators.required],
     });
-
     this.genders.push({ value: 1, text: 'Male', checked: false });
     this.genders.push({ value: 0, text: 'Female', checked: false });
     this.maritals.push({ value: 0, text: 'Single', checked: false });
@@ -699,22 +690,21 @@ export class UserPage {
       //   data => {
       //     let res = data["resource"];
 
-      //     if (res.length == 0) {
-      if (this.Exist_Record == false) {
-
-        this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel;
-        this.usermain_entry.USER_GUID = this.USER_GUID_FOR_UPDATE;
-        //this.usermain_entry.TENANT_GUID = "x";
-        //this.usermain_entry.STAFF_ID	 = "y";
-        //this.usermain_entry.PASSWORD = "z";
-        //this.usermain_entry.LOGIN_ID = "925f21cf-7994-0716-b23c-ac8bff3167a4";
-        this.usermain_entry.LOGIN_ID = this.User_LoginId_Edit_ngModel;
-        this.usermain_entry.PASSWORD = this.User_Password_Edit_ngModel;
-        //this.usermain_entry.ACTIVATION_FLAG = 1;
-        this.usermain_entry.CREATION_TS = new Date().toISOString();
-        this.usermain_entry.CREATION_USER_GUID = "1";
-        this.usermain_entry.UPDATE_TS = new Date().toISOString();
-        this.usermain_entry.UPDATE_USER_GUID = "";
+                    this.userinfo_entry.FULLNAME = this.User_Name_Edit_ngModel;
+                    // this.viewuser_entry.NAME = this.User_Name_Edit_ngModel;                    
+                    this.userinfo_entry.MARITAL_STATUS = this.User_Marital_Edit_ngModel;
+                    this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_Edit_ngModel;  
+                    this.userinfo_entry.PERSONAL_ID = this.User_ICNo_Edit_ngModel;
+                    this.userinfo_entry.DOB = this.User_DOB_Edit_ngModel;
+                    this.userinfo_entry.GENDER = this.User_Gender_Edit_ngModel;
+                    this.userinfo_entry.USER_INFO_GUID = this.USER_INFO_GUID_FOR_UPDATE;
+                    this.userinfo_entry.USER_GUID = this.USER_GUID_FOR_UPDATE;
+                    this.userinfo_entry.CREATION_TS = new Date().toISOString();
+                    this.userinfo_entry.CREATION_USER_GUID = "1";
+                    this.userinfo_entry.UPDATE_TS = new Date().toISOString();
+                    this.userinfo_entry.UPDATE_USER_GUID = "";
+                    this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_Edit_ngModel;
+                    this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_Edit_ngModel;
 
         this.userservice.edit_user_main(this.usermain_entry)
           .subscribe((response) => {
@@ -816,19 +806,7 @@ export class UserPage {
             }
           });
       }
-      //   }
-      //   else {
-      //     console.log("Records Found");
-      //     alert("The User is already Exist.")
-      //   }
-      // },
-      // err => {
-      //   this.Exist_Record = false;
-      //   console.log("ERROR!: ", err);
-      // });
-    }
-  }
-
+  
 
   ClearControls() {
     this.User_Name_ngModel = "";
