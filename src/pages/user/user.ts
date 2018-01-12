@@ -29,6 +29,8 @@ import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
 import { elementDef } from '@angular/core/src/view/element';
+import { ApiDatabaseService } from '../../providers/api-database-service';
+import Encrypt from 'jsencrypt';
 
 import { LoginPage } from '../login/login';
 
@@ -364,6 +366,7 @@ export class UserPage {
           //console.table(this.address)
         });
 
+
       this.Userform = fb.group({
         NAME: ['', Validators.required],
         EMAIL: ['', Validators.required],
@@ -407,6 +410,57 @@ export class UserPage {
     else {
       this.navCtrl.push(LoginPage);
     }
+
+      .map(res => res.json())
+      .subscribe(data => {
+        this.users_local = data.resource;
+        let i:number=0;
+        this.users_local.forEach(element => {
+          let temp:ViewUser_Model = element;
+          if(element.GENDER=='1')temp.GENDER = 'Male'
+          else temp.GENDER = 'Female';
+
+    this.Userform = fb.group({
+      NAME: ['', Validators.required],
+      EMAIL: ['', Validators.required],
+      LOGIN_ID: ['', Validators.required],
+      PASSWORD: ['', Validators.required],
+      CONTACT_NO: ['', Validators.required],
+      COMPANY_CONTACT_NO: ['', Validators.required],
+      MARITAL_STATUS: ['', Validators.required],
+      PERSONAL_ID_TYPE: ['', Validators.required],
+      PERSONAL_ID: ['', Validators.required],
+      DOB: ['', Validators.required],
+      GENDER: ['', Validators.required],
+
+      DESIGNATION_GUID: ['', Validators.required],
+      TENANT_COMPANY_GUID: ['', Validators.required],
+      DEPT_GUID: ['', Validators.required],
+      JOIN_DATE: ['', Validators.required],
+      CONFIRMATION_DATE: ['', Validators.required],
+      RESIGNATION_DATE: ['', Validators.required],
+      BRANCH: ['', Validators.required],
+      EMPLOYEE_TYPE: ['', Validators.required],
+      APPROVER1: ['', Validators.required],
+      APPROVER2: ['', Validators.required],
+      EMPLOYEE_STATUS: ['', Validators.required],   
+
+      USER_ADDRESS1: ['', Validators.required],
+      USER_ADDRESS2: ['', Validators.required],
+      USER_ADDRESS3: ['', Validators.required],
+    });
+
+    this.genders.push({ value: 1, text: 'Male', checked: false });
+    this.genders.push({ value: 0, text: 'Female', checked: false });
+    this.maritals.push({ value: 0, text: 'Single', checked: false });
+    this.maritals.push({ value: 1, text: 'Maried', checked: false });
+    this.emptypes.push({ value: 0, text: 'Permanent', checked: false });
+    this.emptypes.push({ value: 1, text: 'Contract', checked: false });
+    this.emptypes.push({ value: 2, text: 'Temporary', checked: false });
+    this.empstatuss.push({ value: 0, text: 'Probation', checked: false });
+    this.empstatuss.push({ value: 1, text: 'Confirmed', checked: false });
+    this.empstatuss.push({ value: 2, text: 'Terminated', checked: false });
+
   }
 
   ionViewDidLoad() {
@@ -498,8 +552,10 @@ export class UserPage {
               //this.usermain_entry.STAFF_ID = this.User_StaffID_ngModel.trim();  
               this.usermain_entry.USER_GUID = UUID.UUID();
               //this.usermain_entry.USER_GUID = this.userinfo_entry.USER_GUID;
+
               this.usermain_entry.LOGIN_ID = this.User_LoginId_ngModel.trim();
               this.usermain_entry.PASSWORD = this.User_Password_ngModel.trim();
+
               this.usermain_entry.ACTIVATION_FLAG = 1;
               this.usermain_entry.CREATION_TS = new Date().toISOString();
               this.usermain_entry.CREATION_USER_GUID = "1";
@@ -521,7 +577,7 @@ export class UserPage {
                     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
                     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
                     //this.userinfo_entry.USER_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
-                    //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
+                   
                     //this.userinfo_entry.TENANT_COMPANY_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
                     this.userinfo_entry.CREATION_TS = new Date().toISOString();
                     this.userinfo_entry.CREATION_USER_GUID = "1";
@@ -625,6 +681,7 @@ export class UserPage {
 
   USER_GUID_FOR_UPDATE: any;
   Update(USER_GUID: any) {
+
     if (this.Userform) {
       // let headers = new Headers();
       // headers.append('Content-Type', 'application/json');

@@ -30,36 +30,25 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
-                    <th class="lgl1">NAME</th>
+            
+                    <th class="lgl1 tblBrLeft">NAME</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">LOGINID</th>
-                    <th class="lgl1">PASSWORD</th>
-                    <th class="lgl1">PERSONAL CONTACT NO</th>
-                    <th class="lgl1">COMAPANY CONTACT NO</th>
-                    <th class="lgl1">MARITAL STATUS</th>
 
                     <th class="lgl1">STAFF ID</th>
-                    <th class="lgl1">IC NO</th>
-                    <th class="lgl1">DATE OF BIRTH</th>
-                    <th class="lgl1">GENDER</th>
+                
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let user of users; let i=index">
-                    <!-- <td class="lgl1">{{i+1}}</td> -->
+              
                     <td class="lgl1">{{user.NAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
                     <td class="lgl1">{{user.LOGIN_ID}}</td>
-                    <td class="lgl1">{{user.PASSWORD}}</td>
-                    <td class="lgl1">{{user.CONTACT_NO}}</td>
-                    <td class="lgl1">{{user.COMPANY_CONTACT_NO}}</td>
-                    <td class="lgl1">{{user.MARITAL_STATUS}}</td>
+       
 
                     <td class="lgl1">{{user.PERSONAL_ID_TYPE}}</td>
-                    <td class="lgl1">{{user.PERSONAL_ID}}</td>
-                    <td class="lgl1">{{user.DOB}}</td>
-                    <td class="lgl1">{{user.GENDER}}</td>
+    
 
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
@@ -197,6 +186,50 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"EMAIL"}}</ion-label>
                         <ion-input type="text" formControlName="EMAIL" [(ngModel)]="User_Email_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
+                    </ion-item>
+
+
+                    <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Save()">{{"SUBMIT" | translate}}</button>
+                    </div>
+
+                </form>
+            </ion-list>
+        </ion-card>
+
+    </div>
+    <!-- add Tenant form end-->
+
+
+    <!-- edit user form start -->
+
+    <div class="blackcontainer" *ngIf="EditUserClicked">
+    </div>
+    <div class="popup" padding *ngIf="EditUserClicked">
+
+        <ion-card class="cm">
+            <ion-card-header class="icTitle headerColor-white ">
+
+                <div class="icHeaderText">UPDATE USER</div>
+                <button class="btnR" (click)="CloseUserClick()">
+                    <ion-icon name="md-close"></ion-icon>
+                </button>
+            </ion-card-header>
+            <ion-list class="scroll">
+                <form [formGroup]="Userform">
+
+                    <div class="eClaimSubTitle1"> 
+                        <b>PERSONAL DETAILS</b>
+                    </div>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"LOGINID"}}</ion-label>
+                        <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"PASSWORD"}}</ion-label>
+                        <ion-input type="text" formControlName="PASSWORD" [(ngModel)]="User_Password_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
                     <ion-item class="text">
