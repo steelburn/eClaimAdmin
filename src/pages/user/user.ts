@@ -336,8 +336,36 @@ export class UserPage {
       })
     });
 
-    this.http
-      .get(this.baseResourceView)
+
+    if (localStorage.getItem("g_USER_GUID") != null) {
+      //this.GetDropdown();
+      this.GetDesignation();
+      this.GetCompany();
+      this.GetDepartment();
+      this.GetBranch();
+      
+
+      this.http
+        .get(this.baseResourceView1)
+
+        .map(res => res.json())
+        .subscribe(data => {
+          this.employees_local = data.resource;
+          let i: number = 0;
+          this.employees_local.forEach(element => {
+            let temp: View_Dropdown_Model = element;
+            if (element.EMPLOYEE_TYPE == '0') temp.EMPLOYEE_TYPE = 'Permanent'
+            else if (element.EMPLOYEE_TYPE == '1') temp.EMPLOYEE_TYPE = 'Contract'
+            else temp.EMPLOYEE_TYPE = 'Temporary';
+
+            if (element.EMPLOYEE_STATUS == '0') temp.EMPLOYEE_TYPE = 'Probation'
+            else if (element.EMPLOYEE_STATUS == '1') temp.EMPLOYEE_STATUS = 'Confirmed'
+            else temp.EMPLOYEE_STATUS = 'Terminated';
+
+            this.employees.push(temp);
+          })
+        });
+
 
       .map(res => res.json())
       .subscribe(data => {

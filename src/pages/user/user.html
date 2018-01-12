@@ -28,18 +28,20 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-            
+ 
                     <th class="lgl1 tblBrLeft">NAME</th>
+
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">LOGINID</th>
 
+                    
                     <th class="lgl1">STAFF ID</th>
                 
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let user of users; let i=index">
-              
+
                     <td class="lgl1">{{user.NAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
                     <td class="lgl1">{{user.LOGIN_ID}}</td>
@@ -85,12 +87,14 @@
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of employees; let i=index" >
+                <tr class="col7" *ngFor="let user of employees; let i=index">
                     <td class="lgl1">{{user.DESIGNATION_GUID}}</td>
                     <td class="lgl1">{{user.TENANT_COMPANY_GUID}}</td>
-                    <td class="lgl1">{{user.DEPT_GUID}}</td>  
+                    <td class="lgl1">{{user.DEPT_GUID}}</td>
                     <td class="lgl1">{{user.JOIN_DATE}}</td>
+
                     <td class="lgl1">{{user.BRANCH}}</td> 
+
                     <td class="lgl1">{{user.APPROVER1}}</td>
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
                     <td class="lgl1 fColor">
