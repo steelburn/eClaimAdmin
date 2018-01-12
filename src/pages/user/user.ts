@@ -233,6 +233,7 @@ export class UserPage {
         // let res = data["resource"];
         this.view_user_details = data["resource"];
         this.USER_INFO_GUID_FOR_UPDATE =this.view_user_details[0]["USER_INFO_GUID"];
+        alert('user info guid' + this.view_user_details[0]["USER_INFO_GUID"]);
         this.User_Designation_Edit_ngModel = this.view_user_details[0]["DESIGNATION_GUID"];
         // alert('foreign value' + this.view_user_details[0]["DESIGNATION_GUID"]);
         this.User_Company_Edit_ngModel = this.view_user_details[0]["TENANT_COMPANY_GUID"];
@@ -242,7 +243,8 @@ export class UserPage {
         this.User_ResignationDate_Edit_ngModel = this.view_user_details[0]["RESIGNATION_DATE"];
         this.User_Branch_Edit_ngModel = this.view_user_details[0]["BRANCH"];
         this.User_EmployeeType_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_TYPE"];
-        this.User_Approver1_Edit_ngModel = this.view_user_details[0]["APPROVER1"];
+        this.User_Approver1_Edit_ngModel = this.view_user_details[0]["USER_INFO_GUID"];
+        alert('approver' + this.view_user_details[0]["USER_INFO_GUID"]);
         this.User_Approver2_Edit_ngModel = this.view_user_details[0]["APPROVER2"];
         this.User_Employment_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_STATUS"];
       });
