@@ -315,6 +315,7 @@ export class UserPage {
       this.GetCompany();
       this.GetDepartment();
       this.GetBranch();
+      
 
       this.http
         .get(this.baseResourceView1)
