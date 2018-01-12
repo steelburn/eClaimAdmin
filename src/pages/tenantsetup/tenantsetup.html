@@ -44,8 +44,8 @@
                     <td class="lgl1">{{tenant.NAME}}</td>
                     <td class="lgl1">23 - 4- 2222</td>
                     <td class="lgl1">
-                        <ion-toggle class="stog" *ngIf="tenant.ACTIVATION_FLAG==1" checked=true></ion-toggle>
-                        <ion-toggle class="stog" *ngIf="tenant.ACTIVATION_FLAG==0" checked=false></ion-toggle>
+                        <ion-toggle *ngIf="tenant.ACTIVATION_FLAG==1" checked=true></ion-toggle>
+                        <ion-toggle *ngIf="tenant.ACTIVATION_FLAG==0" checked=false></ion-toggle>
                     </td>
 
                     <td class="lgl1 fColor">
