@@ -43,7 +43,10 @@
                   <ion-icon name="md-create"></ion-icon>
               </button>
               <!-- <button ion-button item-end><ion-icon (click)="EditClick(soc.SOC_GUID)" name="md-create"></ion-icon></button> -->
-              <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
+              <!-- <button ion-button item-end><ion-icon name="md-close"></ion-icon></button> -->
+              <button ion-button item-end (click)="DeleteClick(soc.TENANT_GUID)">
+                <ion-icon name="md-close"></ion-icon>
+            </button>
           </td>
         </tr>
               
