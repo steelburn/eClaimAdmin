@@ -22,9 +22,7 @@
     </ion-fab>
 
 
-    <div class="eClaimSubTitle">
-        <b>PERSONAL DETAILS</b>
-    </div>
+
 
     <ion-list>
         <ion-item>
@@ -76,19 +74,14 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
-                    <th class="lgl1">DESIGNATION</th>
+        
+                    <th class="lgl1 tblBrLeft">DESIGNATION</th>
                     <th class="lgl1">COMPANY</th>
                     <th class="lgl1">DEPARTMENT</th>
                     <th class="lgl1">JOIN DATE</th>
-                    <th class="lgl1">CONFIRMATION DATE</th>
-                    <th class="lgl1"> RESIGNATION DATE</th>
-
                     <th class="lgl1">BRANCH</th>
-                    <th class="lgl1">EMPLOYEE TYPE</th>
-                    <th class="lgl1">APPROVER1</th>
-                    <th class="lgl1">APPROVER2</th>
-                    <th class="lgl1">EMPLOYMENT STATUS</th>
+                    <th class="lgl1">APPROVER</th>
+                    <th class="lgl1">STATUS</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
@@ -97,13 +90,8 @@
                     <td class="lgl1">{{user.TENANT_COMPANY_GUID}}</td>
                     <td class="lgl1">{{user.DEPT_GUID}}</td>  
                     <td class="lgl1">{{user.JOIN_DATE}}</td>
-                    <td class="lgl1">{{user.CONFIRMATION_DATE}}</td>
-                    <td class="lgl1">{{user.RESIGNATION_DATE}}</td>
-
                     <td class="lgl1">{{user.BRANCH}}</td> 
-                    <td class="lgl1">{{user.EMPLOYEE_TYPE}}</td>
                     <td class="lgl1">{{user.APPROVER1}}</td>
-                    <td class="lgl1">{{user.APPROVER2}}</td>
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
@@ -131,7 +119,7 @@
             <table class="Tabler">
                 <tr class="linedsg TColor">
                     <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
-                    <th class="lgl1">ADDRESS LINE 1</th>
+                    <th class="lgl1 tblBrLeft">ADDRESS LINE 1</th>
                     <th class="lgl1">ADDRESS LINE 2</th>
                     <th class="lgl1">ADDRESS LINE 3</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
