@@ -116,6 +116,7 @@ export class BankSetup_Service
 	}
 
 	get (id: string, params?: URLSearchParams): Observable<BankSetup_Model> {
+		alert(id);
 		var queryHeaders = new Headers();
     	queryHeaders.append('Content-Type', 'application/json');
     	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
