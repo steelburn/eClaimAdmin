@@ -25,6 +25,7 @@ import { UserSetup_Service } from '../../services/usersetup_service';
 
 import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the TenantsetupPage page.
@@ -214,56 +215,63 @@ export class TenantsetupPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, fb_tenant: FormBuilder, fb_user: FormBuilder, public http: Http, private httpService: BaseHttpService, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private alertCtrl: AlertController) {
-    //--------------Clear all required storage------------------------
-    localStorage.removeItem("PREV_TENANT_GUID");
-    localStorage.removeItem("PREV_TENANT_COMPANY_GUID");
-    localStorage.removeItem("PREV_TENANT_COMPANY_SITE_GUID");
-    //----------------------------------------------------------------
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.tenants = data.resource;console.log(data.resource);
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+
+      //--------------Clear all required storage------------------------
+      localStorage.removeItem("PREV_TENANT_GUID");
+      localStorage.removeItem("PREV_TENANT_COMPANY_GUID");
+      localStorage.removeItem("PREV_TENANT_COMPANY_SITE_GUID");
+      //----------------------------------------------------------------
+      this.http
+        .get(this.baseResourceUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource; console.log(data.resource);
+        });
+
+      this.Tenantform = fb_tenant.group({
+        //SITE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],      
+        //REGISTRATION_NUM: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        //EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
+
+        //ADDRESS: ["", Validators.required],
+        //CONTACT_NO: ["", Validators.required],
+        //WEBSITE: ["", Validators.required],
+        //CONTACT_PERSON: ["", Validators.required],
+        //CONTACT_PERSON_CONTACT_NO: ["", Validators.required],
+        //CONTACT_PERSON_EMAIL: ["", Validators.required],
+
+
+        TENANT_NAME: ["", Validators.required],
+        TENANT_COMPANY_NAME: ["", Validators.required],
+        COMPANY_SITE_NAME: ["", Validators.required],
+        REGISTRATION_NUM: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        ADDRESS1: ["", Validators.required],
+        ADDRESS2: ["", Validators.required],
+        ADDRESS3: ["", Validators.required],
+        CONTACT_NO: ["", Validators.required],
+        EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
+        CONTACT_PERSON: ["", Validators.required],
+        CONTACT_PERSON_NO: ["", Validators.required],
+        CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
+        WEBSITE: ["", Validators.required],
+        ISHQ_FLAG: ["", Validators.required],
+        ACTIVE_FLAG: ["", Validators.required],
       });
 
-    this.Tenantform = fb_tenant.group({
-      //SITE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],      
-      //REGISTRATION_NUM: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
-
-      //ADDRESS: ["", Validators.required],
-      //CONTACT_NO: ["", Validators.required],
-      //WEBSITE: ["", Validators.required],
-      //CONTACT_PERSON: ["", Validators.required],
-      //CONTACT_PERSON_CONTACT_NO: ["", Validators.required],
-      //CONTACT_PERSON_EMAIL: ["", Validators.required],
-
-
-      TENANT_NAME: ["", Validators.required],
-      TENANT_COMPANY_NAME: ["", Validators.required],
-      COMPANY_SITE_NAME: ["", Validators.required],
-      REGISTRATION_NUM: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      ADDRESS1: ["", Validators.required],
-      ADDRESS2: ["", Validators.required],
-      ADDRESS3: ["", Validators.required],
-      CONTACT_NO: ["", Validators.required],
-      EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
-      CONTACT_PERSON: ["", Validators.required],
-      CONTACT_PERSON_NO: ["", Validators.required],
-      CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
-      WEBSITE: ["", Validators.required],
-      ISHQ_FLAG: ["", Validators.required],
-      ACTIVE_FLAG: ["", Validators.required],
-    });
-
-    this.TenantUSerform = fb_user.group({
-      //-------------For Tenant User--------------------
-      TULOGINID: ["", Validators.required],
-      TUPASSWORD: ["", Validators.required],
-      TUEMAIL: ["", Validators.required],
-      TUSERROLE: ["", Validators.required],
-      //------------------------------------------------
-    });
+      this.TenantUSerform = fb_user.group({
+        //-------------For Tenant User--------------------
+        TULOGINID: ["", Validators.required],
+        TUPASSWORD: ["", Validators.required],
+        TUEMAIL: ["", Validators.required],
+        TUSERROLE: ["", Validators.required],
+        //------------------------------------------------
+      });
+    }
+    else {
+      alert("Sorry !! This is for only Super Admin.");
+      this.navCtrl.push(LoginPage);
+    }
   }
 
   ionViewDidLoad() {
@@ -324,6 +332,8 @@ export class TenantsetupPage {
   }
 
   Save_Tenant_Company_Site() {
+    //Check if any HQ is available for particular tenant, tenant_company, tenant_company_site
+    
     this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
     this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
     this.tenant_company_site_entry.SITE_NAME = this.COMPANY_SITE_NAME_ngModel_Add.trim();
@@ -364,7 +374,7 @@ export class TenantsetupPage {
   }
 
   Save_Tenant_User() {
-    this.usermain_entry.USER_GUID = UUID.UUID();    
+    this.usermain_entry.USER_GUID = UUID.UUID();
     this.usermain_entry.TENANT_GUID = localStorage.getItem('PREV_TENANT_GUID');
 
     this.usermain_entry.LOGIN_ID = this.User_Loginid_ngModel_Add.trim();
@@ -382,7 +392,7 @@ export class TenantsetupPage {
       .subscribe((response) => {
         if (response.status == 200) {
           this.Save_Tenant_User_Info();
-          
+
           // alert('Tenant User Registered successfully');
           // this.navCtrl.setRoot(this.navCtrl.getActive().component);
         }
@@ -393,12 +403,12 @@ export class TenantsetupPage {
     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
     this.userinfo_entry.TENANT_COMPANY_GUID = localStorage.getItem('PREV_TENANT_COMPANY_GUID');
-    this.userinfo_entry.TENANT_COMPANY_SITE_GUID = localStorage.getItem('PREV_TENANT_COMPANY_SITE_GUID');    
+    this.userinfo_entry.TENANT_COMPANY_SITE_GUID = localStorage.getItem('PREV_TENANT_COMPANY_SITE_GUID');
     this.userinfo_entry.CREATION_TS = new Date().toISOString();
     this.userinfo_entry.CREATION_USER_GUID = "sva";
     this.userinfo_entry.UPDATE_TS = new Date().toISOString();
     this.userinfo_entry.UPDATE_USER_GUID = "";
-    
+
     // this.userinfo_entry.FULLNAME = "this.User_Name_ngModel.trim()";
     // this.userinfo_entry.MARITAL_STATUS = this.User_Marital_ngModel;
     // this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_ngModel.trim();

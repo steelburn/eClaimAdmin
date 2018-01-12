@@ -43,12 +43,12 @@
 
         <tr class="col7" *ngFor="let branch of branchs; let i=index">
           <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">AIR ASIA MALAYSIA</td>
           <td class="lgl1">{{branch.NAME}}</td>
+          <td class="lgl1">{{branch.SITE_NAME}}</td>
     
           <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(company.COMPANY_GUID)"><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end (click)="DeleteClick(company.COMPANY_GUID)"><ion-icon name="md-close"></ion-icon></button>
+            <button ion-button item-end (click)="EditClick(company.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+            <button ion-button item-end (click)="DeleteClick(company.TENANT_COMPANY_SITE_GUID)"><ion-icon name="md-close"></ion-icon></button>
           </td>
         </tr>
 
@@ -76,13 +76,13 @@
 
             <ion-item>
                 <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
-                <ion-input type="text" formControlName="NAME"
+                <ion-input type="text" formControlName="COMPANYNAME" [(ngModel)]="COMPANYNAME_ngModel_Add"
                 placeholder="{{'Please fill in the company name'}}"></ion-input>
               </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" 
+            <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" 
             placeholder="{{'Please fill in the branch name'}}"></ion-input>
           </ion-item>
           <div class="btn">

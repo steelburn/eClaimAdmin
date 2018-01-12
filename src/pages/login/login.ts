@@ -23,18 +23,17 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public userData: UserData, public http: Http) {
     localStorage.clear();
-    //localStorage.removeItem("g_USER_GUID");
   }
 
   onLogin(form: NgForm) {
     this.submitted = true;
     if (form.valid) {
-      //Check if the login as super vendor
-      // if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-      //   localStorage.setItem("g_USER_GUID", "sva");
-      //   this.navCtrl.push(TabsPage);
-      // }
-      // else {
+      //-----------Check if the login as super vendor-----------------------
+      if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
+        localStorage.setItem("g_USER_GUID", "sva"); 
+        this.navCtrl.push(TabsPage);
+      }
+      else {
         let url: string;
         url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username.trim() + ')and(PASSWORD=' + this.login.password.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         console.log(url);
@@ -67,7 +66,7 @@ export class LoginPage {
               this.login.password = "";
             }
           });
-      // }
+       }
       
       // this.userData.login(this.login.username);
       // this.navCtrl.push(TabsPage);
