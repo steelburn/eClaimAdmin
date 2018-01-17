@@ -72,7 +72,7 @@ export class ConferenceApp {
   ];
 
 
-  rootPage: any = SignupPage;
+  rootPage: any = LoginPage;
   
   constructor(
 

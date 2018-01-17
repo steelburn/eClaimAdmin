@@ -9,7 +9,9 @@
     <ion-navbar>
         <ion-title>USER REGISTRATION</ion-title>
     </ion-navbar>
-
+    <ion-toolbar no-border-top>
+        <ion-searchbar color="primary"  placeholder="Search"></ion-searchbar>
+      </ion-toolbar>
 </ion-header>
 
 
@@ -22,31 +24,45 @@
     </ion-fab>
 
 
-    <div class="eClaimSubTitle">
+    <!-- <div class="eClaimSubTitle">
         <b>PERSONAL DETAILS</b>
-    </div>
+    </div> -->
 
     <ion-list>
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-         
-                    <th class="lgl1 tblBrLeft">NAME</th>
+                    <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
+                    <th class="lgl1">NAME</th>
                     <th class="lgl1">EMAIL</th>
-                    <th class="lgl1">LOGINID</th>
                     <th class="lgl1">STAFF ID</th>
-                    <th class="lgl1">IC NO</th>
+                    <th class="lgl1">DESIGNATION</th>
+                    <th class="lgl1">COMPANY</th>
+                    <th class="lgl1">BRANCH</th>
+                    <th class="lgl1">DEPARTMENT</th>
+                    <th class="lgl1">JOIN DATE</th>
+              
+                    <th class="lgl1">APPROVER</th>
+                    <th class="lgl1">STATUS</th>
+
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of users; let i=index">
-          
+                <tr class="col7" *ngFor="let user of users; let i=index" >
+                    <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{user.NAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
-                    <td class="lgl1">{{user.LOGIN_ID}}</td>
                     <td class="lgl1">{{user.PERSONAL_ID_TYPE}}</td>
-                    <td class="lgl1">{{user.PERSONAL_ID}}</td>
-     
+                    <td class="lgl1">{{user.DESIGNATION_GUID}}</td>
+                    <td class="lgl1">{{user.TENANT_COMPANY_GUID}}</td>
+                    <td class="lgl1">{{user.BRANCH}}</td>
+                    <td class="lgl1">{{user.DEPT_GUID}}</td>
+                    <td class="lgl1">{{user.JOIN_DATE}}</td>
+       
+                    <td class="lgl1">{{user.APPROVER1}}</td>
+                    <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
+  
+
 
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
@@ -66,7 +82,7 @@
 
 
 
-    <div class="eClaimSubTitle">
+    <!-- <div class="eClaimSubTitle">
         <b>EMPLOYMENT DETAILS</b>
     </div>
 
@@ -105,10 +121,10 @@
 
             </table>
         </ion-item>
-    </ion-list>
+    </ion-list> -->
 
 
-
+<!-- 
     <div class="eClaimSubTitle">
         <b>RESIDENTIAL ADDRESS</b>
     </div>
@@ -117,7 +133,7 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
+ 
                     <th class="lgl1 tblBrLeft">ADDRESS LINE 1</th>
                     <th class="lgl1">ADDRESS LINE 2</th>
                     <th class="lgl1">ADDRESS LINE 3</th>
@@ -125,7 +141,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let user of address; let i=index">
-                    <!-- <td class="lgl1">{{i+1}}</td> -->
+        
                     <td class="lgl1">{{user.USER_ADDRESS1}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS2}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS3}}</td>
@@ -144,12 +160,12 @@
 
             </table>
         </ion-item>
-    </ion-list>
+    </ion-list> -->
 
 
     <div class="blackcontainer" *ngIf="AddUserClicked">
     </div>
-    <div class="popup" padding *ngIf="AddUserClicked">
+    <div class="popup1" padding *ngIf="AddUserClicked">
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
@@ -344,7 +360,7 @@
 
     <div class="blackcontainer" *ngIf="EditUserClicked">
     </div>
-    <div class="popup" padding *ngIf="EditUserClicked">
+    <div class="popup1" padding *ngIf="EditUserClicked">
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
