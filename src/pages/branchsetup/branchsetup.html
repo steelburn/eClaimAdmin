@@ -39,7 +39,7 @@
           <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
           <th class="lgl1">COMPANY NAME</th>
           <th class="lgl1">BRANCH NAME</th>
-          <th class="lgl1">ISHQ</th>
+          <th class="lgl1">HEAD QUARTER</th>
           <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
         </tr>
 
@@ -48,8 +48,8 @@
           <td class="lgl1">{{branch.NAME}}</td>
           <td class="lgl1">{{branch.SITE_NAME}}</td>
           <td class="lgl1">
-            <ion-toggle class="stog" *ngIf="branch.ISHQ==1" checked=true></ion-toggle>
-            <ion-toggle class="stog" *ngIf="branch.ISHQ==0" checked=false></ion-toggle>
+            <ion-toggle *ngIf="branch.ISHQ==1" checked=true></ion-toggle>
+            <ion-toggle *ngIf="branch.ISHQ==0" checked=false></ion-toggle>
           </td>
 
           <td class="lgl1 fColor">
