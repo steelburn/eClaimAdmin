@@ -93,6 +93,12 @@
             <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
             <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" placeholder="{{'Please fill in the branch name'}}"></ion-input>
           </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"IS HQ"}}</ion-label>
+            <ion-toggle formControlName="ISHQ_FLAG" [(ngModel)]="ISHQ_FLAG_ngModel_Add"></ion-toggle>
+          </ion-item>
+
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
           </div>
@@ -127,7 +133,7 @@
           <ion-item>
             <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
             <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Edit" placeholder="{{'Please fill in the branch name'}}"></ion-input>
-          </ion-item>          
+          </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="!Update(companysite_details[0], companysite_details[1])">{{"SUBMIT" | translate}}</button>
           </div>
