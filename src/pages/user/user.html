@@ -241,10 +241,17 @@
                     <!-- [value]="designation.DESIGNATION_GUID" -->
 
 
-                    <ion-item class="text">
+                    <!-- <ion-item class="text">
                         <ion-label stacked>{{"COMPANY"}}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{'Please fill the company'}}">
                             <ion-option *ngFor="let company of companies" [value]="company.COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
+                        </ion-select>
+                    </ion-item> -->
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"COMPANY"}}</ion-label>
+                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{'Please fill the company'}}" (ionChange)="GetBranch()">
+                            <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -275,13 +282,20 @@
                         <!-- <ion-input type="text" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{'Please fill the Registration date'}}"></ion-input> -->
                     </ion-item>
 
-                    <ion-item class="text">
+                    <!-- <ion-item class="text">
                         <ion-label stacked>{{"BRANCH"}}</ion-label>
                         <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{'Please fill in the Branch'}}">
                             <ion-option *ngFor="let branch of branches" selected="true" [value]="branch.BRANCH_GUID">{{branch.NAME}}</ion-option>
                         </ion-select>
-                    </ion-item>
+                    </ion-item> -->
                     <!-- [value]="branch.BRANCH_GUID" -->
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"BRANCH"}}</ion-label>
+                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{'Please fill in the Branch'}}">
+                            <ion-option *ngFor="let branch of branches" selected="true" >{{branch.SITE_NAME}}</ion-option>
+                        </ion-select>
+                    </ion-item>
 
                     <ion-item class="text">
                         <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>
