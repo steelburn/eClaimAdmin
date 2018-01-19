@@ -20,6 +20,10 @@ import { TenantCompanySiteSetup_Service } from '../../services/tenantcompanysite
 
 import { UserMain_Model } from '../../models/user_main_model';
 import { UserInfo_Model } from '../../models/usersetup_info_model';
+import { UserContact_Model } from '../../models/user_contact_model';
+import { UserCompany_Model } from '../../models/user_company_model';
+import { UserAddress_Model } from '../../models/usersetup_address_model';
+
 import { UserSetup_Service } from '../../services/usersetup_service';
 
 
@@ -45,6 +49,9 @@ export class TenantsetupPage {
 
   usermain_entry: UserMain_Model = new UserMain_Model();
   userinfo_entry: UserInfo_Model = new UserInfo_Model();
+  usercontact_entry: UserContact_Model = new UserContact_Model();
+  usercompany_entry: UserCompany_Model = new UserCompany_Model();
+  useraddress_entry: UserAddress_Model = new UserAddress_Model();
 
   Tenantform: FormGroup; TenantUSerform: FormGroup;
 
@@ -57,6 +64,7 @@ export class TenantsetupPage {
 
   public tenants: TenantCompanySiteSetup_Model[] = [];
   public tenantusers: any;
+  public tenantuserdetails: any;
 
   //Set the Model Name for Add------------------------------------------
   public TENANT_NAME_ngModel_Add: any;
@@ -121,21 +129,31 @@ export class TenantsetupPage {
 
   public AddTUserClick(TENANT_GUID: any, TENANT_COMPANY_GUID: any, TENANT_COMPANY_SITE_GUID: any) {
     this.AddTUserClicked = true;
-    //----------------For tenant User-------------------
+    //----------------For tenant User---------------------------------------------------------
     this.baseResourceUrl_tenantuser = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/vw_tenantuser?filter=(TENANT_GUID=" + TENANT_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log(this.baseResourceUrl_tenantuser);
+
     this.http
       .get(this.baseResourceUrl_tenantuser)
       .map(res => res.json())
       .subscribe(data => {
         this.tenantusers = data.resource;
-        //alert(this.tenantusers[0]["TENANT_GUID"]);
 
         localStorage.setItem('PREV_TENANT_GUID', TENANT_GUID);
         localStorage.setItem('PREV_TENANT_COMPANY_GUID', TENANT_COMPANY_GUID);
         localStorage.setItem('PREV_TENANT_COMPANY_SITE_GUID', TENANT_COMPANY_SITE_GUID);
       });
-    //--------------------------------------------------
+
+
+    //----------------For Tenant User Address, Company, Info----------------------------------
+    this.baseResourceUrl_tenantuser = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/vw_tenantdetails?filter=(TENANT_COMPANY_GUID=" + TENANT_COMPANY_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+    this.http
+      .get(this.baseResourceUrl_tenantuser)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.tenantuserdetails = data.resource; //console.log(this.tenantuserdetails[0]);
+      });
+    //----------------------------------------------------------------------------------------
   }
 
   public CloseTUserClick() {
@@ -226,7 +244,7 @@ export class TenantsetupPage {
         .get(this.baseResourceUrl)
         .map(res => res.json())
         .subscribe(data => {
-          this.tenants = data.resource; console.log(data.resource);
+          this.tenants = data.resource; //console.log(data.resource);
         });
 
       this.Tenantform = fb_tenant.group({
@@ -290,7 +308,7 @@ export class TenantsetupPage {
     }
     //this.tenant_main_entry.ACTIVATION_FLAG = this.ACTIVE_FLAG_ngModel_Add;
     this.tenant_main_entry.CREATION_TS = new Date().toISOString();
-    this.tenant_main_entry.CREATION_USER_GUID = "sva";
+    this.tenant_main_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.tenant_main_entry.UPDATE_TS = new Date().toISOString();
     this.tenant_main_entry.UPDATE_USER_GUID = "";
 
@@ -333,7 +351,7 @@ export class TenantsetupPage {
 
   Save_Tenant_Company_Site() {
     //Check if any HQ is available for particular tenant, tenant_company, tenant_company_site
-    
+
     this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
     this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
     this.tenant_company_site_entry.SITE_NAME = this.COMPANY_SITE_NAME_ngModel_Add.trim();
@@ -384,7 +402,7 @@ export class TenantsetupPage {
 
     this.usermain_entry.ACTIVATION_FLAG = 1;
     this.usermain_entry.CREATION_TS = new Date().toISOString();
-    this.usermain_entry.CREATION_USER_GUID = "sva";
+    this.usermain_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.usermain_entry.UPDATE_TS = new Date().toISOString();
     this.usermain_entry.UPDATE_USER_GUID = "";
 
@@ -392,53 +410,76 @@ export class TenantsetupPage {
       .subscribe((response) => {
         if (response.status == 200) {
           this.Save_Tenant_User_Info();
-
-          // alert('Tenant User Registered successfully');
-          // this.navCtrl.setRoot(this.navCtrl.getActive().component);
         }
       })
   }
 
   Save_Tenant_User_Info() {
+    this.userinfo_entry.FULLNAME = this.tenantuserdetails[0]["CONTACT_PERSON"];
     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
     this.userinfo_entry.TENANT_COMPANY_GUID = localStorage.getItem('PREV_TENANT_COMPANY_GUID');
     this.userinfo_entry.TENANT_COMPANY_SITE_GUID = localStorage.getItem('PREV_TENANT_COMPANY_SITE_GUID');
     this.userinfo_entry.CREATION_TS = new Date().toISOString();
-    this.userinfo_entry.CREATION_USER_GUID = "sva";
+    this.userinfo_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.userinfo_entry.UPDATE_TS = new Date().toISOString();
     this.userinfo_entry.UPDATE_USER_GUID = "";
 
-    // this.userinfo_entry.FULLNAME = "this.User_Name_ngModel.trim()";
-    // this.userinfo_entry.MARITAL_STATUS = this.User_Marital_ngModel;
-    // this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_ngModel.trim();
-    // this.userinfo_entry.PERSONAL_ID = this.User_ICNo_ngModel.trim();
-    // this.userinfo_entry.DOB = this.User_DOB_ngModel.trim();
-    // this.userinfo_entry.GENDER = this.User_Gender_ngModel;
-    // this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
-    // this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
-    // //this.userinfo_entry.USER_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
-    // //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
-    // //this.userinfo_entry.TENANT_COMPANY_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
-    // this.userinfo_entry.CREATION_TS = new Date().toISOString();
-    // this.userinfo_entry.CREATION_USER_GUID = "1";
-    // this.userinfo_entry.UPDATE_TS = new Date().toISOString();
-    // this.userinfo_entry.UPDATE_USER_GUID = "";
-    // this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_ngModel.trim();
-    // this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_ngModel.trim();
-
-    // this.userinfo_entry.DEPT_GUID = this.User_Department_ngModel.trim();
-    // // alert(this.User_Department_ngModel.trim());
-    // this.userinfo_entry.JOIN_DATE = this.User_JoinDate_ngModel.trim();
-    // this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_ngModel.trim();
-    // this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_ngModel.trim();
-    // this.userinfo_entry.BRANCH = this.User_Branch_ngModel.trim();
-    // this.userinfo_entry.EMPLOYEE_TYPE = this.User_EmployeeType_ngModel.trim();
-    // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
-    // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
-    // this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_ngModel.trim();
-
     this.userservice.save_user_info(this.userinfo_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          this.Save_Tenant_User_Address();
+        }
+      });
+  }
+
+  Save_Tenant_User_Address() {
+    this.useraddress_entry.USER_ADDRESS1 = this.tenantuserdetails[0]["ADDRESS"];
+    this.useraddress_entry.USER_ADDRESS2 = this.tenantuserdetails[0]["ADDRESS"];
+    this.useraddress_entry.USER_ADDRESS3 = this.tenantuserdetails[0]["ADDRESS"];
+    this.useraddress_entry.USER_ADDRESS_GUID = UUID.UUID();
+    this.useraddress_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    this.useraddress_entry.CREATION_TS = new Date().toISOString();
+    this.useraddress_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.useraddress_entry.UPDATE_TS = new Date().toISOString();
+    this.useraddress_entry.UPDATE_USER_GUID = "";
+
+    this.userservice.save_user_address(this.useraddress_entry)
+
+      .subscribe((response) => {
+        if (response.status == 200) {
+          this.Save_Tenant_User_Contact();
+        }
+      });
+  }
+
+  Save_Tenant_User_Contact() {
+    this.usercontact_entry.CONTACT_NO = this.tenantuserdetails[0]["CONTACT_NO"];
+    this.usercontact_entry.CONTACT_INFO_GUID = UUID.UUID();
+    this.usercontact_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    this.usercontact_entry.CREATION_TS = new Date().toISOString();
+    this.usercontact_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.usercontact_entry.UPDATE_TS = new Date().toISOString();
+    this.usercontact_entry.UPDATE_USER_GUID = "";
+
+    this.userservice.save_user_contact(this.usercontact_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          this.Save_Tenant_User_Company();
+        }
+      });
+  }
+
+  Save_Tenant_User_Company() {
+    this.usercompany_entry.COMPANY_CONTACT_NO = this.tenantuserdetails[0]["CONTACT_PERSON_CONTACT_NO"];
+    this.usercompany_entry.USER_COMPANY_GUID = UUID.UUID();
+    this.usercompany_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    this.usercompany_entry.CREATION_TS = new Date().toISOString();
+    this.usercompany_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.usercompany_entry.UPDATE_TS = new Date().toISOString();
+    this.usercompany_entry.UPDATE_USER_GUID = "";
+
+    this.userservice.save_user_company(this.usercompany_entry)
       .subscribe((response) => {
         if (response.status == 200) {
           alert('Tenant User Registered successfully');
@@ -446,6 +487,7 @@ export class TenantsetupPage {
         }
       });
   }
+
   Save() {
     if (this.Tenantform.valid) {
       //Validate existing tenant_name and tenant_company_name and tenant_compay_site_name
