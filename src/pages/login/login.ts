@@ -50,6 +50,7 @@ export class LoginPage {
               localStorage.setItem("g_FULLNAME", res[0]["FULLNAME"]);
               localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
               localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
+              localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
 
               this.navCtrl.push(TabsPage);
             }
@@ -60,6 +61,7 @@ export class LoginPage {
               localStorage.removeItem("g_FULLNAME");
               localStorage.removeItem("g_TENANT_COMPANY_GUID");
               localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
+              localStorage.removeItem("g_ISHQ");
 
               alert("Invalid Login!!")
               this.login.username = "";
