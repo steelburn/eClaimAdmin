@@ -55,7 +55,7 @@ export class RolesetupPage {
   //---------------------------------------------------------------------
   public AddRoleClick() {
     this.AddRoleClicked = true;
-    this.ACTIVATION_FLAG_ngModel_Add = false; 
+    this.ACTIVATION_FLAG_ngModel_Add = false;
     this.ClearControls();
   }
 
@@ -101,7 +101,6 @@ export class RolesetupPage {
                   return item.ROLE_GUID != ROLE_GUID
                 });
               });
-            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         }
       ]
@@ -127,17 +126,9 @@ export class RolesetupPage {
       });
 
     this.Roleform = fb.group({
-      //NAME: ["", Validators.required],
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
       NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      
-      //DESCRIPTION: ["", Validators.required],
-      //DESCRIPTION: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
       DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      
       ACTIVATION_FLAG: ["", Validators.required],
-
-
     });
   }
 
@@ -270,8 +261,7 @@ export class RolesetupPage {
     }
   }
 
-  ClearControls()
-  {
+  ClearControls() {
     this.NAME_ngModel_Add = "";
     this.DESCRIPTION_ngModel_Add = "";
     this.ACTIVATION_FLAG_ngModel_Add = false;
@@ -281,43 +271,3 @@ export class RolesetupPage {
     this.ACTIVATION_FLAG_ngModel_Edit = false;
   }
 }
-  // if (this.Roleform.valid) {
-
-    //         let headers = new Headers();
-    //         headers.append('Content-Type', 'application/json');
-    //         let options = new RequestOptions({ headers: headers });
-    //         let url: string;
-    //         url = "http://api.zen.com.my/api/v2/zcs/_table/main_role?filter=(NAME=" + this.role_entry.NAME + ")&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881";
-    //         this.http.get(url, options)
-    //           .map(res => res.json())
-    //           .subscribe(
-    //           data => {
-    //             let res = data["resource"];
-    //             if (res.length == 0) {
-    //               console.log("No records Found");
-    //               if (this.Exist_Record == false) {
-
-
-    // if (this.Roleform.valid) {
-
-//}
-// else {
-//   console.log("Records Found");
-//   alert("The Role is already Added.")
-
-// }
-// },
-// err => {
-//   this.Exist_Record = false;
-//   console.log("ERROR!: ", err);
-// }
-// );
-// }
-// }
-// }
-
-
-
-
-
-
