@@ -5,7 +5,7 @@ export class UserMain_Model {
         public STAFF_ID: string = null,
         public LOGIN_ID: string = null,
         public PASSWORD: string = null,
-        public EMAIL: string = null,
+        public EMAIL: string = null,  
         public ACTIVATION_FLAG: number = 1,
         public CREATION_TS: string = null,
         public CREATION_USER_GUID: string = null,

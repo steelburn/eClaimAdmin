@@ -83,9 +83,7 @@ export class SetupPage {
     this.navCtrl.push(QualificationsetupPage)
   }
 
-      goToRolesetup(){
-    this.navCtrl.push(RolesetupPage)
-  }
+ 
 
       goToMileagesetup(){
     this.navCtrl.push(MileagesetupPage)

@@ -2,7 +2,7 @@ export class UserAddress_Model {
 	constructor(
         public USER_ADDRESS_GUID: string = null,
         public USER_GUID: string = null,
-        public ADDRESS_TYPE: string = null,
+        public ADDRESS_TYPE: string = null,  
         public USER_ADDRESS1: string = null,
         public USER_ADDRESS2: string = null,
         public USER_ADDRESS3: string = null,

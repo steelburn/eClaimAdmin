@@ -49,6 +49,10 @@ import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 import { PeermissionPage } from'../pages/peermission/peermission';
+import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
+import { PagesetupPage } from'../pages/pagesetup/pagesetup';
+import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -72,11 +76,14 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     OvertimeclaimPage,
     EntertainmentclaimPage,
     PeermissionPage,
+    RolemodulesetupPage,
+    PagesetupPage,
     TravelclaimPage,
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
     SpeakerListPage,
+    SubmodulesetupPage,
     SetupPage,
     BanksetupPage,
     BranchsetupPage,
@@ -88,6 +95,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     TranslatePage,
     MileagesetupPage,
     RolesetupPage,
+    ModulesetupPage,
     PaymenttypesetupPage,
     QualificationsetupPage,
     SubsciptionsetupPage,
@@ -136,6 +144,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     SessionDetailPage,
     SignupPage,
     SetupPage,
+    ModulesetupPage,
     MedicalclaimPage,
     TravelclaimPage,
      PrintclaimPage,
@@ -154,10 +163,13 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     RolesetupPage,
     AdminsetupPage,
     PaymenttypesetupPage,
+    PagesetupPage,
+    SubmodulesetupPage,
     TranslatePage,
     QualificationsetupPage,
     SubsciptionsetupPage,
     TenantsetupPage,
+    RolemodulesetupPage,
     SpeakerListPage,
     TabsPage,
     UserPage,

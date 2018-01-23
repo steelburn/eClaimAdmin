@@ -4,6 +4,12 @@ import { SubsciptionsetupPage } from '../subsciptionsetup/subsciptionsetup';
 import { TenantsetupPage } from '../tenantsetup/tenantsetup';
 import { TranslatePage } from '../translate/translate';
 import { PeermissionPage } from '../peermission/peermission';
+import {RolesetupPage} from'../rolesetup/rolesetup';
+import {RolemodulesetupPage} from'../rolemodulesetup/rolemodulesetup';
+import {PagesetupPage} from'../pagesetup/pagesetup';
+import {ModulesetupPage} from'../modulesetup/modulesetup';
+import {SubmodulesetupPage} from'../submodulesetup/submodulesetup';
+
 /**
  * Generated class for the AdminsetupPage page.
  *
@@ -37,6 +43,25 @@ export class AdminsetupPage {
     this.navCtrl.push(PeermissionPage)
   }
 
+  goToRolesetup(){
+    this.navCtrl.push(RolesetupPage)
+  }
+
+  goToRoleModulesetup(){
+    this.navCtrl.push(RolemodulesetupPage)
+  }
+
+  goToPagesetup(){
+    this.navCtrl.push(PagesetupPage)
+  }
+
+  goToModulesetup(){
+    this.navCtrl.push(ModulesetupPage)
+  }
+
+  goToSubModulesetup(){
+    this.navCtrl.push(SubmodulesetupPage)
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminsetupPage');
