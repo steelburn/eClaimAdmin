@@ -32,7 +32,7 @@ import { LoginPage } from '../login/login';
   selector: 'page-branchsetup',
   templateUrl: 'branchsetup.html', providers: [TenantCompanySetup_Service, TenantCompanySiteSetup_Service, BaseHttpService]
 })
-export class BranchsetupPage {  
+export class BranchsetupPage {
   tenant_company_entry: TenantCompanySetup_Model = new TenantCompanySetup_Model();
   tenant_company_site_entry: TenantCompanySiteSetup_Model = new TenantCompanySiteSetup_Model();
 
@@ -42,7 +42,7 @@ export class BranchsetupPage {
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   //public branchs: BranchSetup_Model[] = [];
-  public branchs:any;
+  public branchs: any; public hqDetails: any;
   //public branchs: TenantCompanySetup_Model[] = [];
 
   public AddBranchsClicked: boolean = false;
@@ -56,6 +56,7 @@ export class BranchsetupPage {
   //Set the Model Name for Add------------------------------------------
   public BRANCHNAME_ngModel_Add: any;
   public COMPANYNAME_ngModel_Add: any;
+  public ISHQ_FLAG_ngModel_Add: any;
   //---------------------------------------------------------------------
 
   //Set the Model Name for edit------------------------------------------
@@ -65,6 +66,7 @@ export class BranchsetupPage {
   public AddBranchsClick() {
     this.AddBranchsClicked = true;
     this.ClearControls();
+    this.COMPANYNAME_ngModel_Add = this.branchs[0]["NAME"];
   }
 
   public CloseBranchsClick() {
@@ -87,7 +89,7 @@ export class BranchsetupPage {
     //     this.NAME_ngModel_Edit = self.branch_details.NAME; localStorage.setItem('Prev_br_Name', self.branch_details.NAME);
     //   });
   }
-  
+
   public DeleteClick(BRANCH_GUID: any) {
     // let alert = this.alertCtrl.create({
     //   title: 'Remove Confirmation',
@@ -130,6 +132,7 @@ export class BranchsetupPage {
       this.Branchform = fb.group({
         COMPANYNAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         BRANCHNAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        ISHQ_FLAG: ["", Validators.required],
       });
     }
     else {
@@ -190,55 +193,105 @@ export class BranchsetupPage {
   }
 
   Save_Tenant_Company() {
-    this.tenant_company_entry.TENANT_COMPANY_GUID = UUID.UUID();
-    this.tenant_company_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");    
-    this.tenant_company_entry.NAME = this.COMPANYNAME_ngModel_Add.trim();
-    //this.tenant_company_entry.REGISTRATION_NO = this.REGISTRATION_NUM_ngModel_Add.trim();
-    this.tenant_company_entry.ACTIVATION_FLAG = "1";
-    
-    this.tenant_company_entry.CREATION_TS = new Date().toISOString();
-    this.tenant_company_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-    this.tenant_company_entry.UPDATE_TS = new Date().toISOString();
-    this.tenant_company_entry.UPDATE_USER_GUID = "";
-
-    this.TenantCompanySetupService.save(this.tenant_company_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
+    //----------Check if the new tenant_company entered then take new guid else take the previous-------------
+    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/tenant_company?filter=(NAME=" + this.COMPANYNAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        //this.tenant_company = data.resource; 
+        //console.log(data.resource[0]);
+        if (data.resource[0] != undefined) {
+          this.tenant_company_entry.TENANT_COMPANY_GUID = data.resource[0]["TENANT_COMPANY_GUID"];
           this.Save_Tenant_Company_Site();
         }
-      })
+        else {
+          this.tenant_company_entry.TENANT_COMPANY_GUID = UUID.UUID();
+          this.tenant_company_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+          this.tenant_company_entry.NAME = this.COMPANYNAME_ngModel_Add.trim();
+          //this.tenant_company_entry.REGISTRATION_NO = this.REGISTRATION_NUM_ngModel_Add.trim();
+          this.tenant_company_entry.ACTIVATION_FLAG = "1";
+
+          this.tenant_company_entry.CREATION_TS = new Date().toISOString();
+          this.tenant_company_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+          this.tenant_company_entry.UPDATE_TS = new Date().toISOString();
+          this.tenant_company_entry.UPDATE_USER_GUID = "";
+
+          this.TenantCompanySetupService.save(this.tenant_company_entry)
+            .subscribe((response) => {
+              if (response.status == 200) {
+                this.Save_Tenant_Company_Site();
+              }
+            })
+        }
+      });
+    //console.log('Bijay Kumar'.replace(' ', '')); 
   }
 
-  Save_Tenant_Company_Site() {    
+  Save_Tenant_Company_Site() {
     this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
     this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
-    this.tenant_company_site_entry.SITE_NAME = this.BRANCHNAME_ngModel_Add.trim();
-    //this.tenant_company_site_entry.REGISTRATION_NUM = this.REGISTRATION_NUM_ngModel_Add.trim();
-    // this.tenant_company_site_entry.ADDRESS = this.ADDRESS1_ngModel_Add.trim();
-    // this.tenant_company_site_entry.ADDRESS2 = this.ADDRESS2_ngModel_Add.trim();
-    // this.tenant_company_site_entry.ADDRESS3 = this.ADDRESS3_ngModel_Add.trim();
-    // this.tenant_company_site_entry.CONTACT_NO = this.CONTACTNO_ngModel_Add.trim();
-    // this.tenant_company_site_entry.EMAIL = this.EMAIL_ngModel_Add.trim();
+    this.tenant_company_site_entry.SITE_NAME = this.BRANCHNAME_ngModel_Add.trim();    
     this.tenant_company_site_entry.ACTIVATION_FLAG = "1";
-    
-    // this.tenant_company_site_entry.CONTACT_PERSON = this.CONTACT_PERSON_ngModel_Add.trim();
-    // this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = this.CONTACT_PERSON_NO_ngModel_Add.trim();
-    // this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = this.CONTACT_PERSON_EMAIL_ngModel_Add.trim();
-    // this.tenant_company_site_entry.WEBSITE = this.WEBSITE_ngModel_Add.trim();
     this.tenant_company_site_entry.CREATION_TS = new Date().toISOString();
     this.tenant_company_site_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.tenant_company_site_entry.UPDATE_TS = new Date().toISOString();
     this.tenant_company_site_entry.UPDATE_USER_GUID = "";
-    this.tenant_company_site_entry.ISHQ = "0";
-    
+    if (this.ISHQ_FLAG_ngModel_Add == true) {
+      this.tenant_company_site_entry.ISHQ = "1";
+    }
+    else {
+      this.tenant_company_site_entry.ISHQ = "0";
+    }
+
     this.tenantcompanysitesetupservice.save(this.tenant_company_site_entry)
       .subscribe((response) => {
         if (response.status == 200) {
-          //alert('Tenant Company Site Registered successfully');
           alert('Company & Site Registered successfully');
           this.navCtrl.setRoot(this.navCtrl.getActive().component);
         }
       })
+
+    //Check if previous tenant_company_site is hq active but current tenant_company_site is updating to hq active then previous tenant_company_site will inactive.      
+    // if (this.ISHQ_FLAG_ngModel_Add == true) {
+    //   //-------------Get all the details of previous tenant_company_site------------------------------
+    //   this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/tenant_company_site?filter=(TENANT_COMPANY_SITE_GUID=" + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    //   this.http
+    //     .get(this.baseResourceUrl)
+    //     .map(res => res.json())
+    //     .subscribe(data => {
+    //       this.hqDetails = data.resource;
+    //     });
+    //   //----------------------------------------------------------------------------------------------
+    //   this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = localStorage.getItem("g_TENANT_COMPANY_SITE_GUID");
+    //   this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
+    //   this.tenant_company_site_entry.SITE_NAME = this.BRANCHNAME_ngModel_Add.trim();
+    //   this.tenant_company_site_entry.REGISTRATION_NUM = this.hqDetails[0]["REGISTRATION_NUM"];
+    //   this.tenant_company_site_entry.ADDRESS = this.hqDetails[0]["ADDRESS"];
+    //   this.tenant_company_site_entry.ADDRESS2 = this.hqDetails[0]["ADDRESS2"];
+    //   this.tenant_company_site_entry.ADDRESS3 = this.hqDetails[0]["ADDRESS3"];
+    //   this.tenant_company_site_entry.CONTACT_NO = this.hqDetails[0]["CONTACT_NO"];
+    //   this.tenant_company_site_entry.EMAIL = this.hqDetails[0]["EMAIL"];
+    //   this.tenant_company_site_entry.ACTIVATION_FLAG = this.hqDetails[0]["ACTIVATION_FLAG"];
+
+    //   this.tenant_company_site_entry.CONTACT_PERSON = this.hqDetails[0]["CONTACT_PERSON"];
+    //   this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = this.hqDetails[0]["CONTACT_PERSON_CONTACT_NO"];
+    //   this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = this.hqDetails[0]["CONTACT_PERSON_EMAIL"];
+    //   this.tenant_company_site_entry.WEBSITE = this.hqDetails[0]["WEBSITE"];
+
+    //   this.tenant_company_site_entry.CREATION_TS = this.hqDetails[0]["CREATION_TS"];
+    //   this.tenant_company_site_entry.CREATION_USER_GUID = this.hqDetails[0]["CREATION_USER_GUID"];
+    //   this.tenant_company_site_entry.UPDATE_TS = new Date().toISOString();
+    //   this.tenant_company_site_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+    //   this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
+    //     .subscribe((response) => {
+    //       if (response.status == 200) {
+    //         alert('Company & Site Registered successfully');
+    //         this.navCtrl.setRoot(this.navCtrl.getActive().component);
+    //       }
+    //     })
+    // }
   }
 
 
@@ -312,7 +365,7 @@ export class BranchsetupPage {
     //   }
     // }
   }
-  
+
   ClearControls() {
     this.BRANCHNAME_ngModel_Add = "";
     this.COMPANYNAME_ngModel_Add = "";
