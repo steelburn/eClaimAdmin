@@ -13,7 +13,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'rolemodulesetup.html',
 })
 export class RolemodulesetupPage {
+  public AddRoleModuleClicked: boolean = false; 
+  public AddRoleModuleClick() {
 
+      this.AddRoleModuleClicked = true; 
+
+  }
+
+  public CloseRoleModuleClick() {
+
+    if (this.AddRoleModuleClicked == true) {
+      this.AddRoleModuleClicked = false;
+    }
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

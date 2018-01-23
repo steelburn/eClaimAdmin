@@ -1,6 +1,6 @@
 export class UserInfo_Model {
 	constructor(
-        public USER_INFO_GUID: string = null,
+        public USER_INFO_GUID: string = null,  
         public USER_GUID: string = null,
         public FULLNAME: string = null,
         public NICKNAME: string = null,

@@ -19,6 +19,13 @@ page-banksetup {
             height: 500px;
     }
 
+    .popup1{
+        width: 96%;
+        top: 88px;
+        position: fixed;
+            height: 500px;
+    }
+
 
     .btn{
     
@@ -154,7 +161,7 @@ page-banksetup {
     
     
     ion-menu#loggedOutMenu {
-        min-width: 303px !important;
+        min-width: 256px !important;
         max-width: 14%  !important;
         border-right: 1px solid #dedede;
         border-left: 0;

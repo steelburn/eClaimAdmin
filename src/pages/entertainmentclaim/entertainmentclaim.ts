@@ -101,13 +101,13 @@ export class EntertainmentclaimPage {
 
   }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
-    // let items = [this.SOC_Number];
-    // this.http
-    //   .get(this.baseResourceUrl_view_soc)
-    //   .map(res => res.json())
-    //   .subscribe(data => {
-    //     this.SOC_Number = data["resource"]
-    //   });
+    let items = [this.SOC_Number];
+    this.http
+      .get(this.baseResourceUrl_view_soc)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.SOC_Number = data["resource"]
+      });
 
     this.Entertainmentform = fb.group({
       // 'Entertainmentform':['',  Validators.required],
@@ -149,6 +149,9 @@ export class EntertainmentclaimPage {
 
 
   openItem(item: View_SOC_Model) {
+
+    alert('open item');
+
     this.Entertainment_SOC_No_ngModel = item.soc;
     this.Entertainment_ProjectName_ngModel = item.project_name;
     this.Entertainment_CustomerName_ngModel = item.customer_name;

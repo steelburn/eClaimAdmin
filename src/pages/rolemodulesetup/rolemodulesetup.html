@@ -7,12 +7,44 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>rolemodulesetup</ion-title>
+    <ion-title>ROLE MODULE SETUP</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="AddRoleModuleClick()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
+  <ion-list>
+    <ion-item>
+      <table class="Tabler">
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+          <th class="lgl1">ROLE NAME</th>
+          <th class="lgl1">MODULE NAME</th>
+          <th class="lgl1">ACTIVE FLAG</th>
+          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+
+        </tr>
+
+        <tr class="col7">
+          <td class="lgl1">1</td>
+          <td class="lgl1">ROLE NAME</td>
+          <td class="lgl1">MODULE NAME</td>
+          <td class="lgl1">INACTIVE</td>
+
+
+          <td class="lgl1 fColor">
+            <button ion-button item-end ><ion-icon name="md-create"></ion-icon></button>
+            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
+          </td>
+        </tr>
+
+
+      </table>
+    </ion-item>
+  </ion-list>
 </ion-content>
