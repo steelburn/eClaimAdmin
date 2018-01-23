@@ -1,5 +1,5 @@
 export class ViewUser_Model {
-	constructor(
+	constructor( 
         public USER_GUID: string = null,
         public NAME: string = null,
         public MARITAL_STATUS: string = null,

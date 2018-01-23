@@ -2,7 +2,7 @@ export class UserContact_Model {
 	constructor(
         public CONTACT_INFO_GUID: string = null,
         public USER_GUID: string = null,
-        public TYPE: string = null,
+        public TYPE: string = null,  
         public CONTACT_NO: string = null,
         public DESCRIPTION: string = null,
         public REMARKS: string = null,

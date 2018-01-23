@@ -337,7 +337,7 @@ export class UserPage {
 
         .map(res => res.json())
         .subscribe(data => {
-          this.employees_local = data.resource;
+          this.employees_local = data.resource;   
           let i: number = 0;
           this.employees_local.forEach(element => {
             let temp: View_Dropdown_Model = element;
