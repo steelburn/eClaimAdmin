@@ -13,7 +13,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'pagesetup.html',
 })
 export class PagesetupPage {
+  public AddPageClicked: boolean = false; 
+  public AddPageClick() {
 
+      this.AddPageClicked = true; 
+
+  }
+
+  public ClosePageClick() {
+
+    if (this.AddPageClicked == true) {
+      this.AddPageClicked = false;
+    }
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
