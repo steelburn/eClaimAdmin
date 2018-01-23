@@ -149,7 +149,9 @@ export class EntertainmentclaimPage {
 
 
   openItem(item: View_SOC_Model) {
-    
+
+    alert('open item');
+
     this.Entertainment_SOC_No_ngModel = item.soc;
     this.Entertainment_ProjectName_ngModel = item.project_name;
     this.Entertainment_CustomerName_ngModel = item.customer_name;
