@@ -11,7 +11,7 @@ import {UserAddress_Model} from '../models/usersetup_address_model';
 import { ViewUser_Model } from '../models/viewuser_model';
 import {BaseHttpService} from './base-http';
 
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map'; 
 import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';

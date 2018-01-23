@@ -1,6 +1,6 @@
 export class UserCompany_Model {
 	constructor(
-        public USER_COMPANY_GUID: string = null,
+        public USER_COMPANY_GUID: string = null,  
         public USER_GUID: string = null,
         public TENANT_COMPANY_SITE_GUID: string = null,
         
