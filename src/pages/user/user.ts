@@ -81,7 +81,10 @@ export class UserPage {
 
   // baseResourceUrl5: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_address' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_address' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/user_address?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   baseResourceUrl_designation: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -101,9 +104,14 @@ export class UserPage {
 
   // baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/personaldetails_emp' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  // baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  baseResourceView1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_dropdown' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  // filter view
+  baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/view_user_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+  // baseResourceView1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_dropdown' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+
+  baseResourceView1: string = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/view_dropdown?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
 
   //public users: UserMain_Model[] = [];
@@ -529,7 +537,7 @@ export class UserPage {
               this.usermain_entry.PASSWORD = this.User_Password_ngModel.trim();
               this.usermain_entry.ACTIVATION_FLAG = 1;
               this.usermain_entry.CREATION_TS = new Date().toISOString();
-              this.usermain_entry.CREATION_USER_GUID = "1";
+              this.usermain_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
               this.usermain_entry.UPDATE_TS = new Date().toISOString();
               this.usermain_entry.UPDATE_USER_GUID = "";
 
@@ -548,10 +556,10 @@ export class UserPage {
                     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
                     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
                     //this.userinfo_entry.USER_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
-                    //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
+                    this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.User_Branch_ngModel.trim();
                     //this.userinfo_entry.TENANT_COMPANY_GUID = "254a0525-c725-11e6-bb9f-00155de7e742";
                     this.userinfo_entry.CREATION_TS = new Date().toISOString();
-                    this.userinfo_entry.CREATION_USER_GUID = "1";
+                    this.userinfo_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
                     this.userinfo_entry.UPDATE_TS = new Date().toISOString();
                     this.userinfo_entry.UPDATE_USER_GUID = "";
                     this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_ngModel.trim();
@@ -584,7 +592,7 @@ export class UserPage {
               this.usercontact_entry.CONTACT_INFO_GUID = UUID.UUID();
               this.usercontact_entry.USER_GUID = this.usermain_entry.USER_GUID;
               this.usercontact_entry.CREATION_TS = new Date().toISOString();
-              this.usercontact_entry.CREATION_USER_GUID = "1";
+              this.usercontact_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
               this.usercontact_entry.UPDATE_TS = new Date().toISOString();
               this.usercontact_entry.UPDATE_USER_GUID = "";
 
@@ -603,7 +611,7 @@ export class UserPage {
               this.usercompany_entry.USER_COMPANY_GUID = UUID.UUID();
               this.usercompany_entry.USER_GUID = this.usermain_entry.USER_GUID;
               this.usercompany_entry.CREATION_TS = new Date().toISOString();
-              this.usercompany_entry.CREATION_USER_GUID = "1";
+              this.usercompany_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
               this.usercompany_entry.UPDATE_TS = new Date().toISOString();
               this.usercompany_entry.UPDATE_USER_GUID = "";
 
@@ -622,7 +630,7 @@ export class UserPage {
               this.useraddress_entry.USER_ADDRESS_GUID = UUID.UUID();
               this.useraddress_entry.USER_GUID = this.usermain_entry.USER_GUID;
               this.useraddress_entry.CREATION_TS = new Date().toISOString();
-              this.useraddress_entry.CREATION_USER_GUID = "1";
+              this.useraddress_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
               this.useraddress_entry.UPDATE_TS = new Date().toISOString();
               this.useraddress_entry.UPDATE_USER_GUID = "";
 
@@ -684,7 +692,7 @@ export class UserPage {
         this.usermain_entry.CREATION_TS = new Date().toISOString();
         this.usermain_entry.CREATION_USER_GUID = "1";
         this.usermain_entry.UPDATE_TS = new Date().toISOString();
-        this.usermain_entry.UPDATE_USER_GUID = "";
+        this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
         this.userservice.edit_user_main(this.usermain_entry)
           .subscribe((response) => {
