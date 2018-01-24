@@ -13,7 +13,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'modulesetup.html',
 })
 export class ModulesetupPage {
+  public AddModuleClicked: boolean = false; 
+  public AddModuleClick() {
 
+      this.AddModuleClicked = true; 
+
+  }
+
+  public CloseModuleClick() {
+
+    if (this.AddModuleClicked == true) {
+      this.AddModuleClicked = false;
+    }
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
