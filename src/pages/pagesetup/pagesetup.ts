@@ -1,0 +1,36 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+/**
+ * Generated class for the PagesetupPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+@IonicPage()
+@Component({
+  selector: 'page-pagesetup',
+  templateUrl: 'pagesetup.html',
+})
+export class PagesetupPage {
+  public AddPageClicked: boolean = false; 
+  public AddPageClick() {
+
+      this.AddPageClicked = true; 
+
+  }
+
+  public ClosePageClick() {
+
+    if (this.AddPageClicked == true) {
+      this.AddPageClicked = false;
+    }
+  }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad PagesetupPage');
+  }
+
+}

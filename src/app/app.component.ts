@@ -25,6 +25,10 @@ import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 import { PeermissionPage } from'../pages/peermission/peermission';
+import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
+import { PagesetupPage } from'../pages/pagesetup/pagesetup';
+import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
+import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
 export interface PageInterface {
 
   title: string;

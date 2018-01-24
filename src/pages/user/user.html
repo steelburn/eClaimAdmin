@@ -9,7 +9,9 @@
     <ion-navbar>
         <ion-title>USER REGISTRATION</ion-title>
     </ion-navbar>
-
+    <ion-toolbar no-border-top>
+        <ion-searchbar color="primary"  placeholder="Search"></ion-searchbar>
+      </ion-toolbar>
 </ion-header>
 
 
@@ -34,8 +36,7 @@
                     <th class="lgl1 tblBrLeft">NAME</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">LOGINID</th>
-                    <th class="lgl1">STAFF ID</th>
-                    <th class="lgl1">IC NO</th>
+      
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
@@ -44,9 +45,7 @@
                     <td class="lgl1">{{user.NAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
                     <td class="lgl1">{{user.LOGIN_ID}}</td>
-                    <td class="lgl1">{{user.PERSONAL_ID_TYPE}}</td>
-                    <td class="lgl1">{{user.PERSONAL_ID}}</td>
-     
+         
 
                     <td class="lgl1 fColor">   
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
@@ -117,7 +116,7 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <!-- <th class="lgl1 tblBrLeft" style="width:40px">NO.</th> -->
+       
                     <th class="lgl1 tblBrLeft">ADDRESS LINE 1</th>
                     <th class="lgl1">ADDRESS LINE 2</th>
                     <th class="lgl1">ADDRESS LINE 3</th>
@@ -125,7 +124,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let user of address; let i=index">
-                    <!-- <td class="lgl1">{{i+1}}</td> -->
+                  
                     <td class="lgl1">{{user.USER_ADDRESS1}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS2}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS3}}</td>
