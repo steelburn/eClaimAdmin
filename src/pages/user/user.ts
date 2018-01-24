@@ -532,6 +532,7 @@ export class UserPage {
               this.usermain_entry.EMAIL = this.User_Email_ngModel.trim();
               //this.usermain_entry.STAFF_ID = this.User_StaffID_ngModel.trim();  
               this.usermain_entry.USER_GUID = UUID.UUID();
+              this.usermain_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
               //this.usermain_entry.USER_GUID = this.userinfo_entry.USER_GUID;
               this.usermain_entry.LOGIN_ID = this.User_LoginId_ngModel.trim();
               this.usermain_entry.PASSWORD = this.User_Password_ngModel.trim();
