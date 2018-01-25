@@ -30,12 +30,11 @@
 
         </tr>
 
-        <tr class="col7">
-          <td class="lgl1">1</td>
-          <td class="lgl1">PAGE NAME</td>
-          <td class="lgl1">DESCRIPTION</td>
-          <td class="lgl1">ABC@GOL.COM</td>
-
+        <tr class="col7" *ngFor="let cashcard of cashcards; let i=index">
+          <td class="lgl1">{{i+1}}</td>
+          <td class="lgl1">{{cashcard.NAME}}</td>
+          <td class="lgl1">{{cashcard.DESCRIPTION}}</td>
+          <td class="lgl1">{{cashcard.URL}}</td>
 
           <td class="lgl1 fColor">
             <button ion-button item-end ><ion-icon name="md-create"></ion-icon></button>
@@ -64,23 +63,25 @@
       </ion-card-header>
       <ion-list>
 
+          <form [formGroup]="Pageform">
           <ion-item>
-            <ion-label stacked>{{"PAGE NAME"}}</ion-label>
-            <ion-input type="text" placeholder="{{'Please fill in the name of the page'}}"></ion-input>
+            <ion-label stacked>{{"NAME"}}</ion-label>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the page'}}"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-            <ion-input type="text" placeholder="{{'Please fill in the description'}}"></ion-input>
+            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"URL"}}</ion-label>
-            <ion-input type="text" placeholder="{{'Please fill in the URL of the page'}}"></ion-input>
+            <ion-input type="text" formControlName="URL" [(ngModel)]="URL_ngModel_Add" placeholder="{{'Please fill in the URL of the page'}}"></ion-input>
           </ion-item>
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1">SUBMIT</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Pageform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
           </div>
+          </form>
 
       </ion-list>
     </ion-card>
