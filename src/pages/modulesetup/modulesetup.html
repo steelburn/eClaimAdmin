@@ -25,7 +25,7 @@
           <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
           <th class="lgl1">MODULE NAME</th>
           <th class="lgl1">DESCRIPTION</th>
-          <th class="lgl1">URL</th>
+          <th class="lgl1">PAGE NAME</th>
           <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
 
         </tr>
@@ -126,7 +126,7 @@
         </ion-item>
 
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1"   (click)="Update()">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1"   (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT" | translate}}</button>
           </div>
           </form>
           <!-- [disabled]="!Moduleform.valid" -->

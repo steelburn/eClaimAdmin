@@ -172,8 +172,8 @@ export class ModulesetupPage {
           if (this.module_entry.DESCRIPTION == null) { this.module_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit; }
           if (this.module_entry.URL == null) { this.module_entry.URL = this.URL_ngModel_Edit; }
     
-          this.module_entry.CREATION_TS = this.module_entry.CREATION_TS;
-          this.module_entry.CREATION_USER_GUID = this.module_entry.CREATION_USER_GUID;
+          this.module_entry.CREATION_TS = this.module_details.CREATION_TS;
+          this.module_entry.CREATION_USER_GUID = this.module_details.CREATION_USER_GUID;
           this.module_entry.MODULE_GUID = MODULE_GUID;
           this.module_entry.UPDATE_TS = new Date().toISOString();
           this.module_entry.UPDATE_USER_GUID = '1';
