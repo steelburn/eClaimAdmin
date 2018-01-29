@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
-import { PageSetup_Model } from '../models/pagesetup_model';
+import { ModuleSetup_Model } from '../models/modulesetup_model';
 import { BaseHttpService } from './base-http';
 
 import 'rxjs/add/operator/map';
@@ -19,8 +19,8 @@ class ServerResponse {
 };
 
 @Injectable()
-export class PageSetup_Service {
-    baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_rolepage';
+export class ModuleSetup_Service {
+    baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_module';
     baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
     constructor(private httpService: BaseHttpService, private nav: NavController) { };
@@ -53,25 +53,25 @@ export class PageSetup_Service {
     // };
 
 
-    save(page_main: PageSetup_Model): Observable<any> {
+    save(module_main: ModuleSetup_Model): Observable<any> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
         let options = new RequestOptions({ headers: queryHeaders });
-        return this.httpService.http.post(this.baseResourceUrl, page_main.toJson(true), options)
+        return this.httpService.http.post(this.baseResourceUrl, module_main.toJson(true), options)
             .map((response) => {
                 return response;
             });
     }
 
-    update(page_main: PageSetup_Model): Observable<any> {
+    update(module_main: ModuleSetup_Model): Observable<any> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
         let options = new RequestOptions({ headers: queryHeaders });
-        return this.httpService.http.patch(this.baseResourceUrl, page_main.toJson(true), options)
+        return this.httpService.http.patch(this.baseResourceUrl, module_main.toJson(true), options)
             .map((response) => {
                 return response;
             });
@@ -108,7 +108,7 @@ export class PageSetup_Service {
             });
     }
 
-    get(id: string, params?: URLSearchParams): Observable<PageSetup_Model> {
+    get(id: string, params?: URLSearchParams): Observable<ModuleSetup_Model> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
@@ -118,8 +118,8 @@ export class PageSetup_Service {
             .get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders })
             .map((response) => {
                 var result: any = response.json();
-                let page: PageSetup_Model = PageSetup_Model.fromJson(result);
-                return page;
+                let module: ModuleSetup_Model = ModuleSetup_Model.fromJson(result);
+                return module;
             }).catch(this.handleError);
     };
 }

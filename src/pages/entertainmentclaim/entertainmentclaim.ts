@@ -45,6 +45,7 @@ export class EntertainmentclaimPage {
   masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
   Entertainmentform: FormGroup;
   private myData: any;
+  public entertainments: EntertainmentClaim_Model[] = [];
 
 
   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -56,8 +57,8 @@ export class EntertainmentclaimPage {
   baseResourceUrl_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  baseResourceUrl_view_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_soc_no' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
+  baseResourceUrl_view_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_registration' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  // view_soc_no
   public Exist_Record: boolean = false;
   public soc: any;
   // public ev:any;
@@ -86,10 +87,26 @@ export class EntertainmentclaimPage {
   //public Entertainment_FileUpload_ngModel:any;
   public myDate: any;
 
+  public AddEntetainmentClicked: boolean = false;
+  public EditEntetainmentClicked: boolean = false;
   public AddLookupClicked: boolean = false;
 
+  public AddEntetainmentClick() {
+      this.AddEntetainmentClicked = true; 
+  }
+
+  public CloseEntetainmentClick() {
+
+    if (this.AddEntetainmentClicked == true) {
+      this.AddEntetainmentClicked = false;
+    }
+    if (this.EditEntetainmentClicked == true) {
+      this.EditEntetainmentClicked = false;
+    }
+  }
+
   public AddLookupClick() {
-    //  this.GetSocNo();
+      //this.GetSocNo();
     this.AddLookupClicked = true;
   }
 
@@ -101,12 +118,13 @@ export class EntertainmentclaimPage {
 
   }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
-    let items = [this.SOC_Number];
+    // let items = [this.SOC_Number];
     this.http
       .get(this.baseResourceUrl_view_soc)
       .map(res => res.json())
       .subscribe(data => {
-        this.SOC_Number = data["resource"]
+         this.SOC_Number = data["resource"]
+       // this.entertainments = data.resource;
       });
 
     this.Entertainmentform = fb.group({

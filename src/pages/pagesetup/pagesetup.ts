@@ -31,7 +31,7 @@ export class PagesetupPage {
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_rolepage' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  public cashcards: PageSetup_Model[] = [];
+  public pages: PageSetup_Model[] = [];
 
   public AddPageClicked: boolean = false;
   public EditPageClicked: boolean = false;
@@ -53,6 +53,7 @@ export class PagesetupPage {
    //---------------------------------------------------------------------
 
   public AddPageClick() {
+    this.ClearControls();
       this.AddPageClicked = true; 
   }
 
@@ -65,12 +66,60 @@ export class PagesetupPage {
       this.EditPageClicked = false;
     }
   }
+
+  public EditClick(PAGE_GUID: any) {
+    
+    //this.ClearControls();
+    this.EditPageClicked = true;
+    var self = this;
+    this.pagesetupservice
+    
+      .get(PAGE_GUID)
+      .subscribe((data) => {
+        self.page_details = data;
+        this.NAME_ngModel_Edit = self.page_details.NAME; localStorage.setItem('Prev_set_NAME', self.page_details.NAME);
+
+        this.DESCRIPTION_ngModel_Edit = self.page_details.DESCRIPTION;
+        this.URL_ngModel_Edit = self.page_details.URL;
+      });
+  }
+
+  public DeleteClick(PAGE_GUID: any) {
+    let alert = this.alertCtrl.create({
+      title: 'Remove Confirmation',
+      message: 'Do you want to remove ?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('OK clicked');
+            var self = this;
+            this.pagesetupservice.remove(PAGE_GUID)
+              .subscribe(() => {
+                self.pages = self.pages.filter((item) => {
+                  return item.PAGE_GUID != PAGE_GUID
+                });
+              });
+            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        }
+      ]
+    }); alert.present();
+  }
+
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private pagesetupservice: PageSetup_Service, private alertCtrl: AlertController) {
     this.http
     .get(this.baseResourceUrl)
     .map(res => res.json())
     .subscribe(data => {
-      this.cashcards = data.resource;
+      this.pages = data.resource;
     });
 
   this.Pageform = fb.group({
@@ -91,11 +140,7 @@ export class PagesetupPage {
       headers.append('Content-Type', 'application/json');
       let options = new RequestOptions({ headers: headers });
       let url: string;
-      //let url1: string;
-      // url = this.baseResource_Url + "main_cashcard?filter=(CASHCARD_SNO=" + this.CASHCARD_SNO_ngModel_Add + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      //url1 = this.baseResource_Url + "main_cashcard?filter=(ACCOUNT_ID=" + this.ACCOUNT_ID_ngModel_Add + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       url = this.baseResource_Url + "main_rolepage?filter=(NAME=" + this.NAME_ngModel_Add.trim() +  ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      //url = "http://api.zen.com.my/api/v2/zcs/_table/main_cashcard?filter=(ACCOUNT_ID=" + this.cashcard_entry.ACCOUNT_ID + ")&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881";
       this.http.get(url, options)
         .map(res => res.json())
         .subscribe(
@@ -134,6 +179,77 @@ export class PagesetupPage {
           console.log("ERROR!: ", err);
         });
     }
+  }
+
+
+  Update(PAGE_GUID: any) {
+    if (this.Pageform.valid) {
+      if (this.page_entry.NAME == null) { this.page_entry.NAME = this.NAME_ngModel_Edit; }
+          if (this.page_entry.DESCRIPTION == null) { this.page_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit; }
+          if (this.page_entry.URL == null) { this.page_entry.URL = this.URL_ngModel_Edit; }
+    
+          this.page_entry.CREATION_TS = this.page_details.CREATION_TS;
+          this.page_entry.CREATION_USER_GUID = this.page_details.CREATION_USER_GUID;
+          this.page_entry.PAGE_GUID = PAGE_GUID;
+          this.page_entry.UPDATE_TS = new Date().toISOString();
+          this.page_entry.UPDATE_USER_GUID = '1';
+
+      if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_set_NAME')) {
+        let url: string;
+        url = this.baseResource_Url + "main_rolepage?filter=(NAME=" + this.NAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.http.get(url)
+          .map(res => res.json())
+          .subscribe(
+          data => {
+            let res = data["resource"];
+            console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_set_NAME'));
+            if (res.length == 0) {
+              console.log("No records Found");
+              this.page_entry.NAME = this.NAME_ngModel_Edit.trim();
+
+              //**************Update service if it is new details*************************
+              this.pagesetupservice.update(this.page_entry)
+                .subscribe((response) => {
+                  if (response.status == 200) {
+                    alert('Page updated successfully');
+                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  }
+                });
+              //**************************************************************************
+            }
+            else {
+              console.log("Records Found");
+              alert("The bank is already Exist. ");
+            }
+          },
+          err => {
+            this.Exist_Record = false;
+            console.log("ERROR!: ", err);
+          });
+      }
+      else {
+        if (this.page_entry.NAME == null) { this.page_entry.NAME = localStorage.getItem('Prev_set_NAME'); }
+        this.page_entry.NAME = this.NAME_ngModel_Edit.trim();
+
+        //**************Update service if it is old details*************************
+
+        this.pagesetupservice.update(this.page_entry)
+          .subscribe((response) => {
+            if (response.status == 200) {
+              alert('Page updated successfully');
+              this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            }
+          });
+        //  }
+      }
+    }
+  }
+
+ 
+  ClearControls() {
+    this.NAME_ngModel_Add = "";
+    this.DESCRIPTION_ngModel_Add = "";
+    this.URL_ngModel_Add = "";
   }
 
 }
