@@ -14,18 +14,57 @@
 
 
 <ion-content padding>
+    <!-- <ion-fab top right edge>
+        <button ion-fab mini (click)="AddEntetainmentClick()"><ion-icon name="add"></ion-icon></button>
+      </ion-fab>
 
-  <div class="blackcontainer">
+      <ion-list>
+          <ion-item>
+            <table class="Tabler">
+              <tr class="linedsg TColor">
+                <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+                <th class="lgl1">DATE</th>
+                <th class="lgl1">SOC NUMBER</th>
+                <th class="lgl1">PROJECT NAME</th>
+                <th class="lgl1">CUSTOMER NAME</th>
+                <th class="lgl1">DESCRIPTION</th>
+                <th class="lgl1">CLAIM AMOUNT</th>
+                <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+      
+              </tr>
+      
+              <tr class="col7" *ngFor="let entertainment of entertainments; let i=index">
+                <td class="lgl1">{{i+1}}</td>
+                <td class="lgl1">{{entertainment.entertainment_date}}</td>
+                <td class="lgl1">{{entertainment.soc_no}}</td>
+                <td class="lgl1">{{entertainment.project_name}}</td>
+                <td class="lgl1">{{entertainment.customer_name}}</td>
+                <td class="lgl1">{{entertainment.project_name}}</td>
+                <td class="lgl1">{{entertainment.description}}</td>
+                <td class="lgl1">{{entertainment.claim_amount}}</td>
+      
+                <td class="lgl1 fColor">
+                  <button ion-button item-end (click)="EditClick(page.PAGE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+                  <button ion-button item-end (click)="DeleteClick(page.PAGE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+                </td>
+              </tr>
+            </table>
+          </ion-item>
+        </ion-list>
 
-    <div class="popup" padding>
+  <div class="blackcontainer" *ngIf="AddEntetainmentClicked">
+    </div>
+
+    <div class="popup" padding *ngIf="AddEntetainmentClicked">
 
       <ion-card class="cm">
         <ion-card-header class="icTitle headerColor-white ">
-
           <div class="icHeaderText">APPLY NEW ENTERTAINMENT CLAIM</div>
-
+          <button class="btnR" (click)="CloseEntetainmentClick()">
+              <ion-icon name="md-close"></ion-icon> 
+            </button>
         </ion-card-header>
-        <ion-list class="scroll">
+        <ion-list class="scroll"> -->
           <form [formGroup]="Entertainmentform">
             <ion-item>
               <ion-label stacked>{{"DATE"}}</ion-label>
@@ -81,11 +120,11 @@
             </div>
 
           </form>
-        </ion-list>
-      </ion-card>
+        <!-- </ion-list> -->
+      <!-- </ion-card> -->
 
-    </div>
-  </div>
+    <!-- </div> -->
+  <!-- </div> -->
 
   <!-- add lookup form start-->
   <div class="blackcontainer" *ngIf="AddLookupClicked">
