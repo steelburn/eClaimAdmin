@@ -55,6 +55,7 @@ import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
 import {  FileUploadOptions  } from '@ionic-native/file-transfer';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 
 
@@ -169,7 +170,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     UserData,
     InAppBrowser,
     SplashScreen,StatusBar,
-
+    EmailComposer,
     Camera,
     File,
     FilePath,
