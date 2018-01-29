@@ -9,6 +9,10 @@ import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
 import * as constants from '../../app/config/constants';
 import { Conditional } from '@angular/compiler';
+import { Cordova } from '@ionic-native/core';
+//import{}
+import { EmailComposer } from '@ionic-native/email-composer';
+
 
 @Component({
   selector: 'page-user',
@@ -21,7 +25,7 @@ export class LoginPage {
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  constructor(public navCtrl: NavController, public userData: UserData, public http: Http) {
+  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public emailComposer: EmailComposer) {
     localStorage.clear();
   }
 
@@ -30,12 +34,12 @@ export class LoginPage {
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
       if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-        localStorage.setItem("g_USER_GUID", "sva"); 
+        localStorage.setItem("g_USER_GUID", "sva");
         this.navCtrl.push(TabsPage);
       }
       else {
         let url: string;
-        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username.trim() + ')and(PASSWORD=' + this.login.password.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;        
+        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username.trim() + ')and(PASSWORD=' + this.login.password.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         //http://api.zen.com.my/api/v2/zcs/_table/vw_login?filter=(LOGIN_ID=bcfb798b-355e-2a9b-baaf-37289d1f1ba3)and(PASSWORD=password)&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881
         this.http
           .get(url)
@@ -67,8 +71,8 @@ export class LoginPage {
               this.login.password = "";
             }
           });
-       }
-      
+      }
+
       // this.userData.login(this.login.username);
       // this.navCtrl.push(TabsPage);
     }
@@ -77,4 +81,29 @@ export class LoginPage {
   onSignup() {
     this.navCtrl.push(SignupPage);
   }
+  onEmail() {
+
+    //   .plugins.email.open({
+    //     to:      'max@mustermann.de',
+    //     cc:      'erika@mustermann.de',
+    //     bcc:     ['john@doe.com', 'jane@doe.com'],
+    //     subject: 'Greetings',
+    //     body:    'How are you? Nice greetings from Leipzig'
+    // });
+
+    this.emailComposer.isAvailable().then((available: boolean) => {
+      if (available) {
+        //Now we know we can send
+        this.emailComposer.open({
+          //from: 'ajay@zen.com.my',
+          to: 'ajay@zen.com.my',
+          cc: 'bijay@zen.com.my',
+         // bcc: ['john@doe.com', 'jane@doe.com'],
+          subject: 'Greetings',
+          body: 'How are you? Nice greetings from ZeN'
+        });
+      }
+    });
+  }
+
 }
