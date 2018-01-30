@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { OvertimeClaim_Model } from '../../models/overtimeclaim_model';
 import { MasterClaim_Model } from '../../models/masterclaim_model';
+import { View_SOC_Model } from '../../models/view_soc_model';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 
@@ -49,6 +50,8 @@ export class OvertimeclaimPage {
   baseResourceUrl_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
+  baseResourceUrl_view_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_registration' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+
   public Exist_Record: boolean = false;
   public OT_Date_ngModel: any;
   public OT_SOC_No_ngModel: any;
@@ -58,6 +61,8 @@ export class OvertimeclaimPage {
   public OT_EndTime_ngModel: any;
   public OT_ClaimAmount_ngModel: any;
   public socs: any;
+
+  SOC_Number:View_SOC_Model[];
 
   public AddLookupClicked: boolean = false;
 
@@ -75,7 +80,12 @@ export class OvertimeclaimPage {
  
   }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private overtimeservice: OvertimeClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
-
+    this.http
+    .get(this.baseResourceUrl_view_soc)
+    .map(res => res.json())
+    .subscribe(data => {
+       this.SOC_Number = data["resource"]
+    });
     this.OTform = fb.group({
 
       // otname: '',
@@ -99,6 +109,16 @@ export class OvertimeclaimPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OvertimeclaimPage');
+  }
+
+  openItem(item: View_SOC_Model) {
+
+    alert('open item');
+
+    this.OT_SOC_No_ngModel = item.soc;
+    this.OT_ProjectName_ngModel = item.project_name;
+    this.OT_CustomerName_ngModel = item.customer_name;
+   this.CloseLookupClick();
   }
 
   GetSocNo() {
