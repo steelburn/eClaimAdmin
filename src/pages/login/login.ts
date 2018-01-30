@@ -10,8 +10,8 @@ import { SignupPage } from '../signup/signup';
 import * as constants from '../../app/config/constants';
 import { Conditional } from '@angular/compiler';
 import { Cordova } from '@ionic-native/core';
-//import{}
-import { EmailComposer } from '@ionic-native/email-composer';
+
+
 
 
 @Component({
@@ -25,7 +25,7 @@ export class LoginPage {
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public emailComposer: EmailComposer) {
+  constructor(public navCtrl: NavController, public userData: UserData, public http: Http) {
     localStorage.clear();
   }
 
@@ -81,29 +81,8 @@ export class LoginPage {
   onSignup() {
     this.navCtrl.push(SignupPage);
   }
-  onEmail() {
 
-    //   .plugins.email.open({
-    //     to:      'max@mustermann.de',
-    //     cc:      'erika@mustermann.de',
-    //     bcc:     ['john@doe.com', 'jane@doe.com'],
-    //     subject: 'Greetings',
-    //     body:    'How are you? Nice greetings from Leipzig'
-    // });
 
-    this.emailComposer.isAvailable().then((available: boolean) => {
-      if (available) {
-        //Now we know we can send
-        this.emailComposer.open({
-          //from: 'ajay@zen.com.my',
-          to: 'ajay@zen.com.my',
-          cc: 'bijay@zen.com.my',
-         // bcc: ['john@doe.com', 'jane@doe.com'],
-          subject: 'Greetings',
-          body: 'How are you? Nice greetings from ZeN'
-        });
-      }
-    });
-  }
+
 
 }
