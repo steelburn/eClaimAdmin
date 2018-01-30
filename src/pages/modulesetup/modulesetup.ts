@@ -12,6 +12,7 @@ import { ModuleSetup_Service } from '../../services/modulesetup_service';
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the ModulesetupPage page.
@@ -55,9 +56,9 @@ export class ModulesetupPage {
   public URL_ngModel_Edit: any;
   //---------------------------------------------------------------------
 
-  
+
   public AddModuleClick() {
-      this.AddModuleClicked = true; 
+    this.AddModuleClicked = true;
   }
 
   public CloseModuleClick() {
@@ -71,12 +72,12 @@ export class ModulesetupPage {
   }
 
   public EditClick(MODULE_GUID: any) {
-    
+
     //this.ClearControls();
     this.EditModuleClicked = true;
     var self = this;
     this.modulesetupservice
-    
+
       .get(MODULE_GUID)
       .subscribe((data) => {
         self.module_details = data;
@@ -87,28 +88,33 @@ export class ModulesetupPage {
       });
   }
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private modulesetupservice: ModuleSetup_Service, private alertCtrl: AlertController) {
-    this.GetDesignation();
-    this.http
-    .get(this.baseResourceUrl)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.modules = data.resource;
-    });
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.GetPage();
+      this.http
+        .get(this.baseResourceUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.modules = data.resource;
+        });
 
-  this.Moduleform = fb.group({
-    NAME: ["", Validators.required],
-    DESCRIPTION: ["", Validators.required],
-    //URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])]
-    URL: ["", Validators.required]
-  });
+      this.Moduleform = fb.group({
+        NAME: ["", Validators.required],
+        DESCRIPTION: ["", Validators.required],
+        //URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])]
+        URL: ["", Validators.required]
+      });
+    }
+    else {
+      alert("Sorry !! This is for only Super Admin.");
+      this.navCtrl.push(LoginPage);
+    }
 
-  
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ModulesetupPage');
   }
-  GetDesignation() {
+  GetPage() {
     this.http
       .get(this.baseResourceUrl_page)
       .map(res => res.json())
@@ -124,7 +130,7 @@ export class ModulesetupPage {
       headers.append('Content-Type', 'application/json');
       let options = new RequestOptions({ headers: headers });
       let url: string;
-      url = this.baseResource_Url + "main_module?filter=(NAME=" + this.NAME_ngModel_Add.trim() +  ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_module?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http.get(url, options)
         .map(res => res.json())
         .subscribe(
@@ -169,14 +175,14 @@ export class ModulesetupPage {
   Update(MODULE_GUID: any) {
     if (this.Moduleform.valid) {
       if (this.module_entry.NAME == null) { this.module_entry.NAME = this.NAME_ngModel_Edit; }
-          if (this.module_entry.DESCRIPTION == null) { this.module_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit; }
-          if (this.module_entry.URL == null) { this.module_entry.URL = this.URL_ngModel_Edit; }
-    
-          this.module_entry.CREATION_TS = this.module_details.CREATION_TS;
-          this.module_entry.CREATION_USER_GUID = this.module_details.CREATION_USER_GUID;
-          this.module_entry.MODULE_GUID = MODULE_GUID;
-          this.module_entry.UPDATE_TS = new Date().toISOString();
-          this.module_entry.UPDATE_USER_GUID = '1';
+      if (this.module_entry.DESCRIPTION == null) { this.module_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit; }
+      if (this.module_entry.URL == null) { this.module_entry.URL = this.URL_ngModel_Edit; }
+
+      this.module_entry.CREATION_TS = this.module_details.CREATION_TS;
+      this.module_entry.CREATION_USER_GUID = this.module_details.CREATION_USER_GUID;
+      this.module_entry.MODULE_GUID = MODULE_GUID;
+      this.module_entry.UPDATE_TS = new Date().toISOString();
+      this.module_entry.UPDATE_USER_GUID = '1';
 
       if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_module_NAME')) {
         let url: string;

@@ -15,7 +15,9 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddSubModuleClick()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="AddSubModuleClick()">
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-fab>
 
   <ion-list>
@@ -40,8 +42,12 @@
 
 
           <td class="lgl1 fColor">
-            <button ion-button item-end ><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
+            <button ion-button item-end>
+              <ion-icon name="md-create"></ion-icon>
+            </button>
+            <button ion-button item-end>
+              <ion-icon name="md-close"></ion-icon>
+            </button>
           </td>
         </tr>
 
@@ -61,34 +67,38 @@
 
         <div class="icHeaderText">REGISTER NEW MODULE</div>
         <button class="btnR" (click)="CloseSubModuleClick()">
-          <ion-icon name="md-close"></ion-icon> 
+          <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
       <ion-list>
-
+        <form [formGroup]="SubModuleform">
           <ion-item>
             <ion-label stacked>{{"MODULE NAME"}}</ion-label>
-            <ion-input type="text" placeholder="{{'Please fill in the name of the module'}}"></ion-input>
+            <ion-select formControlName="MODULE" [(ngModel)]="module_ngModel_Add" placeholder="{{'Select Module'}}">
+              <ion-option *ngFor="let module of modules" [value]="module.NAME">{{module.NAME}}</ion-option>
+            </ion-select>
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"SUB MODULE NAME"}}</ion-label>
-            <ion-input type="text" placeholder="{{'Please fill in the name of the submodule'}}"></ion-input>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the submodule'}}"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-            <ion-input type="text" placeholder="{{'Please fill in the description'}}"></ion-input>
+            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"URL"}}</ion-label>
-            <ion-input type="text" placeholder="{{'Please fill in the URL of the module'}}"></ion-input>
+            <ion-label stacked>{{"PAGE"}}</ion-label>
+            <ion-select formControlName="PAGE" [(ngModel)]="Page_ngModel_Add" placeholder="{{'Select Page'}}">
+              <ion-option *ngFor="let page of pages" [value]="page.NAME">{{page.NAME}}</ion-option>
+            </ion-select>
           </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1">SUBMIT</button>
           </div>
-
+        </form>
       </ion-list>
     </ion-card>
 
