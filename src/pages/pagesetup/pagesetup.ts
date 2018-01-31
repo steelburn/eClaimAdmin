@@ -162,7 +162,7 @@ export class PagesetupPage {
 
               this.page_entry.PAGE_GUID = UUID.UUID();
               this.page_entry.CREATION_TS = new Date().toISOString();
-              this.page_entry.CREATION_USER_GUID = "1";
+              this.page_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
               this.page_entry.UPDATE_TS = new Date().toISOString();
               this.page_entry.UPDATE_USER_GUID = "";
 
@@ -178,7 +178,7 @@ export class PagesetupPage {
           }
           else {
             console.log("Records Found");
-            alert("The Cashcard is already Exist.")
+            alert("The Page is already Exist.")
           }
         },
         err => {
@@ -198,7 +198,7 @@ export class PagesetupPage {
       this.page_entry.CREATION_USER_GUID = this.page_details.CREATION_USER_GUID;
       this.page_entry.PAGE_GUID = PAGE_GUID;
       this.page_entry.UPDATE_TS = new Date().toISOString();
-      this.page_entry.UPDATE_USER_GUID = '1';
+      this.page_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
       if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_set_NAME')) {
         let url: string;
