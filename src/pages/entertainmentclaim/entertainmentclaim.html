@@ -50,21 +50,23 @@
               </tr>
             </table>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
 
-  <div class="blackcontainer" *ngIf="AddEntetainmentClicked">
-    </div>
+  <div class="blackcontainer">
+    <!-- *ngIf="AddEntetainmentClicked" -->
+    <!-- </div> -->
 
-    <div class="popup" padding *ngIf="AddEntetainmentClicked">
+    <div class="popup" padding>
+        <!-- *ngIf="AddEntetainmentClicked" -->
 
       <ion-card class="cm">
         <ion-card-header class="icTitle headerColor-white ">
           <div class="icHeaderText">APPLY NEW ENTERTAINMENT CLAIM</div>
-          <button class="btnR" (click)="CloseEntetainmentClick()">
+          <!-- <button class="btnR" (click)="CloseEntetainmentClick()">
               <ion-icon name="md-close"></ion-icon> 
-            </button>
+            </button> -->
         </ion-card-header>
-        <ion-list class="scroll"> -->
+        <ion-list class="scroll">
           <form [formGroup]="Entertainmentform">
             <ion-item>
               <ion-label stacked>{{"DATE"}}</ion-label>
@@ -120,11 +122,11 @@
             </div>
 
           </form>
-        <!-- </ion-list> -->
-      <!-- </ion-card> -->
+        </ion-list>
+      </ion-card>
 
-    <!-- </div> -->
-  <!-- </div> -->
+    </div>
+  </div>
 
   <!-- add lookup form start-->
   <div class="blackcontainer" *ngIf="AddLookupClicked">
