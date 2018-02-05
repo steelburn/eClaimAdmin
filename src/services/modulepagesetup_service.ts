@@ -22,6 +22,7 @@ class ServerResponse {
 export class ModulePageSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_modulepage';
     baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+    Module_New: ModulePageSetup_Model[] = [];
 
     constructor(private httpService: BaseHttpService, private nav: NavController) { };
 
@@ -38,6 +39,18 @@ export class ModulePageSetup_Service {
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
         let options = new RequestOptions({ headers: queryHeaders });//alert (JSON.stringify(module_main));
         return this.httpService.http.post(this.baseResourceUrl, module_main.toJson(true), options)
+            .map((response) => {
+                return response;
+            });
+    }
+
+    save_multiple_recocrd(module_main: any): Observable<any> {
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+        let options = new RequestOptions({ headers: queryHeaders });
+        //alert (JSON.stringify(module_main));
+        return this.httpService.http.post(this.baseResourceUrl, module_main, options)
             .map((response) => {
                 return response;
             });
@@ -60,7 +73,7 @@ export class ModulePageSetup_Service {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-        
+
         return this.httpService.http
             //.delete(this.baseResourceUrl + '/' + id, { headers: queryHeaders })
             .delete(url, { headers: queryHeaders })

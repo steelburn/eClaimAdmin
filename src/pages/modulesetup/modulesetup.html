@@ -36,15 +36,6 @@
           <td class="lgl1">{{module.MODULE_NAME}}</td>
           <td class="lgl1">{{module.DESCRIPTION}}</td>
           <td class="lgl1">{{module.PAGE_NAME}}</td>
-          <!-- <td class="lgl1">
-            <table class="Tabler">
-              <tr class="col1">
-                <td>{{module.PAGE_NAME}}</td>
-              </tr>
-            </table>
-          </td> -->
-
-
           <td class="lgl1 fColor">
             <button ion-button item-end (click)="EditClick(module.MODULE_GUID)">
               <ion-icon name="md-create"></ion-icon>
@@ -53,9 +44,7 @@
               <ion-icon name="md-close" (click)="DeleteClick(module.MODULE_GUID)"></ion-icon>
             </button>
           </td>
-        </tr>
-
-
+        </tr>        
       </table>
     </ion-item>
   </ion-list>
