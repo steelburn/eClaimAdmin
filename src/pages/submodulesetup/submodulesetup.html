@@ -75,7 +75,7 @@
           <ion-item>
             <ion-label stacked>{{"MODULE NAME"}}</ion-label>
             <ion-select formControlName="MODULE" [(ngModel)]="module_ngModel_Add" placeholder="{{'Select Module'}}">
-              <ion-option *ngFor="let module of modules" [value]="module.NAME">{{module.NAME}}</ion-option>
+              <ion-option *ngFor="let module of modules" [value]="module.MODULE_GUID">{{module.NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
@@ -92,11 +92,11 @@
           <ion-item>
             <ion-label stacked>{{"PAGE"}}</ion-label>
             <ion-select formControlName="PAGE" [(ngModel)]="Page_ngModel_Add" placeholder="{{'Select Page'}}">
-              <ion-option *ngFor="let page of pages" [value]="page.NAME">{{page.NAME}}</ion-option>
+              <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
             </ion-select>
           </ion-item>
-          <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1">SUBMIT</button>
+          <div class="btn">            
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!SubModuleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
           </div>
         </form>
       </ion-list>
