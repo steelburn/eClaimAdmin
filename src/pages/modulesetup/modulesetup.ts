@@ -53,7 +53,8 @@ export class ModulesetupPage {
   public EditModuleClicked: boolean = false;
   public Exist_Record: boolean = false;
 
-  public module_details: any; public module_page_details: any;
+  public module_details: any;
+  public module_page_details: any;
   public exist_record_details: any;
 
   //Set the Model Name for Add------------------------------------------
@@ -68,6 +69,7 @@ export class ModulesetupPage {
   public PAGE_ngModel_Edit: any;
   //---------------------------------------------------------------------
   public Module_New: any = [];
+  public Module_Page_Multiple: any = [];
   public strPage_Name: string = "";
 
   public AddModuleClick() {
@@ -118,7 +120,7 @@ export class ModulesetupPage {
       });
   }
 
-  public DeleteClick(MODULE_GUID: any){
+  public DeleteClick(MODULE_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
       message: 'Do you want to remove ?',
@@ -144,8 +146,8 @@ export class ModulesetupPage {
                 });
               });
 
-              //Remove page details from main_modulepage----------------
-              this.DeleteModulePage(MODULE_GUID);
+            //Remove page details from main_modulepage----------------
+            this.DeleteModulePage(MODULE_GUID);
 
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
@@ -319,11 +321,12 @@ export class ModulesetupPage {
                     this.DeleteModulePage(this.module_entry.MODULE_GUID);
 
                     //-------Update Module Pages----------------
-                    this.UpdateMoulePage(this.module_entry.MODULE_GUID);
+                    //this.UpdateMoulePage(this.module_entry.MODULE_GUID);
+                    this.UpdateMoulePageMultiple(this.module_entry.MODULE_GUID);
                     //------------------------------------------
 
-                    alert('Module updated successfully');
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    // alert('Module updated successfully');
+                    // this.navCtrl.setRoot(this.navCtrl.getActive().component);
                   }
                 });
               //**************************************************************************
@@ -352,11 +355,12 @@ export class ModulesetupPage {
               this.DeleteModulePage(this.module_entry.MODULE_GUID);
 
               //-------Update Module Pages----------------
-              this.UpdateMoulePage(this.module_entry.MODULE_GUID);
+              //this.UpdateMoulePage(this.module_entry.MODULE_GUID);
+              this.UpdateMoulePageMultiple(this.module_entry.MODULE_GUID);
               //------------------------------------------
 
-              alert('Module updated successfully');
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              // alert('Module updated successfully');
+              // this.navCtrl.setRoot(this.navCtrl.getActive().component);
             }
           });
       }
@@ -367,13 +371,14 @@ export class ModulesetupPage {
     this.modulepagesetupservice.remove(MODULE_GUID)
       .subscribe(() => {
         this.modulepages = this.modulepages.filter((item) => {
-          return item.MODULE_GUID != MODULE_GUID;          
+          return item.MODULE_GUID != MODULE_GUID;
         });
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       });
   }
 
   UpdateMoulePage(MODULE_GUID: any) {
+    //console.table(this.PAGE_ngModel_Edit);
     for (var PAGE_GUID of this.PAGE_ngModel_Edit) {
       this.modulepage_entry.ID = UUID.UUID();
       this.modulepage_entry.MODULE_GUID = MODULE_GUID;
@@ -385,10 +390,36 @@ export class ModulesetupPage {
       this.modulepagesetupservice.save(this.modulepage_entry)
         .subscribe((response) => {
           if (response.status == 200) {
+            //alert('ID: ' + this.modulepage_entry.ID + ', ' + 'Module ID: ' + this.modulepage_entry.MODULE_GUID+ ', ' + 'PAGE ID: ' + this.modulepage_entry.PAGE_GUID);
+            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
 
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         });
     }
+    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+  }
+
+  UpdateMoulePageMultiple(MODULE_GUID: any) {
+    //console.table(this.PAGE_ngModel_Edit);    
+    for (var PAGE_GUID of this.PAGE_ngModel_Edit) {
+      this.modulepage_entry.ID = UUID.UUID();
+      this.modulepage_entry.MODULE_GUID = MODULE_GUID;
+      this.modulepage_entry.PAGE_GUID = PAGE_GUID;
+      this.modulepage_entry.CREATION_TS = this.module_entry.CREATION_TS;
+      this.modulepage_entry.CREATION_USER_GUID = this.module_entry.CREATION_USER_GUID;
+      this.modulepage_entry.UPDATE_TS = this.module_entry.UPDATE_TS;
+      this.modulepage_entry.UPDATE_USER_GUID = this.module_entry.UPDATE_USER_GUID;
+
+      this.Module_Page_Multiple.push({ ID: this.modulepage_entry.ID, MODULE_GUID: this.modulepage_entry.MODULE_GUID, PAGE_GUID: this.modulepage_entry.PAGE_GUID, CREATION_USER_GUID: this.modulepage_entry.CREATION_USER_GUID, CREATION_TS: this.modulepage_entry.CREATION_TS, UPDATE_USER_GUID: this.modulepage_entry.UPDATE_USER_GUID, UPDATE_TS: this.modulepage_entry.UPDATE_TS });
+    }
+    //console.log(this.Module_Page_Multiple);
+    this.modulepagesetupservice.save_multiple_recocrd(this.Module_Page_Multiple)
+      .subscribe((response) => {
+        if (response.status == 200) {
+
+        }
+      });
+    alert('Module updated successfully');
+    this.navCtrl.setRoot(this.navCtrl.getActive().component);
   }
 }
