@@ -13,7 +13,83 @@
 </ion-header>
 
 
-<ion-content padding> 
+
+ <ion-content padding>
+
+
+    <div class="blackcontainer" >
+      </div>
+      <div class="popup97" padding >
+        <div class="container">
+          <ion-card>
+            <ion-card-header class="icTitle headerColor-white">
+              STEP 1 : REGISTER YOUR TENANT COMPANY AND SITE 
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <form [formGroup]="Branchform">
+            
+                      <ion-item>
+                        <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="COMPANYNAME" [(ngModel)]="COMPANYNAME_ngModel_Add" placeholder="{{'Please fill in the company name'}}"></ion-input>
+                      </ion-item>
+            
+                      <ion-item>
+                        <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" placeholder="{{'Please fill in the branch name'}}"></ion-input>
+                      </ion-item>
+            
+                      <ion-item>
+                        <ion-label stacked>{{"IS HQ"}}</ion-label>
+                        <ion-toggle formControlName="ISHQ_FLAG" [(ngModel)]="ISHQ_FLAG_ngModel_Add"></ion-toggle>
+                      </ion-item>
+            
+                      <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="Save()">SUBMIT</button>
+                      </div>
+                    </form>
+                  </ion-list>
+
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+              <ion-card-header class="icTitle headerColor-white">
+                STEP 2 : REGISTER YOUR DEPARTMENT 
+              </ion-card-header>
+              <ion-card-content>
+                  <ion-list>
+                      <form >
+                        <ion-item>
+                          <ion-label stacked>{{"TITLE"}}</ion-label>
+                          <ion-input type="text" 
+                          placeholder="{{'Please fill in the title of department'}}"></ion-input>
+                        </ion-item>
+              
+                        <ion-item>
+                          <ion-label stacked>{{"COMPANY"}}</ion-label>
+                          <ion-input type="text" 
+                          placeholder="{{'Please fill in the company name of the department'}}"></ion-input>
+                        </ion-item>
+              
+                        <ion-item>
+                          <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+                          <ion-input type="text" 
+                          placeholder="{{'Please fill in the description'}}"></ion-input>
+                        </ion-item>
+                        <div class="btn">
+                          <button ion-button class="bgColor-grey fontColor-white btnStyle1"  (click)="Save()">SUBMIT</button></div>
+                      </form>
+                    </ion-list>
+  
+              </ion-card-content>
+            </ion-card>
+          </div>
+         
+
+      </div>
+
+    <!--
   <ion-card class="round" (click)="goToBanksetup()">
     <ion-card-header class="icon">
       <ion-icon name="logo-usd" class="iconf"></ion-icon>
@@ -23,14 +99,6 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- <ion-card class="round" (click)="goToBranchsetup()">
-    <ion-card-header class="icon">
-      <ion-icon name="git-branch" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-     BRANCH 
-    </ion-card-content>
-  </ion-card> -->
 
   <ion-card class="round" (click)="goToCashcardsetup()">
     <ion-card-header class="icon">
@@ -102,9 +170,6 @@
 
 
 
-
- 
-
   <ion-card class="round" (click)="goToUser()">
     <ion-card-header class="icon">
       <ion-icon name="people" class="iconf"></ion-icon>
@@ -131,5 +196,5 @@
     <ion-card-content class="Subtitle">
      TENANT COMPANY & SITE 
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 </ion-content>
