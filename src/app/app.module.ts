@@ -60,6 +60,8 @@ import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
 import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -191,6 +193,6 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
   ]
 })
 export class AppModule { }
-export function createTranslateLoader(http:Http) {
+export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
 }

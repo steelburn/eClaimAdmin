@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
 import { PrintingClaim_Model } from '../../models/printingclaim_model';
-import { MasterClaim_Model } from '../../models/masterclaim_model';
+//import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { PrintingClaim_Service } from '../../services/printingclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 
@@ -36,7 +36,7 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 export class PrintclaimPage {
   isReadyToSave: boolean;
   printclaim_entry: PrintingClaim_Model = new PrintingClaim_Model();
-  masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
+  //masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
     Printform: FormGroup;
 
     baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -210,10 +210,10 @@ export class PrintclaimPage {
                  
 
                 
-                  this.masterclaim_entry.CLAIM_AMOUNT = this.Printing_ClaimAmount_ngModel.trim();
-                  this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                  this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                  this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
+                  // this.masterclaim_entry.CLAIM_AMOUNT = this.Printing_ClaimAmount_ngModel.trim();
+                  // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
+                  // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
+                  // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
                   //alert(this.masterclaim_entry.CLAIM_AMOUNT);
     
                   this.printclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
@@ -225,14 +225,14 @@ export class PrintclaimPage {
     
                   //this.uploadFile();
     
-                  this.printingservice.save_main_claim_request(this.masterclaim_entry)
-                    .subscribe((response) => {
-                      if (response.status == 200) {
-                        //alert('PrintClaim Registered successfully');
-                        //location.reload();
-                        this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                      }
-                    });
+                  // this.printingservice.save_main_claim_request(this.masterclaim_entry)
+                  //   .subscribe((response) => {
+                  //     if (response.status == 200) {
+                  //       //alert('PrintClaim Registered successfully');
+                  //       //location.reload();
+                  //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  //     }
+                  //   });
     
                   this.printingservice.save_claim_request_detail(this.printclaim_entry)
     
