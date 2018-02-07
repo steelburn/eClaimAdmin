@@ -27,6 +27,7 @@
     "@ionic-native/file": "^4.1.0",
     "@ionic-native/file-path": "^4.1.0",
     "@ionic-native/file-transfer": "^4.3.2",
+    "@ionic-native/http": "^4.5.3",
     "@ionic-native/in-app-browser": "3.10.2",
     "@ionic-native/splash-screen": "4.4.0",
     "@ionic-native/status-bar": "^4.4.0",
@@ -52,9 +53,11 @@
     "ionic-angular": "^3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
+    "latest": "^0.2.0",
     "ng2-translate": "^5.0.0",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.4.0",
+    "uninstall": "0.0.0",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
