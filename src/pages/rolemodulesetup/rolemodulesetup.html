@@ -76,9 +76,64 @@
               </ion-option>
             </ion-select>
           </ion-item>
+          <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col align-self-start>
+                <table class="Tabler">
+                  <tr class="linedsg TColor">
+                    <th class="lgl1 ">MODULE </th>
+                  </tr>
+          
+                  <tr class="col7">
+                    <td class="lgl1">HOME</td>
+                  </tr>
+                   
+                  <tr class="col7">
+                    <td class="lgl1">APPROVER TASK</td>
+                  </tr>
+                   
+                  <tr class="col7">
+                    <td class="lgl1">SETUP</td>
+                  </tr>
+                   
+                </table>
+              </ion-col>
+              
+              <ion-col align-self-center class="over">
+                <button ion-button>
+                  <ion-icon name="ios-arrow-back"></ion-icon>
+                </button>
+       
+                <button ion-button>  
+                  <ion-icon name="ios-arrow-forward"></ion-icon>
+                </button>
         
+              </ion-col>
 
-      
+              <ion-col align-self-end>
+                <table class="Tabler">
+                  <tr class="linedsg TColor">
+                    <th class="lgl1 ">MODULE ASSIGNED</th>
+                  </tr>
+          
+                  <tr class="col7">
+                    <td class="lgl1">HOME</td>
+                  </tr>
+                   
+                  <tr class="col7">
+                    <td class="lgl1">APPROVER TASK</td>
+                  </tr>
+                   
+                  <tr class="col7">
+                    <td class="lgl1">SETUP</td>
+                  </tr>
+                
+                </table>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
 
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Rolemoduleform.valid" (click)="Save_RoleModule()">{{"SUBMIT" | translate}}</button>
