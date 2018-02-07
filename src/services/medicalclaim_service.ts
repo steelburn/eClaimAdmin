@@ -4,7 +4,7 @@ import {Http, Headers,RequestOptions, URLSearchParams} from '@angular/http';
 import * as constants from '../app/config/constants';
 //import {EntertainmentClaim_Model} from '../models/entertainment_model';
 import {MedicalClaim_Model} from '../models/medicalclaim_model';
-import {MasterClaim_Model} from '../models/masterclaim_model';
+//import {MasterClaim_Model} from '../models/masterclaim_model';
 import {BaseHttpService} from './base-http';
 
 import 'rxjs/add/operator/map';
@@ -60,18 +60,18 @@ export class MedicalClaim_Service
 			}).catch(this.handleError);
 	};
 	
-	save_main_claim_request (master_main: MasterClaim_Model): Observable<any> 
-	{
-		var queryHeaders = new Headers();
-    	queryHeaders.append('Content-Type', 'application/json');
-    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-    	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-		let options = new RequestOptions({ headers: queryHeaders });
-		return this.httpService.http.post(this.baseResourceUrl1, master_main.toJson(true),options)
-			.map((response) => {
-				return response;
-			});
-    }
+	// save_main_claim_request (master_main: MasterClaim_Model): Observable<any> 
+	// {
+	// 	var queryHeaders = new Headers();
+    // 	queryHeaders.append('Content-Type', 'application/json');
+    // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+	// 	let options = new RequestOptions({ headers: queryHeaders });
+	// 	return this.httpService.http.post(this.baseResourceUrl1, master_main.toJson(true),options)
+	// 		.map((response) => {
+	// 			return response;
+	// 		});
+    // }
     
     save_claim_request_detail (medical_main: MedicalClaim_Model): Observable<any> 
 	{
