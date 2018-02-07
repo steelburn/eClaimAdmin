@@ -56,6 +56,13 @@ page-banksetup {
         padding: 10px !important;
     }
     
+    .icTitle2 {
+        border-bottom: 1px solid !important;
+        margin-bottom: 0px !important;
+        padding: 10px !important;
+    }
+    
+    
     
     
     .headerColor-white {
@@ -101,7 +108,7 @@ page-banksetup {
     } 
     .scroll{
         height: calc(100% - 48px);
-        overflow: scroll;
+        overflow: auto;
     }
     
     .cm{
@@ -160,6 +167,7 @@ page-banksetup {
     .fullWidth {width: 100% !important;}
     
     
+
     ion-menu#loggedOutMenu {
         min-width: 256px !important;
         max-width: 14%  !important;
@@ -200,4 +208,24 @@ page-banksetup {
 
     button.item.item-block.item-md{
         font-size: 1.45rem;
+
     }
+
+    .LeftMenu{
+        max-width: 150px;
+        height: 100%;
+        
+    }
+
+    .container{
+        max-height: 465px;
+        overflow-y: auto;
+
+    }
+
+
+    .scroll-content {
+
+        overflow-y: auto !important;
+    
+      }
