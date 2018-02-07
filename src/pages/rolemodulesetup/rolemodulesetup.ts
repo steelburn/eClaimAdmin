@@ -22,16 +22,20 @@ import { GlobalFunction } from '../../shared/GlobalFunction';
 @IonicPage()
 @Component({
   selector: 'page-rolemodulesetup',
-  templateUrl: 'rolemodulesetup.html',
+  templateUrl: 'rolemodulesetup.html', providers: [BaseHttpService]
 })
 export class RolemodulesetupPage {
-  public AddRoleModuleClicked: boolean = false; 
+  public AddRoleModuleClicked: boolean = false;
+
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_role' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
+  
 
   Rolemoduleform: FormGroup;
+  roles:any;
 
   public AddRoleModuleClick() {
 
-      this.AddRoleModuleClicked = true; 
+    this.AddRoleModuleClicked = true;
 
   }
 
@@ -41,9 +45,13 @@ export class RolemodulesetupPage {
       this.AddRoleModuleClicked = false;
     }
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder, public http: Http, private httpService: BaseHttpService) {
+    //Bind role------------------
+    this.GetRole();
+
     this.Rolemoduleform = fb.group({
       ROLENAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      MODULE1: [null],
     });
   }
 
@@ -51,7 +59,16 @@ export class RolemodulesetupPage {
     console.log('ionViewDidLoad RolemodulesetupPage');
   }
 
-  Save_RoleModule(){
+  GetRole(){
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.roles = data["resource"];
+      });
+  }
+
+  Save_RoleModule() {
 
   }
 }
