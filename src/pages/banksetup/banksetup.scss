@@ -19,14 +19,6 @@ page-banksetup {
             height: 500px;
     }
 
-    .popup97{
-        width: 97%;
-        top: 60px;
-        position: fixed;
-            height: 500px;
-    }
-
-
     .popup1{
         width: 96%;
         top: 88px;
@@ -63,6 +55,13 @@ page-banksetup {
         margin-bottom: 10px !important;
         padding: 10px !important;
     }
+    
+    .icTitle2 {
+        border-bottom: 1px solid !important;
+        margin-bottom: 0px !important;
+        padding: 10px !important;
+    }
+    
     
     
     
@@ -109,7 +108,7 @@ page-banksetup {
     } 
     .scroll{
         height: calc(100% - 48px);
-        overflow: scroll;
+        overflow: auto;
     }
     
     .cm{
@@ -168,6 +167,7 @@ page-banksetup {
     .fullWidth {width: 100% !important;}
     
     
+
     ion-menu#loggedOutMenu {
         min-width: 256px !important;
         max-width: 14%  !important;
@@ -208,6 +208,7 @@ page-banksetup {
 
     button.item.item-block.item-md{
         font-size: 1.45rem;
+
     }
 
     .LeftMenu{
@@ -218,5 +219,13 @@ page-banksetup {
 
     .container{
         max-height: 465px;
-        overflow-y: scroll;
+        overflow-y: auto;
+
     }
+
+
+    .scroll-content {
+
+        overflow-y: auto !important;
+    
+      }

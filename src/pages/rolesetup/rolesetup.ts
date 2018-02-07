@@ -13,7 +13,7 @@ import { RoleSetup_Service } from '../../services/rolesetup_service';
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
-import { LoginPage } from '../login/login';
+
 /**
  * Generated class for the RolesetupPage page.
  *
@@ -118,24 +118,18 @@ export class RolesetupPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private rolesetupservice: RoleSetup_Service, private alertCtrl: AlertController) {
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.roles = data.resource;
-        });
-
-      this.Roleform = fb.group({
-        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        ACTIVATION_FLAG: ["", Validators.required],
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.roles = data.resource;
       });
-    }
-    else {
-      alert("Sorry !! This is for only Super Admin.");
-      this.navCtrl.push(LoginPage);
-    }
+
+    this.Roleform = fb.group({
+      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      ACTIVATION_FLAG: ["", Validators.required],
+    });
   }
 
   ionViewDidLoad() {

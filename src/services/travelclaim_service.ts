@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {Http, Headers,RequestOptions, URLSearchParams} from '@angular/http';
 
 import * as constants from '../app/config/constants';
+import * as constants_home from '../app/config/constants_home';
 //import {EntertainmentClaim_Model} from '../models/entertainment_model';
 import {TravelClaim_Model} from '../models/travelclaim_model';
-import {MasterClaim_Model} from '../models/masterclaim_model';
+//import {MasterClaim_Model} from '../models/masterclaim_model';
 import {BaseHttpService} from './base-http';
 
 import 'rxjs/add/operator/map';
@@ -28,7 +29,14 @@ export class TravelClaim_Service
 	baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request';
 	baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 	
-	constructor(private httpService: BaseHttpService, private nav: NavController) {};
+	constructor(public http:Http, private httpService: BaseHttpService, private nav: NavController) {};
+
+	static getUrl(table: string, args?: string) {
+		if (args != null) {
+		  return constants_home.DREAMFACTORY_TABLE_URL + '/' + table + '?' + args + '&api_key=' + constants_home.DREAMFACTORY_API_KEY;
+		}
+		return constants_home.DREAMFACTORY_TABLE_URL + '/' + table + '?api_key=' + constants_home.DREAMFACTORY_API_KEY;
+	  }
 	
     private handleError (error: any) {
 	   let errMsg = (error.message) ? error.message :
@@ -66,22 +74,37 @@ export class TravelClaim_Service
     	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
     	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		let options = new RequestOptions({ headers: queryHeaders });
-		return this.httpService.http.post(this.baseResourceUrl, travel_main.toJson(true),options)
+		return this.httpService.http.post(this.baseResourceUrl, travel_main.toJson(true),options)  
 			.map((response) => {
 				return response;
 			});
 	}
 	
-	save_main_claim_request (master_main: MasterClaim_Model): Observable<any> 
-	{
+	// save_main_claim_request (master_main: MasterClaim_Model): Observable<any> 
+	// {
+	// 	var queryHeaders = new Headers();
+    // 	queryHeaders.append('Content-Type', 'application/json');
+    // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+	// 	let options = new RequestOptions({ headers: queryHeaders });
+	// 	return this.httpService.http.post(this.baseResourceUrl1, master_main.toJson(true),options)
+	// 		.map((response) => {
+	// 			return response;
+	// 		});
+	// }
+
+	postUrl(table: string) {
+		return constants_home.DREAMFACTORY_TABLE_URL + '/' + table;
+	  }
+	postData(endpoint: string, body: any): Observable<any> {
 		var queryHeaders = new Headers();
-    	queryHeaders.append('Content-Type', 'application/json');
-    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-    	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		queryHeaders.append('Content-Type', 'application/json');
+		//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		let options = new RequestOptions({ headers: queryHeaders });
-		return this.httpService.http.post(this.baseResourceUrl1, master_main.toJson(true),options)
-			.map((response) => {
-				return response;
-			});
-    }
+		return this.http.post(this.postUrl(endpoint), body, options)
+		  .map((response) => {
+			return response;
+		  });
+	  }
 }

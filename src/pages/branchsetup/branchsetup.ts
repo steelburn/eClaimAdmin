@@ -268,36 +268,36 @@ export class BranchsetupPage {
         .map(res => res.json())
         .subscribe(data => {
           this.hqDetails = data.resource;
-          this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = localStorage.getItem("g_TENANT_COMPANY_SITE_GUID");
-          this.tenant_company_site_entry.TENANT_COMPANY_GUID = localStorage.getItem("g_TENANT_COMPANY_GUID");
-          this.tenant_company_site_entry.SITE_NAME = this.hqDetails[0]["SITE_NAME"];
-          this.tenant_company_site_entry.REGISTRATION_NUM = this.hqDetails[0]["REGISTRATION_NUM"];
-          this.tenant_company_site_entry.ADDRESS = this.hqDetails[0]["ADDRESS"];
-          this.tenant_company_site_entry.ADDRESS2 = this.hqDetails[0]["ADDRESS2"];
-          this.tenant_company_site_entry.ADDRESS3 = this.hqDetails[0]["ADDRESS3"];
-          this.tenant_company_site_entry.CONTACT_NO = this.hqDetails[0]["CONTACT_NO"];
-          this.tenant_company_site_entry.EMAIL = this.hqDetails[0]["EMAIL"];
-          this.tenant_company_site_entry.ACTIVATION_FLAG = this.hqDetails[0]["ACTIVATION_FLAG"];
-
-          this.tenant_company_site_entry.CONTACT_PERSON = this.hqDetails[0]["CONTACT_PERSON"];
-          this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = this.hqDetails[0]["CONTACT_PERSON_CONTACT_NO"];
-          this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = this.hqDetails[0]["CONTACT_PERSON_EMAIL"];
-          this.tenant_company_site_entry.WEBSITE = this.hqDetails[0]["WEBSITE"];
-
-          this.tenant_company_site_entry.CREATION_TS = this.hqDetails[0]["CREATION_TS"];
-          this.tenant_company_site_entry.CREATION_USER_GUID = this.hqDetails[0]["CREATION_USER_GUID"];
-          this.tenant_company_site_entry.UPDATE_TS = new Date().toISOString();
-          this.tenant_company_site_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-          this.tenant_company_site_entry.ISHQ = "0";
-
-          this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
-            .subscribe((response) => {
-              if (response.status == 200) {
-                alert('Company & Site Registered successfully');
-                this.navCtrl.setRoot(this.navCtrl.getActive().component);
-              }
-            })
         });
+      //----------------------------------------------------------------------------------------------
+      this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = localStorage.getItem("g_TENANT_COMPANY_SITE_GUID");
+      this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
+      this.tenant_company_site_entry.SITE_NAME = this.BRANCHNAME_ngModel_Add.trim();
+      this.tenant_company_site_entry.REGISTRATION_NUM = this.hqDetails[0]["REGISTRATION_NUM"];
+      this.tenant_company_site_entry.ADDRESS = this.hqDetails[0]["ADDRESS"];
+      this.tenant_company_site_entry.ADDRESS2 = this.hqDetails[0]["ADDRESS2"];
+      this.tenant_company_site_entry.ADDRESS3 = this.hqDetails[0]["ADDRESS3"];
+      this.tenant_company_site_entry.CONTACT_NO = this.hqDetails[0]["CONTACT_NO"];
+      this.tenant_company_site_entry.EMAIL = this.hqDetails[0]["EMAIL"];
+      this.tenant_company_site_entry.ACTIVATION_FLAG = this.hqDetails[0]["ACTIVATION_FLAG"];
+
+      this.tenant_company_site_entry.CONTACT_PERSON = this.hqDetails[0]["CONTACT_PERSON"];
+      this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = this.hqDetails[0]["CONTACT_PERSON_CONTACT_NO"];
+      this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = this.hqDetails[0]["CONTACT_PERSON_EMAIL"];
+      this.tenant_company_site_entry.WEBSITE = this.hqDetails[0]["WEBSITE"];
+
+      this.tenant_company_site_entry.CREATION_TS = this.hqDetails[0]["CREATION_TS"];
+      this.tenant_company_site_entry.CREATION_USER_GUID = this.hqDetails[0]["CREATION_USER_GUID"];
+      this.tenant_company_site_entry.UPDATE_TS = new Date().toISOString();
+      this.tenant_company_site_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+      this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            alert('Company & Site Registered successfully');
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        })
     }
   }
 

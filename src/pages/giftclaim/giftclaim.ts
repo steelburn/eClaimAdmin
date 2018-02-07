@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
 import { GiftClaim_Model } from '../../models/giftclaim_model';
-import { MasterClaim_Model } from '../../models/masterclaim_model';
+//import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { GiftClaim_Service } from '../../services/giftclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 
@@ -36,7 +36,7 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 export class GiftclaimPage {
   isReadyToSave: boolean;
   giftclaim_entry: GiftClaim_Model = new GiftClaim_Model();
-  masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
+  //masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
     Giftform: FormGroup;
 
     baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -207,10 +207,10 @@ export class GiftclaimPage {
                  
 
                 
-                  this.masterclaim_entry.CLAIM_AMOUNT = this.Gift_ClaimAmount_ngModel.trim();
-                  this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                  this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                  this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
+                  // this.masterclaim_entry.CLAIM_AMOUNT = this.Gift_ClaimAmount_ngModel.trim();
+                  // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
+                  // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
+                  // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
                   //alert(this.masterclaim_entry.CLAIM_AMOUNT);
     
                   this.giftclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
@@ -222,14 +222,14 @@ export class GiftclaimPage {
     
                   //this.uploadFile();
     
-                  this.giftservice.save_main_claim_request(this.masterclaim_entry)
-                    .subscribe((response) => {
-                      if (response.status == 200) {
-                       // alert('Giftclaim Registered successfully');
-                        //location.reload();
-                        this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                      }
-                    });
+                  // this.giftservice.save_main_claim_request(this.masterclaim_entry)
+                  //   .subscribe((response) => {
+                  //     if (response.status == 200) {
+                  //      // alert('Giftclaim Registered successfully');
+                  //       //location.reload();
+                  //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  //     }
+                  //   });
     
                   this.giftservice.save_claim_request_detail(this.giftclaim_entry)
     

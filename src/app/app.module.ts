@@ -51,7 +51,7 @@ import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 import { PeermissionPage } from'../pages/peermission/peermission';
 import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
-import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';  
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -60,6 +60,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
 import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 
 
@@ -182,6 +183,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     UserData,
     InAppBrowser,
     SplashScreen,StatusBar,
+
     Camera,
     File,
     FilePath,
@@ -191,6 +193,6 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
   ]
 })
 export class AppModule { }
-export function createTranslateLoader(http:Http) {
+export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
 }
