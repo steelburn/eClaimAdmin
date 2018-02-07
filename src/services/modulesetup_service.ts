@@ -58,7 +58,7 @@ export class ModuleSetup_Service {
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-        let options = new RequestOptions({ headers: queryHeaders });
+        let options = new RequestOptions({ headers: queryHeaders });//alert (JSON.stringify(module_main));
         return this.httpService.http.post(this.baseResourceUrl, module_main.toJson(true), options)
             .map((response) => {
                 return response;
@@ -70,7 +70,7 @@ export class ModuleSetup_Service {
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-        let options = new RequestOptions({ headers: queryHeaders });
+        let options = new RequestOptions({ headers: queryHeaders });//alert (JSON.stringify(module_main));
         return this.httpService.http.patch(this.baseResourceUrl, module_main.toJson(true), options)
             .map((response) => {
                 return response;

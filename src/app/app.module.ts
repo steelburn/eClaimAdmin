@@ -62,6 +62,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 
 
+
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -181,7 +182,6 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
     UserData,
     InAppBrowser,
     SplashScreen,StatusBar,
-
     Camera,
     File,
     FilePath,

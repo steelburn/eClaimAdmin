@@ -1,8 +1,7 @@
-export class ModuleSetup_Model {
+export class ModulePageSetup_Model {
 	constructor(
+		public ID: string = null,
 		public MODULE_GUID: string = null,
-		public NAME: string = null,
-		public DESCRIPTION: string = null,
 		public PAGE_GUID: string = null,
 		public CREATION_TS: string = null,
 		public CREATION_USER_GUID: string = null,
@@ -13,10 +12,9 @@ export class ModuleSetup_Model {
 
 	static fromJson(json: any) {
 		if (!json) return;
-		return new ModuleSetup_Model(
+		return new ModulePageSetup_Model(
+			json.ID,
 			json.MODULE_GUID,
-			json.NAME,
-			json.DESCRIPTION,
 			json.PAGE_GUID,
 			json.CREATION_TS,
 			json.CREATION_USER_GUID,
@@ -27,9 +25,8 @@ export class ModuleSetup_Model {
 
 	toJson(stringify?: boolean): any {
 		var doc = {
+			ID: this.ID,
 			MODULE_GUID: this.MODULE_GUID,
-			NAME: this.NAME,
-			DESCRIPTION: this.DESCRIPTION,
 			PAGE_GUID: this.PAGE_GUID,
 			CREATION_TS: this.CREATION_TS,
 			CREATION_USER_GUID: this.CREATION_USER_GUID,
@@ -39,6 +36,3 @@ export class ModuleSetup_Model {
 		return stringify ? JSON.stringify({ resource: [doc] }) : doc;
 	}
 }
-
-
-

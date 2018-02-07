@@ -44,8 +44,10 @@ export interface PageInterface {
 @Component({
   templateUrl: 'app.template.html'
 })
-export class ConferenceApp {
 
+
+export class ConferenceApp {
+  
   public setupPageClicked: boolean = false;
 
   //public setupPageClick() {
