@@ -15,9 +15,7 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddModuleClick()">
-      <ion-icon name="add"></ion-icon>
-    </button>
+    <button ion-fab mini (click)="AddModuleClick()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
   <ion-list>
@@ -29,22 +27,23 @@
           <th class="lgl1">DESCRIPTION</th>
           <th class="lgl1">PAGE NAME</th>
           <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+
         </tr>
 
-        <tr class="col7" *ngFor="let module of Module_New; let i=index">
+        <tr class="col7" *ngFor="let module of modules; let i=index">
           <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{module.MODULE_NAME}}</td>
+          <td class="lgl1">{{module.NAME}}</td>
           <td class="lgl1">{{module.DESCRIPTION}}</td>
-          <td class="lgl1">{{module.PAGE_NAME}}</td>
+          <td class="lgl1">{{module.URL}}</td>
+
+
           <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(module.MODULE_GUID)">
-              <ion-icon name="md-create"></ion-icon>
-            </button>
-            <button ion-button item-end>
-              <ion-icon name="md-close" (click)="DeleteClick(module.MODULE_GUID)"></ion-icon>
-            </button>
+            <button ion-button item-end (click)="EditClick(module.MODULE_GUID)"><ion-icon name="md-create"></ion-icon></button>
+            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>
           </td>
-        </tr>        
+        </tr>
+
+
       </table>
     </ion-item>
   </ion-list>
@@ -60,7 +59,7 @@
 
         <div class="icHeaderText">REGISTER NEW MODULE</div>
         <button class="btnR" (click)="CloseModuleClick()">
-          <ion-icon name="md-close"></ion-icon>
+          <ion-icon name="md-close"></ion-icon> 
         </button>
       </ion-card-header>
       <ion-list>
@@ -76,17 +75,17 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"PAGE NAME"}}</ion-label>
-            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Add" placeholder="{{'Please fill the Page'}}" multiple="true">
-              <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
+            <ion-label stacked>{{"Page Name"}}</ion-label>
+            <ion-select formControlName="URL" [(ngModel)]="URL_ngModel_Add" placeholder="{{'Please fill the Page'}}">
+                <ion-option *ngFor="let page of pages" [value]="page.NAME" >{{page.NAME}}</ion-option>
             </ion-select>
-          </ion-item>
-          
-          <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
-          </div>
-        </form>
+        </ion-item>
 
+          <div class="btn">
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1"  [disabled]="!Moduleform.valid"  (click)="Save()">{{"SUBMIT" | translate}}</button>
+          </div>
+          </form>
+         
       </ion-list>
     </ion-card>
 
@@ -104,7 +103,7 @@
 
         <div class="icHeaderText">UPDATE MODULE</div>
         <button class="btnR" (click)="CloseModuleClick()">
-          <ion-icon name="md-close"></ion-icon>
+          <ion-icon name="md-close"></ion-icon> 
         </button>
       </ion-card-header>
       <ion-list>
@@ -120,17 +119,17 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"PAGE NAME"}}</ion-label>
-            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Edit" placeholder="{{'Please fill the Page'}}" multiple="true">
-              <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
+            <ion-label stacked>{{"Page Name"}}</ion-label>
+            <ion-select formControlName="URL" [(ngModel)]="URL_ngModel_Edit" placeholder="{{'Please fill the Page'}}">
+                <ion-option *ngFor="let page of pages" [value]="page.NAME" >{{page.NAME}}</ion-option>
             </ion-select>
-          </ion-item>
+        </ion-item>
 
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1"   (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT" | translate}}</button>
           </div>
-        </form>
-        <!-- [disabled]="!Moduleform.valid" -->
+          </form>
+          <!-- [disabled]="!Moduleform.valid" -->
       </ion-list>
     </ion-card>
 

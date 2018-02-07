@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
 import { OvertimeClaim_Model } from '../../models/overtimeclaim_model';
-import { MasterClaim_Model } from '../../models/masterclaim_model';
+//import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { View_SOC_Model } from '../../models/view_soc_model';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
 import { BaseHttpService } from '../../services/base-http';
@@ -38,7 +38,7 @@ export class OvertimeclaimPage {
 
   isReadyToSave: boolean;
   overtimeclaim_entry: OvertimeClaim_Model = new OvertimeClaim_Model();
-  masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
+  //masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
   OTform: FormGroup;
 
   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -196,12 +196,12 @@ export class OvertimeclaimPage {
 
 
               //this.masterclaim_entry.SOC_GUID = this.OT_SOC_No_ngModel.trim();
-              this.masterclaim_entry.START_TS = this.OT_StartTime_ngModel.trim();
-              this.masterclaim_entry.END_TS = this.OT_EndTime_ngModel.trim();
-              this.masterclaim_entry.CLAIM_AMOUNT = this.OT_ClaimAmount_ngModel.trim();
-              this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-              this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-              this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
+              // this.masterclaim_entry.START_TS = this.OT_StartTime_ngModel.trim();
+              // this.masterclaim_entry.END_TS = this.OT_EndTime_ngModel.trim();
+              // this.masterclaim_entry.CLAIM_AMOUNT = this.OT_ClaimAmount_ngModel.trim();
+              // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
+              // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
+              // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
               //alert(this.masterclaim_entry.CLAIM_AMOUNT);
 
               this.overtimeclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
@@ -213,24 +213,24 @@ export class OvertimeclaimPage {
 
               //this.uploadFile();
 
-              this.overtimeservice.save_main_claim_request(this.masterclaim_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    //alert('Overtimeclaim Registered successfully');
-                    //location.reload();
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              // this.overtimeservice.save_main_claim_request(this.masterclaim_entry)
+              //   .subscribe((response) => {
+              //     if (response.status == 200) {
+              //       //alert('Overtimeclaim Registered successfully');
+              //       //location.reload();
+              //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              //     }
+              //   });
 
-              this.overtimeservice.save_claim_request_detail(this.overtimeclaim_entry)
+              // this.overtimeservice.save_claim_request_detail(this.overtimeclaim_entry)
 
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Overtimeclaim Registered successfully');
-                    //location.reload();
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              //   .subscribe((response) => {
+              //     if (response.status == 200) {
+              //       alert('Overtimeclaim Registered successfully');
+              //       //location.reload();
+              //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              //     }
+              //   });
 
             }
           }

@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
 import { MedicalClaim_Model } from '../../models/medicalclaim_model';
-import { MasterClaim_Model } from '../../models/masterclaim_model';
+//import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { MedicalClaim_Service } from '../../services/medicalclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 
@@ -38,7 +38,7 @@ import {  LoadingController, ActionSheetController,  Platform, Loading, ToastCon
 export class MedicalclaimPage {
   isReadyToSave: boolean;
   medicalclaim_entry: MedicalClaim_Model = new MedicalClaim_Model();
-  masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
+ // masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
   Mcform: FormGroup;
   private myData: any;
 
@@ -104,10 +104,10 @@ export class MedicalclaimPage {
                 //this.medicalclaim_entry.CLAIM_AMOUNT = this.Medical_Date_ngModel.trim();
                 //this.entertainment2_entry.ATTACHMENT_ID = this.Entertainment_FileUpload_ngModel.trim();
 
-                this.masterclaim_entry.CLAIM_AMOUNT = this.Medical_Amount_ngModel.trim();
-                this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
+                // this.masterclaim_entry.CLAIM_AMOUNT = this.Medical_Amount_ngModel.trim();
+                // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
+                // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
+                // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
                 
         this.medicalclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
         this.medicalclaim_entry.CREATION_TS = new Date().toISOString();
@@ -116,14 +116,14 @@ export class MedicalclaimPage {
         this.medicalclaim_entry.UPDATE_USER_GUID = "";
       //this.uploadFile();
 
-      this.medicalservice.save_main_claim_request(this.masterclaim_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-          //alert('Medicalclaim Registered successfully');
-          //location.reload();
-          this.navCtrl.setRoot(this.navCtrl.getActive().component);
-        }
-      });
+      // this.medicalservice.save_main_claim_request(this.masterclaim_entry)
+      // .subscribe((response) => {
+      //   if (response.status == 200) {
+      //     //alert('Medicalclaim Registered successfully');
+      //     //location.reload();
+      //     this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      //   }
+      // });
 
         this.medicalservice.save_claim_request_detail(this.medicalclaim_entry)
           .subscribe((response) => {

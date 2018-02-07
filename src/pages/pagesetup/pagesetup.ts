@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController  } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -12,7 +12,6 @@ import { PageSetup_Service } from '../../services/pagesetup_service';
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
-import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the PagesetupPage page.
@@ -23,7 +22,7 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-pagesetup',
-  templateUrl: 'pagesetup.html', providers: [PageSetup_Service, BaseHttpService]
+  templateUrl: 'pagesetup.html',  providers: [PageSetup_Service, BaseHttpService]
 })
 export class PagesetupPage {
   page_entry: PageSetup_Model = new PageSetup_Model();
@@ -41,21 +40,21 @@ export class PagesetupPage {
   public page_details: any;
   public exist_record_details: any;
 
-  //Set the Model Name for Add------------------------------------------
-  public NAME_ngModel_Add: any;
-  public DESCRIPTION_ngModel_Add: any;
-  public URL_ngModel_Add: any;
-  //---------------------------------------------------------------------
-
-  //Set the Model Name for edit------------------------------------------
-  public NAME_ngModel_Edit: any;
-  public DESCRIPTION_ngModel_Edit: any;
-  public URL_ngModel_Edit: any;
-  //---------------------------------------------------------------------
+   //Set the Model Name for Add------------------------------------------
+   public NAME_ngModel_Add: any;
+   public DESCRIPTION_ngModel_Add: any;
+   public URL_ngModel_Add: any;
+   //---------------------------------------------------------------------
+ 
+   //Set the Model Name for edit------------------------------------------
+   public NAME_ngModel_Edit: any;
+   public DESCRIPTION_ngModel_Edit: any;
+   public URL_ngModel_Edit: any;
+   //---------------------------------------------------------------------
 
   public AddPageClick() {
     this.ClearControls();
-    this.AddPageClicked = true;
+      this.AddPageClicked = true; 
   }
 
   public ClosePageClick() {
@@ -69,12 +68,12 @@ export class PagesetupPage {
   }
 
   public EditClick(PAGE_GUID: any) {
-
+    
     //this.ClearControls();
     this.EditPageClicked = true;
     var self = this;
     this.pagesetupservice
-
+    
       .get(PAGE_GUID)
       .subscribe((data) => {
         self.page_details = data;
@@ -116,25 +115,18 @@ export class PagesetupPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private pagesetupservice: PageSetup_Service, private alertCtrl: AlertController) {
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.pages = data.resource;
-        });
+    this.http
+    .get(this.baseResourceUrl)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.pages = data.resource;
+    });
 
-      this.Pageform = fb.group({
-        NAME: ["", Validators.required],
-        DESCRIPTION: ["", Validators.required],
-        //URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])]
-        URL: ["", Validators.required]
-      });
-    }
-    else {
-      alert("Sorry !! This is for only Super Admin.");
-      this.navCtrl.push(LoginPage);
-    }
+  this.Pageform = fb.group({
+    NAME: ["", Validators.required],
+    DESCRIPTION: ["", Validators.required],
+    URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])]
+  });
   }
 
   ionViewDidLoad() {
@@ -143,11 +135,12 @@ export class PagesetupPage {
 
   Save() {
     if (this.Pageform.valid) {
+
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       let options = new RequestOptions({ headers: headers });
       let url: string;
-      url = this.baseResource_Url + "main_rolepage?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_rolepage?filter=(NAME=" + this.NAME_ngModel_Add.trim() +  ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http.get(url, options)
         .map(res => res.json())
         .subscribe(
@@ -162,7 +155,7 @@ export class PagesetupPage {
 
               this.page_entry.PAGE_GUID = UUID.UUID();
               this.page_entry.CREATION_TS = new Date().toISOString();
-              this.page_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+              this.page_entry.CREATION_USER_GUID = "1";
               this.page_entry.UPDATE_TS = new Date().toISOString();
               this.page_entry.UPDATE_USER_GUID = "";
 
@@ -178,7 +171,7 @@ export class PagesetupPage {
           }
           else {
             console.log("Records Found");
-            alert("The Page is already Exist.")
+            alert("The Cashcard is already Exist.")
           }
         },
         err => {
@@ -188,17 +181,18 @@ export class PagesetupPage {
     }
   }
 
+
   Update(PAGE_GUID: any) {
     if (this.Pageform.valid) {
       if (this.page_entry.NAME == null) { this.page_entry.NAME = this.NAME_ngModel_Edit; }
-      if (this.page_entry.DESCRIPTION == null) { this.page_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit; }
-      if (this.page_entry.URL == null) { this.page_entry.URL = this.URL_ngModel_Edit; }
-
-      this.page_entry.CREATION_TS = this.page_details.CREATION_TS;
-      this.page_entry.CREATION_USER_GUID = this.page_details.CREATION_USER_GUID;
-      this.page_entry.PAGE_GUID = PAGE_GUID;
-      this.page_entry.UPDATE_TS = new Date().toISOString();
-      this.page_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+          if (this.page_entry.DESCRIPTION == null) { this.page_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit; }
+          if (this.page_entry.URL == null) { this.page_entry.URL = this.URL_ngModel_Edit; }
+    
+          this.page_entry.CREATION_TS = this.page_details.CREATION_TS;
+          this.page_entry.CREATION_USER_GUID = this.page_details.CREATION_USER_GUID;
+          this.page_entry.PAGE_GUID = PAGE_GUID;
+          this.page_entry.UPDATE_TS = new Date().toISOString();
+          this.page_entry.UPDATE_USER_GUID = '1';
 
       if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_set_NAME')) {
         let url: string;
@@ -251,9 +245,11 @@ export class PagesetupPage {
     }
   }
 
+ 
   ClearControls() {
     this.NAME_ngModel_Add = "";
     this.DESCRIPTION_ngModel_Add = "";
     this.URL_ngModel_Add = "";
   }
+
 }
