@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
 import { EntertainmentClaim_Model } from '../../models/entertainmentclaim_model';
-import { MasterClaim_Model } from '../../models/masterclaim_model';
+//import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { EntertainmentClaim_Service } from '../../services/entertainmentclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 
@@ -42,7 +42,7 @@ export class EntertainmentclaimPage {
   //@ViewChild('fileInput') fileInput: any;
   isReadyToSave: boolean;
   entertainment_entry: EntertainmentClaim_Model = new EntertainmentClaim_Model();
-  masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
+  //masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
   Entertainmentform: FormGroup;
   private myData: any;
   public entertainments: EntertainmentClaim_Model[] = [];
@@ -300,10 +300,10 @@ export class EntertainmentclaimPage {
               //this.entertainment2_entry.ATTACHMENT_ID = this.Entertainment_FileUpload_ngModel.trim();
 
 
-              this.masterclaim_entry.CLAIM_AMOUNT = this.Entertainment_ClaimAmount_ngModel.trim();
-              this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-              this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-              this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
+              //this.masterclaim_entry.CLAIM_AMOUNT = this.Entertainment_ClaimAmount_ngModel.trim();
+              //this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
+              //this.masterclaim_entry.CREATION_TS = new Date().toISOString();
+              //this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
               // this.masterclaim_entry.CREATION_USER_GUID = '1';
               // this.masterclaim_entry.UPDATE_USER_GUID = "";
               //  this.masterclaim_entry.TENANT_GUID = "";
@@ -318,14 +318,14 @@ export class EntertainmentclaimPage {
               //this.uploadFile();
 
 
-              this.entertainmentservice.save_main_claim_request(this.masterclaim_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    //alert('Entertainment Registered successfully');
-                    //location.reload();
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              // this.entertainmentservice.save_main_claim_request(this.masterclaim_entry)
+              //   .subscribe((response) => {
+              //     if (response.status == 200) {
+              //       //alert('Entertainment Registered successfully');
+              //       //location.reload();
+              //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              //     }
+              //   });
 
               this.entertainmentservice.save_claim_request_detail(this.entertainment_entry)
                 .subscribe((response) => {
