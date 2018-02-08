@@ -61,6 +61,9 @@ import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
 import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {AddTollPage} from '../pages/add-toll/add-toll';
+import { Services } from '../pages/Services';
+//import { TravelClaim_Service } from '../services/travelclaim_service';
 
 
 
@@ -105,11 +108,12 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     TabsPage,
     UserPage,
     SocRegistrationPage,
-    AdminsetupPage
+    AdminsetupPage,
+    AddTollPage
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpModule, HttpClientModule,
     TranslateModule.forRoot
     ({
       loader:{
@@ -175,14 +179,15 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     SpeakerListPage,
     TabsPage,
     UserPage,
-    SocRegistrationPage
+    SocRegistrationPage,
+    AddTollPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData,
     UserData,
     InAppBrowser,
-    SplashScreen,StatusBar,
+    SplashScreen,StatusBar, Services,
 
     Camera,
     File,
