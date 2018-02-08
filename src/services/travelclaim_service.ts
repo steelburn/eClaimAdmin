@@ -16,7 +16,7 @@ import {Observable} from 'rxjs/Observable';
 import { NavController } from 'ionic-angular';
 
 class ServerResponse {
-	constructor(public resource: any) {
+	constructor(public resource: any, public http:Http) {
         
 	}
 };
