@@ -82,29 +82,25 @@
             <ion-grid>
               <ion-row>
                 <ion-col align-self-start>
-                  <table class="Tabler">
+            
+                 <table class="Tabler">
                     <tr class="linedsg TColor">
-                      <th class="lgl1 ">MODULE </th>
+                  
+                      <th class="lgl1">MODULE </th>
+                
                     </tr>
 
                     <tr class="col7" *ngFor="let module of modules">
+     
                       <td class="lgl1">
+                          <input type="checkbox" name="vehicle1" value="Bike">
+                            
                           {{module.NAME}}                          
                       </td>
                     </tr>
 
-                    <!-- <tr class="col7">
-                      <td class="lgl1">                          
-                          APPROVER TASK
-                      </td>
-                    </tr> -->
-
-                    <!-- <tr class="col7">
-                      <td class="lgl1">SETUP</td>
-                    </tr> -->
-
                   </table>
-                  
+             
                 </ion-col>
 
                 <ion-col align-self-center class="over">
@@ -125,6 +121,7 @@
                     </tr>
 
                     <tr class="col7">
+               
                       <td class="lgl1">HOME</td>
                     </tr>
 
