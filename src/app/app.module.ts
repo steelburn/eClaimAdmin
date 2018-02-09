@@ -64,7 +64,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
-
+import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
 
 
 @NgModule({
@@ -109,7 +109,8 @@ import { Services } from '../pages/Services';
     UserPage,
     SocRegistrationPage,
     AdminsetupPage,
-    AddTollPage
+    AddTollPage,
+    ClaimhistoryPage
   ],
   imports: [
     BrowserModule,
@@ -180,7 +181,8 @@ import { Services } from '../pages/Services';
     TabsPage,
     UserPage,
     SocRegistrationPage,
-    AddTollPage
+    AddTollPage,
+    ClaimhistoryPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
