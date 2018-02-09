@@ -9,6 +9,7 @@ import {RolemodulesetupPage} from'../rolemodulesetup/rolemodulesetup';
 import {PagesetupPage} from'../pagesetup/pagesetup';
 import {ModulesetupPage} from'../modulesetup/modulesetup';
 import {SubmodulesetupPage} from'../submodulesetup/submodulesetup';
+import { ClaimhistoryPage } from '../claimhistory/claimhistory';
 
 /**
  * Generated class for the AdminsetupPage page.
@@ -62,7 +63,9 @@ export class AdminsetupPage {
   goToSubModulesetup(){
     this.navCtrl.push(SubmodulesetupPage)
   }
-
+  goToClaimHistory(){
+    this.navCtrl.push(ClaimhistoryPage)
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminsetupPage');
   }
