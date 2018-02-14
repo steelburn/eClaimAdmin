@@ -61,10 +61,15 @@ import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
 import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+
+import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+
 import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+
 
 
 @NgModule({
@@ -109,8 +114,12 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     UserPage,
     SocRegistrationPage,
     AdminsetupPage,
+
+    ProfileSetupPage
+
     AddTollPage,
     ClaimhistoryPage
+
   ],
   imports: [
     BrowserModule,
@@ -181,8 +190,12 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     TabsPage,
     UserPage,
     SocRegistrationPage,
+
+    ProfileSetupPage
+
     AddTollPage,
     ClaimhistoryPage
+
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
