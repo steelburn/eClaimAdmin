@@ -147,7 +147,7 @@ export class RolesetupPage {
       this.http.get(url, options)
         .map(res => res.json())
         .subscribe(
-        data => {
+        data => { 
           let res = data["resource"];
           if (res.length == 0) {
             console.log("No records Found");

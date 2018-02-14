@@ -62,7 +62,15 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+
 import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+
+import {AddTollPage} from '../pages/add-toll/add-toll';
+import { Services } from '../pages/Services';
+//import { TravelClaim_Service } from '../services/travelclaim_service';
+import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+
+
 
 @NgModule({
   declarations: [
@@ -106,11 +114,16 @@ import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
     UserPage,
     SocRegistrationPage,
     AdminsetupPage,
+
     ProfileSetupPage
+
+    AddTollPage,
+    ClaimhistoryPage
+
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpModule, HttpClientModule,
     TranslateModule.forRoot
     ({
       loader:{
@@ -177,14 +190,19 @@ import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
     TabsPage,
     UserPage,
     SocRegistrationPage,
+
     ProfileSetupPage
+
+    AddTollPage,
+    ClaimhistoryPage
+
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData,
     UserData,
     InAppBrowser,
-    SplashScreen,StatusBar,
+    SplashScreen,StatusBar, Services,
 
     Camera,
     File,
