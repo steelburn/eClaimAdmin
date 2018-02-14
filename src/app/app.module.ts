@@ -62,7 +62,7 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-
+import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
 
 @NgModule({
   declarations: [
@@ -105,7 +105,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     TabsPage,
     UserPage,
     SocRegistrationPage,
-    AdminsetupPage
+    AdminsetupPage,
+    ProfileSetupPage
   ],
   imports: [
     BrowserModule,
@@ -175,7 +176,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     SpeakerListPage,
     TabsPage,
     UserPage,
-    SocRegistrationPage
+    SocRegistrationPage,
+    ProfileSetupPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
