@@ -115,7 +115,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     SocRegistrationPage,
     AdminsetupPage,
 
-    ProfileSetupPage
+    ProfileSetupPage,
 
     AddTollPage,
     ClaimhistoryPage
@@ -191,7 +191,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     UserPage,
     SocRegistrationPage,
 
-    ProfileSetupPage
+    ProfileSetupPage,
 
     AddTollPage,
     ClaimhistoryPage
