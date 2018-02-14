@@ -24,6 +24,7 @@ export class ModulePageSetup_Service {
     baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
     Module_New: ModulePageSetup_Model[] = [];
 
+
     constructor(private httpService: BaseHttpService, private nav: NavController) { };
 
     private handleError(error: any) {
@@ -68,7 +69,7 @@ export class ModulePageSetup_Service {
     }
 
     remove(id: string) {
-        let url = this.baseResource_Url + "main_modulepage?filter=(	MODULE_GUID=" + id + ")";
+        let url = this.baseResource_Url + "main_modulepage?filter=(  MODULE_GUID=" + id + ")";
 
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
