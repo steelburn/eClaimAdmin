@@ -30,7 +30,6 @@ export class ProfileSetupPage {
   NAME: any;
   profile_entry: Main_Profile_Model = new Main_Profile_Model();
   Profileform: FormGroup;
-  //profile_model: Main_Profile_Model = new Main_Profile_Model();
   current_profileGUID: string = '';
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_profile' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -56,7 +55,7 @@ export class ProfileSetupPage {
   //---------------------------------------------------------------------
 
   constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private profilesetupservice: ProfileSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction) {
-    
+
     if (localStorage.getItem("g_USER_GUID") != null) {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/main_profile?order=PROFILE_NAME&api_key=" + constants.DREAMFACTORY_API_KEY;
       this.http
@@ -67,14 +66,14 @@ export class ProfileSetupPage {
         });
 
       this.Profileform = fb.group({
-        PROFILE_NAME: [null,  Validators.required],
-        PROFILE_XML: [null,  Validators.required]        
+        PROFILE_NAME: [null, Validators.required],
+        PROFILE_XML: [null, Validators.required]
       });
     }
     else {
       this.navCtrl.push(LoginPage);
     }
-  
+
   }
 
   public AddProfileClick() {
@@ -91,31 +90,23 @@ export class ProfileSetupPage {
     }
   }
 
- public EditClick(MAIN_PROFILE_GUID: any) {
+  public EditClick(MAIN_PROFILE_GUID: any) {
     this.ClearControls();
     this.EditProfileClicked = true;
     this.current_profileGUID = MAIN_PROFILE_GUID;
     var self = this;
     this.profilesetupservice
       .get(MAIN_PROFILE_GUID)
-      .subscribe((data) => {        
-        self.profile_entry = data;      
+      .subscribe((data) => {
+        self.profile_entry = data;
         this.PROFILENAME_ngModel_Edit = self.profile_entry.PROFILE_NAME;
         this.XML_ngModel_Edit = self.profile_entry.PROFILE_XML;
-        localStorage.setItem('Prev_Name', self.profile_entry.PROFILE_NAME);       
+        localStorage.setItem('Prev_Name', self.profile_entry.PROFILE_NAME);
       });
- }
-//  public DeleteClick(MAIN_PROFILE_GUID: any)
-//  {
-//     this.Delete(MAIN_PROFILE_GUID);
-//     //refresher.complete();
-//     //this.navCtrl.push(this.navCtrl.getActive().component);
-//     this.navCtrl.push(ProfileSetupPage);
-//     //this.getProfilesList();
-//  }
- 
- public DeleteClick(MAIN_PROFILE_GUID: any) {
-   console.log(MAIN_PROFILE_GUID);
+  }
+
+  public DeleteClick(MAIN_PROFILE_GUID: any) {
+    console.log(MAIN_PROFILE_GUID);
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
       message: 'Do you want to remove ?',
@@ -136,82 +127,77 @@ export class ProfileSetupPage {
               .subscribe(() => {
                 self.profile_details = self.profile_details.filter((item) => {
                   return item.MAIN_PROFILE_GUID != MAIN_PROFILE_GUID
-                  
+
                 });
-                //window.location.reload()
                 this.navCtrl.setRoot(this.navCtrl.getActive().component);
               });
-            //this.navCtrl.setRoot(ProfileSetupPage);
           }
         }
       ]
     }); alert.present();
-}
+  }
 
- Save_Profile() {   
+  Save_Profile() {
     if (this.Profileform.valid) {
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       let options = new RequestOptions({ headers: headers });
       let url: string;
-      url = this.baseResource_Url + "main_profile?filter=(PROFILE_NAME=" + this.PROFILENAME_ngModel_Add.trim() +')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      
+      url = this.baseResource_Url + "main_profile?filter=(PROFILE_NAME=" + this.PROFILENAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
       this.http.get(url, options)
         .map(res => res.json())
         .subscribe(
           data => {
-          let res = data["resource"];
-          if (res.length == 0) {
-            console.log("No records Found");
-            if (this.Exist_Record == false) {
-              this.profile_entry.PROFILE_NAME = this.PROFILENAME_ngModel_Add.trim();
-              this.profile_entry.PROFILE_XML = this.XML_ngModel_Add.trim();
-              this.profile_entry.MAIN_PROFILE_GUID = UUID.UUID();
-              this.profile_entry.TENANT_GUID = UUID.UUID();
-              this.profile_entry.TENANT_SITE_GUID = UUID.UUID();
-              this.profile_entry.CREATION_TS = new Date().toISOString();
-              this.profile_entry.CREATION_USER_GUID = '1';
-              this.profile_entry.UPDATE_TS = new Date().toISOString();
-              this.profile_entry.UPDATE_USER_GUID = "";
-              this.profilesetupservice.save(this.profile_entry)
-                .subscribe((response) => {
-                  console.log('hi');
-                  if (response.status == 200) {
-                    alert('Profile Registered successfully');
-                    //this.GlobalFunction.showAlert_New('Bank Registered successfully !!');
-                    //location.reload();
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+            let res = data["resource"];
+            if (res.length == 0) {
+              console.log("No records Found");
+              if (this.Exist_Record == false) {
+                this.profile_entry.PROFILE_NAME = this.PROFILENAME_ngModel_Add.trim();
+                this.profile_entry.PROFILE_XML = this.XML_ngModel_Add.trim();
+                this.profile_entry.MAIN_PROFILE_GUID = UUID.UUID();
+                this.profile_entry.TENANT_GUID = UUID.UUID();
+                this.profile_entry.TENANT_SITE_GUID = UUID.UUID();
+                this.profile_entry.CREATION_TS = new Date().toISOString();
+                this.profile_entry.CREATION_USER_GUID = '1';
+                this.profile_entry.UPDATE_TS = new Date().toISOString();
+                this.profile_entry.UPDATE_USER_GUID = "";
+                this.profilesetupservice.save(this.profile_entry)
+                  .subscribe((response) => {
+                    console.log('hi');
+                    if (response.status == 200) {
+                      alert('Profile Registered successfully');
+                      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+              }
             }
+            else {
+              console.log("Records Found");
+              alert("The Profile is already Exist.")
+            }
+          },
+          err => {
+            this.Exist_Record = false;
+            console.log("ERROR!: ", err);
           }
-          else {
-            console.log("Records Found");
-            alert("The Profile is already Exist.")
-          }
-        },
-        err => {
-          this.Exist_Record = false;
-          console.log("ERROR!: ", err);
-        }
         );
     }
-}
+  }
 
 
-getProfilesList() {
+  getProfilesList() {
     let self = this;
     let params: URLSearchParams = new URLSearchParams();
     self.profilesetupservice.get_profile(params)
       .subscribe((profile: Main_Profile_Model[]) => {
         self.profiles = profile;
       });
-}
+  }
 
-Update_Profile() {
+  Update_Profile() {
     if (this.Profileform.valid) {
-      //alert('hi1');
       if (this.profile_entry.PROFILE_NAME == null) { this.profile_entry.PROFILE_NAME = this.PROFILENAME_ngModel_Edit.trim(); }
       this.profile_entry.PROFILE_XML = this.profile_entry.PROFILE_XML.trim();
       this.profile_entry.TENANT_SITE_GUID = this.profile_entry.TENANT_SITE_GUID.trim();
@@ -224,78 +210,62 @@ Update_Profile() {
       this.profile_entry.UPDATE_USER_GUID = '1';
 
       if (this.PROFILENAME_ngModel_Edit.trim() != localStorage.getItem('Prev_Name')) {
-        //alert('hi');
         let url: string;
         url = this.baseResource_Url + "main_profile?filter=(PROFILE_NAME=" + this.PROFILENAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         this.http.get(url)
           .map(res => res.json())
           .subscribe(
-          data => {
-            let res = data["resource"];
-           
-            //console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_Name'));
-            if (res.length == 0) {
-              console.log("No records Found");
-              this.profile_entry.PROFILE_NAME = this.PROFILENAME_ngModel_Edit.trim();
-              this.profile_entry.PROFILE_XML = this.XML_ngModel_Edit.trim();
+            data => {
+              let res = data["resource"];
+              if (res.length == 0) {
+                console.log("No records Found");
+                this.profile_entry.PROFILE_NAME = this.PROFILENAME_ngModel_Edit.trim();
+                this.profile_entry.PROFILE_XML = this.XML_ngModel_Edit.trim();
 
-      //         this.profile_entry.TENANT_SITE_GUID = this.profile_entry.TENANT_SITE_GUID.trim();
-      // this.profile_entry.TENANT_GUID = this.profile_entry.TENANT_GUID;
-      // this.profile_entry.CREATION_TS = this.profile_entry.CREATION_TS;
-      // this.profile_entry.CREATION_USER_GUID = this.profile_entry.CREATION_USER_GUID;
+                this.profile_entry.MAIN_PROFILE_GUID = this.profile_entry.MAIN_PROFILE_GUID;;
 
-      this.profile_entry.MAIN_PROFILE_GUID = this.profile_entry.MAIN_PROFILE_GUID;;
-      //alert(this.profile_entry.MAIN_PROFILE_GUID);
-      // this.profile_entry.UPDATE_TS = new Date().toISOString();
-      // this.profile_entry.UPDATE_USER_GUID = '1';
-              //**************Update service if it is new details*************************
-              this.profilesetupservice.update_profile(this.profile_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Profile updated successfully');
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
-              //**************************************************************************
-            }
-            else {
-              console.log("Records Found");
-              alert("The profile is already Exist. ");
-            }
-          },
-          err => {
-            this.Exist_Record = false;
-            console.log("ERROR!: ", err);
-          });
+                //**************Update service if it is new details*************************
+                this.profilesetupservice.update_profile(this.profile_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+                      alert('Profile updated successfully');
+                      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+                //**************************************************************************
+              }
+              else {
+                console.log("Records Found");
+                alert("The profile is already Exist. ");
+              }
+            },
+            err => {
+              this.Exist_Record = false;
+              console.log("ERROR!: ", err);
+            });
       }
       else {
-        //alert('hi2');
         if (this.profile_entry.PROFILE_NAME == null) { this.profile_entry.PROFILE_NAME = localStorage.getItem('Prev_Name'); }
         this.profile_entry.PROFILE_NAME = this.PROFILENAME_ngModel_Edit.trim();
         this.profile_entry.PROFILE_XML = this.XML_ngModel_Edit.trim();
         //**************Update service if it is old details*************************
-
-        // alert(JSON.stringify(this.bank_entry));     
-       // alert('hi22');
         this.profilesetupservice.update_profile(this.profile_entry)
           .subscribe((response) => {
-            //alert('hi3');
             if (response.status == 200) {
               alert('Profile updated successfully');
               this.navCtrl.setRoot(this.navCtrl.getActive().component);
             }
           });
-        //  }
       }
     }
-}
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfileSetupPage');
   }
   ClearControls() {
     this.PROFILENAME_ngModel_Add = "";
-    this.XML_ngModel_Add="";
+    this.XML_ngModel_Add = "";
     this.PROFILENAME_ngModel_Edit = "";
     this.XML_ngModel_Edit = "";
   }
