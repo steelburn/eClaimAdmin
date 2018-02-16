@@ -15,7 +15,9 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddRoleClick()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="AddRoleClick()">
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-fab>
 
   <ion-list>
@@ -25,7 +27,11 @@
           <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
           <th class="lgl1">NAME</th>
           <th class="lgl1">DESCRIPTION</th>
-          <th class="lgl1">ACTIVE FLAG</th>
+          <th class="lgl1">ADD</th>
+          <th class="lgl1">EDIT</th>
+          <th class="lgl1">DELETE</th>
+          <th class="lgl1">VIEW</th>
+          <th class="lgl1">ACTIVE FLAG</th>          
           <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
 
         </tr>
@@ -34,6 +40,24 @@
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{role.NAME}}</td>
           <td class="lgl1">{{role.DESCRIPTION}}</td>
+          
+          <td class="lgl1">
+            <ion-toggle class="tog" *ngIf="role.KEY_ADD==1" checked=true></ion-toggle>
+            <ion-toggle class="tog" *ngIf="role.KEY_ADD==0" checked=false></ion-toggle>
+          </td>
+          <td class="lgl1">
+            <ion-toggle class="tog" *ngIf="role.KEY_EDIT==1" checked=true></ion-toggle>
+            <ion-toggle class="tog" *ngIf="role.KEY_EDIT==0" checked=false></ion-toggle>
+          </td>
+          <td class="lgl1">
+            <ion-toggle class="tog" *ngIf="role.KEY_DELETE==1" checked=true></ion-toggle>
+            <ion-toggle class="tog" *ngIf="role.KEY_DELETE==0" checked=false></ion-toggle>
+          </td>
+          <td class="lgl1">
+            <ion-toggle class="tog" *ngIf="role.KEY_VIEW==1" checked=true></ion-toggle>
+            <ion-toggle class="tog" *ngIf="role.KEY_VIEW==0" checked=false></ion-toggle>
+          </td>
+          
           <td class="lgl1">
             <ion-toggle class="tog" *ngIf="role.ACTIVATION_FLAG==1" checked=true></ion-toggle>
             <ion-toggle class="tog" *ngIf="role.ACTIVATION_FLAG==0" checked=false></ion-toggle>
@@ -41,8 +65,12 @@
 
 
           <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(role.ROLE_GUID)"><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end (click)="DeleteClick(role.ROLE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+            <button ion-button item-end (click)="EditClick(role.ROLE_GUID)">
+              <ion-icon name="md-create"></ion-icon>
+            </button>
+            <button ion-button item-end (click)="DeleteClick(role.ROLE_GUID)">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
           </td>
         </tr>
 
@@ -62,7 +90,7 @@
 
         <div class="icHeaderText">REGISTER NEW ROLE</div>
         <button class="btnR" (click)="CloseRoleClick()">
-          <ion-icon name="md-close"></ion-icon> 
+          <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
       <ion-list>
@@ -78,31 +106,38 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"ADD"}}</ion-label>            
+            <ion-label stacked>{{"ADD"}}</ion-label>
             <ion-toggle formControlName="ADD_PERMISSON" [(ngModel)]="ADD_ngModel_Add"></ion-toggle>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"EDIT"}}</ion-label>            
+            <ion-label stacked>{{"EDIT"}}</ion-label>
             <ion-toggle formControlName="EDIT_PERMISSON" [(ngModel)]="EDIT_ngModel_Add"></ion-toggle>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DELETE"}}</ion-label>            
+            <ion-label stacked>{{"DELETE"}}</ion-label>
             <ion-toggle formControlName="DELETE_PERMISSON" [(ngModel)]="DELETE_ngModel_Add"></ion-toggle>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"VIEW"}}</ion-label>            
+            <ion-label stacked>{{"VIEW"}}</ion-label>
             <ion-toggle formControlName="VIEW_PERMISSON" [(ngModel)]="VIEW_ngModel_Add"></ion-toggle>
           </ion-item>
-          
+
           <ion-item>
-            <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>            
+            <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
             <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="ACTIVATION_FLAG_ngModel_Add"></ion-toggle>
           </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"PRIORITY LEVEL"}}</ion-label>
+            <ion-input type="text" formControlName="PRIORITYLEVEL" [(ngModel)]="PRIORITYLEVEL_ngModel_Add" placeholder="{{'Please fill in the priority level'}}"></ion-input>
+          </ion-item>
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+          </div>
         </form>
       </ion-list>
     </ion-card>
@@ -110,7 +145,7 @@
   </div>
   <!-- add Role form end-->
 
-  <!-- edit claimtype form start-->
+  <!-- edit Role form start-->
   <div class="blackcontainer" *ngIf="EditRoleClicked">
   </div>
   <div class="popup" padding *ngIf="EditRoleClicked">
@@ -118,7 +153,7 @@
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">UPDATE ROLE</div>
         <button class="btnR" (click)="CloseRoleClick()">
-          <ion-icon name="md-close"></ion-icon> 
+          <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
 
@@ -137,9 +172,35 @@
           </ion-item>
 
           <ion-item>
+            <ion-label stacked>{{"ADD"}}</ion-label>
+            <ion-toggle formControlName="ADD_PERMISSON" [(ngModel)]="ADD_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"EDIT"}}</ion-label>
+            <ion-toggle formControlName="EDIT_PERMISSON" [(ngModel)]="EDIT_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"DELETE"}}</ion-label>
+            <ion-toggle formControlName="DELETE_PERMISSON" [(ngModel)]="DELETE_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"VIEW"}}</ion-label>
+            <ion-toggle formControlName="VIEW_PERMISSON" [(ngModel)]="VIEW_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
             <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
-            
+
             <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="ACTIVATION_FLAG_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"PRIORITY LEVEL"}}</ion-label>
+            <ion-input type="text" formControlName="PRIORITYLEVEL" [(ngModel)]="PRIORITYLEVEL_ngModel_Edit" [value]="PRIORITYLEVEL_ngModel"
+              placeholder="{{'Please fill in the priority level'}}"></ion-input>
           </ion-item>
 
           <div class="btn">
@@ -149,5 +210,6 @@
       </ion-list>
     </ion-card>
   </div>
+  <!-- edit Role form end-->
 
 </ion-content>
