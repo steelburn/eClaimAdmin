@@ -196,15 +196,13 @@ export class ConferenceApp {
   public translateToMalayClicked: boolean = false;
   public translateToEnglishClicked: boolean = true;
 
-  public translateToEnglish() {
-    alert('english');
+  public translateToEnglish() {   
     this.translate.use('en');
     this.translateToMalayClicked = !this.translateToMalayClicked;
     this.translateToEnglishClicked = !this.translateToEnglishClicked;
   }
 
   public translateToMalay() {
-    alert('malay');
     this.translate.use('ms');
     this.translateToEnglishClicked = !this.translateToEnglishClicked;
     this.translateToMalayClicked = !this.translateToMalayClicked;
