@@ -28,10 +28,14 @@ import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
 import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+
 import { TranslateService } from '@ngx-translate/core';
 
 import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+
 export interface PageInterface {
 
   title: string;
