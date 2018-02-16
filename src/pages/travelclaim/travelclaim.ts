@@ -65,8 +65,7 @@ export class TravelclaimPage {
 
   items: string[];  
 
-  projects: any;
-  Travelform: FormGroup;
+  
 
 
   public Travel_SOC_No_ngModel: any;

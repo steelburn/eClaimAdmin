@@ -76,7 +76,7 @@ export class AddTollPage {
 
     this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
 
-    this.travelservice.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
+    //this.travelservice.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
 
       var postClaimRef = response.json();
       console.log(
