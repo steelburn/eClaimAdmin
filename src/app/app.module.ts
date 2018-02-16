@@ -51,7 +51,7 @@ import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 import { PeermissionPage } from'../pages/peermission/peermission';
 import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
-import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';  
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -61,6 +61,15 @@ import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
 import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {AddTollPage} from '../pages/add-toll/add-toll';
+import { Services } from '../pages/Services';
+
+
+//import { TravelClaim_Service } from '../services/travelclaim_service';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
+}
 
 
 
@@ -105,17 +114,20 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     TabsPage,
     UserPage,
     SocRegistrationPage,
-    AdminsetupPage
+    AdminsetupPage,
+    AddTollPage
   ],
+
+
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpModule, HttpClientModule,
     TranslateModule.forRoot
     ({
       loader:{
         provide:TranslateLoader,
         useFactory:(createTranslateLoader),
-        deps:[Http]
+        deps:[HttpClient]
       }
     }),
     IonicModule.forRoot(ConferenceApp, {}, {
@@ -134,6 +146,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     }),
     IonicStorageModule.forRoot()
   ],
+
   bootstrap: [IonicApp],
   entryComponents: [
     ConferenceApp,
@@ -175,14 +188,15 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     SpeakerListPage,
     TabsPage,
     UserPage,
-    SocRegistrationPage
+    SocRegistrationPage,
+    AddTollPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ConferenceData,
+    ConferenceData, HttpClientModule,
     UserData,
     InAppBrowser,
-    SplashScreen,StatusBar,
+    SplashScreen,StatusBar, Services,
 
     Camera,
     File,
@@ -193,6 +207,4 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
   ]
 })
 export class AppModule { }
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
-}
+

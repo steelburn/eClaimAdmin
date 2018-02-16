@@ -1,5 +1,5 @@
 export class ClaimReqMain_Model {
-    constructor(
+    constructor(   
       public CLAIM_REQUEST_GUID: string = null,
       public SOC_GUID: string = null,
       public TENANT_GUID: string = null,

@@ -7,15 +7,17 @@ import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl }
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import * as constants from '../../app/config/constants';
-import * as constants_home from '../../app/config/constants_home';
+import * as constants from '../../config/constants'
+//import * as constants from '../../app/config/constants';        
+//import * as constants_home from '../../app/config/constants_home';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';
 import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
-import { TravelClaim_Service } from '../../services/travelclaim_service';
+//import { TravelClaim_Service } from '../../services/travelclaim_service';
+import { Services } from '../Services';
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
@@ -28,6 +30,7 @@ import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
 import {Router, Request, Response, NextFunction} from 'express';
+import {AddTollPage} from '../../pages/add-toll/add-toll';
 /**
  * Generated class for the TravelclaimPage page.
  *
@@ -37,7 +40,7 @@ import {Router, Request, Response, NextFunction} from 'express';
 @IonicPage()
 @Component({
   selector: 'page-travelclaim',
-  templateUrl: 'travelclaim.html', providers: [TravelClaim_Service, BaseHttpService, FileTransfer]
+  templateUrl: 'travelclaim.html', providers: [Services, BaseHttpService, FileTransfer]
 })
 export class TravelclaimPage {
   isReadyToSave: boolean;
@@ -45,19 +48,21 @@ export class TravelclaimPage {
   //masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
  
 
-  baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request?api_key=' + constants.DREAMFACTORY_API_KEY;
+ // baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request?api_key=' + constants.DREAMFACTORY_API_KEY;
  // baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-  baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+ // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  //baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   
-  baseResourceUrl_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  //baseResourceUrl_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
  // baseResource_Url_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   vehicles: any;
   storeProjects: any;
-  projects: any;
+  public projects: any;
   Travelform: FormGroup;
+
+  items: string[];  
 
   public Travel_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;
@@ -112,7 +117,7 @@ export class TravelclaimPage {
   //     }
    
   //   }
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private travelservice: TravelClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
   {
     this.Travelform = fb.group({
       soc_no: '',
@@ -149,7 +154,7 @@ export class TravelclaimPage {
 
   LoadProjects() {
     this.http
-      .get(TravelClaim_Service.getUrl('soc_registration'))
+      .get(Services.getUrl('soc_registration'))
       .map(res => res.json())
       .subscribe(data => {
       this.storeProjects=  this.projects = data["resource"];
@@ -160,7 +165,7 @@ export class TravelclaimPage {
 
   LoadVehicles() {
     this.http
-      .get(TravelClaim_Service.getUrl('main_mileage'))
+      .get(Services.getUrl('main_mileage'))
       .map(res => res.json())
       .subscribe(data => {
         this.vehicles = data["resource"];
@@ -254,10 +259,10 @@ export class TravelclaimPage {
 
   // filterProjects(params?: any) {
   //   if (!params) {
-  //     return this.storeProjects;
+  //     //return this.storeProjects;
   //   }
 
-  //   return this.projects.filter((item) => {
+  //     return this.projects.filter((item) =>{
   //     for (let key in params) {
   //       let field = item[key];
   //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
@@ -268,6 +273,22 @@ export class TravelclaimPage {
   //     }
   //     return null;
   //   });
+  // }
+
+  // filterProjects(ev: any) {
+  //   alert('search');
+  //   // Reset items back to all of the items
+  //   this.storeProjects();
+
+  //   // set val to the value of the searchbar
+  //   let val = ev.target.value;
+
+  //   // if the value is an empty string don't filter the items
+  //   if (val && val.trim() != '') {
+  //     this.items = this.items.filter((item) => {
+  //       return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+  //     })
+  //   }
   // }
 
   
@@ -360,7 +381,7 @@ export class TravelclaimPage {
     let month = new Date(value.travel_date).getMonth() + 1;
     let year = new Date(value.travel_date).getFullYear();
     let claimRefGUID;
-    let url = TravelClaim_Service.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+    let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
     this.http
       .get(url)
       .map(res => res.json())
@@ -376,7 +397,7 @@ export class TravelclaimPage {
           claimReqRef.CREATION_TS = new Date().toISOString();
           claimReqRef.UPDATE_TS = new Date().toISOString();
 
-          this.travelservice.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
+          this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
             var postClaimRef = response.json();
             claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
 
@@ -397,7 +418,7 @@ export class TravelclaimPage {
             claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
             claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
             claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
-            this.travelservice.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
+            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
               var postClaimMain = response.json();
               this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
               this.MainClaimSaved = true;
@@ -417,17 +438,17 @@ export class TravelclaimPage {
           claimReqMainRef.TRAVEL_DATE = value.travel_date;
           claimReqMainRef.START_TS = value.start_DT;
           claimReqMainRef.END_TS = value.end_DT;
-          claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-          claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
+          claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+          claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
           claimReqMainRef.FROM = this.Travel_From_ngModel;
           claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
           claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
           claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
-        this.travelservice.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
+        this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
             var postClaimMain = response.json();
-            this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+            this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;  
 
             this.MainClaimSaved = true;
             alert('Claim Has Registered.')
@@ -440,14 +461,14 @@ export class TravelclaimPage {
   showAddToll() {
     //let AddTollModal = this.modalCtrl.create(AddTollPage);
     //AddTollModal.present;
-    this.navCtrl.push('AddTollPage', {
+    this.navCtrl.push(AddTollPage, {
       MainClaim: this.ClaimRequestMain,
       ClaimMethod: '03048acb-037a-11e8-a50c-00155de7e742'
     });
   }
 
   showAddParking() {
-    this.navCtrl.push('AddTollPage', {
+    this.navCtrl.push(AddTollPage, {
       MainClaim: this.ClaimRequestMain,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742'
     });

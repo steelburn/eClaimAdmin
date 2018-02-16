@@ -16,7 +16,7 @@ import {Observable} from 'rxjs/Observable';
 import { NavController } from 'ionic-angular';
 
 class ServerResponse {
-	constructor(public resource: any) {
+	constructor(public resource: any, public http:Http) {
         
 	}
 };
@@ -74,7 +74,7 @@ export class TravelClaim_Service
     	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
     	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		let options = new RequestOptions({ headers: queryHeaders });
-		return this.httpService.http.post(this.baseResourceUrl, travel_main.toJson(true),options)
+		return this.httpService.http.post(this.baseResourceUrl, travel_main.toJson(true),options)  
 			.map((response) => {
 				return response;
 			});

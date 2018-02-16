@@ -1,5 +1,5 @@
 export class ClaimRefMain_Model {
-    constructor(
+    constructor(  
       public CLAIM_REF_GUID: string = null,
       public USER_GUID: string = null,
       public TENANT_GUID: string = null,
