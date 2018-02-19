@@ -14,38 +14,114 @@
 
 
 <ion-content padding>
-  
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="AddPermissionClick()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
+  <ion-list>
+    <ion-item>
+      <table class="Tabler">
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+          <th class="lgl1">TENANT NAME</th>
+          <th class="lgl1">MODULES</th>
+          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+        </tr>
 
+        <tr class="col7" *ngFor="let role of roles; let i=index">
+          <td class="lgl1">{{i+1}}</td>
+          <td class="lgl1">{{role.NAME}}</td>
+          <td class="lgl1">{{role.MODULES}}</td>
 
-  <ion-item>
-    <ion-label stacked>{{"TENANT NAME"}}</ion-label>
-    <ion-select>
-      <ion-option>ALAN</ion-option>
-      <ion-option>BIJAY</ion-option>
-    </ion-select>
-  </ion-item>
+          <td class="lgl1 fColor">
+            <button ion-button item-end (click)="EditClick(role.ROLE_GUID)">
+              <ion-icon name="md-create"></ion-icon>
+            </button>
+            <button ion-button item-end (click)="DeleteClick(role.ROLE_GUID)">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </ion-item>
+  </ion-list>
 
-
-  <ion-item>
-    <ion-label stacked>{{"MODULE"}}</ion-label>
-    <ion-select>
-      <ion-option>SETUP</ion-option>
-      <ion-option>CLAIM FORM</ion-option>
-    </ion-select>
-  </ion-item>
-
-
-
-  <ion-item>
-    <ion-label stacked>{{"SUB MODULE"}}</ion-label>
-    <ion-select>
-      <ion-option>BANK</ion-option>
-      <ion-option>TRAVEL</ion-option>
-    </ion-select>
-  </ion-item>
-
-  <div class="btn">
-    <button ion-button>SUBMIT</button>
+  <!-- add Roleform start-->
+  <div class="blackcontainer" *ngIf="AddPermissionClicked">
   </div>
+  <div class="popup" padding *ngIf="AddPermissionClicked">
+
+    <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">REGISTER NEW PERMISSION</div>
+        <button class="btnR" (click)="ClosePermissionClick()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-card-header>
+      <ion-list>
+        <form [formGroup]="Permissionform">
+          <ion-item>
+            <ion-label stacked>{{"TENANT NAME"}}</ion-label>
+            <ion-select formControlName="TENANTNAME" [(ngModel)]="TENANTNAME_ngModel_Add" placeholder="{{'Please select tenant'}}">
+              <ion-option *ngFor="let tenant of tenants" [value]="tenant.TENANT_GUID">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"MODULES"}}</ion-label>
+            <ion-select formControlName="MODULES" [(ngModel)]="MODULES_ngModel_Add" placeholder="{{'Please select module'}}" multiple="true">
+              <ion-option *ngFor="let module of modules" [value]="module.MODULE_GUID">{{module.NAME}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <div class="btn">
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Permissionform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+          </div>
+        </form>
+      </ion-list>
+    </ion-card>
+
+  </div>
+  <!-- add Permission form end-->
+
+  <!-- edit Permission form start-->
+  <div class="blackcontainer" *ngIf="EditPermissionClicked">
+  </div>
+  <div class="popup" padding *ngIf="EditPermissionClicked">
+    <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+        <div class="icHeaderText">UPDATE PERMISSION</div>
+        <button class="btnR" (click)="ClosePermissionClick()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-card-header>
+
+      <ion-list>
+        <form [formGroup]="Permissionform">
+          <ion-item>
+            <ion-label stacked>{{"TENANT NAME"}}</ion-label>
+            <ion-select formControlName="TENANTNAME" [(ngModel)]="TENANTNAME_ngModel_Edit" placeholder="{{'Please select tenant'}}">
+              <ion-option *ngFor="let tenant of tenants" [value]="tenant.TENANT_GUID">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"MODULES"}}</ion-label>
+            <ion-select formControlName="MODULES" [(ngModel)]="MODULES_ngModel_Edit" placeholder="{{'Please select module'}}" multiple="true">
+              <ion-option *ngFor="let module of modules" [value]="module.MODULE_GUID">{{module.NAME}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <div class="btn">
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(role_details.ROLE_GUID)">{{"SUBMIT" | translate}}</button>
+          </div>
+        </form>
+      </ion-list>
+    </ion-card>
+  </div>
+  <!-- edit Permission form end-->
+
 </ion-content>
