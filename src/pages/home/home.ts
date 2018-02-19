@@ -12,6 +12,7 @@ import { GiftclaimPage } from '../giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../travelclaim/travelclaim';
+import { ProfileSetupPage } from '../Profile-Setup/Profile-Setup';
 @Component({
   selector: 'page-speaker-list',
   templateUrl: 'home.html'
@@ -51,6 +52,10 @@ export class SpeakerListPage {
 
      goToEntertainmentClaim(){
     this.navCtrl.push(EntertainmentclaimPage)
+  }
+  goToProfile()
+  {
+    this.navCtrl.push(ProfileSetupPage)
   }
 
        goToTravelClaim(){
