@@ -9,17 +9,6 @@ webpackJsonp([0],[
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DREAMFACTORY_API_KEY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return DREAMFACTORY_INSTANCE_URL; });
-var DREAMFACTORY_API_KEY = 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881';
-var DREAMFACTORY_INSTANCE_URL = 'http://api.zen.com.my';
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseHttpService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
@@ -49,7 +38,18 @@ BaseHttpService = __decorate([
 //# sourceMappingURL=base-http.js.map
 
 /***/ }),
-/* 8 */,
+/* 7 */,
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DREAMFACTORY_API_KEY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return DREAMFACTORY_INSTANCE_URL; });
+var DREAMFACTORY_API_KEY = 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881';
+var DREAMFACTORY_INSTANCE_URL = 'http://api.zen.com.my';
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
 /* 9 */,
 /* 10 */,
 /* 11 */,
@@ -79,11 +79,11 @@ BaseHttpService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_data__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__setup_setup__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__adminsetup_adminsetup__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_data__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__setup_setup__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__adminsetup_adminsetup__ = __webpack_require__(76);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -184,17 +184,72 @@ LoginPage = __decorate([
 /* 36 */,
 /* 37 */,
 /* 38 */,
-/* 39 */,
+/* 39 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Services; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_constants__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var Services = (function () {
+    function Services(http) {
+        this.http = http;
+    }
+    Services.getUrl = function (table, args) {
+        if (args != null) {
+            return __WEBPACK_IMPORTED_MODULE_0__config_constants__["b" /* DREAMFACTORY_TABLE_URL */] + '/' + table + '?' + args + '&api_key=' + __WEBPACK_IMPORTED_MODULE_0__config_constants__["a" /* DREAMFACTORY_API_KEY */];
+        }
+        return __WEBPACK_IMPORTED_MODULE_0__config_constants__["b" /* DREAMFACTORY_TABLE_URL */] + '/' + table + '?api_key=' + __WEBPACK_IMPORTED_MODULE_0__config_constants__["a" /* DREAMFACTORY_API_KEY */];
+    };
+    Services.prototype.postUrl = function (table) {
+        return __WEBPACK_IMPORTED_MODULE_0__config_constants__["b" /* DREAMFACTORY_TABLE_URL */] + '/' + table;
+    };
+    Services.prototype.postData = function (endpoint, body) {
+        var queryHeaders = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        queryHeaders.append('Content-Type', 'application/json');
+        //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+        queryHeaders.append('X-Dreamfactory-API-Key', __WEBPACK_IMPORTED_MODULE_0__config_constants__["a" /* DREAMFACTORY_API_KEY */]);
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: queryHeaders });
+        return this.http.post(this.postUrl(endpoint), body, options)
+            .map(function (response) {
+            return response;
+        });
+    };
+    return Services;
+}());
+Services = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["A" /* Injectable */])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+], Services);
+
+//# sourceMappingURL=Services.js.map
+
+/***/ }),
 /* 40 */,
 /* 41 */,
-/* 42 */
+/* 42 */,
+/* 43 */,
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserData; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(126);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -281,12 +336,170 @@ UserData = __decorate([
 //# sourceMappingURL=user-data.js.map
 
 /***/ }),
-/* 43 */,
-/* 44 */,
 /* 45 */,
 /* 46 */,
-/* 47 */,
-/* 48 */,
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClaimRefMain_Model; });
+var ClaimRefMain_Model = (function () {
+    function ClaimRefMain_Model(CLAIM_REF_GUID, USER_GUID, TENANT_GUID, REF_NO, MONTH, YEAR, STATUS, STATUS_REMARKS, CLOSURE_TYPE_GUID, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID) {
+        if (CLAIM_REF_GUID === void 0) { CLAIM_REF_GUID = null; }
+        if (USER_GUID === void 0) { USER_GUID = null; }
+        if (TENANT_GUID === void 0) { TENANT_GUID = null; }
+        if (REF_NO === void 0) { REF_NO = null; }
+        if (MONTH === void 0) { MONTH = null; }
+        if (YEAR === void 0) { YEAR = null; }
+        if (STATUS === void 0) { STATUS = null; }
+        if (STATUS_REMARKS === void 0) { STATUS_REMARKS = null; }
+        if (CLOSURE_TYPE_GUID === void 0) { CLOSURE_TYPE_GUID = null; }
+        if (CREATION_TS === void 0) { CREATION_TS = null; }
+        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
+        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
+        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
+        this.CLAIM_REF_GUID = CLAIM_REF_GUID;
+        this.USER_GUID = USER_GUID;
+        this.TENANT_GUID = TENANT_GUID;
+        this.REF_NO = REF_NO;
+        this.MONTH = MONTH;
+        this.YEAR = YEAR;
+        this.STATUS = STATUS;
+        this.STATUS_REMARKS = STATUS_REMARKS;
+        this.CLOSURE_TYPE_GUID = CLOSURE_TYPE_GUID;
+        this.CREATION_TS = CREATION_TS;
+        this.CREATION_USER_GUID = CREATION_USER_GUID;
+        this.UPDATE_TS = UPDATE_TS;
+        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
+    }
+    ClaimRefMain_Model.fromJson = function (json) {
+        if (!json)
+            return;
+        return new ClaimRefMain_Model(json.CLAIM_REF_GUID, json.USER_GUID, json.TENANT_GUID, json.REF_NO, json.MONTH, json.YEAR, json.STATUS, json.STATUS_REMARKS, json.CLOSURE_TYPE_GUID, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID);
+    };
+    ClaimRefMain_Model.prototype.toJson = function (stringify) {
+        var doc = {
+            CLAIM_REF_GUID: this.CLAIM_REF_GUID,
+            USER_GUID: this.USER_GUID,
+            TENANT_GUID: this.TENANT_GUID,
+            REF_NO: this.REF_NO,
+            MONTH: this.MONTH,
+            YEAR: this.YEAR,
+            STATUS: this.STATUS,
+            STATUS_REMARKS: this.STATUS_REMARKS,
+            CLOSURE_TYPE_GUID: this.CLOSURE_TYPE_GUID,
+            CREATION_TS: this.CREATION_TS,
+            CREATION_USER_GUID: this.CREATION_USER_GUID,
+            UPDATE_TS: this.UPDATE_TS,
+            UPDATE_USER_GUID: this.UPDATE_USER_GUID
+        };
+        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
+    };
+    return ClaimRefMain_Model;
+}());
+
+//# sourceMappingURL=ClaimRefMain_Model.js.map
+
+/***/ }),
+/* 48 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClaimReqMain_Model; });
+var ClaimReqMain_Model = (function () {
+    function ClaimReqMain_Model(CLAIM_REQUEST_GUID, SOC_GUID, CUSTOMER_GUID, TENANT_GUID, CLAIM_REF_GUID, CLAIM_TYPE_GUID, MILEAGE_GUID, START_TS, END_TS, FROM, DESTINATION, DISTANCE_KM, MILEAGE_AMOUNT, CLAIM_AMOUNT, DESCRIPTION, CALENDAR_REF, TRAVEL_DATE, STATUS, STATUS_REMARKS, STAGE, STAGE_REMARKS, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID) {
+        if (CLAIM_REQUEST_GUID === void 0) { CLAIM_REQUEST_GUID = null; }
+        if (SOC_GUID === void 0) { SOC_GUID = null; }
+        if (CUSTOMER_GUID === void 0) { CUSTOMER_GUID = null; }
+        if (TENANT_GUID === void 0) { TENANT_GUID = null; }
+        if (CLAIM_REF_GUID === void 0) { CLAIM_REF_GUID = null; }
+        if (CLAIM_TYPE_GUID === void 0) { CLAIM_TYPE_GUID = null; }
+        if (MILEAGE_GUID === void 0) { MILEAGE_GUID = null; }
+        if (START_TS === void 0) { START_TS = null; }
+        if (END_TS === void 0) { END_TS = null; }
+        if (FROM === void 0) { FROM = null; }
+        if (DESTINATION === void 0) { DESTINATION = null; }
+        if (DISTANCE_KM === void 0) { DISTANCE_KM = null; }
+        if (MILEAGE_AMOUNT === void 0) { MILEAGE_AMOUNT = null; }
+        if (CLAIM_AMOUNT === void 0) { CLAIM_AMOUNT = null; }
+        if (DESCRIPTION === void 0) { DESCRIPTION = null; }
+        if (CALENDAR_REF === void 0) { CALENDAR_REF = null; }
+        if (TRAVEL_DATE === void 0) { TRAVEL_DATE = null; }
+        if (STATUS === void 0) { STATUS = null; }
+        if (STATUS_REMARKS === void 0) { STATUS_REMARKS = null; }
+        if (STAGE === void 0) { STAGE = null; }
+        if (STAGE_REMARKS === void 0) { STAGE_REMARKS = null; }
+        if (CREATION_TS === void 0) { CREATION_TS = null; }
+        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
+        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
+        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
+        this.CLAIM_REQUEST_GUID = CLAIM_REQUEST_GUID;
+        this.SOC_GUID = SOC_GUID;
+        this.CUSTOMER_GUID = CUSTOMER_GUID;
+        this.TENANT_GUID = TENANT_GUID;
+        this.CLAIM_REF_GUID = CLAIM_REF_GUID;
+        this.CLAIM_TYPE_GUID = CLAIM_TYPE_GUID;
+        this.MILEAGE_GUID = MILEAGE_GUID;
+        this.START_TS = START_TS;
+        this.END_TS = END_TS;
+        this.FROM = FROM;
+        this.DESTINATION = DESTINATION;
+        this.DISTANCE_KM = DISTANCE_KM;
+        this.MILEAGE_AMOUNT = MILEAGE_AMOUNT;
+        this.CLAIM_AMOUNT = CLAIM_AMOUNT;
+        this.DESCRIPTION = DESCRIPTION;
+        this.CALENDAR_REF = CALENDAR_REF;
+        this.TRAVEL_DATE = TRAVEL_DATE;
+        this.STATUS = STATUS;
+        this.STATUS_REMARKS = STATUS_REMARKS;
+        this.STAGE = STAGE;
+        this.STAGE_REMARKS = STAGE_REMARKS;
+        this.CREATION_TS = CREATION_TS;
+        this.CREATION_USER_GUID = CREATION_USER_GUID;
+        this.UPDATE_TS = UPDATE_TS;
+        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
+    }
+    ClaimReqMain_Model.fromJson = function (json) {
+        if (!json)
+            return;
+        return new ClaimReqMain_Model(json.CLAIM_REQUEST_GUID, json.SOC_GUID, json.CUSTOMER_GUID, json.TENANT_GUID, json.CLAIM_REF_GUID, json.CLAIM_TYPE_GUID, json.MILEAGE_GUID, json.START_TS, json.END_TS, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.MILEAGE_AMOUNT, json.CLAIM_AMOUNT, json.DESCRIPTION, json.CALENDAR_REF, json.TRAVEL_DATE, json.STATUS, json.STATUS_REMARKS, json.STAGE, json.STAGE_REMARKS, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID);
+    };
+    ClaimReqMain_Model.prototype.toJson = function (stringify) {
+        var doc = {
+            CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
+            SOC_GUID: this.SOC_GUID,
+            CUSTOMER_GUID: this.CUSTOMER_GUID,
+            TENANT_GUID: this.TENANT_GUID,
+            CLAIM_REF_GUID: this.CLAIM_REF_GUID,
+            CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
+            MILEAGE_GUID: this.CLAIM_TYPE_GUID,
+            START_TS: this.START_TS,
+            END_TS: this.END_TS,
+            FROM: this.FROM,
+            DESTINATION: this.DESTINATION,
+            DISTANCE_KM: this.DISTANCE_KM,
+            MILEAGE_AMOUNT: this.CLAIM_AMOUNT,
+            DESCRIPTION: this.DESCRIPTION,
+            CLAIM_AMOUNT: this.CLAIM_AMOUNT,
+            CALENDAR_REF: this.CALENDAR_REF,
+            TRAVEL_DATE: this.TRAVEL_DATE,
+            STATUS: this.STATUS,
+            STATUS_REMARKS: this.STATUS_REMARKS,
+            STAGE: this.STAGE,
+            STAGE_REMARKS: this.STAGE_REMARKS,
+            CREATION_TS: this.CREATION_TS,
+            CREATION_USER_GUID: this.CREATION_USER_GUID,
+            UPDATE_TS: this.UPDATE_TS,
+            UPDATE_USER_GUID: this.UPDATE_USER_GUID
+        };
+        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
+    };
+    return ClaimReqMain_Model;
+}());
+
+//# sourceMappingURL=ClaimReqMain_Model.js.map
+
+/***/ }),
 /* 49 */,
 /* 50 */,
 /* 51 */,
@@ -294,19 +507,23 @@ UserData = __decorate([
 /* 53 */,
 /* 54 */,
 /* 55 */,
-/* 56 */
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConferenceData; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_data__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_data__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__ = __webpack_require__(374);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__ = __webpack_require__(376);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -462,10 +679,6 @@ ConferenceData = __decorate([
 //# sourceMappingURL=conference-data.js.map
 
 /***/ }),
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
 /* 61 */,
 /* 62 */,
 /* 63 */,
@@ -473,14 +686,18 @@ ConferenceData = __decorate([
 /* 65 */,
 /* 66 */,
 /* 67 */,
-/* 68 */
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__about_popover_about_popover__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__about_popover_about_popover__ = __webpack_require__(234);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -514,30 +731,30 @@ AboutPage = __decorate([
 //# sourceMappingURL=about.js.map
 
 /***/ }),
-/* 69 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SetupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__banksetup_banksetup__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__branchsetup_branchsetup__ = __webpack_require__(249);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cashcardsetup_cashcardsetup__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__claimtype_claimtype__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__companysetup_companysetup__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__designationsetup_designationsetup__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__departmentsetup_departmentsetup__ = __webpack_require__(258);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__mileagesetup_mileagesetup__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__paymenttypesetup_paymenttypesetup__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__qualificationsetup_qualificationsetup__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__user_user__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__soc_registration_soc_registration__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_tenantcompanysetup_model__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_tenantcompanysitesetup_model__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_tenantcompanysetup_service__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_tenantcompanysitesetup_service__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__banksetup_banksetup__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__branchsetup_branchsetup__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cashcardsetup_cashcardsetup__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__claimtype_claimtype__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__companysetup_companysetup__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__designationsetup_designationsetup__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__departmentsetup_departmentsetup__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__mileagesetup_mileagesetup__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__paymenttypesetup_paymenttypesetup__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__qualificationsetup_qualificationsetup__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__user_user__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__soc_registration_soc_registration__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_tenantcompanysetup_model__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_tenantcompanysitesetup_model__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_tenantcompanysetup_service__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_tenantcompanysitesetup_service__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_angular2_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__login_login__ = __webpack_require__(28);
@@ -545,7 +762,7 @@ AboutPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__app_config_constants__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__app_config_constants__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -833,16 +1050,15 @@ var SetupPage = (function () {
 SetupPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-setup',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\setup\setup.html"*/'<!--\n\n  Generated template for the SetupPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>SETUP</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n\n\n <ion-content padding>\n\n  <div class="blackcontainer" >\n\n  </div>\n\n  <div class="popup" padding >\n\n          <ion-card class="container">\n\n            <ion-card-header color="pure" class="icTitle background">\n\n              STEP 1 : REGISTER YOUR HEAD QUARTER\n\n            </ion-card-header>\n\n            <ion-card-content>\n\n                <ion-list>\n\n                    <form [formGroup]="Branchform">\n\n            \n\n                     \n\n            \n\n                      <ion-item>\n\n                        <ion-label stacked>{{"HEAD QUATER NAME"}}</ion-label>\n\n                        <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" placeholder="{{\'Please fill in the name of head quater of your company\'}}"></ion-input>\n\n                      </ion-item>\n\n                      <ion-item>\n\n                          <ion-label stacked>{{"HEAD QUARTER ADDRESS"}}</ion-label>\n\n                          <ion-input type="text"  placeholder="{{\'Please fill in the address of headquarter\'}}"></ion-input>\n\n                        </ion-item>\n\n                        \n\n                        <ion-item>\n\n                            <ion-label stacked>{{"HEAD QUARTER REG NO."}}</ion-label>\n\n                            <ion-input type="text"  placeholder="{{\'Please fill in the registration number of headquarter\'}}"></ion-input>\n\n                          </ion-item>\n\n            \n\n                      <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1"   [disabled]="!Branchform.valid" (click)="Save()">NEXT</button>\n\n                      </div>\n\n                     \n\n                    </form>\n\n                  </ion-list>\n\n            </ion-card-content>\n\n          </ion-card>\n\n\n\n          <ion-card>\n\n              <ion-card-header color="pure" class="icTitle2 background">\n\n                STEP 2 : REGISTER YOUR BRANCH OF YOUR TENANT COMPANY\n\n              </ion-card-header>\n\n          \n\n            </ion-card>\n\n\n\n            <ion-card>\n\n              <ion-card-header color="pure" class="icTitle2 background">\n\n                STEP 3 : REGISTER YOUR DEPARTMENT OF YOUR TENANT COMPANY\n\n              </ion-card-header>\n\n          \n\n            </ion-card>\n\n\n\n            <ion-card>\n\n              <ion-card-header color="pure" class="icTitle2 background">\n\n                STEP 4 : REGISTER YOUR DESIGNATION OF YOUR TENANT COMPANY\n\n              </ion-card-header>\n\n          \n\n            </ion-card>\n\n\n\n     \n\n     </div>\n\n    <!--\n\n  <ion-card class="round" (click)="goToBanksetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="logo-usd" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     BANK \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n\n\n  <ion-card class="round" (click)="goToCashcardsetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="cash" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n    CASH CARD \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n\n\n  <ion-card class="round" (click)="goToClaimtypesetup()">\n\n  <ion-card-header class="icon">\n\n    <ion-icon name="list" class="iconf"></ion-icon>\n\n  </ion-card-header>\n\n  <ion-card-content class="Subtitle">\n\n    CLAIM TYPE \n\n  </ion-card-content>\n\n</ion-card>\n\n\n\n  \n\n\n\n  <ion-card class="round" (click)="goToDesignationsetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="person" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     DESIGNATION \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <ion-card class="round" (click)="goToDepartmentsetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="git-pull-request" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n        DEPARTMENT \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n    <ion-card class="round"  (click)="goToMileagesetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="grid" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     MILEAGE \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n\n\n    <ion-card class="round"  (click)="goToPaymenttypesetup()">\n\n      <ion-card-header class="icon">\n\n              <ion-icon name="list-box" class="iconf"></ion-icon>\n\n       </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     PAYMENT TYPE \n\n\n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n    <ion-card class="round"  (click)="goToQualificationsetup()" >\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="document" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n    QUALIFICATION \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n\n\n\n\n  <ion-card class="round" (click)="goToUser()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="people" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     USER \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  \n\n  <ion-card class="round" (click)="goToSOC()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="md-clipboard" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     SOC/PROJECT \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <ion-card class="round"  (click)="goToBranchsetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="ios-briefcase" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     TENANT COMPANY & SITE \n\n    </ion-card-content>\n\n  </ion-card> -->\n\n</ion-content>\n\n'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\setup\setup.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_16__services_tenantcompanysetup_service__["a" /* TenantCompanySetup_Service */], __WEBPACK_IMPORTED_MODULE_17__services_tenantcompanysitesetup_service__["a" /* TenantCompanySiteSetup_Service */], __WEBPACK_IMPORTED_MODULE_18__services_base_http__["a" /* BaseHttpService */]]
+        selector: 'page-setup',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\setup\setup.html"*/'<!--\n\n  Generated template for the SetupPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>SETUP</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n\n\n <ion-content padding>\n\n  <!-- <div class="blackcontainer" >\n\n  </div>\n\n  <div class="popup" padding >\n\n          <ion-card class="container">\n\n            <ion-card-header color="pure" class="icTitle background">\n\n              STEP 1 : REGISTER YOUR HEAD QUARTER\n\n            </ion-card-header>\n\n            <ion-card-content>\n\n                <ion-list>\n\n                    <form [formGroup]="Branchform">\n\n            \n\n                     \n\n            \n\n                      <ion-item>\n\n                        <ion-label stacked>{{"HEAD QUATER NAME"}}</ion-label>\n\n                        <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" placeholder="{{\'Please fill in the name of head quater of your company\'}}"></ion-input>\n\n                      </ion-item>\n\n                      <ion-item>\n\n                          <ion-label stacked>{{"HEAD QUARTER ADDRESS"}}</ion-label>\n\n                          <ion-input type="text"  placeholder="{{\'Please fill in the address of headquarter\'}}"></ion-input>\n\n                        </ion-item>\n\n                        \n\n                        <ion-item>\n\n                            <ion-label stacked>{{"HEAD QUARTER REG NO."}}</ion-label>\n\n                            <ion-input type="text"  placeholder="{{\'Please fill in the registration number of headquarter\'}}"></ion-input>\n\n                          </ion-item>\n\n            \n\n                      <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1"   [disabled]="!Branchform.valid" (click)="Save()">NEXT</button>\n\n                      </div>\n\n                     \n\n                    </form>\n\n                  </ion-list>\n\n            </ion-card-content>\n\n          </ion-card>\n\n\n\n          <ion-card>\n\n              <ion-card-header color="pure" class="icTitle2 background">\n\n                STEP 2 : REGISTER YOUR BRANCH OF YOUR TENANT COMPANY\n\n              </ion-card-header>\n\n          \n\n            </ion-card>\n\n\n\n            <ion-card>\n\n              <ion-card-header color="pure" class="icTitle2 background">\n\n                STEP 3 : REGISTER YOUR DEPARTMENT OF YOUR TENANT COMPANY\n\n              </ion-card-header>\n\n          \n\n            </ion-card>\n\n\n\n            <ion-card>\n\n              <ion-card-header color="pure" class="icTitle2 background">\n\n                STEP 4 : REGISTER YOUR DESIGNATION OF YOUR TENANT COMPANY\n\n              </ion-card-header>\n\n          \n\n            </ion-card>\n\n     \n\n     </div> -->\n\n\n\n\n\n\n\n    \n\n  <ion-card class="round" (click)="goToBanksetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="logo-usd" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     BANK \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n\n\n  <ion-card class="round" (click)="goToCashcardsetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="cash" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n    CASH CARD \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n\n\n  <ion-card class="round" (click)="goToClaimtypesetup()">\n\n  <ion-card-header class="icon">\n\n    <ion-icon name="list" class="iconf"></ion-icon>\n\n  </ion-card-header>\n\n  <ion-card-content class="Subtitle">\n\n    CLAIM TYPE \n\n  </ion-card-content>\n\n</ion-card>\n\n\n\n  \n\n\n\n  <ion-card class="round" (click)="goToDesignationsetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="person" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     DESIGNATION \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <ion-card class="round" (click)="goToDepartmentsetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="git-pull-request" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n        DEPARTMENT \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n    <ion-card class="round"  (click)="goToMileagesetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="grid" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     MILEAGE \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n\n\n    <ion-card class="round"  (click)="goToPaymenttypesetup()">\n\n      <ion-card-header class="icon">\n\n              <ion-icon name="list-box" class="iconf"></ion-icon>\n\n       </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     PAYMENT TYPE \n\n\n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n    <ion-card class="round"  (click)="goToQualificationsetup()" >\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="document" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n    QUALIFICATION \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n\n\n\n\n  <ion-card class="round" (click)="goToUser()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="people" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     USER \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  \n\n  <ion-card class="round" (click)="goToSOC()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="md-clipboard" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     SOC/PROJECT \n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <ion-card class="round"  (click)="goToBranchsetup()">\n\n    <ion-card-header class="icon">\n\n      <ion-icon name="ios-briefcase" class="iconf"></ion-icon>\n\n    </ion-card-header>\n\n    <ion-card-content class="Subtitle">\n\n     TENANT COMPANY & SITE \n\n    </ion-card-content>\n\n  </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\setup\setup.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_16__services_tenantcompanysetup_service__["a" /* TenantCompanySetup_Service */], __WEBPACK_IMPORTED_MODULE_17__services_tenantcompanysitesetup_service__["a" /* TenantCompanySiteSetup_Service */], __WEBPACK_IMPORTED_MODULE_18__services_base_http__["a" /* BaseHttpService */]]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_21__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_21__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_22__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_22__angular_http__["b" /* Http */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_18__services_base_http__["a" /* BaseHttpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_18__services_base_http__["a" /* BaseHttpService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_16__services_tenantcompanysetup_service__["a" /* TenantCompanySetup_Service */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_16__services_tenantcompanysetup_service__["a" /* TenantCompanySetup_Service */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_17__services_tenantcompanysitesetup_service__["a" /* TenantCompanySiteSetup_Service */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_17__services_tenantcompanysitesetup_service__["a" /* TenantCompanySiteSetup_Service */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _h || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_21__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_22__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_18__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_16__services_tenantcompanysetup_service__["a" /* TenantCompanySetup_Service */], __WEBPACK_IMPORTED_MODULE_17__services_tenantcompanysitesetup_service__["a" /* TenantCompanySiteSetup_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
 ], SetupPage);
 
-var _a, _b, _c, _d, _e, _f, _g, _h;
 //# sourceMappingURL=setup.js.map
 
 /***/ }),
-/* 70 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -893,7 +1109,7 @@ var TenantCompanySetup_Model = (function () {
 //# sourceMappingURL=tenantcompanysetup_model.js.map
 
 /***/ }),
-/* 71 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -974,23 +1190,23 @@ var TenantCompanySiteSetup_Model = (function () {
 //# sourceMappingURL=tenantcompanysitesetup_model.js.map
 
 /***/ }),
-/* 72 */
+/* 76 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminsetupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subsciptionsetup_subsciptionsetup__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tenantsetup_tenantsetup__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__translate_translate__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__peermission_peermission__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__rolesetup_rolesetup__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__rolemodulesetup_rolemodulesetup__ = __webpack_require__(285);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pagesetup_pagesetup__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modulesetup_modulesetup__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__submodulesetup_submodulesetup__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__claimhistory_claimhistory__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subsciptionsetup_subsciptionsetup__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tenantsetup_tenantsetup__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__translate_translate__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__peermission_peermission__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__rolesetup_rolesetup__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__rolemodulesetup_rolemodulesetup__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pagesetup_pagesetup__ = __webpack_require__(288);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modulesetup_modulesetup__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__submodulesetup_submodulesetup__ = __webpack_require__(293);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__claimhistory_claimhistory__ = __webpack_require__(294);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1069,10 +1285,6 @@ AdminsetupPage = __decorate([
 //# sourceMappingURL=adminsetup.js.map
 
 /***/ }),
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
 /* 77 */,
 /* 78 */,
 /* 79 */,
@@ -1120,15 +1332,19 @@ AdminsetupPage = __decorate([
 /* 121 */,
 /* 122 */,
 /* 123 */,
-/* 124 */
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_data__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabs_tabs__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_data__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabs_tabs__ = __webpack_require__(129);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1168,18 +1384,18 @@ SignupPage = __decorate([
 //# sourceMappingURL=signup.js.map
 
 /***/ }),
-/* 125 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__about_about__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__schedule_schedule__ = __webpack_require__(234);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__setup_setup__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__adminsetup_adminsetup__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__about_about__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__schedule_schedule__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__setup_setup__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__adminsetup_adminsetup__ = __webpack_require__(76);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1217,7 +1433,7 @@ TabsPage = __decorate([
 //# sourceMappingURL=tabs.js.map
 
 /***/ }),
-/* 126 */
+/* 130 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1252,24 +1468,24 @@ SessionDetailPage = __decorate([
 //# sourceMappingURL=session-detail.js.map
 
 /***/ }),
-/* 127 */
+/* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SpeakerListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_in_app_browser__ = __webpack_require__(225);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_conference_data__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__medicalclaim_medicalclaim__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__session_detail_session_detail__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__about_about__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__printclaim_printclaim__ = __webpack_require__(237);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__giftclaim_giftclaim__ = __webpack_require__(238);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__overtimeclaim_overtimeclaim__ = __webpack_require__(239);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__entertainmentclaim_entertainmentclaim__ = __webpack_require__(240);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__travelclaim_travelclaim__ = __webpack_require__(241);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Profile_Setup_Profile_Setup__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_in_app_browser__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_conference_data__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__medicalclaim_medicalclaim__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__session_detail_session_detail__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__about_about__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__printclaim_printclaim__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__giftclaim_giftclaim__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__overtimeclaim_overtimeclaim__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__entertainmentclaim_entertainmentclaim__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__travelclaim_travelclaim__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Profile_Setup_Profile_Setup__ = __webpack_require__(246);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1403,75 +1619,21 @@ SpeakerListPage = __decorate([
 //# sourceMappingURL=home.js.map
 
 /***/ }),
-/* 128 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Services; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_constants__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var Services = (function () {
-    function Services(http) {
-        this.http = http;
-    }
-    Services.getUrl = function (table, args) {
-        if (args != null) {
-            return __WEBPACK_IMPORTED_MODULE_0__config_constants__["b" /* DREAMFACTORY_TABLE_URL */] + '/' + table + '?' + args + '&api_key=' + __WEBPACK_IMPORTED_MODULE_0__config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        }
-        return __WEBPACK_IMPORTED_MODULE_0__config_constants__["b" /* DREAMFACTORY_TABLE_URL */] + '/' + table + '?api_key=' + __WEBPACK_IMPORTED_MODULE_0__config_constants__["a" /* DREAMFACTORY_API_KEY */];
-    };
-    Services.prototype.postUrl = function (table) {
-        return __WEBPACK_IMPORTED_MODULE_0__config_constants__["b" /* DREAMFACTORY_TABLE_URL */] + '/' + table;
-    };
-    Services.prototype.postData = function (endpoint, body) {
-        var queryHeaders = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-        queryHeaders.append('Content-Type', 'application/json');
-        //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-        queryHeaders.append('X-Dreamfactory-API-Key', __WEBPACK_IMPORTED_MODULE_0__config_constants__["a" /* DREAMFACTORY_API_KEY */]);
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: queryHeaders });
-        return this.http.post(this.postUrl(endpoint), body, options)
-            .map(function (response) {
-            return response;
-        });
-    };
-    return Services;
-}());
-Services = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["A" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
-], Services);
-
-//# sourceMappingURL=Services.js.map
-
-/***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TenantCompanySetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_tenantcompanysetup_model__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_tenantcompanysetup_model__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1580,21 +1742,21 @@ TenantCompanySetup_Service = __decorate([
 //# sourceMappingURL=tenantcompanysetup_service.js.map
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TenantCompanySiteSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_tenantcompanysitesetup_model__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_tenantcompanysitesetup_model__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1714,7 +1876,7 @@ TenantCompanySiteSetup_Service = __decorate([
 //# sourceMappingURL=tenantcompanysitesetup_service.js.map
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1768,9 +1930,6 @@ var UserAddress_Model = (function () {
 //# sourceMappingURL=usersetup_address_model.js.map
 
 /***/ }),
-/* 132 */,
-/* 133 */,
-/* 134 */,
 /* 135 */,
 /* 136 */,
 /* 137 */,
@@ -1779,7 +1938,10 @@ var UserAddress_Model = (function () {
 /* 140 */,
 /* 141 */,
 /* 142 */,
-/* 143 */
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -1792,12 +1954,9 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 143;
+webpackEmptyAsyncContext.id = 146;
 
 /***/ }),
-/* 144 */,
-/* 145 */,
-/* 146 */,
 /* 147 */,
 /* 148 */,
 /* 149 */,
@@ -1836,7 +1995,10 @@ webpackEmptyAsyncContext.id = 143;
 /* 182 */,
 /* 183 */,
 /* 184 */,
-/* 185 */
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -1849,12 +2011,9 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 185;
+webpackEmptyAsyncContext.id = 188;
 
 /***/ }),
-/* 186 */,
-/* 187 */,
-/* 188 */,
 /* 189 */,
 /* 190 */,
 /* 191 */,
@@ -1898,7 +2057,9 @@ webpackEmptyAsyncContext.id = 185;
 /* 229 */,
 /* 230 */,
 /* 231 */,
-/* 232 */
+/* 232 */,
+/* 233 */,
+/* 234 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1946,14 +2107,14 @@ PopoverPage = __decorate([
 //# sourceMappingURL=about-popover.js.map
 
 /***/ }),
-/* 233 */
+/* 235 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_data__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_data__ = __webpack_require__(44);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2028,17 +2189,17 @@ AccountPage = __decorate([
 //# sourceMappingURL=account.js.map
 
 /***/ }),
-/* 234 */
+/* 236 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SchedulePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_conference_data__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_data__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__session_detail_session_detail__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__schedule_filter_schedule_filter__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_conference_data__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_data__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__session_detail_session_detail__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__schedule_filter_schedule_filter__ = __webpack_require__(237);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2211,14 +2372,14 @@ SchedulePage = __decorate([
 //# sourceMappingURL=schedule.js.map
 
 /***/ }),
-/* 235 */
+/* 237 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScheduleFilterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_conference_data__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_conference_data__ = __webpack_require__(60);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2279,27 +2440,29 @@ ScheduleFilterPage = __decorate([
 //# sourceMappingURL=schedule-filter.js.map
 
 /***/ }),
-/* 236 */
+/* 238 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MedicalclaimPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_medicalclaim_model__ = __webpack_require__(375);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_medicalclaim_service__ = __webpack_require__(376);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_medicalclaim_service__ = __webpack_require__(377);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__models_ClaimRefMain_Model__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_ClaimReqMain_Model__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Services__ = __webpack_require__(39);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2311,9 +2474,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 //import { FormBuilder, FormGroup } from '@angular/forms';
-
-
 
 
 
@@ -2323,6 +2485,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 //import {Camera} from 'ionic-native';
+
+
+
 
 
 
@@ -2334,11 +2499,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var MedicalclaimPage = (function () {
-    function MedicalclaimPage(navCtrl, viewCtrl, navParams, fb, http, httpService, medicalservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
-        var _this = this;
+    function MedicalclaimPage(platform, navCtrl, viewCtrl, navParams, api, translate, fb, http, httpService, medicalservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
+        //   this.Mcform = fb.group({
+        //     //mcname: '',
+        //     date: ['', Validators.required],
+        //     amount: ['', Validators.required],
+        //     description: ['', Validators.required],
+        //   });
+        //   this.Medical_Date_ngModel = new Date().toISOString();
+        //   //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
         this.navCtrl = navCtrl;
         this.viewCtrl = viewCtrl;
         this.navParams = navParams;
+        this.api = api;
+        this.translate = translate;
         this.http = http;
         this.httpService = httpService;
         this.medicalservice = medicalservice;
@@ -2350,124 +2524,191 @@ var MedicalclaimPage = (function () {
         this.filePath = filePath;
         this.transfer = transfer;
         this.toastCtrl = toastCtrl;
-        this.medicalclaim_entry = new __WEBPACK_IMPORTED_MODULE_6__models_medicalclaim_model__["a" /* MedicalClaim_Model */]();
-        this.baseResourceUrl1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.Exist_Record = false;
-        this.Mcform = fb.group({
-            //mcname: '',
-            date: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            amount: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            description: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+        this.validDate = new Date().toISOString();
+        this.isCustomer = false;
+        this.MainClaimSaved = false;
+        //---------------------Language module start---------------------//
+        this.translateToMalayClicked = false;
+        this.translateToEnglishClicked = true;
+        //   this.Mcform.valueChanges.subscribe((v) => {
+        //     this.isReadyToSave = this.Mcform.valid;
+        //   });
+        // }
+        this.translateToEnglish();
+        this.translate.setDefaultLang('en'); //Fallback language
+        platform.ready().then(function () {
         });
-        this.Medical_Date_ngModel = new Date().toISOString();
+        this.Medicalform = fb.group({
+            // soc_no: '',
+            // distance: '', 
+            //customer: '',
+            // project_name: ['', Validators.required],
+            travel_date: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            // destination: ['', Validators.required],
+            // from: ['', Validators.required],
+            // start_DT: ['', Validators.required],
+            // end_DT: ['', Validators.required], 
+            description: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            // origin: ['', Validators.required],
+            vehicleType: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+        });
+        // this.Travel_Date_ngModel = new Date().toISOString();
+        //this.GetSocNo();
         //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-        this.Mcform.valueChanges.subscribe(function (v) {
-            _this.isReadyToSave = _this.Mcform.valid;
-        });
+        // this.Travelform.valueChanges.subscribe((v) => {
+        //   this.isReadyToSave = this.Travelform.valid;
+        // });
     }
-    MedicalclaimPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad MedicalclaimPage');
+    MedicalclaimPage.prototype.translateToEnglish = function () {
+        this.translate.use('en');
+        this.translateToMalayClicked = !this.translateToMalayClicked;
+        this.translateToEnglishClicked = !this.translateToEnglishClicked;
     };
-    MedicalclaimPage.prototype.save = function () {
+    MedicalclaimPage.prototype.translateToMalay = function () {
+        this.translate.use('ms');
+        this.translateToEnglishClicked = !this.translateToEnglishClicked;
+        this.translateToMalayClicked = !this.translateToMalayClicked;
+    };
+    //---------------------Language module end---------------------//
+    MedicalclaimPage.prototype.save = function (value) {
         var _this = this;
-        //debugger;
-        //this.getImage();
-        //this.uploadFile();
-        if (this.Mcform.valid) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* Headers */]();
-            headers.append('Content-Type', 'application/json');
-            var options = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* RequestOptions */]({ headers: headers });
-            var url = void 0;
-            var request_id = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-            //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Medical_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-            url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-            this.http.get(url, options)
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                var res = data["resource"];
-                if (res.length == 0) {
-                    console.log("No records Found");
-                    if (_this.Exist_Record == false) {
-                        // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-                        _this.medicalclaim_entry.DESCRIPTION = _this.Medical_Description_ngModel.trim();
-                        _this.medicalclaim_entry.CLAIM_AMOUNT = _this.Medical_Amount_ngModel.trim();
-                        //this.medicalclaim_entry.CLAIM_AMOUNT = this.Medical_Date_ngModel.trim();
-                        //this.entertainment2_entry.ATTACHMENT_ID = this.Entertainment_FileUpload_ngModel.trim();
-                        // this.masterclaim_entry.CLAIM_AMOUNT = this.Medical_Amount_ngModel.trim();
-                        // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                        // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                        // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-                        _this.medicalclaim_entry.CLAIM_REQUEST_DETAIL_GUID = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-                        _this.medicalclaim_entry.CREATION_TS = new Date().toISOString();
-                        _this.medicalclaim_entry.CREATION_USER_GUID = '1';
-                        _this.medicalclaim_entry.UPDATE_TS = new Date().toISOString();
-                        _this.medicalclaim_entry.UPDATE_USER_GUID = "";
-                        //this.uploadFile();
-                        // this.medicalservice.save_main_claim_request(this.masterclaim_entry)
-                        // .subscribe((response) => {
-                        //   if (response.status == 200) {
-                        //     //alert('Medicalclaim Registered successfully');
-                        //     //location.reload();
-                        //     this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                        //   }
-                        // });
-                        _this.medicalservice.save_claim_request_detail(_this.medicalclaim_entry)
-                            .subscribe(function (response) {
-                            if (response.status == 200) {
-                                alert('Medicalclaim Registered successfully');
-                                //location.reload();
-                                _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
-                            }
-                        });
+        var userGUID = localStorage.getItem('g_USER_GUID');
+        var tenantGUID = localStorage.getItem('g_TENANT_GUID');
+        var month = new Date(value.travel_date).getMonth() + 1;
+        var year = new Date(value.travel_date).getFullYear();
+        var claimRefGUID;
+        var url = __WEBPACK_IMPORTED_MODULE_15__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+        this.http
+            .get(url)
+            .map(function (res) { return res.json(); })
+            .subscribe(function (claimRefdata) {
+            if (claimRefdata["resource"][0] == null) {
+                var claimReqRef = new __WEBPACK_IMPORTED_MODULE_13__models_ClaimRefMain_Model__["a" /* ClaimRefMain_Model */]();
+                claimReqRef.CLAIM_REF_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqRef.USER_GUID = userGUID;
+                claimReqRef.TENANT_GUID = tenantGUID;
+                claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+                claimReqRef.MONTH = month;
+                claimReqRef.YEAR = year;
+                claimReqRef.CREATION_TS = new Date().toISOString();
+                claimReqRef.UPDATE_TS = new Date().toISOString();
+                _this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe(function (response) {
+                    var postClaimRef = response.json();
+                    claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
+                    var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_14__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                    claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                    claimReqMainRef.TENANT_GUID = tenantGUID;
+                    claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                    //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+                    claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                    claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                    claimReqMainRef.DESCRIPTION = value.description;
+                    //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
+                    claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                    claimReqMainRef.CREATION_TS = new Date().toISOString();
+                    claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                    // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                    // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                    // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                    // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                    if (_this.isCustomer) {
+                        claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
                     }
+                    else {
+                        claimReqMainRef.SOC_GUID = _this.Soc_GUID;
+                    }
+                    claimReqMainRef.CUSTOMER_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    claimReqMainRef.SOC_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                        var postClaimMain = response.json();
+                        _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                        _this.MainClaimSaved = true;
+                        alert('Claim Has Registered.');
+                    });
+                });
+            }
+            else {
+                claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+                var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_14__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqMainRef.TENANT_GUID = tenantGUID;
+                claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+                claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                // claimReqMainRef.START_TS = value.start_DT;
+                // claimReqMainRef.END_TS = value.end_DT;
+                claimReqMainRef.DESCRIPTION = value.description;
+                //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+                claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                claimReqMainRef.CREATION_TS = new Date().toISOString();
+                claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                if (_this.isCustomer) {
+                    claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
                 }
                 else {
-                    console.log("Records Found");
-                    alert("The Medicalclaim is already Exist.");
+                    claimReqMainRef.SOC_GUID = _this.Soc_GUID;
                 }
-            }, function (err) {
-                _this.Exist_Record = false;
-                console.log("ERROR!: ", err);
-            });
-        }
+                _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                    var postClaimMain = response.json();
+                    _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                    _this.MainClaimSaved = true;
+                    alert('Claim Has Registered.');
+                });
+            }
+        });
     };
     return MedicalclaimPage;
 }());
 MedicalclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-medicalclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\medicalclaim\medicalclaim.html"*/'<!--\n\n  Generated template for the MedicalclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  \n\n    <ion-navbar>\n\n      <ion-title>MEDICAL CLAIM</ion-title>\n\n    </ion-navbar>\n\n  \n\n  </ion-header>\n\n  \n\n  \n\n  <ion-content padding>\n\n    <div class="blackcontainer">\n\n  \n\n      <div class="popup" padding>\n\n  \n\n        <ion-card class="cm">\n\n          <ion-card-header class="icTitle headerColor-white ">\n\n  \n\n            <div class="icHeaderText">APPLY NEW MEDICAL CLAIM</div>\n\n  \n\n          </ion-card-header>\n\n          <ion-list class="scroll">\n\n            <form [formGroup]="Mcform">\n\n              <ion-item>\n\n                <ion-label stacked>{{"DATE"}}</ion-label>\n\n                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="Medical_Date_ngModel" placeholder="{{\'Please choose yours date while you take the medical leave\'}}"></ion-datetime>\n\n              </ion-item>\n\n  \n\n              <ion-item>\n\n                <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n                <ion-input type="number" formControlName="amount" [(ngModel)]="Medical_Amount_ngModel" placeholder="{{\'Please fill in the amount of yours Medical Claim(Max RM50)\'}}"></ion-input>\n\n              </ion-item>\n\n  \n\n  \n\n  \n\n              <ion-item>\n\n                <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n                <ion-input type="text" formControlName="description" [(ngModel)]="Medical_Description_ngModel" placeholder="{{\'Please fill in the description (if you have)\'}}"></ion-input>\n\n              </ion-item>\n\n  \n\n              <ion-item>\n\n                <ion-label stacked>{{"ATTACHMENT"}}</ion-label>\n\n  \n\n              </ion-item>\n\n  \n\n              <div class="btn">\n\n                <button ion-button (click)="save()">SUBMIT</button>\n\n              </div>\n\n  \n\n            </form>\n\n          </ion-list>\n\n        </ion-card>\n\n  \n\n      </div>\n\n  \n\n    </div>\n\n  </ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\medicalclaim\medicalclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_7__services_medicalclaim_service__["a" /* MedicalClaim_Service */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-medicalclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\medicalclaim\medicalclaim.html"*/'<!--\n\n  Generated template for the MedicalclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>  \n\n    <ion-navbar>\n\n      <ion-title>MEDICAL CLAIM</ion-title>\n\n    </ion-navbar>  \n\n  </ion-header> -->\n\n  <ion-header>\n\n\n\n      <ion-navbar>\n\n          <button ion-button menuToggle>\n\n              <ion-icon name="menu"></ion-icon>\n\n            </button>\n\n            <div class="headerInfo">\n\n                <ion-fab top right>\n\n                  <button ion-fab mini class="btnClear">\n\n                    <ion-icon name="settings"></ion-icon>\n\n                  </button>\n\n                  <ion-fab-list class="settingBtnFab" side="left">\n\n                    <button ion-fab color="primary" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>\n\n                  </ion-fab-list>\n\n                  <ion-fab-list class="settingBtnFab" side="bottom">\n\n                    <button ion-fab color="primary" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>\n\n                  </ion-fab-list>\n\n                </ion-fab>\n\n              </div>\n\n        <ion-title>{{ \'TRAVEL_CLAIM_HEADING\' | translate }}</ion-title>  \n\n      </ion-navbar>\n\n     </ion-header>\n\n  \n\n  \n\n  <ion-content padding>\n\n      <!-- <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n          <ion-list-header>\n\n            Select Travel Claim For:\n\n          </ion-list-header>\n\n      \n\n          <ion-item>\n\n            <ion-label>Customer</ion-label>\n\n            <ion-radio value="customer" checked="true"></ion-radio>\n\n          </ion-item>\n\n      \n\n          <ion-item>\n\n            <ion-label>Project</ion-label>\n\n            <ion-radio value="project"></ion-radio>\n\n          </ion-item>\n\n        </ion-list> -->\n\n\n\n        <form [formGroup]="Medicalform">\n\n\n\n            <!-- <div *ngIf="claimFor==\'project\'">\n\n                \n\n                <ion-item>\n\n                  <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n                  <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                  <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n                    <ion-icon name="eye"></ion-icon>\n\n                    {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n                </ion-item>\n\n                \n\n                <ion-item>\n\n                  <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n                  <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n                </ion-item>\n\n              </div> -->\n\n            <!-- <ion-card>\n\n                <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>\n\n              <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" \n\n                placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n      \n\n              <ion-list>\n\n                <ion-item-sliding *ngFor="let item of projects">\n\n                  <button ion-item (click)="GetSocNo(item.SOC_GUID)">\n\n                    <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>\n\n                  </button>\n\n                </ion-item-sliding>\n\n              </ion-list>  \n\n            </ion-card> -->\n\n      \n\n            <!-- <div *ngIf="claimFor==\'customer\'">              \n\n                <ion-item>\n\n                  <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n                  <ion-input [(ngModel)]="Customer_Lookup_ngModel" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                  <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n                    <ion-icon name="eye"></ion-icon>\n\n                    {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n                </ion-item>\n\n              </div> -->\n\n      \n\n            <!-- <ion-item>\n\n                <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n                <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n                placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n              </ion-item> -->\n\n      \n\n              <ion-item>\n\n                <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n              </ion-item>               \n\n             \n\n              <ion-item>\n\n                  <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n                  <ion-label > {{travelAmount | number}} </ion-label>\n\n                  <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                </ion-item>\n\n      \n\n                <ion-item>\n\n                    <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n                    <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                  </ion-item>\n\n      \n\n          \n\n              <!-- <ion-item>\n\n                <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n                <ion-select formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n                  <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n                </ion-select>\n\n              </ion-item> -->\n\n          \n\n              <!-- <ion-item>\n\n                <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n              </ion-item> -->\n\n      \n\n              <div class="btn">\n\n                <button ion-button (click)=\'save(Medicalform.value)\'  [disabled]="!Medicalform.valid" >SUBMIT</button>\n\n              </div>            \n\n            </form>\n\n\n\n    <!-- <div class="blackcontainer">  \n\n      <div class="popup" padding>  \n\n        <ion-card class="cm">\n\n          <ion-card-header class="icTitle headerColor-white ">  \n\n            <div class="icHeaderText">APPLY NEW MEDICAL CLAIM</div>  \n\n          </ion-card-header>\n\n          <ion-list class="scroll">\n\n            <form [formGroup]="Mcform">\n\n              <ion-item>\n\n                <ion-label stacked>{{"DATE"}}</ion-label>\n\n                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="Medical_Date_ngModel" placeholder="{{\'Please choose yours date while you take the medical leave\'}}"></ion-datetime>\n\n              </ion-item>\n\n  \n\n              <ion-item>\n\n                <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n                <ion-input type="number" formControlName="amount" [(ngModel)]="Medical_Amount_ngModel" placeholder="{{\'Please fill in the amount of yours Medical Claim(Max RM50)\'}}"></ion-input>\n\n              </ion-item>  \n\n  \n\n              <ion-item>\n\n                <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n                <ion-input type="text" formControlName="description" [(ngModel)]="Medical_Description_ngModel" placeholder="{{\'Please fill in the description (if you have)\'}}"></ion-input>\n\n              </ion-item>\n\n  \n\n              <ion-item>\n\n                <ion-label stacked>{{"ATTACHMENT"}}</ion-label>\n\n  \n\n              </ion-item>\n\n  \n\n              <div class="btn">\n\n                <button ion-button (click)="save()">SUBMIT</button>\n\n              </div>\n\n  \n\n            </form>\n\n          </ion-list>\n\n        </ion-card>\n\n  \n\n      </div>\n\n  \n\n    </div> -->\n\n  </ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\medicalclaim\medicalclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_6__services_medicalclaim_service__["a" /* MedicalClaim_Service */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_7__services_medicalclaim_service__["a" /* MedicalClaim_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_15__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_6__services_medicalclaim_service__["a" /* MedicalClaim_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
 ], MedicalclaimPage);
 
 //# sourceMappingURL=medicalclaim.js.map
 
 /***/ }),
-/* 237 */
+/* 239 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DREAMFACTORY_API_KEY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return DREAMFACTORY_TABLE_URL; });
+var DREAMFACTORY_API_KEY = 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881';
+var DREAMFACTORY_TABLE_URL = 'http://api.zen.com.my/api/v2/zcs/_table';
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 240 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrintclaimPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_printingclaim_model__ = __webpack_require__(379);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_printingclaim_service__ = __webpack_require__(380);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_printingclaim_service__ = __webpack_require__(380);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Services__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_ClaimRefMain_Model__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__ = __webpack_require__(48);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2479,9 +2720,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 //import { FormBuilder, FormGroup } from '@angular/forms';
-
-
 
 
 
@@ -2491,6 +2731,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 //import {Camera} from 'ionic-native';
+
+
+
 
 
 
@@ -2502,11 +2745,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var PrintclaimPage = (function () {
-    function PrintclaimPage(navCtrl, viewCtrl, navParams, fb, http, httpService, printingservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
-        var _this = this;
+    function PrintclaimPage(platform, navCtrl, viewCtrl, navParams, api, translate, fb, http, httpService, printingservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
         this.navCtrl = navCtrl;
         this.viewCtrl = viewCtrl;
         this.navParams = navParams;
+        this.api = api;
+        this.translate = translate;
         this.http = http;
         this.httpService = httpService;
         this.printingservice = printingservice;
@@ -2518,207 +2762,147 @@ var PrintclaimPage = (function () {
         this.filePath = filePath;
         this.transfer = transfer;
         this.toastCtrl = toastCtrl;
-        this.printclaim_entry = new __WEBPACK_IMPORTED_MODULE_6__models_printingclaim_model__["a" /* PrintingClaim_Model */]();
-        this.baseResourceUrl1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/soc_main' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.Exist_Record = false;
-        this.AddLookupClicked = false;
+        this.MainClaimSaved = false;
+        this.isCustomer = false;
+        this.validDate = new Date().toISOString();
         this.Printform = fb.group({
             soc_no: '',
-            project_name: '',
-            customer_name: '',
-            print_date: '',
-            claim_amount: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            description: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            printname: '',
-        });
-        this.Printing_Date_ngModel = new Date().toISOString();
-        //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-        this.GetSocNo();
-        this.Printform.valueChanges.subscribe(function (v) {
-            _this.isReadyToSave = _this.Printform.valid;
+            travel_date: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            description: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            vehicleType: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]
         });
     }
-    PrintclaimPage.prototype.AddLookupClick = function () {
-        this.AddLookupClicked = true;
-    };
-    PrintclaimPage.prototype.CloseLookupClick = function () {
-        if (this.AddLookupClicked == true) {
-            this.AddLookupClicked = false;
-        }
-    };
-    PrintclaimPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad PrintclaimPage');
-    };
-    PrintclaimPage.prototype.GetSocNo = function () {
+    PrintclaimPage.prototype.save = function (value) {
         var _this = this;
+        var userGUID = localStorage.getItem('g_USER_GUID');
+        var tenantGUID = localStorage.getItem('g_TENANT_GUID');
+        var month = new Date(value.travel_date).getMonth() + 1;
+        var year = new Date(value.travel_date).getFullYear();
+        var claimRefGUID;
+        var url = __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
         this.http
-            .get(this.baseResourceUrl_soc)
+            .get(url)
             .map(function (res) { return res.json(); })
-            .subscribe(function (data) {
-            _this.socs = data["resource"];
-            if (_this.Printing_SOC_No_ngModel == undefined) {
-                return;
-            }
-            if (_this.Printing_SOC_No_ngModel != "" || _this.Printing_SOC_No_ngModel != undefined) {
-                var headers = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* Headers */]();
-                headers.append('Content-Type', 'application/json');
-                var options = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* RequestOptions */]({ headers: headers });
-                var url = void 0;
-                var url1 = void 0;
-                url = _this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + _this.Printing_SOC_No_ngModel + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-                url1 = _this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + _this.Printing_SOC_No_ngModel + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-                _this.http.get(url, options)
-                    .map(function (res) { return res.json(); })
-                    .subscribe(function (data) {
-                    var res = data["resource"];
-                    if (res.length > 0) {
-                        _this.Printing_ProjectName_ngModel = res[0].Project;
-                        _this.Printing_CustomerName_ngModel = res[0].customer;
+            .subscribe(function (claimRefdata) {
+            if (claimRefdata["resource"][0] == null) {
+                var claimReqRef = new __WEBPACK_IMPORTED_MODULE_14__models_ClaimRefMain_Model__["a" /* ClaimRefMain_Model */]();
+                claimReqRef.CLAIM_REF_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqRef.USER_GUID = userGUID;
+                claimReqRef.TENANT_GUID = tenantGUID;
+                claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+                claimReqRef.MONTH = month;
+                claimReqRef.YEAR = year;
+                claimReqRef.CREATION_TS = new Date().toISOString();
+                claimReqRef.UPDATE_TS = new Date().toISOString();
+                _this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe(function (response) {
+                    var postClaimRef = response.json();
+                    claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
+                    var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                    claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                    claimReqMainRef.TENANT_GUID = tenantGUID;
+                    claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                    //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+                    claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                    claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                    // claimReqMainRef.START_TS = value.start_DT;
+                    // claimReqMainRef.END_TS = value.end_DT;
+                    claimReqMainRef.DESCRIPTION = value.description;
+                    //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
+                    claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                    claimReqMainRef.CREATION_TS = new Date().toISOString();
+                    claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                    //claimReqMainRef.FROM = this.Travel_From_ngModel;
+                    // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                    // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                    // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                    if (_this.isCustomer) {
+                        claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
                     }
                     else {
-                        alert('please enter valid soc no');
-                        //return;
-                        _this.Printing_SOC_No_ngModel = "";
+                        claimReqMainRef.SOC_GUID = _this.Soc_GUID;
                     }
-                }, function (err) {
-                    console.log("ERROR!: ", err);
+                    claimReqMainRef.CUSTOMER_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    claimReqMainRef.SOC_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                        var postClaimMain = response.json();
+                        _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                        _this.MainClaimSaved = true;
+                        alert('Claim Has Registered.');
+                    });
+                });
+            }
+            else {
+                claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+                var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqMainRef.TENANT_GUID = tenantGUID;
+                claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+                claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                // claimReqMainRef.START_TS = value.start_DT;
+                // claimReqMainRef.END_TS = value.end_DT;
+                claimReqMainRef.DESCRIPTION = value.description;
+                //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+                claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                claimReqMainRef.CREATION_TS = new Date().toISOString();
+                claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                if (_this.isCustomer) {
+                    claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
+                }
+                else {
+                    claimReqMainRef.SOC_GUID = _this.Soc_GUID;
+                }
+                _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                    var postClaimMain = response.json();
+                    _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                    _this.MainClaimSaved = true;
+                    alert('Claim Has Registered.');
                 });
             }
         });
-    };
-    // SOC_No_TextBox_Onchange(Entertainment_SOC_No_ngModel: string) {
-    //   console.log(this.Printing_SOC_No_ngModel);
-    //   if (this.Printing_SOC_No_ngModel == undefined) { return; }
-    //   if (this.Printing_SOC_No_ngModel != "" || this.Printing_SOC_No_ngModel != undefined) {
-    //     let headers = new Headers();
-    //     headers.append('Content-Type', 'application/json');
-    //     let options = new RequestOptions({ headers: headers });
-    //     let url: string;
-    //     let url1: string;
-    //     url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Printing_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Printing_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     this.http.get(url, options)
-    //       .map(res => res.json())
-    //       .subscribe(
-    //       data => {
-    //         let res = data["resource"];
-    //         if (res.length > 0) {
-    //           this.Printing_ProjectName_ngModel = res[0].Project;
-    //           this.Printing_CustomerName_ngModel = res[0].Project;
-    //         }
-    //         else {
-    //           alert('please enter valid soc no');
-    //           //return;
-    //           this.Printing_SOC_No_ngModel = "";
-    //         }
-    //       },
-    //       err => {
-    //         console.log("ERROR!: ", err);
-    //       });
-    //   }
-    // }
-    PrintclaimPage.prototype.save = function () {
-        var _this = this;
-        //debugger;
-        //this.getImage();
-        //this.uploadFile();
-        if (this.Printform.valid) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* Headers */]();
-            headers.append('Content-Type', 'application/json');
-            var options = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* RequestOptions */]({ headers: headers });
-            var url = void 0;
-            var request_id = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-            //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-            url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-            this.http.get(url, options)
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                var res = data["resource"];
-                if (res.length == 0) {
-                    console.log("No records Found");
-                    if (_this.Exist_Record == false) {
-                        // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-                        _this.printclaim_entry.DESCRIPTION = _this.Printing_Description_ngModel.trim();
-                        _this.printclaim_entry.CLAIM_AMOUNT = _this.Printing_ClaimAmount_ngModel.trim();
-                        //this.printclaim_entry.CLAIM_TYPE_GUID = this.masterclaim_entry.CLAIM_TYPE_GUID = "58c59b56-289e-31a2-f708-138e81a9c823";
-                        // this.masterclaim_entry.CLAIM_AMOUNT = this.Printing_ClaimAmount_ngModel.trim();
-                        // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                        // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                        // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-                        //alert(this.masterclaim_entry.CLAIM_AMOUNT);
-                        _this.printclaim_entry.CLAIM_REQUEST_DETAIL_GUID = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-                        _this.printclaim_entry.CREATION_TS = new Date().toISOString();
-                        _this.printclaim_entry.CREATION_USER_GUID = '1';
-                        _this.printclaim_entry.UPDATE_TS = new Date().toISOString();
-                        _this.printclaim_entry.UPDATE_USER_GUID = "";
-                        //this.uploadFile();
-                        // this.printingservice.save_main_claim_request(this.masterclaim_entry)
-                        //   .subscribe((response) => {
-                        //     if (response.status == 200) {
-                        //       //alert('PrintClaim Registered successfully');
-                        //       //location.reload();
-                        //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                        //     }
-                        //   });
-                        _this.printingservice.save_claim_request_detail(_this.printclaim_entry)
-                            .subscribe(function (response) {
-                            if (response.status == 200) {
-                                alert('PrintClaim Registered successfully');
-                                //location.reload();
-                                _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
-                            }
-                        });
-                    }
-                }
-                else {
-                    console.log("Records Found");
-                    alert("The Travelclaim is already Exist.");
-                }
-            }, function (err) {
-                _this.Exist_Record = false;
-                console.log("ERROR!: ", err);
-            });
-        }
     };
     return PrintclaimPage;
 }());
 PrintclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-printclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\printclaim\printclaim.html"*/'<!--\n\n  Generated template for the PrintclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>PRINTING CLAIM</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n\n\n  <div class="blackcontainer">\n\n\n\n    <div class="popup" padding>\n\n\n\n      <ion-card class="cm">\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n\n\n          <div class="icHeaderText">APPLY NEW PRINTING CLAIM</div>\n\n\n\n        </ion-card-header>\n\n        <ion-list class="scroll">\n\n          <form [formGroup]="Printform">\n\n            <ion-item>\n\n              <ion-label stacked>{{"DATE"}}</ion-label>\n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="print_date" [(ngModel)]="Printing_Date_ngModel" placeholder="{{\'Please choose yours date while you printing\'}}"></ion-datetime>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"SOC NUMBER"}}</ion-label>\n\n              <ion-input type="text" placeholder="{{\'Please click the button to get your soc number\'}}"></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                LOOKUP\n\n              </button>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="customer_name" disabled="true" [(ngModel)]="Printing_CustomerName_ngModel" placeholder="{{\'Please fill in the name of yours customer\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="project_name" disabled="true" [(ngModel)]="Printing_ProjectName_ngModel" placeholder="{{\'Please fill in the name of yours project\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n              <ion-input type="text" formControlName="description" [(ngModel)]="Printing_Description_ngModel" placeholder="{{\'Please fill in the description \'}}"></ion-input>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n              <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Printing_ClaimAmount_ngModel" placeholder="{{\'Please fill in the amount of yours Printing Claim\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"ATTACHMENT"}}</ion-label>\n\n\n\n            </ion-item>\n\n\n\n            <div class="btn">\n\n              <button ion-button (click)="save()">SUBMIT</button>\n\n            </div>\n\n\n\n          </form>\n\n        </ion-list>\n\n      </ion-card>\n\n\n\n    </div>\n\n  </div>\n\n\n\n   <!-- add lookup form start-->\n\n   <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n  </div>\n\n  <div class="popup1" padding *ngIf="AddLookupClicked">\n\n    <ion-card>\n\n      <ion-card-header class="icTitle headerColor-white ">\n\n\n\n        <div class="icHeaderText">SOC LOOKUP</div>\n\n        <button class="btnR" (click)="CloseLookupClick()">\n\n          <ion-icon name="md-close"></ion-icon>\n\n        </button>\n\n      </ion-card-header>\n\n      <ion-list>\n\n\n\n        <ion-row>\n\n          <ion-searchbar type="text" #filter (keyup)="0" placeholder="SEARCH SOC NUMBER"></ion-searchbar>\n\n        </ion-row>\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n\n\n   \n\n      </ion-list>\n\n    </ion-card>\n\n  </div>\n\n  <!-- add lookup form end-->\n\n\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\printclaim\printclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_7__services_printingclaim_service__["a" /* PrintingClaim_Service */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-printclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\printclaim\printclaim.html"*/'<!--\n\n  Generated template for the PrintclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>PRINTING CLAIM</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n<ion-header>\n\n\n\n    <ion-navbar>        \n\n      <ion-title>{{ \'PRINT_CLAIM_HEADING\' | translate }}</ion-title>  \n\n    </ion-navbar>\n\n   </ion-header>\n\n\n\n\n\n<ion-content padding> \n\n\n\n    <form [formGroup]="Printform">       \n\n  \n\n          <ion-item>\n\n            <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n          </ion-item>     \n\n        \n\n          <ion-item>\n\n              <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n              <ion-label > {{travelAmount | number}} </ion-label>\n\n              <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            </ion-item>\n\n  \n\n            <ion-item>\n\n                <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n                <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              </ion-item>     \n\n        \n\n          <!-- <ion-item>\n\n            <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n          </ion-item> -->\n\n  \n\n          <div class="btn">\n\n            <button ion-button (click)=\'save(Printform.value)\'  [disabled]="!Printform.valid" >SUBMIT</button>\n\n          </div>     \n\n        </form>\n\n\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\printclaim\printclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_6__services_printingclaim_service__["a" /* PrintingClaim_Service */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_7__services_printingclaim_service__["a" /* PrintingClaim_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_6__services_printingclaim_service__["a" /* PrintingClaim_Service */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_printingclaim_service__["a" /* PrintingClaim_Service */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */]) === "function" && _p || Object, typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */]) === "function" && _q || Object, typeof (_r = typeof __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */]) === "function" && _r || Object, typeof (_s = typeof __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]) === "function" && _s || Object, typeof (_t = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]) === "function" && _t || Object])
 ], PrintclaimPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
 //# sourceMappingURL=printclaim.js.map
 
 /***/ }),
-/* 238 */
+/* 241 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GiftclaimPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_giftclaim_model__ = __webpack_require__(381);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_giftclaim_service__ = __webpack_require__(382);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__ = __webpack_require__(381);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Services__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_ClaimRefMain_Model__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__ = __webpack_require__(48);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2730,9 +2914,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 //import { FormBuilder, FormGroup } from '@angular/forms';
-
-
 
 
 
@@ -2742,6 +2925,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 //import {Camera} from 'ionic-native';
+
+
+
 
 
 
@@ -2753,11 +2939,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var GiftclaimPage = (function () {
-    function GiftclaimPage(navCtrl, viewCtrl, navParams, fb, http, httpService, giftservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
-        var _this = this;
+    function GiftclaimPage(platform, navCtrl, viewCtrl, translate, navParams, api, fb, http, httpService, giftservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
+        //     this.Giftform = fb.group({
         this.navCtrl = navCtrl;
         this.viewCtrl = viewCtrl;
+        this.translate = translate;
         this.navParams = navParams;
+        this.api = api;
         this.http = http;
         this.httpService = httpService;
         this.giftservice = giftservice;
@@ -2769,207 +2957,331 @@ var GiftclaimPage = (function () {
         this.filePath = filePath;
         this.transfer = transfer;
         this.toastCtrl = toastCtrl;
-        this.giftclaim_entry = new __WEBPACK_IMPORTED_MODULE_6__models_giftclaim_model__["a" /* GiftClaim_Model */]();
-        this.baseResourceUrl1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        //baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-        this.baseResourceUrl = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/soc_main' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        // baseResource_Url_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-        this.Exist_Record = false;
+        this.AddTravelClicked = false;
+        this.ProjectLookupClicked = false;
+        this.CustomerLookupClicked = false;
+        // DestinationPlaceID: string;
+        // OriginPlaceID: string;
         this.AddLookupClicked = false;
+        this.AddToLookupClicked = false;
+        this.MainClaimSaved = false;
+        this.validDate = new Date().toISOString();
+        this.isCustomer = false;
+        //---------------------Language module start---------------------//
+        this.translateToMalayClicked = false;
+        this.translateToEnglishClicked = true;
+        //    // giftname: '',
+        //    soc_no: '',
+        //    project_name: '',
+        //    customer_name:'',
+        //    print_date: '',
+        //    claim_amount: ['', Validators.required],
+        //    description: ['', Validators.required],
+        //   });
+        //   this.Gift_Date_ngModel = new Date().toISOString();
+        //   //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
+        //   this.GetSocNo();
+        //   this.Giftform.valueChanges.subscribe((v) => {
+        //     this.isReadyToSave = this.Giftform.valid;
+        //   });
+        // }
+        this.translateToEnglish();
+        this.translate.setDefaultLang('en'); //Fallback language
+        platform.ready().then(function () {
+        });
         this.Giftform = fb.group({
-            // giftname: '',
             soc_no: '',
-            project_name: '',
-            customer_name: '',
-            print_date: '',
-            claim_amount: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            description: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            //distance: '', 
+            customer: '',
+            project_name: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            travel_date: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            description: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            vehicleType: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            // distance: ['', Validators.required],
+            claim_amount: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
         });
-        this.Gift_Date_ngModel = new Date().toISOString();
+        // this.Travel_Date_ngModel = new Date().toISOString();
+        //this.GetSocNo();
         //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-        this.GetSocNo();
-        this.Giftform.valueChanges.subscribe(function (v) {
-            _this.isReadyToSave = _this.Giftform.valid;
-        });
+        // this.Travelform.valueChanges.subscribe((v) => {
+        //   this.isReadyToSave = this.Travelform.valid;
+        // });
+        this.LoadProjects();
+        this.LoadCustomers();
     }
-    GiftclaimPage.prototype.AddLookupClick = function () {
-        this.AddLookupClicked = true;
+    GiftclaimPage.prototype.GetSocNo = function (item) {
+        this.Travel_SOC_No_ngModel = item.soc;
+        this.Project_Lookup_ngModel = item.project_name;
+        this.Soc_GUID = item.SOC_GUID;
+        this.CloseProjectLookup();
     };
-    GiftclaimPage.prototype.CloseLookupClick = function () {
-        if (this.AddLookupClicked == true) {
-            this.AddLookupClicked = false;
-        }
+    GiftclaimPage.prototype.GetCustomer = function (guid, name) {
+        this.Customer_Lookup_ngModel = name;
+        this.Customer_GUID = guid;
+        this.CloseCustomerLookup();
     };
-    GiftclaimPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad GiftclaimPage');
+    GiftclaimPage.prototype.translateToEnglish = function () {
+        this.translate.use('en');
+        this.translateToMalayClicked = !this.translateToMalayClicked;
+        this.translateToEnglishClicked = !this.translateToEnglishClicked;
     };
-    GiftclaimPage.prototype.GetSocNo = function () {
+    GiftclaimPage.prototype.translateToMalay = function () {
+        this.translate.use('ms');
+        this.translateToEnglishClicked = !this.translateToEnglishClicked;
+        this.translateToMalayClicked = !this.translateToMalayClicked;
+    };
+    //---------------------Language module end---------------------//
+    GiftclaimPage.prototype.claimForChanged = function () {
+        // console.log(this.claimFor)
+        if (this.claimFor == 'customer')
+            this.isCustomer = true;
+        else
+            this.isCustomer = false;
+    };
+    GiftclaimPage.prototype.LoadProjects = function () {
         var _this = this;
         this.http
-            .get(this.baseResourceUrl_soc)
+            .get(__WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('soc_registration'))
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
-            _this.socs = data["resource"];
-            if (_this.Gift_SOC_No_ngModel == undefined) {
-                return;
-            }
-            if (_this.Gift_SOC_No_ngModel != "" || _this.Gift_SOC_No_ngModel != undefined) {
-                var headers = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* Headers */]();
-                headers.append('Content-Type', 'application/json');
-                var options = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* RequestOptions */]({ headers: headers });
-                var url = void 0;
-                //let url1: string;
-                url = _this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + _this.Gift_SOC_No_ngModel + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-                // url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Gift_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-                _this.http.get(url, options)
-                    .map(function (res) { return res.json(); })
-                    .subscribe(function (data) {
-                    var res = data["resource"];
-                    if (res.length > 0) {
-                        _this.Gift_ProjectName_ngModel = res[0].Project;
-                        _this.Gift_CustomerName_ngModel = res[0].customer;
+            _this.storeProjects = _this.projects = data["resource"];
+            console.table(_this.projects);
+        });
+    };
+    GiftclaimPage.prototype.LoadCustomers = function () {
+        var _this = this;
+        this.http
+            .get(__WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('main_customer'))
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) {
+            _this.storeCustomers = _this.customers = data["resource"];
+            // console.table(this.projects)
+        });
+    };
+    GiftclaimPage.prototype.CloseTravelClick = function () {
+        this.AddToLookupClicked = false;
+        this.AddTravelClicked = false;
+    };
+    GiftclaimPage.prototype.CloseProjectLookup = function () {
+        if (this.ProjectLookupClicked == true) {
+            this.ProjectLookupClicked = false;
+        }
+    };
+    GiftclaimPage.prototype.CloseCustomerLookup = function () {
+        if (this.CustomerLookupClicked == true) {
+            this.CustomerLookupClicked = false;
+        }
+    };
+    GiftclaimPage.prototype.AddLookupClick = function () {
+        this.AddLookupClicked = true;
+        this.currentItems = null;
+    };
+    GiftclaimPage.prototype.AddToLookupClick = function () {
+        this.AddLookupClicked = true;
+        this.AddToLookupClicked = true;
+        this.currentItems = null;
+    };
+    GiftclaimPage.prototype.ProjectLookup = function () {
+        this.ProjectLookupClicked = true;
+        // this.projects = null;
+    };
+    GiftclaimPage.prototype.CustomerLookup = function () {
+        this.CustomerLookupClicked = true;
+        // this.projects = null;
+    };
+    GiftclaimPage.prototype.searchProject = function (searchString) {
+        var val = searchString.target.value;
+        if (!val || !val.trim()) {
+            this.projects = this.storeProjects;
+            return;
+        }
+        //  this.projects=  this.filterProjects({
+        //   project_name: val
+        //   });
+    };
+    // filterProjects(params?: any) {
+    //   if (!params) {
+    //     //return this.storeProjects;
+    //   }
+    //     return this.projects.filter((item) =>{
+    //     return this.storeProjects;
+    //   }
+    //   return this.projects.filter((item) => {
+    //     for (let key in params) {
+    //       let field = item[key];
+    //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+    //         return item;
+    //       } else if (field == params[key]) {
+    //         return item;
+    //       }
+    //     }
+    //     return null;
+    //   });
+    // }
+    GiftclaimPage.prototype.searchCustomer = function (searchString) {
+        var val = searchString.target.value;
+        if (!val || !val.trim()) {
+            this.customers = this.storeCustomers;
+            return;
+        }
+        // this.customers = this.filterCustomer({
+        //   NAME: val
+        // });
+    };
+    // filterCustomer(params?: any) {
+    //   if (!params) {
+    //     return this.storeCustomers;
+    //   }
+    //   return this.customers.filter((item) => {
+    //     for (let key in params) {
+    //       let field = item[key];
+    //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+    //         return item;
+    //       } else if (field == params[key]) {
+    //         return item;
+    //       }
+    //     }
+    //     return null;
+    //   });
+    // }
+    GiftclaimPage.prototype.takePhoto = function () {
+        // Camera.getPicture().then((imageData) => {
+        //     this.imageURL = imageData
+        // }, (err) => {
+        //     console.log(err);
+        // });
+    };
+    GiftclaimPage.prototype.save = function (value) {
+        var _this = this;
+        var userGUID = localStorage.getItem('g_USER_GUID');
+        var tenantGUID = localStorage.getItem('g_TENANT_GUID');
+        var month = new Date(value.travel_date).getMonth() + 1;
+        var year = new Date(value.travel_date).getFullYear();
+        var claimRefGUID;
+        var url = __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+        this.http
+            .get(url)
+            .map(function (res) { return res.json(); })
+            .subscribe(function (claimRefdata) {
+            if (claimRefdata["resource"][0] == null) {
+                var claimReqRef = new __WEBPACK_IMPORTED_MODULE_14__models_ClaimRefMain_Model__["a" /* ClaimRefMain_Model */]();
+                claimReqRef.CLAIM_REF_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqRef.USER_GUID = userGUID;
+                claimReqRef.TENANT_GUID = tenantGUID;
+                claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+                claimReqRef.MONTH = month;
+                claimReqRef.YEAR = year;
+                claimReqRef.CREATION_TS = new Date().toISOString();
+                claimReqRef.UPDATE_TS = new Date().toISOString();
+                _this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe(function (response) {
+                    var postClaimRef = response.json();
+                    claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
+                    var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                    claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                    claimReqMainRef.TENANT_GUID = tenantGUID;
+                    claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                    claimReqMainRef.MILEAGE_GUID = _this.VehicleId;
+                    claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                    claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                    // claimReqMainRef.START_TS = value.start_DT;
+                    // claimReqMainRef.END_TS = value.end_DT;
+                    claimReqMainRef.DESCRIPTION = value.description;
+                    // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
+                    claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                    claimReqMainRef.CREATION_TS = new Date().toISOString();
+                    claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                    // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                    // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                    // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                    // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                    if (_this.isCustomer) {
+                        claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
                     }
                     else {
-                        alert('please enter valid soc no');
-                        //return;
-                        _this.Gift_SOC_No_ngModel = "";
+                        claimReqMainRef.SOC_GUID = _this.Soc_GUID;
                     }
-                }, function (err) {
-                    console.log("ERROR!: ", err);
+                    claimReqMainRef.CUSTOMER_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    claimReqMainRef.SOC_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                        var postClaimMain = response.json();
+                        _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                        _this.MainClaimSaved = true;
+                        alert('Claim Has Registered.');
+                    });
+                });
+            }
+            else {
+                claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+                var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqMainRef.TENANT_GUID = tenantGUID;
+                claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                claimReqMainRef.MILEAGE_GUID = _this.VehicleId;
+                claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                // claimReqMainRef.START_TS = value.start_DT;
+                // claimReqMainRef.END_TS = value.end_DT;
+                claimReqMainRef.DESCRIPTION = value.description;
+                // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+                claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                claimReqMainRef.CREATION_TS = new Date().toISOString();
+                claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                if (_this.isCustomer) {
+                    claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
+                }
+                else {
+                    claimReqMainRef.SOC_GUID = _this.Soc_GUID;
+                }
+                _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                    var postClaimMain = response.json();
+                    _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                    _this.MainClaimSaved = true;
+                    alert('Claim Has Registered.');
                 });
             }
         });
-    };
-    // SOC_No_TextBox_Onchange(Gift_SOC_No_ngModel: string) {
-    //   console.log(this.Gift_SOC_No_ngModel);
-    //   if (this.Gift_SOC_No_ngModel == undefined) { return; }
-    //   if (this.Gift_SOC_No_ngModel != "" || this.Gift_SOC_No_ngModel != undefined) {
-    //     let headers = new Headers();
-    //     headers.append('Content-Type', 'application/json');
-    //     let options = new RequestOptions({ headers: headers });
-    //     let url: string;
-    //     let url1: string;
-    //     url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Gift_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Gift_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     this.http.get(url, options)
-    //       .map(res => res.json())
-    //       .subscribe(
-    //       data => {
-    //         let res = data["resource"];
-    //         if (res.length > 0) {
-    //           this.Gift_ProjectName_ngModel = res[0].Project;
-    //           this.Gift_CustomerName_ngModel = res[0].Project;
-    //         }
-    //         else {
-    //           alert('please enter valid soc no');
-    //           //return;
-    //           this.Gift_SOC_No_ngModel = "";
-    //         }
-    //       },
-    //       err => {
-    //         console.log("ERROR!: ", err);
-    //       });
-    //   }
-    // }
-    GiftclaimPage.prototype.save = function () {
-        var _this = this;
-        //debugger;
-        //this.getImage();
-        //this.uploadFile();
-        if (this.Giftform.valid) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* Headers */]();
-            headers.append('Content-Type', 'application/json');
-            var options = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* RequestOptions */]({ headers: headers });
-            var url = void 0;
-            var request_id = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-            //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-            url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-            this.http.get(url, options)
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                var res = data["resource"];
-                if (res.length == 0) {
-                    console.log("No records Found");
-                    if (_this.Exist_Record == false) {
-                        // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-                        _this.giftclaim_entry.DESCRIPTION = _this.Gift_Description_ngModel.trim();
-                        _this.giftclaim_entry.CLAIM_AMOUNT = _this.Gift_ClaimAmount_ngModel.trim();
-                        //this.printclaim_entry.CLAIM_TYPE_GUID = this.masterclaim_entry.CLAIM_TYPE_GUID = "58c59b56-289e-31a2-f708-138e81a9c823";
-                        // this.masterclaim_entry.CLAIM_AMOUNT = this.Gift_ClaimAmount_ngModel.trim();
-                        // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                        // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                        // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-                        //alert(this.masterclaim_entry.CLAIM_AMOUNT);
-                        _this.giftclaim_entry.CLAIM_REQUEST_DETAIL_GUID = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-                        _this.giftclaim_entry.CREATION_TS = new Date().toISOString();
-                        _this.giftclaim_entry.CREATION_USER_GUID = '1';
-                        _this.giftclaim_entry.UPDATE_TS = new Date().toISOString();
-                        _this.giftclaim_entry.UPDATE_USER_GUID = "";
-                        //this.uploadFile();
-                        // this.giftservice.save_main_claim_request(this.masterclaim_entry)
-                        //   .subscribe((response) => {
-                        //     if (response.status == 200) {
-                        //      // alert('Giftclaim Registered successfully');
-                        //       //location.reload();
-                        //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                        //     }
-                        //   });
-                        _this.giftservice.save_claim_request_detail(_this.giftclaim_entry)
-                            .subscribe(function (response) {
-                            if (response.status == 200) {
-                                alert('Giftclaim Registered successfully');
-                                //location.reload();
-                                _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
-                            }
-                        });
-                    }
-                }
-                else {
-                    console.log("Records Found");
-                    alert("The Travelclaim is already Exist.");
-                }
-            }, function (err) {
-                _this.Exist_Record = false;
-                console.log("ERROR!: ", err);
-            });
-        }
     };
     return GiftclaimPage;
 }());
 GiftclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-giftclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\giftclaim\giftclaim.html"*/'<!--\n\n  Generated template for the GiftclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>GIFT CLAIM</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <div class="blackcontainer">\n\n\n\n    <div class="popup" padding>\n\n\n\n      <ion-card class="cm">\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n\n\n          <div class="icHeaderText">APPLY NEW GIFT CLAIM</div>\n\n\n\n        </ion-card-header>\n\n        <ion-list class="scroll">\n\n          <form [formGroup]="Giftform">\n\n            <ion-item>\n\n              <ion-label stacked>{{"DATE"}}</ion-label>\n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="print_date" [(ngModel)]="Gift_Date_ngModel" placeholder="{{\'Please choose yours date while you buy the gift\'}}"></ion-datetime>\n\n            </ion-item>\n\n\n\n            <!-- <ion-item>\n\n                  <ion-label stacked>SOC NUMBER</ion-label>\n\n                  <ion-select formControlName="soc_no" [(ngModel)]="Gift_SOC_No_ngModel" placeholder="SELECT" (ionChange)="GetSocNo()">\n\n                    <ion-option *ngFor="let soc of socs" selected="true">{{soc.SOC_NO}}</ion-option>\n\n                  </ion-select>\n\n              </ion-item> -->\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"SOC NUMBER"}}</ion-label>\n\n              <ion-input type="text" placeholder="{{\'Please click the button to get your soc number\'}}"></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                LOOKUP\n\n              </button>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="customer_name" disabled="true" [(ngModel)]="Gift_CustomerName_ngModel" placeholder="{{\'Please fill in the name of yours customer\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="project_name" disabled="true" [(ngModel)]="Gift_ProjectName_ngModel" placeholder="{{\'Please fill in the name of yours project\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n              <ion-input type="text" formControlName="description" [(ngModel)]="Gift_Description_ngModel" placeholder="{{\'Please fill in the description \'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n              <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Gift_ClaimAmount_ngModel" placeholder="{{\'Please fill in the amount of yours Gift Claim\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"ATTACHMENT"}}</ion-label>\n\n\n\n            </ion-item>\n\n\n\n            <div class="btn">\n\n              <button ion-button (click)="save()">SUBMIT</button>\n\n            </div>\n\n\n\n          </form>\n\n        </ion-list>\n\n      </ion-card>\n\n\n\n    </div>\n\n  </div>\n\n\n\n  \n\n  <!-- add lookup form start-->\n\n  <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n    </div>\n\n    <div class="popup1" padding *ngIf="AddLookupClicked">\n\n      <ion-card>\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n  \n\n          <div class="icHeaderText">SOC LOOKUP</div>\n\n          <button class="btnR" (click)="CloseLookupClick()">\n\n            <ion-icon name="md-close"></ion-icon>\n\n          </button>\n\n        </ion-card-header>\n\n        <ion-list>\n\n  \n\n          <ion-row>\n\n            <ion-searchbar type="text" #filter (keyup)="0" placeholder="SEARCH SOC NUMBER"></ion-searchbar>\n\n          </ion-row>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n          <!-- <ion-item>\n\n            <table class="Tabler">\n\n               \n\n                <tr class="col7">\n\n                  <td class="lgl1">3</td>\n\n                  <td class="lgl1">APR127001</td>\n\n                  <td class="lgl1">FLOOR SYSTEM</td>\n\n                  <td class="lgl1">HARTALEGA</td>\n\n                </tr>\n\n        \n\n        \n\n              </table>\n\n  \n\n            </ion-item> -->\n\n        </ion-list>\n\n      </ion-card>\n\n    </div>\n\n    <!-- add lookup form end-->\n\n\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\giftclaim\giftclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_7__services_giftclaim_service__["a" /* GiftClaim_Service */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-giftclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\giftclaim\giftclaim.html"*/'<!--\n\n  Generated template for the GiftclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>GIFT CLAIM</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n        <ion-list-header>\n\n          Select Travel Claim For:\n\n        </ion-list-header>\n\n    \n\n        <ion-item>\n\n          <ion-label>Customer</ion-label>\n\n          <ion-radio value="customer" checked="true"></ion-radio>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label>Project</ion-label>\n\n          <ion-radio value="project"></ion-radio>\n\n        </ion-item>\n\n      </ion-list>\n\n\n\n      <form [formGroup]="Giftform">\n\n\n\n          <div *ngIf="claimFor==\'project\'">\n\n              <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n              <ion-item>\n\n                <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n                <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n                  <ion-icon name="eye"></ion-icon>\n\n                  {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n              </ion-item>\n\n              <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n              <ion-item>\n\n                <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n                <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n              </ion-item>\n\n            </div>\n\n          <!-- <ion-card>\n\n              <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>\n\n            <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" \n\n              placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n    \n\n            <ion-list>\n\n              <ion-item-sliding *ngFor="let item of projects">\n\n                <button ion-item (click)="GetSocNo(item.SOC_GUID)">\n\n                  <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>\n\n                </button>\n\n              </ion-item-sliding>\n\n            </ion-list>  \n\n          </ion-card> -->\n\n    \n\n          <div *ngIf="claimFor==\'customer\'">\n\n    \n\n              <!-- formControlName="customer" -->\n\n              <ion-item>\n\n                <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n                <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n                  <ion-icon name="eye"></ion-icon>\n\n                  {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n              </ion-item>\n\n            </div>\n\n    \n\n          <!-- <ion-item>\n\n              <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n              <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n              placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n            </ion-item> -->\n\n    \n\n            <ion-item>\n\n              <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n            </ion-item>       \n\n            \n\n            <ion-item>\n\n                <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n                <ion-label > {{travelAmount | number}} </ion-label>\n\n                <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              </ion-item>\n\n    \n\n              <ion-item>\n\n                  <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n                  <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                </ion-item>       \n\n           \n\n            <!-- <ion-item>\n\n              <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n            </ion-item> -->\n\n    \n\n            <div class="btn">\n\n              <button ion-button (click)=\'save(Giftform.value)\'   >SUBMIT</button>\n\n            </div> \n\n            <!-- [disabled]="!Giftform.valid"       -->\n\n          </form>\n\n\n\n          <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n            </div>\n\n            <div class="popup2" padding *ngIf="AddLookupClicked">\n\n              <ion-card>\n\n                <ion-card-header class="icTitle headerColor-white ">\n\n          \n\n                  <div class="icHeaderText">Search Location</div>\n\n                  <button class="btnR" (click)="CloseLookupClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                  </button>\n\n                </ion-card-header>\n\n                <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n                <ion-list>\n\n                  <ion-item-sliding *ngFor="let item of currentItems">\n\n                    <button ion-item (click)="openItem(item)">\n\n                      <ion-label> {{item.description}}</ion-label>\n\n                    </button>\n\n                  </ion-item-sliding>\n\n                </ion-list>\n\n              </ion-card>\n\n            </div>\n\n      \n\n            <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n              </div>\n\n              <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n                <ion-card>\n\n                  <ion-card-header class="icTitle headerColor-white ">\n\n                    <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n                    <button class="btnR" (click)="CloseProjectLookup()">\n\n                      <ion-icon name="md-close"></ion-icon>\n\n                    </button>\n\n                  </ion-card-header>\n\n                  <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n                  <ion-list>\n\n                    <ion-item-sliding *ngFor="let item of projects">\n\n                      <button ion-item (click)="GetSocNo(item)">\n\n                        <ion-label>{{item.project_name}}\n\n                          <>{{item.soc}}</ion-label>\n\n                      </button>\n\n                    </ion-item-sliding>\n\n                  </ion-list>\n\n                </ion-card>\n\n              </div>\n\n      \n\n              <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n                </div>\n\n                <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n                  <ion-card>\n\n                    <ion-card-header class="icTitle headerColor-white ">\n\n                      <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n                      <button class="btnR" (click)="CloseCustomerLookup()">\n\n                        <ion-icon name="md-close"></ion-icon>\n\n                      </button>\n\n                    </ion-card-header>\n\n                    <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n                    <ion-list>\n\n                      <ion-item-sliding *ngFor="let item of customers">\n\n                        <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                          <ion-label>{{item.NAME}}</ion-label>\n\n                        </button>\n\n                      </ion-item-sliding>\n\n                    </ion-list>\n\n                  </ion-card>\n\n                </div>\n\n              </ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\giftclaim\giftclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__["a" /* GiftClaim_Service */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_7__services_giftclaim_service__["a" /* GiftClaim_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__["a" /* GiftClaim_Service */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__["a" /* GiftClaim_Service */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */]) === "function" && _p || Object, typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */]) === "function" && _q || Object, typeof (_r = typeof __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */]) === "function" && _r || Object, typeof (_s = typeof __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]) === "function" && _s || Object, typeof (_t = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]) === "function" && _t || Object])
 ], GiftclaimPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
 //# sourceMappingURL=giftclaim.js.map
 
 /***/ }),
-/* 239 */
+/* 242 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OvertimeclaimPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_overtimeclaim_model__ = __webpack_require__(383);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_overtimeclaim_service__ = __webpack_require__(384);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_overtimeclaim_service__ = __webpack_require__(382);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Services__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_ClaimRefMain_Model__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__ = __webpack_require__(48);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2981,9 +3293,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 //import { FormBuilder, FormGroup } from '@angular/forms';
-
-
 
 
 
@@ -2996,6 +3307,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 /**
  * Generated class for the OvertimeclaimPage page.
  *
@@ -3003,11 +3317,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var OvertimeclaimPage = (function () {
-    function OvertimeclaimPage(navCtrl, viewCtrl, navParams, fb, http, httpService, overtimeservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
-        var _this = this;
+    function OvertimeclaimPage(platform, navCtrl, viewCtrl, navParams, api, translate, fb, http, httpService, overtimeservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
         this.navCtrl = navCtrl;
         this.viewCtrl = viewCtrl;
         this.navParams = navParams;
+        this.api = api;
+        this.translate = translate;
         this.http = http;
         this.httpService = httpService;
         this.overtimeservice = overtimeservice;
@@ -3019,192 +3334,312 @@ var OvertimeclaimPage = (function () {
         this.filePath = filePath;
         this.transfer = transfer;
         this.toastCtrl = toastCtrl;
-        this.overtimeclaim_entry = new __WEBPACK_IMPORTED_MODULE_6__models_overtimeclaim_model__["a" /* OvertimeClaim_Model */]();
-        this.baseResourceUrl1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/soc_main' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl_view_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/soc_registration' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.Exist_Record = false;
+        this.AddTravelClicked = false;
+        this.ProjectLookupClicked = false;
+        this.CustomerLookupClicked = false;
         this.AddLookupClicked = false;
-        this.http
-            .get(this.baseResourceUrl_view_soc)
-            .map(function (res) { return res.json(); })
-            .subscribe(function (data) {
-            _this.SOC_Number = data["resource"];
+        this.AddToLookupClicked = false;
+        this.MainClaimSaved = false;
+        this.validDate = new Date().toISOString();
+        this.isCustomer = false;
+        //---------------------Language module start---------------------//
+        this.translateToMalayClicked = false;
+        this.translateToEnglishClicked = true;
+        this.translateToEnglish();
+        this.translate.setDefaultLang('en'); //Fallback language
+        platform.ready().then(function () {
         });
         this.OTform = fb.group({
-            // otname: '',
-            ot_date: '',
             soc_no: '',
-            project_name: '',
-            customer_name: '',
-            start_time: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            end_time: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            claim_amount: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            //distance: '', 
+            //customer: '',
+            // project_name: ['', Validators.required],
+            travel_date: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            //destination: ['', Validators.required],
+            //from: ['', Validators.required],
+            start_DT: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            end_DT: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            description: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            //origin: ['', Validators.required],
+            vehicleType: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
         });
-        this.OT_Date_ngModel = new Date().toISOString();
-        this.GetSocNo();
-        //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-        this.OTform.valueChanges.subscribe(function (v) {
-            _this.isReadyToSave = _this.OTform.valid;
-        });
+        this.LoadProjects();
+        //this.LoadVehicles();
+        this.LoadCustomers();
     }
-    OvertimeclaimPage.prototype.AddLookupClick = function () {
-        this.AddLookupClicked = true;
+    OvertimeclaimPage.prototype.GetSocNo = function (item) {
+        this.Travel_SOC_No_ngModel = item.soc;
+        this.Project_Lookup_ngModel = item.project_name;
+        this.Soc_GUID = item.SOC_GUID;
+        this.CloseProjectLookup();
     };
-    OvertimeclaimPage.prototype.CloseLookupClick = function () {
-        if (this.AddLookupClicked == true) {
-            this.AddLookupClicked = false;
-        }
+    OvertimeclaimPage.prototype.GetCustomer = function (guid, name) {
+        this.Customer_Lookup_ngModel = name;
+        this.Customer_GUID = guid;
+        this.CloseCustomerLookup();
     };
-    OvertimeclaimPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad OvertimeclaimPage');
+    OvertimeclaimPage.prototype.translateToEnglish = function () {
+        this.translate.use('en');
+        this.translateToMalayClicked = !this.translateToMalayClicked;
+        this.translateToEnglishClicked = !this.translateToEnglishClicked;
     };
-    OvertimeclaimPage.prototype.openItem = function (item) {
-        alert('open item');
-        this.OT_SOC_No_ngModel = item.soc;
-        this.OT_ProjectName_ngModel = item.project_name;
-        this.OT_CustomerName_ngModel = item.customer_name;
-        this.CloseLookupClick();
+    OvertimeclaimPage.prototype.translateToMalay = function () {
+        this.translate.use('ms');
+        this.translateToEnglishClicked = !this.translateToEnglishClicked;
+        this.translateToMalayClicked = !this.translateToMalayClicked;
     };
-    OvertimeclaimPage.prototype.GetSocNo = function () {
+    //---------------------Language module end---------------------//
+    OvertimeclaimPage.prototype.claimForChanged = function () {
+        // console.log(this.claimFor)
+        if (this.claimFor == 'customer')
+            this.isCustomer = true;
+        else
+            this.isCustomer = false;
+    };
+    OvertimeclaimPage.prototype.LoadProjects = function () {
         var _this = this;
         this.http
-            .get(this.baseResourceUrl_soc)
+            .get(__WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('soc_registration'))
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
-            _this.socs = data["resource"];
-            if (_this.OT_SOC_No_ngModel == undefined) {
-                return;
-            }
-            if (_this.OT_SOC_No_ngModel != "" || _this.OT_SOC_No_ngModel != undefined) {
-                var headers = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* Headers */]();
-                headers.append('Content-Type', 'application/json');
-                var options = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* RequestOptions */]({ headers: headers });
-                var url = void 0;
-                var url1 = void 0;
-                url = _this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + _this.OT_SOC_No_ngModel + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-                url1 = _this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + _this.OT_SOC_No_ngModel + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-                _this.http.get(url, options)
-                    .map(function (res) { return res.json(); })
-                    .subscribe(function (data) {
-                    var res = data["resource"];
-                    if (res.length > 0) {
-                        _this.OT_ProjectName_ngModel = res[0].Project;
-                        _this.OT_CustomerName_ngModel = res[0].customer;
+            _this.storeProjects = _this.projects = data["resource"];
+            console.table(_this.projects);
+        });
+    };
+    OvertimeclaimPage.prototype.LoadCustomers = function () {
+        var _this = this;
+        this.http
+            .get(__WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('main_customer'))
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) {
+            _this.storeCustomers = _this.customers = data["resource"];
+            // console.table(this.projects)
+        });
+    };
+    OvertimeclaimPage.prototype.CloseTravelClick = function () {
+        this.AddToLookupClicked = false;
+        this.AddTravelClicked = false;
+    };
+    OvertimeclaimPage.prototype.CloseProjectLookup = function () {
+        if (this.ProjectLookupClicked == true) {
+            this.ProjectLookupClicked = false;
+        }
+    };
+    OvertimeclaimPage.prototype.CloseCustomerLookup = function () {
+        if (this.CustomerLookupClicked == true) {
+            this.CustomerLookupClicked = false;
+        }
+    };
+    OvertimeclaimPage.prototype.AddLookupClick = function () {
+        this.AddLookupClicked = true;
+        this.currentItems = null;
+    };
+    OvertimeclaimPage.prototype.AddToLookupClick = function () {
+        this.AddLookupClicked = true;
+        this.AddToLookupClicked = true;
+        this.currentItems = null;
+    };
+    OvertimeclaimPage.prototype.ProjectLookup = function () {
+        this.ProjectLookupClicked = true;
+        // this.projects = null;
+    };
+    OvertimeclaimPage.prototype.CustomerLookup = function () {
+        this.CustomerLookupClicked = true;
+        // this.projects = null;
+    };
+    OvertimeclaimPage.prototype.searchProject = function (searchString) {
+        var val = searchString.target.value;
+        if (!val || !val.trim()) {
+            this.projects = this.storeProjects;
+            return;
+        }
+        //  this.projects=  this.filterProjects({
+        //   project_name: val
+        //   });
+    };
+    // filterProjects(params?: any) {
+    //   if (!params) {
+    //     //return this.storeProjects;
+    //   }
+    //     return this.projects.filter((item) =>{
+    //     return this.storeProjects;
+    //   }
+    //   return this.projects.filter((item) => {
+    //     for (let key in params) {
+    //       let field = item[key];
+    //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+    //         return item;
+    //       } else if (field == params[key]) {
+    //         return item;
+    //       }
+    //     }
+    //     return null;
+    //   });
+    // }
+    OvertimeclaimPage.prototype.searchCustomer = function (searchString) {
+        var val = searchString.target.value;
+        if (!val || !val.trim()) {
+            this.customers = this.storeCustomers;
+            return;
+        }
+        // this.customers = this.filterCustomer({
+        //   NAME: val
+        // });
+    };
+    // filterCustomer(params?: any) {
+    //   if (!params) {
+    //     return this.storeCustomers;
+    //   }
+    //   return this.customers.filter((item) => {
+    //     for (let key in params) {
+    //       let field = item[key];
+    //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+    //         return item;
+    //       } else if (field == params[key]) {
+    //         return item;
+    //       }
+    //     }
+    //     return null;
+    //   });
+    // }
+    OvertimeclaimPage.prototype.takePhoto = function () {
+        // Camera.getPicture().then((imageData) => {
+        //     this.imageURL = imageData
+        // }, (err) => {
+        //     console.log(err);
+        // });
+    };
+    OvertimeclaimPage.prototype.save = function (value) {
+        var _this = this;
+        var userGUID = localStorage.getItem('g_USER_GUID');
+        var tenantGUID = localStorage.getItem('g_TENANT_GUID');
+        var month = new Date(value.travel_date).getMonth() + 1;
+        var year = new Date(value.travel_date).getFullYear();
+        var claimRefGUID;
+        var url = __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+        this.http
+            .get(url)
+            .map(function (res) { return res.json(); })
+            .subscribe(function (claimRefdata) {
+            if (claimRefdata["resource"][0] == null) {
+                var claimReqRef = new __WEBPACK_IMPORTED_MODULE_14__models_ClaimRefMain_Model__["a" /* ClaimRefMain_Model */]();
+                claimReqRef.CLAIM_REF_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqRef.USER_GUID = userGUID;
+                claimReqRef.TENANT_GUID = tenantGUID;
+                claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+                claimReqRef.MONTH = month;
+                claimReqRef.YEAR = year;
+                claimReqRef.CREATION_TS = new Date().toISOString();
+                claimReqRef.UPDATE_TS = new Date().toISOString();
+                _this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe(function (response) {
+                    var postClaimRef = response.json();
+                    claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
+                    var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                    claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                    claimReqMainRef.TENANT_GUID = tenantGUID;
+                    claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                    claimReqMainRef.MILEAGE_GUID = _this.VehicleId;
+                    claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                    claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                    claimReqMainRef.START_TS = value.start_DT;
+                    claimReqMainRef.END_TS = value.end_DT;
+                    claimReqMainRef.DESCRIPTION = value.description;
+                    //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
+                    claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                    claimReqMainRef.CREATION_TS = new Date().toISOString();
+                    claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                    // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                    // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                    // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                    // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                    if (_this.isCustomer) {
+                        claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
                     }
                     else {
-                        alert('please enter valid soc no');
-                        //return;
-                        _this.OT_SOC_No_ngModel = "";
+                        claimReqMainRef.SOC_GUID = _this.Soc_GUID;
                     }
-                }, function (err) {
-                    console.log("ERROR!: ", err);
+                    claimReqMainRef.CUSTOMER_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    claimReqMainRef.SOC_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                        var postClaimMain = response.json();
+                        _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                        _this.MainClaimSaved = true;
+                        alert('Claim Has Registered.');
+                    });
+                });
+            }
+            else {
+                claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+                var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqMainRef.TENANT_GUID = tenantGUID;
+                claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                claimReqMainRef.MILEAGE_GUID = _this.VehicleId;
+                claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                claimReqMainRef.START_TS = value.start_DT;
+                claimReqMainRef.END_TS = value.end_DT;
+                claimReqMainRef.DESCRIPTION = value.description;
+                //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+                claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                claimReqMainRef.CREATION_TS = new Date().toISOString();
+                claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                if (_this.isCustomer) {
+                    claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
+                }
+                else {
+                    claimReqMainRef.SOC_GUID = _this.Soc_GUID;
+                }
+                _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                    var postClaimMain = response.json();
+                    _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                    _this.MainClaimSaved = true;
+                    alert('Claim Has Registered.');
                 });
             }
         });
-    };
-    OvertimeclaimPage.prototype.save = function () {
-        var _this = this;
-        if (this.OTform.valid) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* Headers */]();
-            headers.append('Content-Type', 'application/json');
-            var options = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* RequestOptions */]({ headers: headers });
-            var url = void 0;
-            var request_id = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-            //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-            url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-            this.http.get(url, options)
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                var res = data["resource"];
-                if (res.length == 0) {
-                    console.log("No records Found");
-                    if (_this.Exist_Record == false) {
-                        // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-                        _this.overtimeclaim_entry.START_TS = _this.OT_StartTime_ngModel.trim();
-                        _this.overtimeclaim_entry.END_TS = _this.OT_EndTime_ngModel.trim();
-                        _this.overtimeclaim_entry.CLAIM_AMOUNT = _this.OT_ClaimAmount_ngModel.trim();
-                        // this.overtimeclaim_entry.CLAIM_TYPE_GUID = this.masterclaim_entry.CLAIM_TYPE_GUID = "Overtime claim";
-                        //this.masterclaim_entry.SOC_GUID = this.OT_SOC_No_ngModel.trim();
-                        // this.masterclaim_entry.START_TS = this.OT_StartTime_ngModel.trim();
-                        // this.masterclaim_entry.END_TS = this.OT_EndTime_ngModel.trim();
-                        // this.masterclaim_entry.CLAIM_AMOUNT = this.OT_ClaimAmount_ngModel.trim();
-                        // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                        // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                        // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-                        //alert(this.masterclaim_entry.CLAIM_AMOUNT);
-                        _this.overtimeclaim_entry.CLAIM_REQUEST_DETAIL_GUID = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-                        _this.overtimeclaim_entry.CREATION_TS = new Date().toISOString();
-                        _this.overtimeclaim_entry.CREATION_USER_GUID = '1';
-                        _this.overtimeclaim_entry.UPDATE_TS = new Date().toISOString();
-                        _this.overtimeclaim_entry.UPDATE_USER_GUID = "";
-                        //this.uploadFile();
-                        // this.overtimeservice.save_main_claim_request(this.masterclaim_entry)
-                        //   .subscribe((response) => {
-                        //     if (response.status == 200) {
-                        //       //alert('Overtimeclaim Registered successfully');
-                        //       //location.reload();
-                        //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                        //     }
-                        //   });
-                        // this.overtimeservice.save_claim_request_detail(this.overtimeclaim_entry)
-                        //   .subscribe((response) => {
-                        //     if (response.status == 200) {
-                        //       alert('Overtimeclaim Registered successfully');
-                        //       //location.reload();
-                        //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                        //     }
-                        //   });
-                    }
-                }
-                else {
-                    console.log("Records Found");
-                    alert("The Overtimeclaim is already Exist.");
-                }
-            }, function (err) {
-                _this.Exist_Record = false;
-                console.log("ERROR!: ", err);
-            });
-        }
     };
     return OvertimeclaimPage;
 }());
 OvertimeclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-overtimeclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\overtimeclaim\overtimeclaim.html"*/'<!--\n\n  Generated template for the OvertimeclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>OVERTIME CLAIM</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <div class="blackcontainer">\n\n\n\n    <div class="popup" padding>\n\n\n\n      <ion-card class="cm">\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n\n\n          <div class="icHeaderText">APPLY NEW OVERTIME CLAIM</div>\n\n\n\n        </ion-card-header>\n\n        <ion-list class="scroll">\n\n          <form [formGroup]="OTform">\n\n            <ion-item>\n\n              <ion-label stacked>{{"DATE"}}</ion-label>\n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="ot_date" [(ngModel)]="OT_Date_ngModel" placeholder="{{\'Please choose yours date while you OT\'}}"></ion-datetime>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"SOC NUMBER"}}</ion-label>\n\n              <ion-input type="text" [(ngModel)]="OT_SOC_No_ngModel" [ngModelOptions]="{standalone:true}" placeholder="{{\'Please click the button to get your soc number\'}}"></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                LOOKUP\n\n              </button>\n\n            </ion-item>\n\n\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="customer_name" [(ngModel)]="OT_CustomerName_ngModel" placeholder="{{\'Please fill in the name of yours customer\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="project_name" [(ngModel)]="OT_ProjectName_ngModel" placeholder="{{\'Please fill in the name of yours project\'}}"></ion-input>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label stacked>{{"START TIME"}}</ion-label>\n\n              <ion-datetime displayFormat="HH:mm:ss" formControlName="start_time" [(ngModel)]="OT_StartTime_ngModel" placeholder="{{\'Please choose yours starting overtime\'}}"></ion-datetime>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"END TIME"}}</ion-label>\n\n              <ion-datetime displayFormat="HH:mm:ss" formControlName="end_time" [(ngModel)]="OT_EndTime_ngModel" placeholder="{{\'Please choose yours ending overtime\'}}"></ion-datetime>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n              <ion-input type="number" formControlName="claim_amount" [(ngModel)]="OT_ClaimAmount_ngModel" placeholder="{{\'Please fill in the amount of yours Overtime Claim\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CALENDAR REF."}}</ion-label>\n\n\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"ATTACHMENT"}}</ion-label>\n\n\n\n            </ion-item>\n\n\n\n            <div class="btn">\n\n              <button ion-button (click)="save()">SUBMIT</button>\n\n            </div>\n\n\n\n          </form>\n\n        </ion-list>\n\n      </ion-card>\n\n\n\n    </div>\n\n  </div>\n\n\n\n  <!-- add lookup form start-->\n\n  <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n  </div>\n\n  <div class="popup1" padding *ngIf="AddLookupClicked">\n\n    <ion-card>\n\n      <ion-card-header class="icTitle headerColor-white ">\n\n\n\n        <div class="icHeaderText">SOC LOOKUP</div>\n\n        <button class="btnR" (click)="CloseLookupClick()">\n\n          <ion-icon name="md-close"></ion-icon>\n\n        </button>\n\n      </ion-card-header>\n\n      <ion-row>\n\n        <ion-searchbar type="text" #filter (keyup)="0" placeholder="SEARCH SOC NUMBER"></ion-searchbar>\n\n      </ion-row>\n\n      <ion-list>\n\n\n\n          <ion-item-sliding *ngFor="let soc of SOC_Number">\n\n              <button ion-item (click)="openItem(soc)">\n\n                <ion-label>{{soc.soc}}</ion-label>\n\n    \n\n              </button>\n\n    \n\n            </ion-item-sliding>\n\n        \n\n        <!-- <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item>\n\n        <ion-item class="tnUserRow">\n\n          <ion-label>APR10788</ion-label>\n\n\n\n        </ion-item> -->\n\n\n\n        <!-- <ion-item>\n\n          <table class="Tabler">\n\n              <tr class="colth TColor">\n\n                <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>\n\n                <th class="lgl1">SOC NUMBER</th>\n\n                <th class="lgl1">PROJECT NAME</th>\n\n                <th class="lgl1 tblBrRight">CUSTOMER NAME</th>\n\n      \n\n              </tr>\n\n      \n\n              <tr class="col7">\n\n                <td class="lgl1">1</td>\n\n                <td class="lgl1">APR17001</td>\n\n                <td class="lgl1">FLOOR SYSTEM</td>\n\n                <td class="lgl1">HARTALEGA</td>\n\n              </tr>\n\n              \n\n\n\n              <tr class="col7">\n\n                <td class="lgl1">2</td>\n\n                <td class="lgl1">APR127001</td>\n\n                <td class="lgl1">FLOOR SYSTEM</td>\n\n                <td class="lgl1">HARTALEGA</td>\n\n              </tr>\n\n      \n\n\n\n              <tr class="col7">\n\n                <td class="lgl1">3</td>\n\n                <td class="lgl1">APR127001</td>\n\n                <td class="lgl1">FLOOR SYSTEM</td>\n\n                <td class="lgl1">HARTALEGA</td>\n\n              </tr>\n\n      \n\n      \n\n            </table>\n\n\n\n          </ion-item> -->\n\n      </ion-list>\n\n    </ion-card>\n\n  </div>\n\n  <!-- add lookup form end-->\n\n\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\overtimeclaim\overtimeclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_7__services_overtimeclaim_service__["a" /* OvertimeClaim_Service */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-overtimeclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\overtimeclaim\overtimeclaim.html"*/'<!--\n\n  Generated template for the OvertimeclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>OVERTIME CLAIM</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n<ion-header>\n\n\n\n    <ion-navbar>       \n\n      <ion-title>{{ \'OVERTIME_CLAIM_HEADING\' | translate }}</ion-title>  \n\n    </ion-navbar>\n\n   </ion-header>\n\n\n\n\n\n<ion-content padding>\n\n \n\n\n\n  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n      <ion-list-header>\n\n        Select Travel Claim For:\n\n      </ion-list-header>\n\n  \n\n      <ion-item>\n\n        <ion-label>Customer</ion-label>\n\n        <ion-radio value="customer" checked="true"></ion-radio>\n\n      </ion-item>\n\n  \n\n      <ion-item>\n\n        <ion-label>Project</ion-label>\n\n        <ion-radio value="project"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n\n\n    <form [formGroup]="OTform">\n\n\n\n        <div *ngIf="claimFor==\'project\'">\n\n            <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n            <ion-item>\n\n              <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n              <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n            </ion-item>\n\n            <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n            <ion-item>\n\n              <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n              <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n            </ion-item>\n\n          </div>\n\n        <!-- <ion-card>\n\n            <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>\n\n          <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" \n\n            placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n  \n\n          <ion-list>\n\n            <ion-item-sliding *ngFor="let item of projects">\n\n              <button ion-item (click)="GetSocNo(item.SOC_GUID)">\n\n                <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>\n\n              </button>\n\n            </ion-item-sliding>\n\n          </ion-list>  \n\n        </ion-card> -->\n\n  \n\n        <div *ngIf="claimFor==\'customer\'">\n\n  \n\n            <!-- formControlName="customer" -->\n\n            <ion-item>\n\n              <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n              <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n            </ion-item>\n\n          </div>\n\n  \n\n        <!-- <ion-item>\n\n            <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n            <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n            placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n          </ion-item> -->\n\n  \n\n          <ion-item>\n\n            <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n          </ion-item>\n\n      \n\n          <ion-item>\n\n            <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>\n\n            <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" max={{validDate}} placeholder="{{ \'START_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n          </ion-item>\n\n      \n\n          <ion-item>\n\n            <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>\n\n            <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" max={{validDate}} placeholder="{{ \'END_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n          </ion-item>       \n\n  \n\n          <!-- [(ngModel)]="Travel_Amount_ngModel" -->\n\n          <ion-item>\n\n              <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n              <ion-label > {{travelAmount | number}} </ion-label>\n\n              <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            </ion-item>\n\n  \n\n            <ion-item>\n\n                <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n                <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              </ion-item>\n\n  \n\n      \n\n          <!-- <ion-item>\n\n            <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n            <ion-select formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n            </ion-select>\n\n          </ion-item> -->\n\n      \n\n          <!-- <ion-item>\n\n            <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n          </ion-item> -->\n\n  \n\n          <div class="btn">\n\n            <button ion-button (click)=\'save(OTform.value)\'  [disabled]="!OTform.valid" >SUBMIT</button>\n\n          </div>      \n\n        </form>\n\n\n\n\n\n        <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n          </div>\n\n          <div class="popup2" padding *ngIf="AddLookupClicked">\n\n            <ion-card>\n\n              <ion-card-header class="icTitle headerColor-white ">\n\n        \n\n                <div class="icHeaderText">Search Location</div>\n\n                <button class="btnR" (click)="CloseLookupClick()">\n\n                  <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n              </ion-card-header>\n\n              <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n              <ion-list>\n\n                <ion-item-sliding *ngFor="let item of currentItems">\n\n                  <button ion-item (click)="openItem(item)">\n\n                    <ion-label> {{item.description}}</ion-label>\n\n                  </button>\n\n                </ion-item-sliding>\n\n              </ion-list>\n\n            </ion-card>\n\n          </div>\n\n    \n\n          <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n            </div>\n\n            <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n              <ion-card>\n\n                <ion-card-header class="icTitle headerColor-white ">\n\n                  <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n                  <button class="btnR" (click)="CloseProjectLookup()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                  </button>\n\n                </ion-card-header>\n\n                <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n                <ion-list>\n\n                  <ion-item-sliding *ngFor="let item of projects">\n\n                    <button ion-item (click)="GetSocNo(item)">\n\n                      <ion-label>{{item.project_name}}\n\n                        <>{{item.soc}}</ion-label>\n\n                    </button>\n\n                  </ion-item-sliding>\n\n                </ion-list>\n\n              </ion-card>\n\n            </div>\n\n    \n\n            <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n              </div>\n\n              <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n                <ion-card>\n\n                  <ion-card-header class="icTitle headerColor-white ">\n\n                    <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n                    <button class="btnR" (click)="CloseCustomerLookup()">\n\n                      <ion-icon name="md-close"></ion-icon>\n\n                    </button>\n\n                  </ion-card-header>\n\n                  <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n                  <ion-list>\n\n                    <ion-item-sliding *ngFor="let item of customers">\n\n                      <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                        <ion-label>{{item.NAME}}</ion-label>\n\n                      </button>\n\n                    </ion-item-sliding>\n\n                  </ion-list>\n\n                </ion-card>\n\n              </div>\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\overtimeclaim\overtimeclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_6__services_overtimeclaim_service__["a" /* OvertimeClaim_Service */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_7__services_overtimeclaim_service__["a" /* OvertimeClaim_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_6__services_overtimeclaim_service__["a" /* OvertimeClaim_Service */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_overtimeclaim_service__["a" /* OvertimeClaim_Service */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */]) === "function" && _p || Object, typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */]) === "function" && _q || Object, typeof (_r = typeof __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */]) === "function" && _r || Object, typeof (_s = typeof __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]) === "function" && _s || Object, typeof (_t = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]) === "function" && _t || Object])
 ], OvertimeclaimPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
 //# sourceMappingURL=overtimeclaim.js.map
 
 /***/ }),
-/* 240 */
+/* 243 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EntertainmentclaimPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_entertainmentclaim_model__ = __webpack_require__(385);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_entertainmentclaim_service__ = __webpack_require__(386);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_entertainmentclaim_service__ = __webpack_require__(383);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Services__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_ClaimRefMain_Model__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__ = __webpack_require__(48);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3216,9 +3651,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 //import { FormBuilder, FormGroup } from '@angular/forms';
-
-
 
 
 
@@ -3232,6 +3666,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 /**
  * Generated class for the EntertainmentclaimPage page.
  *
@@ -3239,11 +3676,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var EntertainmentclaimPage = (function () {
-    function EntertainmentclaimPage(navCtrl, viewCtrl, navParams, fb, http, httpService, entertainmentservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
-        var _this = this;
+    function EntertainmentclaimPage(platform, navCtrl, viewCtrl, api, navParams, translate, fb, http, httpService, entertainmentservice, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
+        //  this.translateToEnglish();
+        //   this.translate.setDefaultLang('en'); //Fallback language
+        //   platform.ready().then(() => {
+        //   });
         this.navCtrl = navCtrl;
         this.viewCtrl = viewCtrl;
+        this.api = api;
         this.navParams = navParams;
+        this.translate = translate;
         this.http = http;
         this.httpService = httpService;
         this.entertainmentservice = entertainmentservice;
@@ -3255,262 +3697,275 @@ var EntertainmentclaimPage = (function () {
         this.filePath = filePath;
         this.transfer = transfer;
         this.toastCtrl = toastCtrl;
-        this.entertainment_entry = new __WEBPACK_IMPORTED_MODULE_6__models_entertainmentclaim_model__["a" /* EntertainmentClaim_Model */]();
-        this.entertainments = [];
-        this.baseResourceUrl1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url1 = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/soc_main' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        this.baseResource_Url_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/';
-        this.baseResourceUrl_view_soc = __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["b" /* DREAMFACTORY_INSTANCE_URL */] + '/api/v2/zcs/_table/soc_registration' + '?api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-        // view_soc_no
-        this.Exist_Record = false;
-        this.imageChosen = 0;
-        this.AddEntetainmentClicked = false;
-        this.EditEntetainmentClicked = false;
+        this.AddTravelClicked = false;
+        this.ProjectLookupClicked = false;
+        this.CustomerLookupClicked = false;
+        //DestinationPlaceID: string;
+        //OriginPlaceID: string;
         this.AddLookupClicked = false;
-        // let items = [this.SOC_Number];
+        this.AddToLookupClicked = false;
+        this.MainClaimSaved = false;
+        this.validDate = new Date().toISOString();
+        this.isCustomer = false;
+        this.Entertainmentform = fb.group({
+            soc_no: '',
+            travel_date: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            description: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            vehicleType: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]
+            //distance: '',
+            // customer: '',
+            //destination: ['', Validators.required],
+            //start_DT: ['', Validators.required],
+            //end_DT: ['', Validators.required],
+            //origin: ['', Validators.required],
+        });
+        this.LoadProjects();
+        //this.LoadVehicles();
+        this.LoadCustomers();
+    }
+    EntertainmentclaimPage.prototype.GetSocNo = function (item) {
+        this.Travel_SOC_No_ngModel = item.soc;
+        this.Project_Lookup_ngModel = item.project_name;
+        this.Soc_GUID = item.SOC_GUID;
+        this.CloseProjectLookup();
+    };
+    EntertainmentclaimPage.prototype.GetCustomer = function (guid, name) {
+        this.Customer_Lookup_ngModel = name;
+        this.Customer_GUID = guid;
+        this.CloseCustomerLookup();
+    };
+    EntertainmentclaimPage.prototype.claimForChanged = function () {
+        // console.log(this.claimFor)
+        if (this.claimFor == 'customer')
+            this.isCustomer = true;
+        else
+            this.isCustomer = false;
+    };
+    EntertainmentclaimPage.prototype.LoadProjects = function () {
+        var _this = this;
         this.http
-            .get(this.baseResourceUrl_view_soc)
+            .get(__WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('soc_registration'))
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
-            _this.SOC_Number = data["resource"];
-            // this.entertainments = data.resource;
+            _this.storeProjects = _this.projects = data["resource"];
+            console.table(_this.projects);
         });
-        this.Entertainmentform = fb.group({
-            // 'Entertainmentform':['',  Validators.required],
-            // profilePic: [''],
-            // name: ['', Validators.required],
-            // about: [''],
-            entertainment_date: '',
-            soc_no: '',
-            //SOC_NO: '',
-            project_name: '',
-            customer_name: '',
-            //description: '',
-            description: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            //claim_amount: '',
-            claim_amount: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-        });
-        this.Entertainment_Date_ngModel = new Date().toISOString();
-        // this.GetSocNo();
-        //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-        this.Entertainmentform.valueChanges.subscribe(function (v) {
-            _this.isReadyToSave = _this.Entertainmentform.valid;
-        });
-    }
-    EntertainmentclaimPage.prototype.AddEntetainmentClick = function () {
-        this.AddEntetainmentClicked = true;
     };
-    EntertainmentclaimPage.prototype.CloseEntetainmentClick = function () {
-        if (this.AddEntetainmentClicked == true) {
-            this.AddEntetainmentClicked = false;
+    EntertainmentclaimPage.prototype.LoadCustomers = function () {
+        var _this = this;
+        this.http
+            .get(__WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('main_customer'))
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) {
+            _this.storeCustomers = _this.customers = data["resource"];
+            // console.table(this.projects)
+        });
+    };
+    EntertainmentclaimPage.prototype.CloseTravelClick = function () {
+        this.AddToLookupClicked = false;
+        this.AddTravelClicked = false;
+    };
+    EntertainmentclaimPage.prototype.CloseProjectLookup = function () {
+        if (this.ProjectLookupClicked == true) {
+            this.ProjectLookupClicked = false;
         }
-        if (this.EditEntetainmentClicked == true) {
-            this.EditEntetainmentClicked = false;
+    };
+    EntertainmentclaimPage.prototype.CloseCustomerLookup = function () {
+        if (this.CustomerLookupClicked == true) {
+            this.CustomerLookupClicked = false;
         }
     };
     EntertainmentclaimPage.prototype.AddLookupClick = function () {
-        //this.GetSocNo();
         this.AddLookupClicked = true;
+        this.currentItems = null;
     };
-    EntertainmentclaimPage.prototype.CloseLookupClick = function () {
-        if (this.AddLookupClicked == true) {
-            this.AddLookupClicked = false;
+    EntertainmentclaimPage.prototype.AddToLookupClick = function () {
+        this.AddLookupClicked = true;
+        this.AddToLookupClicked = true;
+        this.currentItems = null;
+    };
+    EntertainmentclaimPage.prototype.ProjectLookup = function () {
+        this.ProjectLookupClicked = true;
+        // this.projects = null;
+    };
+    EntertainmentclaimPage.prototype.CustomerLookup = function () {
+        this.CustomerLookupClicked = true;
+        // this.projects = null;
+    };
+    EntertainmentclaimPage.prototype.searchProject = function (searchString) {
+        var val = searchString.target.value;
+        if (!val || !val.trim()) {
+            this.projects = this.storeProjects;
+            return;
         }
+        // this.projects = this.filterProjects({
+        //   project_name: val
+        // });
     };
-    EntertainmentclaimPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad EntertainmentclaimPage');
-    };
-    EntertainmentclaimPage.prototype.openItem = function (item) {
-        alert('open item');
-        this.Entertainment_SOC_No_ngModel = item.soc;
-        this.Entertainment_ProjectName_ngModel = item.project_name;
-        this.Entertainment_CustomerName_ngModel = item.customer_name;
-        this.CloseLookupClick();
-    };
-    // getItems(ev) {
-    //   let val = ev.target.value;
-    //   if (!val || !val.trim()) {
-    //     this.SOC_Number = [];
-    //     return;
+    // filterProjects(params?: any) {
+    //   if (!params) {
+    //     return this.storeProjects;
     //   }
-    //   this.SOC_Number = 
-    // }
-    // GetSocNo(){
-    //  // AddLookupClick(){
-    //   this.http
-    //   .get(this.baseResourceUrl_view_soc)
-    //   .map(res => res.json())
-    //   .subscribe(data => {
-    //     this.socs = data["resource"];
-    //     console.table(this.socs);
-    //     if (this.Entertainment_SOC_No_ngModel == undefined) { return; }
-    //     if (this.Entertainment_SOC_No_ngModel != "" || this.Entertainment_SOC_No_ngModel != undefined) {
-    //       let headers = new Headers();
-    //       headers.append('Content-Type', 'application/json');
-    //       let options = new RequestOptions({ headers: headers });
-    //       let url: string;
-    //       let url1: string;
-    //       url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Entertainment_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //       url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Entertainment_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //       this.http.get(url, options)
-    //         .map(res => res.json())
-    //         .subscribe(
-    //         data => {
-    //           let res = data["resource"];
-    //           if (res.length > 0) {
-    //             this.Entertainment_ProjectName_ngModel = res[0].Project;
-    //              this.Entertainment_CustomerName_ngModel=res[0].customer;
-    //           }
-    //           else {
-    //             alert('please enter valid soc no');
-    //             //return;
-    //             this.Entertainment_SOC_No_ngModel = "";
-    //           }
-    //         },
-    //         err => {
-    //           console.log("ERROR!: ", err);
-    //         });
+    //   return this.projects.filter((item) => {
+    //     for (let key in params) {
+    //       let field = item[key];
+    //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+    //         return item;
+    //       } else if (field == params[key]) {
+    //         return item;
+    //       }
     //     }
+    //     return null;
     //   });
     // }
-    //   SOC_No_TextBox_Onchange(Entertainment_SOC_No_ngModel: string){
-    //     console.log(this.Entertainment_SOC_No_ngModel);
-    //     if(this.Entertainment_SOC_No_ngModel == undefined){ return;}
-    //     if(this.Entertainment_SOC_No_ngModel != "" || this.Entertainment_SOC_No_ngModel != undefined){
-    //     let headers = new Headers();
-    //     headers.append('Content-Type', 'application/json');
-    //     let options = new RequestOptions({ headers: headers });
-    //     let url: string;
-    //     let url1: string;
-    //     url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Entertainment_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Entertainment_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     this.http.get(url, options)
-    //       .map(res => res.json())
-    //       .subscribe(
-    //       data => {
-    //         let res = data["resource"];
-    //          if (res.length > 0) {
-    //           this.Entertainment_ProjectName_ngModel=res[0].Project;
-    //           this.Entertainment_CustomerName_ngModel=res[0].customer;
-    //          }
-    //          else{
-    //            alert('please enter valid soc no');
-    //            //return;
-    //            this.Entertainment_SOC_No_ngModel = "";
-    //          }
-    //       },
-    //       err => {          
-    //         console.log("ERROR!: ", err);
-    //       });
-    //   } 
-    // } 
-    EntertainmentclaimPage.prototype.save = function () {
+    EntertainmentclaimPage.prototype.searchCustomer = function (searchString) {
+        var val = searchString.target.value;
+        if (!val || !val.trim()) {
+            this.customers = this.storeCustomers;
+            return;
+        }
+        // this.customers = this.filterCustomer({
+        //   NAME: val
+        // });
+    };
+    EntertainmentclaimPage.prototype.takePhoto = function () {
+        // Camera.getPicture().then((imageData) => {
+        //     this.imageURL = imageData
+        // }, (err) => {
+        //     console.log(err);
+        // });
+    };
+    EntertainmentclaimPage.prototype.save = function (value) {
         var _this = this;
-        //debugger;
-        //this.getImage();
-        //this.uploadFile();
-        if (this.Entertainmentform.valid) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* Headers */]();
-            headers.append('Content-Type', 'application/json');
-            var options = new __WEBPACK_IMPORTED_MODULE_3__angular_http__["d" /* RequestOptions */]({ headers: headers });
-            var url = void 0;
-            var request_id = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-            // url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Entertainment_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-            url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + __WEBPACK_IMPORTED_MODULE_5__app_config_constants__["a" /* DREAMFACTORY_API_KEY */];
-            this.http.get(url, options)
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                var res = data["resource"];
-                if (res.length == 0) {
-                    console.log("No records Found");
-                    if (_this.Exist_Record == false) {
-                        // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-                        _this.entertainment_entry.DESCRIPTION = _this.Entertainment_Description_ngModel.trim();
-                        _this.entertainment_entry.CLAIM_AMOUNT = _this.Entertainment_ClaimAmount_ngModel.trim();
-                        //this.entertainment_entry.CLAIM_TYPE_GUID = this.masterclaim_entry.CLAIM_TYPE_GUID = "6a1343a6-9c94-500b-7446-b150a31d753d";
-                        //this.entertainment2_entry.ATTACHMENT_ID = this.Entertainment_FileUpload_ngModel.trim();
-                        //this.masterclaim_entry.CLAIM_AMOUNT = this.Entertainment_ClaimAmount_ngModel.trim();
-                        //this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                        //this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                        //this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-                        // this.masterclaim_entry.CREATION_USER_GUID = '1';
-                        // this.masterclaim_entry.UPDATE_USER_GUID = "";
-                        //  this.masterclaim_entry.TENANT_GUID = "";
-                        // this.entertainment2_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                        _this.entertainment_entry.CLAIM_REQUEST_DETAIL_GUID = __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__["UUID"].UUID();
-                        _this.entertainment_entry.CREATION_TS = new Date().toISOString();
-                        _this.entertainment_entry.CREATION_USER_GUID = '1';
-                        _this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-                        _this.entertainment_entry.UPDATE_USER_GUID = "";
-                        // alert( this.entertainment2_entry.DESCRIPTION+this.entertainment2_entry.CLAIM_TYPE_GUID+this.masterclaim_entry.CLAIM_AMOUNT);
-                        //this.uploadFile();
-                        // this.entertainmentservice.save_main_claim_request(this.masterclaim_entry)
-                        //   .subscribe((response) => {
-                        //     if (response.status == 200) {
-                        //       //alert('Entertainment Registered successfully');
-                        //       //location.reload();
-                        //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                        //     }
-                        //   });
-                        _this.entertainmentservice.save_claim_request_detail(_this.entertainment_entry)
-                            .subscribe(function (response) {
-                            if (response.status == 200) {
-                                alert('Entertainment Registered successfully');
-                                //location.reload();
-                                _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
-                            }
-                        });
+        var userGUID = localStorage.getItem('g_USER_GUID');
+        var tenantGUID = localStorage.getItem('g_TENANT_GUID');
+        var month = new Date(value.travel_date).getMonth() + 1;
+        var year = new Date(value.travel_date).getFullYear();
+        var claimRefGUID;
+        var url = __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+        this.http
+            .get(url)
+            .map(function (res) { return res.json(); })
+            .subscribe(function (claimRefdata) {
+            if (claimRefdata["resource"][0] == null) {
+                var claimReqRef = new __WEBPACK_IMPORTED_MODULE_14__models_ClaimRefMain_Model__["a" /* ClaimRefMain_Model */]();
+                claimReqRef.CLAIM_REF_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqRef.USER_GUID = userGUID;
+                claimReqRef.TENANT_GUID = tenantGUID;
+                claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+                claimReqRef.MONTH = month;
+                claimReqRef.YEAR = year;
+                claimReqRef.CREATION_TS = new Date().toISOString();
+                claimReqRef.UPDATE_TS = new Date().toISOString();
+                _this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe(function (response) {
+                    var postClaimRef = response.json();
+                    claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
+                    var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                    claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                    claimReqMainRef.TENANT_GUID = tenantGUID;
+                    claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                    //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+                    claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                    claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                    // claimReqMainRef.START_TS = value.start_DT;
+                    // claimReqMainRef.END_TS = value.end_DT;
+                    claimReqMainRef.DESCRIPTION = value.description;
+                    // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
+                    claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                    claimReqMainRef.CREATION_TS = new Date().toISOString();
+                    claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                    // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                    // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                    // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                    // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                    if (_this.isCustomer) {
+                        claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
                     }
+                    else {
+                        claimReqMainRef.SOC_GUID = _this.Soc_GUID;
+                    }
+                    claimReqMainRef.CUSTOMER_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    claimReqMainRef.SOC_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                        var postClaimMain = response.json();
+                        _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                        _this.MainClaimSaved = true;
+                        alert('Claim Has Registered.');
+                    });
+                });
+            }
+            else {
+                claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+                var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_15__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__["UUID"].UUID();
+                claimReqMainRef.TENANT_GUID = tenantGUID;
+                claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+                // claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+                claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+                claimReqMainRef.TRAVEL_DATE = value.travel_date;
+                // claimReqMainRef.START_TS = value.start_DT;
+                // claimReqMainRef.END_TS = value.end_DT;
+                claimReqMainRef.DESCRIPTION = value.description;
+                // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+                claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
+                claimReqMainRef.CREATION_TS = new Date().toISOString();
+                claimReqMainRef.UPDATE_TS = new Date().toISOString();
+                // claimReqMainRef.FROM = this.Travel_From_ngModel;
+                // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+                // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+                //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                if (_this.isCustomer) {
+                    claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
                 }
                 else {
-                    console.log("Records Found");
-                    alert("The Entertainment is already Exist.");
+                    claimReqMainRef.SOC_GUID = _this.Soc_GUID;
                 }
-            }, function (err) {
-                _this.Exist_Record = false;
-                console.log("ERROR!: ", err);
-            });
-        }
+                _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
+                    var postClaimMain = response.json();
+                    _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+                    _this.MainClaimSaved = true;
+                    alert('Claim Has Registered.');
+                });
+            }
+        });
     };
     return EntertainmentclaimPage;
 }());
 EntertainmentclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-entertainmentclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\entertainmentclaim\entertainmentclaim.html"*/'<!--\n\n  Generated template for the EntertainmentclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>ENTERTAINMENT CLAIM</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <!-- <ion-fab top right edge>\n\n        <button ion-fab mini (click)="AddEntetainmentClick()"><ion-icon name="add"></ion-icon></button>\n\n      </ion-fab>\n\n\n\n      <ion-list>\n\n          <ion-item>\n\n            <table class="Tabler">\n\n              <tr class="linedsg TColor">\n\n                <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>\n\n                <th class="lgl1">DATE</th>\n\n                <th class="lgl1">SOC NUMBER</th>\n\n                <th class="lgl1">PROJECT NAME</th>\n\n                <th class="lgl1">CUSTOMER NAME</th>\n\n                <th class="lgl1">DESCRIPTION</th>\n\n                <th class="lgl1">CLAIM AMOUNT</th>\n\n                <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>\n\n      \n\n              </tr>\n\n      \n\n              <tr class="col7" *ngFor="let entertainment of entertainments; let i=index">\n\n                <td class="lgl1">{{i+1}}</td>\n\n                <td class="lgl1">{{entertainment.entertainment_date}}</td>\n\n                <td class="lgl1">{{entertainment.soc_no}}</td>\n\n                <td class="lgl1">{{entertainment.project_name}}</td>\n\n                <td class="lgl1">{{entertainment.customer_name}}</td>\n\n                <td class="lgl1">{{entertainment.project_name}}</td>\n\n                <td class="lgl1">{{entertainment.description}}</td>\n\n                <td class="lgl1">{{entertainment.claim_amount}}</td>\n\n      \n\n                <td class="lgl1 fColor">\n\n                  <button ion-button item-end (click)="EditClick(page.PAGE_GUID)"><ion-icon name="md-create"></ion-icon></button>\n\n                  <button ion-button item-end (click)="DeleteClick(page.PAGE_GUID)"><ion-icon name="md-close"></ion-icon></button>\n\n                </td>\n\n              </tr>\n\n            </table>\n\n          </ion-item>\n\n        </ion-list> -->\n\n\n\n  <div class="blackcontainer">\n\n    <!-- *ngIf="AddEntetainmentClicked" -->\n\n    <!-- </div> -->\n\n\n\n    <div class="popup" padding>\n\n        <!-- *ngIf="AddEntetainmentClicked" -->\n\n\n\n      <ion-card class="cm">\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n          <div class="icHeaderText">APPLY NEW ENTERTAINMENT CLAIM</div>\n\n          <!-- <button class="btnR" (click)="CloseEntetainmentClick()">\n\n              <ion-icon name="md-close"></ion-icon> \n\n            </button> -->\n\n        </ion-card-header>\n\n        <ion-list class="scroll">\n\n          <form [formGroup]="Entertainmentform">\n\n            <ion-item>\n\n              <ion-label stacked>{{"DATE"}}</ion-label>\n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="entertainment_date" [(ngModel)]="Entertainment_Date_ngModel" placeholder="{{\'Please choose yours date while you entertain with customer\'}}"></ion-datetime>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"SOC NUMBER"}}</ion-label>\n\n              <ion-input type="text" [(ngModel)]="Entertainment_SOC_No_ngModel" [ngModelOptions]="{standalone:true}" placeholder="{{\'Please click the button to get your soc number\'}}"></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                LOOKUP\n\n              </button>\n\n            </ion-item>\n\n\n\n\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="project_name" disabled="true" [(ngModel)]="Entertainment_ProjectName_ngModel" placeholder="{{\'Please fill in the name of yours project\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="customer_name" disabled="true" [(ngModel)]="Entertainment_CustomerName_ngModel" placeholder="{{\'Please fill in the name of yours customer\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n              <ion-input type="text" formControlName="description" [(ngModel)]="Entertainment_Description_ngModel" placeholder="{{\'Please fill in the description\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n              <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Entertainment_ClaimAmount_ngModel" placeholder="{{\'Please fill in the amount of yours Entertainment Claim\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n\n\n            <ion-item>\n\n                <div style="font-size:14px;">ATTACHMENT :\n\n                  \n\n                    <input type="file" name="upresume_one"/> \n\n                </div>\n\n          \n\n            </ion-item>\n\n\n\n         \n\n            <div class="btn">\n\n\n\n              <button ion-button (click)="save()">SUBMIT</button>\n\n            </div>\n\n\n\n          </form>\n\n        </ion-list>\n\n      </ion-card>\n\n\n\n    </div>\n\n  </div>\n\n\n\n  <!-- add lookup form start-->\n\n  <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n  </div>\n\n  <div class="popup1" padding *ngIf="AddLookupClicked">\n\n    <ion-card>\n\n      <ion-card-header class="icTitle headerColor-white ">\n\n\n\n        <div class="icHeaderText">SOC LOOKUP</div>\n\n        <button class="btnR" (click)="CloseLookupClick()">\n\n          <ion-icon name="md-close"></ion-icon>\n\n        </button>\n\n      </ion-card-header>\n\n\n\n      <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ \'SEARCH HERE\' }}"></ion-searchbar>\n\n\n\n\n\n      <ion-list>\n\n\n\n        <ion-item-sliding *ngFor="let soc of SOC_Number">\n\n          <button ion-item (click)="openItem(soc)">\n\n            <ion-label>{{soc.soc}}</ion-label>\n\n\n\n          </button>\n\n\n\n        </ion-item-sliding>\n\n\n\n      </ion-list>\n\n    </ion-card>\n\n  </div>\n\n  <!-- add lookup form end-->\n\n\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\entertainmentclaim\entertainmentclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_7__services_entertainmentclaim_service__["a" /* EntertainmentClaim_Service */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-entertainmentclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\entertainmentclaim\entertainmentclaim.html"*/'<!--\n\n  Generated template for the EntertainmentclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>ENTERTAINMENT CLAIM</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header> -->\n\n\n\n<ion-header>\n\n\n\n    <ion-navbar>       \n\n      <ion-title>{{ \'ENTERTAINMENT_CLAIM_HEADING\' | translate }}</ion-title>  \n\n    </ion-navbar>\n\n   </ion-header>\n\n\n\n<ion-content padding>\n\n    <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n        <ion-list-header>\n\n          Select Entertainment Claim For:\n\n        </ion-list-header>\n\n    \n\n        <ion-item>\n\n          <ion-label>Customer</ion-label>\n\n          <ion-radio value="customer" checked="true"></ion-radio>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label>Project</ion-label>\n\n          <ion-radio value="project"></ion-radio>\n\n        </ion-item>\n\n      </ion-list>\n\n\n\n      <form [formGroup]="Entertainmentform">\n\n\n\n          <ion-item>\n\n              <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n            </ion-item>\n\n\n\n          <div *ngIf="claimFor==\'project\'">\n\n              <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n              <ion-item>\n\n                <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n                <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n                  <ion-icon name="eye"></ion-icon>\n\n                  {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n              </ion-item>\n\n              <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n              <ion-item>\n\n                <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n                <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n              </ion-item>\n\n            </div>\n\n          <!-- <ion-card>\n\n              <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>\n\n            <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" \n\n              placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n    \n\n            <ion-list>\n\n              <ion-item-sliding *ngFor="let item of projects">\n\n                <button ion-item (click)="GetSocNo(item.SOC_GUID)">\n\n                  <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>\n\n                </button>\n\n              </ion-item-sliding>\n\n            </ion-list>  \n\n          </ion-card> -->\n\n    \n\n          <div *ngIf="claimFor==\'customer\'">\n\n    \n\n              <!-- formControlName="customer" -->\n\n              <ion-item>\n\n                <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n                <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n                  <ion-icon name="eye"></ion-icon>\n\n                  {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n              </ion-item>\n\n            </div>\n\n    \n\n          <!-- <ion-item>\n\n              <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n              <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n              placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n            </ion-item> -->\n\n    \n\n           \n\n        \n\n            <!-- <ion-item>\n\n              <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>\n\n              <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" max={{validDate}} placeholder="{{ \'START_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n            </ion-item>\n\n        \n\n            <ion-item>\n\n              <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>\n\n              <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" max={{validDate}} placeholder="{{ \'END_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n            </ion-item> -->\n\n        \n\n            <!-- <ion-item>\n\n              <ion-label stacked>{{ "CALENDAR_REF_LABEL" | translate }}</ion-label>\n\n            </ion-item> -->\n\n    \n\n            <!-- <ion-item>\n\n                <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n                <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n                  <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n                </ion-select>\n\n              </ion-item> -->\n\n      \n\n            <!-- <ion-item>\n\n              <ion-label stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>\n\n              <ion-input [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" placeholder=" {{ \'ORIGIN_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                {{ "GET_ORIGIN_BUTTON"  }} </button>\n\n            </ion-item> -->\n\n        \n\n            <!-- <ion-item>\n\n              <ion-label stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>\n\n              <ion-input [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination" placeholder=" {{ \'DESTINATION_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="AddToLookupClick()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                {{ "GET_DESTINATION_BUTTON"  }} </button>\n\n            </ion-item> -->\n\n        \n\n            <!-- <ion-item>\n\n              <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>\n\n              <ion-input [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" placeholder=" {{ \'DISTANCE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              \n\n            </ion-item> -->\n\n    \n\n            <!-- [(ngModel)]="Travel_Amount_ngModel" -->\n\n            <ion-item>\n\n                <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n                <ion-label > {{travelAmount | number}} </ion-label>\n\n                <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              </ion-item>\n\n    \n\n              <ion-item>\n\n                  <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n                  <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                </ion-item>\n\n    \n\n        \n\n            <!-- <ion-item>\n\n              <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n              <ion-select formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n                <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> -->\n\n        \n\n            <!-- <ion-item>\n\n              <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n            </ion-item> -->\n\n    \n\n            <div class="btn">\n\n              <button ion-button (click)=\'save(Entertainmentform.value)\'  [disabled]="!Entertainmentform.valid">SUBMIT</button>\n\n            </div>\n\n           \n\n    \n\n            <!-- <a (click)="showAddToll()" *ngIf="MainClaimSaved">\n\n              <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Toll</a>\n\n            <a (click)="showAddParking()" *ngIf="MainClaimSaved">\n\n              <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a> -->\n\n        \n\n          </form>\n\n\n\n  <!-- <div class="blackcontainer">\n\n    <div class="popup" padding>\n\n      <ion-card class="cm">\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n          <div class="icHeaderText">APPLY NEW ENTERTAINMENT CLAIM</div>\n\n          <button class="btnR" (click)="CloseEntetainmentClick()">\n\n              <ion-icon name="md-close"></ion-icon> \n\n            </button>\n\n        </ion-card-header>\n\n        <ion-list class="scroll">\n\n          <form [formGroup]="Entertainmentform">\n\n            <ion-item>\n\n              <ion-label stacked>{{"DATE"}}</ion-label>\n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="entertainment_date" [(ngModel)]="Entertainment_Date_ngModel" placeholder="{{\'Please choose yours date while you entertain with customer\'}}"></ion-datetime>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"SOC NUMBER"}}</ion-label>\n\n              <ion-input type="text" [(ngModel)]="Entertainment_SOC_No_ngModel" [ngModelOptions]="{standalone:true}" placeholder="{{\'Please click the button to get your soc number\'}}"></ion-input>\n\n              <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n                <ion-icon name="eye"></ion-icon>\n\n                LOOKUP\n\n              </button>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="project_name" disabled="true" [(ngModel)]="Entertainment_ProjectName_ngModel" placeholder="{{\'Please fill in the name of yours project\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>\n\n              <ion-input type="text" formControlName="customer_name" disabled="true" [(ngModel)]="Entertainment_CustomerName_ngModel" placeholder="{{\'Please fill in the name of yours customer\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n              <ion-input type="text" formControlName="description" [(ngModel)]="Entertainment_Description_ngModel" placeholder="{{\'Please fill in the description\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n              <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Entertainment_ClaimAmount_ngModel" placeholder="{{\'Please fill in the amount of yours Entertainment Claim\'}}"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n                <div style="font-size:14px;">ATTACHMENT :                  \n\n                    <input type="file" name="upresume_one"/> \n\n                </div>          \n\n            </ion-item>         \n\n            <div class="btn">\n\n              <button ion-button (click)="save()">SUBMIT</button>\n\n            </div>\n\n          </form>\n\n        </ion-list>\n\n      </ion-card>\n\n    </div>\n\n  </div> -->\n\n\n\n  <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n    </div>\n\n    <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n      <ion-card>\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n          <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n          <button class="btnR" (click)="CloseProjectLookup()">\n\n            <ion-icon name="md-close"></ion-icon>\n\n          </button>\n\n        </ion-card-header>\n\n        <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n        <ion-list>\n\n          <ion-item-sliding *ngFor="let item of projects">\n\n            <button ion-item (click)="GetSocNo(item)">\n\n              <ion-label>{{item.project_name}}\n\n                <>{{item.soc}}</ion-label>\n\n            </button>\n\n          </ion-item-sliding>\n\n        </ion-list>\n\n      </ion-card>\n\n    </div>\n\n\n\n    <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n      </div>\n\n      <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n        <ion-card>\n\n          <ion-card-header class="icTitle headerColor-white ">\n\n            <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n            <button class="btnR" (click)="CloseCustomerLookup()">\n\n              <ion-icon name="md-close"></ion-icon>\n\n            </button>\n\n          </ion-card-header>\n\n          <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n          <ion-list>\n\n            <ion-item-sliding *ngFor="let item of customers">\n\n              <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                <ion-label>{{item.NAME}}</ion-label>\n\n              </button>\n\n            </ion-item-sliding>\n\n          </ion-list>\n\n        </ion-card>\n\n      </div>\n\n\n\n  <!-- add lookup form start-->\n\n  <!-- <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n  </div>\n\n  <div class="popup1" padding *ngIf="AddLookupClicked">\n\n    <ion-card>\n\n      <ion-card-header class="icTitle headerColor-white ">\n\n\n\n        <div class="icHeaderText">SOC LOOKUP</div>\n\n        <button class="btnR" (click)="CloseLookupClick()">\n\n          <ion-icon name="md-close"></ion-icon>\n\n        </button>\n\n      </ion-card-header>\n\n\n\n      <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ \'SEARCH HERE\' }}"></ion-searchbar>\n\n      <ion-list>\n\n        <ion-item-sliding *ngFor="let soc of SOC_Number">\n\n          <button ion-item (click)="openItem(soc)">\n\n            <ion-label>{{soc.soc}}</ion-label>\n\n          </button>\n\n        </ion-item-sliding>\n\n      </ion-list>\n\n    </ion-card>\n\n  </div> -->\n\n\n\n\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\entertainmentclaim\entertainmentclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_6__services_entertainmentclaim_service__["a" /* EntertainmentClaim_Service */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_7__services_entertainmentclaim_service__["a" /* EntertainmentClaim_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_6__services_entertainmentclaim_service__["a" /* EntertainmentClaim_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
 ], EntertainmentclaimPage);
 
 //# sourceMappingURL=entertainmentclaim.js.map
 
 /***/ }),
-/* 241 */
+/* 244 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TravelclaimPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__config_constants__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_ClaimRefMain_Model__ = __webpack_require__(387);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_ClaimReqMain_Model__ = __webpack_require__(388);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Services__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_base_http__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_uuid__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_camera__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_transfer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_path__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_add_toll_add_toll__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__config_constants__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_ClaimRefMain_Model__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_ClaimReqMain_Model__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Services__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_base_http__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_uuid__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_angular2_uuid__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_file_path__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_add_toll_add_toll__ = __webpack_require__(245);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3520,6 +3975,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 //import { FormBuilder, FormGroup } from '@angular/forms';
@@ -3548,33 +4004,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var TravelclaimPage = (function () {
-    // public Travel_Date_ngModel: any;
-    // public Travel_ClaimAmount_ngModel: any;
-    // public Travel_Description_ngModel: any;
-    // public Travel_TotalAmount_ngModel: any;
-    // public socs:any;
-    // public storeProjects: any;
-    // public projects: any;
-    // vehicles: any;
-    // public AddTravelClick() {
-    //   this.AddTravelClicked = true;
-    // }
-    // public CloseTravelClick() {
-    //   this.AddTravelClicked = false;
-    // }
-    //   public AddLookupClick() 
-    //   {
-    //     this.AddLookupClicked = true;
-    //   }
-    //   public CloseLookupClick() {
-    //     if (this.AddLookupClicked == true) {
-    //       this.AddLookupClicked = false;
-    //     }
-    //   }
-    function TravelclaimPage(navCtrl, viewCtrl, navParams, fb, http, httpService, api, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
+    function TravelclaimPage(platform, navCtrl, viewCtrl, navParams, translate, fb, http, httpService, api, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
+        //this.translateToEnglish();
+        //this.translate.setDefaultLang('en'); //Fallback language
+        // platform.ready().then(() => {
+        // });
         this.navCtrl = navCtrl;
         this.viewCtrl = viewCtrl;
         this.navParams = navParams;
+        this.translate = translate;
         this.http = http;
         this.httpService = httpService;
         this.api = api;
@@ -3587,50 +4025,97 @@ var TravelclaimPage = (function () {
         this.transfer = transfer;
         this.toastCtrl = toastCtrl;
         this.AddTravelClicked = false;
+        this.ProjectLookupClicked = false;
+        this.CustomerLookupClicked = false;
         this.AddLookupClicked = false;
         this.AddToLookupClicked = false;
         this.MainClaimSaved = false;
         this.validDate = new Date().toISOString();
+        this.isCustomer = false;
         this.Travelform = fb.group({
             soc_no: '',
             distance: '',
-            project_name: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            travel_date: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            destination: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            from: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            start_DT: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            end_DT: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            description: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            origin: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            vehicleType: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            //customer: '',
+            // project_name: ['', Validators.required],
+            travel_date: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            destination: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            from: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            start_DT: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            end_DT: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            description: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            origin: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
+            vehicleType: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required],
         });
-        // this.Travel_Date_ngModel = new Date().toISOString();
-        //this.GetSocNo();
-        //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-        // this.Travelform.valueChanges.subscribe((v) => {
-        //   this.isReadyToSave = this.Travelform.valid;
-        // });
         this.LoadProjects();
         this.LoadVehicles();
+        this.LoadCustomers();
     }
-    TravelclaimPage.prototype.GetSocNo = function (value) {
-        this.Travel_SOC_No_ngModel = value;
-        console.log(this.Travel_SOC_No_ngModel);
+    TravelclaimPage.prototype.GetSocNo = function (item) {
+        this.Travel_SOC_No_ngModel = item.soc;
+        this.Project_Lookup_ngModel = item.project_name;
+        this.Soc_GUID = item.SOC_GUID;
+        this.CloseProjectLookup();
+    };
+    TravelclaimPage.prototype.GetCustomer = function (guid, name) {
+        this.Customer_Lookup_ngModel = name;
+        this.Customer_GUID = guid;
+        this.CloseCustomerLookup();
+    };
+    //---------------------Language module start---------------------//
+    //  public translateToMalayClicked: boolean = false;
+    //  public translateToEnglishClicked: boolean = true;
+    //  public translateToEnglish() {
+    //    this.translate.use('en');
+    //    this.translateToMalayClicked = !this.translateToMalayClicked;
+    //    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+    //  }
+    //  public translateToMalay() {
+    //    this.translate.use('ms');
+    //    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+    //    this.translateToMalayClicked = !this.translateToMalayClicked;
+    //  }
+    //---------------------Language module end---------------------//
+    TravelclaimPage.prototype.claimForChanged = function () {
+        // console.log(this.claimFor)
+        if (this.claimFor == 'customer')
+            this.isCustomer = true;
+        else
+            this.isCustomer = false;
     };
     TravelclaimPage.prototype.LoadProjects = function () {
         var _this = this;
         this.http
-            .get(__WEBPACK_IMPORTED_MODULE_8__Services__["a" /* Services */].getUrl('soc_registration'))
+            .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('soc_registration'))
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
             _this.storeProjects = _this.projects = data["resource"];
             console.table(_this.projects);
         });
     };
+    TravelclaimPage.prototype.LoadCustomers = function () {
+        var _this = this;
+        this.http
+            .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('main_customer'))
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) {
+            _this.storeCustomers = _this.customers = data["resource"];
+            // console.table(this.projects)
+        });
+    };
+    // TenantGUID = localStorage.getItem('g_TENANT_GUID');
+    // LoadVehicles() {
+    //   this.http
+    //     .get(Services.getUrl('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID))
+    //     .map(res => res.json())
+    //     .subscribe(data => {
+    //       this.vehicles = data["resource"];
+    //     }
+    //     );
+    // }
     TravelclaimPage.prototype.LoadVehicles = function () {
         var _this = this;
         this.http
-            .get(__WEBPACK_IMPORTED_MODULE_8__Services__["a" /* Services */].getUrl('main_mileage'))
+            .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('main_mileage'))
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
             _this.vehicles = data["resource"];
@@ -3639,8 +4124,8 @@ var TravelclaimPage = (function () {
     TravelclaimPage.prototype.GetDistance = function () {
         var _this = this;
         var origin = this.Travel_From_ngModel;
-        var destination = this.Travel_Destination_ngModel;
-        var url = 'http://api.zen.com.my/api/v2/google/distancematrix/json?destinations=place_id:' + this.DestinationPlaceID + '&origins=place_id:' + this.OriginPlaceID + '&api_key=' + __WEBPACK_IMPORTED_MODULE_5__config_constants__["a" /* DREAMFACTORY_API_KEY */];
+        var destination;
+        var url = 'http://api.zen.com.my/api/v2/google/distancematrix/json?destinations=place_id:' + this.DestinationPlaceID + '&origins=place_id:' + this.OriginPlaceID + '&api_key=' + __WEBPACK_IMPORTED_MODULE_6__config_constants__["a" /* DREAMFACTORY_API_KEY */];
         this.http.get(url).map(function (res) { return res.json(); }).subscribe(function (data) {
             var temp = data["rows"][0]["elements"][0];
             // console.table(data)
@@ -3665,6 +4150,22 @@ var TravelclaimPage = (function () {
         if (this.AddToLookupClicked == true) {
             this.AddToLookupClicked = false;
         }
+        var origin = this.Travel_From_ngModel;
+        var destination = this.Travel_Distance_ngModel;
+        if (origin != '' && destination != '') {
+            this.GetDistance();
+            // this.Travel_Mode_ngModel = this.vehicleCategory ;
+        }
+    };
+    TravelclaimPage.prototype.CloseProjectLookup = function () {
+        if (this.ProjectLookupClicked == true) {
+            this.ProjectLookupClicked = false;
+        }
+    };
+    TravelclaimPage.prototype.CloseCustomerLookup = function () {
+        if (this.CustomerLookupClicked == true) {
+            this.CustomerLookupClicked = false;
+        }
     };
     TravelclaimPage.prototype.AddLookupClick = function () {
         this.AddLookupClicked = true;
@@ -3674,6 +4175,14 @@ var TravelclaimPage = (function () {
         this.AddLookupClicked = true;
         this.AddToLookupClicked = true;
         this.currentItems = null;
+    };
+    TravelclaimPage.prototype.ProjectLookup = function () {
+        this.ProjectLookupClicked = true;
+        // this.projects = null;
+    };
+    TravelclaimPage.prototype.CustomerLookup = function () {
+        this.CustomerLookupClicked = true;
+        // this.projects = null;
     };
     TravelclaimPage.prototype.openItem = function (item) {
         if (this.AddToLookupClicked) {
@@ -3689,13 +4198,15 @@ var TravelclaimPage = (function () {
     TravelclaimPage.prototype.searchLocation = function (searchLocationString) {
         var _this = this;
         var val = searchLocationString.target.value;
+        val = val.replace(/ /g, '');
         if (!val || !val.trim()) {
             this.currentItems = [];
             return;
         }
-        var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + __WEBPACK_IMPORTED_MODULE_5__config_constants__["a" /* DREAMFACTORY_API_KEY */];
+        var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + __WEBPACK_IMPORTED_MODULE_6__config_constants__["a" /* DREAMFACTORY_API_KEY */];
         this.http.get(url).map(function (res) { return res.json(); }).subscribe(function (data) {
             _this.currentItems = data["predictions"];
+            console.table(_this.currentItems);
         });
     };
     TravelclaimPage.prototype.searchProject = function (searchString) {
@@ -3707,11 +4218,6 @@ var TravelclaimPage = (function () {
         //  this.projects=  this.filterProjects({
         //   project_name: val
         //   });
-    };
-    TravelclaimPage.prototype.SetPrice = function (vehicle) {
-        this.VehicleId = vehicle.MILEAGE_GUID;
-        this.VehicleRate = vehicle.RATE_PER_UNIT;
-        this.Travel_Amount_ngModel = this.Travel_Distance_ngModel * vehicle.RATE_PER_UNIT;
     };
     // filterProjects(params?: any) {
     //   if (!params) {
@@ -3745,76 +4251,44 @@ var TravelclaimPage = (function () {
     //     })
     //   }
     // }
-    TravelclaimPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad TravelclaimPage');
+    TravelclaimPage.prototype.searchCustomer = function (searchString) {
+        var val = searchString.target.value;
+        if (!val || !val.trim()) {
+            this.customers = this.storeCustomers;
+            return;
+        }
+        // this.customers = this.filterCustomer({
+        //   NAME: val
+        // });
     };
-    // GetSocNo(){
-    //    this.http
-    //   .get(this.baseResourceUrl_soc)
-    //   .map(res => res.json())
-    //   .subscribe(data => {
-    //     this.socs = data["resource"];
-    //     if (this.Travel_SOC_No_ngModel == undefined) { return; }
-    //     if (this.Travel_SOC_No_ngModel != "" || this.Travel_SOC_No_ngModel != undefined) {
-    //       let headers = new Headers();
-    //       headers.append('Content-Type', 'application/json');
-    //       let options = new RequestOptions({ headers: headers });
-    //       let url: string;
-    //       //let url1: string;
-    //       url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Travel_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //      //url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Travel_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //       this.http.get(url, options)
-    //         .map(res => res.json())
-    //         .subscribe(
-    //         data => {
-    //           let res = data["resource"];
-    //           if (res.length > 0) {
-    //             this.Travel_ProjectName_ngModel = res[0].Project;
-    //             // this.Entertainment_CustomerName_ngModel=res[0].customer;
-    //           }
-    //           else {
-    //             alert('please enter valid soc no');
-    //             //return;
-    //             this.Travel_SOC_No_ngModel = "";
-    //           }
-    //         },
-    //         err => {
-    //           console.log("ERROR!: ", err);
-    //         });
+    // filterCustomer(params?: any) {
+    //   if (!params) {
+    //     return this.storeCustomers;
+    //   }
+    //   return this.customers.filter((item) => {
+    //     for (let key in params) {
+    //       let field = item[key];
+    //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+    //         return item;
+    //       } else if (field == params[key]) {
+    //         return item;
+    //       }
     //     }
+    //     return null;
     //   });
     // }
-    // SOC_No_TextBox_Onchange(Travel_SOC_No_ngModel: string) {
-    //   console.log(this.Travel_SOC_No_ngModel);
-    //   if (this.Travel_SOC_No_ngModel == undefined) { return; }
-    //   if (this.Travel_SOC_No_ngModel != "" || this.Travel_SOC_No_ngModel != undefined) {
-    //     let headers = new Headers();
-    //     headers.append('Content-Type', 'application/json');
-    //     let options = new RequestOptions({ headers: headers });
-    //     let url: string;
-    //     let url1: string;
-    //     url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Travel_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Travel_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     this.http.get(url, options)
-    //       .map(res => res.json())
-    //       .subscribe(
-    //       data => {
-    //         let res = data["resource"];
-    //         if (res.length > 0) {
-    //           this.Travel_ProjectName_ngModel = res[0].Project;
-    //           // this.Entertainment_CustomerName_ngModel=res[0].customer;
-    //         }
-    //         else {
-    //           alert('please enter valid soc no');
-    //           //return;
-    //           this.Travel_SOC_No_ngModel = "";
-    //         }
-    //       },
-    //       err => {
-    //         console.log("ERROR!: ", err);
-    //       });
-    //   }
-    // }
+    TravelclaimPage.prototype.takePhoto = function () {
+        // Camera.getPicture().then((imageData) => {
+        //     this.imageURL = imageData
+        // }, (err) => {
+        //     console.log(err);
+        // });
+    };
+    TravelclaimPage.prototype.SetPrice = function (vehicle) {
+        this.VehicleId = vehicle.MILEAGE_GUID;
+        this.VehicleRate = vehicle.RATE_PER_UNIT;
+        this.vehicleCategory = vehicle.CATEGORY;
+    };
     TravelclaimPage.prototype.save = function (value) {
         var _this = this;
         var userGUID = localStorage.getItem('g_USER_GUID');
@@ -3822,14 +4296,14 @@ var TravelclaimPage = (function () {
         var month = new Date(value.travel_date).getMonth() + 1;
         var year = new Date(value.travel_date).getFullYear();
         var claimRefGUID;
-        var url = __WEBPACK_IMPORTED_MODULE_8__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+        var url = __WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
         this.http
             .get(url)
             .map(function (res) { return res.json(); })
             .subscribe(function (claimRefdata) {
             if (claimRefdata["resource"][0] == null) {
-                var claimReqRef = new __WEBPACK_IMPORTED_MODULE_6__models_ClaimRefMain_Model__["a" /* ClaimRefMain_Model */]();
-                claimReqRef.CLAIM_REF_GUID = __WEBPACK_IMPORTED_MODULE_10_angular2_uuid__["UUID"].UUID();
+                var claimReqRef = new __WEBPACK_IMPORTED_MODULE_7__models_ClaimRefMain_Model__["a" /* ClaimRefMain_Model */]();
+                claimReqRef.CLAIM_REF_GUID = __WEBPACK_IMPORTED_MODULE_11_angular2_uuid__["UUID"].UUID();
                 claimReqRef.USER_GUID = userGUID;
                 claimReqRef.TENANT_GUID = tenantGUID;
                 claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
@@ -3840,8 +4314,8 @@ var TravelclaimPage = (function () {
                 _this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe(function (response) {
                     var postClaimRef = response.json();
                     claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
-                    var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_7__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
-                    claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_10_angular2_uuid__["UUID"].UUID();
+                    var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_8__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                    claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_11_angular2_uuid__["UUID"].UUID();
                     claimReqMainRef.TENANT_GUID = tenantGUID;
                     claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
                     claimReqMainRef.MILEAGE_GUID = _this.VehicleId;
@@ -3849,6 +4323,7 @@ var TravelclaimPage = (function () {
                     claimReqMainRef.TRAVEL_DATE = value.travel_date;
                     claimReqMainRef.START_TS = value.start_DT;
                     claimReqMainRef.END_TS = value.end_DT;
+                    claimReqMainRef.DESCRIPTION = value.description;
                     claimReqMainRef.MILEAGE_AMOUNT = _this.Travel_Amount_ngModel;
                     claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
                     claimReqMainRef.CREATION_TS = new Date().toISOString();
@@ -3856,19 +4331,28 @@ var TravelclaimPage = (function () {
                     claimReqMainRef.FROM = _this.Travel_From_ngModel;
                     claimReqMainRef.DESTINATION = _this.Travel_Destination_ngModel;
                     claimReqMainRef.DISTANCE_KM = _this.Travel_Distance_ngModel;
-                    claimReqMainRef.SOC_GUID = _this.Travel_SOC_No_ngModel;
+                    // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                    if (_this.isCustomer) {
+                        claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
+                    }
+                    else {
+                        claimReqMainRef.SOC_GUID = _this.Soc_GUID;
+                    }
+                    claimReqMainRef.CUSTOMER_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
+                    claimReqMainRef.SOC_GUID = _this.isCustomer ? _this.Customer_GUID : _this.Soc_GUID;
                     _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
                         var postClaimMain = response.json();
                         _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
                         _this.MainClaimSaved = true;
+                        console.table(claimReqMainRef);
                         alert('Claim Has Registered.');
                     });
                 });
             }
             else {
                 claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
-                var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_7__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
-                claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_10_angular2_uuid__["UUID"].UUID();
+                var claimReqMainRef = new __WEBPACK_IMPORTED_MODULE_8__models_ClaimReqMain_Model__["a" /* ClaimReqMain_Model */]();
+                claimReqMainRef.CLAIM_REQUEST_GUID = __WEBPACK_IMPORTED_MODULE_11_angular2_uuid__["UUID"].UUID();
                 claimReqMainRef.TENANT_GUID = tenantGUID;
                 claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
                 claimReqMainRef.MILEAGE_GUID = _this.VehicleId;
@@ -3876,6 +4360,7 @@ var TravelclaimPage = (function () {
                 claimReqMainRef.TRAVEL_DATE = value.travel_date;
                 claimReqMainRef.START_TS = value.start_DT;
                 claimReqMainRef.END_TS = value.end_DT;
+                claimReqMainRef.DESCRIPTION = value.description;
                 claimReqMainRef.MILEAGE_AMOUNT = _this.Travel_Amount_ngModel;
                 claimReqMainRef.CLAIM_AMOUNT = _this.Travel_Amount_ngModel;
                 claimReqMainRef.CREATION_TS = new Date().toISOString();
@@ -3883,7 +4368,13 @@ var TravelclaimPage = (function () {
                 claimReqMainRef.FROM = _this.Travel_From_ngModel;
                 claimReqMainRef.DESTINATION = _this.Travel_Destination_ngModel;
                 claimReqMainRef.DISTANCE_KM = _this.Travel_Distance_ngModel;
-                claimReqMainRef.SOC_GUID = _this.Travel_SOC_No_ngModel;
+                //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+                if (_this.isCustomer) {
+                    claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
+                }
+                else {
+                    claimReqMainRef.SOC_GUID = _this.Soc_GUID;
+                }
                 _this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe(function (response) {
                     var postClaimMain = response.json();
                     _this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
@@ -3896,13 +4387,13 @@ var TravelclaimPage = (function () {
     TravelclaimPage.prototype.showAddToll = function () {
         //let AddTollModal = this.modalCtrl.create(AddTollPage);
         //AddTollModal.present;
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_15__pages_add_toll_add_toll__["a" /* AddTollPage */], {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_16__pages_add_toll_add_toll__["a" /* AddTollPage */], {
             MainClaim: this.ClaimRequestMain,
             ClaimMethod: '03048acb-037a-11e8-a50c-00155de7e742'
         });
     };
     TravelclaimPage.prototype.showAddParking = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_15__pages_add_toll_add_toll__["a" /* AddTollPage */], {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_16__pages_add_toll_add_toll__["a" /* AddTollPage */], {
             MainClaim: this.ClaimRequestMain,
             ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742'
         });
@@ -3912,26 +4403,15 @@ var TravelclaimPage = (function () {
 TravelclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-travelclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/'<!--\n\n  Generated template for the TravelclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n      <button ion-button menuToggle>\n\n          <ion-icon name="menu"></ion-icon>\n\n        </button>\n\n\n\n    <ion-title>{{ \'TRAVEL_CLAIM_HEADING\' | translate }}</ion-title>  \n\n\n\n\n\n  </ion-navbar>\n\n \n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <!-- <button ion-button (click)="AddTravelClick()">SUMMARY</button> -->\n\n  <form [formGroup]="Travelform">\n\n      <ion-card>\n\n\n\n          <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>\n\n        <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" \n\n          placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n\n\n\n\n        <ion-list>\n\n          <ion-item-sliding *ngFor="let item of projects">\n\n            <button ion-item (click)="GetSocNo(item.SOC_GUID)">\n\n              <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>\n\n            </button>\n\n          </ion-item-sliding>\n\n        </ion-list>  \n\n      </ion-card>\n\n\n\n      <ion-item>\n\n\n\n          <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n          <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n          placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n        </ion-item>\n\n\n\n        <ion-item>\n\n          <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>\n\n\n\n        \n\n          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n\n\n          <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>\n\n\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" max={{validDate}} placeholder="{{ \'START_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n\n\n          <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>\n\n\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" max={{validDate}} placeholder="{{ \'END_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <!-- <ion-item>\n\n          <ion-label stacked>{{ "CALENDAR_REF_LABEL" | translate }}</ion-label>\n\n        </ion-item> -->\n\n    \n\n    \n\n    \n\n        <ion-item>\n\n\n\n          <ion-label stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>\n\n\n\n          <ion-input [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" placeholder=" {{ \'ORIGIN_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_ORIGIN_BUTTON"  }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n\n\n          <ion-label stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>\n\n\n\n          <ion-input [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination" placeholder=" {{ \'DESTINATION_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddToLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DESTINATION_BUTTON"  }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n\n\n          <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>\n\n\n\n          <ion-input [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" placeholder=" {{ \'DISTANCE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="GetDistance()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DISTANCE_BUTTON" }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n\n\n          <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n\n\n          <ion-select formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n            <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n\n\n          <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n\n\n          <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n\n\n          <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n          <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n        </ion-item>\n\n        <ion-item>\n\n          <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n\n\n    \n\n        </ion-item>\n\n        <div class="btn">\n\n          <button ion-button (click)=\'save(Travelform.value)\' >SUBMIT</button>\n\n        </div>\n\n        <!-- [disabled]="!Travelform.valid" -->\n\n\n\n        <a (click)="showAddToll()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Toll</a>\n\n        <a (click)="showAddParking()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a>\n\n    \n\n      </form>\n\n      <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n      </div>\n\n      <div class="popup1" padding *ngIf="AddLookupClicked">\n\n        <ion-card>\n\n          <ion-card-header class="icTitle headerColor-white ">\n\n    \n\n            <div class="icHeaderText">Search Location</div>\n\n            <button class="btnR" (click)="CloseLookupClick()">\n\n              <ion-icon name="md-close"></ion-icon>\n\n            </button>\n\n          </ion-card-header>\n\n          <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n          <ion-list>\n\n            <ion-item-sliding *ngFor="let item of currentItems">\n\n              <button ion-item (click)="openItem(item)">\n\n                <ion-label> {{item.description}}</ion-label>\n\n              </button>\n\n            </ion-item-sliding>\n\n          </ion-list>\n\n        </ion-card>\n\n      </div>\n\n\n\n\n\n    <!-- <ion-item>\n\n            <ion-label stacked>SOC NUMBER</ion-label>\n\n            <ion-select formControlName="soc_no" [(ngModel)]="Travel_SOC_No_ngModel" placeholder="SELECT" (ionChange)="GetSocNo()">\n\n              <ion-option *ngFor="let soc of socs" selected="true">{{soc.SOC_NO}}</ion-option>\n\n            </ion-select>\n\n          </ion-item> -->\n\n\n\n    <!-- <ion-item>\n\n      <ion-label stacked>{{"SOC NUMBER"}}</ion-label>\n\n      <ion-input type="text" placeholder="{{\'Please click the button to get your soc number\'}}"></ion-input>\n\n      <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n        <ion-icon name="eye"></ion-icon>\n\n        LOOKUP\n\n      </button>\n\n    </ion-item> -->\n\n\n\n    <!-- <ion-item>\n\n      <ion-label stacked>{{"PROJECT NAME"}}</ion-label>\n\n      <ion-input type="text" formControlName="project_name" disabled="true" [(ngModel)]="Travel_ProjectName_ngModel" placeholder="{{\'Please fill in the project name\'}}"></ion-input>\n\n    </ion-item> -->\n\n\n\n    <!-- <ion-item>\n\n      <ion-label stacked>{{"DATE"}}</ion-label>\n\n      <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="Travel_Date_ngModel" placeholder="{{\'Please choose yours date while you go to the place\'}}"></ion-datetime>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"CALENDAR REF."}}</ion-label>\n\n\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"FROM"}}</ion-label>\n\n      <ion-input type="text" formControlName="from" [(ngModel)]="Travel_From_ngModel" placeholder="{{\'Please fill in the the place that you start car\'}}"></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"DESTINATION"}}</ion-label>\n\n      <ion-input type="text" formControlName="destination" [(ngModel)]="Travel_Destination_ngModel" placeholder="{{\'Please fill in the destination of the Claim\'}}"></ion-input>\n\n    </ion-item>\n\n\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"DISTANCE(KM)"}}</ion-label>\n\n      <ion-input type="number" formControlName="distance" [(ngModel)]="Travel_Distance_ngModel" placeholder="{{\'Please choose the distance between the trip\'}}"></ion-input>\n\n    </ion-item>\n\n\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n      <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Travel_ClaimAmount_ngModel" placeholder="{{\'Please fill in the amount of yours Travel Claim\'}}"></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n      <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" placeholder="{{\'Please fill in the description\'}}"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label stacked>{{"ATTACHMENT"}}</ion-label>\n\n\n\n    </ion-item> -->\n\n\n\n    <!-- <ion-item>\n\n            <ion-label stacked>{{"TOTAL AMOUNT(RM)"}}</ion-label>\n\n            <ion-input type="number" formControlName="total_amount" [(ngModel)]="Travel_TotalAmount_ngModel" placeholder="{{\'Please fill in the amount for the total of the Travel Claim\'}}"></ion-input>\n\n          </ion-item> -->\n\n    <!-- <div class="btn">\n\n      <button ion-button (click)="save()">SUBMIT</button>\n\n    </div>\n\n  </form> -->\n\n\n\n\n\n\n\n\n\n  <!-- add Travel form start-->\n\n  <!-- <div class="blackcontainer" *ngIf="AddTravelClicked">\n\n  </div>\n\n  <div class="popup" padding *ngIf="AddTravelClicked">\n\n\n\n    <ion-card class="cm">\n\n      <ion-card-header class="icTitle headerColor-white ">\n\n\n\n        <div class="icHeaderText">    TRAVEL CLAIM HISTORY</div>\n\n        <button class="btnR" (click)="CloseTravelClick()">\n\n          <ion-icon name="md-close"></ion-icon> \n\n        </button>\n\n      </ion-card-header>\n\n      <ion-list class="scroll">\n\n          <ion-item>\n\n      <table class="Tabler">\n\n        <tr class="colth tColor">\n\n          <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>\n\n          <th class="lgl1">SOC NUMBER</th>\n\n          <th class="lgl1">FROM</th>\n\n          <th class="lgl1">DESTINATION</th>\n\n          <th class="lgl1">CLAIM AMOUNT(RM)</th>\n\n          <th class="lgl1 tblBrRight" style="width:80px">ACTION</th>\n\n\n\n        </tr>\n\n\n\n        <tr class="col7">\n\n          <td class="lgl1">1</td>\n\n          <td class="lgl1">CS 001</td>\n\n          <td class="lgl1">KUALA LUMPUR</td>\n\n          <td class="lgl1">KLIA 2</td>\n\n          <td class="lgl1">222</td>\n\n          <td class="lgl1 fColor">\n\n            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>\n\n            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>\n\n          </td>\n\n        </tr>\n\n\n\n\n\n      </table>\n\n    </ion-item>\n\n      </ion-list>\n\n    </ion-card>\n\n\n\n  </div> -->\n\n  <!-- add Travel form end-->\n\n\n\n    <!-- add lookup form start-->\n\n    <!-- <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n    </div>\n\n    <div class="popup1" padding *ngIf="AddLookupClicked">\n\n      <ion-card>\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n  \n\n          <div class="icHeaderText">SOC LOOKUP</div>\n\n          <button class="btnR" (click)="CloseLookupClick()">\n\n            <ion-icon name="md-close"></ion-icon>\n\n          </button>\n\n        </ion-card-header>\n\n        <ion-list>\n\n  \n\n          <ion-row>\n\n            <ion-searchbar type="text" #filter (keyup)="0" placeholder="SEARCH SOC NUMBER"></ion-searchbar>\n\n          </ion-row>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n        \n\n        </ion-list>\n\n      </ion-card>\n\n    </div> -->\n\n    <!-- add lookup form end-->\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_8__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_9__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-travelclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/'<!--\n\n  Generated template for the TravelclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n      <!-- <button ion-button menuToggle>\n\n          <ion-icon name="menu"></ion-icon>\n\n        </button> -->\n\n        <!-- <div class="headerInfo">\n\n            <ion-fab top right>\n\n              <button ion-fab mini class="btnClear">\n\n                <ion-icon name="settings"></ion-icon>\n\n              </button>\n\n              <ion-fab-list class="settingBtnFab" side="left">\n\n                <button ion-fab color="primary" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>\n\n              </ion-fab-list>\n\n              <ion-fab-list class="settingBtnFab" side="bottom">\n\n                <button ion-fab color="primary" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>\n\n              </ion-fab-list>\n\n            </ion-fab>\n\n          </div> -->\n\n    <ion-title>{{ \'TRAVEL_CLAIM_HEADING\' | translate }}</ion-title>  \n\n  </ion-navbar>\n\n </ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <!-- <button ion-button (click)="AddTravelClick()">SUMMARY</button> -->\n\n\n\n  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n      <ion-list-header>\n\n        Select Travel Claim For:\n\n      </ion-list-header>\n\n  \n\n      <ion-item>\n\n        <ion-label>Customer</ion-label>\n\n        <ion-radio value="customer" checked="true"></ion-radio>\n\n      </ion-item>\n\n  \n\n      <ion-item>\n\n        <ion-label>Project</ion-label>\n\n        <ion-radio value="project"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n\n\n  <form [formGroup]="Travelform">\n\n\n\n      <div *ngIf="claimFor==\'project\'">\n\n          <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n          <ion-item>\n\n            <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n            <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n              <ion-icon name="eye"></ion-icon>\n\n              {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n          </ion-item>\n\n          <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n          <ion-item>\n\n            <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n            <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n          </ion-item>\n\n        </div>\n\n      <!-- <ion-card>\n\n          <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>\n\n        <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" \n\n          placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n\n\n        <ion-list>\n\n          <ion-item-sliding *ngFor="let item of projects">\n\n            <button ion-item (click)="GetSocNo(item.SOC_GUID)">\n\n              <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>\n\n            </button>\n\n          </ion-item-sliding>\n\n        </ion-list>  \n\n      </ion-card> -->\n\n\n\n      <div *ngIf="claimFor==\'customer\'">\n\n\n\n          <!-- formControlName="customer" -->\n\n          <ion-item>\n\n            <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n            <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n              <ion-icon name="eye"></ion-icon>\n\n              {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n          </ion-item>\n\n        </div>\n\n\n\n      <!-- <ion-item>\n\n          <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n          <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n          placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n        </ion-item> -->\n\n\n\n        <ion-item>\n\n          <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" max={{validDate}} placeholder="{{ \'START_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" max={{validDate}} placeholder="{{ \'END_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <!-- <ion-item>\n\n          <ion-label stacked>{{ "CALENDAR_REF_LABEL" | translate }}</ion-label>\n\n        </ion-item> -->\n\n\n\n        <ion-item>\n\n            <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n            <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n  \n\n        <ion-item>\n\n          <ion-label stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" placeholder=" {{ \'ORIGIN_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_ORIGIN_BUTTON" | translate  }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination" placeholder=" {{ \'DESTINATION_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddToLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DESTINATION_BUTTON" | translate }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" placeholder=" {{ \'DISTANCE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <!-- <button ion-button outline item-end icon-left (click)="GetDistance()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DISTANCE_BUTTON" }} </button> -->\n\n        </ion-item>\n\n\n\n        <!-- [(ngModel)]="Travel_Amount_ngModel" -->\n\n        <ion-item>\n\n            <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n            <ion-label > {{travelAmount | number}} </ion-label>\n\n            <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item>\n\n              <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n              <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            </ion-item>\n\n\n\n    \n\n        <!-- <ion-item>\n\n          <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n          <ion-select formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n            <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n          </ion-select>\n\n        </ion-item> -->\n\n    \n\n        <!-- <ion-item>\n\n          <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n        </ion-item> -->\n\n\n\n        <div class="btn">\n\n          <button ion-button (click)=\'save(Travelform.value)\'  >SUBMIT</button>\n\n        </div>\n\n        <!-- [disabled]="!Travelform.valid" -->\n\n       \n\n\n\n        <a (click)="showAddToll()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Toll</a>\n\n        <a (click)="showAddParking()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a>\n\n    \n\n      </form>\n\n\n\n      <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n      </div>\n\n      <div class="popup2" padding *ngIf="AddLookupClicked">\n\n        <ion-card>\n\n          <ion-card-header class="icTitle headerColor-white ">\n\n    \n\n            <div class="icHeaderText">Search Location</div>\n\n            <button class="btnR" (click)="CloseLookupClick()">\n\n              <ion-icon name="md-close"></ion-icon>\n\n            </button>\n\n          </ion-card-header>\n\n          <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n          <ion-list>\n\n            <ion-item-sliding *ngFor="let item of currentItems">\n\n              <button ion-item (click)="openItem(item)">\n\n                <ion-label> {{item.description}}</ion-label>\n\n              </button>\n\n            </ion-item-sliding>\n\n          </ion-list>\n\n        </ion-card>\n\n      </div>\n\n\n\n      <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n        </div>\n\n        <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n          <ion-card>\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n              <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n              <button class="btnR" (click)="CloseProjectLookup()">\n\n                <ion-icon name="md-close"></ion-icon>\n\n              </button>\n\n            </ion-card-header>\n\n            <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n            <ion-list>\n\n              <ion-item-sliding *ngFor="let item of projects">\n\n                <button ion-item (click)="GetSocNo(item)">\n\n                  <ion-label>{{item.project_name}}\n\n                    <>{{item.soc}}</ion-label>\n\n                </button>\n\n              </ion-item-sliding>\n\n            </ion-list>\n\n          </ion-card>\n\n        </div>\n\n\n\n        <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n          </div>\n\n          <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n            <ion-card>\n\n              <ion-card-header class="icTitle headerColor-white ">\n\n                <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n                <button class="btnR" (click)="CloseCustomerLookup()">\n\n                  <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n              </ion-card-header>\n\n              <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n              <ion-list>\n\n                <ion-item-sliding *ngFor="let item of customers">\n\n                  <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                    <ion-label>{{item.NAME}}</ion-label>\n\n                  </button>\n\n                </ion-item-sliding>\n\n              </ion-list>\n\n            </ion-card>\n\n          </div>\n\n\n\n\n\n    <!-- <ion-item>\n\n            <ion-label stacked>SOC NUMBER</ion-label>\n\n            <ion-select formControlName="soc_no" [(ngModel)]="Travel_SOC_No_ngModel" placeholder="SELECT" (ionChange)="GetSocNo()">\n\n              <ion-option *ngFor="let soc of socs" selected="true">{{soc.SOC_NO}}</ion-option>\n\n            </ion-select>\n\n          </ion-item> -->\n\n\n\n    <!-- <ion-item>\n\n      <ion-label stacked>{{"SOC NUMBER"}}</ion-label>\n\n      <ion-input type="text" placeholder="{{\'Please click the button to get your soc number\'}}"></ion-input>\n\n      <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n        <ion-icon name="eye"></ion-icon>\n\n        LOOKUP\n\n      </button>\n\n    </ion-item> -->\n\n\n\n    <!-- <ion-item>\n\n      <ion-label stacked>{{"PROJECT NAME"}}</ion-label>\n\n      <ion-input type="text" formControlName="project_name" disabled="true" [(ngModel)]="Travel_ProjectName_ngModel" placeholder="{{\'Please fill in the project name\'}}"></ion-input>\n\n    </ion-item> -->\n\n\n\n    <!-- <ion-item>\n\n      <ion-label stacked>{{"DATE"}}</ion-label>\n\n      <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="Travel_Date_ngModel" placeholder="{{\'Please choose yours date while you go to the place\'}}"></ion-datetime>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"CALENDAR REF."}}</ion-label>\n\n\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"FROM"}}</ion-label>\n\n      <ion-input type="text" formControlName="from" [(ngModel)]="Travel_From_ngModel" placeholder="{{\'Please fill in the the place that you start car\'}}"></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"DESTINATION"}}</ion-label>\n\n      <ion-input type="text" formControlName="destination" [(ngModel)]="Travel_Destination_ngModel" placeholder="{{\'Please fill in the destination of the Claim\'}}"></ion-input>\n\n    </ion-item>\n\n\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"DISTANCE(KM)"}}</ion-label>\n\n      <ion-input type="number" formControlName="distance" [(ngModel)]="Travel_Distance_ngModel" placeholder="{{\'Please choose the distance between the trip\'}}"></ion-input>\n\n    </ion-item>\n\n\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>\n\n      <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Travel_ClaimAmount_ngModel" placeholder="{{\'Please fill in the amount of yours Travel Claim\'}}"></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n      <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" placeholder="{{\'Please fill in the description\'}}"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label stacked>{{"ATTACHMENT"}}</ion-label>\n\n\n\n    </ion-item> -->\n\n\n\n    <!-- <ion-item>\n\n            <ion-label stacked>{{"TOTAL AMOUNT(RM)"}}</ion-label>\n\n            <ion-input type="number" formControlName="total_amount" [(ngModel)]="Travel_TotalAmount_ngModel" placeholder="{{\'Please fill in the amount for the total of the Travel Claim\'}}"></ion-input>\n\n          </ion-item> -->\n\n    <!-- <div class="btn">\n\n      <button ion-button (click)="save()">SUBMIT</button>\n\n    </div>\n\n  </form> -->\n\n\n\n\n\n\n\n\n\n  <!-- add Travel form start-->\n\n  <!-- <div class="blackcontainer" *ngIf="AddTravelClicked">\n\n  </div>\n\n  <div class="popup" padding *ngIf="AddTravelClicked">\n\n\n\n    <ion-card class="cm">\n\n      <ion-card-header class="icTitle headerColor-white ">\n\n\n\n        <div class="icHeaderText">    TRAVEL CLAIM HISTORY</div>\n\n        <button class="btnR" (click)="CloseTravelClick()">\n\n          <ion-icon name="md-close"></ion-icon> \n\n        </button>\n\n      </ion-card-header>\n\n      <ion-list class="scroll">\n\n          <ion-item>\n\n      <table class="Tabler">\n\n        <tr class="colth tColor">\n\n          <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>\n\n          <th class="lgl1">SOC NUMBER</th>\n\n          <th class="lgl1">FROM</th>\n\n          <th class="lgl1">DESTINATION</th>\n\n          <th class="lgl1">CLAIM AMOUNT(RM)</th>\n\n          <th class="lgl1 tblBrRight" style="width:80px">ACTION</th>\n\n\n\n        </tr>\n\n\n\n        <tr class="col7">\n\n          <td class="lgl1">1</td>\n\n          <td class="lgl1">CS 001</td>\n\n          <td class="lgl1">KUALA LUMPUR</td>\n\n          <td class="lgl1">KLIA 2</td>\n\n          <td class="lgl1">222</td>\n\n          <td class="lgl1 fColor">\n\n            <button ion-button item-end><ion-icon name="md-create"></ion-icon></button>\n\n            <button ion-button item-end><ion-icon name="md-close"></ion-icon></button>\n\n          </td>\n\n        </tr>\n\n\n\n\n\n      </table>\n\n    </ion-item>\n\n      </ion-list>\n\n    </ion-card>\n\n\n\n  </div> -->\n\n  <!-- add Travel form end-->\n\n\n\n    <!-- add lookup form start-->\n\n    <!-- <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n    </div>\n\n    <div class="popup1" padding *ngIf="AddLookupClicked">\n\n      <ion-card>\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n  \n\n          <div class="icHeaderText">SOC LOOKUP</div>\n\n          <button class="btnR" (click)="CloseLookupClick()">\n\n            <ion-icon name="md-close"></ion-icon>\n\n          </button>\n\n        </ion-card-header>\n\n        <ion-list>\n\n  \n\n          <ion-row>\n\n            <ion-searchbar type="text" #filter (keyup)="0" placeholder="SEARCH SOC NUMBER"></ion-searchbar>\n\n          </ion-row>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n          <ion-item class="tnUserRow">\n\n            <ion-label>APR10788</ion-label>\n\n  \n\n          </ion-item>\n\n  \n\n        \n\n        </ion-list>\n\n      </ion-card>\n\n    </div> -->\n\n    <!-- add lookup form end-->\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_9__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_8__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_15__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
 ], TravelclaimPage);
 
 //# sourceMappingURL=travelclaim.js.map
 
 /***/ }),
-/* 242 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DREAMFACTORY_API_KEY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return DREAMFACTORY_TABLE_URL; });
-var DREAMFACTORY_API_KEY = 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881';
-var DREAMFACTORY_TABLE_URL = 'http://api.zen.com.my/api/v2/zcs/_table';
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 243 */
+/* 245 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3939,11 +4419,11 @@ var DREAMFACTORY_TABLE_URL = 'http://api.zen.com.my/api/v2/zcs/_table';
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_ClaimReqDetail_Model__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_ClaimReqDetail_Model__ = __webpack_require__(384);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angular2_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Services__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Services__ = __webpack_require__(39);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4034,7 +4514,7 @@ AddTollPage = __decorate([
 //# sourceMappingURL=add-toll.js.map
 
 /***/ }),
-/* 244 */
+/* 246 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4045,13 +4525,13 @@ AddTollPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_main_profile_model__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_profilesetup_services__ = __webpack_require__(390);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_main_profile_model__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_profilesetup_services__ = __webpack_require__(385);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__shared_GlobalFunction__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__shared_GlobalFunction__ = __webpack_require__(248);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__login_login__ = __webpack_require__(28);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4313,7 +4793,7 @@ ProfileSetupPage = __decorate([
 //# sourceMappingURL=Profile-Setup.js.map
 
 /***/ }),
-/* 245 */
+/* 247 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4364,7 +4844,7 @@ var Main_Profile_Model = (function () {
 //# sourceMappingURL=main_profile_model.js.map
 
 /***/ }),
-/* 246 */
+/* 248 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4406,7 +4886,7 @@ GlobalFunction = __decorate([
 //# sourceMappingURL=GlobalFunction.js.map
 
 /***/ }),
-/* 247 */
+/* 249 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4417,13 +4897,13 @@ GlobalFunction = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_banksetup_model__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_banksetup_service__ = __webpack_require__(391);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_banksetup_model__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_banksetup_service__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__shared_GlobalFunction__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__shared_GlobalFunction__ = __webpack_require__(248);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4701,7 +5181,7 @@ BanksetupPage = __decorate([
 //# sourceMappingURL=banksetup.js.map
 
 /***/ }),
-/* 248 */
+/* 250 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4749,7 +5229,7 @@ var BankSetup_Model = (function () {
 //# sourceMappingURL=banksetup_model.js.map
 
 /***/ }),
-/* 249 */
+/* 251 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4760,12 +5240,12 @@ var BankSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_tenantcompanysetup_model__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_tenantcompanysitesetup_model__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_tenantcompanysetup_service__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_tenantcompanysitesetup_service__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_tenantcompanysetup_model__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_tenantcompanysitesetup_model__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_tenantcompanysetup_service__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_tenantcompanysitesetup_service__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_angular2_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__login_login__ = __webpack_require__(28);
@@ -5119,7 +5599,7 @@ BranchsetupPage = __decorate([
 //# sourceMappingURL=branchsetup.js.map
 
 /***/ }),
-/* 250 */
+/* 252 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5130,10 +5610,10 @@ BranchsetupPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_cashcardsetup_model__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_cashcardsetup_service__ = __webpack_require__(392);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_cashcardsetup_model__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_cashcardsetup_service__ = __webpack_require__(387);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5479,7 +5959,7 @@ CashcardsetupPage = __decorate([
 //# sourceMappingURL=cashcardsetup.js.map
 
 /***/ }),
-/* 251 */
+/* 253 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5539,7 +6019,7 @@ var CashcardSetup_Model = (function () {
 //# sourceMappingURL=cashcardsetup_model.js.map
 
 /***/ }),
-/* 252 */
+/* 254 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5550,10 +6030,10 @@ var CashcardSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_claimtypesetup_model__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_claimtypesetup_service__ = __webpack_require__(393);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_claimtypesetup_model__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_claimtypesetup_service__ = __webpack_require__(388);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5838,7 +6318,7 @@ ClaimtypePage = __decorate([
 //# sourceMappingURL=claimtype.js.map
 
 /***/ }),
-/* 253 */
+/* 255 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5886,7 +6366,7 @@ var ClaimTypeSetup_Model = (function () {
 //# sourceMappingURL=claimtypesetup_model.js.map
 
 /***/ }),
-/* 254 */
+/* 256 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5897,10 +6377,10 @@ var ClaimTypeSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_companysetup_model__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_companysetup_service__ = __webpack_require__(394);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_companysetup_model__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_companysetup_service__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6331,7 +6811,7 @@ CompanysetupPage = __decorate([
 //# sourceMappingURL=companysetup.js.map
 
 /***/ }),
-/* 255 */
+/* 257 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6388,7 +6868,7 @@ var CompanySetup_Model = (function () {
 //# sourceMappingURL=companysetup_model.js.map
 
 /***/ }),
-/* 256 */
+/* 258 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6399,10 +6879,10 @@ var CompanySetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_designationsetup_model__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_designationsetup_service__ = __webpack_require__(395);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_designationsetup_model__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_designationsetup_service__ = __webpack_require__(390);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6682,7 +7162,7 @@ DesignationsetupPage = __decorate([
 //# sourceMappingURL=designationsetup.js.map
 
 /***/ }),
-/* 257 */
+/* 259 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6727,7 +7207,7 @@ var DesignationSetup_Model = (function () {
 //# sourceMappingURL=designationsetup_model.js.map
 
 /***/ }),
-/* 258 */
+/* 260 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6738,10 +7218,10 @@ var DesignationSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_departmentsetup_model__ = __webpack_require__(259);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_departmentsetup_service__ = __webpack_require__(396);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_departmentsetup_model__ = __webpack_require__(261);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_departmentsetup_service__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7030,7 +7510,7 @@ DepartmentsetupPage = __decorate([
 //# sourceMappingURL=departmentsetup.js.map
 
 /***/ }),
-/* 259 */
+/* 261 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7078,7 +7558,7 @@ var DepartmentSetup_Model = (function () {
 //# sourceMappingURL=departmentsetup_model.js.map
 
 /***/ }),
-/* 260 */
+/* 262 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7089,10 +7569,10 @@ var DepartmentSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_mileagesetup_model__ = __webpack_require__(261);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_mileagesetup_service__ = __webpack_require__(397);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_mileagesetup_model__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_mileagesetup_service__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7376,7 +7856,7 @@ MileagesetupPage = __decorate([
 //# sourceMappingURL=mileagesetup.js.map
 
 /***/ }),
-/* 261 */
+/* 263 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7430,7 +7910,7 @@ var MileageSetup_Model = (function () {
 //# sourceMappingURL=mileagesetup_model.js.map
 
 /***/ }),
-/* 262 */
+/* 264 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7441,10 +7921,10 @@ var MileageSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_paymenttypesetup_model__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_paymenttypesetup_service__ = __webpack_require__(398);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_paymenttypesetup_model__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_paymenttypesetup_service__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7724,7 +8204,7 @@ PaymenttypesetupPage = __decorate([
 //# sourceMappingURL=paymenttypesetup.js.map
 
 /***/ }),
-/* 263 */
+/* 265 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7772,7 +8252,7 @@ var PaymentTypeSetup_Model = (function () {
 //# sourceMappingURL=paymenttypesetup_model.js.map
 
 /***/ }),
-/* 264 */
+/* 266 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7783,10 +8263,10 @@ var PaymentTypeSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_qualificationsetup_model__ = __webpack_require__(265);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_qualificationsetup_service__ = __webpack_require__(399);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_qualificationsetup_model__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_qualificationsetup_service__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8066,7 +8546,7 @@ QualificationsetupPage = __decorate([
 //# sourceMappingURL=qualificationsetup.js.map
 
 /***/ }),
-/* 265 */
+/* 267 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8114,7 +8594,7 @@ var QualificationSetup_Model = (function () {
 //# sourceMappingURL=qualificationsetup_model.js.map
 
 /***/ }),
-/* 266 */
+/* 268 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8125,22 +8605,22 @@ var QualificationSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_usersetup_info_model__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_user_main_model__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_user_contact_model__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_user_company_model__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_usersetup_address_model__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_viewuser_model__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_view_dropdown__ = __webpack_require__(400);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_usersetup_service__ = __webpack_require__(272);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_usersetup_info_model__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_user_main_model__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_user_contact_model__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_user_company_model__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_usersetup_address_model__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_viewuser_model__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_view_dropdown__ = __webpack_require__(395);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_usersetup_service__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_angular2_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_camera__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_file__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_file_transfer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_file_path__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_file_path__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__login_login__ = __webpack_require__(28);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8315,7 +8795,8 @@ var UserPage = (function () {
                 EMAIL: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
                 LOGIN_ID: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
                 PASSWORD: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-                CONTACT_NO: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+                // CONTACT_NO: ['', Validators.required],
+                CONTACT_NO: [null, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern('^(?!(0))[0-9]*'), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
                 COMPANY_CONTACT_NO: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
                 MARITAL_STATUS: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
                 PERSONAL_ID_TYPE: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
@@ -8861,7 +9342,7 @@ var UserPage = (function () {
 UserPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-user',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\user\user.html"*/'<!--\n\n  Generated template for the UserPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n    <ion-navbar>\n\n        <ion-title>USER REGISTRATION</ion-title>\n\n    </ion-navbar>\n\n    <ion-toolbar no-border-top>\n\n        <ion-searchbar color="primary"  placeholder="Search"></ion-searchbar>\n\n      </ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n    <ion-fab top right edge>\n\n        <button ion-fab mini (click)="AddUserClick()">\n\n            <ion-icon name="add"></ion-icon>\n\n        </button>\n\n    </ion-fab>\n\n\n\n\n\n    <div class="eClaimSubTitle">\n\n        <b>PERSONAL DETAILS</b>\n\n    </div>\n\n\n\n    <ion-list>\n\n        <ion-item>\n\n            <table class="Tabler">\n\n                <tr class="linedsg TColor">\n\n         \n\n                    <th class="lgl1 tblBrLeft">NAME</th>\n\n                    <th class="lgl1">EMAIL</th>\n\n                    <th class="lgl1">LOGINID</th>\n\n      \n\n                    <th class="lgl1 tblBrRight">ACTION</th>\n\n                </tr>\n\n\n\n                <tr class="col7" *ngFor="let user of users; let i=index">\n\n          \n\n                    <td class="lgl1">{{user.NAME}}</td>\n\n                    <td class="lgl1">{{user.EMAIL}}</td>\n\n                    <td class="lgl1">{{user.LOGIN_ID}}</td>\n\n         \n\n\n\n                    <td class="lgl1 fColor">   \n\n                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">\n\n                            <ion-icon name="md-create"></ion-icon>\n\n                        </button>\n\n                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">\n\n                            <!-- DeleteClick(user.USER_GUID) -->\n\n                            <ion-icon name="md-close"></ion-icon>\n\n                        </button>\n\n                    </td>\n\n                </tr>\n\n\n\n\n\n            </table>\n\n        </ion-item>\n\n    </ion-list>\n\n\n\n\n\n\n\n    <div class="eClaimSubTitle">\n\n        <b>EMPLOYMENT DETAILS</b>\n\n    </div>\n\n\n\n    <ion-list>\n\n        <ion-item>\n\n            <table class="Tabler">\n\n                <tr class="linedsg TColor">\n\n                    <th class="lgl1 tblBrLeft">DESIGNATION</th>\n\n                    <th class="lgl1">COMPANY</th>\n\n                    <th class="lgl1">DEPARTMENT</th>\n\n                    <th class="lgl1">JOIN DATE</th>\n\n                    <th class="lgl1">BRANCH</th>\n\n                    <th class="lgl1">APPROVER</th>\n\n                    <th class="lgl1"> STATUS</th>\n\n                    <th class="lgl1 tblBrRight">ACTION</th>\n\n                </tr>\n\n\n\n                <tr class="col7" *ngFor="let user of employees; let i=index">\n\n                    <td class="lgl1">{{user.DESIGNATION_NAME}}</td>\n\n                    <td class="lgl1">{{user.COMPANY}}</td>\n\n                    <td class="lgl1">{{user.DEPARTMENT_NAME}}</td>\n\n                    <td class="lgl1">{{user.JOIN_DATE}}</td>\n\n                    <td class="lgl1">{{user.BRANCH}}</td>\n\n                    <td class="lgl1">{{user.APPROVER1}}</td>\n\n                    <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>\n\n                    <td class="lgl1 fColor">\n\n                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">\n\n                            <ion-icon name="md-create"></ion-icon>\n\n                        </button>\n\n                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">\n\n                            <ion-icon name="md-close"></ion-icon>\n\n                        </button>\n\n                    </td>\n\n                </tr>\n\n\n\n\n\n            </table>\n\n        </ion-item>\n\n    </ion-list>\n\n\n\n\n\n\n\n    <div class="eClaimSubTitle">\n\n        <b>RESIDENTIAL ADDRESS</b>\n\n    </div>\n\n\n\n    <ion-list>\n\n        <ion-item>\n\n            <table class="Tabler">\n\n                <tr class="linedsg TColor">\n\n       \n\n                    <th class="lgl1 tblBrLeft">ADDRESS LINE 1</th>\n\n                    <th class="lgl1">ADDRESS LINE 2</th>\n\n                    <th class="lgl1">ADDRESS LINE 3</th>\n\n                    <th class="lgl1 tblBrRight">ACTION</th>\n\n                </tr>\n\n\n\n                <tr class="col7" *ngFor="let user of address; let i=index">\n\n                  \n\n                    <td class="lgl1">{{user.USER_ADDRESS1}}</td>\n\n                    <td class="lgl1">{{user.USER_ADDRESS2}}</td>\n\n                    <td class="lgl1">{{user.USER_ADDRESS3}}</td>\n\n\n\n\n\n                    <td class="lgl1 fColor">\n\n                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">\n\n                            <ion-icon name="md-create"></ion-icon>\n\n                        </button>\n\n                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">\n\n                            <ion-icon name="md-close"></ion-icon>\n\n                        </button>\n\n                    </td>\n\n                </tr>\n\n\n\n\n\n            </table>\n\n        </ion-item>\n\n    </ion-list>\n\n\n\n\n\n    <div class="blackcontainer" *ngIf="AddUserClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="AddUserClicked">\n\n\n\n        <ion-card class="cm">\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n\n\n                <div class="icHeaderText">REGISTER NEW USER</div>\n\n                <button class="btnR" (click)="CloseUserClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n            </ion-card-header>\n\n            <ion-list class="scroll">\n\n                <form [formGroup]="Userform">\n\n\n\n                    <div class="eClaimSubTitle1">\n\n                        <b>PERSONAL DETAILS</b>\n\n                    </div>\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"NAME"}}</ion-label>\n\n                        <ion-input type="text" formControlName="NAME" [(ngModel)]="User_Name_ngModel" placeholder="{{\'Please fill the name of the user\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"EMAIL"}}</ion-label>\n\n                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="User_Email_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"LOGINID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"PASSWORD"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PASSWORD" [(ngModel)]="User_Password_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"PERSONAL CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="User_PersonalNo_ngModel" placeholder="{{\'Please fill the personal contact number\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"COMAPANY CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="COMPANY_CONTACT_NO" [(ngModel)]="User_CompanyNo_ngModel" placeholder="{{\'Please fill in the HQ website\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>\n\n                        <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_ngModel" placeholder="{{\'Please fill the marital status\'}}">\n\n                            <ion-option *ngFor="let marital of maritals" [value]="marital.value">{{marital.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"STAFF ID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PERSONAL_ID_TYPE" [(ngModel)]="User_StaffID_ngModel" placeholder="{{\'Please fill the staff id\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"IC NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PERSONAL_ID" [(ngModel)]="User_ICNo_ngModel" placeholder="{{\'Please fill the ic no\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{\'Please choose your effective date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{\'Please fill the dob\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"GENDER" | translate}}</ion-label>\n\n                        <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_ngModel" placeholder="{{\'Please fill the gender\'}}">\n\n                            <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.text | translate}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>EMPLOYMENT DETAILS</b>\n\n                    </div>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"DESIGNATION"}}</ion-label>\n\n                        <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_ngModel" placeholder="{{\'Please fill the designation\'}}">\n\n                            <ion-option *ngFor="let designation of designations" [value]="designation.DESIGNATION_GUID" selected="true">{{designation.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n                    <!-- [value]="designation.DESIGNATION_GUID" -->\n\n\n\n\n\n                    <!-- <ion-item class="text">\n\n                        <ion-label stacked>{{"COMPANY"}}</ion-label>\n\n                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{\'Please fill the company\'}}">\n\n                            <ion-option *ngFor="let company of companies" [value]="company.COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item> -->\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"COMPANY"}}</ion-label>\n\n                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{\'Please fill the company\'}}" (ionChange)="GetBranch()">\n\n                            <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"DEPARTMENT"}}</ion-label>\n\n                        <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_ngModel" placeholder="{{\'Please fill in the Department\'}}">\n\n                            <ion-option *ngFor="let department of departments" [value]="department.DEPARTMENT_GUID" selected="true">{{department.NAME }}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n                    <!-- [value]="department.DEPARTMENT_GUID" -->\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"JOIN DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel"\n\n                            placeholder="{{\'Please fill the confermation date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{\'Please fill the confermation date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"RESIGNATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{\'Please fill the Registration date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{\'Please fill the Registration date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <!-- <ion-item class="text">\n\n                        <ion-label stacked>{{"BRANCH"}}</ion-label>\n\n                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{\'Please fill in the Branch\'}}">\n\n                            <ion-option *ngFor="let branch of branches" selected="true" [value]="branch.BRANCH_GUID">{{branch.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item> -->\n\n                    <!-- [value]="branch.BRANCH_GUID" -->\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"BRANCH"}}</ion-label>\n\n                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{\'Please fill in the Branch\'}}">\n\n                            <ion-option *ngFor="let branch of branches" [value]="branch.TENANT_COMPANY_SITE_GUID" selected="true" >{{branch.SITE_NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_ngModel" placeholder="{{\'Please fill in the Email\'}}">\n\n                            <ion-option *ngFor="let emptype of emptypes" value="{{emptype.value}}">{{emptype.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"APPROVER1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER1" [(ngModel)]="User_Approver1_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"APPROVER2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER2" [(ngModel)]="User_Approver2_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"EMPLOYEE STATUS"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_ngModel" placeholder="{{\'Please fill the employement status\'}}">\n\n                            <ion-option *ngFor="let empstatus of empstatuss" value="{{empstatus.value}}">{{empstatus.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>RESIDENTIAL ADDRESS</b>\n\n                    </div>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"ADDRESS LINE 1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS1" [(ngModel)]="User_Address1_ngModel" placeholder="{{\'Please fill the address1\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"ADDRESS LINE 2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS2" [(ngModel)]="User_Address2_ngModel" placeholder="{{\'Please fill the address2\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"ADDRESS LINE 3"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS3" [(ngModel)]="User_Address3_ngModel" placeholder="{{\'Please fill the address3\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n\n\n\n\n                    <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Save()">{{"SUBMIT" | translate}}</button>\n\n                    </div>\n\n                    <!-- [disabled]="!Userform.valid" -->\n\n                </form>\n\n            </ion-list>\n\n        </ion-card>\n\n\n\n    </div>\n\n    <!-- add Tenant form end-->\n\n\n\n\n\n    <!-- edit user form start -->\n\n\n\n    <div class="blackcontainer" *ngIf="EditUserClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="EditUserClicked">\n\n\n\n        <ion-card class="cm">\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n\n\n                <div class="icHeaderText">UPDATE USER</div>\n\n                <button class="btnR" (click)="CloseUserClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n            </ion-card-header>\n\n            <ion-list class="scroll">\n\n                <form [formGroup]="Userform">\n\n\n\n                    <div class="eClaimSubTitle1">\n\n                        <b>PERSONAL DETAILS</b>\n\n                    </div>\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"NAME"}}</ion-label>\n\n                        <ion-input type="text" formControlName="NAME" [(ngModel)]="User_Name_Edit_ngModel" placeholder="{{\'Please fill the name of the user\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMAIL"}}</ion-label>\n\n                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="User_Email_Edit_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"LOGINID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_Edit_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"PASSWORD"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PASSWORD" [(ngModel)]="User_Password_Edit_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"PERSONAL CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="User_PersonalNo_Edit_ngModel" placeholder="{{\'Please fill the personal contact number\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"COMAPANY CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="COMPANY_CONTACT_NO" [(ngModel)]="User_CompanyNo_Edit_ngModel" placeholder="{{\'Please fill in the HQ website\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n\n\n                        <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>\n\n                        <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{\'Please fill the marital status\'}}">\n\n                            <ion-option *ngFor="let marital of maritals" value="{{marital.value}}">{{marital.text}}</ion-option>\n\n\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"STAFF ID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PERSONAL_ID_TYPE" [(ngModel)]="User_StaffID_Edit_ngModel" placeholder="{{\'Please fill the staff id\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"IC NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PERSONAL_ID" [(ngModel)]="User_ICNo_Edit_ngModel" placeholder="{{\'Please fill the ic no\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_Edit_ngModel" placeholder="{{\'Please choose your effective date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{\'Please fill the dob\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n\n\n                        <ion-label stacked>{{"GENDER"}}</ion-label>\n\n                        <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_Edit_ngModel" placeholder="{{\'Please fill the gender\'}}">\n\n                            <ion-option *ngFor="let gender of genders" value="{{gender.value}}">{{gender.text}}</ion-option>\n\n\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>EMPLOYMENT DETAILS</b>\n\n                    </div>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DESIGNATION"}}</ion-label>\n\n                        <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_Edit_ngModel" placeholder="{{\'Please fill the designation\'}}">\n\n                            <ion-option *ngFor="let designation of designations" value="{{designation.DESIGNATION_GUID}}" selected="true">{{designation.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"COMPANY"}}</ion-label>\n\n                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{\'Please fill the company\'}}">\n\n                            <ion-option *ngFor="let company of companies" value="{{company.COMPANY_GUID}}" selected="true">{{company.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DEPARTMENT"}}</ion-label>\n\n                        <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_Edit_ngModel" placeholder="{{\'Please fill in the Department\'}}">\n\n                            <ion-option *ngFor="let department of departments" value="{{department.DEPARTMENT_GUID}}" selected="true">{{department.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"JOIN DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_Edit_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_Edit_ngModel"\n\n                            placeholder="{{\'Please fill the confermation date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{\'Please fill the confermation date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"RESIGNATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_Edit_ngModel"\n\n                            placeholder="{{\'Please fill the Registration date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{\'Please fill the Registration date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"BRANCH"}}</ion-label>\n\n                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_Edit_ngModel" placeholder="{{\'Please fill in the Branch\'}}">\n\n                            <ion-option *ngFor="let branch of branches" value="{{branch.BRANCH_GUID}}" selected="true">{{branch.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}">\n\n                            <ion-option *ngFor="let emptype of emptypes" value="{{emptype.value}}">{{emptype.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"APPROVER1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER1" [(ngModel)]="User_Approver1_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"APPROVER2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER2" [(ngModel)]="User_Approver2_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMPLOYEE STATUS"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_Edit_ngModel" placeholder="{{\'Please fill the employement status\'}}">\n\n                            <ion-option *ngFor="let empstatus of empstatuss" value="{{empstatus.value}}">{{empstatus.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>RESIDENTIAL ADDRESS</b>\n\n                    </div>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS1" [(ngModel)]="User_Address1_Edit_ngModel" [value]="USER_ADDRESS1" placeholder="{{\'Please fill the address1\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS2" [(ngModel)]="User_Address2_Edit_ngModel" [value]="USER_ADDRESS2" placeholder="{{\'Please fill the address2\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 3"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS3" [(ngModel)]="User_Address3_Edit_ngModel" [value]="USER_ADDRESS3" placeholder="{{\'Please fill the address3\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n\n\n                    <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(view_user_details.USER_GUID)">{{"SUBMIT" | translate}}</button>\n\n                    </div>\n\n                </form>\n\n\n\n            </ion-list>\n\n        </ion-card>\n\n\n\n    </div>\n\n\n\n\n\n    <!-- Middle -->\n\n\n\n    <!-- <div class="blackcontainer" *ngIf="EditUserClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="EditUserClicked">\n\n\n\n        <ion-card class="cm">\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n\n\n                <div class="icHeaderText">UPDATE USER</div>\n\n                <button class="btnR" (click)="CloseUserClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n            </ion-card-header>\n\n            <ion-list class="scroll">\n\n                <form [formGroup]="Userform"> -->\n\n\n\n    <!-- <div class="eClaimSubTitle1">\n\n                        <b>PERSONAL DETAILS</b>\n\n                    </div>\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"NAME"}}</ion-label>\n\n                        <ion-input type="text" formControlName="name" [(ngModel)]="User_Name_Edit_ngModel" placeholder="{{\'Please fill the name of the user\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMAIL"}}</ion-label>\n\n                        <ion-input type="text" formControlName="email" [(ngModel)]="User_Email_Edit_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"PERSONAL CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="contactno" [(ngModel)]="User_PersonalNo_Edit_ngModel" placeholder="{{\'Please fill the personal contact number\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"COMAPANY CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="companyno" [(ngModel)]="User_CompanyNo_Edit_ngModel" placeholder="{{\'Please fill in the HQ website\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>\n\n                        <ion-select formControlName="maritalstatus" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{\'Please fill the marital status\'}}">\n\n                            <ion-option *ngFor="let marital of maritals" value="{{marital.value}}">{{marital.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"STAFF ID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="personidtype" [(ngModel)]="User_StaffID_Edit_ngModel" placeholder="{{\'Please fill the staff id\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"IC NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="personid" [(ngModel)]="User_ICNo_Edit_ngModel" placeholder="{{\'Please fill the ic no\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dob" [(ngModel)]="User_DOB_Edit_ngModel" placeholder="{{\'Please choose your effective date\'}}"></ion-datetime>\n\n                        \n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"GENDER"}}</ion-label>\n\n                        <ion-select formControlName="gender" [(ngModel)]="User_Gender_Edit_ngModel" placeholder="{{\'Please fill the gender\'}}">\n\n                            <ion-option *ngFor="let gender of genders" value="{{gender.value}}">{{gender.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item> -->\n\n\n\n\n\n    <!-- <div class="eClaimSubTitle2">\n\n                        <b>EMPLOYMENT DETAILS</b>\n\n                    </div>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DESIGNATION"}}</ion-label>\n\n                        <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_Edit_ngModel" placeholder="{{\'Please fill the designation\'}}">\n\n                            <ion-option *ngFor="let designation of designations" selected="true">{{designation.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"COMPANY"}}</ion-label>\n\n                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{\'Please fill the company\'}}">\n\n                            <ion-option *ngFor="let company of companies" selected="true">{{company.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DEPARTMENT"}}</ion-label>\n\n                        <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_Edit_ngModel" placeholder="{{\'Please fill in the Department\'}}">\n\n                            <ion-option *ngFor="let department of departments" selected="true" [value]="department.DEPARTMENT_GUID">{{department.NAME }}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"JOIN DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_Edit_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-datetime>\n\n                        <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_Edit_ngModel"\n\n                            placeholder="{{\'Please fill the confermation date\'}}"></ion-datetime>\n\n                        <ion-input type="text" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{\'Please fill the confermation date\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"RESIGNATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_Edit_ngModel"\n\n                            placeholder="{{\'Please fill the Registration date\'}}"></ion-datetime>\n\n                        <ion-input type="text" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{\'Please fill the Registration date\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"BRANCH"}}</ion-label>\n\n                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_Edit_ngModel" placeholder="{{\'Please fill in the Branch\'}}">\n\n                            <ion-option *ngFor="let branch of branches" selected="true">{{branch.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}">\n\n                            <ion-option *ngFor="let emptype of emptypes" value="{{emptype.value}}">{{emptype.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"APPROVER1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER1" [(ngModel)]="User_Approver1_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"APPROVER2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER2" [(ngModel)]="User_Approver2_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMPLOYEE STATUS"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_Edit_ngModel" placeholder="{{\'Please fill the employement status\'}}">\n\n                            <ion-option *ngFor="let empstatus of empstatuss" value="{{empstatus.value}}">{{empstatus.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>RESIDENTIAL ADDRESS</b>\n\n                    </div>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS1" [(ngModel)]="User_Address1_Edit_ngModel" [value]="USER_ADDRESS1" placeholder="{{\'Please fill the address1\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS2" [(ngModel)]="User_Address2_Edit_ngModel" [value]="USER_ADDRESS2" placeholder="{{\'Please fill the address2\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 3"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS3" [(ngModel)]="User_Address3_Edit_ngModel" [value]="USER_ADDRESS3" placeholder="{{\'Please fill the address3\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n\n\n                    <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Edit()">{{"SUBMIT" | translate}}</button>\n\n                    </div>\n\n                   \n\n                </form>\n\n            </ion-list>\n\n        </ion-card> -->\n\n\n\n    <!-- </div> -->\n\n\n\n\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\user\user.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_13__services_usersetup_service__["a" /* UserSetup_Service */], __WEBPACK_IMPORTED_MODULE_14__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_18__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-user',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\user\user.html"*/'<!--\n\n  Generated template for the UserPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n    <ion-navbar>\n\n        <ion-title>USER REGISTRATION</ion-title>\n\n    </ion-navbar>\n\n    <ion-toolbar no-border-top>\n\n        <ion-searchbar color="primary"  placeholder="Search"></ion-searchbar>\n\n      </ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n    <ion-fab top right edge>\n\n        <button ion-fab mini (click)="AddUserClick()">\n\n            <ion-icon name="add"></ion-icon>\n\n        </button>\n\n    </ion-fab>\n\n\n\n\n\n    <div class="eClaimSubTitle">\n\n        <b>PERSONAL DETAILS</b>\n\n    </div>\n\n\n\n    <ion-list>\n\n        <ion-item>\n\n            <table class="Tabler">\n\n                <tr class="linedsg TColor">\n\n         \n\n                    <th class="lgl1 tblBrLeft">NAME</th>\n\n                    <th class="lgl1">EMAIL</th>\n\n                    <th class="lgl1">LOGINID</th>\n\n      \n\n                    <th class="lgl1 tblBrRight">ACTION</th>\n\n                </tr>\n\n\n\n                <tr class="col7" *ngFor="let user of users; let i=index">\n\n          \n\n                    <td class="lgl1">{{user.NAME}}</td>\n\n                    <td class="lgl1">{{user.EMAIL}}</td>\n\n                    <td class="lgl1">{{user.LOGIN_ID}}</td>\n\n         \n\n\n\n                    <td class="lgl1 fColor">   \n\n                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">\n\n                            <ion-icon name="md-create"></ion-icon>\n\n                        </button>\n\n                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">\n\n                            <!-- DeleteClick(user.USER_GUID) -->\n\n                            <ion-icon name="md-close"></ion-icon>\n\n                        </button>\n\n                    </td>\n\n                </tr>\n\n\n\n\n\n            </table>\n\n        </ion-item>\n\n    </ion-list>\n\n\n\n\n\n\n\n    <div class="eClaimSubTitle">\n\n        <b>EMPLOYMENT DETAILS</b>\n\n    </div>\n\n\n\n    <ion-list>\n\n        <ion-item>\n\n            <table class="Tabler">\n\n                <tr class="linedsg TColor">\n\n                    <th class="lgl1 tblBrLeft">DESIGNATION</th>\n\n                    <th class="lgl1">COMPANY</th>\n\n                    <th class="lgl1">DEPARTMENT</th>\n\n                    <th class="lgl1">JOIN DATE</th>\n\n                    <th class="lgl1">BRANCH</th>\n\n                    <th class="lgl1">APPROVER</th>\n\n                    <th class="lgl1"> STATUS</th>\n\n                    <th class="lgl1 tblBrRight">ACTION</th>\n\n                </tr>\n\n\n\n                <tr class="col7" *ngFor="let user of employees; let i=index">\n\n                    <td class="lgl1">{{user.DESIGNATION_NAME}}</td>\n\n                    <td class="lgl1">{{user.COMPANY}}</td>\n\n                    <td class="lgl1">{{user.DEPARTMENT_NAME}}</td>\n\n                    <td class="lgl1">{{user.JOIN_DATE}}</td>\n\n                    <td class="lgl1">{{user.BRANCH}}</td>\n\n                    <td class="lgl1">{{user.APPROVER1}}</td>\n\n                    <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>\n\n                    <td class="lgl1 fColor">\n\n                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">\n\n                            <ion-icon name="md-create"></ion-icon>\n\n                        </button>\n\n                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">\n\n                            <ion-icon name="md-close"></ion-icon>\n\n                        </button>\n\n                    </td>\n\n                </tr>\n\n\n\n\n\n            </table>\n\n        </ion-item>\n\n    </ion-list>\n\n\n\n\n\n\n\n    <div class="eClaimSubTitle">\n\n        <b>RESIDENTIAL ADDRESS</b>\n\n    </div>\n\n\n\n    <ion-list>\n\n        <ion-item>\n\n            <table class="Tabler">\n\n                <tr class="linedsg TColor">\n\n       \n\n                    <th class="lgl1 tblBrLeft">ADDRESS LINE 1</th>\n\n                    <th class="lgl1">ADDRESS LINE 2</th>\n\n                    <th class="lgl1">ADDRESS LINE 3</th>\n\n                    <th class="lgl1 tblBrRight">ACTION</th>\n\n                </tr>\n\n\n\n                <tr class="col7" *ngFor="let user of address; let i=index">\n\n                  \n\n                    <td class="lgl1">{{user.USER_ADDRESS1}}</td>\n\n                    <td class="lgl1">{{user.USER_ADDRESS2}}</td>\n\n                    <td class="lgl1">{{user.USER_ADDRESS3}}</td>\n\n\n\n\n\n                    <td class="lgl1 fColor">\n\n                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">\n\n                            <ion-icon name="md-create"></ion-icon>\n\n                        </button>\n\n                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">\n\n                            <ion-icon name="md-close"></ion-icon>\n\n                        </button>\n\n                    </td>\n\n                </tr>\n\n\n\n\n\n            </table>\n\n        </ion-item>\n\n    </ion-list>\n\n\n\n\n\n    <div class="blackcontainer" *ngIf="AddUserClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="AddUserClicked">\n\n\n\n        <ion-card class="cm">\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n\n\n                <div class="icHeaderText">REGISTER NEW USER</div>\n\n                <button class="btnR" (click)="CloseUserClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n            </ion-card-header>\n\n            <ion-list class="scroll">\n\n                <form [formGroup]="Userform">\n\n\n\n                    <div class="eClaimSubTitle1">\n\n                        <b>PERSONAL DETAILS</b>\n\n                    </div>\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"NAME"}}</ion-label>\n\n                        <ion-input type="text" formControlName="NAME" [(ngModel)]="User_Name_ngModel" placeholder="{{\'Please fill the name of the user\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"EMAIL"}}</ion-label>\n\n                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="User_Email_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"LOGINID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"PASSWORD"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PASSWORD" [(ngModel)]="User_Password_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"PERSONAL CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="User_PersonalNo_ngModel" placeholder="{{\'Please fill the personal contact number\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"COMAPANY CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="COMPANY_CONTACT_NO" [(ngModel)]="User_CompanyNo_ngModel" placeholder="{{\'Please fill in the HQ website\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>\n\n                        <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_ngModel" placeholder="{{\'Please fill the marital status\'}}">\n\n                            <ion-option *ngFor="let marital of maritals" [value]="marital.value">{{marital.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"STAFF ID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PERSONAL_ID_TYPE" [(ngModel)]="User_StaffID_ngModel" placeholder="{{\'Please fill the staff id\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"IC NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PERSONAL_ID" [(ngModel)]="User_ICNo_ngModel" placeholder="{{\'Please fill the ic no\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{\'Please choose your effective date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{\'Please fill the dob\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"GENDER" | translate}}</ion-label>\n\n                        <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_ngModel" placeholder="{{\'Please fill the gender\'}}">\n\n                            <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.text | translate}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>EMPLOYMENT DETAILS</b>\n\n                    </div>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"DESIGNATION"}}</ion-label>\n\n                        <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_ngModel" placeholder="{{\'Please fill the designation\'}}">\n\n                            <ion-option *ngFor="let designation of designations" [value]="designation.DESIGNATION_GUID" selected="true">{{designation.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n                    <!-- [value]="designation.DESIGNATION_GUID" -->\n\n\n\n\n\n                    <!-- <ion-item class="text">\n\n                        <ion-label stacked>{{"COMPANY"}}</ion-label>\n\n                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{\'Please fill the company\'}}">\n\n                            <ion-option *ngFor="let company of companies" [value]="company.COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item> -->\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"COMPANY"}}</ion-label>\n\n                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{\'Please fill the company\'}}" (ionChange)="GetBranch()">\n\n                            <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"DEPARTMENT"}}</ion-label>\n\n                        <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_ngModel" placeholder="{{\'Please fill in the Department\'}}">\n\n                            <ion-option *ngFor="let department of departments" [value]="department.DEPARTMENT_GUID" selected="true">{{department.NAME }}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n                    <!-- [value]="department.DEPARTMENT_GUID" -->\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"JOIN DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel"\n\n                            placeholder="{{\'Please fill the confermation date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{\'Please fill the confermation date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"RESIGNATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{\'Please fill the Registration date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{\'Please fill the Registration date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <!-- <ion-item class="text">\n\n                        <ion-label stacked>{{"BRANCH"}}</ion-label>\n\n                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{\'Please fill in the Branch\'}}">\n\n                            <ion-option *ngFor="let branch of branches" selected="true" [value]="branch.BRANCH_GUID">{{branch.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item> -->\n\n                    <!-- [value]="branch.BRANCH_GUID" -->\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"BRANCH"}}</ion-label>\n\n                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{\'Please fill in the Branch\'}}">\n\n                            <ion-option *ngFor="let branch of branches" [value]="branch.TENANT_COMPANY_SITE_GUID" selected="true" >{{branch.SITE_NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_ngModel" placeholder="{{\'Please fill in the Email\'}}">\n\n                            <ion-option *ngFor="let emptype of emptypes" value="{{emptype.value}}">{{emptype.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"APPROVER1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER1" [(ngModel)]="User_Approver1_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"APPROVER2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER2" [(ngModel)]="User_Approver2_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"EMPLOYEE STATUS"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_ngModel" placeholder="{{\'Please fill the employement status\'}}">\n\n                            <ion-option *ngFor="let empstatus of empstatuss" value="{{empstatus.value}}">{{empstatus.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>RESIDENTIAL ADDRESS</b>\n\n                    </div>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"ADDRESS LINE 1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS1" [(ngModel)]="User_Address1_ngModel" placeholder="{{\'Please fill the address1\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"ADDRESS LINE 2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS2" [(ngModel)]="User_Address2_ngModel" placeholder="{{\'Please fill the address2\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"ADDRESS LINE 3"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS3" [(ngModel)]="User_Address3_ngModel" placeholder="{{\'Please fill the address3\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n\n\n\n\n                    <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1"  [disabled]="!Userform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>\n\n                    </div>\n\n                   \n\n                </form>\n\n            </ion-list>\n\n        </ion-card>\n\n\n\n    </div>\n\n    <!-- add Tenant form end-->\n\n\n\n\n\n    <!-- edit user form start -->\n\n\n\n    <div class="blackcontainer" *ngIf="EditUserClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="EditUserClicked">\n\n\n\n        <ion-card class="cm">\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n\n\n                <div class="icHeaderText">UPDATE USER</div>\n\n                <button class="btnR" (click)="CloseUserClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n            </ion-card-header>\n\n            <ion-list class="scroll">\n\n                <form [formGroup]="Userform">\n\n\n\n                    <div class="eClaimSubTitle1">\n\n                        <b>PERSONAL DETAILS</b>\n\n                    </div>\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"NAME"}}</ion-label>\n\n                        <ion-input type="text" formControlName="NAME" [(ngModel)]="User_Name_Edit_ngModel" placeholder="{{\'Please fill the name of the user\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMAIL"}}</ion-label>\n\n                        <ion-input type="text" formControlName="EMAIL" [(ngModel)]="User_Email_Edit_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"LOGINID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_Edit_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"PASSWORD"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PASSWORD" [(ngModel)]="User_Password_Edit_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"PERSONAL CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="CONTACT_NO" [(ngModel)]="User_PersonalNo_Edit_ngModel" placeholder="{{\'Please fill the personal contact number\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"COMAPANY CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="COMPANY_CONTACT_NO" [(ngModel)]="User_CompanyNo_Edit_ngModel" placeholder="{{\'Please fill in the HQ website\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n\n\n                        <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>\n\n                        <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{\'Please fill the marital status\'}}">\n\n                            <ion-option *ngFor="let marital of maritals" value="{{marital.value}}">{{marital.text}}</ion-option>\n\n\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"STAFF ID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PERSONAL_ID_TYPE" [(ngModel)]="User_StaffID_Edit_ngModel" placeholder="{{\'Please fill the staff id\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"IC NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="PERSONAL_ID" [(ngModel)]="User_ICNo_Edit_ngModel" placeholder="{{\'Please fill the ic no\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_Edit_ngModel" placeholder="{{\'Please choose your effective date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{\'Please fill the dob\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n\n\n                        <ion-label stacked>{{"GENDER"}}</ion-label>\n\n                        <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_Edit_ngModel" placeholder="{{\'Please fill the gender\'}}">\n\n                            <ion-option *ngFor="let gender of genders" value="{{gender.value}}">{{gender.text}}</ion-option>\n\n\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>EMPLOYMENT DETAILS</b>\n\n                    </div>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DESIGNATION"}}</ion-label>\n\n                        <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_Edit_ngModel" placeholder="{{\'Please fill the designation\'}}">\n\n                            <ion-option *ngFor="let designation of designations" value="{{designation.DESIGNATION_GUID}}" selected="true">{{designation.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"COMPANY"}}</ion-label>\n\n                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{\'Please fill the company\'}}">\n\n                            <ion-option *ngFor="let company of companies" value="{{company.COMPANY_GUID}}" selected="true">{{company.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DEPARTMENT"}}</ion-label>\n\n                        <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_Edit_ngModel" placeholder="{{\'Please fill in the Department\'}}">\n\n                            <ion-option *ngFor="let department of departments" value="{{department.DEPARTMENT_GUID}}" selected="true">{{department.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"JOIN DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_Edit_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_Edit_ngModel"\n\n                            placeholder="{{\'Please fill the confermation date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{\'Please fill the confermation date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"RESIGNATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_Edit_ngModel"\n\n                            placeholder="{{\'Please fill the Registration date\'}}"></ion-datetime>\n\n                        <!-- <ion-input type="text" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{\'Please fill the Registration date\'}}"></ion-input> -->\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"BRANCH"}}</ion-label>\n\n                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_Edit_ngModel" placeholder="{{\'Please fill in the Branch\'}}">\n\n                            <ion-option *ngFor="let branch of branches" value="{{branch.BRANCH_GUID}}" selected="true">{{branch.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}">\n\n                            <ion-option *ngFor="let emptype of emptypes" value="{{emptype.value}}">{{emptype.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"APPROVER1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER1" [(ngModel)]="User_Approver1_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"APPROVER2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER2" [(ngModel)]="User_Approver2_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMPLOYEE STATUS"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_Edit_ngModel" placeholder="{{\'Please fill the employement status\'}}">\n\n                            <ion-option *ngFor="let empstatus of empstatuss" value="{{empstatus.value}}">{{empstatus.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>RESIDENTIAL ADDRESS</b>\n\n                    </div>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS1" [(ngModel)]="User_Address1_Edit_ngModel" [value]="USER_ADDRESS1" placeholder="{{\'Please fill the address1\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS2" [(ngModel)]="User_Address2_Edit_ngModel" [value]="USER_ADDRESS2" placeholder="{{\'Please fill the address2\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 3"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS3" [(ngModel)]="User_Address3_Edit_ngModel" [value]="USER_ADDRESS3" placeholder="{{\'Please fill the address3\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n\n\n                    <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(view_user_details.USER_GUID)">{{"SUBMIT" | translate}}</button>\n\n                    </div>\n\n                </form>\n\n\n\n            </ion-list>\n\n        </ion-card>\n\n\n\n    </div>\n\n\n\n\n\n    <!-- Middle -->\n\n\n\n    <!-- <div class="blackcontainer" *ngIf="EditUserClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="EditUserClicked">\n\n\n\n        <ion-card class="cm">\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n\n\n                <div class="icHeaderText">UPDATE USER</div>\n\n                <button class="btnR" (click)="CloseUserClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n            </ion-card-header>\n\n            <ion-list class="scroll">\n\n                <form [formGroup]="Userform"> -->\n\n\n\n    <!-- <div class="eClaimSubTitle1">\n\n                        <b>PERSONAL DETAILS</b>\n\n                    </div>\n\n                    <ion-item class="text">\n\n                        <ion-label stacked>{{"NAME"}}</ion-label>\n\n                        <ion-input type="text" formControlName="name" [(ngModel)]="User_Name_Edit_ngModel" placeholder="{{\'Please fill the name of the user\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMAIL"}}</ion-label>\n\n                        <ion-input type="text" formControlName="email" [(ngModel)]="User_Email_Edit_ngModel" placeholder="{{\'Please fill the email of the tenant\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"PERSONAL CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="contactno" [(ngModel)]="User_PersonalNo_Edit_ngModel" placeholder="{{\'Please fill the personal contact number\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"COMAPANY CONTACT NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="companyno" [(ngModel)]="User_CompanyNo_Edit_ngModel" placeholder="{{\'Please fill in the HQ website\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>\n\n                        <ion-select formControlName="maritalstatus" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{\'Please fill the marital status\'}}">\n\n                            <ion-option *ngFor="let marital of maritals" value="{{marital.value}}">{{marital.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"STAFF ID"}}</ion-label>\n\n                        <ion-input type="text" formControlName="personidtype" [(ngModel)]="User_StaffID_Edit_ngModel" placeholder="{{\'Please fill the staff id\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"IC NO"}}</ion-label>\n\n                        <ion-input type="text" formControlName="personid" [(ngModel)]="User_ICNo_Edit_ngModel" placeholder="{{\'Please fill the ic no\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DATE OF BIRTH"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dob" [(ngModel)]="User_DOB_Edit_ngModel" placeholder="{{\'Please choose your effective date\'}}"></ion-datetime>\n\n                        \n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"GENDER"}}</ion-label>\n\n                        <ion-select formControlName="gender" [(ngModel)]="User_Gender_Edit_ngModel" placeholder="{{\'Please fill the gender\'}}">\n\n                            <ion-option *ngFor="let gender of genders" value="{{gender.value}}">{{gender.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item> -->\n\n\n\n\n\n    <!-- <div class="eClaimSubTitle2">\n\n                        <b>EMPLOYMENT DETAILS</b>\n\n                    </div>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DESIGNATION"}}</ion-label>\n\n                        <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_Edit_ngModel" placeholder="{{\'Please fill the designation\'}}">\n\n                            <ion-option *ngFor="let designation of designations" selected="true">{{designation.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"COMPANY"}}</ion-label>\n\n                        <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{\'Please fill the company\'}}">\n\n                            <ion-option *ngFor="let company of companies" selected="true">{{company.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DEPARTMENT"}}</ion-label>\n\n                        <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_Edit_ngModel" placeholder="{{\'Please fill in the Department\'}}">\n\n                            <ion-option *ngFor="let department of departments" selected="true" [value]="department.DEPARTMENT_GUID">{{department.NAME }}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"JOIN DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_Edit_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-datetime>\n\n                        <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{\'Please fill the join date\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_Edit_ngModel"\n\n                            placeholder="{{\'Please fill the confermation date\'}}"></ion-datetime>\n\n                        <ion-input type="text" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_ngModel" placeholder="{{\'Please fill the confermation date\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"RESIGNATION DATE"}}</ion-label>\n\n                        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_Edit_ngModel"\n\n                            placeholder="{{\'Please fill the Registration date\'}}"></ion-datetime>\n\n                        <ion-input type="text" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_ngModel" placeholder="{{\'Please fill the Registration date\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"BRANCH"}}</ion-label>\n\n                        <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_Edit_ngModel" placeholder="{{\'Please fill in the Branch\'}}">\n\n                            <ion-option *ngFor="let branch of branches" selected="true">{{branch.NAME}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}">\n\n                            <ion-option *ngFor="let emptype of emptypes" value="{{emptype.value}}">{{emptype.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"APPROVER1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER1" [(ngModel)]="User_Approver1_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"APPROVER2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="APPROVER2" [(ngModel)]="User_Approver2_Edit_ngModel" placeholder="{{\'Please fill in the Email\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"EMPLOYEE STATUS"}}</ion-label>\n\n                        <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_Edit_ngModel" placeholder="{{\'Please fill the employement status\'}}">\n\n                            <ion-option *ngFor="let empstatus of empstatuss" value="{{empstatus.value}}">{{empstatus.text}}</ion-option>\n\n                        </ion-select>\n\n                    </ion-item>\n\n\n\n                    <div class="eClaimSubTitle2">\n\n                        <b>RESIDENTIAL ADDRESS</b>\n\n                    </div>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 1"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS1" [(ngModel)]="User_Address1_Edit_ngModel" [value]="USER_ADDRESS1" placeholder="{{\'Please fill the address1\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 2"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS2" [(ngModel)]="User_Address2_Edit_ngModel" [value]="USER_ADDRESS2" placeholder="{{\'Please fill the address2\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ADDRESS LINE 3"}}</ion-label>\n\n                        <ion-input type="text" formControlName="USER_ADDRESS3" [(ngModel)]="User_Address3_Edit_ngModel" [value]="USER_ADDRESS3" placeholder="{{\'Please fill the address3\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n\n\n                    <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Edit()">{{"SUBMIT" | translate}}</button>\n\n                    </div>\n\n                   \n\n                </form>\n\n            </ion-list>\n\n        </ion-card> -->\n\n\n\n    <!-- </div> -->\n\n\n\n\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\user\user.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_13__services_usersetup_service__["a" /* UserSetup_Service */], __WEBPACK_IMPORTED_MODULE_14__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_18__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_14__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_13__services_usersetup_service__["a" /* UserSetup_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_16__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_17__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_19__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_18__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
 ], UserPage);
@@ -8869,7 +9350,7 @@ UserPage = __decorate([
 //# sourceMappingURL=user.js.map
 
 /***/ }),
-/* 267 */
+/* 269 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8974,7 +9455,7 @@ var UserInfo_Model = (function () {
 //# sourceMappingURL=usersetup_info_model.js.map
 
 /***/ }),
-/* 268 */
+/* 270 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9031,7 +9512,7 @@ var UserMain_Model = (function () {
 //# sourceMappingURL=user_main_model.js.map
 
 /***/ }),
-/* 269 */
+/* 271 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9085,7 +9566,7 @@ var UserContact_Model = (function () {
 //# sourceMappingURL=user_contact_model.js.map
 
 /***/ }),
-/* 270 */
+/* 272 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9133,7 +9614,7 @@ var UserCompany_Model = (function () {
 //# sourceMappingURL=user_company_model.js.map
 
 /***/ }),
-/* 271 */
+/* 273 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9187,24 +9668,24 @@ var ViewUser_Model = (function () {
 //# sourceMappingURL=viewuser_model.js.map
 
 /***/ }),
-/* 272 */
+/* 274 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_usersetup_address_model__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_viewuser_model__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_usersetup_address_model__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_viewuser_model__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_observable_throw__ = __webpack_require__(401);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_observable_throw__ = __webpack_require__(396);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_observable_throw___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rxjs_add_observable_throw__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9600,7 +10081,7 @@ UserSetup_Service = __decorate([
 //# sourceMappingURL=usersetup_service.js.map
 
 /***/ }),
-/* 273 */
+/* 275 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9611,14 +10092,14 @@ UserSetup_Service = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_socmain_model__ = __webpack_require__(402);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_soc_project_model__ = __webpack_require__(274);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_soc_customer_model__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_socmain_service__ = __webpack_require__(403);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_tenant_main_model__ = __webpack_require__(404);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_view_soc_model__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_socmain_model__ = __webpack_require__(397);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_soc_project_model__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_soc_customer_model__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_socmain_service__ = __webpack_require__(398);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_tenant_main_model__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_view_soc_model__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9923,7 +10404,7 @@ SocRegistrationPage = __decorate([
 //# sourceMappingURL=soc-registration.js.map
 
 /***/ }),
-/* 274 */
+/* 276 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9974,7 +10455,7 @@ var SocProject_Model = (function () {
 //# sourceMappingURL=soc_project_model.js.map
 
 /***/ }),
-/* 275 */
+/* 277 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10022,7 +10503,7 @@ var SocCustomer_Model = (function () {
 //# sourceMappingURL=soc_customer_model.js.map
 
 /***/ }),
-/* 276 */
+/* 278 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10061,7 +10542,7 @@ var View_SOC_Model = (function () {
 //# sourceMappingURL=view_soc_model.js.map
 
 /***/ }),
-/* 277 */
+/* 279 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10072,10 +10553,10 @@ var View_SOC_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_subsciptionsetup_model__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_subsciptionsetup_service__ = __webpack_require__(405);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_subsciptionsetup_model__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_subsciptionsetup_service__ = __webpack_require__(400);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10404,7 +10885,7 @@ SubsciptionsetupPage = __decorate([
 //# sourceMappingURL=subsciptionsetup.js.map
 
 /***/ }),
-/* 278 */
+/* 280 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10464,7 +10945,7 @@ var SubsciptionSetup_Model = (function () {
 //# sourceMappingURL=subsciptionsetup_model.js.map
 
 /***/ }),
-/* 279 */
+/* 281 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10475,20 +10956,20 @@ var SubsciptionSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_tenantmainsetup_model__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_tenantmainsetup_service__ = __webpack_require__(406);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_tenantcompanysetup_model__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_tenantcompanysetup_service__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_tenantcompanysitesetup_model__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_tenantcompanysitesetup_service__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_user_main_model__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__models_usersetup_info_model__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_user_contact_model__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_user_company_model__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__models_usersetup_address_model__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_usersetup_service__ = __webpack_require__(272);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_tenantmainsetup_model__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_tenantmainsetup_service__ = __webpack_require__(401);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_tenantcompanysetup_model__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_tenantcompanysetup_service__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_tenantcompanysitesetup_model__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_tenantcompanysitesetup_service__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_user_main_model__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__models_usersetup_info_model__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_user_contact_model__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_user_company_model__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__models_usersetup_address_model__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_usersetup_service__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_angular2_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__login_login__ = __webpack_require__(28);
@@ -11082,7 +11563,7 @@ TenantsetupPage = __decorate([
 //# sourceMappingURL=tenantsetup.js.map
 
 /***/ }),
-/* 280 */
+/* 282 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11130,7 +11611,7 @@ var TenantMainSetup_Model = (function () {
 //# sourceMappingURL=tenantmainsetup_model.js.map
 
 /***/ }),
-/* 281 */
+/* 283 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11175,7 +11656,7 @@ TranslatePage = __decorate([
 //# sourceMappingURL=translate.js.map
 
 /***/ }),
-/* 282 */
+/* 284 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11220,7 +11701,7 @@ PeermissionPage = __decorate([
 //# sourceMappingURL=peermission.js.map
 
 /***/ }),
-/* 283 */
+/* 285 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11231,10 +11712,10 @@ PeermissionPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_rolesetup_model__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_rolesetup_service__ = __webpack_require__(407);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_rolesetup_model__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_rolesetup_service__ = __webpack_require__(402);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11503,7 +11984,7 @@ RolesetupPage = __decorate([
 //# sourceMappingURL=rolesetup.js.map
 
 /***/ }),
-/* 284 */
+/* 286 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11554,7 +12035,7 @@ var RoleSetup_Model = (function () {
 //# sourceMappingURL=rolesetup_model.js.map
 
 /***/ }),
-/* 285 */
+/* 287 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11565,13 +12046,13 @@ var RoleSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_angular2_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__login_login__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_rolemodulesetup_model__ = __webpack_require__(408);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_rolemodulesetup_service__ = __webpack_require__(409);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_rolemodulesetup_model__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_rolemodulesetup_service__ = __webpack_require__(404);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11929,7 +12410,7 @@ RolemodulesetupPage = __decorate([
 //# sourceMappingURL=rolemodulesetup.js.map
 
 /***/ }),
-/* 286 */
+/* 288 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11940,10 +12421,10 @@ RolemodulesetupPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_pagesetup_model__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_pagesetup_service__ = __webpack_require__(410);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_pagesetup_model__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_pagesetup_service__ = __webpack_require__(405);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12186,7 +12667,7 @@ PagesetupPage = __decorate([
 //# sourceMappingURL=pagesetup.js.map
 
 /***/ }),
-/* 287 */
+/* 289 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12234,7 +12715,7 @@ var PageSetup_Model = (function () {
 //# sourceMappingURL=pagesetup_model.js.map
 
 /***/ }),
-/* 288 */
+/* 290 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12245,12 +12726,12 @@ var PageSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_modulesetup_model__ = __webpack_require__(289);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_modulesetup_service__ = __webpack_require__(411);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_modulepagesetup_model__ = __webpack_require__(290);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_ModulePageSetup_Service__ = __webpack_require__(412);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_modulesetup_model__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_modulesetup_service__ = __webpack_require__(406);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_modulepagesetup_model__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_ModulePageSetup_Service__ = __webpack_require__(407);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_angular2_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__login_login__ = __webpack_require__(28);
@@ -12641,7 +13122,7 @@ ModulesetupPage = __decorate([
 //# sourceMappingURL=modulesetup.js.map
 
 /***/ }),
-/* 289 */
+/* 291 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12689,7 +13170,7 @@ var ModuleSetup_Model = (function () {
 //# sourceMappingURL=modulesetup_model.js.map
 
 /***/ }),
-/* 290 */
+/* 292 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12734,7 +13215,7 @@ var ModulePageSetup_Model = (function () {
 //# sourceMappingURL=modulepagesetup_model.js.map
 
 /***/ }),
-/* 291 */
+/* 293 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12788,7 +13269,7 @@ SubmodulesetupPage = __decorate([
 //# sourceMappingURL=submodulesetup.js.map
 
 /***/ }),
-/* 292 */
+/* 294 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12798,8 +13279,8 @@ SubmodulesetupPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_base_http__ = __webpack_require__(6);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12852,21 +13333,19 @@ ClaimhistoryPage = __decorate([
 //# sourceMappingURL=claimhistory.js.map
 
 /***/ }),
-/* 293 */
+/* 295 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(294);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(313);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(315);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
 //# sourceMappingURL=main.js.map
 
 /***/ }),
-/* 294 */,
-/* 295 */,
 /* 296 */,
 /* 297 */,
 /* 298 */,
@@ -12884,73 +13363,75 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* 310 */,
 /* 311 */,
 /* 312 */,
-/* 313 */
+/* 313 */,
+/* 314 */,
+/* 315 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export createTranslateLoader */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_in_app_browser__ = __webpack_require__(225);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(228);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__ = __webpack_require__(230);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_translate_http_loader__ = __webpack_require__(371);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_component__ = __webpack_require__(373);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_about_about__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_about_popover_about_popover__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_account_account__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_in_app_browser__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_translate_http_loader__ = __webpack_require__(373);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_component__ = __webpack_require__(375);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_about_about__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_about_popover_about_popover__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_account_account__ = __webpack_require__(235);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_login_login__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_banksetup_banksetup__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_branchsetup_branchsetup__ = __webpack_require__(249);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_cashcardsetup_cashcardsetup__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_claimtype_claimtype__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_companysetup_companysetup__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_designationsetup_designationsetup__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_departmentsetup_departmentsetup__ = __webpack_require__(258);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_mileagesetup_mileagesetup__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_rolesetup_rolesetup__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_paymenttypesetup_paymenttypesetup__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_qualificationsetup_qualificationsetup__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_subsciptionsetup_subsciptionsetup__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_schedule_schedule__ = __webpack_require__(234);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_schedule_filter_schedule_filter__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_session_detail_session_detail__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_signup_signup__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_home_home__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_tabs_tabs__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_tenantsetup_tenantsetup__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_setup_setup__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__providers_conference_data__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__providers_user_data__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__pages_medicalclaim_medicalclaim__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__pages_printclaim_printclaim__ = __webpack_require__(237);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_giftclaim_giftclaim__ = __webpack_require__(238);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_overtimeclaim_overtimeclaim__ = __webpack_require__(239);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_entertainmentclaim_entertainmentclaim__ = __webpack_require__(240);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__pages_travelclaim_travelclaim__ = __webpack_require__(241);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__pages_user_user__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_soc_registration_soc_registration__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_adminsetup_adminsetup__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_peermission_peermission__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_rolemodulesetup_rolemodulesetup__ = __webpack_require__(285);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_pagesetup_pagesetup__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__pages_submodulesetup_submodulesetup__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_modulesetup_modulesetup__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_translate_translate__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__ionic_native_camera__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__ionic_native_file__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__ionic_native_file_path__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__ionic_native_file_transfer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__angular_common_http__ = __webpack_require__(413);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__pages_Profile_Setup_Profile_Setup__ = __webpack_require__(244);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__pages_add_toll_add_toll__ = __webpack_require__(243);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__pages_Services__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__pages_claimhistory_claimhistory__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_banksetup_banksetup__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_branchsetup_branchsetup__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_cashcardsetup_cashcardsetup__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_claimtype_claimtype__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_companysetup_companysetup__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_designationsetup_designationsetup__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_departmentsetup_departmentsetup__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_mileagesetup_mileagesetup__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_rolesetup_rolesetup__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_paymenttypesetup_paymenttypesetup__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_qualificationsetup_qualificationsetup__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_subsciptionsetup_subsciptionsetup__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_schedule_schedule__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_schedule_filter_schedule_filter__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_session_detail_session_detail__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_signup_signup__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_home_home__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_tabs_tabs__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_tenantsetup_tenantsetup__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_setup_setup__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__providers_conference_data__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__providers_user_data__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__pages_medicalclaim_medicalclaim__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__pages_printclaim_printclaim__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_giftclaim_giftclaim__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_overtimeclaim_overtimeclaim__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_entertainmentclaim_entertainmentclaim__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__pages_travelclaim_travelclaim__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__pages_user_user__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_soc_registration_soc_registration__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_adminsetup_adminsetup__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_peermission_peermission__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_rolemodulesetup_rolemodulesetup__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_pagesetup_pagesetup__ = __webpack_require__(288);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__pages_submodulesetup_submodulesetup__ = __webpack_require__(293);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_modulesetup_modulesetup__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_translate_translate__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__ionic_native_file_path__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__angular_common_http__ = __webpack_require__(408);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__pages_Profile_Setup_Profile_Setup__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__pages_add_toll_add_toll__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__pages_Services__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__pages_claimhistory_claimhistory__ = __webpack_require__(294);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13168,8 +13649,6 @@ AppModule = __decorate([
 //# sourceMappingURL=app.module.js.map
 
 /***/ }),
-/* 314 */,
-/* 315 */,
 /* 316 */,
 /* 317 */,
 /* 318 */,
@@ -13227,27 +13706,29 @@ AppModule = __decorate([
 /* 370 */,
 /* 371 */,
 /* 372 */,
-/* 373 */
+/* 373 */,
+/* 374 */,
+/* 375 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConferenceApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_splash_screen__ = __webpack_require__(228);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_about_about__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_account_account__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_splash_screen__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_about_about__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_account_account__ = __webpack_require__(235);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_signup_signup__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_tabs_tabs__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_setup_setup__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_home_home__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_conference_data__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_user_data__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_adminsetup_adminsetup__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ngx_translate_core__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_signup_signup__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_tabs_tabs__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_setup_setup__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_home_home__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_conference_data__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_user_data__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_adminsetup_adminsetup__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ngx_translate_core__ = __webpack_require__(34);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13389,108 +13870,39 @@ var ConferenceApp = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Nav */]),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Nav */]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Nav */])
 ], ConferenceApp.prototype, "nav", void 0);
 ConferenceApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\app\app.template.html"*/'﻿<ion-split-pane>\n\n\n\n  <!-- logged out menu -->\n\n  <ion-menu id="loggedOutMenu" [content]="content">\n\n\n\n    <!-- <ion-header>\n\n      <ion-toolbar>\n\n        <ion-title>eClaim</ion-title>\n\n      </ion-toolbar>\n\n    </ion-header> -->\n\n\n\n    <ion-header>\n\n      <ion-navbar>\n\n        <div class="headerInfo">\n\n          <ion-fab top left>\n\n            <button ion-fab mini class="btnClear">\n\n              <ion-icon name="settings"></ion-icon>\n\n            </button>\n\n            <ion-fab-list class="settingBtnFab" side="right">\n\n              <button ion-fab class="bgColor-green" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>\n\n              <button ion-fab class="bgColor-green" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>\n\n            </ion-fab-list>\n\n          </ion-fab>\n\n        </div>\n\n      </ion-navbar>\n\n    </ion-header>\n\n\n\n    <!-- <ion-nav [root]="rootPage"></ion-nav> -->\n\n\n\n    <ion-content class="outer-content">\n\n\n\n      <ion-list>\n\n        <ion-list-header>\n\n          {{"NAVIGATE_LABEL" | translate}}\n\n        </ion-list-header>\n\n        \n\n        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">\n\n          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>\n\n          {{p.title}}\n\n        </button>\n\n      </ion-list> \n\n\n\n      <ion-list>\n\n        <ion-list-header>\n\n          Account\n\n        </ion-list-header>\n\n        <button ion-item menuClose *ngFor="let p of loggedOutPages " (click)="openPage(p) ">\n\n          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>\n\n          {{p.title}}\n\n        </button>\n\n      </ion-list>\n\n\n\n\n\n    </ion-content>\n\n\n\n  </ion-menu>\n\n\n\n<!-- logged in menu -->\n\n  <ion-menu id="loggedInMenu" [content]="content">\n\n    \n\n        <ion-header>\n\n          <ion-toolbar>\n\n            <ion-title>eClaim</ion-title>\n\n          </ion-toolbar>\n\n        </ion-header>\n\n    \n\n        <ion-content class="outer-content">\n\n    \n\n          <ion-list>\n\n            <ion-list-header>\n\n              Navigate\n\n            </ion-list-header>\n\n            \n\n            <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">\n\n              <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>\n\n              {{p.title}}\n\n            </button>\n\n          </ion-list> \n\n    \n\n          <ion-list>\n\n            <ion-list-header>\n\n              Account\n\n            </ion-list-header>\n\n            <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) ">\n\n              <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>\n\n              {{p.title}}\n\n            </button>\n\n          </ion-list>\n\n    \n\n    \n\n        </ion-content>\n\n    \n\n      </ion-menu>\n\n\n\n  <!-- main navigation -->\n\n  <ion-nav [root]="rootPage" #content swipeBackEnabled="false" main></ion-nav>\n\n  <!-- <ion-nav [root]="rootPage"></ion-nav> -->\n\n\n\n</ion-split-pane>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\app\app.template.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_13__providers_user_data__["a" /* UserData */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_13__providers_user_data__["a" /* UserData */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* MenuController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* MenuController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_12__providers_conference_data__["a" /* ConferenceData */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__providers_conference_data__["a" /* ConferenceData */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_15__ngx_translate_core__["c" /* TranslateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_15__ngx_translate_core__["c" /* TranslateService */]) === "function" && _k || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */],
+        __WEBPACK_IMPORTED_MODULE_13__providers_user_data__["a" /* UserData */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */],
+        __WEBPACK_IMPORTED_MODULE_12__providers_conference_data__["a" /* ConferenceData */],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__["a" /* StatusBar */],
+        __WEBPACK_IMPORTED_MODULE_2__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_15__ngx_translate_core__["c" /* TranslateService */]])
 ], ConferenceApp);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
-/* 374 */,
-/* 375 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MedicalClaim_Model; });
-var MedicalClaim_Model = (function () {
-    function MedicalClaim_Model(CLAIM_REQUEST_DETAIL_GUID, CLAIM_REQUEST_GUID, CLAIM_TYPE_GUID, CLAIM_AMOUNT, FROM, DESTINATION, DISTANCE_KM, DESCRIPTION, PAYMENT_TYPE_GUID, START_TS, END_TS, ATTACHMENT_ID, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID, GST) {
-        if (CLAIM_REQUEST_DETAIL_GUID === void 0) { CLAIM_REQUEST_DETAIL_GUID = null; }
-        if (CLAIM_REQUEST_GUID === void 0) { CLAIM_REQUEST_GUID = null; }
-        if (CLAIM_TYPE_GUID === void 0) { CLAIM_TYPE_GUID = null; }
-        if (CLAIM_AMOUNT === void 0) { CLAIM_AMOUNT = null; }
-        if (FROM === void 0) { FROM = null; }
-        if (DESTINATION === void 0) { DESTINATION = null; }
-        if (DISTANCE_KM === void 0) { DISTANCE_KM = null; }
-        if (DESCRIPTION === void 0) { DESCRIPTION = null; }
-        if (PAYMENT_TYPE_GUID === void 0) { PAYMENT_TYPE_GUID = null; }
-        if (START_TS === void 0) { START_TS = null; }
-        if (END_TS === void 0) { END_TS = null; }
-        if (ATTACHMENT_ID === void 0) { ATTACHMENT_ID = null; }
-        if (CREATION_TS === void 0) { CREATION_TS = null; }
-        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
-        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
-        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
-        if (GST === void 0) { GST = null; }
-        this.CLAIM_REQUEST_DETAIL_GUID = CLAIM_REQUEST_DETAIL_GUID;
-        this.CLAIM_REQUEST_GUID = CLAIM_REQUEST_GUID;
-        this.CLAIM_TYPE_GUID = CLAIM_TYPE_GUID;
-        this.CLAIM_AMOUNT = CLAIM_AMOUNT;
-        this.FROM = FROM;
-        this.DESTINATION = DESTINATION;
-        this.DISTANCE_KM = DISTANCE_KM;
-        this.DESCRIPTION = DESCRIPTION;
-        this.PAYMENT_TYPE_GUID = PAYMENT_TYPE_GUID;
-        this.START_TS = START_TS;
-        this.END_TS = END_TS;
-        this.ATTACHMENT_ID = ATTACHMENT_ID;
-        this.CREATION_TS = CREATION_TS;
-        this.CREATION_USER_GUID = CREATION_USER_GUID;
-        this.UPDATE_TS = UPDATE_TS;
-        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
-        this.GST = GST;
-    }
-    MedicalClaim_Model.fromJson = function (json) {
-        if (!json)
-            return;
-        return new MedicalClaim_Model(json.CLAIM_REQUEST_DETAIL_GUID, json.CLAIM_REQUEST_GUID, json.CLAIM_TYPE_GUID, json.CLAIM_AMOUNT, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.DESCRIPTION, json.PAYMENT_TYPE_GUID, json.START_TS, json.END_TS, json.ATTACHMENT_ID, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID, json.GST);
-    };
-    MedicalClaim_Model.prototype.toJson = function (stringify) {
-        var doc = {
-            CLAIM_REQUEST_DETAIL_GUID: this.CLAIM_REQUEST_DETAIL_GUID,
-            CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
-            CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
-            CLAIM_AMOUNT: this.CLAIM_AMOUNT,
-            FROM: this.FROM,
-            DESTINATION: this.DESTINATION,
-            DISTANCE_KM: this.DISTANCE_KM,
-            DESCRIPTION: this.DESCRIPTION,
-            PAYMENT_TYPE_GUID: this.PAYMENT_TYPE_GUID,
-            START_TS: this.START_TS,
-            END_TS: this.END_TS,
-            ATTACHMENT_ID: this.ATTACHMENT_ID,
-            CREATION_TS: this.CREATION_TS,
-            CREATION_USER_GUID: this.CREATION_USER_GUID,
-            UPDATE_TS: this.UPDATE_TS,
-            UPDATE_USER_GUID: this.UPDATE_USER_GUID,
-            GST: this.GST
-        };
-        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
-    };
-    return MedicalClaim_Model;
-}());
-
-//# sourceMappingURL=medicalclaim_model.js.map
-
-/***/ }),
-/* 376 */
+/* 376 */,
+/* 377 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MedicalClaim_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13587,83 +13999,8 @@ MedicalClaim_Service = __decorate([
 //# sourceMappingURL=medicalclaim_service.js.map
 
 /***/ }),
-/* 377 */,
 /* 378 */,
-/* 379 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrintingClaim_Model; });
-var PrintingClaim_Model = (function () {
-    function PrintingClaim_Model(CLAIM_REQUEST_DETAIL_GUID, CLAIM_REQUEST_GUID, CLAIM_TYPE_GUID, CLAIM_AMOUNT, FROM, DESTINATION, DISTANCE_KM, DESCRIPTION, PAYMENT_TYPE_GUID, START_TS, END_TS, ATTACHMENT_ID, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID, GST) {
-        if (CLAIM_REQUEST_DETAIL_GUID === void 0) { CLAIM_REQUEST_DETAIL_GUID = null; }
-        if (CLAIM_REQUEST_GUID === void 0) { CLAIM_REQUEST_GUID = null; }
-        if (CLAIM_TYPE_GUID === void 0) { CLAIM_TYPE_GUID = null; }
-        if (CLAIM_AMOUNT === void 0) { CLAIM_AMOUNT = null; }
-        if (FROM === void 0) { FROM = null; }
-        if (DESTINATION === void 0) { DESTINATION = null; }
-        if (DISTANCE_KM === void 0) { DISTANCE_KM = null; }
-        if (DESCRIPTION === void 0) { DESCRIPTION = null; }
-        if (PAYMENT_TYPE_GUID === void 0) { PAYMENT_TYPE_GUID = null; }
-        if (START_TS === void 0) { START_TS = null; }
-        if (END_TS === void 0) { END_TS = null; }
-        if (ATTACHMENT_ID === void 0) { ATTACHMENT_ID = null; }
-        if (CREATION_TS === void 0) { CREATION_TS = null; }
-        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
-        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
-        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
-        if (GST === void 0) { GST = null; }
-        this.CLAIM_REQUEST_DETAIL_GUID = CLAIM_REQUEST_DETAIL_GUID;
-        this.CLAIM_REQUEST_GUID = CLAIM_REQUEST_GUID;
-        this.CLAIM_TYPE_GUID = CLAIM_TYPE_GUID;
-        this.CLAIM_AMOUNT = CLAIM_AMOUNT;
-        this.FROM = FROM;
-        this.DESTINATION = DESTINATION;
-        this.DISTANCE_KM = DISTANCE_KM;
-        this.DESCRIPTION = DESCRIPTION;
-        this.PAYMENT_TYPE_GUID = PAYMENT_TYPE_GUID;
-        this.START_TS = START_TS;
-        this.END_TS = END_TS;
-        this.ATTACHMENT_ID = ATTACHMENT_ID;
-        this.CREATION_TS = CREATION_TS;
-        this.CREATION_USER_GUID = CREATION_USER_GUID;
-        this.UPDATE_TS = UPDATE_TS;
-        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
-        this.GST = GST;
-    }
-    PrintingClaim_Model.fromJson = function (json) {
-        if (!json)
-            return;
-        return new PrintingClaim_Model(json.CLAIM_REQUEST_DETAIL_GUID, json.CLAIM_REQUEST_GUID, json.CLAIM_TYPE_GUID, json.CLAIM_AMOUNT, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.DESCRIPTION, json.PAYMENT_TYPE_GUID, json.START_TS, json.END_TS, json.ATTACHMENT_ID, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID, json.GST);
-    };
-    PrintingClaim_Model.prototype.toJson = function (stringify) {
-        var doc = {
-            CLAIM_REQUEST_DETAIL_GUID: this.CLAIM_REQUEST_DETAIL_GUID,
-            CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
-            CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
-            CLAIM_AMOUNT: this.CLAIM_AMOUNT,
-            FROM: this.FROM,
-            DESTINATION: this.DESTINATION,
-            DISTANCE_KM: this.DISTANCE_KM,
-            DESCRIPTION: this.DESCRIPTION,
-            PAYMENT_TYPE_GUID: this.PAYMENT_TYPE_GUID,
-            START_TS: this.START_TS,
-            END_TS: this.END_TS,
-            ATTACHMENT_ID: this.ATTACHMENT_ID,
-            CREATION_TS: this.CREATION_TS,
-            CREATION_USER_GUID: this.CREATION_USER_GUID,
-            UPDATE_TS: this.UPDATE_TS,
-            UPDATE_USER_GUID: this.UPDATE_USER_GUID,
-            GST: this.GST
-        };
-        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
-    };
-    return PrintingClaim_Model;
-}());
-
-//# sourceMappingURL=printingclaim_model.js.map
-
-/***/ }),
+/* 379 */,
 /* 380 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -13671,13 +14008,13 @@ var PrintingClaim_Model = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrintingClaim_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13778,91 +14115,16 @@ PrintingClaim_Service = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GiftClaim_Model; });
-var GiftClaim_Model = (function () {
-    function GiftClaim_Model(CLAIM_REQUEST_DETAIL_GUID, CLAIM_REQUEST_GUID, CLAIM_TYPE_GUID, CLAIM_AMOUNT, FROM, DESTINATION, DISTANCE_KM, DESCRIPTION, PAYMENT_TYPE_GUID, START_TS, END_TS, ATTACHMENT_ID, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID, GST) {
-        if (CLAIM_REQUEST_DETAIL_GUID === void 0) { CLAIM_REQUEST_DETAIL_GUID = null; }
-        if (CLAIM_REQUEST_GUID === void 0) { CLAIM_REQUEST_GUID = null; }
-        if (CLAIM_TYPE_GUID === void 0) { CLAIM_TYPE_GUID = null; }
-        if (CLAIM_AMOUNT === void 0) { CLAIM_AMOUNT = null; }
-        if (FROM === void 0) { FROM = null; }
-        if (DESTINATION === void 0) { DESTINATION = null; }
-        if (DISTANCE_KM === void 0) { DISTANCE_KM = null; }
-        if (DESCRIPTION === void 0) { DESCRIPTION = null; }
-        if (PAYMENT_TYPE_GUID === void 0) { PAYMENT_TYPE_GUID = null; }
-        if (START_TS === void 0) { START_TS = null; }
-        if (END_TS === void 0) { END_TS = null; }
-        if (ATTACHMENT_ID === void 0) { ATTACHMENT_ID = null; }
-        if (CREATION_TS === void 0) { CREATION_TS = null; }
-        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
-        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
-        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
-        if (GST === void 0) { GST = null; }
-        this.CLAIM_REQUEST_DETAIL_GUID = CLAIM_REQUEST_DETAIL_GUID;
-        this.CLAIM_REQUEST_GUID = CLAIM_REQUEST_GUID;
-        this.CLAIM_TYPE_GUID = CLAIM_TYPE_GUID;
-        this.CLAIM_AMOUNT = CLAIM_AMOUNT;
-        this.FROM = FROM;
-        this.DESTINATION = DESTINATION;
-        this.DISTANCE_KM = DISTANCE_KM;
-        this.DESCRIPTION = DESCRIPTION;
-        this.PAYMENT_TYPE_GUID = PAYMENT_TYPE_GUID;
-        this.START_TS = START_TS;
-        this.END_TS = END_TS;
-        this.ATTACHMENT_ID = ATTACHMENT_ID;
-        this.CREATION_TS = CREATION_TS;
-        this.CREATION_USER_GUID = CREATION_USER_GUID;
-        this.UPDATE_TS = UPDATE_TS;
-        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
-        this.GST = GST;
-    }
-    GiftClaim_Model.fromJson = function (json) {
-        if (!json)
-            return;
-        return new GiftClaim_Model(json.CLAIM_REQUEST_DETAIL_GUID, json.CLAIM_REQUEST_GUID, json.CLAIM_TYPE_GUID, json.CLAIM_AMOUNT, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.DESCRIPTION, json.PAYMENT_TYPE_GUID, json.START_TS, json.END_TS, json.ATTACHMENT_ID, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID, json.GST);
-    };
-    GiftClaim_Model.prototype.toJson = function (stringify) {
-        var doc = {
-            CLAIM_REQUEST_DETAIL_GUID: this.CLAIM_REQUEST_DETAIL_GUID,
-            CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
-            CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
-            CLAIM_AMOUNT: this.CLAIM_AMOUNT,
-            FROM: this.FROM,
-            DESTINATION: this.DESTINATION,
-            DISTANCE_KM: this.DISTANCE_KM,
-            DESCRIPTION: this.DESCRIPTION,
-            PAYMENT_TYPE_GUID: this.PAYMENT_TYPE_GUID,
-            START_TS: this.START_TS,
-            END_TS: this.END_TS,
-            ATTACHMENT_ID: this.ATTACHMENT_ID,
-            CREATION_TS: this.CREATION_TS,
-            CREATION_USER_GUID: this.CREATION_USER_GUID,
-            UPDATE_TS: this.UPDATE_TS,
-            UPDATE_USER_GUID: this.UPDATE_USER_GUID,
-            GST: this.GST
-        };
-        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
-    };
-    return GiftClaim_Model;
-}());
-
-//# sourceMappingURL=giftclaim_model.js.map
-
-/***/ }),
-/* 382 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GiftClaim_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13959,95 +14221,20 @@ GiftClaim_Service = __decorate([
 //# sourceMappingURL=giftclaim_service.js.map
 
 /***/ }),
-/* 383 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OvertimeClaim_Model; });
-var OvertimeClaim_Model = (function () {
-    function OvertimeClaim_Model(CLAIM_REQUEST_DETAIL_GUID, CLAIM_REQUEST_GUID, CLAIM_TYPE_GUID, CLAIM_AMOUNT, FROM, DESTINATION, DISTANCE_KM, DESCRIPTION, PAYMENT_TYPE_GUID, START_TS, END_TS, ATTACHMENT_ID, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID, GST) {
-        if (CLAIM_REQUEST_DETAIL_GUID === void 0) { CLAIM_REQUEST_DETAIL_GUID = null; }
-        if (CLAIM_REQUEST_GUID === void 0) { CLAIM_REQUEST_GUID = null; }
-        if (CLAIM_TYPE_GUID === void 0) { CLAIM_TYPE_GUID = null; }
-        if (CLAIM_AMOUNT === void 0) { CLAIM_AMOUNT = null; }
-        if (FROM === void 0) { FROM = null; }
-        if (DESTINATION === void 0) { DESTINATION = null; }
-        if (DISTANCE_KM === void 0) { DISTANCE_KM = null; }
-        if (DESCRIPTION === void 0) { DESCRIPTION = null; }
-        if (PAYMENT_TYPE_GUID === void 0) { PAYMENT_TYPE_GUID = null; }
-        if (START_TS === void 0) { START_TS = null; }
-        if (END_TS === void 0) { END_TS = null; }
-        if (ATTACHMENT_ID === void 0) { ATTACHMENT_ID = null; }
-        if (CREATION_TS === void 0) { CREATION_TS = null; }
-        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
-        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
-        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
-        if (GST === void 0) { GST = null; }
-        this.CLAIM_REQUEST_DETAIL_GUID = CLAIM_REQUEST_DETAIL_GUID;
-        this.CLAIM_REQUEST_GUID = CLAIM_REQUEST_GUID;
-        this.CLAIM_TYPE_GUID = CLAIM_TYPE_GUID;
-        this.CLAIM_AMOUNT = CLAIM_AMOUNT;
-        this.FROM = FROM;
-        this.DESTINATION = DESTINATION;
-        this.DISTANCE_KM = DISTANCE_KM;
-        this.DESCRIPTION = DESCRIPTION;
-        this.PAYMENT_TYPE_GUID = PAYMENT_TYPE_GUID;
-        this.START_TS = START_TS;
-        this.END_TS = END_TS;
-        this.ATTACHMENT_ID = ATTACHMENT_ID;
-        this.CREATION_TS = CREATION_TS;
-        this.CREATION_USER_GUID = CREATION_USER_GUID;
-        this.UPDATE_TS = UPDATE_TS;
-        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
-        this.GST = GST;
-    }
-    OvertimeClaim_Model.fromJson = function (json) {
-        if (!json)
-            return;
-        return new OvertimeClaim_Model(json.CLAIM_REQUEST_DETAIL_GUID, json.CLAIM_REQUEST_GUID, json.CLAIM_TYPE_GUID, json.CLAIM_AMOUNT, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.DESCRIPTION, json.PAYMENT_TYPE_GUID, json.START_TS, json.END_TS, json.ATTACHMENT_ID, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID, json.GST);
-    };
-    OvertimeClaim_Model.prototype.toJson = function (stringify) {
-        var doc = {
-            CLAIM_REQUEST_DETAIL_GUID: this.CLAIM_REQUEST_DETAIL_GUID,
-            CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
-            CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
-            CLAIM_AMOUNT: this.CLAIM_AMOUNT,
-            FROM: this.FROM,
-            DESTINATION: this.DESTINATION,
-            DISTANCE_KM: this.DISTANCE_KM,
-            DESCRIPTION: this.DESCRIPTION,
-            PAYMENT_TYPE_GUID: this.PAYMENT_TYPE_GUID,
-            START_TS: this.START_TS,
-            END_TS: this.END_TS,
-            ATTACHMENT_ID: this.ATTACHMENT_ID,
-            CREATION_TS: this.CREATION_TS,
-            CREATION_USER_GUID: this.CREATION_USER_GUID,
-            UPDATE_TS: this.UPDATE_TS,
-            UPDATE_USER_GUID: this.UPDATE_USER_GUID,
-            GST: this.GST
-        };
-        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
-    };
-    return OvertimeClaim_Model;
-}());
-
-//# sourceMappingURL=overtimeclaim_model.js.map
-
-/***/ }),
-/* 384 */
+/* 382 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OvertimeClaim_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -14144,95 +14331,20 @@ OvertimeClaim_Service = __decorate([
 //# sourceMappingURL=overtimeclaim_service.js.map
 
 /***/ }),
-/* 385 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EntertainmentClaim_Model; });
-var EntertainmentClaim_Model = (function () {
-    function EntertainmentClaim_Model(CLAIM_REQUEST_DETAIL_GUID, CLAIM_REQUEST_GUID, CLAIM_TYPE_GUID, CLAIM_AMOUNT, FROM, DESTINATION, DISTANCE_KM, DESCRIPTION, PAYMENT_TYPE_GUID, START_TS, END_TS, ATTACHMENT_ID, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID, GST) {
-        if (CLAIM_REQUEST_DETAIL_GUID === void 0) { CLAIM_REQUEST_DETAIL_GUID = null; }
-        if (CLAIM_REQUEST_GUID === void 0) { CLAIM_REQUEST_GUID = null; }
-        if (CLAIM_TYPE_GUID === void 0) { CLAIM_TYPE_GUID = null; }
-        if (CLAIM_AMOUNT === void 0) { CLAIM_AMOUNT = null; }
-        if (FROM === void 0) { FROM = null; }
-        if (DESTINATION === void 0) { DESTINATION = null; }
-        if (DISTANCE_KM === void 0) { DISTANCE_KM = null; }
-        if (DESCRIPTION === void 0) { DESCRIPTION = null; }
-        if (PAYMENT_TYPE_GUID === void 0) { PAYMENT_TYPE_GUID = null; }
-        if (START_TS === void 0) { START_TS = null; }
-        if (END_TS === void 0) { END_TS = null; }
-        if (ATTACHMENT_ID === void 0) { ATTACHMENT_ID = null; }
-        if (CREATION_TS === void 0) { CREATION_TS = null; }
-        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
-        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
-        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
-        if (GST === void 0) { GST = null; }
-        this.CLAIM_REQUEST_DETAIL_GUID = CLAIM_REQUEST_DETAIL_GUID;
-        this.CLAIM_REQUEST_GUID = CLAIM_REQUEST_GUID;
-        this.CLAIM_TYPE_GUID = CLAIM_TYPE_GUID;
-        this.CLAIM_AMOUNT = CLAIM_AMOUNT;
-        this.FROM = FROM;
-        this.DESTINATION = DESTINATION;
-        this.DISTANCE_KM = DISTANCE_KM;
-        this.DESCRIPTION = DESCRIPTION;
-        this.PAYMENT_TYPE_GUID = PAYMENT_TYPE_GUID;
-        this.START_TS = START_TS;
-        this.END_TS = END_TS;
-        this.ATTACHMENT_ID = ATTACHMENT_ID;
-        this.CREATION_TS = CREATION_TS;
-        this.CREATION_USER_GUID = CREATION_USER_GUID;
-        this.UPDATE_TS = UPDATE_TS;
-        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
-        this.GST = GST;
-    }
-    EntertainmentClaim_Model.fromJson = function (json) {
-        if (!json)
-            return;
-        return new EntertainmentClaim_Model(json.CLAIM_REQUEST_DETAIL_GUID, json.CLAIM_REQUEST_GUID, json.CLAIM_TYPE_GUID, json.CLAIM_AMOUNT, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.DESCRIPTION, json.PAYMENT_TYPE_GUID, json.START_TS, json.END_TS, json.ATTACHMENT_ID, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID, json.GST);
-    };
-    EntertainmentClaim_Model.prototype.toJson = function (stringify) {
-        var doc = {
-            CLAIM_REQUEST_DETAIL_GUID: this.CLAIM_REQUEST_DETAIL_GUID,
-            CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
-            CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
-            CLAIM_AMOUNT: this.CLAIM_AMOUNT,
-            FROM: this.FROM,
-            DESTINATION: this.DESTINATION,
-            DISTANCE_KM: this.DISTANCE_KM,
-            DESCRIPTION: this.DESCRIPTION,
-            PAYMENT_TYPE_GUID: this.PAYMENT_TYPE_GUID,
-            START_TS: this.START_TS,
-            END_TS: this.END_TS,
-            ATTACHMENT_ID: this.ATTACHMENT_ID,
-            CREATION_TS: this.CREATION_TS,
-            CREATION_USER_GUID: this.CREATION_USER_GUID,
-            UPDATE_TS: this.UPDATE_TS,
-            UPDATE_USER_GUID: this.UPDATE_USER_GUID,
-            GST: this.GST
-        };
-        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
-    };
-    return EntertainmentClaim_Model;
-}());
-
-//# sourceMappingURL=entertainmentclaim_model.js.map
-
-/***/ }),
-/* 386 */
+/* 383 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EntertainmentClaim_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -14329,163 +14441,7 @@ EntertainmentClaim_Service = __decorate([
 //# sourceMappingURL=entertainmentclaim_service.js.map
 
 /***/ }),
-/* 387 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClaimRefMain_Model; });
-var ClaimRefMain_Model = (function () {
-    function ClaimRefMain_Model(CLAIM_REF_GUID, USER_GUID, TENANT_GUID, REF_NO, MONTH, YEAR, STATUS, STATUS_REMARKS, CLOSURE_TYPE_GUID, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID) {
-        if (CLAIM_REF_GUID === void 0) { CLAIM_REF_GUID = null; }
-        if (USER_GUID === void 0) { USER_GUID = null; }
-        if (TENANT_GUID === void 0) { TENANT_GUID = null; }
-        if (REF_NO === void 0) { REF_NO = null; }
-        if (MONTH === void 0) { MONTH = null; }
-        if (YEAR === void 0) { YEAR = null; }
-        if (STATUS === void 0) { STATUS = null; }
-        if (STATUS_REMARKS === void 0) { STATUS_REMARKS = null; }
-        if (CLOSURE_TYPE_GUID === void 0) { CLOSURE_TYPE_GUID = null; }
-        if (CREATION_TS === void 0) { CREATION_TS = null; }
-        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
-        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
-        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
-        this.CLAIM_REF_GUID = CLAIM_REF_GUID;
-        this.USER_GUID = USER_GUID;
-        this.TENANT_GUID = TENANT_GUID;
-        this.REF_NO = REF_NO;
-        this.MONTH = MONTH;
-        this.YEAR = YEAR;
-        this.STATUS = STATUS;
-        this.STATUS_REMARKS = STATUS_REMARKS;
-        this.CLOSURE_TYPE_GUID = CLOSURE_TYPE_GUID;
-        this.CREATION_TS = CREATION_TS;
-        this.CREATION_USER_GUID = CREATION_USER_GUID;
-        this.UPDATE_TS = UPDATE_TS;
-        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
-    }
-    ClaimRefMain_Model.fromJson = function (json) {
-        if (!json)
-            return;
-        return new ClaimRefMain_Model(json.CLAIM_REF_GUID, json.USER_GUID, json.TENANT_GUID, json.REF_NO, json.MONTH, json.YEAR, json.STATUS, json.STATUS_REMARKS, json.CLOSURE_TYPE_GUID, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID);
-    };
-    ClaimRefMain_Model.prototype.toJson = function (stringify) {
-        var doc = {
-            CLAIM_REF_GUID: this.CLAIM_REF_GUID,
-            USER_GUID: this.USER_GUID,
-            TENANT_GUID: this.TENANT_GUID,
-            REF_NO: this.REF_NO,
-            MONTH: this.MONTH,
-            YEAR: this.YEAR,
-            STATUS: this.STATUS,
-            STATUS_REMARKS: this.STATUS_REMARKS,
-            CLOSURE_TYPE_GUID: this.CLOSURE_TYPE_GUID,
-            CREATION_TS: this.CREATION_TS,
-            CREATION_USER_GUID: this.CREATION_USER_GUID,
-            UPDATE_TS: this.UPDATE_TS,
-            UPDATE_USER_GUID: this.UPDATE_USER_GUID
-        };
-        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
-    };
-    return ClaimRefMain_Model;
-}());
-
-//# sourceMappingURL=ClaimRefMain_Model.js.map
-
-/***/ }),
-/* 388 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClaimReqMain_Model; });
-var ClaimReqMain_Model = (function () {
-    function ClaimReqMain_Model(CLAIM_REQUEST_GUID, SOC_GUID, TENANT_GUID, CLAIM_REF_GUID, CLAIM_TYPE_GUID, MILEAGE_GUID, START_TS, END_TS, FROM, DESTINATION, DISTANCE_KM, MILEAGE_AMOUNT, CLAIM_AMOUNT, CALENDAR_REF, TRAVEL_DATE, STATUS, STATUS_REMARKS, STAGE, STAGE_REMARKS, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID) {
-        if (CLAIM_REQUEST_GUID === void 0) { CLAIM_REQUEST_GUID = null; }
-        if (SOC_GUID === void 0) { SOC_GUID = null; }
-        if (TENANT_GUID === void 0) { TENANT_GUID = null; }
-        if (CLAIM_REF_GUID === void 0) { CLAIM_REF_GUID = null; }
-        if (CLAIM_TYPE_GUID === void 0) { CLAIM_TYPE_GUID = null; }
-        if (MILEAGE_GUID === void 0) { MILEAGE_GUID = null; }
-        if (START_TS === void 0) { START_TS = null; }
-        if (END_TS === void 0) { END_TS = null; }
-        if (FROM === void 0) { FROM = null; }
-        if (DESTINATION === void 0) { DESTINATION = null; }
-        if (DISTANCE_KM === void 0) { DISTANCE_KM = null; }
-        if (MILEAGE_AMOUNT === void 0) { MILEAGE_AMOUNT = null; }
-        if (CLAIM_AMOUNT === void 0) { CLAIM_AMOUNT = null; }
-        if (CALENDAR_REF === void 0) { CALENDAR_REF = null; }
-        if (TRAVEL_DATE === void 0) { TRAVEL_DATE = null; }
-        if (STATUS === void 0) { STATUS = null; }
-        if (STATUS_REMARKS === void 0) { STATUS_REMARKS = null; }
-        if (STAGE === void 0) { STAGE = null; }
-        if (STAGE_REMARKS === void 0) { STAGE_REMARKS = null; }
-        if (CREATION_TS === void 0) { CREATION_TS = null; }
-        if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
-        if (UPDATE_TS === void 0) { UPDATE_TS = null; }
-        if (UPDATE_USER_GUID === void 0) { UPDATE_USER_GUID = null; }
-        this.CLAIM_REQUEST_GUID = CLAIM_REQUEST_GUID;
-        this.SOC_GUID = SOC_GUID;
-        this.TENANT_GUID = TENANT_GUID;
-        this.CLAIM_REF_GUID = CLAIM_REF_GUID;
-        this.CLAIM_TYPE_GUID = CLAIM_TYPE_GUID;
-        this.MILEAGE_GUID = MILEAGE_GUID;
-        this.START_TS = START_TS;
-        this.END_TS = END_TS;
-        this.FROM = FROM;
-        this.DESTINATION = DESTINATION;
-        this.DISTANCE_KM = DISTANCE_KM;
-        this.MILEAGE_AMOUNT = MILEAGE_AMOUNT;
-        this.CLAIM_AMOUNT = CLAIM_AMOUNT;
-        this.CALENDAR_REF = CALENDAR_REF;
-        this.TRAVEL_DATE = TRAVEL_DATE;
-        this.STATUS = STATUS;
-        this.STATUS_REMARKS = STATUS_REMARKS;
-        this.STAGE = STAGE;
-        this.STAGE_REMARKS = STAGE_REMARKS;
-        this.CREATION_TS = CREATION_TS;
-        this.CREATION_USER_GUID = CREATION_USER_GUID;
-        this.UPDATE_TS = UPDATE_TS;
-        this.UPDATE_USER_GUID = UPDATE_USER_GUID;
-    }
-    ClaimReqMain_Model.fromJson = function (json) {
-        if (!json)
-            return;
-        return new ClaimReqMain_Model(json.CLAIM_REQUEST_GUID, json.SOC_GUID, json.TENANT_GUID, json.CLAIM_REF_GUID, json.CLAIM_TYPE_GUID, json.MILEAGE_GUID, json.START_TS, json.END_TS, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.MILEAGE_AMOUNT, json.CLAIM_AMOUNT, json.CALENDAR_REF, json.TRAVEL_DATE, json.STATUS, json.STATUS_REMARKS, json.STAGE, json.STAGE_REMARKS, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID);
-    };
-    ClaimReqMain_Model.prototype.toJson = function (stringify) {
-        var doc = {
-            CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
-            SOC_GUID: this.SOC_GUID,
-            TENANT_GUID: this.TENANT_GUID,
-            CLAIM_REF_GUID: this.CLAIM_REF_GUID,
-            CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
-            MILEAGE_GUID: this.CLAIM_TYPE_GUID,
-            START_TS: this.START_TS,
-            END_TS: this.END_TS,
-            FROM: this.FROM,
-            DESTINATION: this.DESTINATION,
-            DISTANCE_KM: this.DISTANCE_KM,
-            MILEAGE_AMOUNT: this.CLAIM_AMOUNT,
-            CLAIM_AMOUNT: this.CLAIM_AMOUNT,
-            CALENDAR_REF: this.CALENDAR_REF,
-            TRAVEL_DATE: this.TRAVEL_DATE,
-            STATUS: this.STATUS,
-            STATUS_REMARKS: this.STATUS_REMARKS,
-            STAGE: this.STAGE,
-            STAGE_REMARKS: this.STAGE_REMARKS,
-            CREATION_TS: this.CREATION_TS,
-            CREATION_USER_GUID: this.CREATION_USER_GUID,
-            UPDATE_TS: this.UPDATE_TS,
-            UPDATE_USER_GUID: this.UPDATE_USER_GUID
-        };
-        return stringify ? JSON.stringify({ resource: [doc] }) : doc;
-    };
-    return ClaimReqMain_Model;
-}());
-
-//# sourceMappingURL=ClaimReqMain_Model.js.map
-
-/***/ }),
-/* 389 */
+/* 384 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14545,21 +14501,21 @@ var ClaimReqDetail_Model = (function () {
 //# sourceMappingURL=ClaimReqDetail_Model.js.map
 
 /***/ }),
-/* 390 */
+/* 385 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_main_profile_model__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_main_profile_model__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -14686,21 +14642,21 @@ ProfileSetup_Service = __decorate([
 //# sourceMappingURL=profilesetup_services.js.map
 
 /***/ }),
-/* 391 */
+/* 386 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BankSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_banksetup_model__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_banksetup_model__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -14857,21 +14813,21 @@ BankSetup_Service = __decorate([
 //# sourceMappingURL=banksetup_service.js.map
 
 /***/ }),
-/* 392 */
+/* 387 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CashcardSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_cashcardsetup_model__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_cashcardsetup_model__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15007,21 +14963,21 @@ CashcardSetup_Service = __decorate([
 //# sourceMappingURL=cashcardsetup_service.js.map
 
 /***/ }),
-/* 393 */
+/* 388 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClaimTypeSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_claimtypesetup_model__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_claimtypesetup_model__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15175,21 +15131,21 @@ ClaimTypeSetup_Service = __decorate([
 //# sourceMappingURL=claimtypesetup_service.js.map
 
 /***/ }),
-/* 394 */
+/* 389 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CompanySetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_companysetup_model__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_companysetup_model__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15325,21 +15281,21 @@ CompanySetup_Service = __decorate([
 //# sourceMappingURL=companysetup_service.js.map
 
 /***/ }),
-/* 395 */
+/* 390 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DesignationSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_designationsetup_model__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_designationsetup_model__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15476,21 +15432,21 @@ DesignationSetup_Service = __decorate([
 //# sourceMappingURL=designationsetup_service.js.map
 
 /***/ }),
-/* 396 */
+/* 391 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DepartmentSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_departmentsetup_model__ = __webpack_require__(259);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_departmentsetup_model__ = __webpack_require__(261);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15626,21 +15582,21 @@ DepartmentSetup_Service = __decorate([
 //# sourceMappingURL=departmentsetup_service.js.map
 
 /***/ }),
-/* 397 */
+/* 392 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MileageSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_mileagesetup_model__ = __webpack_require__(261);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_mileagesetup_model__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15780,21 +15736,21 @@ MileageSetup_Service = __decorate([
 //# sourceMappingURL=mileagesetup_service.js.map
 
 /***/ }),
-/* 398 */
+/* 393 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PaymentTypeSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_paymenttypesetup_model__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_paymenttypesetup_model__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15930,21 +15886,21 @@ PaymentTypeSetup_Service = __decorate([
 //# sourceMappingURL=paymenttypesetup_service.js.map
 
 /***/ }),
-/* 399 */
+/* 394 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return QualificationSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_qualificationsetup_model__ = __webpack_require__(265);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_qualificationsetup_model__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -16080,7 +16036,7 @@ QualificationSetup_Service = __decorate([
 //# sourceMappingURL=qualificationsetup_service.js.map
 
 /***/ }),
-/* 400 */
+/* 395 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16140,8 +16096,8 @@ var View_Dropdown_Model = (function () {
 //# sourceMappingURL=view_dropdown.js.map
 
 /***/ }),
-/* 401 */,
-/* 402 */
+/* 396 */,
+/* 397 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16189,23 +16145,23 @@ var SocMain_Model = (function () {
 //# sourceMappingURL=socmain_model.js.map
 
 /***/ }),
-/* 403 */
+/* 398 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SocMain_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_soc_project_model__ = __webpack_require__(274);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_soc_customer_model__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_view_soc_model__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_soc_project_model__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_soc_customer_model__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_view_soc_model__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -16459,7 +16415,7 @@ SocMain_Service = __decorate([
 //# sourceMappingURL=socmain_service.js.map
 
 /***/ }),
-/* 404 */
+/* 399 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16507,21 +16463,21 @@ var Tenant_Main_Model = (function () {
 //# sourceMappingURL=tenant_main_model.js.map
 
 /***/ }),
-/* 405 */
+/* 400 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SubsciptionSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_subsciptionsetup_model__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_subsciptionsetup_model__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -16656,21 +16612,21 @@ SubsciptionSetup_Service = __decorate([
 //# sourceMappingURL=subsciptionsetup_service.js.map
 
 /***/ }),
-/* 406 */
+/* 401 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TenantMainSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_tenantmainsetup_model__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_tenantmainsetup_model__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -16779,21 +16735,21 @@ TenantMainSetup_Service = __decorate([
 //# sourceMappingURL=tenantmainsetup_service.js.map
 
 /***/ }),
-/* 407 */
+/* 402 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoleSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_rolesetup_model__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_rolesetup_model__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -16930,7 +16886,7 @@ RoleSetup_Service = __decorate([
 //# sourceMappingURL=rolesetup_service.js.map
 
 /***/ }),
-/* 408 */
+/* 403 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16974,20 +16930,20 @@ var RoleModuleSetup_Model = (function () {
 //# sourceMappingURL=rolemodulesetup_model.js.map
 
 /***/ }),
-/* 409 */
+/* 404 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoleModuleSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -17083,21 +17039,21 @@ RoleModuleSetup_Service = __decorate([
 //# sourceMappingURL=rolemodulesetup_service.js.map
 
 /***/ }),
-/* 410 */
+/* 405 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PageSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_pagesetup_model__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_pagesetup_model__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -17231,21 +17187,21 @@ PageSetup_Service = __decorate([
 //# sourceMappingURL=pagesetup_service.js.map
 
 /***/ }),
-/* 411 */
+/* 406 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModuleSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_modulesetup_model__ = __webpack_require__(289);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_modulesetup_model__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -17379,21 +17335,21 @@ ModuleSetup_Service = __decorate([
 //# sourceMappingURL=modulesetup_service.js.map
 
 /***/ }),
-/* 412 */
+/* 407 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModulePageSetup_Service; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_modulepagesetup_model__ = __webpack_require__(290);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_config_constants__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_modulepagesetup_model__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -17503,5 +17459,5 @@ ModulePageSetup_Service = __decorate([
 //# sourceMappingURL=ModulePageSetup_Service.js.map
 
 /***/ })
-],[293]);
+],[295]);
 //# sourceMappingURL=main.js.map

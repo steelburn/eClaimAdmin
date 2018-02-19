@@ -2,6 +2,7 @@ export class ClaimReqMain_Model {
     constructor(   
       public CLAIM_REQUEST_GUID: string = null,
       public SOC_GUID: string = null,
+      public CUSTOMER_GUID	: number=null,
       public TENANT_GUID: string = null,
       public CLAIM_REF_GUID: string = null,
       public CLAIM_TYPE_GUID: string = null, 
@@ -13,6 +14,7 @@ export class ClaimReqMain_Model {
       public DISTANCE_KM: number = null,
       public MILEAGE_AMOUNT: number = null,
       public CLAIM_AMOUNT: number = null,
+      public DESCRIPTION: number = null,
       public CALENDAR_REF: string = null,
       public TRAVEL_DATE: string = null,
       public STATUS: string = null,
@@ -31,6 +33,7 @@ export class ClaimReqMain_Model {
       return new ClaimReqMain_Model(
         json.CLAIM_REQUEST_GUID,
         json.SOC_GUID,
+        json.CUSTOMER_GUID,
         json.TENANT_GUID,
         json.CLAIM_REF_GUID,
         json.CLAIM_TYPE_GUID,
@@ -42,6 +45,7 @@ export class ClaimReqMain_Model {
         json.DISTANCE_KM,
         json.MILEAGE_AMOUNT,
         json.CLAIM_AMOUNT,
+        json.DESCRIPTION,
         json.CALENDAR_REF,
         json.TRAVEL_DATE,
         json.STATUS,
@@ -59,6 +63,7 @@ export class ClaimReqMain_Model {
       var doc = {
         CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
         SOC_GUID: this.SOC_GUID,
+        CUSTOMER_GUID: this.CUSTOMER_GUID,
         TENANT_GUID: this.TENANT_GUID,
         CLAIM_REF_GUID: this.CLAIM_REF_GUID,
         CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
@@ -69,6 +74,7 @@ export class ClaimReqMain_Model {
         DESTINATION: this.DESTINATION,
         DISTANCE_KM: this.DISTANCE_KM,
         MILEAGE_AMOUNT: this.CLAIM_AMOUNT,
+        DESCRIPTION: this.DESCRIPTION,
         CLAIM_AMOUNT: this.CLAIM_AMOUNT,
         CALENDAR_REF: this.CALENDAR_REF,
         TRAVEL_DATE: this.TRAVEL_DATE,

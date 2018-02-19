@@ -4,184 +4,195 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
+<!-- <ion-header>
   <ion-navbar>
     <ion-title>OVERTIME CLAIM</ion-title>
   </ion-navbar>
+</ion-header> -->
+<ion-header>
 
-</ion-header>
+    <ion-navbar>       
+      <ion-title>{{ 'OVERTIME_CLAIM_HEADING' | translate }}</ion-title>  
+    </ion-navbar>
+   </ion-header>
 
 
 <ion-content padding>
+ 
 
-  <div class="blackcontainer">
+  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">
 
-    <div class="popup" padding>
+      <ion-list-header>
+        Select Travel Claim For:
+      </ion-list-header>
+  
+      <ion-item>
+        <ion-label>Customer</ion-label>
+        <ion-radio value="customer" checked="true"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Project</ion-label>
+        <ion-radio value="project"></ion-radio>
+      </ion-item>
+    </ion-list>
 
-      <ion-card class="cm">
-        <ion-card-header class="icTitle headerColor-white ">
+    <form [formGroup]="OTform">
 
-          <div class="icHeaderText">APPLY NEW OVERTIME CLAIM</div>
-
-        </ion-card-header>
-        <ion-list class="scroll">
-          <form [formGroup]="OTform">
+        <div *ngIf="claimFor=='project'">
+            <!-- [(ngModel)]="Project_Lookup_ngModel" -->
             <ion-item>
-              <ion-label stacked>{{"DATE"}}</ion-label>
-              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="ot_date" [(ngModel)]="OT_Date_ngModel" placeholder="{{'Please choose yours date while you OT'}}"></ion-datetime>
-            </ion-item>
-
-            <ion-item>
-              <ion-label stacked>{{"SOC NUMBER"}}</ion-label>
-              <ion-input type="text" [(ngModel)]="OT_SOC_No_ngModel" [ngModelOptions]="{standalone:true}" placeholder="{{'Please click the button to get your soc number'}}"></ion-input>
-              <button ion-button outline item-end icon-left (click)="AddLookupClick()">
+              <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
+              <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ 'PROJECT_LOOKUP_PLACE_HOLDER' | translate }} "></ion-input>
+              <button ion-button outline item-end icon-left (click)="ProjectLookup()">
                 <ion-icon name="eye"></ion-icon>
-                LOOKUP
+                {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
+            </ion-item>
+            <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->
+            <ion-item>
+              <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
+              <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ 'SOC_NUMBER_PLACE_HOLDER' | translate }}"></ion-input>
+            </ion-item>
+          </div>
+        <!-- <ion-card>
+            <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>
+          <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" 
+            placeholder='{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+  
+          <ion-list>
+            <ion-item-sliding *ngFor="let item of projects">
+              <button ion-item (click)="GetSocNo(item.SOC_GUID)">
+                <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>
               </button>
-            </ion-item>
-
-
-
-            <ion-item>
-              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>
-              <ion-input type="text" formControlName="customer_name" [(ngModel)]="OT_CustomerName_ngModel" placeholder="{{'Please fill in the name of yours customer'}}"></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>
-              <ion-input type="text" formControlName="project_name" [(ngModel)]="OT_ProjectName_ngModel" placeholder="{{'Please fill in the name of yours project'}}"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>{{"START TIME"}}</ion-label>
-              <ion-datetime displayFormat="HH:mm:ss" formControlName="start_time" [(ngModel)]="OT_StartTime_ngModel" placeholder="{{'Please choose yours starting overtime'}}"></ion-datetime>
-            </ion-item>
-
-
-            <ion-item>
-              <ion-label stacked>{{"END TIME"}}</ion-label>
-              <ion-datetime displayFormat="HH:mm:ss" formControlName="end_time" [(ngModel)]="OT_EndTime_ngModel" placeholder="{{'Please choose yours ending overtime'}}"></ion-datetime>
-            </ion-item>
-
-
-            <ion-item>
-              <ion-label stacked>{{"CLAIM AMOUNT(RM)"}}</ion-label>
-              <ion-input type="number" formControlName="claim_amount" [(ngModel)]="OT_ClaimAmount_ngModel" placeholder="{{'Please fill in the amount of yours Overtime Claim'}}"></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label stacked>{{"CALENDAR REF."}}</ion-label>
-
-            </ion-item>
-
-            <ion-item>
-              <ion-label stacked>{{"ATTACHMENT"}}</ion-label>
-
-            </ion-item>
-
-            <div class="btn">
-              <button ion-button (click)="save()">SUBMIT</button>
-            </div>
-
-          </form>
-        </ion-list>
-      </ion-card>
-
-    </div>
-  </div>
-
-  <!-- add lookup form start-->
-  <div class="blackcontainer" *ngIf="AddLookupClicked">
-  </div>
-  <div class="popup1" padding *ngIf="AddLookupClicked">
-    <ion-card>
-      <ion-card-header class="icTitle headerColor-white ">
-
-        <div class="icHeaderText">SOC LOOKUP</div>
-        <button class="btnR" (click)="CloseLookupClick()">
-          <ion-icon name="md-close"></ion-icon>
-        </button>
-      </ion-card-header>
-      <ion-row>
-        <ion-searchbar type="text" #filter (keyup)="0" placeholder="SEARCH SOC NUMBER"></ion-searchbar>
-      </ion-row>
-      <ion-list>
-
-          <ion-item-sliding *ngFor="let soc of SOC_Number">
-              <button ion-item (click)="openItem(soc)">
-                <ion-label>{{soc.soc}}</ion-label>
-    
-              </button>
-    
             </ion-item-sliding>
-        
-        <!-- <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item>
-        <ion-item class="tnUserRow">
-          <ion-label>APR10788</ion-label>
-
-        </ion-item> -->
-
+          </ion-list>  
+        </ion-card> -->
+  
+        <div *ngIf="claimFor=='customer'">
+  
+            <!-- formControlName="customer" -->
+            <ion-item>
+              <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
+              <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ 'CUSTOMER_NAME_PLACE_HOLDER' | translate }} "></ion-input>
+              <button ion-button outline item-end icon-left (click)="CustomerLookup()">
+                <ion-icon name="eye"></ion-icon>
+                {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
+            </ion-item>
+          </div>
+  
         <!-- <ion-item>
-          <table class="Tabler">
-              <tr class="colth TColor">
-                <th class="lgl1 tblBrLeft" style="width:60px">S.NO</th>
-                <th class="lgl1">SOC NUMBER</th>
-                <th class="lgl1">PROJECT NAME</th>
-                <th class="lgl1 tblBrRight">CUSTOMER NAME</th>
-      
-              </tr>
-      
-              <tr class="col7">
-                <td class="lgl1">1</td>
-                <td class="lgl1">APR17001</td>
-                <td class="lgl1">FLOOR SYSTEM</td>
-                <td class="lgl1">HARTALEGA</td>
-              </tr>
-              
-
-              <tr class="col7">
-                <td class="lgl1">2</td>
-                <td class="lgl1">APR127001</td>
-                <td class="lgl1">FLOOR SYSTEM</td>
-                <td class="lgl1">HARTALEGA</td>
-              </tr>
-      
-
-              <tr class="col7">
-                <td class="lgl1">3</td>
-                <td class="lgl1">APR127001</td>
-                <td class="lgl1">FLOOR SYSTEM</td>
-                <td class="lgl1">HARTALEGA</td>
-              </tr>
-      
-      
-            </table>
-
+            <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
+            <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" 
+            placeholder="{{ 'SOC_NUMBER_PLACE_HOLDER' | translate }}"></ion-input>
           </ion-item> -->
-      </ion-list>
-    </ion-card>
-  </div>
-  <!-- add lookup form end-->
+  
+          <ion-item>
+            <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        
+            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ 'TRAVEL_DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" max={{validDate}} placeholder="{{ 'START_DATETIME_PLACE_HOLDER' | translate }}"></ion-datetime>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" max={{validDate}} placeholder="{{ 'END_DATETIME_PLACE_HOLDER' | translate }}"></ion-datetime>
+          </ion-item>       
+  
+          <!-- [(ngModel)]="Travel_Amount_ngModel" -->
+          <ion-item>
+              <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+              <ion-label > {{travelAmount | number}} </ion-label>
+              <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
+            </ion-item>
+  
+            <ion-item>
+                <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
+                <ion-input type="text" formControlName="description" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
+              </ion-item>
+  
+      
+          <!-- <ion-item>
+            <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
+            <ion-select formControlName="vehicleType" placeholder="{{ 'TRAVEL_TYPE_PLACE_HOLDER' | translate }}">
+              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>
+            </ion-select>
+          </ion-item> -->
+      
+          <!-- <ion-item>
+            <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>
+          </ion-item> -->
+  
+          <div class="btn">
+            <button ion-button (click)='save(OTform.value)'  [disabled]="!OTform.valid" >SUBMIT</button>
+          </div>      
+        </form>
 
+
+        <div class="blackcontainer" *ngIf="AddLookupClicked">
+          </div>
+          <div class="popup2" padding *ngIf="AddLookupClicked">
+            <ion-card>
+              <ion-card-header class="icTitle headerColor-white ">
+        
+                <div class="icHeaderText">Search Location</div>
+                <button class="btnR" (click)="CloseLookupClick()">
+                  <ion-icon name="md-close"></ion-icon>
+                </button>
+              </ion-card-header>
+              <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>
+              <ion-list>
+                <ion-item-sliding *ngFor="let item of currentItems">
+                  <button ion-item (click)="openItem(item)">
+                    <ion-label> {{item.description}}</ion-label>
+                  </button>
+                </ion-item-sliding>
+              </ion-list>
+            </ion-card>
+          </div>
+    
+          <div class="blackcontainer" *ngIf="ProjectLookupClicked">
+            </div>
+            <div class="popup2" padding *ngIf="ProjectLookupClicked">
+              <ion-card>
+                <ion-card-header class="icTitle headerColor-white ">
+                  <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>
+                  <button class="btnR" (click)="CloseProjectLookup()">
+                    <ion-icon name="md-close"></ion-icon>
+                  </button>
+                </ion-card-header>
+                <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder='{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+                <ion-list>
+                  <ion-item-sliding *ngFor="let item of projects">
+                    <button ion-item (click)="GetSocNo(item)">
+                      <ion-label>{{item.project_name}}
+                        <>{{item.soc}}</ion-label>
+                    </button>
+                  </ion-item-sliding>
+                </ion-list>
+              </ion-card>
+            </div>
+    
+            <div class="blackcontainer" *ngIf="CustomerLookupClicked">
+              </div>
+              <div class="popup2" padding *ngIf="CustomerLookupClicked">
+                <ion-card>
+                  <ion-card-header class="icTitle headerColor-white ">
+                    <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
+                    <button class="btnR" (click)="CloseCustomerLookup()">
+                      <ion-icon name="md-close"></ion-icon>
+                    </button>
+                  </ion-card-header>
+                  <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder='{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+                  <ion-list>
+                    <ion-item-sliding *ngFor="let item of customers">
+                      <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
+                        <ion-label>{{item.NAME}}</ion-label>
+                      </button>
+                    </ion-item-sliding>
+                  </ion-list>
+                </ion-card>
+              </div>
 </ion-content>
