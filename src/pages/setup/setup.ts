@@ -306,7 +306,7 @@ export class SetupPage {
       //-------------Get all the details of previous tenant_company_site------------------------------
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/tenant_company_site?filter=(TENANT_COMPANY_SITE_GUID=" + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http
-        .get(this.baseResourceUrl)
+        .get(this.baseResourceUrl)     
         .map(res => res.json())
         .subscribe(data => {
           this.hqDetails = data.resource;
