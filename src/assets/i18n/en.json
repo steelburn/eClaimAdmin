@@ -1,11 +1,17 @@
 {
   "LOGIN_TITLE": "Login",
+
   "SUBMIT_BUTTON": "Submit",
   "GET_ORIGIN_BUTTON": "Get Origin",
   "GET_DESTINATION_BUTTON": "Get Destination",
   "GET_DISTANCE_BUTTON": "Get Distance",
+  "PROJECT_LOOKUP_BUTTON": "Project Lookup",
+  "CUSTOMER_LOOKUP_BUTTON": "Customer Lookup",
+  "CLAIM_DETAILS_BUTTON": "Get Claim Details",
+
   "SOC_NUMBER_PLACE_HOLDER": "Please Enter Soc Number",
   "PROJECT_NAME_PLACE_HOLDER": "Please Select Project Name",
+  "CUSTOMER_NAME_PLACE_HOLDER": "Please Select Customer Name",
   "TRAVEL_DATE_PLACE_HOLDER": "Please Select Travel Date",
   "START_DATETIME_PLACE_HOLDER": "Please Select Start Date Time",
   "END_DATETIME_PLACE_HOLDER": "Please Select END DATE TIME Date",
@@ -15,15 +21,22 @@
   "DESCRIPTION_PLACE_HOLDER": "Please Fill the  Description",
   "CLAIM_AMOUNT_PLACE_HOLDER": "Please Fill the Claim Amount",
   "DISTANCE_PLACE_HOLDER": "Please Click the button to Get Distance",
+  "PROJECT_LOOKUP_PLACE_HOLDER": "Please Click the button to Get Project",
+  "CUSTOMER_LOOKUP_PLACE_HOLDER": "Please Click the button to Get Customer",
   "PAYMENT_TYPE_PLACE_HOLDER": "Please Select Payment Type",
+
   "TRAVEL_CLAIM_HEADING": "Travel Claim",
+  "ENTERTAINMENT_CLAIM_HEADING": "Entertainment Claim",
+  "OVERTIME_CLAIM_HEADING": "Overtime Claim",
+  "PRINT_CLAIM_HEADING": "print Claim",
   "ADD_TOLL_HEADING": "Add Toll",
   "ADD_PARKING_HEADING": "Add Parking",
-  "SOC_NUMBER_LABEL": "Soc Number",
+
   "PROJECT_NAME_LABEL": "Project Name",
+  "CUSTOMER_NAME_LABEL": "Customer Name",
   "TRAVEL_DATE_LABEL": "Travel Date",
   "CALENDAR_REF_LABEL": "Calendar Reference",
-  "TRAVEL_TYPE_LABEL": "Travel Type",
+  "TRAVEL_TYPE_LABEL": "Travel Mode",
   "ORIGIN_PLACE_LABEL": "Origin Place",
   "DESTINATION_PLACE_LABEL": "Destination Place",
   "DESCRIPTION_LABEL": "Description",
@@ -38,9 +51,11 @@
   "AMOUNT_LABEL": "Amount",
   "START_DT_LABEL": "Start Date Time",
   "END_DT_LABEL": "End Date Time",
-
   "PAY_BY_LABEL": "Pay By",
-  "NAVIGATE_LABEL": "Navigate Page"
+  "SOC_NUMBER_LABEL":"SOC Number",
+  "CLAIM_APPLIED_DATE_LABEL":"Claim Applied Date",
+  "STATUS_LABEL":"Status",
+  "TOTAL_AMOUNT_LABEL":"Total Amount",
+ "STAGE_LABEL":"Stage"
   
-
 }

@@ -26,6 +26,14 @@ page-overtimeclaim {
             position: fixed;
                 height: 500px;
         }
+
+        .popup2{
+            width: 83%;
+            left: 25px;
+            top: 60px;
+            position: fixed;
+                height: 500px;
+        }
     
         .btn{
         
@@ -69,5 +77,6 @@ page-overtimeclaim {
         }
 
         .tnUserRow {border-bottom: 2px solid #efefef;}
+        .settingBtnFab {margin-left: 50px !important;margin-right: 50px !important;}
     }
     
