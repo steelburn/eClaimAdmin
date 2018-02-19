@@ -76,17 +76,17 @@
               <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
             </ion-select>
           </ion-item>
-          <div style="width: 47%">
-            <ion-card class="cb5 contentHeight3">
+          <div style="width: 47%;display:inline-block !important;">
+            <ion-card>
               <ion-row>
-                <ion-item class="lgl1 bgColor-lightGrey posRelative">
+                <ion-item class="lgl1">
                   <ion-label item-start>{{"AVAILABLE MODULES" | translate}}</ion-label>
-                  <button item-end ion-button color="primary" class="posAbsolute fullHeight topZero rightZero btnStyle2 marginZero" (click)="SelectAllAvailableModule()">
+                  <button item-end ion-button color="primary"  (click)="SelectAllAvailableModule()">
                     <ion-icon name="ios-arrow-forward"></ion-icon>
                   </button>
                 </ion-item>
               </ion-row>
-              <div class="contentHeight3 overflowTrue">
+              <div>
                 <ion-list>
                   <ion-item *ngFor="let module of modules">
                     <ion-label>{{module.NAME}}</ion-label>
@@ -97,17 +97,17 @@
             </ion-card>
           </div>
 
-          <div style="width: 47%">
-            <ion-card class="cb5 contentHeight3">
+          <div style="width: 47%; display:inline-block !important;">
+            <ion-card>
               <ion-row>
-                <ion-item class="lgl1 bgColor-lightGrey posRelative">
+                <ion-item class="lgl1">
                   <ion-label item-start>{{"ASSIGNED MODULES" | translate}}</ion-label>
-                  <button item-end ion-button color="primary" class="posAbsolute fullHeight topZero rightZero btnStyle2 marginZero" (click)="SelectAllAssignedModule()">
+                  <button item-end ion-button color="primary" (click)="SelectAllAssignedModule()">
                     <ion-icon name="ios-arrow-back"></ion-icon>
                   </button>
                 </ion-item>
               </ion-row>
-              <div class="contentHeight3 overflowTrue">
+              <div>
                 <ion-list>
                   <ion-item *ngFor="let module_assigned of Module_Assign">
                     <ion-label>{{module_assigned.MODULE_NAME}}</ion-label>
