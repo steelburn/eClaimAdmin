@@ -10,6 +10,7 @@ import {PagesetupPage} from'../pagesetup/pagesetup';
 import {ModulesetupPage} from'../modulesetup/modulesetup';
 import {SubmodulesetupPage} from'../submodulesetup/submodulesetup';
 import { ClaimhistoryPage } from '../claimhistory/claimhistory';
+import { UserPage } from '../user/user';
 
 /**
  * Generated class for the AdminsetupPage page.
@@ -59,6 +60,11 @@ export class AdminsetupPage {
   goToModulesetup(){
     this.navCtrl.push(ModulesetupPage)
   }
+
+  goToUser(){
+    this.navCtrl.push(UserPage)
+  }
+
 
   goToSubModulesetup(){
     this.navCtrl.push(SubmodulesetupPage)
