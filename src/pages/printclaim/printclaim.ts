@@ -109,8 +109,8 @@ export class PrintclaimPage {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
-          claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-          claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
             this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
               var postClaimMain = response.json();
@@ -157,79 +157,5 @@ export class PrintclaimPage {
         }
 
       })
-  }
-
-  // save() {    
-  //       //debugger;
-  //       //this.getImage();
-  //       //this.uploadFile();
-  //       if (this.Printform.valid) {
-  //         let headers = new Headers();
-  //         headers.append('Content-Type', 'application/json');
-  //         let options = new RequestOptions({ headers: headers });    
-    
-  //         let url: string;
-  //         let request_id = UUID.UUID();
-  //         //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //         url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    
-  //         this.http.get(url, options)
-  //           .map(res => res.json())
-  //           .subscribe(
-  //           data => {
-  //             let res = data["resource"];
-  //             if (res.length == 0) {
-  //               console.log("No records Found");
-  //               if (this.Exist_Record == false) {
-  //                 // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-                 
-  //                 this.printclaim_entry.DESCRIPTION = this.Printing_Description_ngModel.trim();
-  //                 this.printclaim_entry.CLAIM_AMOUNT = this.Printing_ClaimAmount_ngModel.trim();
-  //                //this.printclaim_entry.CLAIM_TYPE_GUID = this.masterclaim_entry.CLAIM_TYPE_GUID = "58c59b56-289e-31a2-f708-138e81a9c823";               
-  //                 // this.masterclaim_entry.CLAIM_AMOUNT = this.Printing_ClaimAmount_ngModel.trim();
-  //                 // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-  //                 // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-  //                 // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-  //                 //alert(this.masterclaim_entry.CLAIM_AMOUNT);
-    
-  //                 this.printclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
-  //                 this.printclaim_entry.CREATION_TS = new Date().toISOString();
-  //                 this.printclaim_entry.CREATION_USER_GUID = '1';
-  //                 this.printclaim_entry.UPDATE_TS = new Date().toISOString();
-  //                 this.printclaim_entry.UPDATE_USER_GUID = "";    
-    
-  //                 // this.printingservice.save_main_claim_request(this.masterclaim_entry)
-  //                 //   .subscribe((response) => {
-  //                 //     if (response.status == 200) {
-  //                 //       //alert('PrintClaim Registered successfully');
-  //                 //       //location.reload();
-  //                 //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-  //                 //     }
-  //                 //   });
-    
-  //                 this.printingservice.save_claim_request_detail(this.printclaim_entry)
-    
-  //                   .subscribe((response) => {
-  //                     if (response.status == 200) {
-  //                       alert('PrintClaim Registered successfully');
-  //                       //location.reload();
-  //                       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-  //                     }
-  //                   });
-    
-  //               }
-  //             }
-  //             else {
-  //               console.log("Records Found");
-  //               alert("The Travelclaim is already Exist.")
-    
-  //             }    
-  //           },
-  //           err => {
-  //             this.Exist_Record = false;
-  //             console.log("ERROR!: ", err);
-  //           });
-  //       }    
-  //     }
-
+  } 
 }

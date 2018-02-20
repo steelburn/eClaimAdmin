@@ -4,24 +4,15 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<!-- <ion-header>
-  <ion-navbar>
-    <ion-title>OVERTIME CLAIM</ion-title>
-  </ion-navbar>
-</ion-header> -->
-<ion-header>
 
+<ion-header>
     <ion-navbar>       
       <ion-title>{{ 'OVERTIME_CLAIM_HEADING' | translate }}</ion-title>  
     </ion-navbar>
    </ion-header>
 
-
 <ion-content padding>
- 
-
   <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">
-
       <ion-list-header>
         Select Travel Claim For:
       </ion-list-header>
@@ -114,12 +105,8 @@
               </ion-item>
   
       
-          <!-- <ion-item>
-            <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
-            <ion-select formControlName="vehicleType" placeholder="{{ 'TRAVEL_TYPE_PLACE_HOLDER' | translate }}">
-              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>
-            </ion-select>
-          </ion-item> -->
+          
+         
       
           <!-- <ion-item>
             <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>

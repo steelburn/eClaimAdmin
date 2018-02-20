@@ -50,10 +50,7 @@ export class EntertainmentclaimPage {
   storeCustomers: any;
 
   public Travel_SOC_No_ngModel: any;
-  public Travel_ProjectName_ngModel: any;
-  // public Travel_From_ngModel: any;
-  // public Travel_Destination_ngModel: any;
-  // public Travel_Distance_ngModel: any;
+  public Travel_ProjectName_ngModel: any;  
   public Travel_Mode_ngModel: any;
   Travel_Amount_ngModel: any;
   Project_Lookup_ngModel: any;
@@ -79,28 +76,14 @@ export class EntertainmentclaimPage {
   ClaimRequestMain: any;
 
   constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, private api: Services, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
-  //  this.translateToEnglish();
-  //   this.translate.setDefaultLang('en'); //Fallback language
-  //   platform.ready().then(() => {
-  //   });
- 
+  
     this.Entertainmentform = fb.group({
       soc_no: '', 
       travel_date: ['', Validators.required],
       description: ['', Validators.required],
-      vehicleType: ['', Validators.required]
-      //distance: '',
-      // customer: '',
-    
-      //destination: ['', Validators.required],
-      //start_DT: ['', Validators.required],
-      //end_DT: ['', Validators.required],
-     
-      //origin: ['', Validators.required],
-     
+      vehicleType: ['', Validators.required]     
     });
-    this.LoadProjects();
-    //this.LoadVehicles();
+    this.LoadProjects();    
     this.LoadCustomers();
   }
 
@@ -264,17 +247,12 @@ export class EntertainmentclaimPage {
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
-            claimReqMainRef.TRAVEL_DATE = value.travel_date;
-            // claimReqMainRef.START_TS = value.start_DT;
-            // claimReqMainRef.END_TS = value.end_DT;
+            claimReqMainRef.TRAVEL_DATE = value.travel_date;           
             claimReqMainRef.DESCRIPTION = value.description;
             // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
             claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
             claimReqMainRef.CREATION_TS = new Date().toISOString();
-            claimReqMainRef.UPDATE_TS = new Date().toISOString();
-            // claimReqMainRef.FROM = this.Travel_From_ngModel;
-            // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
-            // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+            claimReqMainRef.UPDATE_TS = new Date().toISOString();           
            // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
            if(this.isCustomer){
             claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
@@ -282,8 +260,8 @@ export class EntertainmentclaimPage {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
-          claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-          claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
             this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
               var postClaimMain = response.json();
@@ -302,17 +280,12 @@ export class EntertainmentclaimPage {
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
          // claimReqMainRef.MILEAGE_GUID = this.VehicleId;
           claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
-          claimReqMainRef.TRAVEL_DATE = value.travel_date;
-          // claimReqMainRef.START_TS = value.start_DT;
-          // claimReqMainRef.END_TS = value.end_DT;
+          claimReqMainRef.TRAVEL_DATE = value.travel_date;          
           claimReqMainRef.DESCRIPTION = value.description;
           // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
-          claimReqMainRef.UPDATE_TS = new Date().toISOString();
-          // claimReqMainRef.FROM = this.Travel_From_ngModel;
-          // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
-          // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+          claimReqMainRef.UPDATE_TS = new Date().toISOString();         
           //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
           if(this.isCustomer){
             claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
