@@ -225,7 +225,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     InAppBrowser,
     SplashScreen,StatusBar, Services,
 
-    Camera,
+//    Camera,
     File,
     FilePath,
     FileTransfer,
