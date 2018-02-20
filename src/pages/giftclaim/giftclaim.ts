@@ -36,10 +36,7 @@ import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
   selector: 'page-giftclaim',
   templateUrl: 'giftclaim.html', providers: [GiftClaim_Service, BaseHttpService, FileTransfer]
 })
-export class GiftclaimPage {
-  // isReadyToSave: boolean;
-  // giftclaim_entry: GiftClaim_Model = new GiftClaim_Model();
-  //masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
+export class GiftclaimPage {  
     Giftform: FormGroup; 
 
     // vehicles: any;
@@ -51,10 +48,7 @@ export class GiftclaimPage {
     items: string[];  
   
     public Travel_SOC_No_ngModel: any;
-    public Travel_ProjectName_ngModel: any;
-    // public Travel_From_ngModel: any;
-    // public Travel_Destination_ngModel: any;
-    // public Travel_Distance_ngModel: any;
+    public Travel_ProjectName_ngModel: any;    
     // public Travel_Mode_ngModel: any;
     Travel_Amount_ngModel: any;
     Project_Lookup_ngModel: any;
@@ -66,16 +60,12 @@ export class GiftclaimPage {
     public socGUID : any;
     public AddTravelClicked: boolean = false;
     ProjectLookupClicked: boolean = false;
-    CustomerLookupClicked: boolean = false;
-    // DestinationPlaceID: string;
-    // OriginPlaceID: string;
+    CustomerLookupClicked: boolean = false;    
     public AddLookupClicked: boolean = false;
     public AddToLookupClicked: boolean = false;
     currentItems: any;
-    public MainClaimSaved: boolean = false;
-    // Start_DT_ngModel: any;
-    claimFor: any;
-    // End_DT_ngModel: any;
+    public MainClaimSaved: boolean = false;   
+    claimFor: any;   
     VehicleId: any;
     // VehicleRate: any;
     travelAmount: any;
@@ -83,27 +73,7 @@ export class GiftclaimPage {
     ClaimRequestMain: any;
     isCustomer: boolean = false;
     constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
-    {
-  //     this.Giftform = fb.group({
-
-  //    // giftname: '',
-  //    soc_no: '',
-  //    project_name: '',
-  //    customer_name:'',
-  //    print_date: '',
-  //    claim_amount: ['', Validators.required],
-  //    description: ['', Validators.required],
-
-  //   });
-  //   this.Gift_Date_ngModel = new Date().toISOString();
-  //   //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-  //   this.GetSocNo();
-
-  //   this.Giftform.valueChanges.subscribe((v) => {
-  //     this.isReadyToSave = this.Giftform.valid;
-  //   });
-  // }
-
+    { 
   this.translateToEnglish();
   this.translate.setDefaultLang('en'); //Fallback language
   platform.ready().then(() => {
@@ -355,8 +325,8 @@ takePhoto() {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
-          claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-          claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
             this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
               var postClaimMain = response.json();

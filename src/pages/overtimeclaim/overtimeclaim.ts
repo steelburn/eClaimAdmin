@@ -89,22 +89,15 @@ export class OvertimeclaimPage {
     });
 
     this.OTform = fb.group({
-      soc_no: '',
-      //distance: '', 
-      //customer: '',
-     // project_name: ['', Validators.required],
-      travel_date:  ['', Validators.required],
-      //destination: ['', Validators.required],
-      //from: ['', Validators.required],
+      soc_no: '',      
+      travel_date:  ['', Validators.required],     
       start_DT: ['', Validators.required],
       end_DT: ['', Validators.required], 
-      description: ['', Validators.required],
-      //origin: ['', Validators.required],
+      description: ['', Validators.required],     
       vehicleType: ['', Validators.required],
     });
     
-    this.LoadProjects();
-    //this.LoadVehicles();
+    this.LoadProjects();   
     this.LoadCustomers();
   }
 
@@ -331,8 +324,8 @@ export class OvertimeclaimPage {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
-          claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-          claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
             this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
               var postClaimMain = response.json();
