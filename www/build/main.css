@@ -43810,6 +43810,14 @@ page-entertainmentclaim .popup1 {
   height: 500px;
 }
 
+page-entertainmentclaim .popup2 {
+  width: 83%;
+  left: 25px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
 page-entertainmentclaim .btn {
   text-align: center;
   margin: 10px 0px;
@@ -43850,6 +43858,11 @@ page-entertainmentclaim .tnUserRow {
   border-bottom: 2px solid #efefef;
 }
 
+page-entertainmentclaim .settingBtnFab {
+  margin-left: 50px !important;
+  margin-right: 50px !important;
+}
+
 page-giftclaim .blackcontainer {
   top: 0;
   left: 0;
@@ -43871,6 +43884,14 @@ page-giftclaim .popup {
 page-giftclaim .popup1 {
   width: 83%;
   left: 78px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
+page-giftclaim .popup2 {
+  width: 83%;
+  left: 25px;
   top: 60px;
   position: fixed;
   height: 500px;
@@ -43914,6 +43935,11 @@ page-giftclaim .cm {
 
 page-giftclaim .tnUserRow {
   border-bottom: 2px solid #efefef;
+}
+
+page-giftclaim .settingBtnFab {
+  margin-left: 50px !important;
+  margin-right: 50px !important;
 }
 
 page-speaker-list .Subtitle {
@@ -44052,6 +44078,14 @@ page-overtimeclaim .popup1 {
   height: 500px;
 }
 
+page-overtimeclaim .popup2 {
+  width: 83%;
+  left: 25px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
 page-overtimeclaim .btn {
   text-align: center;
   margin: 10px 0px;
@@ -44090,6 +44124,11 @@ page-overtimeclaim .cm {
 
 page-overtimeclaim .tnUserRow {
   border-bottom: 2px solid #efefef;
+}
+
+page-overtimeclaim .settingBtnFab {
+  margin-left: 50px !important;
+  margin-right: 50px !important;
 }
 
 page-printclaim .blackcontainer {
@@ -44393,6 +44432,14 @@ page-travelclaim .popup1 {
   height: 500px;
 }
 
+page-travelclaim .popup2 {
+  width: 83%;
+  left: 25px;
+  top: 60px;
+  position: fixed;
+  height: 500px;
+}
+
 page-travelclaim .btn {
   text-align: center;
   margin: 10px 0px;
@@ -44431,4 +44478,9 @@ page-travelclaim .cm {
 
 page-travelclaim .tnUserRow {
   border-bottom: 2px solid #efefef;
+}
+
+page-travelclaim .settingBtnFab {
+  margin-left: 50px !important;
+  margin-right: 50px !important;
 }
