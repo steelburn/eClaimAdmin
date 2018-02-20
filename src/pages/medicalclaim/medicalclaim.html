@@ -12,23 +12,8 @@
   <ion-header>
 
       <ion-navbar>
-          <button ion-button menuToggle>
-              <ion-icon name="menu"></ion-icon>
-            </button>
-            <div class="headerInfo">
-                <ion-fab top right>
-                  <button ion-fab mini class="btnClear">
-                    <ion-icon name="settings"></ion-icon>
-                  </button>
-                  <ion-fab-list class="settingBtnFab" side="left">
-                    <button ion-fab color="primary" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>
-                  </ion-fab-list>
-                  <ion-fab-list class="settingBtnFab" side="bottom">
-                    <button ion-fab color="primary" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>
-                  </ion-fab-list>
-                </ion-fab>
-              </div>
-        <ion-title>{{ 'TRAVEL_CLAIM_HEADING' | translate }}</ion-title>  
+          
+        <ion-title>{{ 'MEDICAL_CLAIM_HEADING' | translate }}</ion-title>  
       </ion-navbar>
      </ion-header>
   

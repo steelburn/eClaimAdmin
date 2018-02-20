@@ -66,70 +66,22 @@ export class MedicalclaimPage {
   public MainClaimSaved: boolean = false;
 
   constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private medicalservice: MedicalClaim_Service, private alertCtrl: AlertController, private camera: Camera,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController ) {
-  //   this.Mcform = fb.group({
-  //     //mcname: '',
-  //     date: ['', Validators.required],
-  //     amount: ['', Validators.required],
-  //     description: ['', Validators.required],
-  //   });
-  //   this.Medical_Date_ngModel = new Date().toISOString();
-  //   //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-
-  //   this.Mcform.valueChanges.subscribe((v) => {
-  //     this.isReadyToSave = this.Mcform.valid;
-  //   });
-  // }
+  
 
   
-    this.translateToEnglish();
-    this.translate.setDefaultLang('en'); //Fallback language
-    platform.ready().then(() => {
-    });
+    // this.translateToEnglish();
+    // this.translate.setDefaultLang('en'); //Fallback language
+    // platform.ready().then(() => {
+    // });
 
     this.Medicalform = fb.group({
-      // soc_no: '',
-      // distance: '', 
-      //customer: '',
-     // project_name: ['', Validators.required],
-      travel_date:  ['', Validators.required],
-      // destination: ['', Validators.required],
-      // from: ['', Validators.required],
-      // start_DT: ['', Validators.required],
-      // end_DT: ['', Validators.required], 
-      description: ['', Validators.required],
-      // origin: ['', Validators.required],
-     vehicleType: ['', Validators.required],
      
-      // distance: ['', Validators.required],
-       //claim_amount: ['', Validators.required],
-      //total_amount: ['', Validators.required],
-
-    });
-    // this.Travel_Date_ngModel = new Date().toISOString();
-    //this.GetSocNo();
-    //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-    // this.Travelform.valueChanges.subscribe((v) => {
-    //   this.isReadyToSave = this.Travelform.valid;
-    // });
-    
+      travel_date:  ['', Validators.required],      
+      description: ['', Validators.required],      
+     vehicleType: ['', Validators.required],
+        });
+   
   }
-
-   //---------------------Language module start---------------------//
-   public translateToMalayClicked: boolean = false;
-   public translateToEnglishClicked: boolean = true;
- 
-   public translateToEnglish() {
-     this.translate.use('en');
-     this.translateToMalayClicked = !this.translateToMalayClicked;
-     this.translateToEnglishClicked = !this.translateToEnglishClicked;
-   }
- 
-   public translateToMalay() {
-     this.translate.use('ms');
-     this.translateToEnglishClicked = !this.translateToEnglishClicked;
-     this.translateToMalayClicked = !this.translateToMalayClicked;
-   }
-   //---------------------Language module end---------------------//
 
    save(value: any) {
     let userGUID = localStorage.getItem('g_USER_GUID');
