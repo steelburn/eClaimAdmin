@@ -5,13 +5,10 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>SOC REGISTRATION</ion-title>
+    <ion-title>{{ 'SOC_REGISTRATION_HEADING' | translate }}</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <ion-fab top right edge>
@@ -26,10 +23,10 @@
       <table class="Tabler">
           <tr class="linedsg TColor">
               <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
-              <th class="lgl1">SOC NUMBER</th>
-              <th class="lgl1">PROJECT NAME</th>
-              <th class="lgl1">CUSTOMER NAME</th>
-              <th class="lgl1 tblBrRight" style="width:80px">ACTION</th>
+              <th class="lgl1">{{ 'SOC_NUMBER' | translate }}</th>
+              <th class="lgl1">{{ 'PROJECT_NAME' | translate }}</th>
+              <th class="lgl1">{{ 'CUSTOMER_NAME' | translate }}</th>
+              <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
           </tr>
 
           <tr class="col7" *ngFor="let soc of socs; let i=index">
@@ -71,17 +68,17 @@
           <form  [formGroup]="Socform">
 
             <ion-item>
-              <ion-label stacked>{{"SOC NO"}}</ion-label>
+              <ion-label stacked>{{ 'SOC_NUMBER' | translate }}</ion-label>
               <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Add" placeholder="{{'Please fill the soc no'}}"></ion-input>
             </ion-item>
             
             <ion-item>
-              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>
+              <ion-label stacked>{{ 'PROJECT_NAME' | translate }}</ion-label>
               <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>
+              <ion-label stacked>{{ 'CUSTOMER_NAME' | translate }}</ion-label>
               <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
             </ion-item>
 
@@ -114,17 +111,17 @@
           <form  [formGroup]="Socform">
 
             <ion-item>
-              <ion-label stacked>{{"SOC NO"}}</ion-label>
+              <ion-label stacked>{{ 'SOC_NUMBER' | translate }}</ion-label>
               <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Edit" placeholder="{{'Please fill the soc no'}}"></ion-input>
             </ion-item>
             
             <ion-item>
-              <ion-label stacked>{{"PROJECT NAME"}}</ion-label>
+              <ion-label stacked>{{ 'PROJECT_NAME' | translate }}</ion-label>
               <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Edit" placeholder="{{'Please fill the project name'}}"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label stacked>{{"CUSTOMER NAME"}}</ion-label>
+              <ion-label stacked>{{ 'CUSTOMER_NAME' | translate }}</ion-label>
               <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Edit" placeholder="{{'Please fill the project name'}}"></ion-input>
             </ion-item>
 
