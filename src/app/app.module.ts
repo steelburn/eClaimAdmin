@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+﻿import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule,Http } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
@@ -74,7 +74,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 
 
-import { ProfileSetupPage } from'../pages/profile-setup/profile-setup';
+import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
 
 import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
@@ -225,7 +225,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     InAppBrowser,
     SplashScreen,StatusBar, Services,
 
-//    Camera,
+    Camera,
     File,
     FilePath,
     FileTransfer,
