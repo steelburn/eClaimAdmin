@@ -39,22 +39,6 @@ import { Services } from '../Services';
   templateUrl: 'medicalclaim.html', providers: [MedicalClaim_Service, BaseHttpService, FileTransfer]
 })
 export class MedicalclaimPage {
-//   isReadyToSave: boolean;
-//   medicalclaim_entry: MedicalClaim_Model = new MedicalClaim_Model();
-//  // masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
-//   Mcform: FormGroup;
-//   private myData: any;
-
-//   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-//   baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-
-//   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-//   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-//   public Exist_Record: boolean = false;
-
-//   public Medical_Date_ngModel:any;
-//   public Medical_Amount_ngModel:any;
-//   public Medical_Description_ngModel: any;
   Medicalform: FormGroup;
   Travel_Amount_ngModel: any;
   travelAmount: any;
@@ -67,13 +51,6 @@ export class MedicalclaimPage {
 
   constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private medicalservice: MedicalClaim_Service, private alertCtrl: AlertController, private camera: Camera,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController ) {
   
-
-  
-    // this.translateToEnglish();
-    // this.translate.setDefaultLang('en'); //Fallback language
-    // platform.ready().then(() => {
-    // });
-
     this.Medicalform = fb.group({
      
       travel_date:  ['', Validators.required],      
@@ -131,8 +108,8 @@ export class MedicalclaimPage {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
-          claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-          claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
             this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
               var postClaimMain = response.json();
@@ -180,77 +157,5 @@ export class MedicalclaimPage {
 
       })
   }
-
-
- 
-
-  // save(){    
-  //   //debugger;
-  //   //this.getImage();
-  //   //this.uploadFile();
-  //     if (this.Mcform.valid) {
-  //       let headers = new Headers();
-  //       headers.append('Content-Type', 'application/json');
-  //       let options = new RequestOptions({ headers: headers });
-  //       let url: string;
-  //       let request_id = UUID.UUID();
-  //       //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Medical_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //       url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //       this.http.get(url, options)
-  //         .map(res => res.json())
-  //         .subscribe(
-  //         data => {
-  //           let res = data["resource"];
-  //           if (res.length == 0) {
-  //             console.log("No records Found");
-  //             if (this.Exist_Record == false) {
-  //              // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-  //               this.medicalclaim_entry.DESCRIPTION = this.Medical_Description_ngModel.trim();
-  //               this.medicalclaim_entry.CLAIM_AMOUNT = this.Medical_Amount_ngModel.trim();
-  //               //this.medicalclaim_entry.CLAIM_AMOUNT = this.Medical_Date_ngModel.trim();
-  //               //this.entertainment2_entry.ATTACHMENT_ID = this.Entertainment_FileUpload_ngModel.trim();
-
-  //               // this.masterclaim_entry.CLAIM_AMOUNT = this.Medical_Amount_ngModel.trim();
-  //               // this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-  //               // this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-  //               // this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-                
-  //       this.medicalclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
-  //       this.medicalclaim_entry.CREATION_TS = new Date().toISOString();
-  //       this.medicalclaim_entry.CREATION_USER_GUID = '1';
-  //       this.medicalclaim_entry.UPDATE_TS = new Date().toISOString();
-  //       this.medicalclaim_entry.UPDATE_USER_GUID = "";
-  //     //this.uploadFile();
-
-  //     // this.medicalservice.save_main_claim_request(this.masterclaim_entry)
-  //     // .subscribe((response) => {
-  //     //   if (response.status == 200) {
-  //     //     //alert('Medicalclaim Registered successfully');
-  //     //     //location.reload();
-  //     //     this.navCtrl.setRoot(this.navCtrl.getActive().component);
-  //     //   }
-  //     // });
-
-  //       this.medicalservice.save_claim_request_detail(this.medicalclaim_entry)
-  //         .subscribe((response) => {
-  //           if (response.status == 200) {
-  //             alert('Medicalclaim Registered successfully');
-  //             //location.reload();
-  //             this.navCtrl.setRoot(this.navCtrl.getActive().component);
-  //           }
-  //         });
-  //     }
-  //   }
-  //   else {
-  //     console.log("Records Found");
-  //     alert("The Medicalclaim is already Exist.")      
-  //   }    
-  //   },
-  //   err => {
-  //   this.Exist_Record = false;
-  //   console.log("ERROR!: ", err);
-  //   });
-  //   }    
-  //   }
 
 }

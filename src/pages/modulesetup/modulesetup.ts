@@ -11,7 +11,7 @@ import { ModuleSetup_Model } from '../../models/modulesetup_model';
 import { ModuleSetup_Service } from '../../services/modulesetup_service';
 
 import { ModulePageSetup_Model } from '../../models/modulepagesetup_model';
-import { ModulePageSetup_Service } from '../../services/ModulePageSetup_Service';
+import { ModulePageSetup_Service } from '../../services/modulepagesetup_service';
 
 import { BaseHttpService } from '../../services/base-http';
 

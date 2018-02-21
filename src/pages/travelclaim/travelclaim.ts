@@ -89,12 +89,7 @@ export class TravelclaimPage {
   isCustomer: boolean = false;
  
   constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
-  {
-    //this.translateToEnglish();
-    //this.translate.setDefaultLang('en'); //Fallback language
-    // platform.ready().then(() => {
-    // });
-
+  {   
     this.Travelform = fb.group({
       soc_no: '',
       distance: '', 
@@ -125,24 +120,7 @@ export class TravelclaimPage {
     this.Customer_Lookup_ngModel = name;
     this.Customer_GUID = guid;
     this.CloseCustomerLookup();
-  }
-
-   //---------------------Language module start---------------------//
-  //  public translateToMalayClicked: boolean = false;
-  //  public translateToEnglishClicked: boolean = true;
- 
-  //  public translateToEnglish() {
-  //    this.translate.use('en');
-  //    this.translateToMalayClicked = !this.translateToMalayClicked;
-  //    this.translateToEnglishClicked = !this.translateToEnglishClicked;
-  //  }
- 
-  //  public translateToMalay() {
-  //    this.translate.use('ms');
-  //    this.translateToEnglishClicked = !this.translateToEnglishClicked;
-  //    this.translateToMalayClicked = !this.translateToMalayClicked;
-  //  }
-   //---------------------Language module end---------------------//
+  } 
  
    claimForChanged() {
     // console.log(this.claimFor)
@@ -171,18 +149,7 @@ export class TravelclaimPage {
         // console.table(this.projects)
       }
       );
-  }
-
-  // TenantGUID = localStorage.getItem('g_TENANT_GUID');
-  // LoadVehicles() {
-  //   this.http
-  //     .get(Services.getUrl('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID))
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       this.vehicles = data["resource"];
-  //     }
-  //     );
-  // }
+  } 
 
   LoadVehicles() {
     this.http
@@ -331,24 +298,7 @@ export class TravelclaimPage {
   //     return null;
   //   });
   // }
-
-
-  // filterProjects(ev: any) {
-  //   alert('search');
-  //   // Reset items back to all of the items
-  //   this.storeProjects();
-
-  //   // set val to the value of the searchbar
-  //   let val = ev.target.value;
-
-  //   // if the value is an empty string don't filter the items
-  //   if (val && val.trim() != '') {
-  //     this.items = this.items.filter((item) => {
-  //       return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-  //     })
-  //   }
-  // }
-
+  
   searchCustomer(searchString: any) {
     let val = searchString.target.value;
     if (!val || !val.trim()) {
@@ -444,8 +394,8 @@ export class TravelclaimPage {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
-          claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-          claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
             this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
               var postClaimMain = response.json();
@@ -510,89 +460,4 @@ export class TravelclaimPage {
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742'
     });
   }
- 
-
-  // save(value: any) {
-
-  //   if (this.Travelform.valid) {
-  //     let headers = new Headers();
-  //     headers.append('Content-Type', 'application/json');
-  //     let options = new RequestOptions({ headers: headers });
-
-
-  //     let url: string;
-  //     let request_id = UUID.UUID();
-  //     //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //     url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  //     this.http.get(url, options)
-  //       .map(res => res.json())
-  //       .subscribe(
-  //       data => {
-  //         let res = data["resource"];
-  //         if (res.length == 0) {
-  //           console.log("No records Found");
-  //           if (this.Exist_Record == false) {
-  //             // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-  //             this.travelclaim_entry.FROM = this.Travel_From_ngModel.trim();
-  //             this.travelclaim_entry.DESTINATION = this.Travel_Destination_ngModel.trim();
-  //             this.travelclaim_entry.DISTANCE_KM = this.Travel_Distance_ngModel.trim();
-  //             this.travelclaim_entry.DESCRIPTION = this.Travel_Description_ngModel.trim();
-  //             this.travelclaim_entry.CLAIM_AMOUNT = this.Travel_ClaimAmount_ngModel.trim();
-  //             this.travelclaim_entry.CLAIM_TYPE_GUID = this.masterclaim_entry.CLAIM_TYPE_GUID = "58c59b56-289e-31a2-f708-138e81a9c823";
-  //             //alert(this.Travel_From_ngModel.trim() + this.Travel_Destination_ngModel.trim() + this.Travel_Distance_ngModel.trim());
-  //             //alert( this.travelclaim_entry.FROM + this.travelclaim_entry.DESTINATION +  this.travelclaim_entry.DISTANCE_KM);
-  //             // this.travelclaim_entry.CLAIM_AMOUNT = this.Travel_TotalAmount_ngModel.trim();
-  //             //this.entertainment2_entry.ATTACHMENT_ID = this.Entertainment_FileUpload_ngModel.trim();
-
-  //             // this.masterclaim_entry.CLAIM_REQUEST_GUID = this.Travel_Description_ngModel.trim();
-  //             // this.masterclaim_entry.DESCRIPTION = this.Travel_ClaimAmount_ngModel.trim();
-  //             this.masterclaim_entry.FROM = this.Travel_From_ngModel.trim();
-  //             this.masterclaim_entry.DESTINATION = this.Travel_Destination_ngModel.trim();
-  //             this.masterclaim_entry.DISTANCE_KM = this.Travel_Distance_ngModel.trim();
-  //             this.masterclaim_entry.CLAIM_AMOUNT = this.Travel_ClaimAmount_ngModel.trim();
-  //             this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-  //             this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-  //             this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-  //             //alert(this.masterclaim_entry.CLAIM_AMOUNT);
-
-  //             this.travelclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
-  //             this.travelclaim_entry.CREATION_TS = new Date().toISOString();
-  //             this.travelclaim_entry.CREATION_USER_GUID = '1';
-  //             this.travelclaim_entry.UPDATE_TS = new Date().toISOString();
-  //             this.travelclaim_entry.UPDATE_USER_GUID = "";
-
-  //             this.travelservice.save_main_claim_request(this.masterclaim_entry)
-  //               .subscribe((response) => {
-  //                 if (response.status == 200) {
-  //                   //alert('Travelclaim Registered successfully');
-  //                   //location.reload();
-  //                   this.navCtrl.setRoot(this.navCtrl.getActive().component);
-  //                 }
-  //               });
-
-  //             this.travelservice.save_claim_request_detail(this.travelclaim_entry)
-
-  //               .subscribe((response) => {
-  //                 if (response.status == 200) {
-  //                   alert('Travelclaim Registered successfully');
-  //                   //location.reload();
-  //                   this.navCtrl.setRoot(this.navCtrl.getActive().component);
-  //                 }
-  //               });
-  //           }
-  //         }
-  //         else {
-  //           console.log("Records Found");
-  //           alert("The Travelclaim is already Exist.")
-
-  //         }
-  //       },
-  //       err => {
-  //         this.Exist_Record = false;
-  //         console.log("ERROR!: ", err);
-  //       });
-  //   }
-  // }
-
 }
