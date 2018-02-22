@@ -4,6 +4,13 @@ import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Transfer, TransferObject } from '@ionic-native/transfer';
+import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -21,17 +28,14 @@ import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
 
-import { Camera, CameraOptions } from '@ionic-native/camera';
-//import {Camera} from 'ionic-native';
-import { File } from '@ionic-native/file';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { FilePath } from '@ionic-native/file-path';
 
-import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
 import { elementDef } from '@angular/core/src/view/element';
 
-import { LoginPage } from '../login/login';
+declare var cordova: any;
 
+import { LoginPage } from '../login/login';
+import { Conditional } from '@angular/compiler';
+declare var cordova: any;
 /**
  * Generated class for the UserPage page.
  *
@@ -41,7 +45,7 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-user',
-  templateUrl: 'user.html', providers: [UserSetup_Service, BaseHttpService, FileTransfer]
+  templateUrl: 'user.html', providers: [UserSetup_Service, BaseHttpService, FileTransfer, Transfer]
 })
 export class UserPage {
   //selectedValue: number;
@@ -70,47 +74,29 @@ export class UserPage {
   user_details: any;
   Userform: FormGroup;
 
+  BaseTableURL: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+  Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
+  banks: any; qualifications: any;
+
+
+
+
+
   baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_info' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-
   baseResourceUrl2: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl2_URL: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   baseResourceUrl3: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_contact' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  baseResourceUrl4: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_company' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  // baseResourceUrl5: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_address' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
+  baseResourceUrl4: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_company' + '?api_key=' + constants.DREAMFACTORY_API_KEY;  
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/user_address?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-
   baseResourceUrl_designation: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  //baseResourceUrl_company: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_company' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  // baseResourceUrl_company: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
   baseResourceUrl_company: string = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/tenant_company?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
   baseResourceUrl_department: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_department' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  // baseResourceUrl_branch: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_branch' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  baseResourceUrl_branch: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_tenantcompanysitedetails' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-
-  // baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/personaldetails_emp' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  // baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  // filter view
+  baseResourceUrl_branch: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_tenantcompanysitedetails' + '?api_key=' + constants.DREAMFACTORY_API_KEY;  
   baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/view_user_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  // baseResourceView1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_dropdown' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
   baseResourceView1: string = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/view_dropdown?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
 
@@ -186,6 +172,7 @@ export class UserPage {
   public User_Address2_Edit_ngModel: any;
   public User_Address3_Edit_ngModel: any;
   // private _users: any[];
+
   public AddUserClick() {
 
     this.AddUserClicked = true;
@@ -322,77 +309,85 @@ export class UserPage {
     }); alert.present();
   }
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: Transfer, public toastCtrl: ToastController, public platform: Platform, private fileTransfer_new: FileTransfer) {
 
     if (localStorage.getItem("g_USER_GUID") != null) {
-      //this.GetDropdown();
-      this.GetDesignation();
-      this.GetCompany();
-      this.GetDepartment();
-      this.GetBranch();
+      //---------Bind Designation-----------------      
+      this.GetDesignation("main_designation", "NAME");
+
+      //---------Bind Company---------------------
+      this.GetCompany("tenant_company", "NAME");
+
+      //---------Bind Department------------------
+      this.GetDepartment("main_department", "NAME");
+
+      //---------Bind Branch----------------------
+      //this.GetBranch("tenant_company_site", "SITE_NAME");
+
+      //---------Bind Country---------------------
+      this.BindCountry("TestTable");
+
+      //---------Bind State-----------------------
+      this.BindState();
+
+      //--------Bind Qualification----------------
+      this.BindQualification("main_qualification_type", "TYPE_NAME");
+
+      //---------Bind Bank------------------------
+      this.BindBank("main_bank", "NAME");
 
 
-      this.http
-        .get(this.baseResourceView1)
 
-        .map(res => res.json())
-        .subscribe(data => {
-          this.employees_local = data.resource;
-          let i: number = 0;
-          this.employees_local.forEach(element => {
-            let temp: View_Dropdown_Model = element;
-            if (element.EMPLOYEE_TYPE == '0') temp.EMPLOYEE_TYPE = 'Permanent'
-            else if (element.EMPLOYEE_TYPE == '1') temp.EMPLOYEE_TYPE = 'Contract'
-            else temp.EMPLOYEE_TYPE = 'Temporary';
 
-            if (element.EMPLOYEE_STATUS == '0') temp.EMPLOYEE_TYPE = 'Probation'
-            else if (element.EMPLOYEE_STATUS == '1') temp.EMPLOYEE_STATUS = 'Confirmed'
-            else temp.EMPLOYEE_STATUS = 'Terminated';
+      // this.http
+      //   .get(this.baseResourceView1)
 
-            this.employees.push(temp);
-          })
-        });
-
-      this.http
-        .get(this.baseResourceView)
-
-        .map(res => res.json())
-        .subscribe(data => {
-          this.users_local = data.resource;
-          let i: number = 0;
-          this.users_local.forEach(element => {
-            let temp: ViewUser_Model = element;
-            if (element.GENDER == '1') temp.GENDER = 'Male'
-            else temp.GENDER = 'Female';
-
-            if (element.MARITAL_STATUS == '1') temp.MARITAL_STATUS = 'Married'
-            else temp.MARITAL_STATUS = 'Single';
-
-            this.users.push(temp);
-          });
-        });
-
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.address = data.resource;
-          //console.table(this.address)
-        });
-
-      //     let headers = new Headers();
-      // headers.append('Content-Type', 'application/json');
-      // let options = new RequestOptions({ headers: headers });
-      // let url: string;
-      // url = this.baseResource_Url1 + "vw_tenantcompanysitedetails?filter=(TENANT_GUID=" + this.User_Company_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      // this.http.get(url, options)
       //   .map(res => res.json())
-      //   .subscribe(
-      //   data => {
-      //     let res = data["resource"];
+      //   .subscribe(data => {
+      //     this.employees_local = data.resource;
+      //     let i: number = 0;
+      //     this.employees_local.forEach(element => {
+      //       let temp: View_Dropdown_Model = element;
+      //       if (element.EMPLOYEE_TYPE == '0') temp.EMPLOYEE_TYPE = 'Permanent'
+      //       else if (element.EMPLOYEE_TYPE == '1') temp.EMPLOYEE_TYPE = 'Contract'
+      //       else temp.EMPLOYEE_TYPE = 'Temporary';
+
+      //       if (element.EMPLOYEE_STATUS == '0') temp.EMPLOYEE_TYPE = 'Probation'
+      //       else if (element.EMPLOYEE_STATUS == '1') temp.EMPLOYEE_STATUS = 'Confirmed'
+      //       else temp.EMPLOYEE_STATUS = 'Terminated';
+
+      //       this.employees.push(temp);
+      //     })
+      //   });
+
+      // this.http
+      //   .get(this.baseResourceView)
+
+      //   .map(res => res.json())
+      //   .subscribe(data => {
+      //     this.users_local = data.resource;
+      //     let i: number = 0;
+      //     this.users_local.forEach(element => {
+      //       let temp: ViewUser_Model = element;
+      //       if (element.GENDER == '1') temp.GENDER = 'Male'
+      //       else temp.GENDER = 'Female';
+
+      //       if (element.MARITAL_STATUS == '1') temp.MARITAL_STATUS = 'Married'
+      //       else temp.MARITAL_STATUS = 'Single';
+
+      //       this.users.push(temp);
+      //     });
+      //   });
+
+      // this.http
+      //   .get(this.baseResourceUrl)
+      //   .map(res => res.json())
+      //   .subscribe(data => {
+      //     this.address = data.resource;
       //   });
 
       this.Userform = fb.group({
+        // -------------------PERSONAL DETAILS--------------------
         NAME: ['', Validators.required],
         EMAIL: ['', Validators.required],
         LOGIN_ID: ['', Validators.required],
@@ -405,6 +400,7 @@ export class UserPage {
         DOB: ['', Validators.required],
         GENDER: ['', Validators.required],
 
+        // -------------------EMPLOYMENT DETAILS--------------------
         DESIGNATION_GUID: ['', Validators.required],
         TENANT_COMPANY_GUID: ['', Validators.required],
         DEPT_GUID: ['', Validators.required],
@@ -413,24 +409,64 @@ export class UserPage {
         RESIGNATION_DATE: ['', Validators.required],
         BRANCH: ['', Validators.required],
         EMPLOYEE_TYPE: ['', Validators.required],
-        APPROVER1: ['', Validators.required],
-        APPROVER2: ['', Validators.required],
+        // APPROVER1: ['', Validators.required],
+        // APPROVER2: ['', Validators.required],
         EMPLOYEE_STATUS: ['', Validators.required],
 
+        // -------------------EDUCATIONAL QUALIFICATION--------------------
+        HIGHEST_QUALIFICATION: ['', Validators.required],
+        MAJOR: ['', Validators.required],
+        EDU_YEAR: ['', Validators.required],
+
+        // -------------------PROFESSIONAL CERTIFICATIONS--------------------
+        CERTIFICATION: ['', Validators.required],
+        CERTIFICATION_YEAR: ['', Validators.required],
+        CERTIFICATION_GRADE: ['', Validators.required],
+
+        // -------------------RESIDENTIAL ADDRESS----------------------------
         USER_ADDRESS1: ['', Validators.required],
         USER_ADDRESS2: ['', Validators.required],
         USER_ADDRESS3: ['', Validators.required],
+        USER_POSTCODE: ['', Validators.required],
+        USER_COUNTRY: ['', Validators.required],
+        USER_STATE: ['', Validators.required],
+
+        // -------------------FAMILY DETAILS----------------------------------
+        //--------For Spouse----------
+        SPOUSENAME: ['', Validators.required],
+        SPOUSE_ICNUMBER: ['', Validators.required],
+        //--------For Spouse----------
+        CHILDNAME: ['', Validators.required],
+        CHILD_ICNUMBER: ['', Validators.required],
+        CHILD_GENDER: ['', Validators.required],
+        SPOUSE_CHILD: ['', Validators.required],
+
+        // -------------------EMERGENCY CONTACT DETAILS------------------------
+        EMG_CONTACT_NAME1: ['', Validators.required],
+        EMG_RELATIONSHIP: ['', Validators.required],
+        EMG_CONTACT_NO1: ['', Validators.required],
+        EMG_CONTACT_NAME2: ['', Validators.required],
+        EMG_RELATIONSHIP2: ['', Validators.required],
+        EMG_CONTACT_NO2: ['', Validators.required],
+
+        // -------------------PAYROLL DETAILS------------------------
+        EPF_NUMBER: ['', Validators.required],
+        INCOMETAX_NO: ['', Validators.required],
+        BANK_NAME: ['', Validators.required],
+        ACCOUNT_NUMBER: ['', Validators.required],
       });
-      this.genders.push({ value: 1, text: 'Male', checked: false });
-      this.genders.push({ value: 0, text: 'Female', checked: false });
-      this.maritals.push({ value: 0, text: 'Single', checked: false });
-      this.maritals.push({ value: 1, text: 'Maried', checked: false });
-      this.emptypes.push({ value: 0, text: 'Permanent', checked: false });
-      this.emptypes.push({ value: 1, text: 'Contract', checked: false });
-      this.emptypes.push({ value: 2, text: 'Temporary', checked: false });
-      this.empstatuss.push({ value: 0, text: 'Probation', checked: false });
-      this.empstatuss.push({ value: 1, text: 'Confirmed', checked: false });
-      this.empstatuss.push({ value: 2, text: 'Terminated', checked: false });
+
+      // this.genders.push({ value: 1, text: 'Male', checked: false });
+      // this.genders.push({ value: 0, text: 'Female', checked: false });
+      // this.maritals.push({ value: 0, text: 'Single', checked: false });
+      // this.maritals.push({ value: 1, text: 'Maried', checked: false });
+      // this.emptypes.push({ value: 0, text: 'Permanent', checked: false });
+      // this.emptypes.push({ value: 1, text: 'Contract', checked: false });
+      // this.emptypes.push({ value: 2, text: 'Temporary', checked: false });
+
+      // this.empstatuss.push({ value: 0, text: 'Probation', checked: false });
+      // this.empstatuss.push({ value: 1, text: 'Confirmed', checked: false });
+      // this.empstatuss.push({ value: 2, text: 'Terminated', checked: false });
     }
     else {
       this.navCtrl.push(LoginPage);
@@ -441,73 +477,117 @@ export class UserPage {
     console.log('ionViewDidLoad UserPage');
   }
 
-  // GetAddressData() {
-  //   this.http
-  //     .get(this.baseResourceUrl)
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       // this.address = data.resource;
-  //       this.address = data["resource"];
-  //       console.table(this.address)
-  //     });
-  // }
-
-  GetDesignation() {
+  GetDesignation(TableName: string, SortField: string) {
+    let TableURL: string;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      //TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + this.User_Company_ngModel +')&' + 'order='+ SortField + '&' + this.Key_Param;
+      TableURL = this.BaseTableURL + TableName + '?order=' + SortField + '&' + this.Key_Param;
+    }
+    else {
+      TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + SortField + '&' + this.Key_Param;
+    }
     this.http
-      .get(this.baseResourceUrl_designation)
+      .get(TableURL)
       .map(res => res.json())
       .subscribe(data => {
         this.designations = data["resource"];
       });
   }
 
-  GetCompany() {
+  GetCompany(TableName: string, SortField: string) {
+    let TableURL: string;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      //TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + this.User_Company_ngModel +')&' + 'order='+ SortField + '&' + this.Key_Param;
+      TableURL = this.BaseTableURL + TableName + '?order=' + SortField + '&' + this.Key_Param;
+    }
+    else {
+      TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + SortField + '&' + this.Key_Param;
+    }
     this.http
-      .get(this.baseResourceUrl_company)
+      .get(TableURL)
       .map(res => res.json())
       .subscribe(data => {
         this.companies = data["resource"];
       });
   }
+
   public guid: any;
 
-  GetDepartment() {
+  GetDepartment(TableName: string, SortField: string) {
+    let TableURL: string;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      //TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + this.User_Company_ngModel +')&' + 'order='+ SortField + '&' + this.Key_Param;
+      TableURL = this.BaseTableURL + TableName + '?order=' + SortField + '&' + this.Key_Param;
+    }
+    else {
+      TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + SortField + '&' + this.Key_Param;
+    }
     this.http
-      .get(this.baseResourceUrl_department)
+      .get(TableURL)
       .map(res => res.json())
       .subscribe(data => {
         this.departments = data["resource"];
       });
   }
 
-  // GetDropdown() {
-  //   this.http
-  //     .get(this.baseResourceView1)
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       this.employees = data["resource"];
-  //       console.table(this.employees);
+  GetBranch(TableName: string, SortField: string) {
+    let TableURL: string;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_COMPANY_GUID=' + this.User_Company_ngModel + ')&' + 'order=' + SortField + '&' + this.Key_Param;
+      //TableURL = this.BaseTableURL + TableName + '?order=' + SortField + '&' + this.Key_Param;
+    }
+    else {
+      TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_COMPANY_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + SortField + '&' + this.Key_Param;
+    }
 
-  //     });
-  // }
-
-
-  // test(selectedValue: any) {
-  //   alert('selected: ' + selectedValue);
-  // }
-  GetBranch() {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
-    let url: string;
-    url = this.baseResource_Url1 + "tenant_company_site?filter=(TENANT_COMPANY_GUID=" + this.User_Company_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
-      .get(url)
+      .get(TableURL)
       .map(res => res.json())
       .subscribe(data => {
         this.branches = data["resource"];
+      });
+  }
 
+  BindCountry(TableParamName: string) {
+    //Bind the Country from DB
+  }
 
+  BindState() {
+    //Bind State from DB
+  }
+
+  BindBank(TableName: string, SortField: string) {
+    let TableURL: string;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      //TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + this.User_Company_ngModel +')&' + 'order='+ SortField + '&' + this.Key_Param;
+      TableURL = this.BaseTableURL + TableName + '?order=' + SortField + '&' + this.Key_Param;
+    }
+    else {
+      TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + SortField + '&' + this.Key_Param;
+    }
+
+    this.http
+      .get(TableURL)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.banks = data["resource"];
+      });
+  }
+
+  BindQualification(TableName: string, SortField: string) {
+    let TableURL: string;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      //TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + this.User_Company_ngModel +')&' + 'order='+ SortField + '&' + this.Key_Param;
+      TableURL = this.BaseTableURL + TableName + '?order=' + SortField + '&' + this.Key_Param;
+    }
+    else {
+      TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + SortField + '&' + this.Key_Param;
+    }
+    this.http
+      .get(TableURL)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.qualifications = data["resource"];
       });
   }
 
@@ -596,7 +676,7 @@ export class UserPage {
                             this.userservice.save_user_contact(this.usercontact_entry)
                               .subscribe((response) => {
                                 alert('Entered into 3');
-                                if (response.status == 200) { 
+                                if (response.status == 200) {
                                   alert('user_contact Registered successfully');
                                   // this.navCtrl.setRoot(this.navCtrl.getActive().component);
 
@@ -845,7 +925,6 @@ export class UserPage {
     }
   }
 
-
   ClearControls() {
     this.User_Name_ngModel = "";
     this.User_Email_ngModel = "";
@@ -872,4 +951,211 @@ export class UserPage {
     this.User_Address3_ngModel = "";
 
   }
+
+  lastImage: string = null;
+  loading: Loading;
+
+  public uploadImage() {
+    let url = "http://api.zen.com.my/api/v2/files/" + this.lastImage + "?check_exist=false"
+    var targetPath = this.pathForImage(this.lastImage);
+    var filename = this.lastImage;
+    var options = {
+      fileKey: "file",
+      fileName: filename,
+      chunkedMode: false,
+      mimeType: "multipart/form-data",
+      params: { 'fileName': filename },
+      headers: { 'Content-Type': 'application/json', 'X-Dreamfactory-API-Key': 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881' }
+    };
+    const fileTransfer: TransferObject = this.transfer.create();
+    this.loading = this.loadingCtrl.create({
+      content: 'Uploading...',
+    });
+    this.loading.present();
+    fileTransfer.upload(targetPath, url, options).then(data => {
+      this.loading.dismissAll()
+      this.presentToast('Image succesful uploaded.');
+    }, err => {
+      this.loading.dismissAll()
+      this.presentToast('Error while uploading file.');
+    });
+  }
+
+  public pathForImage(img: any) {
+    if (img === null) {
+      return '';
+    } else {
+      return cordova.file.dataDirectory + img;
+    }
+  }
+
+  private presentToast(text: any) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  public presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select Image Source',
+      buttons: [
+        {
+          text: 'Load from Library',
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
+        {
+          text: 'Use Camera',
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.CAMERA);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+  public takePicture(sourceType: any) {
+    var options = {
+      quality: 100,
+      sourceType: sourceType,
+      saveToPhotoAlbum: false,
+      correctOrientation: true
+    };
+    this.camera.getPicture(options).then((imagePath) => {
+      if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+        this.filePath.resolveNativePath(imagePath)
+          .then(filePath => {
+            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+            let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+          });
+      } else {
+        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+      }
+    }, (err) => {
+      this.presentToast('Error while selecting image.');
+    });
+  }
+
+  private createFileName() {
+    var d = new Date(),
+      n = d.getTime(),
+      newFileName = n + ".jpg";
+    return newFileName;
+  }
+
+  private copyFileToLocalDir(namePath: any, currentName: any, newFileName: any) {
+    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+      this.lastImage = newFileName;
+    }, error => {
+      this.presentToast('Error while storing file.');
+    });
+  }
+
+  ProfileImage: any;
+  fileList: FileList;
+
+  private ProfileImageDisplay(e: any): void {
+    if (e.target.files && e.target.files[0]) {
+      let reader = new FileReader();
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    //----------------For Uploading file to Server----------------------------
+    // let url = "http://api.zen.com.my/api/v2/files/" + this.fileList[0]["name"] + "?check_exist=false"
+    // //var targetPath = e.target.files.nativeElement.files[0]; 
+    // var targetPath = e.target.files[0];
+    // var filename = this.fileList[0]["name"];
+    // var options = {
+    //   fileKey: "ionicfile",
+    //   fileName: filename,
+    //   chunkedMode: false,
+    //   mimeType: "multipart/form-data",
+    //   params: { 'fileName': filename },
+    //   headers: { 'Content-Type': 'application/json', 'X-Dreamfactory-API-Key': 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881' }
+    // };
+
+    // const fileTransfer: TransferObject = this.transfer.create();
+    // // this.loading = this.loadingCtrl.create({
+    // //   content: 'Uploading...',
+    // // });
+    // // this.loading.present();
+
+    // fileTransfer.upload(targetPath, url, options).then(data => {
+    //   //this.loading.dismissAll()
+    //   //this.presentToast('Image succesful uploaded.');
+    // }, err => {
+    //   // this.loading.dismissAll()
+    //   // this.presentToast('Error while uploading file.');
+    // });
+
+
+  }
+
+  uploadProfileImage() {
+    let url = "http://api.zen.com.my/api/v2/files/" + this.fileList[0]["name"] + "?check_exist=false"
+    var targetPath = "../../assets/img/";
+    var filename = this.fileList[0]["name"];
+    var options = {
+      fileKey: "ionicfile",
+      fileName: "ica-slidebox-img-1.png",
+      chunkedMode: false,
+      mimeType: "multipart/form-data",
+      params: { 'fileName': filename },
+      headers: { 'Content-Type': 'application/json', 'X-Dreamfactory-API-Key': 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881' }
+    };
+
+    const fileTransfer: TransferObject = this.transfer.create();
+    this.loading = this.loadingCtrl.create({
+      content: 'Uploading...',
+    });
+    this.loading.present();
+
+    fileTransfer.upload(targetPath, url, options).then(data => {
+      this.loading.dismissAll()
+      this.presentToast('Image succesful uploaded.');
+    }, err => {
+      this.loading.dismissAll()
+      this.presentToast('Error while uploading file.');
+    });
+  }
+
+  UploadProfilePicture() {
+    debugger;
+    const fileTransfer: TransferObject = this.transfer.create();
+
+    let url = "http://api.zen.com.my/api/v2/files/" + "ica-slidebox-img-1.png" + "?check_exist=false"
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: 'ica-slidebox-img-1.png',
+      chunkedMode: false,
+      mimeType: "multipart/form-data",
+      params: { 'fileName': 'ica-slidebox-img-1.png' },
+      headers: { 'Content-Type': 'application/json', 'X-Dreamfactory-API-Key': constants.DREAMFACTORY_API_KEY }
+    }
+    //fileTransfer.upload(this.ProfileImage, url, options1)
+    fileTransfer.upload("../../assets/img/ica-slidebox-img-1.png", url, options)
+      .then((data) => {
+        // success
+        alert("success");
+      }, (err) => {
+        // error
+        alert("error" + JSON.stringify(err));
+      });
+  }
+
 }
