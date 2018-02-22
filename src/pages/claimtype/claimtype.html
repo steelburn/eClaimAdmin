@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>CLAIM TYPE SETUP</ion-title>
+    <ion-title>{{ 'CLAIM_TYPE_SETUP_HEADING' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -22,10 +22,10 @@
     <ion-item>
         <table class="Tabler">
             <tr class="linedsg TColor">
-                <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-                <th class="lgl1">NAME</th>
-                <th class="lgl1">DESCRIPTION</th>
-                <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+                <th class="lgl1 tblBrLeft" style="width:60px">NO.</th> 
+                <th class="lgl1">{{ 'CLAIM_NAME' | translate }}</th>
+                <th class="lgl1">{{ 'CLAIM_DESCRIPTION' | translate }}</th>
+                <th class="lgl1 tblBrRight" style="width:90px">{{ 'CLAIM_ACTION' | translate }}</th>
 
             </tr>
 
@@ -93,13 +93,13 @@
       <ion-list>
         <form [formGroup]="Claimtypeform">
           <ion-item>
-            <ion-label stacked>{{"NAME"}}</ion-label>
+            <ion-label stacked>{{ 'CLAIM_NAME' | translate }}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add"  
             placeholder="{{'Please fill in the name of claim'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{ 'CLAIM_DESCRIPTION' | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" 
             placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
@@ -126,13 +126,13 @@
       <ion-list>
         <form [formGroup]="Claimtypeform">
           <ion-item>
-            <ion-label stacked>{{"NAME"}}</ion-label>
+            <ion-label stacked>{{ 'CLAIM_NAME' | translate }}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" 
              placeholder="{{'Please fill in the name of claim'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{ 'CLAIM_DESCRIPTION' | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit" required
               placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
