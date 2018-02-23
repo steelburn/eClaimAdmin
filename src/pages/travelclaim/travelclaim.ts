@@ -32,6 +32,9 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 import {Router, Request, Response, NextFunction} from 'express';
 import {AddTollPage} from '../../pages/add-toll/add-toll';
 
+import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
+
+
 /**
  * Generated class for the TravelclaimPage page.
  *
@@ -47,10 +50,10 @@ export class TravelclaimPage {
   isReadyToSave: boolean;
  
   vehicles: any;
-  customers: any;
+  customers: any[];
   storeProjects: any;
   storeCustomers: any;  
-  public projects: any;
+  public projects: any[];
   Travelform: FormGroup;
 
   items: string[];  
@@ -260,7 +263,28 @@ export class TravelclaimPage {
     });
   }
 
+//   onSearchInput(ev: any) {  
+//     let val = ev.target.value;
+//     if (val && val.trim() != '') {
+//      this.projects = this.projects.filter((item) => {
+   
+//        console.log(item);
+//        return ((item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) > -1) 
+//        || ((item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) > -1) 
+//        || (item.YEAR.toString().toLowerCase().indexOf(val.toLowerCase()) > -1))
+//        || (item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) > -1
+//      ) 
+//      );
+//      })
+//    }
+//    else
+//    {
+//     //  this.BindData();
+//     return null;
+//    }
+// }
 
+// Search project start:
     
   searchProject(searchString: any) {
     let val = searchString.target.value;
@@ -268,36 +292,29 @@ export class TravelclaimPage {
       this.projects = this.storeProjects;
       return;
     }
-  //  this.projects=  this.filterProjects({
-  //   project_name: val
-  //   });
+   this.projects=  this.filterProjects({
+    project_name: val
+    });
   }
 
 
-  // filterProjects(params?: any) {
-  //   if (!params) {
+  filterProjects(params?: any) {
+    if (!params) {
+      return this.storeProjects;
+    }
 
-  //     //return this.storeProjects;
-  //   }
-
-  //     return this.projects.filter((item) =>{
-
-  //     return this.storeProjects;
-  //   }
-
-  //   return this.projects.filter((item) => {
-
-  //     for (let key in params) {
-  //       let field = item[key];
-  //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-  //         return item;
-  //       } else if (field == params[key]) {
-  //         return item;
-  //       }
-  //     }
-  //     return null;
-  //   });
-  // }
+    return this.projects.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
   
   searchCustomer(searchString: any) {
     let val = searchString.target.value;
@@ -305,28 +322,28 @@ export class TravelclaimPage {
       this.customers = this.storeCustomers;
       return;
     }
-    // this.customers = this.filterCustomer({
-    //   NAME: val
-    // });
+    this.customers = this.filterCustomer({
+      NAME: val
+    });
   }
 
-  // filterCustomer(params?: any) {
-  //   if (!params) {
-  //     return this.storeCustomers;
-  //   }
+  filterCustomer(params?: any) {
+    if (!params) {
+      return this.storeCustomers;
+    }
 
-  //   return this.customers.filter((item) => {
-  //     for (let key in params) {
-  //       let field = item[key];
-  //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-  //         return item;
-  //       } else if (field == params[key]) {
-  //         return item;
-  //       }
-  //     }
-  //     return null;
-  //   });
-  // }
+    return this.customers.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
 
   takePhoto() {
     // Camera.getPicture().then((imageData) => {
@@ -342,6 +359,30 @@ export class TravelclaimPage {
     this.VehicleRate = vehicle.RATE_PER_UNIT;
     this.vehicleCategory = vehicle.CATEGORY;
   }
+
+  
+
+  // fileChange(){
+  //   alert('file change');
+  //   let fileList: FileList = event.target.files;
+  //   if(fileList.length > 0) {
+  //       let file: File = fileList[0];
+  //       let formData:FormData = new FormData();
+  //       formData.append('uploadFile', file, file.name);
+  //       let headers = new Headers();
+  //       /** No need to include Content-Type in Angular 4 */
+  //       headers.append('Content-Type', 'multipart/form-data');
+  //       headers.append('Accept', 'application/json');
+  //       let options = new RequestOptions({ headers: headers });
+  //       this.http.post(`${this.apiEndPoint}`, formData, options)
+  //           .map(res => res.json())
+  //           .catch(error => Observable.throw(error))
+  //           .subscribe(
+  //               data => console.log('success'),
+  //               error => console.log(error)
+  //           )
+  //   }
+  // }
 
 
   save(value: any) {
