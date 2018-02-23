@@ -16,9 +16,8 @@ import { RolesetupPage } from '../rolesetup/rolesetup';
 import { TenantsetupPage } from '../tenantsetup/tenantsetup';
 import { UserPage } from '../user/user';
 import { SocRegistrationPage } from '../soc-registration/soc-registration';
-
-
-
+import { CountrysetupPage } from '../countrysetup/countrysetup';
+import { StatesetupPage } from '../statesetup/statesetup';
 
 import { TenantCompanySetup_Model } from '../../models/tenantcompanysetup_model';
 import { TenantCompanySiteSetup_Model } from '../../models/tenantcompanysitesetup_model';
@@ -210,8 +209,14 @@ export class SetupPage {
     this.navCtrl.push(PaymenttypesetupPage)
   }
 
+  goToStatesetup(){
+    this.navCtrl.push(StatesetupPage)
+  }
 
   
+  goToCountrysetup(){
+    this.navCtrl.push(CountrysetupPage)
+  }
 
       goToQualificationsetup(){
     this.navCtrl.push(QualificationsetupPage)
