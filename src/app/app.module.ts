@@ -53,6 +53,8 @@ import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';  
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
+import { CountrysetupPage } from'../pages/countrysetup/countrysetup';
+import { UploadPage } from'../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -100,6 +102,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     PeermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
+    CountrysetupPage,
     TravelclaimPage,
     ScheduleFilterPage,
     SessionDetailPage,
@@ -126,12 +129,11 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     UserPage,
     SocRegistrationPage,
     AdminsetupPage,
-
-   
+    
+    UploadPage,
 
 
     ProfileSetupPage,
-
     AddTollPage,
     ClaimhistoryPage
 
@@ -199,6 +201,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     AdminsetupPage,
     PaymenttypesetupPage,
     PagesetupPage,
+    CountrysetupPage,
     SubmodulesetupPage,
     TranslatePage,
     QualificationsetupPage,
@@ -214,7 +217,9 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     ProfileSetupPage,
 
     AddTollPage,
-    ClaimhistoryPage
+    ClaimhistoryPage,
+
+    UploadPage,
 
 
   ],

@@ -523,7 +523,7 @@ var ClaimReqMain_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__ = __webpack_require__(376);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__ = __webpack_require__(377);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1899,7 +1899,7 @@ TenantCompanySiteSetup_Service = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_user_company_model__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_usersetup_address_model__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_viewuser_model__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_view_dropdown__ = __webpack_require__(395);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_view_dropdown__ = __webpack_require__(396);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_usersetup_service__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_uuid__ = __webpack_require__(13);
@@ -3213,7 +3213,7 @@ ScheduleFilterPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_medicalclaim_service__ = __webpack_require__(377);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_medicalclaim_service__ = __webpack_require__(378);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
@@ -3414,7 +3414,7 @@ var DREAMFACTORY_TABLE_URL = 'http://api.zen.com.my/api/v2/zcs/_table';
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_printingclaim_service__ = __webpack_require__(380);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_printingclaim_service__ = __webpack_require__(381);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
@@ -3607,7 +3607,7 @@ PrintclaimPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__ = __webpack_require__(381);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__ = __webpack_require__(382);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
@@ -3947,7 +3947,7 @@ var GiftclaimPage = (function () {
 GiftclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-giftclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\giftclaim\giftclaim.html"*/'<!--\n\n  Generated template for the GiftclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>GIFT CLAIM</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n        <ion-list-header>\n\n          Select Travel Claim For:\n\n        </ion-list-header>\n\n    \n\n        <ion-item>\n\n          <ion-label>Customer</ion-label>\n\n          <ion-radio value="customer" checked="true"></ion-radio>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label>Project</ion-label>\n\n          <ion-radio value="project"></ion-radio>\n\n        </ion-item>\n\n      </ion-list>\n\n\n\n      <form [formGroup]="Giftform">\n\n\n\n          <div *ngIf="claimFor==\'project\'">\n\n              <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n              <ion-item>\n\n                <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n                <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n                  <ion-icon name="eye"></ion-icon>\n\n                  {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n              </ion-item>\n\n              <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n              <ion-item>\n\n                <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n                <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n              </ion-item>\n\n            </div>\n\n          <!-- <ion-card>\n\n              <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>\n\n            <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" \n\n              placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n    \n\n            <ion-list>\n\n              <ion-item-sliding *ngFor="let item of projects">\n\n                <button ion-item (click)="GetSocNo(item.SOC_GUID)">\n\n                  <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>\n\n                </button>\n\n              </ion-item-sliding>\n\n            </ion-list>  \n\n          </ion-card> -->\n\n    \n\n          <div *ngIf="claimFor==\'customer\'">\n\n    \n\n              <!-- formControlName="customer" -->\n\n              <ion-item>\n\n                <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n                <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n                  <ion-icon name="eye"></ion-icon>\n\n                  {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n              </ion-item>\n\n            </div>\n\n    \n\n          <!-- <ion-item>\n\n              <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n              <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n              placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n            </ion-item> -->\n\n    \n\n            <ion-item>\n\n              <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n            </ion-item>       \n\n            \n\n            <ion-item>\n\n                <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n                <ion-label > {{travelAmount | number}} </ion-label>\n\n                <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              </ion-item>\n\n    \n\n              <ion-item>\n\n                  <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n                  <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                </ion-item>       \n\n           \n\n            <!-- <ion-item>\n\n              <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n            </ion-item> -->\n\n    \n\n            <div class="btn">\n\n              <button ion-button (click)=\'save(Giftform.value)\'   >SUBMIT</button>\n\n            </div> \n\n            <!-- [disabled]="!Giftform.valid"       -->\n\n          </form>\n\n\n\n          <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n            </div>\n\n            <div class="popup2" padding *ngIf="AddLookupClicked">\n\n              <ion-card>\n\n                <ion-card-header class="icTitle headerColor-white ">\n\n          \n\n                  <div class="icHeaderText">Search Location</div>\n\n                  <button class="btnR" (click)="CloseLookupClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                  </button>\n\n                </ion-card-header>\n\n                <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n                <ion-list>\n\n                  <ion-item-sliding *ngFor="let item of currentItems">\n\n                    <button ion-item (click)="openItem(item)">\n\n                      <ion-label> {{item.description}}</ion-label>\n\n                    </button>\n\n                  </ion-item-sliding>\n\n                </ion-list>\n\n              </ion-card>\n\n            </div>\n\n      \n\n            <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n              </div>\n\n              <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n                <ion-card>\n\n                  <ion-card-header class="icTitle headerColor-white ">\n\n                    <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n                    <button class="btnR" (click)="CloseProjectLookup()">\n\n                      <ion-icon name="md-close"></ion-icon>\n\n                    </button>\n\n                  </ion-card-header>\n\n                  <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n                  <ion-list>\n\n                    <ion-item-sliding *ngFor="let item of projects">\n\n                      <button ion-item (click)="GetSocNo(item)">\n\n                        <ion-label>{{item.project_name}}\n\n                          <>{{item.soc}}</ion-label>\n\n                      </button>\n\n                    </ion-item-sliding>\n\n                  </ion-list>\n\n                </ion-card>\n\n              </div>\n\n      \n\n              <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n                </div>\n\n                <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n                  <ion-card>\n\n                    <ion-card-header class="icTitle headerColor-white ">\n\n                      <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n                      <button class="btnR" (click)="CloseCustomerLookup()">\n\n                        <ion-icon name="md-close"></ion-icon>\n\n                      </button>\n\n                    </ion-card-header>\n\n                    <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n                    <ion-list>\n\n                      <ion-item-sliding *ngFor="let item of customers">\n\n                        <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                          <ion-label>{{item.NAME}}</ion-label>\n\n                        </button>\n\n                      </ion-item-sliding>\n\n                    </ion-list>\n\n                  </ion-card>\n\n                </div>\n\n              </ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\giftclaim\giftclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__["a" /* GiftClaim_Service */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-giftclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\giftclaim\giftclaim.html"*/'<!--\n\n  Generated template for the GiftclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>{{ \'GIFT_CLAIM_HEADING\' | translate }}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n        <ion-list-header>\n\n          Select Travel Claim For:\n\n        </ion-list-header>\n\n    \n\n        <ion-item>\n\n          <ion-label>Customer</ion-label>\n\n          <ion-radio value="customer" checked="true"></ion-radio>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label>Project</ion-label>\n\n          <ion-radio value="project"></ion-radio>\n\n        </ion-item>\n\n      </ion-list>\n\n\n\n      <form [formGroup]="Giftform">\n\n\n\n          <div *ngIf="claimFor==\'project\'">\n\n              <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n              <ion-item>\n\n                <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n                <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n                  <ion-icon name="eye"></ion-icon>\n\n                  {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n              </ion-item>\n\n              <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n              <ion-item>\n\n                <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n                <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n              </ion-item>\n\n            </div>\n\n          <!-- <ion-card>\n\n              <ion-label stacked>{{ "PROJECT_NAME_LABEL" | translate }}</ion-label>\n\n            <ion-searchbar formControlName="project_name" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" \n\n              placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n    \n\n            <ion-list>\n\n              <ion-item-sliding *ngFor="let item of projects">\n\n                <button ion-item (click)="GetSocNo(item.SOC_GUID)">\n\n                  <ion-label >{{item.project_name}}<>{{item.soc}}</ion-label>\n\n                </button>\n\n              </ion-item-sliding>\n\n            </ion-list>  \n\n          </ion-card> -->\n\n    \n\n          <div *ngIf="claimFor==\'customer\'">\n\n    \n\n              <!-- formControlName="customer" -->\n\n              <ion-item>\n\n                <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n                <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n                  <ion-icon name="eye"></ion-icon>\n\n                  {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n              </ion-item>\n\n            </div>\n\n    \n\n          <!-- <ion-item>\n\n              <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n              <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n              placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n            </ion-item> -->\n\n    \n\n            <ion-item>\n\n              <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n            </ion-item>       \n\n            \n\n            <ion-item>\n\n                <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n                <ion-label > {{travelAmount | number}} </ion-label>\n\n                <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n              </ion-item>\n\n    \n\n              <ion-item>\n\n                  <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n                  <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n                </ion-item>       \n\n           \n\n            <!-- <ion-item>\n\n              <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>\n\n            </ion-item> -->\n\n    \n\n            <div class="btn">\n\n              <button ion-button (click)=\'save(Giftform.value)\'   >SUBMIT</button>\n\n            </div> \n\n            <!-- [disabled]="!Giftform.valid"       -->\n\n          </form>\n\n\n\n          <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n            </div>\n\n            <div class="popup2" padding *ngIf="AddLookupClicked">\n\n              <ion-card>\n\n                <ion-card-header class="icTitle headerColor-white ">\n\n          \n\n                  <div class="icHeaderText">Search Location</div>\n\n                  <button class="btnR" (click)="CloseLookupClick()">\n\n                    <ion-icon name="md-close"></ion-icon>\n\n                  </button>\n\n                </ion-card-header>\n\n                <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n                <ion-list>\n\n                  <ion-item-sliding *ngFor="let item of currentItems">\n\n                    <button ion-item (click)="openItem(item)">\n\n                      <ion-label> {{item.description}}</ion-label>\n\n                    </button>\n\n                  </ion-item-sliding>\n\n                </ion-list>\n\n              </ion-card>\n\n            </div>\n\n      \n\n            <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n              </div>\n\n              <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n                <ion-card>\n\n                  <ion-card-header class="icTitle headerColor-white ">\n\n                    <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n                    <button class="btnR" (click)="CloseProjectLookup()">\n\n                      <ion-icon name="md-close"></ion-icon>\n\n                    </button>\n\n                  </ion-card-header>\n\n                  <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n                  <ion-list>\n\n                    <ion-item-sliding *ngFor="let item of projects">\n\n                      <button ion-item (click)="GetSocNo(item)">\n\n                        <ion-label>{{item.project_name}}\n\n                          <>{{item.soc}}</ion-label>\n\n                      </button>\n\n                    </ion-item-sliding>\n\n                  </ion-list>\n\n                </ion-card>\n\n              </div>\n\n      \n\n              <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n                </div>\n\n                <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n                  <ion-card>\n\n                    <ion-card-header class="icTitle headerColor-white ">\n\n                      <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n                      <button class="btnR" (click)="CloseCustomerLookup()">\n\n                        <ion-icon name="md-close"></ion-icon>\n\n                      </button>\n\n                    </ion-card-header>\n\n                    <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n                    <ion-list>\n\n                      <ion-item-sliding *ngFor="let item of customers">\n\n                        <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                          <ion-label>{{item.NAME}}</ion-label>\n\n                        </button>\n\n                      </ion-item-sliding>\n\n                    </ion-list>\n\n                  </ion-card>\n\n                </div>\n\n              </ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\giftclaim\giftclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__["a" /* GiftClaim_Service */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_13__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_7__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_6__services_giftclaim_service__["a" /* GiftClaim_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
 ], GiftclaimPage);
@@ -3967,7 +3967,7 @@ GiftclaimPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_overtimeclaim_service__ = __webpack_require__(382);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_overtimeclaim_service__ = __webpack_require__(383);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
@@ -4317,7 +4317,7 @@ OvertimeclaimPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_entertainmentclaim_service__ = __webpack_require__(383);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_entertainmentclaim_service__ = __webpack_require__(384);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_uuid__);
@@ -4848,61 +4848,80 @@ var TravelclaimPage = (function () {
             console.table(_this.currentItems);
         });
     };
+    //   onSearchInput(ev: any) {  
+    //     let val = ev.target.value;
+    //     if (val && val.trim() != '') {
+    //      this.projects = this.projects.filter((item) => {
+    //        console.log(item);
+    //        return ((item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) > -1) 
+    //        || ((item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) > -1) 
+    //        || (item.YEAR.toString().toLowerCase().indexOf(val.toLowerCase()) > -1))
+    //        || (item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) > -1
+    //      ) 
+    //      );
+    //      })
+    //    }
+    //    else
+    //    {
+    //     //  this.BindData();
+    //     return null;
+    //    }
+    // }
+    // Search project start:
     TravelclaimPage.prototype.searchProject = function (searchString) {
         var val = searchString.target.value;
         if (!val || !val.trim()) {
             this.projects = this.storeProjects;
             return;
         }
-        //  this.projects=  this.filterProjects({
-        //   project_name: val
-        //   });
+        this.projects = this.filterProjects({
+            project_name: val
+        });
     };
-    // filterProjects(params?: any) {
-    //   if (!params) {
-    //     //return this.storeProjects;
-    //   }
-    //     return this.projects.filter((item) =>{
-    //     return this.storeProjects;
-    //   }
-    //   return this.projects.filter((item) => {
-    //     for (let key in params) {
-    //       let field = item[key];
-    //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-    //         return item;
-    //       } else if (field == params[key]) {
-    //         return item;
-    //       }
-    //     }
-    //     return null;
-    //   });
-    // }
+    TravelclaimPage.prototype.filterProjects = function (params) {
+        if (!params) {
+            return this.storeProjects;
+        }
+        return this.projects.filter(function (item) {
+            for (var key in params) {
+                var field = item[key];
+                if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+                    return item;
+                }
+                else if (field == params[key]) {
+                    return item;
+                }
+            }
+            return null;
+        });
+    };
     TravelclaimPage.prototype.searchCustomer = function (searchString) {
         var val = searchString.target.value;
         if (!val || !val.trim()) {
             this.customers = this.storeCustomers;
             return;
         }
-        // this.customers = this.filterCustomer({
-        //   NAME: val
-        // });
+        this.customers = this.filterCustomer({
+            NAME: val
+        });
     };
-    // filterCustomer(params?: any) {
-    //   if (!params) {
-    //     return this.storeCustomers;
-    //   }
-    //   return this.customers.filter((item) => {
-    //     for (let key in params) {
-    //       let field = item[key];
-    //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-    //         return item;
-    //       } else if (field == params[key]) {
-    //         return item;
-    //       }
-    //     }
-    //     return null;
-    //   });
-    // }
+    TravelclaimPage.prototype.filterCustomer = function (params) {
+        if (!params) {
+            return this.storeCustomers;
+        }
+        return this.customers.filter(function (item) {
+            for (var key in params) {
+                var field = item[key];
+                if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+                    return item;
+                }
+                else if (field == params[key]) {
+                    return item;
+                }
+            }
+            return null;
+        });
+    };
     TravelclaimPage.prototype.takePhoto = function () {
         // Camera.getPicture().then((imageData) => {
         //     this.imageURL = imageData
@@ -4915,6 +4934,27 @@ var TravelclaimPage = (function () {
         this.VehicleRate = vehicle.RATE_PER_UNIT;
         this.vehicleCategory = vehicle.CATEGORY;
     };
+    // fileChange(){
+    //   alert('file change');
+    //   let fileList: FileList = event.target.files;
+    //   if(fileList.length > 0) {
+    //       let file: File = fileList[0];
+    //       let formData:FormData = new FormData();
+    //       formData.append('uploadFile', file, file.name);
+    //       let headers = new Headers();
+    //       /** No need to include Content-Type in Angular 4 */
+    //       headers.append('Content-Type', 'multipart/form-data');
+    //       headers.append('Accept', 'application/json');
+    //       let options = new RequestOptions({ headers: headers });
+    //       this.http.post(`${this.apiEndPoint}`, formData, options)
+    //           .map(res => res.json())
+    //           .catch(error => Observable.throw(error))
+    //           .subscribe(
+    //               data => console.log('success'),
+    //               error => console.log(error)
+    //           )
+    //   }
+    // }
     TravelclaimPage.prototype.save = function (value) {
         var _this = this;
         var userGUID = localStorage.getItem('g_USER_GUID');
@@ -5029,7 +5069,7 @@ var TravelclaimPage = (function () {
 TravelclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-travelclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/'<!--\n\n  Generated template for the TravelclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>     \n\n    <ion-title>{{ \'TRAVEL_CLAIM_HEADING\' | translate }}</ion-title>  \n\n  </ion-navbar>\n\n </ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <!-- <button ion-button (click)="AddTravelClick()">SUMMARY</button> -->\n\n\n\n  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n      <ion-list-header>\n\n        Select Travel Claim For:\n\n      </ion-list-header>\n\n  \n\n      <ion-item>\n\n        <ion-label>Customer</ion-label>\n\n        <ion-radio value="customer" checked="true"></ion-radio>\n\n      </ion-item>\n\n  \n\n      <ion-item>\n\n        <ion-label>Project</ion-label>\n\n        <ion-radio value="project"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n\n\n  <form [formGroup]="Travelform">\n\n\n\n      <div *ngIf="claimFor==\'project\'">\n\n          <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n          <ion-item>\n\n            <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n            <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n              <ion-icon name="eye"></ion-icon>\n\n              {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n          </ion-item>\n\n          <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n          <ion-item>\n\n            <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n            <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n          </ion-item>\n\n        </div>     \n\n\n\n      <div *ngIf="claimFor==\'customer\'">\n\n\n\n          <!-- formControlName="customer" -->\n\n          <ion-item>\n\n            <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n            <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n              <ion-icon name="eye"></ion-icon>\n\n              {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n          </ion-item>\n\n        </div>\n\n\n\n      <!-- <ion-item>\n\n          <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n          <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n          placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n        </ion-item> -->\n\n\n\n        <ion-item>\n\n          <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" max={{validDate}} placeholder="{{ \'START_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" max={{validDate}} placeholder="{{ \'END_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <!-- <ion-item>\n\n          <ion-label stacked>{{ "CALENDAR_REF_LABEL" | translate }}</ion-label>\n\n        </ion-item> -->\n\n\n\n        <ion-item>\n\n            <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n            <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n  \n\n        <ion-item>\n\n          <ion-label stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" placeholder=" {{ \'ORIGIN_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_ORIGIN_BUTTON" | translate  }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination" placeholder=" {{ \'DESTINATION_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddToLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DESTINATION_BUTTON" | translate }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" placeholder=" {{ \'DISTANCE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <!-- <button ion-button outline item-end icon-left (click)="GetDistance()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DISTANCE_BUTTON" }} </button> -->\n\n        </ion-item>\n\n\n\n        <!-- [(ngModel)]="Travel_Amount_ngModel" -->\n\n        <ion-item>\n\n            <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n            <ion-label > {{travelAmount | number}} </ion-label>\n\n            <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item>\n\n              <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n              <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            </ion-item>       \n\n\n\n        <div class="btn">\n\n          <button ion-button (click)=\'save(Travelform.value)\'  >SUBMIT</button>\n\n        </div>\n\n        <!-- [disabled]="!Travelform.valid" -->       \n\n\n\n        <a (click)="showAddToll()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Toll</a>\n\n        <a (click)="showAddParking()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a>\n\n    \n\n      </form>\n\n\n\n      <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n      </div>\n\n      <div class="popup2" padding *ngIf="AddLookupClicked">\n\n        <ion-card>\n\n          <ion-card-header class="icTitle headerColor-white ">\n\n    \n\n            <div class="icHeaderText">Search Location</div>\n\n            <button class="btnR" (click)="CloseLookupClick()">\n\n              <ion-icon name="md-close"></ion-icon>\n\n            </button>\n\n          </ion-card-header>\n\n          <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n          <ion-list>\n\n            <ion-item-sliding *ngFor="let item of currentItems">\n\n              <button ion-item (click)="openItem(item)">\n\n                <ion-label> {{item.description}}</ion-label>\n\n              </button>\n\n            </ion-item-sliding>\n\n          </ion-list>\n\n        </ion-card>\n\n      </div>\n\n\n\n      <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n        </div>\n\n        <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n          <ion-card>\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n              <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n              <button class="btnR" (click)="CloseProjectLookup()">\n\n                <ion-icon name="md-close"></ion-icon>\n\n              </button>\n\n            </ion-card-header>\n\n            <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n            <ion-list>\n\n              <ion-item-sliding *ngFor="let item of projects">\n\n                <button ion-item (click)="GetSocNo(item)">\n\n                  <ion-label>{{item.project_name}}\n\n                    <>{{item.soc}}</ion-label>\n\n                </button>\n\n              </ion-item-sliding>\n\n            </ion-list>\n\n          </ion-card>\n\n        </div>\n\n\n\n        <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n          </div>\n\n          <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n            <ion-card>\n\n              <ion-card-header class="icTitle headerColor-white ">\n\n                <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n                <button class="btnR" (click)="CloseCustomerLookup()">\n\n                  <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n              </ion-card-header>\n\n              <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n              <ion-list>\n\n                <ion-item-sliding *ngFor="let item of customers">\n\n                  <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                    <ion-label>{{item.NAME}}</ion-label>\n\n                  </button>\n\n                </ion-item-sliding>\n\n              </ion-list>\n\n            </ion-card>\n\n          </div>   \n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */]]
+        selector: 'page-travelclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/'<!--\n\n  Generated template for the TravelclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>     \n\n    <ion-title>{{ \'TRAVEL_CLAIM_HEADING\' | translate }}</ion-title>  \n\n  </ion-navbar>\n\n </ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <!-- <button ion-button (click)="AddTravelClick()">SUMMARY</button> -->\n\n\n\n  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n      <ion-list-header>\n\n        Select Travel Claim For:\n\n      </ion-list-header>\n\n  \n\n      <ion-item>\n\n        <ion-label>Customer</ion-label>\n\n        <ion-radio value="customer" checked="true"></ion-radio>\n\n      </ion-item>\n\n  \n\n      <ion-item>\n\n        <ion-label>Project</ion-label>\n\n        <ion-radio value="project"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n\n\n  <form [formGroup]="Travelform">\n\n\n\n      <div *ngIf="claimFor==\'project\'">\n\n          <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n          <ion-item>\n\n            <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n            <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n              <ion-icon name="eye"></ion-icon>\n\n              {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n          </ion-item>\n\n          <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n          <ion-item>\n\n            <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n            <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n          </ion-item>\n\n        </div>     \n\n\n\n      <div *ngIf="claimFor==\'customer\'">\n\n\n\n          <!-- formControlName="customer" -->\n\n          <ion-item>\n\n            <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n            <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n              <ion-icon name="eye"></ion-icon>\n\n              {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n          </ion-item>\n\n        </div>\n\n\n\n      <!-- <ion-item>\n\n          <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n          <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n          placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n        </ion-item> -->\n\n\n\n        <ion-item>\n\n          <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" max={{validDate}} placeholder="{{ \'START_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" max={{validDate}} placeholder="{{ \'END_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <!-- <ion-item>\n\n          <ion-label stacked>{{ "CALENDAR_REF_LABEL" | translate }}</ion-label>\n\n        </ion-item> -->\n\n\n\n        <ion-item>\n\n            <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n            <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n  \n\n        <ion-item>\n\n          <ion-label stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" placeholder=" {{ \'ORIGIN_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_ORIGIN_BUTTON" | translate  }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination" placeholder=" {{ \'DESTINATION_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddToLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DESTINATION_BUTTON" | translate }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" placeholder=" {{ \'DISTANCE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <!-- <button ion-button outline item-end icon-left (click)="GetDistance()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DISTANCE_BUTTON" }} </button> -->\n\n        </ion-item>\n\n\n\n        <!-- [(ngModel)]="Travel_Amount_ngModel" -->\n\n        <ion-item>\n\n            <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n            <ion-label > {{travelAmount | number}} </ion-label>\n\n            <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item>\n\n              <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n              <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            </ion-item>      \n\n            \n\n            <ion-item>\n\n              <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">\n\n            </ion-item>\n\n\n\n        <div class="btn">\n\n          <button ion-button (click)=\'save(Travelform.value)\'  >SUBMIT</button>\n\n        </div>\n\n        <!-- [disabled]="!Travelform.valid" -->       \n\n\n\n        <a (click)="showAddToll()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Toll</a>\n\n        <a (click)="showAddParking()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a>\n\n    \n\n      </form>\n\n\n\n      <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n      </div>\n\n      <div class="popup2" padding *ngIf="AddLookupClicked">\n\n        <ion-card>\n\n          <ion-card-header class="icTitle headerColor-white ">\n\n    \n\n            <div class="icHeaderText">Search Location</div>\n\n            <button class="btnR" (click)="CloseLookupClick()">\n\n              <ion-icon name="md-close"></ion-icon>\n\n            </button>\n\n          </ion-card-header>\n\n          <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n          <ion-list>\n\n            <ion-item-sliding *ngFor="let item of currentItems">\n\n              <button ion-item (click)="openItem(item)">\n\n                <ion-label> {{item.description}}</ion-label>\n\n              </button>\n\n            </ion-item-sliding>\n\n          </ion-list>\n\n        </ion-card>\n\n      </div>\n\n\n\n      <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n        </div>\n\n        <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n          <ion-card>\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n              <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n              <button class="btnR" (click)="CloseProjectLookup()">\n\n                <ion-icon name="md-close"></ion-icon>\n\n              </button>\n\n            </ion-card-header>\n\n            <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n            <ion-list>\n\n              <ion-item-sliding *ngFor="let item of projects">\n\n                <button ion-item (click)="GetSocNo(item)">\n\n                  <ion-label>{{item.project_name}}\n\n                    <>{{item.soc}}</ion-label>\n\n                </button>\n\n              </ion-item-sliding>\n\n            </ion-list>\n\n          </ion-card>\n\n        </div>\n\n\n\n        <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n          </div>\n\n          <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n            <ion-card>\n\n              <ion-card-header class="icTitle headerColor-white ">\n\n                <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n                <button class="btnR" (click)="CloseCustomerLookup()">\n\n                  <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n              </ion-card-header>\n\n              <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n              <ion-list>\n\n                <ion-item-sliding *ngFor="let item of customers">\n\n                  <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                    <ion-label>{{item.NAME}}</ion-label>\n\n                  </button>\n\n                </ion-item-sliding>\n\n              </ion-list>\n\n            </ion-card>\n\n          </div>   \n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_15__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
 ], TravelclaimPage);
@@ -5045,7 +5085,7 @@ TravelclaimPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_ClaimReqDetail_Model__ = __webpack_require__(384);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_ClaimReqDetail_Model__ = __webpack_require__(385);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angular2_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(9);
@@ -5153,7 +5193,7 @@ AddTollPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_main_profile_model__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_profilesetup_services__ = __webpack_require__(385);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_profilesetup_services__ = __webpack_require__(386);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -5525,7 +5565,7 @@ GlobalFunction = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_banksetup_model__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_banksetup_service__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_banksetup_service__ = __webpack_require__(387);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -6238,7 +6278,7 @@ BranchsetupPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_cashcardsetup_model__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_cashcardsetup_service__ = __webpack_require__(387);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_cashcardsetup_service__ = __webpack_require__(388);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -6658,7 +6698,7 @@ var CashcardSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_claimtypesetup_model__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_claimtypesetup_service__ = __webpack_require__(388);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_claimtypesetup_service__ = __webpack_require__(389);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -7005,7 +7045,7 @@ var ClaimTypeSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_companysetup_model__ = __webpack_require__(258);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_companysetup_service__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_companysetup_service__ = __webpack_require__(390);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -7507,7 +7547,7 @@ var CompanySetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_designationsetup_model__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_designationsetup_service__ = __webpack_require__(390);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_designationsetup_service__ = __webpack_require__(391);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -7846,7 +7886,7 @@ var DesignationSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_departmentsetup_model__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_departmentsetup_service__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_departmentsetup_service__ = __webpack_require__(392);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -8197,7 +8237,7 @@ var DepartmentSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_mileagesetup_model__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_mileagesetup_service__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_mileagesetup_service__ = __webpack_require__(393);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -8549,7 +8589,7 @@ var MileageSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_paymenttypesetup_model__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_paymenttypesetup_service__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_paymenttypesetup_service__ = __webpack_require__(394);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -8891,7 +8931,7 @@ var PaymentTypeSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_qualificationsetup_model__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_qualificationsetup_service__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_qualificationsetup_service__ = __webpack_require__(395);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -9555,7 +9595,7 @@ var ViewUser_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_catch__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_Observable__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_observable_throw__ = __webpack_require__(396);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_observable_throw__ = __webpack_require__(397);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_observable_throw___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rxjs_add_observable_throw__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ionic_angular__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9963,11 +10003,11 @@ UserSetup_Service = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_socmain_model__ = __webpack_require__(397);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_socmain_model__ = __webpack_require__(398);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_soc_project_model__ = __webpack_require__(276);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_soc_customer_model__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_socmain_service__ = __webpack_require__(398);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_tenant_main_model__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_socmain_service__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_tenant_main_model__ = __webpack_require__(400);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_view_soc_model__ = __webpack_require__(278);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angular2_uuid__ = __webpack_require__(13);
@@ -10425,7 +10465,7 @@ var View_SOC_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_subsciptionsetup_model__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_subsciptionsetup_service__ = __webpack_require__(400);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_subsciptionsetup_service__ = __webpack_require__(401);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -10828,7 +10868,7 @@ var SubsciptionSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_tenantmainsetup_model__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_tenantmainsetup_service__ = __webpack_require__(401);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_tenantmainsetup_service__ = __webpack_require__(402);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_tenantcompanysetup_model__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_tenantcompanysetup_service__ = __webpack_require__(132);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_tenantcompanysitesetup_model__ = __webpack_require__(75);
@@ -11643,7 +11683,7 @@ PeermissionPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_rolesetup_model__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_rolesetup_service__ = __webpack_require__(402);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_rolesetup_service__ = __webpack_require__(403);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -12038,8 +12078,8 @@ var RoleSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_angular2_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__login_login__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_rolemodulesetup_model__ = __webpack_require__(403);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_rolemodulesetup_service__ = __webpack_require__(404);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_rolemodulesetup_model__ = __webpack_require__(404);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_rolemodulesetup_service__ = __webpack_require__(405);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12410,7 +12450,7 @@ RolemodulesetupPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_pagesetup_model__ = __webpack_require__(289);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_pagesetup_service__ = __webpack_require__(405);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_pagesetup_service__ = __webpack_require__(406);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_uuid__);
@@ -12715,9 +12755,9 @@ var PageSetup_Model = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config_constants__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_modulesetup_model__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_modulesetup_service__ = __webpack_require__(406);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_modulesetup_service__ = __webpack_require__(407);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_modulepagesetup_model__ = __webpack_require__(292);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_ModulePageSetup_Service__ = __webpack_require__(407);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_ModulePageSetup_Service__ = __webpack_require__(408);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_base_http__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_uuid__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_angular2_uuid__);
@@ -13320,20 +13360,20 @@ ClaimhistoryPage = __decorate([
 //# sourceMappingURL=claimhistory.js.map
 
 /***/ }),
-/* 295 */
+/* 295 */,
+/* 296 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(296);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(315);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(316);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
 //# sourceMappingURL=main.js.map
 
 /***/ }),
-/* 296 */,
 /* 297 */,
 /* 298 */,
 /* 299 */,
@@ -13352,7 +13392,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* 312 */,
 /* 313 */,
 /* 314 */,
-/* 315 */
+/* 315 */,
+/* 316 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13367,8 +13408,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_translate_http_loader__ = __webpack_require__(373);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_component__ = __webpack_require__(375);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_translate_http_loader__ = __webpack_require__(374);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_component__ = __webpack_require__(376);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_about_about__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_about_popover_about_popover__ = __webpack_require__(235);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_account_account__ = __webpack_require__(236);
@@ -13409,22 +13450,26 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_pagesetup_pagesetup__ = __webpack_require__(288);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__pages_submodulesetup_submodulesetup__ = __webpack_require__(293);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_modulesetup_modulesetup__ = __webpack_require__(290);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_translate_translate__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__ionic_native_camera__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__ionic_native_file__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__ionic_native_file_path__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__ionic_native_file_transfer__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__angular_common_http__ = __webpack_require__(408);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__pages_Profile_Setup_Profile_Setup__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__pages_add_toll_add_toll__ = __webpack_require__(246);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__pages_Services__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__pages_claimhistory_claimhistory__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_countrysetup_countrysetup__ = __webpack_require__(409);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__pages_upload_upload__ = __webpack_require__(410);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__pages_translate_translate__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__ionic_native_camera__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__ionic_native_file__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__ionic_native_file_path__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__ionic_native_file_transfer__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__angular_common_http__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__pages_Profile_Setup_Profile_Setup__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__pages_add_toll_add_toll__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_61__pages_Services__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__pages_claimhistory_claimhistory__ = __webpack_require__(294);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -13515,6 +13560,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_46__pages_peermission_peermission__["a" /* PeermissionPage */],
             __WEBPACK_IMPORTED_MODULE_47__pages_rolemodulesetup_rolemodulesetup__["a" /* RolemodulesetupPage */],
             __WEBPACK_IMPORTED_MODULE_48__pages_pagesetup_pagesetup__["a" /* PagesetupPage */],
+            __WEBPACK_IMPORTED_MODULE_51__pages_countrysetup_countrysetup__["a" /* CountrysetupPage */],
             __WEBPACK_IMPORTED_MODULE_42__pages_travelclaim_travelclaim__["a" /* TravelclaimPage */],
             __WEBPACK_IMPORTED_MODULE_28__pages_schedule_filter_schedule_filter__["a" /* ScheduleFilterPage */],
             __WEBPACK_IMPORTED_MODULE_29__pages_session_detail_session_detail__["a" /* SessionDetailPage */],
@@ -13529,7 +13575,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_18__pages_claimtype_claimtype__["a" /* ClaimtypePage */],
             __WEBPACK_IMPORTED_MODULE_17__pages_cashcardsetup_cashcardsetup__["a" /* CashcardsetupPage */],
             __WEBPACK_IMPORTED_MODULE_20__pages_designationsetup_designationsetup__["a" /* DesignationsetupPage */],
-            __WEBPACK_IMPORTED_MODULE_51__pages_translate_translate__["a" /* TranslatePage */],
+            __WEBPACK_IMPORTED_MODULE_53__pages_translate_translate__["a" /* TranslatePage */],
             __WEBPACK_IMPORTED_MODULE_22__pages_mileagesetup_mileagesetup__["a" /* MileagesetupPage */],
             __WEBPACK_IMPORTED_MODULE_23__pages_rolesetup_rolesetup__["a" /* RolesetupPage */],
             __WEBPACK_IMPORTED_MODULE_50__pages_modulesetup_modulesetup__["a" /* ModulesetupPage */],
@@ -13541,18 +13587,19 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_43__pages_user_user__["a" /* UserPage */],
             __WEBPACK_IMPORTED_MODULE_44__pages_soc_registration_soc_registration__["a" /* SocRegistrationPage */],
             __WEBPACK_IMPORTED_MODULE_45__pages_adminsetup_adminsetup__["a" /* AdminsetupPage */],
-            __WEBPACK_IMPORTED_MODULE_57__pages_Profile_Setup_Profile_Setup__["a" /* ProfileSetupPage */],
-            __WEBPACK_IMPORTED_MODULE_58__pages_add_toll_add_toll__["a" /* AddTollPage */],
-            __WEBPACK_IMPORTED_MODULE_60__pages_claimhistory_claimhistory__["a" /* ClaimhistoryPage */]
+            __WEBPACK_IMPORTED_MODULE_52__pages_upload_upload__["a" /* UploadPage */],
+            __WEBPACK_IMPORTED_MODULE_59__pages_Profile_Setup_Profile_Setup__["a" /* ProfileSetupPage */],
+            __WEBPACK_IMPORTED_MODULE_60__pages_add_toll_add_toll__["a" /* AddTollPage */],
+            __WEBPACK_IMPORTED_MODULE_62__pages_claimhistory_claimhistory__["a" /* ClaimhistoryPage */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* HttpModule */], __WEBPACK_IMPORTED_MODULE_56__angular_common_http__["b" /* HttpClientModule */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* HttpModule */], __WEBPACK_IMPORTED_MODULE_58__angular_common_http__["b" /* HttpClientModule */],
             __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__["b" /* TranslateModule */].forRoot({
                 loader: {
                     provide: __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__["a" /* TranslateLoader */],
                     useFactory: (createTranslateLoader),
-                    deps: [__WEBPACK_IMPORTED_MODULE_56__angular_common_http__["a" /* HttpClient */]]
+                    deps: [__WEBPACK_IMPORTED_MODULE_58__angular_common_http__["a" /* HttpClient */]]
                 }
             }),
             __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_10__app_component__["a" /* ConferenceApp */], {}, {
@@ -13603,8 +13650,9 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_45__pages_adminsetup_adminsetup__["a" /* AdminsetupPage */],
             __WEBPACK_IMPORTED_MODULE_24__pages_paymenttypesetup_paymenttypesetup__["a" /* PaymenttypesetupPage */],
             __WEBPACK_IMPORTED_MODULE_48__pages_pagesetup_pagesetup__["a" /* PagesetupPage */],
+            __WEBPACK_IMPORTED_MODULE_51__pages_countrysetup_countrysetup__["a" /* CountrysetupPage */],
             __WEBPACK_IMPORTED_MODULE_49__pages_submodulesetup_submodulesetup__["a" /* SubmodulesetupPage */],
-            __WEBPACK_IMPORTED_MODULE_51__pages_translate_translate__["a" /* TranslatePage */],
+            __WEBPACK_IMPORTED_MODULE_53__pages_translate_translate__["a" /* TranslatePage */],
             __WEBPACK_IMPORTED_MODULE_25__pages_qualificationsetup_qualificationsetup__["a" /* QualificationsetupPage */],
             __WEBPACK_IMPORTED_MODULE_26__pages_subsciptionsetup_subsciptionsetup__["a" /* SubsciptionsetupPage */],
             __WEBPACK_IMPORTED_MODULE_33__pages_tenantsetup_tenantsetup__["a" /* TenantsetupPage */],
@@ -13613,22 +13661,23 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_32__pages_tabs_tabs__["a" /* TabsPage */],
             __WEBPACK_IMPORTED_MODULE_43__pages_user_user__["a" /* UserPage */],
             __WEBPACK_IMPORTED_MODULE_44__pages_soc_registration_soc_registration__["a" /* SocRegistrationPage */],
-            __WEBPACK_IMPORTED_MODULE_57__pages_Profile_Setup_Profile_Setup__["a" /* ProfileSetupPage */],
-            __WEBPACK_IMPORTED_MODULE_58__pages_add_toll_add_toll__["a" /* AddTollPage */],
-            __WEBPACK_IMPORTED_MODULE_60__pages_claimhistory_claimhistory__["a" /* ClaimhistoryPage */]
+            __WEBPACK_IMPORTED_MODULE_59__pages_Profile_Setup_Profile_Setup__["a" /* ProfileSetupPage */],
+            __WEBPACK_IMPORTED_MODULE_60__pages_add_toll_add_toll__["a" /* AddTollPage */],
+            __WEBPACK_IMPORTED_MODULE_62__pages_claimhistory_claimhistory__["a" /* ClaimhistoryPage */],
+            __WEBPACK_IMPORTED_MODULE_52__pages_upload_upload__["a" /* UploadPage */],
         ],
         providers: [
             { provide: __WEBPACK_IMPORTED_MODULE_2__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* IonicErrorHandler */] },
-            __WEBPACK_IMPORTED_MODULE_35__providers_conference_data__["a" /* ConferenceData */], __WEBPACK_IMPORTED_MODULE_56__angular_common_http__["b" /* HttpClientModule */],
+            __WEBPACK_IMPORTED_MODULE_35__providers_conference_data__["a" /* ConferenceData */], __WEBPACK_IMPORTED_MODULE_58__angular_common_http__["b" /* HttpClientModule */],
             __WEBPACK_IMPORTED_MODULE_36__providers_user_data__["a" /* UserData */],
             __WEBPACK_IMPORTED_MODULE_4__ionic_native_in_app_browser__["a" /* InAppBrowser */],
-            __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_59__pages_Services__["a" /* Services */],
-            __WEBPACK_IMPORTED_MODULE_52__ionic_native_camera__["a" /* Camera */],
-            __WEBPACK_IMPORTED_MODULE_53__ionic_native_file__["a" /* File */],
-            __WEBPACK_IMPORTED_MODULE_54__ionic_native_file_path__["a" /* FilePath */],
-            __WEBPACK_IMPORTED_MODULE_55__ionic_native_file_transfer__["a" /* FileTransfer */],
+            __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_61__pages_Services__["a" /* Services */],
+            __WEBPACK_IMPORTED_MODULE_54__ionic_native_camera__["a" /* Camera */],
+            __WEBPACK_IMPORTED_MODULE_55__ionic_native_file__["a" /* File */],
+            __WEBPACK_IMPORTED_MODULE_56__ionic_native_file_path__["a" /* FilePath */],
+            __WEBPACK_IMPORTED_MODULE_57__ionic_native_file_transfer__["a" /* FileTransfer */],
             //FileUploadOptions,
-            __WEBPACK_IMPORTED_MODULE_55__ionic_native_file_transfer__["b" /* FileTransferObject */]
+            __WEBPACK_IMPORTED_MODULE_57__ionic_native_file_transfer__["b" /* FileTransferObject */]
         ]
     })
 ], AppModule);
@@ -13636,7 +13685,6 @@ AppModule = __decorate([
 //# sourceMappingURL=app.module.js.map
 
 /***/ }),
-/* 316 */,
 /* 317 */,
 /* 318 */,
 /* 319 */,
@@ -13695,7 +13743,8 @@ AppModule = __decorate([
 /* 372 */,
 /* 373 */,
 /* 374 */,
-/* 375 */
+/* 375 */,
+/* 376 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13875,8 +13924,8 @@ ConferenceApp = __decorate([
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
-/* 376 */,
-/* 377 */
+/* 377 */,
+/* 378 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13986,9 +14035,9 @@ MedicalClaim_Service = __decorate([
 //# sourceMappingURL=medicalclaim_service.js.map
 
 /***/ }),
-/* 378 */,
 /* 379 */,
-/* 380 */
+/* 380 */,
+/* 381 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14098,7 +14147,7 @@ PrintingClaim_Service = __decorate([
 //# sourceMappingURL=printingclaim_service.js.map
 
 /***/ }),
-/* 381 */
+/* 382 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14208,7 +14257,7 @@ GiftClaim_Service = __decorate([
 //# sourceMappingURL=giftclaim_service.js.map
 
 /***/ }),
-/* 382 */
+/* 383 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14318,7 +14367,7 @@ OvertimeClaim_Service = __decorate([
 //# sourceMappingURL=overtimeclaim_service.js.map
 
 /***/ }),
-/* 383 */
+/* 384 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14428,7 +14477,7 @@ EntertainmentClaim_Service = __decorate([
 //# sourceMappingURL=entertainmentclaim_service.js.map
 
 /***/ }),
-/* 384 */
+/* 385 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14488,7 +14537,7 @@ var ClaimReqDetail_Model = (function () {
 //# sourceMappingURL=ClaimReqDetail_Model.js.map
 
 /***/ }),
-/* 385 */
+/* 386 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14629,7 +14678,7 @@ ProfileSetup_Service = __decorate([
 //# sourceMappingURL=profilesetup_services.js.map
 
 /***/ }),
-/* 386 */
+/* 387 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14800,7 +14849,7 @@ BankSetup_Service = __decorate([
 //# sourceMappingURL=banksetup_service.js.map
 
 /***/ }),
-/* 387 */
+/* 388 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14950,7 +14999,7 @@ CashcardSetup_Service = __decorate([
 //# sourceMappingURL=cashcardsetup_service.js.map
 
 /***/ }),
-/* 388 */
+/* 389 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15118,7 +15167,7 @@ ClaimTypeSetup_Service = __decorate([
 //# sourceMappingURL=claimtypesetup_service.js.map
 
 /***/ }),
-/* 389 */
+/* 390 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15268,7 +15317,7 @@ CompanySetup_Service = __decorate([
 //# sourceMappingURL=companysetup_service.js.map
 
 /***/ }),
-/* 390 */
+/* 391 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15419,7 +15468,7 @@ DesignationSetup_Service = __decorate([
 //# sourceMappingURL=designationsetup_service.js.map
 
 /***/ }),
-/* 391 */
+/* 392 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15569,7 +15618,7 @@ DepartmentSetup_Service = __decorate([
 //# sourceMappingURL=departmentsetup_service.js.map
 
 /***/ }),
-/* 392 */
+/* 393 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15723,7 +15772,7 @@ MileageSetup_Service = __decorate([
 //# sourceMappingURL=mileagesetup_service.js.map
 
 /***/ }),
-/* 393 */
+/* 394 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15873,7 +15922,7 @@ PaymentTypeSetup_Service = __decorate([
 //# sourceMappingURL=paymenttypesetup_service.js.map
 
 /***/ }),
-/* 394 */
+/* 395 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16023,7 +16072,7 @@ QualificationSetup_Service = __decorate([
 //# sourceMappingURL=qualificationsetup_service.js.map
 
 /***/ }),
-/* 395 */
+/* 396 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16083,8 +16132,8 @@ var View_Dropdown_Model = (function () {
 //# sourceMappingURL=view_dropdown.js.map
 
 /***/ }),
-/* 396 */,
-/* 397 */
+/* 397 */,
+/* 398 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16132,7 +16181,7 @@ var SocMain_Model = (function () {
 //# sourceMappingURL=socmain_model.js.map
 
 /***/ }),
-/* 398 */
+/* 399 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16402,7 +16451,7 @@ SocMain_Service = __decorate([
 //# sourceMappingURL=socmain_service.js.map
 
 /***/ }),
-/* 399 */
+/* 400 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16450,7 +16499,7 @@ var Tenant_Main_Model = (function () {
 //# sourceMappingURL=tenant_main_model.js.map
 
 /***/ }),
-/* 400 */
+/* 401 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16599,7 +16648,7 @@ SubsciptionSetup_Service = __decorate([
 //# sourceMappingURL=subsciptionsetup_service.js.map
 
 /***/ }),
-/* 401 */
+/* 402 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16722,7 +16771,7 @@ TenantMainSetup_Service = __decorate([
 //# sourceMappingURL=tenantmainsetup_service.js.map
 
 /***/ }),
-/* 402 */
+/* 403 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16873,7 +16922,7 @@ RoleSetup_Service = __decorate([
 //# sourceMappingURL=rolesetup_service.js.map
 
 /***/ }),
-/* 403 */
+/* 404 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16917,7 +16966,7 @@ var RoleModuleSetup_Model = (function () {
 //# sourceMappingURL=rolemodulesetup_model.js.map
 
 /***/ }),
-/* 404 */
+/* 405 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17026,7 +17075,7 @@ RoleModuleSetup_Service = __decorate([
 //# sourceMappingURL=rolemodulesetup_service.js.map
 
 /***/ }),
-/* 405 */
+/* 406 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17174,7 +17223,7 @@ PageSetup_Service = __decorate([
 //# sourceMappingURL=pagesetup_service.js.map
 
 /***/ }),
-/* 406 */
+/* 407 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17322,7 +17371,7 @@ ModuleSetup_Service = __decorate([
 //# sourceMappingURL=modulesetup_service.js.map
 
 /***/ }),
-/* 407 */
+/* 408 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17445,6 +17494,125 @@ ModulePageSetup_Service = __decorate([
 
 //# sourceMappingURL=ModulePageSetup_Service.js.map
 
+/***/ }),
+/* 409 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CountrysetupPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the CountrysetupPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var CountrysetupPage = (function () {
+    function CountrysetupPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    CountrysetupPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad CountrysetupPage');
+    };
+    return CountrysetupPage;
+}());
+CountrysetupPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+        selector: 'page-countrysetup',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\countrysetup\countrysetup.html"*/'<!--\n  Generated template for the CountrysetupPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>countrysetup</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\countrysetup\countrysetup.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */]])
+], CountrysetupPage);
+
+//# sourceMappingURL=countrysetup.js.map
+
+/***/ }),
+/* 410 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(295);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the UploadPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var UploadPage = (function () {
+    function UploadPage(navCtrl, navParams, http) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.http = http;
+    }
+    UploadPage.prototype.ngOnInit = function () {
+    };
+    // private upload() {
+    //   const fileBrowser = this.fileInput.nativeElement;
+    //   if (fileBrowser.files && fileBrowser.files[0]) {
+    //     const formData = new FormData();
+    //     formData.append('files', fileBrowser.files[0]);
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('POST', 'http://api.zen.com.my/api/v2/files/', true);
+    //     xhr.onload = function () {
+    //       if (this['status'] === 200) {
+    //           const responseText = this['responseText'];
+    //           const files = JSON.parse(responseText);
+    //           //todo: emit event
+    //       } else {
+    //         //todo: error handling
+    //       }
+    //     };
+    //     xhr.send(formData);
+    //   }
+    // }
+    UploadPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad UploadPage');
+    };
+    return UploadPage;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('fileInput'),
+    __metadata("design:type", Object)
+], UploadPage.prototype, "fileInput", void 0);
+UploadPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+        selector: 'page-upload',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\upload\upload.html"*/'<!--\n  Generated template for the UploadPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>upload</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <form [formGroup]="Travelform">\n    <!-- <ion-item>\n        <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">\n      </ion-item> -->\n\n      <div>\n          <input type="file" #fileInput placeholder="Upload file..." />\n          <button type="button" (click)="upload()">Upload</button>\n        </div>\n      </form>\n</ion-content>\n'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\upload\upload.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+], UploadPage);
+
+//# sourceMappingURL=upload.js.map
+
 /***/ })
-],[295]);
+],[296]);
 //# sourceMappingURL=main.js.map
