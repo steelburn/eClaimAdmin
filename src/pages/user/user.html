@@ -33,16 +33,18 @@
             <table class="Tabler">
                 <tr class="linedsg TColor">
 
-                    <th class="lgl1 tblBrLeft">NAME</th>
+                    <th class="lgl1 tblBrLeft">#</th>
+                    <th class="lgl1">NAME</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">LOGINID</th>
 
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of users; let i=index">
+                <tr class="col7" *ngFor="let user of userview; let i=index">
 
-                    <td class="lgl1">{{user.NAME}}</td>
+                    <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{user.FULLNAME}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
                     <td class="lgl1">{{user.LOGIN_ID}}</td>
 
@@ -73,23 +75,25 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft">DESIGNATION</th>
+                    <th class="lgl1 tblBrLeft">#</th>
+                    <th class="lgl1">DESIGNATION</th>
                     <th class="lgl1">COMPANY</th>
                     <th class="lgl1">DEPARTMENT</th>
                     <th class="lgl1">JOIN DATE</th>
                     <th class="lgl1">BRANCH</th>
-                    <th class="lgl1">APPROVER</th>
+                    <!-- <th class="lgl1">APPROVER</th> -->
                     <th class="lgl1"> STATUS</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of employees; let i=index">
-                    <td class="lgl1">{{user.DESIGNATION_NAME}}</td>
-                    <td class="lgl1">{{user.COMPANY}}</td>
-                    <td class="lgl1">{{user.DEPARTMENT_NAME}}</td>
+                <tr class="col7" *ngFor="let user of userview; let i=index">
+                    <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{user.designation_name}}</td>
+                    <td class="lgl1">{{user.tenant_company_name}}</td>
+                    <td class="lgl1">{{user.department_name}}</td>
                     <td class="lgl1">{{user.JOIN_DATE}}</td>
-                    <td class="lgl1">{{user.BRANCH}}</td>
-                    <td class="lgl1">{{user.APPROVER1}}</td>
+                    <td class="lgl1">{{user.SITE_NAME}}</td>
+                    <!-- <td class="lgl1">{{user.APPROVER1}}</td> -->
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
@@ -117,14 +121,16 @@
             <table class="Tabler">
                 <tr class="linedsg TColor">
 
-                    <th class="lgl1 tblBrLeft">ADDRESS LINE 1</th>
+                    <th class="lgl1 tblBrLeft">#</th>
+                    <th class="lgl1">ADDRESS LINE 1</th>
                     <th class="lgl1">ADDRESS LINE 2</th>
                     <th class="lgl1">ADDRESS LINE 3</th>
                     <th class="lgl1 tblBrRight">ACTION</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of address; let i=index">
+                <tr class="col7"*ngFor="let user of userview; let i=index">
 
+                    <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS1}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS2}}</td>
                     <td class="lgl1">{{user.USER_ADDRESS3}}</td>
@@ -181,7 +187,7 @@
 
                     <ion-item class="text">
                         <ion-label stacked>{{"PASSWORD"}}</ion-label>
-                        <ion-input type="text" formControlName="PASSWORD" [(ngModel)]="User_Password_ngModel" placeholder="{{'Please fill the Password'}}"></ion-input>
+                        <ion-input type="password"  formControlName="PASSWORD" [(ngModel)]="User_Password_ngModel" placeholder="{{'Please fill the Password'}}"></ion-input>
                     </ion-item>
 
                     <ion-item class="text">
@@ -295,7 +301,9 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>
                         <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_ngModel" placeholder="{{'Please fill in the Employee Type'}}">
-                            <ion-option *ngFor="let emptype of emptypes" value="{{emptype.value}}">{{emptype.text}}</ion-option>
+                            <ion-option value="0">Permanent</ion-option>
+                            <ion-option value="1">Contract</ion-option>
+                            <ion-option value="2">Temporary</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -334,6 +342,11 @@
                         <ion-select formControlName="HIGHEST_QUALIFICATION" [(ngModel)]="User_HighestQualification_ngModel" placeholder="{{'Select Highest Qualification'}}">
                             <ion-option *ngFor="let qualification of qualifications" value="{{qualification.QUALIFICATION_TYPE_GUID}}">{{qualification.TYPE_NAME}}</ion-option>
                         </ion-select>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"UNIVERSITY"}}</ion-label>
+                        <ion-input type="text" formControlName="UNIVERSITY" [(ngModel)]="User_University_ngModel" placeholder="{{'Please fill the University'}}"></ion-input>
                     </ion-item>
 
                     <ion-item class="text">
@@ -449,17 +462,15 @@
 
                     <ion-item class="text">
                         <ion-label stacked>{{"COUNTRY"}}</ion-label>
-                        <ion-select formControlName="USER_COUNTRY" [(ngModel)]="User_Country_ngModel" placeholder="{{'Select Country'}}">
-                            <ion-option value="1">MALAYSIA</ion-option>
-                            <ion-option value="2">INDIA</ion-option>
+                        <ion-select formControlName="USER_COUNTRY" [(ngModel)]="User_Country_ngModel" placeholder="{{'Select Country'}}" (ionChange)="BindState('main_state','NAME')">
+                            <ion-option *ngFor="let country of countries" [value]="country.COUNTRY_GUID" selected="true">{{ country.NAME }}</ion-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item class="text">
                         <ion-label stacked>{{"STATE"}}</ion-label>
                         <ion-select formControlName="USER_STATE" [(ngModel)]="User_State_ngModel" placeholder="{{'Select State'}}">
-                            <ion-option value="1">KUALAMPUR</ion-option>
-                            <ion-option value="2">ANDHRA PRADESH</ion-option>
+                            <ion-option *ngFor="let state of states" [value]="state.STATE_GUID" selected="true">{{ state.NAME }}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -580,7 +591,7 @@
 
                     <ion-item class="text">
                         <ion-label stacked>{{"CONTACT NAME 1"}}</ion-label>
-                        <ion-input type="text" formControlName="EMG_CONTACT_NAME1" [(ngModel)]="User_EMG_CONTACT_NAME1_ngModel" placeholder="{{'Please fill the Contact Number'}}"></ion-input>
+                        <ion-input type="text" formControlName="EMG_CONTACT_NAME1" [(ngModel)]="User_EMG_CONTACT_NAME1_ngModel" placeholder="{{'Please fill the Contact Name'}}"></ion-input>
                     </ion-item>
 
                     <ion-item class="text">
@@ -661,7 +672,6 @@
 
 
     <!-- edit user form start -->
-
     <div class="blackcontainer" *ngIf="EditUserClicked">
     </div>
     <div class="popup" padding *ngIf="EditUserClicked">
@@ -851,5 +861,5 @@
         </ion-card>
 
     </div>
-
+    <!-- edit user form end -->
 </ion-content>
