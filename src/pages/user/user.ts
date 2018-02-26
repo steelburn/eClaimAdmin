@@ -868,7 +868,6 @@ export class UserPage {
                 // });
 
 
-
                 // this.usermain_entry.EMAIL = this.User_Email_ngModel.trim();
                 // //this.usermain_entry.STAFF_ID = this.User_StaffID_ngModel.trim();  
                 // this.usermain_entry.USER_GUID = UUID.UUID();
