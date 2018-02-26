@@ -66,6 +66,10 @@
   "SOC_NUMBER": "SOC Number",
   "PROJECT_NAME": "Project Name",
   "CUSTOMER_NAME": "Customer Name",
+  "COUNTRY_SETUP_HEADING": "Country Name",
+  "STATE_SETUP_HEADING": "State Setup",
+  "COUNTRY_NAME": "Country Name",
+  "STATE_NAME": "State Nmae",
   
 
   "PROJECT_NAME_LABEL": "Project Name",
