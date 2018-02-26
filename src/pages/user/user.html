@@ -394,9 +394,11 @@
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHMENT</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
                     </ion-item>
-                    <button ion-button icon-left (click)="UploadCertificate()">
+
+                    <button ion-button icon-left (click)="AddProfessionalCertification()">
                         <ion-icon name="cloud-upload"></ion-icon>ADD
                     </button>
+
                     <ion-list>
                         <ion-item>
                             <table class="Tabler">
@@ -409,17 +411,17 @@
                                     <th class="lgl1 tblBrRight">ACTION</th>
                                 </tr>
 
-                                <tr class="col7" *ngFor="let user of address; let i=index">
+                                <tr class="col7" *ngFor="let certificate of ProfessionalCertification; let i=index">
                                     <td class="lgl1">{{i+1}}</td>
-                                    <td class="lgl1">MCA</td>
-                                    <td class="lgl1">2010</td>
-                                    <td class="lgl1">B</td>
+                                    <td class="lgl1">{{certificate.NAME}}</td>
+                                    <td class="lgl1">{{certificate.GRADE}}</td>
+                                    <td class="lgl1">{{certificate.YEAR}}</td>
                                     <td class="lgl1">MCA.Pdf</td>
                                     <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
+                                        <button ion-button item-end (click)="EditClick_Personaldetails(certificate.NAME)">
                                             <ion-icon name="md-create"></ion-icon>
                                         </button>
-                                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
+                                        <button ion-button item-end (click)="RemoveProfessionalCertification(certificate.NAME)">
                                             <ion-icon name="md-close"></ion-icon>
                                         </button>
                                     </td>
@@ -495,7 +497,7 @@
                         <ion-input type="text" formControlName="SPOUSE_ICNUMBER" [(ngModel)]="User_Spouse_IcNumber_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
                     </ion-item>
 
-                    <button ion-button icon-left (click)="UploadCertificate()">
+                    <button ion-button icon-left (click)="AddFamilyDetails()">
                         <ion-icon name="cloud-upload"></ion-icon>ADD
                     </button>
 
@@ -509,15 +511,15 @@
                                     <th class="lgl1 tblBrRight">ACTION</th>
                                 </tr>
 
-                                <tr class="col7" *ngFor="let user of address; let i=index">
+                                <tr class="col7" *ngFor="let family of FamilyDetails; let i=index">
                                     <td class="lgl1">{{i+1}}</td>
-                                    <td class="lgl1">SPOUSE NAME</td>
-                                    <td class="lgl1">1234567890</td>
+                                    <td class="lgl1">{{family.NAME}}</td>
+                                    <td class="lgl1">{{family.ICNO}}</td>
                                     <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
+                                        <button ion-button item-end (click)="EditClick_Personaldetails(family.NAME)">
                                             <ion-icon name="md-create"></ion-icon>
                                         </button>
-                                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
+                                        <button ion-button item-end (click)="RemoveFamilyDetails(family.NAME)">
                                             <ion-icon name="md-close"></ion-icon>
                                         </button>
                                     </td>
@@ -544,10 +546,14 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"SPOUSE"}}</ion-label>
                         <ion-select formControlName="SPOUSE_CHILD" [(ngModel)]="User_SpouseChild_ngModel" placeholder="{{'Please Select Spouse'}}">
-                            <ion-option value="1">SPOUSE NAME 1</ion-option>
-                            <ion-option value="0">SPOUSE NAME 2</ion-option>
+                            <ion-option *ngFor="let family of FamilyDetails" [value]="family.NAME" selected="true">{{ family.NAME }}</ion-option>
                         </ion-select>
                     </ion-item>
+
+                    <button ion-button icon-left (click)="AddChildren()">
+                        <ion-icon name="cloud-upload"></ion-icon>ADD
+                    </button>
+
                     <ion-list>
                         <ion-item>
                             <table class="Tabler">
@@ -555,21 +561,22 @@
                                     <th class="lgl1 tblBrLeft">NO</th>
                                     <th class="lgl1">NAME</th>
                                     <th class="lgl1">IC NUMBER</th>
-                                    <th class="lgl1">GENDOR</th>
+                                    <th class="lgl1">GENDER</th>
                                     <th class="lgl1">SPOUSE</th>
                                     <th class="lgl1 tblBrRight">ACTION</th>
                                 </tr>
 
-                                <tr class="col7" *ngFor="let user of address; let i=index">
+                                <tr class="col7" *ngFor="let chilren of ChildrenDetails; let i=index">
                                     <td class="lgl1">{{i+1}}</td>
-                                    <td class="lgl1">CHILD NAME</td>
-                                    <td class="lgl1">0987654321</td>
-                                    <td class="lgl1">FEMALE</td>
+                                    <td class="lgl1">{{chilren.NAME}}</td>
+                                    <td class="lgl1">{{chilren.ICNO}}</td>
+                                    <td class="lgl1">{{chilren.GENDER}}</td>
+                                    <td class="lgl1">{{chilren.SPOUSE}}</td>
                                     <td class="lgl1 fColor">
                                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
                                             <ion-icon name="md-create"></ion-icon>
                                         </button>
-                                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
+                                        <button ion-button item-end (click)="RemoveChildren(chilren.NAME)">
                                             <ion-icon name="md-close"></ion-icon>
                                         </button>
                                     </td>
