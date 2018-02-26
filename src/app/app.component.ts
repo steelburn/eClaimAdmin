@@ -28,6 +28,9 @@ import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
 import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+import { UploadPage } from'../pages/upload/upload';
+import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
+import { StatesetupPage } from '../pages/statesetup/statesetup';
 
 import { TranslateService } from '@ngx-translate/core';
 

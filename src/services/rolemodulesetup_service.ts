@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
-import { RoleModuleSetup_Model } from '../models/roleModuleSetup_model';
+import { RoleModuleSetup_Model } from '../models/rolemodulesetup_model';
 import { BaseHttpService } from './base-http';
 
 import 'rxjs/add/operator/map';
