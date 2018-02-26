@@ -77,6 +77,20 @@ export class StateSetup_Service {
             });
     }
 
+    remove (id: string) {
+		var queryHeaders = new Headers();
+    	queryHeaders.append('Content-Type', 'application/json');
+    	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		return this.httpService.http
+			.delete(this.baseResourceUrl + '/' + id,{ headers: queryHeaders})
+			.map((response) => {
+				var result: any = response.json();
+				//console.log(result.bank_GUID);
+				return result.STATE_GUID;
+			});
+	}
+
     // get_cashcard(params?: URLSearchParams): Observable<CashcardSetup_Model[]> {
     //     var queryHeaders = new Headers();
     //     queryHeaders.append('Content-Type', 'application/json');

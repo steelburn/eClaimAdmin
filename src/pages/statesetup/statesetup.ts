@@ -30,6 +30,7 @@ export class StatesetupPage {
   country_entry: CountrySetup_Model = new CountrySetup_Model();
   Stateform: FormGroup;
   public countries:any;
+  
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_state' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
@@ -38,7 +39,7 @@ export class StatesetupPage {
   baseResourceUrl_view: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_state' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   // main_country' + '?order=NAME&api_key=' + cons        order=NAME&
   //public states: StateSetup_Model[] = [];
-  public states: any;
+  public states: any[];
 
   public AddStateClicked: boolean = false;
   public EditStateClicked: boolean = false;
@@ -76,6 +77,36 @@ export class StatesetupPage {
         this.STATE_NAME_ngModel_Edit = self.state_details.NAME; localStorage.setItem('Previ_state', self.state_details.NAME); //console.log(self.mileage_details.CATEGORY);
         this.COUNTRY_NAME_ngModel_Edit = self.state_details.COUNTRY_GUID;
       });
+  }
+
+  public DeleteClick(STATE_GUID: any) {
+    let alert = this.alertCtrl.create({
+      title: 'Remove Confirmation',
+      message: 'Do you want to remove ?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('OK clicked');
+            var self = this;
+            this.statesetupservice.remove(STATE_GUID)
+              .subscribe(() => {
+                self.states = self.states.filter((item) => {
+                  return item.STATE_GUID != STATE_GUID
+                });
+              });
+            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        }
+      ]
+    }); alert.present();
   }
 
   public CloseStateClick() {
