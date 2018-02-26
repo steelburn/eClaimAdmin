@@ -51,21 +51,48 @@ export class CountrysetupPage {
     this.AddCountryClicked = true;    
   }
 
-  public EditClick(COUNTRYE_GUID: any) {
+  public EditClick(COUNTRY_GUID: any) {
    // this.ClearControls();
     this.EditCountryClicked = true;
     var self = this;
     this.countrysetupservice
-      .get(COUNTRYE_GUID)
+      .get(COUNTRY_GUID)
       .subscribe((data) => {
         self.country_details = data;
         console.log(self.country_details);
         this.NAME_ngModel_Edit = self.country_details.NAME; localStorage.setItem('Prev_country', self.country_details.NAME); //console.log(self.mileage_details.CATEGORY);
        
-       // alert(this.CATEGORY_ngModel_Edit);
-       // alert(self.mileage_details.CATEGORY);
-       
       });
+  }
+
+  public DeleteClick(COUNTRY_GUID: any) {
+    let alert = this.alertCtrl.create({
+      title: 'Remove Confirmation',
+      message: 'Do you want to remove ?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('OK clicked');
+            var self = this;
+            this.countrysetupservice.remove(COUNTRY_GUID)
+              .subscribe(() => {
+                self.countries = self.countries.filter((item) => {
+                  return item.COUNTRY_GUID != COUNTRY_GUID
+                });
+              });
+            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        }
+      ]
+    }); alert.present();
   }
 
   public CloseCountryClick() {
