@@ -44,7 +44,7 @@
   "CLAIM_TYPE_SETUP_HEADING": "Claim Type Setup",
   "CLAIM_NAME": "Name",
   "CLAIM_DESCRIPTION": "Description",
-  "CLAIM_ACTION": "Action",
+  
   "DESIGNATION_SETUP_HEADING": "Designation Setup",
   "DESIGNATION_NAME": "Name",
   "DESIGNATION_DESCRIPTION": "Description",
@@ -70,6 +70,8 @@
   "STATE_SETUP_HEADING": "State Setup",
   "COUNTRY_NAME": "Country Name",
   "STATE_NAME": "State Nmae",
+  "NO": "No.",
+ 
   
 
   "PROJECT_NAME_LABEL": "Project Name",
