@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController, Item } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -115,6 +115,10 @@ export class UserPage {
   public Exist_Record: boolean = false;
   public AddUserClicked: boolean = false;
   public EditUserClicked: boolean = false;
+
+  public ProfessionalCertification: any[] = [];
+  public FamilyDetails: any[] = [];
+  public ChildrenDetails: any[] = [];
 
   //Set the Model Name for Add------------------------------------------
   public User_Name_ngModel: any;
@@ -505,10 +509,15 @@ export class UserPage {
     console.log('ionViewDidLoad UserPage');
   }
 
-  BindGrid(ViewName: string){
+  BindGrid(ViewName: string) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
     let TableURL_User: string;
 
-    if (localStorage.getItem("g_USER_GUID") == "sva") {      
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
       TableURL_User = this.BaseTableURL + ViewName + '?' + this.Key_Param;
     }
     else {
@@ -519,12 +528,13 @@ export class UserPage {
       .map(res => res.json())
       .subscribe(data => {
         this.userview = data["resource"];
+        this.loading.dismissAll();
       });
   }
 
   GetDesignation(TableName: string, SortField: string) {
     let TableURL: string;
-    
+
     TableURL = this.BaseTableURL + TableName + '?order=' + SortField + '&' + this.Key_Param;
     this.http
       .get(TableURL)
@@ -593,7 +603,7 @@ export class UserPage {
       });
   }
 
-  BindCountry(TableName: string, SortField: string) {   
+  BindCountry(TableName: string, SortField: string) {
     let TableURL: string;
     TableURL = this.BaseTableURL + TableName + '?order=' + SortField + '&' + this.Key_Param;
 
@@ -607,7 +617,7 @@ export class UserPage {
 
   BindState(TableName: string, SortField: string) {
     let TableURL: string;
-    TableURL = this.BaseTableURL + TableName + '?filter=(COUNTRY_GUID=' + this.User_Country_ngModel +')&' + 'order='+ SortField + '&' + this.Key_Param;
+    TableURL = this.BaseTableURL + TableName + '?filter=(COUNTRY_GUID=' + this.User_Country_ngModel + ')&' + 'order=' + SortField + '&' + this.Key_Param;
 
     this.http
       .get(TableURL)
@@ -650,6 +660,100 @@ export class UserPage {
       .subscribe(data => {
         this.qualifications = data["resource"];
       });
+  }
+
+  User_Certification_ngModel: any;
+  User_CertificationGrade_ngModel: any;
+  User_CertificationYear_ngModel: any;
+
+  AddProfessionalCertification() {
+    if (this.User_Certification_ngModel != undefined && this.User_Certification_ngModel.trim() != "") {
+      if (this.User_CertificationGrade_ngModel != undefined && this.User_CertificationGrade_ngModel.trim() != "") {
+        if (this.User_CertificationYear_ngModel != undefined && this.User_CertificationYear_ngModel.trim() != "") {
+          this.ProfessionalCertification.push({ NAME: this.User_Certification_ngModel.trim(), GRADE: this.User_CertificationGrade_ngModel.trim(), YEAR: this.User_CertificationYear_ngModel.trim() });
+          //Clear the Controls------------------------
+          this.User_Certification_ngModel = "";
+          this.User_CertificationGrade_ngModel = "";
+          this.User_CertificationYear_ngModel = "";
+        }
+        else {
+          alert("Fill Year !!");
+        }
+      }
+      else {
+        alert("Fill Grade !!");
+      }
+    }
+    else {
+      alert("Fill Certificate Name !!");
+    }
+  }
+
+  RemoveProfessionalCertification(CertificateName: string) {
+    this.ProfessionalCertification = this.ProfessionalCertification.filter(item => item.NAME != CertificateName);
+  }
+
+  User_Spouse_Name_ngModel: any;
+  User_Spouse_IcNumber_ngModel: any;
+
+  AddFamilyDetails() {
+    if (this.User_Spouse_Name_ngModel != undefined && this.User_Spouse_Name_ngModel.trim() != "") {
+      if (this.User_Spouse_IcNumber_ngModel != undefined && this.User_Spouse_IcNumber_ngModel.trim() != "") {
+        this.FamilyDetails.push({ NAME: this.User_Spouse_Name_ngModel.trim(), ICNO: this.User_Spouse_IcNumber_ngModel.trim() });
+        
+        this.User_Spouse_Name_ngModel = "";
+        this.User_Spouse_IcNumber_ngModel = "";
+      }
+      else {
+        alert("Fill IC Number !!");
+      }
+    }
+    else {
+      alert("Fill Spouse Name !!");
+    }
+  }
+
+  RemoveFamilyDetails(SpouseName: string) {
+    this.FamilyDetails = this.FamilyDetails.filter(item => item.NAME != SpouseName);
+  }
+
+  User_Child_Name_ngModel: any;
+  User_Child_IcNumber_ngModel: any;
+  User_Child_Gender_ngModel: any;
+  User_SpouseChild_ngModel: any;
+
+  AddChildren() {
+    if (this.User_Child_Name_ngModel != undefined && this.User_Child_Name_ngModel.trim() != "") {
+      if (this.User_Child_IcNumber_ngModel != undefined && this.User_Child_IcNumber_ngModel.trim() != "") {
+        if (this.User_Child_Gender_ngModel != undefined && this.User_Child_Gender_ngModel != "") {
+          if (this.User_SpouseChild_ngModel != undefined && this.User_SpouseChild_ngModel != "") {
+            this.ChildrenDetails.push({ NAME: this.User_Child_Name_ngModel.trim(), ICNO: this.User_Child_IcNumber_ngModel.trim(), GENDER: this.User_Child_Gender_ngModel.trim(), SPOUSE: this.User_SpouseChild_ngModel.trim() });
+
+            //------Clear Controls ----------------
+            this.User_Child_Name_ngModel= "";
+            this.User_Child_IcNumber_ngModel = "";
+            this.User_Child_Gender_ngModel = "";
+            this.User_SpouseChild_ngModel = "";
+          }
+          else {
+            alert("Select Spouse !!");
+          }
+        }
+        else {
+          alert("Select Gender !!");
+        }
+      }
+      else {
+        alert("Fill Child IC Number !!")
+      }
+    }
+    else {
+      alert("Fill Child Name !!");
+    }
+  }
+
+  RemoveChildren(ChildName: string){
+    this.ChildrenDetails = this.ChildrenDetails.filter(item => item.NAME != ChildName);
   }
 
   GetTenant_GUID(Tenant_company_guid: string) {
