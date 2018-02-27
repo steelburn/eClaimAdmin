@@ -720,6 +720,7 @@ export class UserPage {
   User_Child_IcNumber_ngModel: any;
   User_Child_Gender_ngModel: any;
   User_SpouseChild_ngModel: any;
+  
 
   AddChildren() {
     if (this.User_Child_Name_ngModel != undefined && this.User_Child_Name_ngModel.trim() != "") {
