@@ -22,6 +22,9 @@ import { UserContact_Model } from '../../models/user_contact_model';
 import { UserCompany_Model } from '../../models/user_company_model';
 import { UserAddress_Model } from '../../models/usersetup_address_model';
 import { UserQualification_Model } from '../../models/user_qualification_model';
+import { UserCertification_Model } from '../../models/user_certification_model';
+import { UserSpouse_Model } from '../../models/user_spouse_model';
+import { UserChildren_Model } from '../../models/user_children_model';
 import { ViewUser_Model } from '../../models/viewuser_model';
 import { View_Dropdown_Model } from '../../models/view_dropdown';
 import { UserSetup_Service } from '../../services/usersetup_service';
@@ -70,6 +73,10 @@ export class UserPage {
   // tenantcompany_entry: UserCompany_Model = new UserCompany_Model();
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
   userqualification_entry: UserQualification_Model = new UserQualification_Model();
+  UserCertification_Entry: UserCertification_Model = new UserCertification_Model();
+  UserSpouse_Entry: UserSpouse_Model = new UserSpouse_Model();
+  UserChildren_Entry: UserChildren_Model = new UserChildren_Model();
+
   viewuser_entry: ViewUser_Model = new ViewUser_Model();
   viewdropdown_entry: View_Dropdown_Model = new View_Dropdown_Model();
   view_user_details: any;
@@ -664,12 +671,23 @@ export class UserPage {
   User_Certification_ngModel: any;
   User_CertificationGrade_ngModel: any;
   User_CertificationYear_ngModel: any;
+  CertificateSaveFlag: boolean = false;
 
   AddProfessionalCertification() {
     if (this.User_Certification_ngModel != undefined && this.User_Certification_ngModel.trim() != "") {
       if (this.User_CertificationGrade_ngModel != undefined && this.User_CertificationGrade_ngModel.trim() != "") {
         if (this.User_CertificationYear_ngModel != undefined && this.User_CertificationYear_ngModel.trim() != "") {
-          this.ProfessionalCertification.push({ NAME: this.User_Certification_ngModel.trim(), GRADE: this.User_CertificationGrade_ngModel.trim(), YEAR: this.User_CertificationYear_ngModel.trim() });
+          if (this.CertificateSaveFlag == false) {
+            this.ProfessionalCertification.push({ CERTIFICATE_GUID: UUID.UUID(), NAME: this.User_Certification_ngModel.trim(), GRADE: this.User_CertificationGrade_ngModel.trim(), YEAR: this.User_CertificationYear_ngModel.trim() });
+          }
+          else {
+            this.ProfessionalCertification = this.ProfessionalCertification.filter(item => item.CERTIFICATE_GUID != localStorage.getItem("CERTIFICATE_GUID"));
+            this.ProfessionalCertification.push({ CERTIFICATE_GUID: localStorage.getItem("CERTIFICATE_GUID"), NAME: this.User_Certification_ngModel.trim(), GRADE: this.User_CertificationGrade_ngModel.trim(), YEAR: this.User_CertificationYear_ngModel.trim() });
+
+            this.CertificateSaveFlag = false;
+            localStorage.removeItem("SPOUSE_GUID");
+          }
+
           //Clear the Controls------------------------
           this.User_Certification_ngModel = "";
           this.User_CertificationGrade_ngModel = "";
@@ -688,18 +706,46 @@ export class UserPage {
     }
   }
 
-  RemoveProfessionalCertification(CertificateName: string) {
-    this.ProfessionalCertification = this.ProfessionalCertification.filter(item => item.NAME != CertificateName);
+  EditProfessionalCertification(CERTIFICATE_GUID: string) {
+    for (var item in this.ProfessionalCertification) {
+      if (this.ProfessionalCertification[item]["CERTIFICATE_GUID"] == CERTIFICATE_GUID) {
+        this.User_Certification_ngModel = this.ProfessionalCertification[item]["NAME"];
+        this.User_CertificationGrade_ngModel = this.ProfessionalCertification[item]["GRADE"];
+        this.User_CertificationYear_ngModel = this.ProfessionalCertification[item]["YEAR"];
+
+        localStorage.setItem("CERTIFICATE_GUID", this.ProfessionalCertification[item]["CERTIFICATE_GUID"]);
+
+        this.CertificateSaveFlag = true;
+        return;
+      }
+    }
+  }
+
+  RemoveProfessionalCertification(CERTIFICATE_GUID: string) {
+    if (this.CertificateSaveFlag == false) {
+      this.ProfessionalCertification = this.ProfessionalCertification.filter(item => item.CERTIFICATE_GUID != CERTIFICATE_GUID);
+    }
+    else {
+      alert('Sorry!! You are in Edit Mode.');
+    }
   }
 
   User_Spouse_Name_ngModel: any;
   User_Spouse_IcNumber_ngModel: any;
+  SpouseSaveFlag: boolean = false;
 
   AddFamilyDetails() {
     if (this.User_Spouse_Name_ngModel != undefined && this.User_Spouse_Name_ngModel.trim() != "") {
       if (this.User_Spouse_IcNumber_ngModel != undefined && this.User_Spouse_IcNumber_ngModel.trim() != "") {
-        this.FamilyDetails.push({ NAME: this.User_Spouse_Name_ngModel.trim(), ICNO: this.User_Spouse_IcNumber_ngModel.trim() });
-        
+        if (this.SpouseSaveFlag == false) {
+          this.FamilyDetails.push({ SPOUSE_GUID: UUID.UUID(), NAME: this.User_Spouse_Name_ngModel.trim(), ICNO: this.User_Spouse_IcNumber_ngModel.trim() });
+        }
+        else {
+          this.FamilyDetails = this.FamilyDetails.filter(item => item.SPOUSE_GUID != localStorage.getItem("SPOUSE_GUID"));
+          this.FamilyDetails.push({ SPOUSE_GUID: localStorage.getItem("SPOUSE_GUID"), NAME: this.User_Spouse_Name_ngModel.trim(), ICNO: this.User_Spouse_IcNumber_ngModel.trim() });
+          this.SpouseSaveFlag = false;
+          localStorage.removeItem("SPOUSE_GUID");
+        }
         this.User_Spouse_Name_ngModel = "";
         this.User_Spouse_IcNumber_ngModel = "";
       }
@@ -712,25 +758,53 @@ export class UserPage {
     }
   }
 
-  RemoveFamilyDetails(SpouseName: string) {
-    this.FamilyDetails = this.FamilyDetails.filter(item => item.NAME != SpouseName);
+  EditFamilyDetails(SPOUSE_GUID: string) {
+    for (var item in this.FamilyDetails) {
+      if (this.FamilyDetails[item]["SPOUSE_GUID"] == SPOUSE_GUID) {
+        this.User_Spouse_Name_ngModel = this.FamilyDetails[item]["NAME"];
+        this.User_Spouse_IcNumber_ngModel = this.FamilyDetails[item]["ICNO"];
+        localStorage.setItem("SPOUSE_GUID", this.FamilyDetails[item]["SPOUSE_GUID"]);
+
+        this.SpouseSaveFlag = true;
+        return;
+      }
+    }
+  }
+
+  RemoveFamilyDetails(SPOUSE_GUID: string) {
+    if (this.SpouseSaveFlag == false) {
+      this.FamilyDetails = this.FamilyDetails.filter(item => item.SPOUSE_GUID != SPOUSE_GUID);
+      this.SpouseSaveFlag = false;
+    }
+    else {
+      alert("Sorry !! You are in Edit Mode.");
+    }
+
   }
 
   User_Child_Name_ngModel: any;
   User_Child_IcNumber_ngModel: any;
   User_Child_Gender_ngModel: any;
   User_SpouseChild_ngModel: any;
-  
+  ChildSaveFlag: boolean = false;
 
   AddChildren() {
     if (this.User_Child_Name_ngModel != undefined && this.User_Child_Name_ngModel.trim() != "") {
       if (this.User_Child_IcNumber_ngModel != undefined && this.User_Child_IcNumber_ngModel.trim() != "") {
         if (this.User_Child_Gender_ngModel != undefined && this.User_Child_Gender_ngModel != "") {
           if (this.User_SpouseChild_ngModel != undefined && this.User_SpouseChild_ngModel != "") {
-            this.ChildrenDetails.push({ NAME: this.User_Child_Name_ngModel.trim(), ICNO: this.User_Child_IcNumber_ngModel.trim(), GENDER: this.User_Child_Gender_ngModel.trim(), SPOUSE: this.User_SpouseChild_ngModel.trim() });
+            if (this.ChildSaveFlag == false) {
+              this.ChildrenDetails.push({ CHILD_GUID: UUID.UUID(), NAME: this.User_Child_Name_ngModel.trim(), ICNO: this.User_Child_IcNumber_ngModel.trim(), GENDER: this.User_Child_Gender_ngModel.trim(), SPOUSE: this.User_SpouseChild_ngModel.trim() });
+            }
+            else {
+              this.ChildrenDetails = this.ChildrenDetails.filter(item => item.CHILD_GUID != localStorage.getItem("CHILD_GUID"));
+              this.ChildrenDetails.push({ CHILD_GUID: localStorage.getItem("CHILD_GUID"), NAME: this.User_Child_Name_ngModel.trim(), ICNO: this.User_Child_IcNumber_ngModel.trim(), GENDER: this.User_Child_Gender_ngModel.trim(), SPOUSE: this.User_SpouseChild_ngModel.trim() });
 
+              this.ChildSaveFlag = false;
+              localStorage.removeItem("CHILD_GUID");
+            }
             //------Clear Controls ----------------
-            this.User_Child_Name_ngModel= "";
+            this.User_Child_Name_ngModel = "";
             this.User_Child_IcNumber_ngModel = "";
             this.User_Child_Gender_ngModel = "";
             this.User_SpouseChild_ngModel = "";
@@ -752,8 +826,30 @@ export class UserPage {
     }
   }
 
-  RemoveChildren(ChildName: string){
-    this.ChildrenDetails = this.ChildrenDetails.filter(item => item.NAME != ChildName);
+  EditChildren(CHILD_GUID: string) {
+    for (var item in this.ChildrenDetails) {
+      if (this.ChildrenDetails[item]["CHILD_GUID"] == CHILD_GUID) {
+        this.User_Child_Name_ngModel = this.ChildrenDetails[item]["NAME"];
+        this.User_Child_IcNumber_ngModel = this.ChildrenDetails[item]["ICNO"];
+        this.User_Child_Gender_ngModel = this.ChildrenDetails[item]["GENDER"];
+        this.User_SpouseChild_ngModel = this.ChildrenDetails[item]["SPOUSE"];
+
+        localStorage.setItem("CHILD_GUID", this.ChildrenDetails[item]["CHILD_GUID"]);
+
+        this.ChildSaveFlag = true;
+        return;
+      }
+    }
+  }
+
+  RemoveChildren(CHILD_GUID: string) {
+    if (this.ChildSaveFlag == false) {
+      this.ChildrenDetails = this.ChildrenDetails.filter(item => item.CHILD_GUID != CHILD_GUID);
+      this.ChildSaveFlag = false;
+    }
+    else {
+      alert('Sorry!! You are in Edit Mode.');
+    }
   }
 
   GetTenant_GUID(Tenant_company_guid: string) {
@@ -934,16 +1030,90 @@ export class UserPage {
       .subscribe(
         (response) => {
           if (response.status == 200) {
+            
+            this.Save_User_Certification();
+            this.Save_User_Spouse();
+            this.Save_User_Children();
 
             alert('User Inserted Successfully!!');
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         });
+  }
+
+  Save_User_Certification() {
+    for (var item in this.ProfessionalCertification) {
+      this.UserCertification_Entry.certificate_guid = this.ProfessionalCertification[item]["CERTIFICATE_GUID"];
+      this.UserCertification_Entry.name = this.ProfessionalCertification[item]["NAME"];
+      this.UserCertification_Entry.grade = this.ProfessionalCertification[item]["GRADE"];
+      this.UserCertification_Entry.passing_year = this.ProfessionalCertification[item]["YEAR"];
+      this.UserCertification_Entry.user_guid = this.usermain_entry.USER_GUID;
+
+      this.UserCertification_Entry.creation_ts = new Date().toISOString();
+      this.UserCertification_Entry.creation_user_guid = localStorage.getItem("g_USER_GUID");
+      this.UserCertification_Entry.update_ts = "";
+      this.UserCertification_Entry.update_user_guid = "";
+
+      this.userservice.save_user_certification(this.UserCertification_Entry)
+        .subscribe(
+          (response) => {
+            if (response.status == 200) {
+
+              // alert('User Inserted Successfully!!');
+              // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            }
+          });
+    }
+  }
+
+  Save_User_Spouse() {
+    for (var item in this.FamilyDetails) {
+      this.UserSpouse_Entry.SPOUSE_GUID = this.FamilyDetails[item]["SPOUSE_GUID"];
+      this.UserSpouse_Entry.NAME = this.FamilyDetails[item]["NAME"];
+      this.UserSpouse_Entry.ICNO = this.FamilyDetails[item]["ICNO"];
+      this.UserSpouse_Entry.CREATION_TS = new Date().toISOString();
+      this.UserSpouse_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.UserSpouse_Entry.UPDATE_TS = "";
+      this.UserSpouse_Entry.UPDATE_USER_GUID = "";
+      this.UserSpouse_Entry.USER_GUID = this.usermain_entry.USER_GUID;
+      this.userservice.save_user_spouse(this.UserSpouse_Entry)
+        .subscribe(
+          (response) => {
+            if (response.status == 200) {
+
+              // alert('User Inserted Successfully!!');
+              // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            }
+          });
+    }
 
   }
 
-  Save() {
+  Save_User_Children(){
+    for (var item in this.ChildrenDetails) {
+      this.UserChildren_Entry.CHILD_GUID = this.ChildrenDetails[item]["CHILD_GUID"];
+      this.UserChildren_Entry.NAME = this.ChildrenDetails[item]["NAME"];
+      this.UserChildren_Entry.ICNO = this.ChildrenDetails[item]["ICNO"];
+      this.UserChildren_Entry.GENDER = this.ChildrenDetails[item]["GENDER"];
+      this.UserChildren_Entry.SPOUSE = this.ChildrenDetails[item]["SPOUSE"];
+      this.UserChildren_Entry.CREATION_TS = new Date().toISOString();
+      this.UserChildren_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.UserChildren_Entry.UPDATE_TS = "";
+      this.UserChildren_Entry.UPDATE_USER_GUID = "";
+      this.UserChildren_Entry.USER_GUID = this.usermain_entry.USER_GUID;
+      this.userservice.save_user_children(this.UserChildren_Entry)
+        .subscribe(
+          (response) => {
+            if (response.status == 200) {
 
+              // alert('User Inserted Successfully!!');
+              // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            }
+          });
+    }
+  }
+
+  Save() {
     if (this.Userform) {
       //----------Check duplicate for email---------------
       let headers = new Headers();
@@ -960,7 +1130,11 @@ export class UserPage {
             if (res.length == 0) {
               console.log("No records Found");
               if (this.Exist_Record == false) {
-                this.Save_User_Main();
+                //this.Save_User_Main();
+                //this.Save_User_Certification();
+                //this.SaveUserSpouse();
+                //this.SaveUserChildren();
+
 
                 // let val =  this.GetTenant_GUID(this.User_Company_ngModel.trim());
                 // val.then((res) => {

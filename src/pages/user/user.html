@@ -417,10 +417,10 @@
                                     <td class="lgl1">{{certificate.YEAR}}</td>
                                     <td class="lgl1">MCA.Pdf</td>
                                     <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditClick_Personaldetails(certificate.NAME)">
+                                        <button ion-button item-end (click)="EditProfessionalCertification(certificate.CERTIFICATE_GUID)">
                                             <ion-icon name="md-create"></ion-icon>
                                         </button>
-                                        <button ion-button item-end (click)="RemoveProfessionalCertification(certificate.NAME)">
+                                        <button ion-button item-end (click)="RemoveProfessionalCertification(certificate.CERTIFICATE_GUID)">
                                             <ion-icon name="md-close"></ion-icon>
                                         </button>
                                     </td>
@@ -515,10 +515,10 @@
                                     <td class="lgl1">{{family.NAME}}</td>
                                     <td class="lgl1">{{family.ICNO}}</td>
                                     <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditClick_Personaldetails(family.NAME)">
+                                        <button ion-button item-end (click)="EditFamilyDetails(family.SPOUSE_GUID)">
                                             <ion-icon name="md-create"></ion-icon>
                                         </button>
-                                        <button ion-button item-end (click)="RemoveFamilyDetails(family.NAME)">
+                                        <button ion-button item-end (click)="RemoveFamilyDetails(family.SPOUSE_GUID)">
                                             <ion-icon name="md-close"></ion-icon>
                                         </button>
                                     </td>
@@ -549,6 +549,7 @@
                         </ion-select>
                     </ion-item>
 
+                    
                     <button ion-button icon-left (click)="AddChildren()">
                         <ion-icon name="cloud-upload"></ion-icon>ADD
                     </button>
@@ -572,10 +573,10 @@
                                     <td class="lgl1">{{chilren.GENDER}}</td>
                                     <td class="lgl1">{{chilren.SPOUSE}}</td>
                                     <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
+                                        <button ion-button item-end (click)="EditChildren(chilren.CHILD_GUID)">
                                             <ion-icon name="md-create"></ion-icon>
                                         </button>
-                                        <button ion-button item-end (click)="RemoveChildren(chilren.NAME)">
+                                        <button ion-button item-end (click)="RemoveChildren(chilren.CHILD_GUID)">
                                             <ion-icon name="md-close"></ion-icon>
                                         </button>
                                     </td>
