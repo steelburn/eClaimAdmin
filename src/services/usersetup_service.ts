@@ -9,6 +9,9 @@ import { UserContact_Model } from '../models/user_contact_model';
 import { UserCompany_Model } from '../models/user_company_model';
 import { UserAddress_Model } from '../models/usersetup_address_model';
 import { UserQualification_Model } from '../models/user_qualification_model';
+import { UserCertification_Model } from '../models/user_certification_model';
+import { UserSpouse_Model } from '../models/user_spouse_model';
+import { UserChildren_Model } from '../models/user_children_model';
 import { ViewUser_Model } from '../models/viewuser_model';
 import { BaseHttpService } from './base-http';
 
@@ -47,9 +50,13 @@ export class UserSetup_Service {
 	baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
 	baseResourceUrl5: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_qualification';
-	
+
 	baseResourceView: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display';
 	baseResourceView_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+
+	baseResourceView6: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_certification';
+	baseResourceView7: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_spouse';
+	baseResourceView8: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_children';
 
 	public USER_GUID: any;
 
@@ -143,18 +150,54 @@ export class UserSetup_Service {
 			});
 	}
 
-	save_user_qualification(user_qualification: UserQualification_Model): Observable<any> {		
+	save_user_qualification(user_qualification: UserQualification_Model): Observable<any> {
 		var queryHeaders = new Headers();
 		queryHeaders.append('Content-Type', 'application/json');
 		//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-		let options = new RequestOptions({ headers: queryHeaders }); 
+		let options = new RequestOptions({ headers: queryHeaders });
 		return this.httpService.http.post(this.baseResourceUrl5, user_qualification.toJson(true), options)
 			.map((response) => {
 				return response;
 			});
 	}
 
+	save_user_certification(user_cetrtification: UserCertification_Model): Observable<any> {
+		var queryHeaders = new Headers();
+		queryHeaders.append('Content-Type', 'application/json');
+		//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		let options = new RequestOptions({ headers: queryHeaders });
+		return this.httpService.http.post(this.baseResourceView6, user_cetrtification.toJson(true), options)
+			.map((response) => {
+				return response;
+			});
+	}
+
+	save_user_spouse(user_spouse: UserSpouse_Model): Observable<any> {
+		var queryHeaders = new Headers();
+		queryHeaders.append('Content-Type', 'application/json');
+		//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		let options = new RequestOptions({ headers: queryHeaders });
+		return this.httpService.http.post(this.baseResourceView7, user_spouse.toJson(true), options)
+			.map((response) => {
+				return response;
+			});
+	}
+
+	save_user_children(user_children: UserChildren_Model): Observable<any> {
+		var queryHeaders = new Headers();
+		queryHeaders.append('Content-Type', 'application/json');
+		//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		let options = new RequestOptions({ headers: queryHeaders });
+		return this.httpService.http.post(this.baseResourceView8, user_children.toJson(true), options)
+			.map((response) => {
+				return response;
+			});
+	}
+	
 
 	//Edit
 	// edit_user_info (user_info: UserInfo_Model): Observable<any> 
