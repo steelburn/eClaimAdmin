@@ -62,7 +62,7 @@ export class CountrysetupPage {
         console.log(self.country_details);
         this.NAME_ngModel_Edit = self.country_details.NAME; localStorage.setItem('Prev_country', self.country_details.NAME); //console.log(self.mileage_details.CATEGORY);
        
-      });
+      });   
   }
 
   public DeleteClick(COUNTRY_GUID: any) {
