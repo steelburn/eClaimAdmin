@@ -1,3 +1,51 @@
 page-claimhistory {
+    .spinner-container {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+    }
+    .icon ion-funnel{
+        color: red !important;
+        
+    }
+    .filters {
+        list-style: none;
+        display: flex;
+        flex-flow: row wrap;
+  
+        li {
+           width: 40%;
+             text-align: center;
+        }
+     }
+     .cool-div {
 
+        position:absolute;
+        width:20%;
+        margin:auto;
+        left:22%;
+        top: 28%;
+        //margin-bottom:50%;
+    
+    }
+    .cool-div-dept {
+
+        position:absolute;
+        width:20%;
+        margin:auto;
+        left:22%;
+        top: 28%;
+        //margin-bottom:50%;
+    }
+    .cool-div-month{
+        position:absolute;
+        width:20%;
+        margin:auto;
+        left:63%;
+        top: 28%;
+        //height: 55%;
+        //white-space: pre-line;
+        //white-space: pre-line!important;
+    }
+    
 }
