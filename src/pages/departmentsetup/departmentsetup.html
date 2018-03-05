@@ -7,29 +7,25 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>DEPARTMENT SETUP</ion-title>
+    <ion-title>{{ 'DEPARTMENT_CLAIM_HEADING' | translate }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
     <ion-fab top right edge>
       <button ion-fab mini (click)="AddDepartmentClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
-  
-
     
     <ion-list>
       <ion-item>
           <table class="Tabler">
               <tr class="linedsg TColor">
-                  <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-                  <th class="lgl1">TITLE</th>
-                  <th class="lgl1">COMPANY</th>
-                  <th class="lgl1">DESCRIPTION</th>
-                  <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+                  <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
+                  <th class="lgl1">{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</th>
+                  <th class="lgl1">{{ 'DEPARTMENT_CLAIM_COMPANY' | translate }}</th>
+                  <th class="lgl1">{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</th>
+                  <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
   
               </tr>
   
@@ -67,19 +63,19 @@
       <ion-list>
         <form [formGroup]="Departmentform">
           <ion-item>
-            <ion-label stacked>{{"TITLE"}}</ion-label>
+            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" 
             placeholder="{{'Please fill in the tittle of department'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"COMPANY"}}</ion-label>
+            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_COMPANY' | translate }}</ion-label>
             <ion-input type="text" formControlName="COMPANY" [(ngModel)]="COMPANY_ngModel_Add" 
             placeholder="{{'Please fill in the company ame of department'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" 
             placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
@@ -106,20 +102,20 @@
         <form [formGroup]="Departmentform">
           <ion-item>
             
-            <ion-label stacked>{{"TITLE"}}</ion-label>
+            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" 
              placeholder="{{'Please fill in the tittle in the department'}}"></ion-input>
           </ion-item>
 
 
           <ion-item>
-            <ion-label stacked>{{"COMPANY"}}</ion-label>
+            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_COMPANY' | translate }}</ion-label>
             <ion-input type="text" formControlName="COMPANY" [(ngModel)]="COMPANY_ngModel_Edit" 
             placeholder="{{'Please fill in the company name of the department'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit"
              placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>

@@ -31,6 +31,10 @@ import { FilePath } from '@ionic-native/file-path';
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
 import {Router, Request, Response, NextFunction} from 'express';
 import {AddTollPage} from '../../pages/add-toll/add-toll';
+
+import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
+
+
 /**
  * Generated class for the TravelclaimPage page.
  *
@@ -44,32 +48,33 @@ import {AddTollPage} from '../../pages/add-toll/add-toll';
 })
 export class TravelclaimPage {
   isReadyToSave: boolean;
-  //travelclaim_entry: TravelClaim_Model = new TravelClaim_Model();
-  //masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
  
-
- // baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request?api_key=' + constants.DREAMFACTORY_API_KEY;
- // baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-
- // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-  //baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-
-  
-  //baseResourceUrl_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
- // baseResource_Url_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   vehicles: any;
+  customers: any[];
   storeProjects: any;
-  projects: any;
+  storeCustomers: any;  
+  public projects: any[];
   Travelform: FormGroup;
+
+  items: string[];  
 
   public Travel_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;
   public Travel_From_ngModel: any;
   public Travel_Destination_ngModel: any;
   public Travel_Distance_ngModel: any;
+  public Travel_Mode_ngModel: any;
   Travel_Amount_ngModel: any;
+  Project_Lookup_ngModel: any;
+  Travel_Customer_ngModel: any;
+  Customer_Lookup_ngModel: any;
+  Customer_GUID: any;
+  Soc_GUID: any;
+
   public socGUID : any;
   public AddTravelClicked: boolean = false;
+  ProjectLookupClicked: boolean = false;
+  CustomerLookupClicked: boolean = false;
   DestinationPlaceID: string;
   OriginPlaceID: string;
   public AddLookupClicked: boolean = false;
@@ -77,50 +82,22 @@ export class TravelclaimPage {
   currentItems: any;
   public MainClaimSaved: boolean = false;
   Start_DT_ngModel: any;
+  claimFor: any;
   End_DT_ngModel: any;
   VehicleId: any;
   VehicleRate: any;
+  travelAmount: any;
   validDate = new Date().toISOString();
-
-  // public Travel_Date_ngModel: any;
-  // public Travel_ClaimAmount_ngModel: any;
-  // public Travel_Description_ngModel: any;
-  // public Travel_TotalAmount_ngModel: any;
-  // public socs:any;
-  // public storeProjects: any;
-  // public projects: any;
-  // vehicles: any;
+  ClaimRequestMain: any;
+  isCustomer: boolean = false;
  
-
-  // public AddTravelClick() {
-
-  //   this.AddTravelClicked = true;
-  // }
-
-  // public CloseTravelClick() {
-
-  //   this.AddTravelClicked = false;
-  // }
-  
-  //   public AddLookupClick() 
-  //   {
-   
-  //     this.AddLookupClicked = true;
-  //   }
-  
-  
-  //   public CloseLookupClick() {
-  //     if (this.AddLookupClicked == true) {
-  //       this.AddLookupClicked = false;
-  //     }
-   
-  //   }
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
-  {
+  constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
+  {   
     this.Travelform = fb.group({
       soc_no: '',
-      distance: '',
-      project_name: ['', Validators.required],
+      distance: '', 
+      //customer: '',
+     // project_name: ['', Validators.required],
       travel_date:  ['', Validators.required],
       destination: ['', Validators.required],
       from: ['', Validators.required],
@@ -129,26 +106,31 @@ export class TravelclaimPage {
       description: ['', Validators.required],
       origin: ['', Validators.required],
       vehicleType: ['', Validators.required],
-     
-      // distance: ['', Validators.required],
-      // claim_amount: ['', Validators.required],
-      //total_amount: ['', Validators.required],
-
-    });
-    // this.Travel_Date_ngModel = new Date().toISOString();
-    //this.GetSocNo();
-    //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-    // this.Travelform.valueChanges.subscribe((v) => {
-    //   this.isReadyToSave = this.Travelform.valid;
-    // });
+    });   
     this.LoadProjects();
     this.LoadVehicles();
+    this.LoadCustomers();
   }
 
-  GetSocNo(value:any){
-    this.Travel_SOC_No_ngModel = value;
-    console.log(this.Travel_SOC_No_ngModel);
+  GetSocNo(item: any){
+    this.Travel_SOC_No_ngModel = item.soc;
+    this.Project_Lookup_ngModel = item.project_name;
+    this.Soc_GUID = item.SOC_GUID;
+    this.CloseProjectLookup();
   }
+
+  GetCustomer(guid: any, name: any) {
+    this.Customer_Lookup_ngModel = name;
+    this.Customer_GUID = guid;
+    this.CloseCustomerLookup();
+  } 
+ 
+   claimForChanged() {
+    // console.log(this.claimFor)
+    if (this.claimFor == 'customer') this.isCustomer = true;
+    else this.isCustomer = false;
+  }
+
 
   LoadProjects() {
     this.http
@@ -160,6 +142,17 @@ export class TravelclaimPage {
       }
       );
   }
+
+  LoadCustomers() {
+    this.http
+      .get(Services.getUrl('main_customer'))
+      .map(res => res.json())
+      .subscribe(data => {
+        this.storeCustomers = this.customers = data["resource"];
+        // console.table(this.projects)
+      }
+      );
+  } 
 
   LoadVehicles() {
     this.http
@@ -173,7 +166,7 @@ export class TravelclaimPage {
 
   GetDistance() {
     var origin = this.Travel_From_ngModel;
-    var destination = this.Travel_Destination_ngModel;
+    var destination;
     var url = 'http://api.zen.com.my/api/v2/google/distancematrix/json?destinations=place_id:' + this.DestinationPlaceID + '&origins=place_id:' + this.OriginPlaceID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http.get(url).map(res => res.json()).subscribe(data => {
       let temp = data["rows"][0]["elements"][0];
@@ -186,6 +179,7 @@ export class TravelclaimPage {
       }
       else
         alert('Please select Valid Origin & Destination Places');
+
     });
   }
 
@@ -201,6 +195,24 @@ export class TravelclaimPage {
     if (this.AddToLookupClicked == true) {
       this.AddToLookupClicked = false;
     }
+    let origin = this.Travel_From_ngModel;
+    let destination = this.Travel_Distance_ngModel;
+    if (origin != '' && destination != '') {
+      this.GetDistance();
+      // this.Travel_Mode_ngModel = this.vehicleCategory ;
+    }
+  }
+
+  public CloseProjectLookup() {
+    if (this.ProjectLookupClicked == true) {
+      this.ProjectLookupClicked = false;
+    }
+  }
+
+  public CloseCustomerLookup() {
+    if (this.CustomerLookupClicked == true) {
+      this.CustomerLookupClicked = false;
+    }
   }
 
   public AddLookupClick() {
@@ -212,6 +224,17 @@ export class TravelclaimPage {
     this.AddLookupClicked = true;
     this.AddToLookupClicked = true;
     this.currentItems = null;
+  }
+
+  public ProjectLookup() {
+    this.ProjectLookupClicked = true;
+   
+    // this.projects = null;
+  }
+
+  public CustomerLookup() {
+    this.CustomerLookupClicked = true;
+    // this.projects = null;
   }
 
   openItem(item: any) {
@@ -228,6 +251,7 @@ export class TravelclaimPage {
 
   searchLocation(searchLocationString: any) {
     let val = searchLocationString.target.value;
+    val = val.replace(/ /g, '');
     if (!val || !val.trim()) {
       this.currentItems = [];
       return;
@@ -235,124 +259,128 @@ export class TravelclaimPage {
     var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http.get(url).map(res => res.json()).subscribe(data => {
       this.currentItems = data["predictions"];
+      console.table(this.currentItems);
     });
   }
 
+//   onSearchInput(ev: any) {  
+//     let val = ev.target.value;
+//     if (val && val.trim() != '') {
+//      this.projects = this.projects.filter((item) => {
+   
+//        console.log(item);
+//        return ((item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) > -1) 
+//        || ((item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) > -1) 
+//        || (item.YEAR.toString().toLowerCase().indexOf(val.toLowerCase()) > -1))
+//        || (item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) > -1
+//      ) 
+//      );
+//      })
+//    }
+//    else
+//    {
+//     //  this.BindData();
+//     return null;
+//    }
+// }
+
+// Search project start:
+    
   searchProject(searchString: any) {
     let val = searchString.target.value;
     if (!val || !val.trim()) {
       this.projects = this.storeProjects;
       return;
     }
-  //  this.projects=  this.filterProjects({
-  //   project_name: val
-  //   });
+   this.projects=  this.filterProjects({
+    project_name: val
+    });
   }
 
+
+  filterProjects(params?: any) {
+    if (!params) {
+      return this.storeProjects;
+    }
+
+    return this.projects.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+  
+  searchCustomer(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.customers = this.storeCustomers;
+      return;
+    }
+    this.customers = this.filterCustomer({
+      NAME: val
+    });
+  }
+
+  filterCustomer(params?: any) {
+    if (!params) {
+      return this.storeCustomers;
+    }
+
+    return this.customers.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+
+  takePhoto() {
+    // Camera.getPicture().then((imageData) => {
+    //     this.imageURL = imageData
+    // }, (err) => {
+    //     console.log(err);
+    // });
+  }
+
+  vehicleCategory : any;
   SetPrice(vehicle: any) {
     this.VehicleId = vehicle.MILEAGE_GUID;
     this.VehicleRate = vehicle.RATE_PER_UNIT;
-    this.Travel_Amount_ngModel = this.Travel_Distance_ngModel * vehicle.RATE_PER_UNIT;
+    this.vehicleCategory = vehicle.CATEGORY;
   }
-
-  // filterProjects(params?: any) {
-  //   if (!params) {
-  //     return this.storeProjects;
-  //   }
-
-  //   return this.projects.filter((item) => {
-  //     for (let key in params) {
-  //       let field = item[key];
-  //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-  //         return item;
-  //       } else if (field == params[key]) {
-  //         return item;
-  //       }
-  //     }
-  //     return null;
-  //   });
-  // }
 
   
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TravelclaimPage');
-  }
-
-  // GetSocNo(){
-  //    this.http
-  //   .get(this.baseResourceUrl_soc)
-  //   .map(res => res.json())
-  //   .subscribe(data => {
-  //     this.socs = data["resource"];
-      
-      
-  //     if (this.Travel_SOC_No_ngModel == undefined) { return; }
-  //     if (this.Travel_SOC_No_ngModel != "" || this.Travel_SOC_No_ngModel != undefined) {
+  // fileChange(){
+  //   alert('file change');
+  //   let fileList: FileList = event.target.files;
+  //   if(fileList.length > 0) {
+  //       let file: File = fileList[0];
+  //       let formData:FormData = new FormData();
+  //       formData.append('uploadFile', file, file.name);
   //       let headers = new Headers();
-  //       headers.append('Content-Type', 'application/json');
+  //       /** No need to include Content-Type in Angular 4 */
+  //       headers.append('Content-Type', 'multipart/form-data');
+  //       headers.append('Accept', 'application/json');
   //       let options = new RequestOptions({ headers: headers });
-  //       let url: string;
-  //       //let url1: string;
-  //       url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Travel_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //      //url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Travel_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //       this.http.get(url, options)
-  //         .map(res => res.json())
-  //         .subscribe(
-  //         data => {
-  //           let res = data["resource"];
-  
-  //           if (res.length > 0) {
-  //             this.Travel_ProjectName_ngModel = res[0].Project;
-  //             // this.Entertainment_CustomerName_ngModel=res[0].customer;
-  //           }
-  //           else {
-  //             alert('please enter valid soc no');
-  //             //return;
-  //             this.Travel_SOC_No_ngModel = "";
-  //           }
-  //         },
-  //         err => {
-  //           console.log("ERROR!: ", err);
-  //         });
-  //     }
-
-
-
-      
-  //   });
-  // }
-
-  // SOC_No_TextBox_Onchange(Travel_SOC_No_ngModel: string) {
-  //   console.log(this.Travel_SOC_No_ngModel);
-  //   if (this.Travel_SOC_No_ngModel == undefined) { return; }
-  //   if (this.Travel_SOC_No_ngModel != "" || this.Travel_SOC_No_ngModel != undefined) {
-  //     let headers = new Headers();
-  //     headers.append('Content-Type', 'application/json');
-  //     let options = new RequestOptions({ headers: headers });
-  //     let url: string;
-  //     let url1: string;
-  //     url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Travel_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //     url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Travel_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //     this.http.get(url, options)
-  //       .map(res => res.json())
-  //       .subscribe(
-  //       data => {
-  //         let res = data["resource"];
-
-  //         if (res.length > 0) {
-  //           this.Travel_ProjectName_ngModel = res[0].Project;
-  //           // this.Entertainment_CustomerName_ngModel=res[0].customer;
-  //         }
-  //         else {
-  //           alert('please enter valid soc no');
-  //           //return;
-  //           this.Travel_SOC_No_ngModel = "";
-  //         }
-  //       },
-  //       err => {
-  //         console.log("ERROR!: ", err);
-  //       });
+  //       this.http.post(`${this.apiEndPoint}`, formData, options)
+  //           .map(res => res.json())
+  //           .catch(error => Observable.throw(error))
+  //           .subscribe(
+  //               data => console.log('success'),
+  //               error => console.log(error)
+  //           )
   //   }
   // }
 
@@ -392,6 +420,7 @@ export class TravelclaimPage {
             claimReqMainRef.TRAVEL_DATE = value.travel_date;
             claimReqMainRef.START_TS = value.start_DT;
             claimReqMainRef.END_TS = value.end_DT;
+            claimReqMainRef.DESCRIPTION = value.description;
             claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
             claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
             claimReqMainRef.CREATION_TS = new Date().toISOString();
@@ -399,11 +428,21 @@ export class TravelclaimPage {
             claimReqMainRef.FROM = this.Travel_From_ngModel;
             claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
             claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
-            claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+           // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+           if(this.isCustomer){
+            claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
+          }
+          else{
+            claimReqMainRef.SOC_GUID = this.Soc_GUID;
+          }
+          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+
             this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
               var postClaimMain = response.json();
               this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
               this.MainClaimSaved = true;
+              console.table( claimReqMainRef);
               alert('Claim Has Registered.')
             })
           })
@@ -420,6 +459,7 @@ export class TravelclaimPage {
           claimReqMainRef.TRAVEL_DATE = value.travel_date;
           claimReqMainRef.START_TS = value.start_DT;
           claimReqMainRef.END_TS = value.end_DT;
+          claimReqMainRef.DESCRIPTION = value.description;
           claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
@@ -427,7 +467,13 @@ export class TravelclaimPage {
           claimReqMainRef.FROM = this.Travel_From_ngModel;
           claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
           claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
-          claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+          //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+          if(this.isCustomer){
+            claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
+          }
+          else{
+            claimReqMainRef.SOC_GUID = this.Soc_GUID;
+          }
         this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
             var postClaimMain = response.json();
             this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;  
@@ -455,89 +501,4 @@ export class TravelclaimPage {
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742'
     });
   }
-  ClaimRequestMain: any;
-
-  // save(value: any) {
-
-  //   if (this.Travelform.valid) {
-  //     let headers = new Headers();
-  //     headers.append('Content-Type', 'application/json');
-  //     let options = new RequestOptions({ headers: headers });
-
-
-  //     let url: string;
-  //     let request_id = UUID.UUID();
-  //     //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //     url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  //     this.http.get(url, options)
-  //       .map(res => res.json())
-  //       .subscribe(
-  //       data => {
-  //         let res = data["resource"];
-  //         if (res.length == 0) {
-  //           console.log("No records Found");
-  //           if (this.Exist_Record == false) {
-  //             // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-  //             this.travelclaim_entry.FROM = this.Travel_From_ngModel.trim();
-  //             this.travelclaim_entry.DESTINATION = this.Travel_Destination_ngModel.trim();
-  //             this.travelclaim_entry.DISTANCE_KM = this.Travel_Distance_ngModel.trim();
-  //             this.travelclaim_entry.DESCRIPTION = this.Travel_Description_ngModel.trim();
-  //             this.travelclaim_entry.CLAIM_AMOUNT = this.Travel_ClaimAmount_ngModel.trim();
-  //             this.travelclaim_entry.CLAIM_TYPE_GUID = this.masterclaim_entry.CLAIM_TYPE_GUID = "58c59b56-289e-31a2-f708-138e81a9c823";
-  //             //alert(this.Travel_From_ngModel.trim() + this.Travel_Destination_ngModel.trim() + this.Travel_Distance_ngModel.trim());
-  //             //alert( this.travelclaim_entry.FROM + this.travelclaim_entry.DESTINATION +  this.travelclaim_entry.DISTANCE_KM);
-  //             // this.travelclaim_entry.CLAIM_AMOUNT = this.Travel_TotalAmount_ngModel.trim();
-  //             //this.entertainment2_entry.ATTACHMENT_ID = this.Entertainment_FileUpload_ngModel.trim();
-
-  //             // this.masterclaim_entry.CLAIM_REQUEST_GUID = this.Travel_Description_ngModel.trim();
-  //             // this.masterclaim_entry.DESCRIPTION = this.Travel_ClaimAmount_ngModel.trim();
-  //             this.masterclaim_entry.FROM = this.Travel_From_ngModel.trim();
-  //             this.masterclaim_entry.DESTINATION = this.Travel_Destination_ngModel.trim();
-  //             this.masterclaim_entry.DISTANCE_KM = this.Travel_Distance_ngModel.trim();
-  //             this.masterclaim_entry.CLAIM_AMOUNT = this.Travel_ClaimAmount_ngModel.trim();
-  //             this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-  //             this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-  //             this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-  //             //alert(this.masterclaim_entry.CLAIM_AMOUNT);
-
-  //             this.travelclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
-  //             this.travelclaim_entry.CREATION_TS = new Date().toISOString();
-  //             this.travelclaim_entry.CREATION_USER_GUID = '1';
-  //             this.travelclaim_entry.UPDATE_TS = new Date().toISOString();
-  //             this.travelclaim_entry.UPDATE_USER_GUID = "";
-
-  //             this.travelservice.save_main_claim_request(this.masterclaim_entry)
-  //               .subscribe((response) => {
-  //                 if (response.status == 200) {
-  //                   //alert('Travelclaim Registered successfully');
-  //                   //location.reload();
-  //                   this.navCtrl.setRoot(this.navCtrl.getActive().component);
-  //                 }
-  //               });
-
-  //             this.travelservice.save_claim_request_detail(this.travelclaim_entry)
-
-  //               .subscribe((response) => {
-  //                 if (response.status == 200) {
-  //                   alert('Travelclaim Registered successfully');
-  //                   //location.reload();
-  //                   this.navCtrl.setRoot(this.navCtrl.getActive().component);
-  //                 }
-  //               });
-  //           }
-  //         }
-  //         else {
-  //           console.log("Records Found");
-  //           alert("The Travelclaim is already Exist.")
-
-  //         }
-  //       },
-  //       err => {
-  //         this.Exist_Record = false;
-  //         console.log("ERROR!: ", err);
-  //       });
-  //   }
-  // }
-
 }
