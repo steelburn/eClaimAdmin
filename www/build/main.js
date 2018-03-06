@@ -407,7 +407,7 @@ var ClaimRefMain_Model = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClaimReqMain_Model; });
 var ClaimReqMain_Model = (function () {
-    function ClaimReqMain_Model(CLAIM_REQUEST_GUID, SOC_GUID, CUSTOMER_GUID, TENANT_GUID, CLAIM_REF_GUID, CLAIM_TYPE_GUID, MILEAGE_GUID, START_TS, END_TS, FROM, DESTINATION, DISTANCE_KM, MILEAGE_AMOUNT, CLAIM_AMOUNT, DESCRIPTION, CALENDAR_REF, TRAVEL_DATE, STATUS, STATUS_REMARKS, STAGE, STAGE_REMARKS, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID) {
+    function ClaimReqMain_Model(CLAIM_REQUEST_GUID, SOC_GUID, CUSTOMER_GUID, TENANT_GUID, CLAIM_REF_GUID, CLAIM_TYPE_GUID, MILEAGE_GUID, START_TS, END_TS, FROM, DESTINATION, DISTANCE_KM, MILEAGE_AMOUNT, CLAIM_AMOUNT, DESCRIPTION, CALENDAR_REF, TRAVEL_DATE, STATUS, STATUS_REMARKS, STAGE, STAGE_REMARKS, ASSIGNED_TO, PROFILE_JSON, PROFILE_LEVEL, CREATION_TS, CREATION_USER_GUID, UPDATE_TS, UPDATE_USER_GUID) {
         if (CLAIM_REQUEST_GUID === void 0) { CLAIM_REQUEST_GUID = null; }
         if (SOC_GUID === void 0) { SOC_GUID = null; }
         if (CUSTOMER_GUID === void 0) { CUSTOMER_GUID = null; }
@@ -429,6 +429,9 @@ var ClaimReqMain_Model = (function () {
         if (STATUS_REMARKS === void 0) { STATUS_REMARKS = null; }
         if (STAGE === void 0) { STAGE = null; }
         if (STAGE_REMARKS === void 0) { STAGE_REMARKS = null; }
+        if (ASSIGNED_TO === void 0) { ASSIGNED_TO = null; }
+        if (PROFILE_JSON === void 0) { PROFILE_JSON = null; }
+        if (PROFILE_LEVEL === void 0) { PROFILE_LEVEL = null; }
         if (CREATION_TS === void 0) { CREATION_TS = null; }
         if (CREATION_USER_GUID === void 0) { CREATION_USER_GUID = null; }
         if (UPDATE_TS === void 0) { UPDATE_TS = null; }
@@ -454,6 +457,9 @@ var ClaimReqMain_Model = (function () {
         this.STATUS_REMARKS = STATUS_REMARKS;
         this.STAGE = STAGE;
         this.STAGE_REMARKS = STAGE_REMARKS;
+        this.ASSIGNED_TO = ASSIGNED_TO;
+        this.PROFILE_JSON = PROFILE_JSON;
+        this.PROFILE_LEVEL = PROFILE_LEVEL;
         this.CREATION_TS = CREATION_TS;
         this.CREATION_USER_GUID = CREATION_USER_GUID;
         this.UPDATE_TS = UPDATE_TS;
@@ -462,7 +468,7 @@ var ClaimReqMain_Model = (function () {
     ClaimReqMain_Model.fromJson = function (json) {
         if (!json)
             return;
-        return new ClaimReqMain_Model(json.CLAIM_REQUEST_GUID, json.SOC_GUID, json.CUSTOMER_GUID, json.TENANT_GUID, json.CLAIM_REF_GUID, json.CLAIM_TYPE_GUID, json.MILEAGE_GUID, json.START_TS, json.END_TS, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.MILEAGE_AMOUNT, json.CLAIM_AMOUNT, json.DESCRIPTION, json.CALENDAR_REF, json.TRAVEL_DATE, json.STATUS, json.STATUS_REMARKS, json.STAGE, json.STAGE_REMARKS, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID);
+        return new ClaimReqMain_Model(json.CLAIM_REQUEST_GUID, json.SOC_GUID, json.CUSTOMER_GUID, json.TENANT_GUID, json.CLAIM_REF_GUID, json.CLAIM_TYPE_GUID, json.MILEAGE_GUID, json.START_TS, json.END_TS, json.FROM, json.DESTINATION, json.DISTANCE_KM, json.MILEAGE_AMOUNT, json.CLAIM_AMOUNT, json.DESCRIPTION, json.CALENDAR_REF, json.TRAVEL_DATE, json.STATUS, json.STATUS_REMARKS, json.STAGE, json.STAGE_REMARKS, json.ASSIGNED_TO, json.PROFILE_JSON, json.PROFILE_LEVEL, json.CREATION_TS, json.CREATION_USER_GUID, json.UPDATE_TS, json.UPDATE_USER_GUID);
     };
     ClaimReqMain_Model.prototype.toJson = function (stringify) {
         var doc = {
@@ -487,6 +493,9 @@ var ClaimReqMain_Model = (function () {
             STATUS_REMARKS: this.STATUS_REMARKS,
             STAGE: this.STAGE,
             STAGE_REMARKS: this.STAGE_REMARKS,
+            ASSIGNED_TO: this.ASSIGNED_TO,
+            PROFILE_JSON: this.PROFILE_JSON,
+            PROFILE_LEVEL: this.PROFILE_LEVEL,
             CREATION_TS: this.CREATION_TS,
             CREATION_USER_GUID: this.CREATION_USER_GUID,
             UPDATE_TS: this.UPDATE_TS,
@@ -4723,9 +4732,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var TravelclaimPage = (function () {
-    function TravelclaimPage(platform, navCtrl, viewCtrl, navParams, translate, fb, http, httpService, api, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
+    function TravelclaimPage(platform, navCtrl, viewCtrl, modalCtrl, navParams, translate, fb, http, httpService, api, alertCtrl, camera, actionSheetCtrl, loadingCtrl, file, filePath, transfer, toastCtrl) {
         this.navCtrl = navCtrl;
         this.viewCtrl = viewCtrl;
+        this.modalCtrl = modalCtrl;
         this.navParams = navParams;
         this.translate = translate;
         this.http = http;
@@ -4747,6 +4757,10 @@ var TravelclaimPage = (function () {
         this.MainClaimSaved = false;
         this.validDate = new Date().toISOString();
         this.isCustomer = false;
+        /********FORM EDIT VARIABLES***********/
+        this.isFormEdit = false;
+        this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
+        this.emailUrl = 'http://api.zen.com.my/api/v2/emailnotificationtest?api_key=' + __WEBPACK_IMPORTED_MODULE_6__config_constants__["a" /* DREAMFACTORY_API_KEY */];
         this.Travelform = fb.group({
             soc_no: '',
             distance: '',
@@ -4764,7 +4778,56 @@ var TravelclaimPage = (function () {
         this.LoadProjects();
         this.LoadVehicles();
         this.LoadCustomers();
+        this.readProfile();
     }
+    TravelclaimPage.prototype.ngOnInit = function () {
+        this.userGUID = localStorage.getItem('g_USER_GUID');
+        this.isFormEdit = this.navParams.get('isFormEdit');
+        // this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
+        this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
+        if (this.isFormEdit)
+            this.GetDataforEdit();
+    };
+    TravelclaimPage.prototype.GetDataforEdit = function () {
+        var _this = this;
+        this.http
+            .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) {
+            _this.claimRequestData = data["resource"];
+            console.log(_this.claimRequestData);
+            if (_this.claimRequestData[0].SOC_GUID === null) {
+                _this.claimFor = 'customer';
+                _this.storeCustomers.forEach(function (element) {
+                    if (element.CUSTOMER_GUID === _this.claimRequestData[0].CUSTOMER_GUID) {
+                        _this.Customer_Lookup_ngModel = element.NAME;
+                    }
+                });
+            }
+            else {
+                _this.claimFor = 'project';
+                _this.storeProjects.forEach(function (element) {
+                    if (element.SOC_GUID === _this.claimRequestData[0].SOC_GUID) {
+                        _this.Project_Lookup_ngModel = element.project_name;
+                        _this.Travel_SOC_No_ngModel = element.soc;
+                    }
+                });
+            }
+            _this.Travel_Date_ngModel = _this.claimRequestData[0].TRAVEL_DATE;
+            _this.Travel_From_ngModel = _this.claimRequestData[0].FROM;
+            _this.Travel_Destination_ngModel = _this.claimRequestData[0].DESTINATION;
+            _this.Travel_Distance_ngModel = _this.claimRequestData[0].DISTANCE_KM;
+            _this.travelAmount = _this.claimRequestData[0].MILEAGE_AMOUNT;
+            _this.Travel_Description_ngModel = _this.claimRequestData[0].DESCRIPTION;
+            _this.vehicles.forEach(function (element) {
+                if (element.MILEAGE_GUID === _this.claimRequestData[0].MILEAGE_GUID) {
+                    _this.Travel_Mode_ngModel = element.CATEGORY;
+                }
+            });
+            console.table(_this.claimRequestData);
+            console.log(_this.claimRequestData[0].SOC_GUID);
+        });
+    };
     TravelclaimPage.prototype.GetSocNo = function (item) {
         this.Travel_SOC_No_ngModel = item.soc;
         this.Project_Lookup_ngModel = item.project_name;
@@ -4800,16 +4863,19 @@ var TravelclaimPage = (function () {
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
             _this.storeCustomers = _this.customers = data["resource"];
-            // console.table(this.projects)
+            console.table(_this.projects);
         });
     };
+    //console.log(TenantGUID);
     TravelclaimPage.prototype.LoadVehicles = function () {
         var _this = this;
+        console.log(this.TenantGUID);
         this.http
-            .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('main_mileage'))
+            .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID))
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
             _this.vehicles = data["resource"];
+            console.table(_this.vehicles);
         });
     };
     TravelclaimPage.prototype.GetDistance = function () {
@@ -5009,12 +5075,11 @@ var TravelclaimPage = (function () {
     // }
     TravelclaimPage.prototype.save = function (value) {
         var _this = this;
-        var userGUID = localStorage.getItem('g_USER_GUID');
         var tenantGUID = localStorage.getItem('g_TENANT_GUID');
         var month = new Date(value.travel_date).getMonth() + 1;
         var year = new Date(value.travel_date).getFullYear();
         var claimRefGUID;
-        var url = __WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+        var url = __WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
         this.http
             .get(url)
             .map(function (res) { return res.json(); })
@@ -5022,9 +5087,9 @@ var TravelclaimPage = (function () {
             if (claimRefdata["resource"][0] == null) {
                 var claimReqRef = new __WEBPACK_IMPORTED_MODULE_7__models_ClaimRefMain_Model__["a" /* ClaimRefMain_Model */]();
                 claimReqRef.CLAIM_REF_GUID = __WEBPACK_IMPORTED_MODULE_11_angular2_uuid__["UUID"].UUID();
-                claimReqRef.USER_GUID = userGUID;
+                claimReqRef.USER_GUID = _this.userGUID;
                 claimReqRef.TENANT_GUID = tenantGUID;
-                claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+                claimReqRef.REF_NO = _this.userGUID + '/' + month + '/' + year;
                 claimReqRef.MONTH = month;
                 claimReqRef.YEAR = year;
                 claimReqRef.CREATION_TS = new Date().toISOString();
@@ -5049,6 +5114,13 @@ var TravelclaimPage = (function () {
                     claimReqMainRef.FROM = _this.Travel_From_ngModel;
                     claimReqMainRef.DESTINATION = _this.Travel_Destination_ngModel;
                     claimReqMainRef.DISTANCE_KM = _this.Travel_Distance_ngModel;
+                    alert(_this.assignedTo);
+                    claimReqMainRef.ASSIGNED_TO = _this.assignedTo;
+                    alert('if' + _this.assignedTo);
+                    claimReqMainRef.PROFILE_LEVEL = _this.profileLevel;
+                    claimReqMainRef.PROFILE_JSON = _this.profileJSON;
+                    claimReqMainRef.STATUS = 'Pending';
+                    claimReqMainRef.STAGE = _this.stage;
                     // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
                     if (_this.isCustomer) {
                         claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
@@ -5085,7 +5157,15 @@ var TravelclaimPage = (function () {
                 claimReqMainRef.UPDATE_TS = new Date().toISOString();
                 claimReqMainRef.FROM = _this.Travel_From_ngModel;
                 claimReqMainRef.DESTINATION = _this.Travel_Destination_ngModel;
+                alert(_this.assignedTo);
+                claimReqMainRef.ASSIGNED_TO = _this.assignedTo;
+                alert('else' + _this.assignedTo);
                 claimReqMainRef.DISTANCE_KM = _this.Travel_Distance_ngModel;
+                claimReqMainRef.PROFILE_LEVEL = _this.profileLevel;
+                claimReqMainRef.PROFILE_JSON = _this.profileJSON;
+                claimReqMainRef.STATUS = 'Pending';
+                //claimReqMainRef.STATUS = 'Pending';
+                claimReqMainRef.STAGE = _this.stage;
                 //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
                 if (_this.isCustomer) {
                     claimReqMainRef.CUSTOMER_GUID = _this.Customer_GUID;
@@ -5102,6 +5182,52 @@ var TravelclaimPage = (function () {
             }
         });
     };
+    TravelclaimPage.prototype.sendEmail = function () {
+        var name;
+        var email;
+        name = 'shabbeer';
+        email = 'shabbeer@zen.com.my';
+        var queryHeaders = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Headers */]();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+        queryHeaders.append('X-Dreamfactory-API-Key', __WEBPACK_IMPORTED_MODULE_6__config_constants__["a" /* DREAMFACTORY_API_KEY */]);
+        var options = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["d" /* RequestOptions */]({ headers: queryHeaders });
+        var body = {
+            "template": "",
+            "template_id": 0,
+            "to": [
+                {
+                    "name": name,
+                    "email": email
+                }
+            ],
+            "cc": [
+                {
+                    "name": name,
+                    "email": email
+                }
+            ],
+            "bcc": [
+                {
+                    "name": name,
+                    "email": email
+                }
+            ],
+            "subject": "Test",
+            "body_text": "",
+            "body_html": '<HTML><HEAD> <META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD> <BODY> <DIV style="FONT-FAMILY: Century Gothic"> <DIV style="MIN-WIDTH: 500px"><BR> <DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV> <DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"> <DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR> <DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear [%Variable: @Employee%]<BR><BR>Your&nbsp;[%Variable: @LeaveType%] application has been forwarded to your superior for approval.  <H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Leave Details :</B><BR></H1> <TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto"> <TBODY> <TR> <TD style="TEXT-ALIGN: left">EMPLOYEE</TD> <TD style="PADDING-BOTTOM: 6px; PADDING-TOP: 6px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px">:</TD> <TD colSpan=2>[%Variable: @Employee%]</TD></TR> <TR> <TD>START DATE</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @StartDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">END DATE </TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @EndDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">APPLIED DATE</TD> <TD style="PADDING-BOTTOM: 6px; PADDING-TOP: 6px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px">:</TD> <TD colSpan=2>[%Variable: @AppliedDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">DAYS</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left">[%Variable: @NoOfDays%] </TD> <TD style="TEXT-ALIGN: left">[%Variable: @HalfDay%]</TD></TR></TR> <TR> <TD>LEAVE TYPE</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @LeaveType%]</TD></TR> <TR> <TD style="TEXT-ALIG: left">REASON</TD> <TD>: </TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Current Item:Reason%]</TD></TR></TBODY></TABLE><BR> <DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>',
+            "from_name": "Ajay DAV",
+            "from_email": "ajay1591ani@gmail.com",
+            "reply_to_name": "",
+            "reply_to_email": ""
+        };
+        this.http.post(this.emailUrl, body, options)
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) {
+            // this.result= data["resource"];
+            alert(JSON.stringify(data));
+        });
+    };
     TravelclaimPage.prototype.showAddToll = function () {
         //let AddTollModal = this.modalCtrl.create(AddTollPage);
         //AddTollModal.present;
@@ -5116,6 +5242,61 @@ var TravelclaimPage = (function () {
             ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742'
         });
     };
+    TravelclaimPage.prototype.readProfile = function () {
+        var _this = this;
+        return this.http.get('assets/profile.json').map(function (response) { return response.json(); }).subscribe(function (data) {
+            _this.profileJSON = JSON.stringify(data);
+            //levels: any[];
+            var levels = data.profile.levels.level;
+            console.table(levels);
+            levels.forEach(function (element) {
+                if (element['-id'] == '1') {
+                    _this.profileLevel = '1';
+                    if (element['approver']['-directManager'] === '1') {
+                        _this.http
+                            .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('user_info', 'filter=USER_GUID=' + _this.userGUID))
+                            .map(function (res) { return res.json(); })
+                            .subscribe(function (data) {
+                            var userInfo = data["resource"];
+                            userInfo.forEach(function (userElm) {
+                                _this.assignedTo = userElm.MANAGER_USER_GUID;
+                                _this.http
+                                    .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('user_info', 'filter=USER_GUID=' + userElm.MANAGER_USER_GUID))
+                                    .map(function (res) { return res.json(); })
+                                    .subscribe(function (data) {
+                                    var userInfo = data["resource"];
+                                    userInfo.forEach(function (approverElm) {
+                                        _this.stage = approverElm.DEPT_GUID;
+                                    });
+                                });
+                            });
+                            // console.log('Direct Manager Exists')
+                        });
+                        // console.log('Direct Manager ' + element['approver']['-directManager'])
+                        var varf = element['conditions']['condition'];
+                        varf.forEach(function (condElement) {
+                            if (condElement['-status'] === 'approved') {
+                                console.log('Next Level ' + condElement['nextlevel']['#text']);
+                            }
+                            console.log('Status ' + condElement['-status']);
+                        });
+                    }
+                    else {
+                        _this.assignedTo = element['approver']['#text'];
+                        _this.http
+                            .get(__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */].getUrl('user_info', 'filter=USER_GUID=' + _this.assignedTo))
+                            .map(function (res) { return res.json(); })
+                            .subscribe(function (data) {
+                            var userInfo = data["resource"];
+                            userInfo.forEach(function (approverElm) {
+                                _this.stage = approverElm.DEPT_GUID;
+                            });
+                        });
+                    }
+                }
+            });
+        });
+    };
     return TravelclaimPage;
 }());
 TravelclaimPage = __decorate([
@@ -5123,9 +5304,10 @@ TravelclaimPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
         selector: 'page-travelclaim',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/'<!--\n\n  Generated template for the TravelclaimPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>     \n\n    <ion-title>{{ \'TRAVEL_CLAIM_HEADING\' | translate }}</ion-title>  \n\n  </ion-navbar>\n\n </ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <!-- <button ion-button (click)="AddTravelClick()">SUMMARY</button> -->\n\n\n\n  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">\n\n\n\n      <ion-list-header>\n\n        Select Travel Claim For:\n\n      </ion-list-header>\n\n  \n\n      <ion-item>\n\n        <ion-label>Customer</ion-label>\n\n        <ion-radio value="customer" checked="true"></ion-radio>\n\n      </ion-item>\n\n  \n\n      <ion-item>\n\n        <ion-label>Project</ion-label>\n\n        <ion-radio value="project"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n\n\n  <form [formGroup]="Travelform">\n\n\n\n      <div *ngIf="claimFor==\'project\'">\n\n          <!-- [(ngModel)]="Project_Lookup_ngModel" -->\n\n          <ion-item>\n\n            <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>\n\n            <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ \'PROJECT_LOOKUP_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            <button ion-button outline item-end icon-left (click)="ProjectLookup()">\n\n              <ion-icon name="eye"></ion-icon>\n\n              {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>\n\n          </ion-item>\n\n          <!-- [(ngModel)]="Travel_SOC_No_ngModel" -->\n\n          <ion-item>\n\n            <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n            <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n          </ion-item>\n\n        </div>     \n\n\n\n      <div *ngIf="claimFor==\'customer\'">\n\n\n\n          <!-- formControlName="customer" -->\n\n          <ion-item>\n\n            <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>\n\n            <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ \'CUSTOMER_NAME_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            <button ion-button outline item-end icon-left (click)="CustomerLookup()">\n\n              <ion-icon name="eye"></ion-icon>\n\n              {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>\n\n          </ion-item>\n\n        </div>\n\n\n\n      <!-- <ion-item>\n\n          <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>\n\n          <ion-input type="text" formControlName="soc_no" disabled="true" [(ngModel)]="Travel_SOC_No_ngModel" \n\n          placeholder="{{ \'SOC_NUMBER_PLACE_HOLDER\' | translate }}"></ion-input>\n\n        </ion-item> -->\n\n\n\n        <ion-item>\n\n          <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        \n\n          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ \'TRAVEL_DATE_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" max={{validDate}} placeholder="{{ \'START_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>\n\n          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" max={{validDate}} placeholder="{{ \'END_DATETIME_PLACE_HOLDER\' | translate }}"></ion-datetime>\n\n        </ion-item>\n\n    \n\n        <!-- <ion-item>\n\n          <ion-label stacked>{{ "CALENDAR_REF_LABEL" | translate }}</ion-label>\n\n        </ion-item> -->\n\n\n\n        <ion-item>\n\n            <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>\n\n            <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType" placeholder="{{ \'TRAVEL_TYPE_PLACE_HOLDER\' | translate }}">\n\n              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n  \n\n        <ion-item>\n\n          <ion-label stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" placeholder=" {{ \'ORIGIN_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_ORIGIN_BUTTON" | translate  }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination" placeholder=" {{ \'DESTINATION_PLACE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <button ion-button outline item-end icon-left (click)="AddToLookupClick()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DESTINATION_BUTTON" | translate }} </button>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>\n\n          <ion-input [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" placeholder=" {{ \'DISTANCE_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          <!-- <button ion-button outline item-end icon-left (click)="GetDistance()">\n\n            <ion-icon name="eye"></ion-icon>\n\n            {{ "GET_DISTANCE_BUTTON" }} </button> -->\n\n        </ion-item>\n\n\n\n        <!-- [(ngModel)]="Travel_Amount_ngModel" -->\n\n        <ion-item>\n\n            <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>\n\n            <ion-label > {{travelAmount | number}} </ion-label>\n\n            <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ \'CLAIM_AMOUNT_PLACE_HOLDER\' | translate }} "></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item>\n\n              <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>\n\n              <ion-input type="text" formControlName="description" placeholder=" {{ \'DESCRIPTION_PLACE_HOLDER\' | translate }} "></ion-input>\n\n            </ion-item>      \n\n            \n\n            <ion-item>\n\n              <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">\n\n            </ion-item>\n\n\n\n        <div class="btn">\n\n          <button ion-button (click)=\'save(Travelform.value)\'  >SUBMIT</button>\n\n        </div>\n\n        <!-- [disabled]="!Travelform.valid" -->       \n\n\n\n        <a (click)="showAddToll()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Toll</a>\n\n        <a (click)="showAddParking()" *ngIf="MainClaimSaved">\n\n          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a>\n\n    \n\n      </form>\n\n\n\n      <div class="blackcontainer" *ngIf="AddLookupClicked">\n\n      </div>\n\n      <div class="popup2" padding *ngIf="AddLookupClicked">\n\n        <ion-card>\n\n          <ion-card-header class="icTitle headerColor-white ">\n\n    \n\n            <div class="icHeaderText">Search Location</div>\n\n            <button class="btnR" (click)="CloseLookupClick()">\n\n              <ion-icon name="md-close"></ion-icon>\n\n            </button>\n\n          </ion-card-header>\n\n          <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>\n\n          <ion-list>\n\n            <ion-item-sliding *ngFor="let item of currentItems">\n\n              <button ion-item (click)="openItem(item)">\n\n                <ion-label> {{item.description}}</ion-label>\n\n              </button>\n\n            </ion-item-sliding>\n\n          </ion-list>\n\n        </ion-card>\n\n      </div>\n\n\n\n      <div class="blackcontainer" *ngIf="ProjectLookupClicked">\n\n        </div>\n\n        <div class="popup2" padding *ngIf="ProjectLookupClicked">\n\n          <ion-card>\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n              <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>\n\n              <button class="btnR" (click)="CloseProjectLookup()">\n\n                <ion-icon name="md-close"></ion-icon>\n\n              </button>\n\n            </ion-card-header>\n\n            <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder=\'{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n            <ion-list>\n\n              <ion-item-sliding *ngFor="let item of projects">\n\n                <button ion-item (click)="GetSocNo(item)">\n\n                  <ion-label>{{item.project_name}}\n\n                    <>{{item.soc}}</ion-label>\n\n                </button>\n\n              </ion-item-sliding>\n\n            </ion-list>\n\n          </ion-card>\n\n        </div>\n\n\n\n        <div class="blackcontainer" *ngIf="CustomerLookupClicked">\n\n          </div>\n\n          <div class="popup2" padding *ngIf="CustomerLookupClicked">\n\n            <ion-card>\n\n              <ion-card-header class="icTitle headerColor-white ">\n\n                <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>\n\n                <button class="btnR" (click)="CloseCustomerLookup()">\n\n                  <ion-icon name="md-close"></ion-icon>\n\n                </button>\n\n              </ion-card-header>\n\n              <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder=\'{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}\'></ion-searchbar>\n\n              <ion-list>\n\n                <ion-item-sliding *ngFor="let item of customers">\n\n                  <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">\n\n                    <ion-label>{{item.NAME}}</ion-label>\n\n                  </button>\n\n                </ion-item-sliding>\n\n              </ion-list>\n\n            </ion-card>\n\n          </div>   \n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\travelclaim\travelclaim.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_15__ionic_native_file_path__["a" /* FilePath */], __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ModalController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__services_base_http__["a" /* BaseHttpService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__Services__["a" /* Services */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_12__ionic_native_camera__["a" /* Camera */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__ionic_native_camera__["a" /* Camera */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* LoadingController */]) === "function" && _p || Object, typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_13__ionic_native_file__["a" /* File */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_13__ionic_native_file__["a" /* File */]) === "function" && _q || Object, typeof (_r = typeof __WEBPACK_IMPORTED_MODULE_15__ionic_native_file_path__["a" /* FilePath */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_15__ionic_native_file_path__["a" /* FilePath */]) === "function" && _r || Object, typeof (_s = typeof __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_14__ionic_native_file_transfer__["a" /* FileTransfer */]) === "function" && _s || Object, typeof (_t = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ToastController */]) === "function" && _t || Object])
 ], TravelclaimPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
 //# sourceMappingURL=travelclaim.js.map
 
 /***/ }),
@@ -6671,10 +6853,9 @@ CashcardsetupPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
         selector: 'page-cashcardsetup',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\cashcardsetup\cashcardsetup.html"*/'<!--\n\n  Generated template for the CashcardsetupPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n    <ion-navbar>\n\n        <ion-title>{{ \'CASHCARD_SETUP_HEADING\' | translate }}</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <ion-fab top right edge>\n\n        <button ion-fab mini (click)="AddCashClick()"><ion-icon name="add"></ion-icon></button>\n\n    </ion-fab>\n\n\n\n    <ion-list>\n\n        <ion-item>\n\n            <table class="Tabler ">\n\n                <tr class="linedsg TColor">\n\n                    <th class="lgl1 tblBrLeft" style="width:60px">{{ \'NO\' | translate }}</th>\n\n                    <!-- <th class="lgl1">CASHCARD NO.</th> -->\n\n                     <th class="lgl1">{{ \'CARD_NO\' | translate }}</th>\n\n                    <th class="lgl1">{{ \'ACCOUNT_NO\' | translate }}</th>\n\n                    <!-- <th class="lgl1">PASSWORD</th> -->\n\n                    <th class="lgl1">{{ \'MANAGEMENT_URL\' | translate }}</th>\n\n                    <th class="lgl1">{{ \'DESCRIPTION\' | translate }}</th>\n\n                    <th class="lgl1 tblBrRight" style="width:80px">{{ \'ACTION\' | translate }}</th>\n\n\n\n                </tr>\n\n\n\n                <tr class="col7" *ngFor="let cashcard of cashcards; let i=index">\n\n                    <td class="lgl1">{{i+1}}</td>\n\n                    <td class="lgl1">{{cashcard.CASHCARD_SNO}}</td>\n\n                    <td class="lgl1">{{cashcard.ACCOUNT_ID}}</td>\n\n                    <!-- <td class="lgl1">{{cashcard.ACCOUNT_PASSWORD}}</td> -->\n\n                    <td class="lgl1">{{cashcard.MANAGEMENT_URL}}</td>\n\n                    <td class="lgl1">{{cashcard.DESCRIPTION}}</td>\n\n                    <td class="lgl1 fColor">\n\n                        <button ion-button item-end (click)="EditClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-create"></ion-icon></button>\n\n                        <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button>\n\n                    </td>\n\n                </tr>\n\n\n\n\n\n            </table>\n\n        </ion-item>\n\n    </ion-list>\n\n\n\n\n\n\n\n\n\n\n\n\n\n    <!-- add cash card form start-->\n\n    <div class="blackcontainer" *ngIf="AddCashClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="AddCashClicked">\n\n\n\n        <ion-card>\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n\n\n                <div class="icHeaderText">REGISTER NEW CASHCARD</div>\n\n                <button class="btnR" (click)="CloseCashClick()">\n\n          <ion-icon name="md-close"></ion-icon> \n\n        </button>\n\n            </ion-card-header>\n\n            <ion-list>\n\n\n\n                <form [formGroup]="Cashform">\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"CASHCARD NO."}}</ion-label>\n\n                        <ion-input type="text" formControlName="CASHCARD_SNO" [(ngModel)]="CASHCARD_SNO_ngModel_Add" placeholder="{{\'Please fill in the cash card no.\'}}"></ion-input>\n\n\n\n                    </ion-item>\n\n\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ACCOUNT NO."}}</ion-label>\n\n                        <ion-input type="text" formControlName="ACCOUNT_ID" [(ngModel)]="ACCOUNT_ID_ngModel_Add" placeholder="{{\'Please fill in the account no.\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"PASSWORD"}}</ion-label>\n\n                        <ion-input type="password" formControlName="ACCOUNT_PASSWORD" [(ngModel)]="ACCOUNT_PASSWORD_ngModel_Add" placeholder="{{\'Please fill in yours password\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"MANAGEMENT URL"}}</ion-label>\n\n                        <ion-input type="text" formControlName="MANAGEMENT_URL" [(ngModel)]="MANAGEMENT_URL_ngModel_Add" placeholder="{{\'Please fill in the management URL\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n                        <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{\'Please fill in the description\'}}"></ion-input>\n\n                    </ion-item>\n\n                    <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Cashform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>\n\n                </form>\n\n\n\n            </ion-list>\n\n        </ion-card>\n\n\n\n    </div>\n\n    <!-- add cash card form end-->\n\n\n\n    <!-- Edit cash card form start-->\n\n    <div class="blackcontainer" *ngIf="EditCashClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="EditCashClicked">\n\n\n\n        <ion-card>\n\n            <ion-card-header class="icTitle headerColor-white ">\n\n\n\n                <div class="icHeaderText">UPDATE CASHCARD</div>\n\n                <button class="btnR" (click)="CloseCashClick()">\n\n          <ion-icon name="md-close"></ion-icon> \n\n        </button>\n\n            </ion-card-header>\n\n            <ion-list>\n\n                <form [formGroup]="Cashform">\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"CASHCARD NO."}}</ion-label>\n\n                        <ion-input type="text" formControlName="CASHCARD_SNO" [(ngModel)]="CASHCARD_SNO_ngModel_Edit" placeholder="{{\'Please fill in the cash card no.\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"ACCOUNT NO."}}</ion-label>\n\n                        <ion-input type="text" formControlName="ACCOUNT_ID" [(ngModel)]="ACCOUNT_ID_ngModel_Edit" placeholder="{{\'Please fill in the account no.\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"PASSWORD"}}</ion-label>\n\n                        <ion-input type="password" formControlName="ACCOUNT_PASSWORD" [(ngModel)]="ACCOUNT_PASSWORD_ngModel_Edit" placeholder="{{\'Please fill in yours password\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"MANAGEMENT URL"}}</ion-label>\n\n                        <ion-input type="text" formControlName="MANAGEMENT_URL" [(ngModel)]="MANAGEMENT_URL_ngModel_Edit" placeholder="{{\'Please fill in the management URL\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <ion-item>\n\n                        <ion-label stacked>{{"DESCRIPTION"}}</ion-label>\n\n                        <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit" placeholder="{{\'Please fill in the description\'}}"></ion-input>\n\n                    </ion-item>\n\n\n\n                    <div class="btn">\n\n                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Cashform.valid" (click)="!Update(cashcard_details.CASHCARD_GUID)">{{"SUBMIT" | translate}}</button></div>\n\n                </form>\n\n            </ion-list>\n\n        </ion-card>\n\n\n\n    </div>\n\n    <!-- Edit cash card form end-->\n\n</ion-content>'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\cashcardsetup\cashcardsetup.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_7__services_cashcardsetup_service__["a" /* CashcardSetup_Service */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */]]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__services_cashcardsetup_service__["a" /* CashcardSetup_Service */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_cashcardsetup_service__["a" /* CashcardSetup_Service */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _g || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_8__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_7__services_cashcardsetup_service__["a" /* CashcardSetup_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
 ], CashcardsetupPage);
 
-var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=cashcardsetup.js.map
 
 /***/ }),
@@ -11004,7 +11185,7 @@ var StatesetupPage = (function () {
 StatesetupPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-        selector: 'page-statesetup',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\statesetup\statesetup.html"*/'<!--\n\n  Generated template for the StatesetupPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>{{ \'STATE_SETUP_HEADING\' | translate }}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <ion-fab top right edge>\n\n        <button ion-fab mini (click)="AddStateClick()"><ion-icon name="add"></ion-icon></button>\n\n      </ion-fab>\n\n    <ion-list>\n\n        <ion-item>\n\n          <table class="Tabler">\n\n            <tr class="linedsg TColor">\n\n              <th class="lgl1 tblBrLeft" style="width:60px">{{ \'NO\' | translate }}</th>\n\n              <th class="lgl1">{{ \'STATE_NAME\' | translate }}</th>    \n\n              <th class="lgl1">{{ \'COUNTRY_NAME\' | translate }}</th>                                 \n\n              <th class="lgl1 tblBrRight" style="width:90px">{{ \'ACTION\' | translate }}</th>\n\n    \n\n            </tr>\n\n    \n\n            <tr class="col7" *ngFor="let state of states; let i=index">\n\n              <td class="lgl1">{{i+1}}</td>\n\n              <td class="lgl1">{{state.STATE_NAME}}</td>   \n\n              <td class="lgl1">{{state.COUNTRY_NAME}}</td>                       \n\n              <td class="lgl1 fColor">\n\n                <button ion-button item-end (click)="EditClick(state.STATE_GUID)"><ion-icon name="md-create"></ion-icon></button>\n\n                <button ion-button item-end (click)="DeleteClick(state.STATE_GUID)"><ion-icon name="md-close"></ion-icon></button>\n\n              </td>\n\n            </tr>   \n\n          </table>\n\n        </ion-item>\n\n      </ion-list>\n\n\n\n       <!-- add country form start-->\n\n   <div class="blackcontainer" *ngIf="AddStateClicked">\n\n  </div>\n\n  <div class="popup" padding *ngIf="AddStateClicked">\n\n\n\n    <ion-card>\n\n      <ion-card-header class="icTitle headerColor-white ">\n\n        <div class="icHeaderText">REGISTER NEW STATE</div>\n\n        <button class="btnR" (click)="CloseStateClick()">\n\n          <ion-icon name="md-close"></ion-icon> \n\n        </button>\n\n      </ion-card-header>\n\n\n\n      <ion-list>\n\n        <form [formGroup]="Stateform">\n\n\n\n           \n\n          <!-- <ion-item>\n\n            <ion-label stacked>{{ \'COUNTRY_NAME\' | translate }}</ion-label>\n\n            <ion-input type="text" formControlName="NAME" [(ngModel)]="COUNTRY_NAME_ngModel_Add"  \n\n             required placeholder="{{\'Please fill in the category of the country\'}}"></ion-input>\n\n          </ion-item>     -->\n\n         \n\n          <ion-item>\n\n            <ion-label stacked>{{ \'STATE_NAME\' | translate }}</ion-label>\n\n            <ion-input type="text" formControlName="NAME" [(ngModel)]="STATE_NAME_ngModel_Add"  \n\n             required placeholder="{{\'Please fill in the state\'}}"></ion-input>\n\n          </ion-item>  \n\n\n\n          <ion-item class="text">\n\n              <ion-label stacked>{{ \'COUNTRY_NAME\' | translate }}</ion-label>\n\n              <ion-select formControlName="COUNTRY_GUID" [(ngModel)]="COUNTRY_NAME_ngModel_Add" placeholder="{{\'Please fill the country\'}}" >\n\n                  <ion-option *ngFor="let country of countries" [value]="country.COUNTRY_GUID">{{country.NAME}}</ion-option>\n\n              </ion-select>\n\n          </ion-item>\n\n          \n\n          <div class="btn">\n\n            <button ion-button class="bgColor-grey fontColor-white btnStyle1"  (click)="Save()">{{"SUBMIT" | translate}}</button>\n\n          </div>\n\n          <!-- [disabled]="!Stateform.valid" -->\n\n        </form>\n\n      </ion-list>\n\n\n\n    </ion-card>\n\n\n\n  </div>\n\n  <!-- add country form end-->\n\n\n\n  <div class="blackcontainer" *ngIf="EditStateClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="EditStateClicked">\n\n      <ion-card>\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n          <div class="icHeaderText">UPDATE STATE</div>\n\n          <button class="btnR" (click)="CloseStateClick()">\n\n            <ion-icon name="md-close"></ion-icon> \n\n          </button>\n\n        </ion-card-header>\n\n  \n\n        <ion-list>\n\n            <form [formGroup]="Stateform">\n\n\n\n           \n\n                <!-- <ion-item>\n\n                  <ion-label stacked>{{ \'COUNTRY_NAME\' | translate }}</ion-label>\n\n                  <ion-input type="text" formControlName="NAME" [(ngModel)]="COUNTRY_NAME_ngModel_Add"  \n\n                   required placeholder="{{\'Please fill in the category of the country\'}}"></ion-input>\n\n                </ion-item>     -->\n\n               \n\n                <ion-item>\n\n                  <ion-label stacked>{{ \'STATE_NAME\' | translate }}</ion-label>\n\n                  <ion-input type="text" formControlName="NAME" [(ngModel)]="STATE_NAME_ngModel_Edit"  \n\n                   required placeholder="{{\'Please fill in the state\'}}"></ion-input>\n\n                </ion-item>  \n\n      \n\n                <ion-item class="text">\n\n                    <ion-label stacked>{{ \'COUNTRY_NAME\' | translate }}</ion-label>\n\n                    <ion-select formControlName="COUNTRY_GUID" [(ngModel)]="COUNTRY_NAME_ngModel_Edit" placeholder="{{\'Please fill the country\'}}" >\n\n                        <ion-option *ngFor="let country of countries" [value]="country.COUNTRY_GUID">{{country.NAME}}</ion-option>\n\n                    </ion-select>\n\n                </ion-item>\n\n                \n\n                <div class="btn">\n\n                  <button ion-button class="bgColor-grey fontColor-white btnStyle1"  (click)="Update(state_details.STATE_GUID)">{{"SUBMIT" | translate}}</button>\n\n                </div>\n\n                <!-- [disabled]="!Stateform.valid" -->\n\n              </form>\n\n        </ion-list>\n\n  \n\n      </ion-card>\n\n    </div>\n\n    <!-- edit country form end-->\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\statesetup\statesetup.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_8__services_statesetup_service__["a" /* StateSetup_Service */], __WEBPACK_IMPORTED_MODULE_9__services_base_http__["a" /* BaseHttpService */]]
+        selector: 'page-statesetup',template:/*ion-inline-start:"G:\Alan Documents\Fresh\eClaim\src\pages\statesetup\statesetup.html"*/'<!--\n\n  Generated template for the StatesetupPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>{{ \'STATE_SETUP_HEADING\' | translate }}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <ion-fab top right edge>\n\n        <button ion-fab mini (click)="AddStateClick()"><ion-icon name="add"></ion-icon></button>\n\n      </ion-fab>\n\n    <ion-list>\n\n        <ion-item>\n\n          <table class="Tabler">\n\n            <tr class="linedsg TColor">\n\n              <th class="lgl1 tblBrLeft" style="width:60px">{{ \'NO\' | translate }}</th>\n\n              <th class="lgl1">{{ \'STATE_NAME\' | translate }}</th>    \n\n              <th class="lgl1">{{ \'COUNTRY_NAME\' | translate }}</th>                                 \n\n              <th class="lgl1 tblBrRight" style="width:90px">{{ \'ACTION\' | translate }}</th>   \n\n    \n\n            </tr>\n\n    \n\n            <tr class="col7" *ngFor="let state of states; let i=index">\n\n              <td class="lgl1">{{i+1}}</td>\n\n              <td class="lgl1">{{state.STATE_NAME}}</td>   \n\n              <td class="lgl1">{{state.COUNTRY_NAME}}</td>                       \n\n              <td class="lgl1 fColor">\n\n                <button ion-button item-end (click)="EditClick(state.STATE_GUID)"><ion-icon name="md-create"></ion-icon></button>\n\n                <button ion-button item-end (click)="DeleteClick(state.STATE_GUID)"><ion-icon name="md-close"></ion-icon></button>\n\n              </td>\n\n            </tr>   \n\n          </table>\n\n        </ion-item>\n\n      </ion-list>\n\n\n\n       <!-- add country form start-->\n\n   <div class="blackcontainer" *ngIf="AddStateClicked">\n\n  </div>\n\n  <div class="popup" padding *ngIf="AddStateClicked">\n\n\n\n    <ion-card>\n\n      <ion-card-header class="icTitle headerColor-white ">\n\n        <div class="icHeaderText">REGISTER NEW STATE</div>\n\n        <button class="btnR" (click)="CloseStateClick()">\n\n          <ion-icon name="md-close"></ion-icon> \n\n        </button>\n\n      </ion-card-header>\n\n\n\n      <ion-list>\n\n        <form [formGroup]="Stateform">\n\n\n\n           \n\n          <!-- <ion-item>\n\n            <ion-label stacked>{{ \'COUNTRY_NAME\' | translate }}</ion-label>\n\n            <ion-input type="text" formControlName="NAME" [(ngModel)]="COUNTRY_NAME_ngModel_Add"  \n\n             required placeholder="{{\'Please fill in the category of the country\'}}"></ion-input>\n\n          </ion-item>     -->\n\n         \n\n          <ion-item>\n\n            <ion-label stacked>{{ \'STATE_NAME\' | translate }}</ion-label>\n\n            <ion-input type="text" formControlName="NAME" [(ngModel)]="STATE_NAME_ngModel_Add"  \n\n             required placeholder="{{\'Please fill in the state\'}}"></ion-input>\n\n          </ion-item>  \n\n\n\n          <ion-item class="text">\n\n              <ion-label stacked>{{ \'COUNTRY_NAME\' | translate }}</ion-label>\n\n              <ion-select formControlName="COUNTRY_GUID" [(ngModel)]="COUNTRY_NAME_ngModel_Add" placeholder="{{\'Please fill the country\'}}" >\n\n                  <ion-option *ngFor="let country of countries" [value]="country.COUNTRY_GUID">{{country.NAME}}</ion-option>\n\n              </ion-select>\n\n          </ion-item>\n\n          \n\n          <div class="btn">\n\n            <button ion-button class="bgColor-grey fontColor-white btnStyle1"  (click)="Save()">{{"SUBMIT" | translate}}</button>\n\n          </div>\n\n          <!-- [disabled]="!Stateform.valid" -->\n\n        </form>\n\n      </ion-list>\n\n\n\n    </ion-card>\n\n\n\n  </div>\n\n  <!-- add country form end-->\n\n\n\n  <div class="blackcontainer" *ngIf="EditStateClicked">\n\n    </div>\n\n    <div class="popup" padding *ngIf="EditStateClicked">\n\n      <ion-card>\n\n        <ion-card-header class="icTitle headerColor-white ">\n\n          <div class="icHeaderText">UPDATE STATE</div>\n\n          <button class="btnR" (click)="CloseStateClick()">\n\n            <ion-icon name="md-close"></ion-icon> \n\n          </button>\n\n        </ion-card-header>\n\n  \n\n        <ion-list>\n\n            <form [formGroup]="Stateform">\n\n\n\n           \n\n                <!-- <ion-item>\n\n                  <ion-label stacked>{{ \'COUNTRY_NAME\' | translate }}</ion-label>\n\n                  <ion-input type="text" formControlName="NAME" [(ngModel)]="COUNTRY_NAME_ngModel_Add"  \n\n                   required placeholder="{{\'Please fill in the category of the country\'}}"></ion-input>\n\n                </ion-item>     -->\n\n               \n\n                <ion-item>\n\n                  <ion-label stacked>{{ \'STATE_NAME\' | translate }}</ion-label>\n\n                  <ion-input type="text" formControlName="NAME" [(ngModel)]="STATE_NAME_ngModel_Edit"  \n\n                   required placeholder="{{\'Please fill in the state\'}}"></ion-input>\n\n                </ion-item>  \n\n      \n\n                <ion-item class="text">\n\n                    <ion-label stacked>{{ \'COUNTRY_NAME\' | translate }}</ion-label>\n\n                    <ion-select formControlName="COUNTRY_GUID" [(ngModel)]="COUNTRY_NAME_ngModel_Edit" placeholder="{{\'Please fill the country\'}}" >\n\n                        <ion-option *ngFor="let country of countries" [value]="country.COUNTRY_GUID">{{country.NAME}}</ion-option>\n\n                    </ion-select>\n\n                </ion-item>\n\n                \n\n                <div class="btn">\n\n                  <button ion-button class="bgColor-grey fontColor-white btnStyle1"  (click)="Update(state_details.STATE_GUID)">{{"SUBMIT" | translate}}</button>\n\n                </div>\n\n                <!-- [disabled]="!Stateform.valid" -->\n\n              </form>\n\n        </ion-list>\n\n  \n\n      </ion-card>\n\n    </div>\n\n    <!-- edit country form end-->\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"G:\Alan Documents\Fresh\eClaim\src\pages\statesetup\statesetup.html"*/, providers: [__WEBPACK_IMPORTED_MODULE_8__services_statesetup_service__["a" /* StateSetup_Service */], __WEBPACK_IMPORTED_MODULE_9__services_base_http__["a" /* BaseHttpService */]]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_9__services_base_http__["a" /* BaseHttpService */], __WEBPACK_IMPORTED_MODULE_8__services_statesetup_service__["a" /* StateSetup_Service */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
 ], StatesetupPage);
