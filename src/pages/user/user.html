@@ -146,7 +146,7 @@
     </ion-list>
 
 
-<!-- add Tenant form start-->
+    <!-- add Tenant form start-->
     <div class="blackcontainer" *ngIf="AddUserClicked"></div>
     <div class="popup" padding *ngIf="AddUserClicked">
 
@@ -663,10 +663,10 @@
         </ion-card>
 
     </div>
-<!-- add Tenant form end-->
+    <!-- add Tenant form end-->
 
 
-<!-- edit user form start -->
+    <!-- edit user form start -->
     <div class="blackcontainer" *ngIf="EditUserClicked"></div>
     <div class="popup" padding *ngIf="EditUserClicked">
 
@@ -717,7 +717,7 @@
                     <ion-item>
 
                         <ion-label stacked>{{"MARITAL STATUS"}}</ion-label>
-                        <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}">                            
+                        <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}">
                             <ion-option [value]="0">SINGLE</ion-option>
                             <ion-option [value]="1">MARRIED</ion-option>
                         </ion-select>
@@ -770,7 +770,7 @@
 
 
                     <ion-item>
-                        <ion-label stacked>{{"COMPANY"}}</ion-label>                        
+                        <ion-label stacked>{{"COMPANY"}}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{'Please fill the company'}}"
                             (ionChange)="GetBranch('tenant_company_site', User_Company_Edit_ngModel,'SITE_NAME')">
                             <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
@@ -793,7 +793,7 @@
                     <ion-item>
                         <ion-label stacked>{{"CONFIRMATION DATE"}}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_Edit_ngModel"
-                            placeholder="{{'Please fill the confermation date'}}"></ion-datetime>                        
+                            placeholder="{{'Please fill the confermation date'}}"></ion-datetime>
                     </ion-item>
 
                     <ion-item>
@@ -803,7 +803,7 @@
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"BRANCH"}}</ion-label>                        
+                        <ion-label stacked>{{"BRANCH"}}</ion-label>
                         <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_Edit_ngModel" placeholder="{{'Please select Branch'}}">
                             <ion-option *ngFor="let branch of branches" [value]="branch.TENANT_COMPANY_SITE_GUID" selected="true">{{branch.SITE_NAME}}</ion-option>
                         </ion-select>
@@ -811,7 +811,7 @@
 
                     <ion-item>
                         <ion-label stacked>{{"EMPLOYEE TYPE"}}</ion-label>
-                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{'Please fill in the Email'}}">                            
+                        <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{'Please fill in the Email'}}">
                             <ion-option value="0">Permanent</ion-option>
                             <ion-option value="1">Contract</ion-option>
                             <ion-option value="2">Temporary</ion-option>
@@ -844,102 +844,102 @@
 
 
                     <div class="eClaimSubTitle2">
-                            <b>EDUCATIONAL QUALIFICATION</b>
-                        </div>
-    
-                        <ion-item class="text">
-                            <ion-label stacked>{{"HIGHEST QUALIFICATION"}}</ion-label>
-                            <ion-select formControlName="HIGHEST_QUALIFICATION" [(ngModel)]="User_HighestQualification_Edit_ngModel" placeholder="{{'Select Highest Qualification'}}">
-                                <ion-option *ngFor="let qualification of qualifications" [value]="qualification.QUALIFICATION_TYPE_GUID" selected="true">{{qualification.TYPE_NAME}}</ion-option>
-                            </ion-select>
-                        </ion-item>
-    
-                        <ion-item class="text">
-                            <ion-label stacked>{{"UNIVERSITY"}}</ion-label>
-                            <ion-input type="text" formControlName="UNIVERSITY" [(ngModel)]="User_University_Edit_ngModel" placeholder="{{'Please fill the University'}}"></ion-input>
-                        </ion-item>
-    
-                        <ion-item class="text">
-                            <ion-label stacked>{{"MAJOR"}}</ion-label>
-                            <ion-input type="text" formControlName="MAJOR" [(ngModel)]="User_Major_Edit_ngModel" placeholder="{{'Please fill the Major'}}"></ion-input>
-                        </ion-item>                        
-    
-                        <ion-item class="text">
-                            <ion-label stacked>{{"YEAR"}}</ion-label>
-                            <ion-input type="text" formControlName="EDU_YEAR" [(ngModel)]="User_EduYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}"></ion-input>
-                        </ion-item>
-    
+                        <b>EDUCATIONAL QUALIFICATION</b>
+                    </div>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"HIGHEST QUALIFICATION"}}</ion-label>
+                        <ion-select formControlName="HIGHEST_QUALIFICATION" [(ngModel)]="User_HighestQualification_Edit_ngModel" placeholder="{{'Select Highest Qualification'}}">
+                            <ion-option *ngFor="let qualification of qualifications" [value]="qualification.QUALIFICATION_TYPE_GUID" selected="true">{{qualification.TYPE_NAME}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"UNIVERSITY"}}</ion-label>
+                        <ion-input type="text" formControlName="UNIVERSITY" [(ngModel)]="User_University_Edit_ngModel" placeholder="{{'Please fill the University'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"MAJOR"}}</ion-label>
+                        <ion-input type="text" formControlName="MAJOR" [(ngModel)]="User_Major_Edit_ngModel" placeholder="{{'Please fill the Major'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"YEAR"}}</ion-label>
+                        <ion-input type="text" formControlName="EDU_YEAR" [(ngModel)]="User_EduYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label id="certificate_image" color="primary" stacked>ATTACHEMENT</ion-label>
+                        <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
+                    </ion-item>
+                    <button ion-button icon-left (click)="UploadCertificate()">
+                        <ion-icon name="cloud-upload"></ion-icon>ATTACH
+                    </button>
+
+
+
+
+
+
+                    <div class="eClaimSubTitle2">
+                        <b>PROFESSIONAL CERTIFICATIONS</b>
+                    </div>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"CERTIFICATION"}}</ion-label>
+                        <ion-input type="text" formControlName="CERTIFICATION" [(ngModel)]="User_Certification_Edit_ngModel" placeholder="{{'Please fill the certifiation'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"YEAR"}}</ion-label>
+                        <ion-input type="text" formControlName="CERTIFICATION_YEAR" [(ngModel)]="User_CertificationYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"GRADE"}}</ion-label>
+                        <ion-input type="text" formControlName="CERTIFICATION_GRADE" [(ngModel)]="User_CertificationGrade_Edit_ngModel" placeholder="{{'Please fill the Grade'}}"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label id="certificate_image" color="primary" stacked>ATTACHMENT</ion-label>
+                        <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
+                    </ion-item>
+
+                    <button ion-button icon-left (click)="AddProfessionalCertificationForEdit()">
+                        <ion-icon name="cloud-upload"></ion-icon>ADD
+                    </button>
+
+                    <ion-list>
                         <ion-item>
-                            <ion-label id="certificate_image" color="primary" stacked>ATTACHEMENT</ion-label>
-                            <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
+                            <table class="Tabler">
+                                <tr class="linedsg TColor">
+                                    <th class="lgl1 tblBrLeft">NO</th>
+                                    <th class="lgl1">NAME</th>
+                                    <th class="lgl1">GRADE</th>
+                                    <th class="lgl1">YEAR</th>
+                                    <th class="lgl1">ATTACHEMENT</th>
+                                    <th class="lgl1 tblBrRight">ACTION</th>
+                                </tr>
+
+                                <tr class="col7" *ngFor="let certificate of ProfessionalCertification; let i=index">
+                                    <td class="lgl1">{{i+1}}</td>
+                                    <td class="lgl1">{{certificate.NAME}}</td>
+                                    <td class="lgl1">{{certificate.GRADE}}</td>
+                                    <td class="lgl1">{{certificate.YEAR}}</td>
+                                    <td class="lgl1">MCA.Pdf</td>
+                                    <td class="lgl1 fColor">
+                                        <button ion-button item-end (click)="EditProfessionalCertificationForEdit(certificate.CERTIFICATE_GUID)">
+                                            <ion-icon name="md-create"></ion-icon>
+                                        </button>
+                                        <button ion-button item-end (click)="RemoveProfessionalCertification(certificate.CERTIFICATE_GUID)">
+                                            <ion-icon name="md-close"></ion-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
                         </ion-item>
-                        <button ion-button icon-left (click)="UploadCertificate()">
-                            <ion-icon name="cloud-upload"></ion-icon>ATTACH
-                        </button>
-    
-    
-    
-    
-    
-    
-                        <div class="eClaimSubTitle2">
-                            <b>PROFESSIONAL CERTIFICATIONS</b>
-                        </div>
-    
-                        <ion-item class="text">
-                            <ion-label stacked>{{"CERTIFICATION"}}</ion-label>
-                            <ion-input type="text" formControlName="CERTIFICATION" [(ngModel)]="User_Certification_Edit_ngModel" placeholder="{{'Please fill the certifiation'}}"></ion-input>
-                        </ion-item>
-    
-                        <ion-item class="text">
-                            <ion-label stacked>{{"YEAR"}}</ion-label>
-                            <ion-input type="text" formControlName="CERTIFICATION_YEAR" [(ngModel)]="User_CertificationYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}"></ion-input>
-                        </ion-item>
-    
-                        <ion-item class="text">
-                            <ion-label stacked>{{"GRADE"}}</ion-label>
-                            <ion-input type="text" formControlName="CERTIFICATION_GRADE" [(ngModel)]="User_CertificationGrade_Edit_ngModel" placeholder="{{'Please fill the Grade'}}"></ion-input>
-                        </ion-item>
-    
-                        <ion-item>
-                            <ion-label id="certificate_image" color="primary" stacked>ATTACHMENT</ion-label>
-                            <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
-                        </ion-item>
-    
-                        <button ion-button icon-left (click)="AddProfessionalCertificationForEdit()">
-                            <ion-icon name="cloud-upload"></ion-icon>ADD
-                        </button>
-    
-                        <ion-list>
-                            <ion-item>
-                                <table class="Tabler">
-                                    <tr class="linedsg TColor">
-                                        <th class="lgl1 tblBrLeft">NO</th>
-                                        <th class="lgl1">NAME</th>
-                                        <th class="lgl1">GRADE</th>
-                                        <th class="lgl1">YEAR</th>
-                                        <th class="lgl1">ATTACHEMENT</th>
-                                        <th class="lgl1 tblBrRight">ACTION</th>
-                                    </tr>
-    
-                                    <tr class="col7" *ngFor="let certificate of ProfessionalCertification; let i=index">
-                                        <td class="lgl1">{{i+1}}</td>
-                                        <td class="lgl1">{{certificate.NAME}}</td>
-                                        <td class="lgl1">{{certificate.GRADE}}</td>
-                                        <td class="lgl1">{{certificate.YEAR}}</td>
-                                        <td class="lgl1">MCA.Pdf</td>
-                                        <td class="lgl1 fColor">
-                                            <button ion-button item-end (click)="EditProfessionalCertificationForEdit(certificate.CERTIFICATE_GUID)">
-                                                <ion-icon name="md-create"></ion-icon>
-                                            </button>
-                                            <button ion-button item-end (click)="RemoveProfessionalCertification(certificate.CERTIFICATE_GUID)">
-                                                <ion-icon name="md-close"></ion-icon>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ion-item>
-                        </ion-list>
+                    </ion-list>
 
 
 
@@ -1152,7 +1152,7 @@
                     </ion-item>
 
                     <div class="btn">
-                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(view_user_details.USER_GUID)">{{"SUBMIT" | translate}}</button>
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(view_user_details[0].USER_GUID)">{{"SUBMIT" | translate}}</button>
                     </div>
                 </form>
 
@@ -1160,6 +1160,6 @@
         </ion-card>
 
     </div>
-<!-- edit user form end -->
+    <!-- edit user form end -->
 
 </ion-content>
