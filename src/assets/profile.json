@@ -1,0 +1,69 @@
+    {
+      "profile": {
+        "levels": {
+          "level": [
+            {
+              "-id": "1",
+              "approver": { "-directManager": "1" },
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": { "-final": "false" }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": {
+                      "-final": "false",
+                      "#text": "2"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "-id": "2",
+              "approver": {
+                "-keytype": "userGUID",
+                "#text": "64e8da16-e008-b53e-9e00-eca107d35a75"
+              },
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": { "-final": "false" }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": {
+                      "-final": "false",
+                      "#text": "3"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "-id": "3",
+              "approver": {
+                "-keytype": "userGUID",
+                "#text": "64e8da16-e008-b53e-9e00-eca107d35a75"
+              },
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": { "-final": "false" }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": { "-final": "true" }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  
