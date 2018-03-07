@@ -10,6 +10,7 @@ import {PagesetupPage} from'../pagesetup/pagesetup';
 import {ModulesetupPage} from'../modulesetup/modulesetup';
 import {SubmodulesetupPage} from'../submodulesetup/submodulesetup';
 import { ClaimhistoryPage } from '../claimhistory/claimhistory';
+import { ApproverTaskListPage } from '../approver-task-list/approver-task-list';
 import { UserPage } from '../user/user';
 
 /**
@@ -71,6 +72,9 @@ export class AdminsetupPage {
   }
   goToClaimHistory(){
     this.navCtrl.push(ClaimhistoryPage)
+  }
+  goApproverTaskList(){
+    this.navCtrl.push(ApproverTaskListPage)
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminsetupPage');

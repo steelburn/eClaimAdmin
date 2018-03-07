@@ -43,6 +43,8 @@ import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
+import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
+import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
@@ -134,6 +136,8 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     UserPage,
     SocRegistrationPage,
     AdminsetupPage,
+    ApproverTaskListPage,
+    TravelClaimViewPage,
     
     UploadPage,
 
@@ -216,6 +220,8 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     RolemodulesetupPage,
     SpeakerListPage,
     TabsPage,
+    ApproverTaskListPage,
+    TravelClaimViewPage,
     UserPage,
     SocRegistrationPage,
 
