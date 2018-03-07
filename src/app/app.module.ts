@@ -65,6 +65,10 @@ import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
+import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
+import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
+import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 
 
 @NgModule({
@@ -110,7 +114,11 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     SocRegistrationPage,
     AdminsetupPage,
     AddTollPage,
-    ClaimhistoryPage
+    ClaimhistoryPage,
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage
   ],
   imports: [
     BrowserModule,
@@ -182,7 +190,11 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     UserPage,
     SocRegistrationPage,
     AddTollPage,
-    ClaimhistoryPage
+    ClaimhistoryPage,
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

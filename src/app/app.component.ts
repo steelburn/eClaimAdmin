@@ -29,6 +29,12 @@ import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
 import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
+import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
+import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
+import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+
 export interface PageInterface {
 
   title: string;

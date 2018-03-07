@@ -10,6 +10,10 @@ import {PagesetupPage} from'../pagesetup/pagesetup';
 import {ModulesetupPage} from'../modulesetup/modulesetup';
 import {SubmodulesetupPage} from'../submodulesetup/submodulesetup';
 import { ClaimhistoryPage } from '../claimhistory/claimhistory';
+import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
+import{ClaimtasklistPage} from '../claimtasklist/claimtasklist'
+import{UserclaimslistPage} from '../userclaimslist/userclaimslist'
+
 
 /**
  * Generated class for the AdminsetupPage page.
@@ -66,6 +70,18 @@ export class AdminsetupPage {
   goToClaimHistory(){
     this.navCtrl.push(ClaimhistoryPage)
   }
+  goToClaimRequetList(){
+    this.navCtrl.push(ClaimapprovertasklistPage,{
+    claimRefGuid:'null'
+  })
+}
+  goToClaimTaskList(){
+    this.navCtrl.push(ClaimtasklistPage)
+  }
+  goToUserClaimList(){
+    this.navCtrl.push(UserclaimslistPage)
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminsetupPage');
   }
