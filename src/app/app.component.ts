@@ -38,7 +38,7 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 import { UploadPage } from'../pages/upload/upload';
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
-
+import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { TranslateService } from '@ngx-translate/core';
 
 import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
