@@ -242,10 +242,10 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
     ClaimtasklistPage,
-    UserclaimslistPage
+    UserclaimslistPage,
 
 
-    UploadPage,
+    UploadPage
 
 
 
