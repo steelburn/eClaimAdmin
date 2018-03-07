@@ -86,6 +86,10 @@ import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
+import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
+import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
+import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 
 
 
@@ -141,7 +145,15 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
 
     ProfileSetupPage,
     AddTollPage,
-    ClaimhistoryPage
+
+    ClaimhistoryPage,
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage
+
+    
+
 
 
   ],
@@ -227,7 +239,14 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     AddTollPage,
     ClaimhistoryPage,
 
-    UploadPage
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage
+
+
+    UploadPage,
+
 
 
   ],
