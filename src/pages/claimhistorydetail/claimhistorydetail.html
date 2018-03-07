@@ -1,0 +1,66 @@
+<!--
+  Generated template for the ClaimhistorydetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>CLAIM HISTORY DETAILS</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item *ngFor="let userdetail of userdetails">
+    <ion-label>Name :</ion-label>
+    <ion-label>{{userdetail.FULLNAME}}</ion-label>
+    <ion-label>Department :</ion-label>
+    <ion-label>{{userdetail.DEPARTMENT}}</ion-label>
+  </ion-item>
+
+  <ion-item *ngFor="let userdetail of userdetails">
+    <ion-label>Designation :</ion-label>
+    <ion-label>{{userdetail.DESIGNATION}}</ion-label>
+    <ion-label>Month :</ion-label>
+    <ion-label>{{this.month}}</ion-label>
+  </ion-item>
+  <ion-item>
+      <!-- <ion-searchbar type="text" #filter (keyup)="0" placeholder="{{'SEARCH_FULLNAME' | translate}}"></ion-searchbar> -->
+      <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+    </ion-item>
+
+<ion-list>
+  <ion-item>
+      <table class="Tabler ">
+          <tr class="linedsg TColor">
+              <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+              <!-- <th class="lgl1">S NO.</th> -->
+              <th class="lgl1">CLAIM TYPE</th>
+              <th class="lgl1">DATE</th>
+              <th class="lgl1">STATUS</th>
+              <th class="lgl1">STAGE</th>
+              <th class="lgl1">AMOUNT</th>
+              <!-- <th class="lgl1 tblBrRight" style="width:80px">ACTION</th> -->
+
+          </tr>
+
+          <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails; let i=index">
+              <td class="lgl1">{{i+1}}</td>
+              <td class="lgl1" >{{claimhistorydetail.CLAIM_TYPE}}</td>
+              <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy H:mm'}}</td>
+              <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
+              <td class="lgl1">{{claimhistorydetail.STAGE}}</td>
+              <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT}}</td>
+          </tr>
+
+
+      </table>
+  </ion-item>
+</ion-list>
+
+
+</ion-content>

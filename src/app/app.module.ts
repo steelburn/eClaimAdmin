@@ -43,6 +43,10 @@ import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
+
+import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
+import { StatesetupPage } from '../pages/statesetup/statesetup';
+
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { UserPage } from '../pages/user/user';
@@ -53,6 +57,8 @@ import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';  
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
+
+import { UploadPage } from'../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -80,6 +86,10 @@ import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
+import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
+import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
+import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 
 
 
@@ -100,7 +110,9 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     PeermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
+    CountrysetupPage,
     TravelclaimPage,
+    StatesetupPage,
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
@@ -126,14 +138,21 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     UserPage,
     SocRegistrationPage,
     AdminsetupPage,
-
-   
+    
+    UploadPage,
 
 
     ProfileSetupPage,
-
     AddTollPage,
-    ClaimhistoryPage
+
+    ClaimhistoryPage,
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage
+
+    
+
 
 
   ],
@@ -178,6 +197,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
+    StatesetupPage,
     SetupPage,
     ModulesetupPage,
     MedicalclaimPage,
@@ -199,6 +219,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     AdminsetupPage,
     PaymenttypesetupPage,
     PagesetupPage,
+    CountrysetupPage,
     SubmodulesetupPage,
     TranslatePage,
     QualificationsetupPage,
@@ -214,7 +235,16 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     ProfileSetupPage,
 
     AddTollPage,
-    ClaimhistoryPage
+    ClaimhistoryPage,
+
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage
+
+
+    UploadPage,
+
 
 
   ],
