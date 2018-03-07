@@ -38,7 +38,13 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 import { UploadPage } from'../pages/upload/upload';
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
+
+import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
+//import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
+
+
 import { SetupguidePage } from '../pages/setupguide/setupguide';
+
 import { TranslateService } from '@ngx-translate/core';
 
 import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
