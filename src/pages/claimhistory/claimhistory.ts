@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { BaseHttpService } from '../../services/base-http';
 //import { ClaimHistory_Model } from '../../models/claimhistory_model';
-import { ClaimhistorydetailPage } from '../claimhistorydetail/claimhistorydetail';
+// import { ClaimhistorydetailPage } from '../claimhistorydetail/claimhistorydetail';
 import { ResourceLoader } from '@angular/compiler';
 import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 
@@ -242,13 +242,13 @@ export class ClaimhistoryPage {
   }
 
 
-  goToClaimHistoryDetail(claimrefguid:any,userguid:any,month:any){
-    this.navCtrl.push(ClaimhistorydetailPage,{
-    claimRefGuid:claimrefguid,
-    userGuid:userguid,
-    Month:month
-     } )
-  }
+  // goToClaimHistoryDetail(claimrefguid:any,userguid:any,month:any){
+  //   this.navCtrl.push(ClaimhistorydetailPage,{
+  //   claimRefGuid:claimrefguid,
+  //   userGuid:userguid,
+  //   Month:month
+  //    } )
+  // }
 
   
 
