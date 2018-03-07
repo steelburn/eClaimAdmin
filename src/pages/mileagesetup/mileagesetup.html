@@ -4,12 +4,10 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-  
+<ion-header>  
     <ion-navbar>
-      <ion-title>MILEAGE SETUP</ion-title>
-    </ion-navbar>
-  
+      <ion-title>{{ 'MILEAGE_SETUP_HEADING' | translate }}</ion-title>
+    </ion-navbar>  
   </ion-header>
   
   
@@ -24,12 +22,12 @@
       <ion-item>
         <table class="Tabler">
           <tr class="linedsg TColor">
-            <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-            <th class="lgl1">CATEGORY</th>
-            <th class="lgl1">MILAGE PER UNIT</th>
-            <th class="lgl1">EFFECTIVE DATE</th>
-            <th class="lgl1">ACTIVE FLAG</th>
-            <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+            <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
+            <th class="lgl1">{{ 'MILEAGE_CATEGORY' | translate }}</th>
+            <th class="lgl1">{{ 'MILEAGE_PER_UNIT' | translate }}</th>
+            <th class="lgl1">{{ 'MILEAGE_DATE' | translate }}</th>
+            <th class="lgl1">{{ 'MILEAGE_FLAG' | translate }}</th>
+            <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
   
           </tr>
   
@@ -70,23 +68,23 @@
         <ion-list>
           <form [formGroup]="Mileageform">
             <ion-item>
-              <ion-label stacked>{{"CATEGORY"}}</ion-label>
+              <ion-label stacked>{{ 'MILEAGE_CATEGORY' | translate }}</ion-label>
               <ion-input type="text" formControlName="CATEGORY" [(ngModel)]="CATEGORY_ngModel_Add"  
                required placeholder="{{'Please fill in the category of the mileage'}}"></ion-input>
             </ion-item> 
    
             <ion-item>
-              <ion-label stacked>{{"MILEAGE PER UNIT"}}</ion-label>
+              <ion-label stacked>{{ 'MILEAGE_PER_UNIT' | translate }}</ion-label>
               <ion-input type="text" formControlName="RATE_PER_UNIT" [(ngModel)]="RATE_PER_UNIT_ngModel_Add" placeholder="{{'Please fill in the unit of mileage'}}"></ion-input>
             </ion-item>
   
             <ion-item>
-              <ion-label stacked>{{"EFFECTIVE DATE"}}</ion-label>
+              <ion-label stacked>{{ 'MILEAGE_DATE' | translate }}</ion-label>
               <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RATE_DATE" [(ngModel)]="RATE_DATE_ngModel_Add" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
             </ion-item>
   
             <ion-item>
-              <ion-label stacked>{{"ACTIVE"}}</ion-label>
+              <ion-label stacked>{{ 'MILEAGE_FLAG' | translate }}</ion-label>
               <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="ACTIVATION_FLAG_ngModel_Add"></ion-toggle>
             </ion-item>
             <div class="btn">
@@ -116,7 +114,7 @@
           <form [formGroup]="Mileageform">
             <!-- ng-pattern="/^[a-zA-Z][a-zA-Z0-9\\s]+$/" -->
             <ion-item>
-              <ion-label stacked>{{"CATEGORY"}}</ion-label>
+              <ion-label stacked>{{ 'MILEAGE_CATEGORY' | translate }}</ion-label>
               <ion-input type="text" formControlName="CATEGORY" [(ngModel)]="CATEGORY_ngModel_Edit"  required placeholder="{{'Please fill in the category in the mileage'}}" required></ion-input>
             </ion-item>
 
@@ -126,18 +124,18 @@
   
   
             <ion-item>
-              <ion-label stacked>{{"MILEAGE PER UNIT"}}</ion-label>
+              <ion-label stacked>{{ 'MILEAGE_PER_UNIT' | translate }}</ion-label>
               <ion-input type="text" formControlName="RATE_PER_UNIT" [(ngModel)]="RATE_PER_UNIT_ngModel_Edit" 
                 placeholder="{{'Please fill in the mileage'}}"></ion-input>
             </ion-item>
   
             <ion-item>
-              <ion-label stacked>{{"EFFECTIVE DATE"}}</ion-label>
+              <ion-label stacked>{{ 'MILEAGE_DATE' | translate }}</ion-label>
               <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RATE_DATE" [(ngModel)]="RATE_DATE_ngModel_Edit" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
             </ion-item>
   
             <ion-item>
-              <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
+              <ion-label stacked>{{ 'MILEAGE_FLAG' | translate }}</ion-label>
               <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="ACTIVATION_FLAG_ngModel_Edit"></ion-toggle>
             </ion-item>
   

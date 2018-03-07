@@ -10,9 +10,13 @@ import {PagesetupPage} from'../pagesetup/pagesetup';
 import {ModulesetupPage} from'../modulesetup/modulesetup';
 import {SubmodulesetupPage} from'../submodulesetup/submodulesetup';
 import { ClaimhistoryPage } from '../claimhistory/claimhistory';
+
 import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
 import{ClaimtasklistPage} from '../claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../userclaimslist/userclaimslist'
+
+
+import { UserPage } from '../user/user';
 
 
 /**
@@ -63,6 +67,11 @@ export class AdminsetupPage {
   goToModulesetup(){
     this.navCtrl.push(ModulesetupPage)
   }
+
+  goToUser(){
+    this.navCtrl.push(UserPage)
+  }
+
 
   goToSubModulesetup(){
     this.navCtrl.push(SubmodulesetupPage)

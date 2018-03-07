@@ -7,11 +7,9 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>CASHCARD SETUP</ion-title>
+        <ion-title>{{ 'CASHCARD_SETUP_HEADING' | translate }}</ion-title>
     </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
     <ion-fab top right edge>
@@ -22,13 +20,14 @@
         <ion-item>
             <table class="Tabler ">
                 <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-                    <th class="lgl1">CASHCARD NO.</th>
-                    <th class="lgl1">ACCOUNT NO.</th>
+                    <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
+                    <!-- <th class="lgl1">CASHCARD NO.</th> -->
+                     <th class="lgl1">{{ 'CARD_NO' | translate }}</th>
+                    <th class="lgl1">{{ 'ACCOUNT_NO' | translate }}</th>
                     <!-- <th class="lgl1">PASSWORD</th> -->
-                    <th class="lgl1">MANAGEMENT URL</th>
-                    <th class="lgl1">DESCRIPTION</th>
-                    <th class="lgl1 tblBrRight" style="width:80px">ACTION</th>
+                    <th class="lgl1">{{ 'MANAGEMENT_URL' | translate }}</th>
+                    <th class="lgl1">{{ 'DESCRIPTION' | translate }}</th>
+                    <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
 
                 </tr>
 

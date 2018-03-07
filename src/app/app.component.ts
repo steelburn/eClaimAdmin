@@ -4,7 +4,6 @@ import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage';
-import{ TranslateService } from '@ngx-translate/core';
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
@@ -29,11 +28,24 @@ import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
 import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
 import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+
+import { UploadPage } from'../pages/upload/upload';
+import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
+import { StatesetupPage } from '../pages/statesetup/statesetup';
+
+import { TranslateService } from '@ngx-translate/core';
+
+import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+
 
 export interface PageInterface {
 
@@ -82,7 +94,8 @@ export class ConferenceApp {
   ];
 
 
-  rootPage: any = LoginPage;
+  // rootPage: any = LoginPage;
+  rootPage = 'LoginPage';
   
   constructor(
 
@@ -93,11 +106,22 @@ export class ConferenceApp {
     public confData: ConferenceData,
      storage: Storage,
      statusbar:StatusBar,
-     splashScreen: SplashScreen,translate: TranslateService
-  ) { 
+     splashScreen: SplashScreen, public translate: TranslateService
+  ) {
+    
+    this.translateToEnglish();
+    this.translate.setDefaultLang('en'); //Fallback language
+
+    platform.ready().then(() => {
+    });
+
+    
 
     translate.setDefaultLang('en');
     platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
+
+
+
     // Check if the user has already seen the tutorial
 
 
@@ -178,5 +202,20 @@ export class ConferenceApp {
       return 'primary';
     }
     return;
+  }
+
+  public translateToMalayClicked: boolean = false;
+  public translateToEnglishClicked: boolean = true;
+
+  public translateToEnglish() {   
+    this.translate.use('en');
+    this.translateToMalayClicked = !this.translateToMalayClicked;
+    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+  }
+
+  public translateToMalay() {
+    this.translate.use('ms');
+    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+    this.translateToMalayClicked = !this.translateToMalayClicked;
   }
 }

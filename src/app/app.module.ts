@@ -43,6 +43,10 @@ import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
+
+import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
+import { StatesetupPage } from '../pages/statesetup/statesetup';
+
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { UserPage } from '../pages/user/user';
@@ -53,6 +57,8 @@ import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';  
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
+
+import { UploadPage } from'../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -61,6 +67,21 @@ import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
 import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+// import {AddTollPage} from '../pages/add-toll/add-toll';
+// import { Services } from '../pages/Services';
+
+
+//import { TravelClaim_Service } from '../services/travelclaim_service';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
+}
+
+
+
+import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+
 import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
@@ -69,6 +90,8 @@ import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistoryd
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+
+
 
 
 @NgModule({
@@ -87,7 +110,9 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     PeermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
+    CountrysetupPage,
     TravelclaimPage,
+    StatesetupPage,
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
@@ -113,13 +138,26 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     UserPage,
     SocRegistrationPage,
     AdminsetupPage,
+    
+    UploadPage,
+
+
+    ProfileSetupPage,
     AddTollPage,
+
     ClaimhistoryPage,
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
     ClaimtasklistPage,
     UserclaimslistPage
+
+    
+
+
+
   ],
+
+
   imports: [
     BrowserModule,
     HttpModule, HttpClientModule,
@@ -128,7 +166,7 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
       loader:{
         provide:TranslateLoader,
         useFactory:(createTranslateLoader),
-        deps:[Http]
+        deps:[HttpClient]
       }
     }),
     IonicModule.forRoot(ConferenceApp, {}, {
@@ -147,6 +185,7 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     }),
     IonicStorageModule.forRoot()
   ],
+
   bootstrap: [IonicApp],
   entryComponents: [
     ConferenceApp,
@@ -158,6 +197,7 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
+    StatesetupPage,
     SetupPage,
     ModulesetupPage,
     MedicalclaimPage,
@@ -179,6 +219,7 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     AdminsetupPage,
     PaymenttypesetupPage,
     PagesetupPage,
+    CountrysetupPage,
     SubmodulesetupPage,
     TranslatePage,
     QualificationsetupPage,
@@ -189,16 +230,27 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     TabsPage,
     UserPage,
     SocRegistrationPage,
+
+
+    ProfileSetupPage,
+
     AddTollPage,
     ClaimhistoryPage,
+
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
     ClaimtasklistPage,
     UserclaimslistPage
+
+
+    UploadPage,
+
+
+
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ConferenceData,
+    ConferenceData, HttpClientModule,
     UserData,
     InAppBrowser,
     SplashScreen,StatusBar, Services,
@@ -212,6 +264,3 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
   ]
 })
 export class AppModule { }
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
-}

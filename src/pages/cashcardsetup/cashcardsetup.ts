@@ -215,7 +215,7 @@ export class CashcardsetupPage {
 
   Update(CASHCARD_GUID: any) {
     // if (this.Cashform.valid) {
-    if (this.Cashform.valid) {
+    if (this.Cashform.valid) {    
       if (this.cashcard_entry.ACCOUNT_ID == null) { this.cashcard_entry.ACCOUNT_ID = this.ACCOUNT_ID_ngModel_Edit; }
       if (this.cashcard_entry.CASHCARD_SNO == null) { this.cashcard_entry.CASHCARD_SNO = this.CASHCARD_SNO_ngModel_Edit; }
 
