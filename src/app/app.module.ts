@@ -48,7 +48,7 @@ import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-vie
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
-
+import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { UserPage } from '../pages/user/user';
@@ -88,6 +88,10 @@ import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
+import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
+import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
+import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 
 
 
@@ -111,6 +115,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     CountrysetupPage,
     TravelclaimPage,
     StatesetupPage,
+    SetupguidePage,
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
@@ -144,7 +149,15 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
 
     ProfileSetupPage,
     AddTollPage,
-    ClaimhistoryPage
+
+    ClaimhistoryPage,
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage
+
+    
+
 
 
   ],
@@ -188,6 +201,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     SchedulePage,
     ScheduleFilterPage,
     SessionDetailPage,
+    SetupguidePage,
     SignupPage,
     StatesetupPage,
     SetupPage,
@@ -231,7 +245,14 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     AddTollPage,
     ClaimhistoryPage,
 
-    UploadPage,
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage,
+
+
+    UploadPage
+
 
 
   ],
