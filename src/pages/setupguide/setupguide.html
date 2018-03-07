@@ -1,0 +1,75 @@
+<!--
+  Generated template for the SetupguidePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>SETUP GUIDE</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="blackcontainer" >
+  </div>
+  <div class="popup" padding >
+          <ion-card class="container">
+            <ion-card-header color="pure" class="icTitle background">
+              STEP 1 : REGISTER YOUR COMPANY
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <form [formGroup]="Branchform">
+            
+                    
+            
+                      <ion-item>
+                        <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+                        <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" placeholder="{{'Please fill in the name of your company'}}"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                          <ion-label stacked>{{"COMPANY ADDRESS"}}</ion-label>
+                          <ion-input type="text"  placeholder="{{'Please fill in the address of your company'}}"></ion-input>
+                        </ion-item>
+                        
+                        <ion-item>
+                            <ion-label stacked>{{"COMPANY REG NO."}}</ion-label>
+                            <ion-input type="text"  placeholder="{{'Please fill in the registration number of the company'}}"></ion-input>
+                          </ion-item>
+            
+                      <div class="btn">
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1"   [disabled]="!Branchform.valid" (click)="Save()">NEXT</button>
+                      </div>
+                    
+                    </form>
+                  </ion-list>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+              <ion-card-header color="pure" class="icTitle2 background">
+                STEP 2 : REGISTER YOUR HQ OF YOUR TENANT COMPANY
+              </ion-card-header>
+          
+            </ion-card>
+
+            <ion-card>
+              <ion-card-header color="pure" class="icTitle2 background">
+                STEP 3 : REGISTER YOUR BRANCH OF YOUR TENANT COMPANY
+              </ion-card-header>
+          
+            </ion-card>
+
+            <ion-card>
+              <ion-card-header color="pure" class="icTitle2 background">
+                STEP 4 : REGISTER YOUR DEPARTMENT OF YOUR TENANT COMPANY
+              </ion-card-header>
+          
+            </ion-card>
+    
+    </div>  
+</ion-content>

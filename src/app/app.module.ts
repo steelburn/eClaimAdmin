@@ -46,7 +46,7 @@ import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
-
+import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { UserPage } from '../pages/user/user';
@@ -109,6 +109,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     CountrysetupPage,
     TravelclaimPage,
     StatesetupPage,
+    SetupguidePage,
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
@@ -184,6 +185,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     SchedulePage,
     ScheduleFilterPage,
     SessionDetailPage,
+    SetupguidePage,
     SignupPage,
     StatesetupPage,
     SetupPage,
@@ -225,7 +227,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     AddTollPage,
     ClaimhistoryPage,
 
-    UploadPage,
+    UploadPage
 
 
   ],
