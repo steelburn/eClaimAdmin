@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+
 /**
  * Generated class for the SetupguidePage page.
  *
@@ -14,8 +17,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'setupguide.html',
 })
 export class SetupguidePage {
+  Branchform: FormGroup;
+  constructor(public navCtrl: NavController, public navParams: NavParams,fb: FormBuilder) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.Branchform = fb.group({
+
+    });
   }
 
   ionViewDidLoad() {
