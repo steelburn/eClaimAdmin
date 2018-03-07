@@ -18,8 +18,10 @@ import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl }
 })
 export class SetupguidePage {
   Branchform: FormGroup;
-  constructor(public navCtrl: NavController, public navParams: NavParams,fb: FormBuilder) {
+  CompanyClicked: boolean; HQClicked: boolean; BranchClicked: boolean; DepartmentClicked: boolean;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams,fb: FormBuilder) {
+    this.CompanyClicked = true; this.HQClicked = false; this.BranchClicked = false; this.DepartmentClicked = false;
     this.Branchform = fb.group({
 
     });
@@ -27,6 +29,40 @@ export class SetupguidePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetupguidePage');
+  }
+
+  SaveCompany(){
+    this.CompanyClicked = false;
+    this.HQClicked = true;
+  }
+
+  SaveHQ(){
+    this.HQClicked = false;
+    this.BranchClicked = true;
+  }
+
+  BackHQ(){
+    this.CompanyClicked = true;
+    this.HQClicked = false;
+  }
+
+  SaveBranch(){
+    this.BranchClicked = false;
+    this.DepartmentClicked = true;
+  }
+
+  BackBranch(){
+    this.HQClicked = true;
+    this.BranchClicked = false;
+  }
+
+  SaveDepartment(){
+
+  }
+
+  BackDepartment(){
+    this.BranchClicked = true;
+    this.DepartmentClicked = false;
   }
 
 }
