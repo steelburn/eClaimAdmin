@@ -14,60 +14,150 @@
 
 
 <ion-content padding>
-  <div class="blackcontainer" >
+  <div class="blackcontainer"></div>
+  <div class="popup" padding>
+    <ion-card class="container">
+      <ion-card-header color="pure" class="icTitle2 background">
+        STEP 1 : REGISTER YOUR COMPANY
+      </ion-card-header>
+
+      <ion-card-content *ngIf="CompanyClicked">
+        <ion-list>
+          <form [formGroup]="Branchform">
+
+            <ion-item>
+              <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the name of your company'}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"COMPANY ADDRESS"}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the address of your company'}}"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label stacked>{{"COMPANY REG NO."}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the registration number of the company'}}"></ion-input>
+            </ion-item>
+
+            <div class="btn">
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveCompany()">NEXT
+                <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
+              </button>
+            </div>
+
+          </form>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header color="pure" class="icTitle2 background">
+        STEP 2 : REGISTER YOUR HQ OF YOUR TENANT COMPANY
+      </ion-card-header>
+
+      <ion-card-content *ngIf="HQClicked">
+        <ion-list>
+          <form [formGroup]="Branchform">
+
+            <ion-item>
+              <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the name of your company'}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"COMPANY ADDRESS"}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the address of your company'}}"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label stacked>{{"COMPANY REG NO."}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the registration number of the company'}}"></ion-input>
+            </ion-item>
+
+            <div class="btn">
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="BackHQ()">
+                  <ion-icon name="ios-arrow-back" style="padding: 10px;"></ion-icon>BACK
+              </button>
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveHQ()">NEXT
+                  <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
+              </button>              
+            </div>
+
+          </form>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header color="pure" class="icTitle2 background">
+        STEP 3 : REGISTER YOUR BRANCH OF YOUR TENANT COMPANY
+      </ion-card-header>
+
+      <ion-card-content *ngIf="BranchClicked">
+        <ion-list>
+          <form [formGroup]="Branchform">
+
+            <ion-item>
+              <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the name of your company'}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"COMPANY ADDRESS"}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the address of your company'}}"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label stacked>{{"COMPANY REG NO."}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the registration number of the company'}}"></ion-input>
+            </ion-item>
+
+            <div class="btn">
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="BackBranch()">
+                  <ion-icon name="ios-arrow-back" style="padding: 10px;"></ion-icon>BACK
+              </button>
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveBranch()">NEXT
+                <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
+              </button>
+            </div>
+
+          </form>
+        </ion-list>
+      </ion-card-content>      
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header color="pure" class="icTitle2 background">
+        STEP 4 : REGISTER YOUR DEPARTMENT OF YOUR TENANT COMPANY
+      </ion-card-header>
+
+      <ion-card-content *ngIf="DepartmentClicked">
+        <ion-list>
+          <form [formGroup]="Branchform">
+
+            <ion-item>
+              <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the name of your company'}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>{{"COMPANY ADDRESS"}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the address of your company'}}"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label stacked>{{"COMPANY REG NO."}}</ion-label>
+              <ion-input type="text" placeholder="{{'Please fill in the registration number of the company'}}"></ion-input>
+            </ion-item>
+
+            <div class="btn">
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="BackDepartment()">
+                <ion-icon name="ios-arrow-back" style="padding: 10px;"></ion-icon>BACK                
+              </button>
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveDepartment()">FINISH</button>
+            </div>
+
+          </form>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
   </div>
-  <div class="popup" padding >
-          <ion-card class="container">
-            <ion-card-header color="pure" class="icTitle background">
-              STEP 1 : REGISTER YOUR COMPANY
-            </ion-card-header>
-            <ion-card-content>
-                <ion-list>
-                    <form [formGroup]="Branchform">
-
-                      <ion-item>
-                        <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
-                        <ion-input type="text"  placeholder="{{'Please fill in the name of your company'}}"></ion-input>
-                      </ion-item>
-                      <ion-item>
-                          <ion-label stacked>{{"COMPANY ADDRESS"}}</ion-label>
-                          <ion-input type="text"  placeholder="{{'Please fill in the address of your company'}}"></ion-input>
-                        </ion-item>
-                        
-                        <ion-item>
-                            <ion-label stacked>{{"COMPANY REG NO."}}</ion-label>
-                            <ion-input type="text"  placeholder="{{'Please fill in the registration number of the company'}}"></ion-input>
-                          </ion-item>
-            
-                      <div class="btn">
-                        <button ion-button class="bgColor-grey fontColor-white btnStyle1"   [disabled]="!Branchform.valid" (click)="Save()">NEXT</button>
-                      </div>
-                    
-                    </form>
-                  </ion-list>
-            </ion-card-content>
-          </ion-card>
-
-          <ion-card>
-              <ion-card-header color="pure" class="icTitle2 background">
-                STEP 2 : REGISTER YOUR HQ OF YOUR TENANT COMPANY
-              </ion-card-header>
-          
-            </ion-card>
-
-            <ion-card>
-              <ion-card-header color="pure" class="icTitle2 background">
-                STEP 3 : REGISTER YOUR BRANCH OF YOUR TENANT COMPANY
-              </ion-card-header>
-          
-            </ion-card>
-
-            <ion-card>
-              <ion-card-header color="pure" class="icTitle2 background">
-                STEP 4 : REGISTER YOUR DEPARTMENT OF YOUR TENANT COMPANY
-              </ion-card-header>
-          
-            </ion-card>
-    
-    </div>  
 </ion-content>
