@@ -9,16 +9,15 @@
   <ion-navbar>
     <ion-title>CLAIM TASK LIST</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top>
+    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-item>
-        <!-- <ion-searchbar type="text" #filter (keyup)="0" placeholder="{{'SEARCH_FULLNAME' | translate}}"></ion-searchbar> -->
-        <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
-      </ion-item>
+
 
       <ion-list>
           <ion-item>
