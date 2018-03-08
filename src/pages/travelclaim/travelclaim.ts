@@ -143,8 +143,10 @@ export class TravelclaimPage {
         this.Travel_From_ngModel = this.claimRequestData[0].FROM;
         this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
         this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
-        this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
-        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
+        //this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+        this.Travel_Amount_ngModel = this.claimRequestData[0].CLAIM_AMOUNT;
+        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+       
         this.vehicles.forEach(element => {
           if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
             this.Travel_Mode_ngModel = element.CATEGORY
@@ -152,6 +154,8 @@ export class TravelclaimPage {
         });
         console.table(this.claimRequestData)
         console.log(this.claimRequestData[0].SOC_GUID)
+        console.log(this.claimRequestData[0].MILEAGE_GUID)
+        console.log(this.claimRequestData[0].DESCRIPTION)
       }
       );
   }
@@ -429,6 +433,10 @@ export class TravelclaimPage {
     this.VehicleId = vehicle.MILEAGE_GUID;
     this.VehicleRate = vehicle.RATE_PER_UNIT;
     this.vehicleCategory = vehicle.CATEGORY;
+    console.log(vehicle.MILEAGE_GUID);
+    console.log(vehicle.RATE_PER_UNIT);
+    console.log(vehicle.CATEGORY);
+    console.log(this.VehicleId);
   }
 
   

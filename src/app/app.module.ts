@@ -45,6 +45,7 @@ import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
+import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
@@ -138,6 +139,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     AdminsetupPage,
     ApproverTaskListPage,
     TravelClaimViewPage,
+    EntertainmentClaimViewPage,
     
     UploadPage,
 
@@ -222,6 +224,7 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     TabsPage,
     ApproverTaskListPage,
     TravelClaimViewPage,
+    EntertainmentClaimViewPage,
     UserPage,
     SocRegistrationPage,
 
