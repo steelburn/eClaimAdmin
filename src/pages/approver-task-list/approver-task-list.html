@@ -19,15 +19,19 @@
 <ion-item>
     <table class="Tabler ">
         <tr class="linedsg TColor">
-            <th class="lgl1 tblBrLeft" style="width:60px"><ion-item><ion-checkbox item-end (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox></ion-item></th>
-            <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+            <th class="lgl1 tblBrLeft" style="width:60px">
+              <ion-item>
+                <ion-checkbox item-end (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox>
+              </ion-item>
+            </th>
+            <th class="lgl1" style="width:60px">NO.</th>
             <th class="lgl1">NAME</th>
             <th class="lgl1">CLAIM TYPE</th>
             <th class="lgl1">DATE</th>
             <th class="lgl1">STATUS</th>
             <th class="lgl1">STAGE</th>
             <th class="lgl1">AMOUNT</th>
-            <th class="lgl1">ACTION</th>
+            <th class="lgl1 tblBrRight">ACTION</th>
 
         </tr>
 
