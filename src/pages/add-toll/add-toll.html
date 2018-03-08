@@ -10,25 +10,33 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="login-content" padding>
-    <!-- <form [formGroup]="DetailsForm" > -->
+    <form [formGroup]="DetailsForm" >
 
     <ion-list>
       <ion-item>
         <ion-label color="primary">{{ 'PAY_BY_LABEL'  }}</ion-label>
-        <ion-select  [(ngModel)]="PayType" placeholder='{{ "PAYMENT_TYPE_PLACE_HOLDER"  }}'>
+        <ion-select  [ngModelOptions]="{standalone: true}" [(ngModel)]="PayType" placeholder='{{ "PAYMENT_TYPE_PLACE_HOLDER"  }}'>
           <ion-option *ngFor="let item of paymentTypes" value={{item.PAYMENT_TYPE_GUID}} >{{ item.NAME}}</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label color="primary" fixed>{{ 'AMOUNT_LABEL'  }}{{ 'CURRENCY_NAME_LABEL'}}</ion-label>
-        <ion-input [(ngModel)]="Amount" type="number" placeholder="0.00"></ion-input>
+        <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Amount" type="number" placeholder="0.00"></ion-input>
       </ion-item>
       <ion-item>
           <ion-label color="primary" fixed>{{ 'DESCRIPTION_LABEL' }}</ion-label>
-          <ion-input [(ngModel)]="Description" placeholder="Add Description"></ion-input>
+          <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Description" placeholder="Add Description"></ion-input>
         </ion-item>
-      <ion-item>
+
+        <div class="form-group">
+          <!-- <label for="avatar">Avatar</label> -->
+          <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+          <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+        </div>
+        <!-- <button type="submit" [disabled]="DetailsForm.invalid || loading" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button> -->
+      
+      <!-- <ion-item>
         <ion-label color="primary" fixed>{{ 'ATTACHMENT_LABEL'  }}</ion-label>
       </ion-item>
       <button class="button-clear">
@@ -36,11 +44,11 @@
       </button>&nbsp;&nbsp;&nbsp;&nbsp;
       <button class="button-clear">
         <ion-icon name="md-folder" style="font-size:30px;"></ion-icon>
-      </button>
+      </button> -->
       <ion-item>
-        <button (click)='save()' ion-button round style="width:100px;">{{ 'SUBMIT_BUTTON'  }}</button>
+        <button (click)='save()' [disabled]="DetailsForm.invalid || loading" ion-button round style="width:100px;">{{ 'SUBMIT_BUTTON'  }}</button>
       </ion-item>
     </ion-list>
-    <!-- </form> -->
+    </form>
 
 </ion-content>

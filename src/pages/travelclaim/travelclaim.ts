@@ -621,6 +621,7 @@ export class TravelclaimPage {
     //let AddTollModal = this.modalCtrl.create(AddTollPage);
     //AddTollModal.present;
     this.navCtrl.push(AddTollPage, {
+      DetailsType: 'Toll',
       MainClaim: this.ClaimRequestMain,
       ClaimMethod: '03048acb-037a-11e8-a50c-00155de7e742'
     });
@@ -628,6 +629,7 @@ export class TravelclaimPage {
 
   showAddParking() {
     this.navCtrl.push(AddTollPage, {
+      DetailsType: 'Parking',
       MainClaim: this.ClaimRequestMain,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742'
     });
