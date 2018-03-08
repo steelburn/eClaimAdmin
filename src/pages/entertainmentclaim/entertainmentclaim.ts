@@ -49,6 +49,11 @@ export class EntertainmentclaimPage {
   customers: any; 
   storeCustomers: any;
 
+  public assignedTo: any;
+  public profileLevel: any; 
+  public stage: any;
+  public profileJSON: any;
+
   public Travel_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;  
   public Travel_Mode_ngModel: any;

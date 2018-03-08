@@ -255,6 +255,7 @@ export class UserPage {
 
   public EditClick_Personaldetails(id: any) {
     this.ClearControls();
+
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
     });

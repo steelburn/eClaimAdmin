@@ -104,13 +104,13 @@ export class TravelclaimPage {
    /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
    claimRequestGUID: any;
-   claimRequestData: any;
+   claimRequestData: any[];
    ngOnInit(): void {
      this.userGUID = localStorage.getItem('g_USER_GUID');
  
      this.isFormEdit = this.navParams.get('isFormEdit');
-     // this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-     this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
+      this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
+     //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
      if (this.isFormEdit)
        this.GetDataforEdit();
    }
