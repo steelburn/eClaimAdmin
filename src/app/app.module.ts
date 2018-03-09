@@ -46,6 +46,8 @@ import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
+import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
+import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
@@ -140,6 +142,8 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     ApproverTaskListPage,
     TravelClaimViewPage,
     EntertainmentClaimViewPage,
+    MedicalClaimViewPage,
+    OvertimeClaimViewPage,
     
     UploadPage,
 
@@ -225,6 +229,8 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     ApproverTaskListPage,
     TravelClaimViewPage,
     EntertainmentClaimViewPage,
+    MedicalClaimViewPage,
+    OvertimeClaimViewPage,
     UserPage,
     SocRegistrationPage,
 

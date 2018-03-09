@@ -12,7 +12,8 @@ import * as constants from '../../config/constants';
 import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view';
 import { EntertainmentClaimViewPage } from '../../pages/entertainment-claim-view/entertainment-claim-view';
-
+import { MedicalClaimViewPage } from '../../pages/medical-claim-view/medical-claim-view';
+import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-claim-view';
 
 @IonicPage()
 @Component({
@@ -27,10 +28,12 @@ export class ApproverTaskListPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
-    this.claimrefguid = 'e60dee1f-0460-5f14-c74f-9bbfc04e6877'
+    //this.claimrefguid = 'e60dee1f-0460-5f14-c74f-9bbfc04e6877'
     //this.claimrefguid = 'eb341cca-cf4d-8b69-d66a-b5d01e06a77b'
     //this.claimrefguid = 'fdadf529-5277-28ef-8298-b176c38d9ebb'
     //this.claimrefguid ='8254ea7a-e64f-a2f5-4d4c-7225de2d3559'
+    //this.claimrefguid = 'fdadf529-5277-28ef-8298-b176c38d9ebb'
+    this.claimrefguid = 'eb341cca-cf4d-8b69-d66a-b5d01e06a77b'
      //this.claimrefguid =navParams.get("claimRefGuid");
     if (this.claimrefguid != 'null') {
       this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -65,8 +68,10 @@ export class ApproverTaskListPage {
 
   viewClaim(claimRequestGUID: string,level:number) {
     console.log(claimRequestGUID)
-    this.navCtrl.push(TravelClaimViewPage, {
+    // this.navCtrl.push(TravelClaimViewPage, {
       //this.navCtrl.push(EntertainmentClaimViewPage, {
+        // this.navCtrl.push(MedicalClaimViewPage, {
+          this.navCtrl.push(OvertimeClaimViewPage, {
       cr_GUID: claimRequestGUID,
       level_no: level,
       approver_GUID : localStorage.getItem('g_USER_GUID')
