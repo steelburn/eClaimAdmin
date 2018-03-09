@@ -505,9 +505,8 @@ export class TravelclaimPage {
             claimReqMainRef.UPDATE_TS = new Date().toISOString();
             claimReqMainRef.FROM = this.Travel_From_ngModel;
             claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
-            claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel; alert(this.assignedTo);
-            claimReqMainRef.ASSIGNED_TO = this.assignedTo;
-            alert('if' + this.assignedTo);
+            claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+            claimReqMainRef.ASSIGNED_TO = this.assignedTo;           
             claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
             claimReqMainRef.STATUS = 'Pending';
@@ -549,9 +548,8 @@ export class TravelclaimPage {
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
           claimReqMainRef.FROM = this.Travel_From_ngModel;
-          claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;alert(this.assignedTo);
-          claimReqMainRef.ASSIGNED_TO = this.assignedTo;
-          alert('else' + this.assignedTo);
+          claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+          claimReqMainRef.ASSIGNED_TO = this.assignedTo;        
           claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;

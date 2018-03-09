@@ -48,6 +48,7 @@ import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-vie
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
+import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
@@ -91,6 +92,7 @@ import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 
 
 
@@ -144,6 +146,8 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     EntertainmentClaimViewPage,
     MedicalClaimViewPage,
     OvertimeClaimViewPage,
+    PrintClaimViewPage,
+    GiftClaimViewPage,
     
     UploadPage,
 
@@ -231,6 +235,8 @@ import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
     EntertainmentClaimViewPage,
     MedicalClaimViewPage,
     OvertimeClaimViewPage,
+    PrintClaimViewPage,
+    GiftClaimViewPage,
     UserPage,
     SocRegistrationPage,
 
