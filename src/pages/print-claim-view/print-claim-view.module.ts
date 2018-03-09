@@ -10,4 +10,4 @@ import { PrintingClaimViewPage } from './printing-claim-view';
     IonicPageModule.forChild(PrintingClaimViewPage),
   ],
 })
-export class PrintingClaimViewPageModule {}
+export class PrintClaimViewPageModule {}
