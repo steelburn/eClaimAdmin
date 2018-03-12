@@ -36,12 +36,21 @@
         </tr>
 
         <tr class="col7" *ngFor="let item of claimrequestdetails; let i=index">
+
+           
+
+          <td class="lgl1">
+              <ion-item>   <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,item.CLAIM_REQUEST_GUID)"> </ion-checkbox></ion-item>
+            </td>
+
+
             <td class="lgl1">
               <ion-item>   
                 <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,item.CLAIM_REQUEST_GUID)"> </ion-checkbox>
               </ion-item>
             </td>
          
+
             <td class="lgl1">{{i+1}}</td>
             <td class="lgl1" >{{item.FULLNAME}}</td>
             <td class="lgl1" >{{item.CLAIMTYPE}}</td>
@@ -49,10 +58,16 @@
             <td class="lgl1">{{item.STATUS}}</td>
             <td class="lgl1">{{item.STAGE}}</td>
             <td class="lgl1">{{item.CLAIM_AMOUNT}}</td>
+
+
             <td class="lgl1 fColor">
                 <button ion-button item-end (click)='viewClaim(item.CLAIM_REQUEST_GUID, item.PROFILE_LEVEL)'><ion-icon name="md-eye"></ion-icon></button>
             </td>
+           
+
         </tr>
+
+        
 
 
     </table>

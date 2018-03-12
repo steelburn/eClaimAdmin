@@ -39,6 +39,7 @@ import { Services } from '../Services';
   templateUrl: 'medicalclaim.html', providers: [MedicalClaim_Service, BaseHttpService, FileTransfer]
 })
 export class MedicalclaimPage {
+
   Medicalform: FormGroup;
   Travel_Amount_ngModel: any;
   travelAmount: any;
@@ -48,6 +49,68 @@ export class MedicalclaimPage {
   Soc_GUID: any;
   ClaimRequestMain: any;
   public MainClaimSaved: boolean = false;
+  
+  userGUID: any;
+  Travel_Date_ngModel: any;
+  Travel_Description_ngModel: any;
+  public assignedTo: any;
+  public profileLevel: any; 
+  public stage: any;
+  public profileJSON: any;
+
+   /********FORM EDIT VARIABLES***********/
+   isFormEdit: boolean = false;
+   claimRequestGUID: any;
+   claimRequestData: any[];
+   ngOnInit(): void {
+     this.userGUID = localStorage.getItem('g_USER_GUID');
+ 
+     this.isFormEdit = this.navParams.get('isFormEdit');
+      this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
+     //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
+     if (this.isFormEdit)
+       this.GetDataforEdit();
+   }
+  GetDataforEdit() {
+    this.http
+      .get(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
+      .map(res => res.json())
+      .subscribe(data => {
+        this.claimRequestData = data["resource"];
+        console.log(this.claimRequestData)
+        // if (this.claimRequestData[0].SOC_GUID === null) {
+        //   this.claimFor = 'customer'
+        //   this.storeCustomers.forEach(element => {
+        //     if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
+        //       this.Customer_Lookup_ngModel = element.NAME
+        //     }
+        //   });
+        // }
+        // else {
+        //   this.claimFor = 'project'
+        //   this.storeProjects.forEach(element => {
+        //     if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
+        //       this.Project_Lookup_ngModel = element.project_name
+        //       this.Travel_SOC_No_ngModel = element.soc
+        //     }
+        //   });
+        // }
+        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;        
+        // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
+        this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+        // this.vehicles.forEach(element => {
+        //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
+        //     this.Travel_Mode_ngModel = element.CATEGORY
+        //   }
+        // });
+        console.table(this.claimRequestData)       
+        console.log(this.claimRequestData[0].DESCRIPTION)
+        console.log(this.Travel_Date_ngModel)
+        console.log(this.claimRequestData[0].TRAVEL_DATE)
+      }
+      );
+  }
 
   constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private medicalservice: MedicalClaim_Service, private alertCtrl: AlertController, private camera: Camera,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController ) {
   
@@ -57,6 +120,7 @@ export class MedicalclaimPage {
       description: ['', Validators.required],      
      vehicleType: ['', Validators.required],
         });
+        this.readProfile();
    
   }
 
@@ -91,11 +155,17 @@ export class MedicalclaimPage {
             claimReqMainRef.TENANT_GUID = tenantGUID;
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
-            claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+            // claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+            claimReqMainRef.CLAIM_TYPE_GUID = '40dbaf56-98e4-77b9-df95-85ec232ff714';
             claimReqMainRef.TRAVEL_DATE = value.travel_date;           
             claimReqMainRef.DESCRIPTION = value.description;
             //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
+            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+            claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
+            claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
+            claimReqMainRef.PROFILE_JSON = this.profileJSON;
+            claimReqMainRef.STATUS = 'Pending';
+            claimReqMainRef.STAGE = this.stage;
             claimReqMainRef.CREATION_TS = new Date().toISOString();
             claimReqMainRef.UPDATE_TS = new Date().toISOString();
             // claimReqMainRef.FROM = this.Travel_From_ngModel;
@@ -127,13 +197,19 @@ export class MedicalclaimPage {
           claimReqMainRef.TENANT_GUID = tenantGUID;
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
           //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
-          claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+          //claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+          claimReqMainRef.CLAIM_TYPE_GUID = '40dbaf56-98e4-77b9-df95-85ec232ff714';
           claimReqMainRef.TRAVEL_DATE = value.travel_date;
           // claimReqMainRef.START_TS = value.start_DT;
           // claimReqMainRef.END_TS = value.end_DT;
           claimReqMainRef.DESCRIPTION = value.description;
           //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+          claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
+          claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
+          claimReqMainRef.PROFILE_JSON = this.profileJSON;
+          claimReqMainRef.STATUS = 'Pending';
+          claimReqMainRef.STAGE = this.stage;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
           // claimReqMainRef.FROM = this.Travel_From_ngModel;
@@ -156,6 +232,108 @@ export class MedicalclaimPage {
         }
 
       })
+  }
+  emailUrl: string = 'http://api.zen.com.my/api/v2/emailnotificationtest?api_key=' + constants.DREAMFACTORY_API_KEY;
+  sendEmail() {
+    let name: string; let email: string
+    name = 'shabbeer'; email = 'shabbeer@zen.com.my'
+    var queryHeaders = new Headers();
+    queryHeaders.append('Content-Type', 'application/json');
+    queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    let options = new RequestOptions({ headers: queryHeaders });
+
+    let body = {
+      "template": "",
+      "template_id": 0,
+      "to": [
+        {
+          "name": name,
+          "email": email
+        }
+      ],
+      "cc": [
+        {
+          "name": name,
+          "email": email
+        }
+      ],
+      "bcc": [
+        {
+          "name": name,
+          "email": email
+        }
+      ],
+      "subject": "Test",
+      "body_text": "",
+      "body_html": '<HTML><HEAD> <META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD> <BODY> <DIV style="FONT-FAMILY: Century Gothic"> <DIV style="MIN-WIDTH: 500px"><BR> <DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV> <DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"> <DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR> <DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear [%Variable: @Employee%]<BR><BR>Your&nbsp;[%Variable: @LeaveType%] application has been forwarded to your superior for approval.  <H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Leave Details :</B><BR></H1> <TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto"> <TBODY> <TR> <TD style="TEXT-ALIGN: left">EMPLOYEE</TD> <TD style="PADDING-BOTTOM: 6px; PADDING-TOP: 6px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px">:</TD> <TD colSpan=2>[%Variable: @Employee%]</TD></TR> <TR> <TD>START DATE</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @StartDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">END DATE </TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @EndDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">APPLIED DATE</TD> <TD style="PADDING-BOTTOM: 6px; PADDING-TOP: 6px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px">:</TD> <TD colSpan=2>[%Variable: @AppliedDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">DAYS</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left">[%Variable: @NoOfDays%] </TD> <TD style="TEXT-ALIGN: left">[%Variable: @HalfDay%]</TD></TR></TR> <TR> <TD>LEAVE TYPE</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @LeaveType%]</TD></TR> <TR> <TD style="TEXT-ALIG: left">REASON</TD> <TD>: </TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Current Item:Reason%]</TD></TR></TBODY></TABLE><BR> <DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>',
+      "from_name": "Ajay DAV",
+      "from_email": "ajay1591ani@gmail.com",
+      "reply_to_name": "",
+      "reply_to_email": ""
+    };
+    this.http.post(this.emailUrl, body, options)
+      .map(res => res.json())
+      .subscribe(data => {
+        // this.result= data["resource"];
+        alert(JSON.stringify(data));
+      });
+  }
+
+  readProfile() {
+    return this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => {
+      this.profileJSON = JSON.stringify(data);
+      //levels: any[];
+       let levels: any[] = data.profile.levels.level
+      console.table(levels)
+      levels.forEach(element => {
+        if (element['-id'] == '1') {
+          this.profileLevel = '1';
+          if (element['approver']['-directManager'] === '1') {
+            this.http
+              .get(Services.getUrl('user_info', 'filter=USER_GUID=' + this.userGUID))
+              .map(res => res.json())
+              .subscribe(data => {
+                let userInfo: any[] = data["resource"]
+                userInfo.forEach(userElm => {
+                  this.assignedTo = userElm.MANAGER_USER_GUID
+                  this.http
+                    .get(Services.getUrl('user_info', 'filter=USER_GUID=' + userElm.MANAGER_USER_GUID))
+                    .map(res => res.json())
+                    .subscribe(data => {
+                      let userInfo: any[] = data["resource"]
+                      userInfo.forEach(approverElm => {
+                        this.stage = approverElm.DEPT_GUID
+                      });
+                    });
+                });
+                // console.log('Direct Manager Exists')
+              });
+            // console.log('Direct Manager ' + element['approver']['-directManager'])
+            let varf: any[]= element['conditions']['condition']
+            varf.forEach(condElement => {
+              if (condElement['-status'] === 'approved') {
+                console.log('Next Level ' + condElement['nextlevel']['#text'])
+              }
+              console.log('Status ' + condElement['-status'])
+            });
+          }
+          else {
+            this.assignedTo = element['approver']['#text']
+            this.http
+              .get(Services.getUrl('user_info', 'filter=USER_GUID=' + this.assignedTo))
+              .map(res => res.json())
+              .subscribe(data => {
+                let userInfo: any[] = data["resource"]
+                userInfo.forEach(approverElm => {
+                  this.stage = approverElm.DEPT_GUID
+                });
+              });
+              
+          }
+        }
+      });
+    });
   }
 
 }

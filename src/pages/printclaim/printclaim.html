@@ -34,7 +34,7 @@
   
             <ion-item>
                 <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
-                <ion-input type="text" formControlName="description" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
+                <ion-input type="text" formControlName="description"  [(ngModel)]="Travel_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
               </ion-item>     
         
           <!-- <ion-item>
