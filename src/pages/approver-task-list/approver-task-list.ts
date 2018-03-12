@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { Services } from '../Services';
 import { TranslateService } from '@ngx-translate/core';
-
+import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -10,12 +10,7 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../config/constants';
 // import { BaseHttpService } from '../../services/base-http';
 import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
-import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view';
-import { EntertainmentClaimViewPage } from '../../pages/entertainment-claim-view/entertainment-claim-view';
-import { MedicalClaimViewPage } from '../../pages/medical-claim-view/medical-claim-view';
-import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-claim-view';
-import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-view';
-import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
+import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view.component';
 
 @IonicPage()
 @Component({

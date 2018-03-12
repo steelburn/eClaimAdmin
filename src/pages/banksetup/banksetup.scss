@@ -26,6 +26,41 @@ page-banksetup {
             height: 500px;
     }
 
+        
+    .popscroll{
+        width: 96%;
+        top: 60px;
+        position: fixed;
+        height: calc(100% - 65px);
+        overflow-y: auto;
+    }
+
+    /**  STYLE 11 */
+
+    .popscroll::-webkit-scrollbar {
+        width: 10px;
+        background-color: none;
+    }
+
+.popscroll::-webkit-scrollbar-track {
+    border-radius: 10px ;
+    background: rgba(0,0,0,0.1);
+    border: none;
+  }
+  
+  .popscroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #ca9b24;
+    border: 1px solid #aaa;
+  }
+  
+  .popscroll::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+  }
+  
+  .popscroll::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+  }
 
     .btn{
     
