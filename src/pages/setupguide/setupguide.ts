@@ -359,7 +359,7 @@ export class SetupguidePage {
           .get(Url_Dept)
           .map(res => res.json())
           .subscribe(data => {
-            this.departments = data.resource;
+            this.departments = data.resource; 
             for(var item in this.departments){
               this.Department.push({ DEPARTMENT_GUID: this.departments[item]["DEPARTMENT_GUID"], DEPARTMENT_NAME: this.departments[item]["NAME"], DEPARTMENT_DESC: this.departments[item]["DESCRIPTION"] });
             }            
@@ -371,13 +371,13 @@ export class SetupguidePage {
         this.Designation_Name_ngModel = "";
         this.Designation_Desc_ngModel = "";
 
-        let Url_Desig: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        let Url_Desig: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;        
         this.http
           .get(Url_Desig)
           .map(res => res.json())
           .subscribe(data => {
             this.designations = data.resource;
-            for(var item in this.departments){
+            for(var item in this.designations){
               this.Designation.push({ DESIGNATION_GUID: this.designations[item]["DESIGNATION_GUID"], DESIGNATION_NAME: this.designations[item]["NAME"], DESIGNATION_DESC: this.designations[item]["DESCRIPTION"] });             
             }            
           });
