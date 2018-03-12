@@ -44,15 +44,11 @@ import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
-<<<<<<< HEAD
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
-=======
-import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
->>>>>>> ad3954c9663bf1abb3f47bfbf7b353161c198dbc
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
