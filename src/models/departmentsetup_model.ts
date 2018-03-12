@@ -2,7 +2,7 @@ export class DepartmentSetup_Model {
 	constructor(
 		public DEPARTMENT_GUID: string = null,
 		public NAME: string = null,
-		public COMPANY: string = null,
+		//public COMPANY: string = null,
 		public DESCRIPTION: string = null,
 		public CREATION_TS: string = null,
 		public CREATION_USER_GUID: string = null,
@@ -17,7 +17,7 @@ export class DepartmentSetup_Model {
 		return new DepartmentSetup_Model(
 			json.DEPARTMENT_GUID,
 			json.NAME,
-			json.COMPANY,
+			//json.COMPANY,
 			json.DESCRIPTION,
 			json.CREATION_TS,
 			json.CREATION_USER_GUID,
@@ -31,7 +31,7 @@ export class DepartmentSetup_Model {
 		var doc = {
 			DEPARTMENT_GUID: this.DEPARTMENT_GUID,
 			NAME: this.NAME,
-			COMPANY: this.COMPANY,
+			//COMPANY: this.COMPANY,
 			DESCRIPTION: this.DESCRIPTION,
 			CREATION_TS: this.CREATION_TS,
 			CREATION_USER_GUID: this.CREATION_USER_GUID,
