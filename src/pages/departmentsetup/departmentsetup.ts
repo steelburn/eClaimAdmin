@@ -25,14 +25,12 @@ import { UUID } from 'angular2-uuid';
 })
 export class DepartmentsetupPage {
   department_entry: DepartmentSetup_Model = new DepartmentSetup_Model();
-  //department: DepartmentSetup_Model = new DepartmentSetup_Model();
   Departmentform: FormGroup;
 
   baseResourceUrl: string = "";
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   public departments: DepartmentSetup_Model[] = [];
-
 
   public AddDepartmentClicked: boolean = false;
   public EditDepartmentClicked: boolean = false;
@@ -43,13 +41,11 @@ export class DepartmentsetupPage {
 
   //Set the Model Name for Add------------------------------------------
   public NAME_ngModel_Add: any;
-  public COMPANY_ngModel_Add: any;
   public DESCRIPTION_ngModel_Add: any;
   //---------------------------------------------------------------------
 
   //Set the Model Name for edit------------------------------------------
   public NAME_ngModel_Edit: any;
-  public COMPANY_ngModel_Edit: any;
   public DESCRIPTION_ngModel_Edit: any;
   //---------------------------------------------------------------------
 
@@ -68,7 +64,6 @@ export class DepartmentsetupPage {
       .subscribe((data) => {
         self.department_details = data;
         this.NAME_ngModel_Edit = self.department_details.NAME; localStorage.setItem('Prev_dep_Name', self.department_details.NAME);
-        this.COMPANY_ngModel_Edit = self.department_details.COMPANY;
         this.DESCRIPTION_ngModel_Edit = self.department_details.DESCRIPTION;
 
       });
@@ -129,15 +124,7 @@ export class DepartmentsetupPage {
 
     this.Departmentform = fb.group({
       NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
-      //NAME: ["", Validators.required],
-      //COMPANY: ["", Validators.required],
-      COMPANY: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //COMPANY: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
       DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //DESCRIPTION: ["", Validators.required],
-
-
     });
 
   }
@@ -162,7 +149,6 @@ export class DepartmentsetupPage {
               console.log("No records Found");
               if (this.Exist_Record == false) {
                 this.department_entry.NAME = this.NAME_ngModel_Add.trim();
-                this.department_entry.COMPANY = this.COMPANY_ngModel_Add.trim();
                 this.department_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
 
                 this.department_entry.DEPARTMENT_GUID = UUID.UUID();
@@ -206,7 +192,7 @@ export class DepartmentsetupPage {
   Update(DEPARTMENT_GUID: any) {
     if (this.Departmentform.valid) {
       if (this.department_entry.NAME == null) { this.department_entry.NAME = this.NAME_ngModel_Edit.trim(); }
-      if (this.department_entry.COMPANY == null) { this.department_entry.COMPANY = this.COMPANY_ngModel_Edit.trim(); }
+      //if (this.department_entry.COMPANY == null) { this.department_entry.COMPANY = this.COMPANY_ngModel_Edit.trim(); }
       if (this.department_entry.DESCRIPTION == null) { this.department_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit.trim(); }
 
       this.department_entry.CREATION_TS = this.department_details.CREATION_TS;
@@ -270,11 +256,11 @@ export class DepartmentsetupPage {
 
   ClearControls() {
     this.NAME_ngModel_Add = "";
-    this.COMPANY_ngModel_Add = "";
+    //this.COMPANY_ngModel_Add = "";
     this.DESCRIPTION_ngModel_Add = "";
 
     this.NAME_ngModel_Edit = "";
-    this.COMPANY_ngModel_Edit = "";
+    //this.COMPANY_ngModel_Edit = "";
     this.DESCRIPTION_ngModel_Edit = "";
 
   }
