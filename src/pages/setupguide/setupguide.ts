@@ -42,7 +42,7 @@ import { UserSetup_Service } from '../../services/usersetup_service';
 @IonicPage()
 @Component({
   selector: 'page-setupguide',
-  templateUrl: 'setupguide.html', providers: [BaseHttpService]
+  templateUrl: 'setupguide.html', providers: [BaseHttpService, TenantMainSetup_Service, TenantCompanySetup_Service, TenantCompanySiteSetup_Service, UserSetup_Service]
 })
 export class SetupguidePage {
   Branchform: FormGroup;
