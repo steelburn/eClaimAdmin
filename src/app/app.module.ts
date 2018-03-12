@@ -96,9 +96,10 @@ import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimappr
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 
-
-
-
+import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
+import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
+import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
+import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 
 @NgModule({
   declarations: [
