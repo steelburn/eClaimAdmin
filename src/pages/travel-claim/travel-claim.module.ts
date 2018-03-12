@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { TravelclaimPage } from './travelclaim';
+import { TravelclaimPage } from './travel-claim.component';
 
 @NgModule({
   declarations: [

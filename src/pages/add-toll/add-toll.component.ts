@@ -9,7 +9,7 @@ import { Console } from '@angular/core/src/console';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Services } from '../Services';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { ImageUpload_model } from '../../models/ImageUpload_model';
+import { ImageUpload_model } from '../../models/image-upload.model';
 
 
 @IonicPage()
