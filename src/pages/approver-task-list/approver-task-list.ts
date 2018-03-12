@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../config/constants';
 // import { BaseHttpService } from '../../services/base-http';
 import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
-import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view';
+import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view.component';
 
 
 @IonicPage()

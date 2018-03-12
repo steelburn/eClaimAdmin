@@ -30,25 +30,19 @@ import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
 import {Router, Request, Response, NextFunction} from 'express';
-import {AddTollPage} from '../../pages/add-toll/add-toll';
+import {AddTollPage} from '../../pages/add-toll/add-toll.component';
 
 import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
 
 
-/**
- * Generated class for the TravelclaimPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-travelclaim',
-  templateUrl: 'travelclaim.html', providers: [Services, BaseHttpService, FileTransfer]
+  templateUrl: 'travel-claim.html', providers: [Services, BaseHttpService, FileTransfer]
 })
 export class TravelclaimPage {
   isReadyToSave: boolean;
- 
+  
   vehicles: any[];
   customers: any[];
   //storeProjects: any;

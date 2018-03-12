@@ -11,7 +11,7 @@ import { PrintclaimPage } from '../printclaim/printclaim';
 import { GiftclaimPage } from '../giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../entertainmentclaim/entertainmentclaim';
-import { TravelclaimPage } from '../travelclaim/travelclaim';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { ProfileSetupPage } from '../Profile-Setup/Profile-Setup';
 @Component({
   selector: 'page-speaker-list',
