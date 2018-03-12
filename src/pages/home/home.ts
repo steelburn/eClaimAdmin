@@ -12,7 +12,7 @@ import { GiftclaimPage } from '../giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../travel-claim/travel-claim.component';
-import { ProfileSetupPage } from '../Profile-Setup/Profile-Setup';
+import { ProfileSetupPage } from '../profile-setup/profile-setup.component';
 @Component({
   selector: 'page-speaker-list',
   templateUrl: 'home.html'

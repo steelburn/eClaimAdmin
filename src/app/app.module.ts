@@ -82,7 +82,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 
 
-import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
 
 import {AddTollPage} from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';

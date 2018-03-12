@@ -50,7 +50,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
 
 
 export interface PageInterface {
