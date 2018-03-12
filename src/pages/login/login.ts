@@ -12,6 +12,7 @@ import { Conditional } from '@angular/compiler';
 import { Cordova } from '@ionic-native/core';
 import { SetupPage } from '../setup/setup';
 import { AdminsetupPage } from '../adminsetup/adminsetup';
+import { SetupguidePage } from '../setupguide/setupguide';
 
 
 @Component({
@@ -54,8 +55,11 @@ export class LoginPage {
               localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
               localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
               localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
-
-              this.navCtrl.push(SetupPage);
+              
+              //Setup Guide for only Hq Users
+              if(res[0]["ISHQ"] == "1"){
+                this.navCtrl.push(SetupguidePage);
+              }              
             }
             else {
               localStorage.removeItem("g_USER_GUID");

@@ -19,24 +19,39 @@
 <ion-item>
     <table class="Tabler ">
         <tr class="linedsg TColor">
-            <th class="lgl1 tblBrLeft" style="width:60px"><ion-item><ion-checkbox item-end (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox></ion-item></th>
-            <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+            <th class="lgl1 tblBrLeft" style="width:60px">
+              <ion-item>
+                <ion-checkbox item-end (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox>
+              </ion-item>
+            </th>
+            <th class="lgl1" style="width:60px">NO.</th>
             <th class="lgl1">NAME</th>
             <th class="lgl1">CLAIM TYPE</th>
             <th class="lgl1">DATE</th>
             <th class="lgl1">STATUS</th>
             <th class="lgl1">STAGE</th>
-            <th class="lgl1">AMOUNT</th>       
-            <th class="lgl1">ACTION</th>
+
+            <th class="lgl1">AMOUNT</th>
+            <th class="lgl1 tblBrRight">ACTION</th>
+
 
         </tr>
 
         <tr class="col7" *ngFor="let item of claimrequestdetails; let i=index">
+
            
 
           <td class="lgl1">
               <ion-item>   <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,item.CLAIM_REQUEST_GUID)"> </ion-checkbox></ion-item>
             </td>
+
+
+            <td class="lgl1">
+              <ion-item>   
+                <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,item.CLAIM_REQUEST_GUID)"> </ion-checkbox>
+              </ion-item>
+            </td>
+         
 
             <td class="lgl1">{{i+1}}</td>
             <td class="lgl1" >{{item.FULLNAME}}</td>
@@ -46,10 +61,12 @@
             <td class="lgl1">{{item.STAGE}}</td>
             <td class="lgl1">{{item.CLAIM_AMOUNT}}</td>
 
+
             <td class="lgl1 fColor">
                 <button ion-button item-end (click)='viewClaim(item.CLAIM_REQUEST_GUID, item.PROFILE_LEVEL)'><ion-icon name="md-eye"></ion-icon></button>
             </td>
            
+
         </tr>
 
         

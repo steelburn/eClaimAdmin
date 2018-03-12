@@ -52,7 +52,7 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
-
+import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
 import { UserPage } from '../pages/user/user';
@@ -92,7 +92,14 @@ import {AddTollPage} from '../pages/add-toll/add-toll';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+
 import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
+
+import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
+import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
+import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
+import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+
 
 
 
@@ -116,6 +123,7 @@ import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
     CountrysetupPage,
     TravelclaimPage,
     StatesetupPage,
+    SetupguidePage,
     ScheduleFilterPage,
     SessionDetailPage,
     SignupPage,
@@ -154,7 +162,15 @@ import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 
     ProfileSetupPage,
     AddTollPage,
-    ClaimhistoryPage
+
+    ClaimhistoryPage,
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage
+
+    
+
 
 
   ],
@@ -198,6 +214,7 @@ import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
     SchedulePage,
     ScheduleFilterPage,
     SessionDetailPage,
+    SetupguidePage,
     SignupPage,
     StatesetupPage,
     SetupPage,
@@ -246,7 +263,14 @@ import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
     AddTollPage,
     ClaimhistoryPage,
 
-    UploadPage,
+    ClaimhistorydetailPage,
+    ClaimapprovertasklistPage,
+    ClaimtasklistPage,
+    UserclaimslistPage,
+
+
+    UploadPage
+
 
 
   ],
