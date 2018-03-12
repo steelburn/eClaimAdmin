@@ -44,13 +44,13 @@ import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
-import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
+import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
 import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
-import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
+import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
@@ -82,9 +82,9 @@ export function createTranslateLoader(http: HttpClient) {
 
 
 
-import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
 
-import {AddTollPage} from '../pages/add-toll/add-toll';
+import {AddTollPage} from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';

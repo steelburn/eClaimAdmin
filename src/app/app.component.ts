@@ -17,7 +17,7 @@ import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
-import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
+import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { UserPage } from '../pages/user/user';
@@ -50,7 +50,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ProfileSetupPage } from'../pages/Profile-Setup/Profile-Setup';
+import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
 
 
 export interface PageInterface {
