@@ -149,7 +149,7 @@ export class CompanysetupPage {
       //PHONE: ["", Validators.required],
       EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
       //EMAIL: ["", Validators.required],
-    });
+    }); 
   }
 
   ionViewDidLoad() {

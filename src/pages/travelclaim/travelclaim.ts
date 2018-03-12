@@ -104,13 +104,13 @@ export class TravelclaimPage {
    /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
    claimRequestGUID: any;
-   claimRequestData: any;
+   claimRequestData: any[];
    ngOnInit(): void {
      this.userGUID = localStorage.getItem('g_USER_GUID');
  
      this.isFormEdit = this.navParams.get('isFormEdit');
-     // this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-     this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
+      this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
+     //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
      if (this.isFormEdit)
        this.GetDataforEdit();
    }
@@ -143,8 +143,10 @@ export class TravelclaimPage {
         this.Travel_From_ngModel = this.claimRequestData[0].FROM;
         this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
         this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
-        this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
-        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
+        //this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+        this.Travel_Amount_ngModel = this.claimRequestData[0].CLAIM_AMOUNT;
+        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+       
         this.vehicles.forEach(element => {
           if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
             this.Travel_Mode_ngModel = element.CATEGORY
@@ -152,6 +154,8 @@ export class TravelclaimPage {
         });
         console.table(this.claimRequestData)
         console.log(this.claimRequestData[0].SOC_GUID)
+        console.log(this.claimRequestData[0].MILEAGE_GUID)
+        console.log(this.claimRequestData[0].DESCRIPTION)
       }
       );
   }
@@ -429,6 +433,10 @@ export class TravelclaimPage {
     this.VehicleId = vehicle.MILEAGE_GUID;
     this.VehicleRate = vehicle.RATE_PER_UNIT;
     this.vehicleCategory = vehicle.CATEGORY;
+    console.log(vehicle.MILEAGE_GUID);
+    console.log(vehicle.RATE_PER_UNIT);
+    console.log(vehicle.CATEGORY);
+    console.log(this.VehicleId);
   }
 
   
@@ -497,9 +505,8 @@ export class TravelclaimPage {
             claimReqMainRef.UPDATE_TS = new Date().toISOString();
             claimReqMainRef.FROM = this.Travel_From_ngModel;
             claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
-            claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel; alert(this.assignedTo);
-            claimReqMainRef.ASSIGNED_TO = this.assignedTo;
-            alert('if' + this.assignedTo);
+            claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+            claimReqMainRef.ASSIGNED_TO = this.assignedTo;           
             claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
             claimReqMainRef.STATUS = 'Pending';
@@ -541,9 +548,8 @@ export class TravelclaimPage {
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
           claimReqMainRef.FROM = this.Travel_From_ngModel;
-          claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;alert(this.assignedTo);
-          claimReqMainRef.ASSIGNED_TO = this.assignedTo;
-          alert('else' + this.assignedTo);
+          claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+          claimReqMainRef.ASSIGNED_TO = this.assignedTo;        
           claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
@@ -621,6 +627,7 @@ export class TravelclaimPage {
     //let AddTollModal = this.modalCtrl.create(AddTollPage);
     //AddTollModal.present;
     this.navCtrl.push(AddTollPage, {
+      DetailsType: 'Toll',
       MainClaim: this.ClaimRequestMain,
       ClaimMethod: '03048acb-037a-11e8-a50c-00155de7e742'
     });
@@ -628,6 +635,7 @@ export class TravelclaimPage {
 
   showAddParking() {
     this.navCtrl.push(AddTollPage, {
+      DetailsType: 'Parking',
       MainClaim: this.ClaimRequestMain,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742'
     });

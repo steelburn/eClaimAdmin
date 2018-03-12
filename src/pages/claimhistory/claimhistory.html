@@ -9,16 +9,15 @@
   <ion-navbar>
     <ion-title>CLAIM HISTORY</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top>
+    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-item>
-        <!-- <ion-searchbar type="text" #filter (keyup)="0" placeholder="{{'SEARCH_FULLNAME' | translate}}"></ion-searchbar> -->
-        <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
-      </ion-item>
+
 
       <!-- <ion-item>
         <button ion-button item-end (click)="goToEmailTest()"><ion-icon name="md-eye"></ion-icon></button>
