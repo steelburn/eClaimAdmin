@@ -15,6 +15,23 @@ import { BaseHttpService } from '../../services/base-http';
 import * as constants from '../../app/config/constants';
 import { SetupPage } from '../../pages/setup/setup';
 
+import { TenantMainSetup_Model } from '../../models/tenantmainsetup_model';
+import { TenantMainSetup_Service } from '../../services/tenantmainsetup_service';
+
+import { TenantCompanySetup_Model } from '../../models/tenantcompanysetup_model';
+import { TenantCompanySetup_Service } from '../../services/tenantcompanysetup_service';
+
+import { TenantCompanySiteSetup_Model } from '../../models/tenantcompanysitesetup_model';
+import { TenantCompanySiteSetup_Service } from '../../services/tenantcompanysitesetup_service';
+
+import { UserMain_Model } from '../../models/user_main_model';
+import { UserInfo_Model } from '../../models/usersetup_info_model';
+import { UserContact_Model } from '../../models/user_contact_model';
+import { UserCompany_Model } from '../../models/user_company_model';
+import { UserAddress_Model } from '../../models/usersetup_address_model';
+
+import { UserSetup_Service } from '../../services/usersetup_service';
+
 /**
  * Generated class for the SetupguidePage page.
  *
@@ -63,8 +80,19 @@ export class SetupguidePage {
   DesignationSaveFlag: boolean = false;
   Designation_Name_ngModel: any;
   Designation_Desc_ngModel: any;
+  //------------------------------------------------------
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController) {
+  tenant_main_entry: TenantMainSetup_Model = new TenantMainSetup_Model();
+  tenant_company_entry: TenantCompanySetup_Model = new TenantCompanySetup_Model();
+  tenant_company_site_entry: TenantCompanySiteSetup_Model = new TenantCompanySiteSetup_Model();
+
+  usermain_entry: UserMain_Model = new UserMain_Model();
+  userinfo_entry: UserInfo_Model = new UserInfo_Model();
+  usercontact_entry: UserContact_Model = new UserContact_Model();
+  usercompany_entry: UserCompany_Model = new UserCompany_Model();
+  useraddress_entry: UserAddress_Model = new UserAddress_Model();
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service) {
     //on the page load all the details of tenant get display----------------------------------
     this.BindControls();
 
@@ -142,6 +170,12 @@ export class SetupguidePage {
   }
 
   SaveDesignation() {
+    //Save/Update to Tenant_main-------------------------------------
+
+    //Save/Update to Tenant_company----------------------------------
+    //Save/Update to Tenant_compny_site------------------------------
+    //Save/Update to user_main---------------------------------------
+
     this.navCtrl.push(SetupPage);
   }
 
@@ -416,4 +450,51 @@ export class SetupguidePage {
     this.Designation_Name_ngModel = "";
     this.Designation_Desc_ngModel = "";
   }
+
+  Save_Tenant_Main() {
+    this.tenant_main_entry.TENANT_GUID = localStorage.getItem('g_TENANT_GUID');
+    this.tenant_main_entry.PARENT_TENANT_GUID = "";
+    this.tenant_main_entry.TENANT_ACCOUNT_NAME = this.Tenant_Name_ngModel.trim();
+    this.tenant_main_entry.ACTIVATION_FLAG = this.tenants[0]["ACTIVATION_FLAG"];
+    this.tenant_main_entry.CREATION_TS = this.tenants[0]["CREATION_TS"];
+    this.tenant_main_entry.CREATION_USER_GUID = this.tenants[0]["USER_GUID"];
+    this.tenant_main_entry.UPDATE_TS = new Date().toISOString();
+    this.tenant_main_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+    this.TenantMainSetupService.update(this.tenant_main_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('1');
+          //this.Save_Tenant_Company();
+        }
+      })
+  }
+
+  // Save_Tenant_Company() {
+  //   this.tenant_company_entry.TENANT_COMPANY_GUID =  this.tenants[0]["TENANT_ACCOUNT_NAME"];
+  //   this.tenant_company_entry.TENANT_GUID = this.tenant_main_entry.TENANT_GUID;
+  //   this.tenant_company_entry.NAME = this.Companyname_ngModel.trim();
+  //   this.tenant_company_entry.REGISTRATION_NO = this.HQregno_ngModel.trim();
+  //   if (this.ACTIVE_FLAG_ngModel_Add == true) {
+  //     this.tenant_company_entry.ACTIVATION_FLAG = "1";
+  //   }
+  //   else {
+  //     this.tenant_company_entry.ACTIVATION_FLAG = "0";
+  //   }
+  //   this.tenant_company_entry.CREATION_TS = new Date().toISOString();
+  //   this.tenant_company_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+  //   this.tenant_company_entry.UPDATE_TS = new Date().toISOString();
+  //   this.tenant_company_entry.UPDATE_USER_GUID = "";
+
+  //   this.TenantCompanySetupService.save(this.tenant_company_entry)
+  //     .subscribe((response) => {
+  //       if (response.status == 200) {
+  //         //alert('Tenant Company Registered successfully');
+  //         //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+  //         this.Save_Tenant_Company_Site();
+  //       }
+  //     })
+  // }
+
+
 }
