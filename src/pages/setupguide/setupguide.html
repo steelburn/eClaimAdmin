@@ -42,7 +42,7 @@
               <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveCompany()">NEXT
                 <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
               </button>
-              <a ion-button color="secondary" (click)="SkipSetup()">SKIP...</a>
+              <a ion-button color="secondary" (click)="SkipSetup()">SKIP</a>
             </div>
 
           </form>
@@ -128,21 +128,22 @@
                 <ion-input type="number" formControlName="BRANCH_CONTACT_NO" [(ngModel)]="Branch_Contactno_ngModel" placeholder="{{'Please fill in the contact no'}}"></ion-input>
               </ion-item>
             </div>
-
-            <button ion-button icon-left (click)="AddBranch()">
-              ADD
-              <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
-            </button>
+            <div class="btn">
+              <button ion-button icon-left (click)="AddBranch()">
+                ADD
+                <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
+              </button>
+          </div>
             <ion-list>
               <ion-item>
                 <table class="Tabler">
                   <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft">NO</th>
+                    <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
                     <th class="lgl1">NAME</th>
                     <th class="lgl1">REG NO.</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">CONTACT NO</th>
-                    <th class="lgl1 tblBrRight">ACTION</th>
+                    <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
                   </tr>
 
                   <tr class="col7" *ngFor="let branch of Branches; let i=index">
@@ -171,7 +172,7 @@
               <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveBranch()">NEXT
                 <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
               </button>
-              <a ion-button color="secondary" (click)="SaveBranch()">SKIP...</a>
+              <a ion-button color="secondary" (click)="SaveBranch()">SKIP</a>
             </div>
 
           </form>
@@ -197,18 +198,21 @@
               <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
               <ion-input type="text" formControlName="DEPARTMENT_DESCRIPTION" [(ngModel)]="Department_Desc_ngModel" placeholder="{{'Please fill in the department description of your company'}}"></ion-input>
             </ion-item>
-            <button ion-button icon-left (click)="AddDepartment()">
-              ADD
-              <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
-            </button>
+            <div class="btn">
+              <button ion-button icon-left (click)="AddDepartment()">
+                ADD
+                <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
+              </button>
+            </div>
+
             <ion-list>
               <ion-item>
                 <table class="Tabler">
                   <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft">NO</th>
+                    <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
                     <th class="lgl1">NAME</th>
                     <th class="lgl1">DESCRIPTION</th>
-                    <th class="lgl1 tblBrRight">ACTION</th>
+                    <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
                   </tr>
 
                   <tr class="col7" *ngFor="let dept of Department; let i=index">
@@ -260,20 +264,20 @@
               <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
               <ion-input type="text" formControlName="DESIGNATION_DESC" [(ngModel)]="Designation_Desc_ngModel" placeholder="{{'Please fill in the designation description of your company'}}"></ion-input>
             </ion-item>
-
-            <button ion-button icon-left (click)="AddDesignation()">
-              ADD
-              <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
-            </button>
-
+            <div class="btn">
+              <button ion-button icon-left (click)="AddDesignation()">
+                ADD
+                <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
+              </button>
+            </div>
             <ion-list>
               <ion-item>
                 <table class="Tabler">
                   <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft">NO</th>
+                    <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
                     <th class="lgl1">NAME</th>
                     <th class="lgl1">DESCRIPTION</th>
-                    <th class="lgl1 tblBrRight">ACTION</th>
+                    <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
                   </tr>
 
                   <tr class="col7" *ngFor="let desig of Designation; let i=index">
