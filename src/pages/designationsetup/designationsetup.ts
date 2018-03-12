@@ -31,15 +31,15 @@ export class DesignationsetupPage {
 
   //designation: DesignationSetup_Model = new DesignationSetup_Model();
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   public designations: DesignationSetup_Model[] = [];
-  public AddDesignationClicked: boolean = false; 
+  public AddDesignationClicked: boolean = false;
   public EditDesignationClicked: boolean = false;
   public Exist_Record: boolean = false;
 
-  public designation_details: any; 
+  public designation_details: any;
   public exist_record_details: any;
 
   //Set the Model Name for Add------------------------------------------
@@ -51,7 +51,6 @@ export class DesignationsetupPage {
   public NAME_ngModel_Edit: any;
   public DESCRIPTION_ngModel_Edit: any;
   //---------------------------------------------------------------------
-
 
   public AddDesignationClick() {
     this.AddDesignationClicked = true;
@@ -74,11 +73,11 @@ export class DesignationsetupPage {
     this.designationsetupservice
       .get(DESIGNATION_GUID)
       .subscribe((data) => {
-      self.designation_details = data;
-      this.NAME_ngModel_Edit = self.designation_details.NAME; localStorage.setItem('Prev_de_Name', self.designation_details.NAME); 
-      this.DESCRIPTION_ngModel_Edit = self.designation_details.DESCRIPTION;
-  });
-}
+        self.designation_details = data;
+        this.NAME_ngModel_Edit = self.designation_details.NAME; localStorage.setItem('Prev_de_Name', self.designation_details.NAME);
+        this.DESCRIPTION_ngModel_Edit = self.designation_details.DESCRIPTION;
+      });
+  }
 
   public DeleteClick(DESIGNATION_GUID: any) {
     let alert = this.alertCtrl.create({
@@ -109,7 +108,15 @@ export class DesignationsetupPage {
       ]
     }); alert.present();
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private designationsetupservice: DesignationSetup_Service, private alertCtrl: AlertController) {
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private designationsetupservice: DesignationSetup_Service, private alertCtrl: AlertController) {        
+    if(localStorage.getItem("g_USER_GUID") == "sva"){      
+      this.baseResourceUrl =  constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else{
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }    
+    
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -117,15 +124,9 @@ export class DesignationsetupPage {
         this.designations = data.resource;
       });
 
-
     this.Designationform = fb.group({
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
-      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //NAME: ["", Validators.required],
-      //DESCRIPTION: [null, Validators.compose([Validators.pattern('[a-zA-Z][a-zA-Z ]+'), Validators.required])],
-      //DESCRIPTION: ["", Validators.required],
-      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //DESCRIPTION: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
+      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],    
+      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],      
     });
   }
 
@@ -143,63 +144,65 @@ export class DesignationsetupPage {
       this.http.get(url, options)
         .map(res => res.json())
         .subscribe(
-        data => {
-          let res = data["resource"];
-          if (res.length == 0) {
-            console.log("No records Found");
-            if (this.Exist_Record == false) {
-              this.designation_entry.NAME = this.NAME_ngModel_Add.trim();
-              this.designation_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
+          data => {
+            let res = data["resource"];
+            if (res.length == 0) {
+              console.log("No records Found");
+              if (this.Exist_Record == false) {
+                this.designation_entry.NAME = this.NAME_ngModel_Add.trim();
+                this.designation_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
 
-      this.designation_entry.DESIGNATION_GUID = UUID.UUID();
-      this.designation_entry.CREATION_TS = new Date().toISOString();
-      this.designation_entry.CREATION_USER_GUID = '1';
-      this.designation_entry.UPDATE_TS = new Date().toISOString();
-      this.designation_entry.UPDATE_USER_GUID = "";
+                this.designation_entry.DESIGNATION_GUID = UUID.UUID();
+                this.designation_entry.CREATION_TS = new Date().toISOString();
+                this.designation_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+                this.designation_entry.UPDATE_TS = new Date().toISOString();
+                this.designation_entry.UPDATE_USER_GUID = "";
+                this.designation_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID"); 
 
-      this.designationsetupservice.save(this.designation_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Designation Registered successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        });
+                this.designationsetupservice.save(this.designation_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+                      alert('Designation Registered successfully');
+                      //location.reload();
+                      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+              }
+            }
+            else {
+              console.log("Records Found");
+              alert("The Designation is already Exist.")
+
+            }
+
+          },
+          err => {
+            this.Exist_Record = false;
+            console.log("ERROR!: ", err);
+          });
     }
   }
-  else {
-    console.log("Records Found");
-    alert("The Designation is already Exist.")
-    
+
+  getBankList() {
+    let self = this;
+    let params: URLSearchParams = new URLSearchParams();
+    self.designationsetupservice.get_bank(params)
+      .subscribe((designations: DesignationSetup_Model[]) => {
+        self.designations = designations;
+      });
   }
-  
-},
-err => {
-  this.Exist_Record = false;
-  console.log("ERROR!: ", err);
-});
-}
-}
-getBankList() {
-  let self = this;
-  let params: URLSearchParams = new URLSearchParams();
-  self.designationsetupservice.get_bank(params)
-    .subscribe((designations: DesignationSetup_Model[]) => {
-      self.designations = designations;
-    });
-}
 
-
-  Update(DESIGNATION_GUID: any) { 
+  Update(DESIGNATION_GUID: any) {
     if (this.Designationform.valid) {
-    if(this.designation_entry.NAME==null){this.designation_entry.NAME = this.NAME_ngModel_Edit;}
-    if(this.designation_entry.DESCRIPTION==null){this.designation_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit;}
+      if (this.designation_entry.NAME == null) { this.designation_entry.NAME = this.NAME_ngModel_Edit; }
+      if (this.designation_entry.DESCRIPTION == null) { this.designation_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit; }
 
       this.designation_entry.CREATION_TS = this.designation_details.CREATION_TS;
       this.designation_entry.CREATION_USER_GUID = this.designation_details.CREATION_USER_GUID;
       this.designation_entry.DESIGNATION_GUID = DESIGNATION_GUID;
       this.designation_entry.UPDATE_TS = new Date().toISOString();
-      this.designation_entry.UPDATE_USER_GUID = '1';
+      this.designation_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.designation_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
 
       if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_de_Name')) {
         let url: string;
@@ -207,57 +210,57 @@ getBankList() {
         this.http.get(url)
           .map(res => res.json())
           .subscribe(
-          data => {
-            let res = data["resource"];
-            console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_de_Name'));
+            data => {
+              let res = data["resource"];
+              console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_de_Name'));
 
-            if (res.length == 0) {
-              console.log("No records Found");
-              this.designation_entry.NAME = this.NAME_ngModel_Edit.trim();
-              
-              //**************Update service if it is new details*************************
-              this.designationsetupservice.update(this.designation_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Designation updated successfully');
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
-              //**************************************************************************
-            }
-            else {
-              console.log("Records Found");
-              alert("The Designation is already Exist. ");
-            }
-          },
-          err => {
-            this.Exist_Record = false;
-            console.log("ERROR!: ", err);
-          });
+              if (res.length == 0) {
+                console.log("No records Found");
+                this.designation_entry.NAME = this.NAME_ngModel_Edit.trim();
+
+                //**************Update service if it is new details*************************
+                this.designationsetupservice.update(this.designation_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+                      alert('Designation updated successfully');
+                      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+                //**************************************************************************
+              }
+              else {
+                console.log("Records Found");
+                alert("The Designation is already Exist. ");
+              }
+            },
+            err => {
+              this.Exist_Record = false;
+              console.log("ERROR!: ", err);
+            });
       }
       else {
         if (this.designation_entry.NAME == null) { this.designation_entry.NAME = localStorage.getItem('Prev_de_Name'); }
         this.designation_entry.NAME = this.NAME_ngModel_Edit.trim();
         //**************Update service if it is old details*************************
-      this.designationsetupservice.update(this.designation_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Designation updated successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        });
+        this.designationsetupservice.update(this.designation_entry)
+          .subscribe((response) => {
+            if (response.status == 200) {
+              alert('Designation updated successfully');
+              //location.reload();
+              this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            }
+          });
       }
     }
   }
-  ClearControls()
-  {
+
+  ClearControls() {
     this.NAME_ngModel_Add = "";
     this.DESCRIPTION_ngModel_Add = "";
-   
+
     this.NAME_ngModel_Edit = "";
     this.DESCRIPTION_ngModel_Edit = "";
-   
+
   }
 }
   //     if (this.Designationform.valid) {
@@ -279,7 +282,7 @@ getBankList() {
 // else {
 //   console.log("Records Found");
 //   alert("The Designation is already Added.")
-  
+
 // }
 // },
 // err => {
