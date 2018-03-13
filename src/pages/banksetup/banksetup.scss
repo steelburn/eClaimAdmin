@@ -201,7 +201,9 @@ page-banksetup {
     .graphHeaderStyle {border-top: 5px solid #ca9b24;border-bottom: 1px solid gainsboro;}
     .fullWidth {width: 100% !important;}
     
-    
+    ion-item.item.item-block.item-md.item-checkbox {
+        background: none !important;
+    } 
 
     ion-menu#loggedOutMenu {
         min-width: 256px !important;
