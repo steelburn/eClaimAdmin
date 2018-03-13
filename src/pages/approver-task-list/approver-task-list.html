@@ -42,16 +42,10 @@
            
 
           <td class="lgl1">
-              <ion-item>   <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,item.CLAIM_REQUEST_GUID)"> </ion-checkbox></ion-item>
-            </td>
-
-
-            <td class="lgl1">
-              <ion-item>   
-                <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,item.CLAIM_REQUEST_GUID)"> </ion-checkbox>
+              <ion-item>  
+                 <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,item.CLAIM_REQUEST_GUID)"> </ion-checkbox>
               </ion-item>
             </td>
-         
 
             <td class="lgl1">{{i+1}}</td>
             <td class="lgl1" >{{item.FULLNAME}}</td>
@@ -66,11 +60,7 @@
                 <button ion-button item-end (click)='viewClaim(item.CLAIM_REQUEST_GUID, item.PROFILE_LEVEL)'><ion-icon name="md-eye"></ion-icon></button>
             </td>
            
-
         </tr>
-
-        
-
 
     </table>
 </ion-item>
