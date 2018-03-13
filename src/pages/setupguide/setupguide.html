@@ -13,7 +13,7 @@
 <ion-content padding>
   <div class="blackcontainer"></div>
   <div class="popscroll" padding>
-    
+
     <ion-card class="container">
       <ion-card-header color="pure" class="icTitle2 background">
         STEP 1 : REGISTER YOUR COMPANY
@@ -71,7 +71,7 @@
               </ion-item>
             </div>
 
-            <div style="width: 47%; display:inline-table !important;">              
+            <div style="width: 47%; display:inline-table !important;">
               <ion-item>
                 <ion-label stacked>{{"EMAIL"}}</ion-label>
                 <ion-input type="text" formControlName="TENANT_EMAIL" [(ngModel)]="Tenantemail_ngModel" placeholder="{{'Please fill in the email'}}"></ion-input>
@@ -123,17 +123,26 @@
                 <ion-input type="text" formControlName="BRANCH_EMAIL" [(ngModel)]="Branch_Email_ngModel" placeholder="{{'Please fill in the email'}}"></ion-input>
               </ion-item>
 
-              <ion-item>
-                <ion-label stacked>{{"CONTACT NO"}}</ion-label>
-                <ion-input type="number" formControlName="BRANCH_CONTACT_NO" [(ngModel)]="Branch_Contactno_ngModel" placeholder="{{'Please fill in the contact no'}}"></ion-input>
-              </ion-item>
+              <div style="width: 47%; display:inline-table !important;">
+                <ion-item>
+                  <ion-label stacked>{{"CONTACT NO"}}</ion-label>
+                  <ion-input type="number" formControlName="BRANCH_CONTACT_NO" [(ngModel)]="Branch_Contactno_ngModel" placeholder="{{'Please fill in the contact no'}}"></ion-input>
+                </ion-item>
+              </div>
+              <div style="width: 47%; display:inline-table !important;">
+                <ion-item>
+                  <ion-label stacked>{{"BRANCH HQ"}}</ion-label> 
+                  <ion-toggle formControlName="ISHQ_FLAG" [(ngModel)]="Branch_ISHQ_FLAG_ngModel"></ion-toggle>                 
+                </ion-item>
+              </div>
+
             </div>
             <div class="btn">
               <button ion-button icon-left (click)="AddBranch()">
                 ADD
                 <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
               </button>
-          </div>
+            </div>
             <ion-list>
               <ion-item>
                 <table class="Tabler">
@@ -143,6 +152,7 @@
                     <th class="lgl1">REG NO.</th>
                     <th class="lgl1">EMAIL</th>
                     <th class="lgl1">CONTACT NO</th>
+                    <th class="lgl1">IS HQ</th>
                     <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
                   </tr>
 
@@ -152,6 +162,11 @@
                     <td class="lgl1">{{branch.BRANCH_REGNO}}</td>
                     <td class="lgl1">{{branch.BRANCH_EMAIL}}</td>
                     <td class="lgl1">{{branch.BRANCH_CONTACTNO}}</td>
+                    <td class="lgl1">                      
+                      <ion-icon *ngIf="branch.ISHQ==true" md="md-done-all"></ion-icon>
+                      <ion-icon *ngIf="branch.ISHQ==false" md="md-close"></ion-icon>
+                    </td>
+                    
                     <td class="lgl1 fColor">
                       <button ion-button item-end (click)="EditBranch(branch.BRANCH_GUID)">
                         <ion-icon name="md-create"></ion-icon>
