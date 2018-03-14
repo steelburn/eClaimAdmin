@@ -613,13 +613,14 @@ export class SetupguidePage {
       this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
         .subscribe((response) => {
           if (response.status == 200) {
-            this.InsertDepartment();
+            // this.InsertDepartment();
 
             //alert('Tenant company Site Registered successfully');
             //this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         })
     }
+    this.InsertDepartment();
   }
 
   InsertDepartment() {
@@ -643,10 +644,11 @@ export class SetupguidePage {
                   if (response.status == 200) {
                     //alert('Department Registered successfully');
 
-                    this.InsertDesignation();
+                    //this.InsertDesignation();
                   }
                 })
             }
+            this.InsertDesignation();
           }
         });
   }
