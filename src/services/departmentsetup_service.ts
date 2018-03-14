@@ -107,12 +107,26 @@ export class DepartmentSetup_Service {
             });
     }
 
+    remove_multiple(id: string, tablename: string) {       
+        let url_multiple = this.baseResource_Url + tablename + "?filter=(TENANT_GUID=" + id + ")";
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+
+        return this.httpService.http
+            .delete(url_multiple, { headers: queryHeaders })
+            .map((response) => {
+                var result: any = response.json();
+				//return result.PAGE_GUID;
+				return response;
+            });
+	}
+
     get(id: string, params?: URLSearchParams): Observable<DepartmentSetup_Model> {        
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-//alert(id);
         return this.httpService.http
             .get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders })
             .map((response) => {

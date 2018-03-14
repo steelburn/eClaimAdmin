@@ -343,7 +343,6 @@ export class TenantsetupPage {
       .subscribe((response) => {
         if (response.status == 200) {
           //alert('Tenant Company Registered successfully');
-          //this.navCtrl.setRoot(this.navCtrl.getActive().component);
           this.Save_Tenant_Company_Site();
         }
       })
