@@ -1,7 +1,8 @@
 page-banksetup {
     
     }
-    
+
+
     .blackcontainer{
         top: 0;
         left:0;
@@ -31,7 +32,7 @@ page-banksetup {
         width: 96%;
         top: 60px;
         position: fixed;
-        height: calc(100% - 65px);
+        height: calc(100% - 89px);
         overflow-y: auto;
     }
 
@@ -50,7 +51,7 @@ page-banksetup {
   
   .popscroll::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #ca9b24;
+    background: #89937A;
     border: 1px solid #aaa;
   }
   
@@ -185,7 +186,7 @@ page-banksetup {
         }
             
         td.lgl2 {
-                   font-size: 14px;
+            font-size: 14px;
             padding: 2px;
             text-align: center;
             word-wrap: break-word;
@@ -196,9 +197,9 @@ page-banksetup {
     
         .tblBrLeft { border-radius: 5px 0 0 5px !important;}
         .tblBrRight { border-radius: 0 5px 5px 0 !important;}
-        .TColor{background: #CB9D2F;color: white;}
+        .TColor{background: #3176BC ;color: white;}
     .linedsg {border-bottom: 1px solid gainsboro ;}
-    .graphHeaderStyle {border-top: 5px solid #ca9b24;border-bottom: 1px solid gainsboro;}
+    .graphHeaderStyle {border-top: 5px solid #3176BC ;border-bottom: 1px solid gainsboro;}
     .fullWidth {width: 100% !important;}
     
     ion-item.item.item-block.item-md.item-checkbox {
