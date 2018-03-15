@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>PERMISSION SETTING</ion-title>
+    <ion-title>Permission Setting</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -24,10 +24,10 @@
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-          <th class="lgl1">TENANT NAME</th>
-          <th class="lgl1">MODULES</th>
-          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1">Tenant Name</th>
+          <th class="lgl1">Modules</th>
+          <th class="lgl1 tblBrRight" style="width:90px">Action</th>
         </tr>
 
         <tr class="col7" *ngFor="let role of roles; let i=index">
@@ -64,14 +64,14 @@
       <ion-list>
         <form [formGroup]="Permissionform">
           <ion-item>
-            <ion-label stacked>{{"TENANT NAME"}}</ion-label>
+            <ion-label stacked>{{"Tenant Name"}}</ion-label>
             <ion-select formControlName="TENANTNAME" [(ngModel)]="TENANTNAME_ngModel_Add" placeholder="{{'Please select tenant'}}">
               <ion-option *ngFor="let tenant of tenants" [value]="tenant.TENANT_GUID">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"MODULES"}}</ion-label>
+            <ion-label stacked>{{"Modules"}}</ion-label>
             <ion-select formControlName="MODULES" [(ngModel)]="MODULES_ngModel_Add" placeholder="{{'Please select module'}}" multiple="true">
               <ion-option *ngFor="let module of modules" [value]="module.MODULE_GUID">{{module.NAME}}</ion-option>
             </ion-select>
@@ -102,14 +102,14 @@
       <ion-list>
         <form [formGroup]="Permissionform">
           <ion-item>
-            <ion-label stacked>{{"TENANT NAME"}}</ion-label>
+            <ion-label stacked>{{"Tenant Name"}}</ion-label>
             <ion-select formControlName="TENANTNAME" [(ngModel)]="TENANTNAME_ngModel_Edit" placeholder="{{'Please select tenant'}}">
               <ion-option *ngFor="let tenant of tenants" [value]="tenant.TENANT_GUID">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"MODULES"}}</ion-label>
+            <ion-label stacked>{{"Modules"}}</ion-label>
             <ion-select formControlName="MODULES" [(ngModel)]="MODULES_ngModel_Edit" placeholder="{{'Please select module'}}" multiple="true">
               <ion-option *ngFor="let module of modules" [value]="module.MODULE_GUID">{{module.NAME}}</ion-option>
             </ion-select>

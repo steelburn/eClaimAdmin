@@ -23,11 +23,11 @@
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-          <th class="lgl1">MODULE NAME</th>
-          <th class="lgl1">DESCRIPTION</th>
-          <th class="lgl1">PAGE NAME</th>
-          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1">Module Name</th>
+          <th class="lgl1">Description</th>
+          <th class="lgl1">Page Name</th>
+          <th class="lgl1 tblBrRight" style="width:90px">Action</th>
         </tr>
 
         <tr class="col7" *ngFor="let module of Module_New; let i=index">
@@ -65,17 +65,17 @@
       <ion-list>
         <form [formGroup]="Moduleform">
           <ion-item>
-            <ion-label stacked>{{"MODULE NAME"}}</ion-label>
+            <ion-label stacked>{{"Module Name"}}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the module'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{"Description"}}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"PAGE NAME"}}</ion-label>
+            <ion-label stacked>{{"Page Name"}}</ion-label>
             <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Add" placeholder="{{'Please fill the Page'}}" multiple="true">
               <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
             </ion-select>
@@ -109,17 +109,17 @@
       <ion-list>
         <form [formGroup]="Moduleform">
           <ion-item>
-            <ion-label stacked>{{"MODULE NAME"}}</ion-label>
+            <ion-label stacked>{{"Module Name"}}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" placeholder="{{'Please fill in the name of the module'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{"Description"}}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"PAGE NAME"}}</ion-label>
+            <ion-label stacked>{{"Page Name"}}</ion-label>
             <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Edit" placeholder="{{'Please fill the Page'}}" multiple="true">
               <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
             </ion-select>
