@@ -95,7 +95,7 @@
       </ion-card-header>
       <ion-list>
         <form [formGroup]="Roleform">
-          <ion-item>
+          <ion-item >
             <ion-label stacked>{{"NAME"}}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the role'}}"></ion-input>
           </ion-item>
@@ -105,22 +105,22 @@
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
-          <ion-item>
+          <ion-item style="width:24%; display:inline-block;">
             <ion-label stacked>{{"ADD"}}</ion-label>
             <ion-toggle formControlName="ADD_PERMISSON" [(ngModel)]="ADD_ngModel_Add"></ion-toggle>
           </ion-item>
 
-          <ion-item>
+          <ion-item style="width:24%; display:inline-block;">
             <ion-label stacked>{{"EDIT"}}</ion-label>
             <ion-toggle formControlName="EDIT_PERMISSON" [(ngModel)]="EDIT_ngModel_Add"></ion-toggle>
           </ion-item>
 
-          <ion-item>
+          <ion-item style="width:24%; display:inline-block;">
             <ion-label stacked>{{"DELETE"}}</ion-label>
             <ion-toggle formControlName="DELETE_PERMISSON" [(ngModel)]="DELETE_ngModel_Add"></ion-toggle>
           </ion-item>
 
-          <ion-item>
+          <ion-item style="width:24%; display:inline-block;">
             <ion-label stacked>{{"VIEW"}}</ion-label>
             <ion-toggle formControlName="VIEW_PERMISSON" [(ngModel)]="VIEW_ngModel_Add"></ion-toggle>
           </ion-item>
