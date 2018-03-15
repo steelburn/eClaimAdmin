@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>TENANT SITE SETUP</ion-title>
+    <ion-title>Tenant Site Setup</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -36,11 +36,11 @@
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
-          <th class="lgl1">COMPANY NAME</th>
-          <th class="lgl1">BRANCH NAME</th>
-          <th class="lgl1">HEAD QUARTER</th>
-          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+          <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
+          <th class="lgl1">Company Name</th>
+          <th class="lgl1">Branch Name</th>
+          <th class="lgl1">Head Quarter</th>
+          <th class="lgl1 tblBrRight" style="width:90px">Action</th>
         </tr>
 
         <tr class="col7" *ngFor="let branch of branchs; let i=index">
@@ -48,8 +48,8 @@
           <td class="lgl1">{{branch.NAME}}</td>
           <td class="lgl1">{{branch.SITE_NAME}}</td>
           <td class="lgl1">
-            <ion-toggle *ngIf="branch.ISHQ==1" checked=true></ion-toggle>
-            <ion-toggle *ngIf="branch.ISHQ==0" checked=false></ion-toggle>
+            <ion-toggle class="tog" *ngIf="branch.ISHQ==1" checked=true></ion-toggle>
+            <ion-toggle class="tog" *ngIf="branch.ISHQ==0" checked=false></ion-toggle>
           </td>
 
           <td class="lgl1 fColor">
@@ -85,17 +85,17 @@
         <form [formGroup]="Branchform">
 
           <ion-item>
-            <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+            <ion-label stacked>{{"Company Name"}}</ion-label>
             <ion-input type="text" formControlName="COMPANYNAME" [(ngModel)]="COMPANYNAME_ngModel_Add" placeholder="{{'Please fill in the company name'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
+            <ion-label stacked>{{"Branch Name"}}</ion-label>
             <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" placeholder="{{'Please fill in the branch name'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"IS HQ"}}</ion-label>
+            <ion-label stacked>{{"Is It HQ"}}</ion-label>
             <ion-toggle formControlName="ISHQ_FLAG" [(ngModel)]="ISHQ_FLAG_ngModel_Add"></ion-toggle>
           </ion-item>
 
@@ -126,12 +126,12 @@
       <ion-list>
         <form [formGroup]="Branchform">
           <ion-item>
-            <ion-label stacked>{{"COMPANY NAME"}}</ion-label>
+            <ion-label stacked>{{"Company Name"}}</ion-label>
             <ion-input type="text" formControlName="COMPANYNAME" [(ngModel)]="COMPANYNAME_ngModel_Edit" placeholder="{{'Please fill in the company name'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
+            <ion-label stacked>{{"Branch Name"}}</ion-label>
             <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Edit" placeholder="{{'Please fill in the branch name'}}"></ion-input>
           </ion-item>
           <div class="btn">
