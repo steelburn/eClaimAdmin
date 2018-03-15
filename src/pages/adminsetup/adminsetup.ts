@@ -10,7 +10,7 @@ import {PagesetupPage} from'../pagesetup/pagesetup';
 import {ModulesetupPage} from'../modulesetup/modulesetup';
 import {SubmodulesetupPage} from'../submodulesetup/submodulesetup';
 import { ClaimhistoryPage } from '../claimhistory/claimhistory';
-
+import { ProfileSetupPage } from '../profile-setup/profile-setup.component';
 import { ApproverTaskListPage } from '../approver-task-list/approver-task-list';
 
 
@@ -99,7 +99,9 @@ export class AdminsetupPage {
   goToUserClaimList(){
     this.navCtrl.push(UserclaimslistPage)
   }
-
+  goToProfile(){
+    this.navCtrl.push(ProfileSetupPage)
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminsetupPage');
