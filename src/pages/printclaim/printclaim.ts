@@ -223,7 +223,7 @@ export class PrintclaimPage {
  
   this.loading = true;
   const queryHeaders = new Headers();
-  queryHeaders.append('filename', this.uploadFileName);
+  queryHeaders.append('filename', this.uploadFileName);         
   queryHeaders.append('Content-Type', 'multipart/form-data');
   queryHeaders.append('fileKey', 'file');
   queryHeaders.append('chunkedMode', 'false');

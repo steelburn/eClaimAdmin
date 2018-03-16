@@ -529,7 +529,7 @@ export class OvertimeclaimPage {
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
           claimReqMainRef.MILEAGE_GUID = this.VehicleId;
           claimReqMainRef.CLAIM_TYPE_GUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
-          claimReqMainRef.TRAVEL_DATE =  this.Travel_Date_ngModel;         
+          claimReqMainRef.TRAVEL_DATE =  this.Travel_Date_ngModel;             
           claimReqMainRef.START_TS =this.Start_DT_ngModel;
           claimReqMainRef.END_TS =this.End_DT_ngModel;
           claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;

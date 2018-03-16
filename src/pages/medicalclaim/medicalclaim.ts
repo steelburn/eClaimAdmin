@@ -194,7 +194,7 @@ export class MedicalclaimPage {
     return new Promise((resolve, reject) => {
       this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {    
         // let res = response.json();
-        // let imageGUID = res["resource"][0].Image_Guid;
+        // let imageGUID = res["resource"][0].Image_Guid;     
         resolve(objImage.toJson());
       })
     })

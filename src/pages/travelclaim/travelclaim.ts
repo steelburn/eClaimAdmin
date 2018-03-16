@@ -47,7 +47,7 @@ import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/ht
   selector: 'page-travelclaim',
   templateUrl: 'travelclaim.html', providers: [Services, BaseHttpService, FileTransfer]
 })
-export class TravelclaimPage {
+export class TravelclaimPage {         
   isReadyToSave: boolean; 
  
   vehicles: any[];
