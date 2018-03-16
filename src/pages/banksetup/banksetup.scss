@@ -144,7 +144,8 @@ page-banksetup {
     } 
     .scroll{
         height: calc(100% - 48px);
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
     
     .cm{
@@ -201,7 +202,26 @@ page-banksetup {
     .linedsg {border-bottom: 1px solid gainsboro ;}
     .graphHeaderStyle {border-top: 5px solid #3176BC ;border-bottom: 1px solid gainsboro;}
     .fullWidth {width: 100% !important;}
-    
+    .row {
+   
+        border-bottom: 1px solid gainsboro !important;
+    }
+
+
+ ::-moz-placeholder {
+        font-size: 15px;
+      }
+      
+      :-ms-input-placeholder {
+        font-size: 15px;
+      }
+      
+   ::-webkit-input-placeholder {
+        font-size: 15px;
+      }
+
+      .datetime-md .datetime-placeholder { font-size: 15px; }
+
     ion-item.item.item-block.item-md.item-checkbox {
         background: none !important;
     } 
@@ -257,6 +277,10 @@ page-banksetup {
         max-width: 150px;
         height: 100%;
         
+    }
+
+    .label-md[stacked] {
+        font-size: 14px !important;
     }
 
     .container{
