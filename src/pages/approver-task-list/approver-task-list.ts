@@ -87,7 +87,6 @@ export class ApproverTaskListPage {
   }
 
   approveClaims() {
-
   }
 
 }
