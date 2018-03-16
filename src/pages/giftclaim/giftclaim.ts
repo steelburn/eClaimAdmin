@@ -148,7 +148,7 @@ export class GiftclaimPage {
   platform.ready().then(() => {
   });
 
-  this.Giftform = fb.group({
+  this.Giftform = fb.group({ 
     avatar: null,
     soc_no: '',
     //distance: '', 
