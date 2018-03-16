@@ -41,7 +41,7 @@ export class LoginPage {
       else {
         let url: string;
         url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username.trim() + ')and(PASSWORD=' + this.login.password.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        //http://api.zen.com.my/api/v2/zcs/_table/vw_login?filter=(LOGIN_ID=bcfb798b-355e-2a9b-baaf-37289d1f1ba3)and(PASSWORD=password)&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881
+        //http://api.zen.com.my/api/v2/zcs/_table/vw_login?filter=(LOGIN_ID=bcfb798b-355e-2a9b-baaf-37289d1f1ba3)and(PASSWORD=password)&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881        
         this.http
           .get(url)
           .map(res => res.json())
@@ -59,6 +59,9 @@ export class LoginPage {
               //Setup Guide for only Hq Users
               if(res[0]["ISHQ"] == "1"){
                 this.navCtrl.push(SetupguidePage);
+              }
+              else{
+                this.navCtrl.push(SetupPage);
               }              
             }
             else {
