@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>ROLE MODULE SETUP</ion-title>
+    <ion-title>Role Module Setup</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -24,11 +24,11 @@
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-          <th class="lgl1">ROLE NAME</th>
-          <th class="lgl1">MODULE NAME</th>
+          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1">Role Name</th>
+          <th class="lgl1">Module Name</th>
           <!-- <th class="lgl1">ACTIVE FLAG</th> -->
-          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+          <th class="lgl1 tblBrRight" style="width:90px">Action</th>
         </tr>
 
         <tr class="col7" *ngFor="let rolemodule of Role_Module; let i=index">
@@ -71,7 +71,7 @@
 
         <form [formGroup]="Rolemoduleform">
           <ion-item>
-            <ion-label stacked>{{"ROLE"}}</ion-label>
+            <ion-label stacked>{{"Role"}}</ion-label>
             <ion-select formControlName="ROLENAME" [(ngModel)]="ROLENAME_ngModel_Add" placeholder="{{'Select Role'}}">
               <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
             </ion-select>
@@ -120,66 +120,6 @@
 
 
 
-
-
-
-
-
-          <!-- <ion-item>
-            <ion-grid>
-              <ion-row>
-                <ion-col align-self-start>
-
-                  <table class="Tabler">
-                    <tr class="linedsg TColor">
-                      <th class="lgl1">MODULE </th>
-                    </tr>
-
-                    <tr class="col7" *ngFor="let module of modules">
-                      <td class="lgl1">
-                        <input type="checkbox" formControlName="ROLEMAINMODULE" [(ngModel)]="module.checked" [value]="module.MODULE_GUID" checked="module.checked" (change)="change(module.MODULE_GUID)"> {{module.NAME}}
-                      </td>
-                    </tr>
-                  </table>
-
-                </ion-col>
-                
-                <ion-col align-self-center class="over">
-                  <button ion-button (click)="AddBackward()">
-                    <ion-icon name="ios-arrow-back"></ion-icon>
-                  </button>
-
-                  <button ion-button (click)="AddForward()">
-                    <ion-icon name="ios-arrow-forward"></ion-icon>
-                  </button>
-
-                </ion-col>
-
-                <ion-col align-self-end>
-                  <table class="Tabler">
-                    <tr class="linedsg TColor">
-                      <th class="lgl1 ">MODULE ASSIGNED</th>
-                    </tr>
-
-                    <tr class="col7">
-
-                      <td class="lgl1">HOME</td>
-                    </tr>
-
-                    <tr class="col7">
-                      <td class="lgl1">APPROVER TASK</td>
-                    </tr>
-
-                    <tr class="col7">
-                      <td class="lgl1">SETUP</td>
-                    </tr>
-
-                  </table>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item> -->
-
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Rolemoduleform.valid" (click)="Save_RoleModule()">{{"SUBMIT" | translate}}</button>
           </div>
@@ -209,7 +149,7 @@
 
         <form [formGroup]="Rolemoduleform">
           <ion-item>
-            <ion-label stacked>{{"ROLE"}}</ion-label>
+            <ion-label stacked>{{"Role"}}</ion-label>
             <ion-select formControlName="ROLENAME" [(ngModel)]="ROLENAME_ngModel_Edit" placeholder="{{'Select Role'}}">
               <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
             </ion-select>
