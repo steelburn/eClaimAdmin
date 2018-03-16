@@ -34,7 +34,7 @@
         <form [formGroup]="Medicalform">          
       
               <ion-item>
-                <ion-label stacked>{{ "MEDICAL_DATE_LABEL" | translate  }}</ion-label>        
+                <ion-label stacked>{{ "MEDICAL_DATE_LABEL" | translate  }}</ion-label>             
                 <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="travel_date" max={{validDate}} placeholder="{{ 'TRAVEL_DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
               </ion-item>               
              

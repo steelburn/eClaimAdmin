@@ -152,7 +152,7 @@ export class EntertainmentclaimPage {
     this.Entertainmentform = fb.group({
       avatar: null,
       soc_no: '', 
-      travel_date: ['', Validators.required],
+      travel_date: ['', Validators.required],    
       description: ['', Validators.required],
       vehicleType: ['', Validators.required]     
     });

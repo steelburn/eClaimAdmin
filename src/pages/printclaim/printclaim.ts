@@ -227,7 +227,7 @@ export class PrintclaimPage {
   queryHeaders.append('Content-Type', 'multipart/form-data');
   queryHeaders.append('fileKey', 'file');
   queryHeaders.append('chunkedMode', 'false');
-  queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+  queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);     
   const options = new RequestOptions({ headers: queryHeaders });
   return new Promise((resolve, reject) => {
     this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Printform.get('avatar').value, options)

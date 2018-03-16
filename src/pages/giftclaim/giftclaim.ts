@@ -153,7 +153,7 @@ export class GiftclaimPage {
     soc_no: '',
     //distance: '', 
     //customer: '',
-    //project_name: ['', Validators.required],
+    //project_name: ['', Validators.required],     
     travel_date:  ['', Validators.required],
     description: ['', Validators.required],
     vehicleType: ['', Validators.required],

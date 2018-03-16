@@ -192,7 +192,7 @@ export class MedicalclaimPage {
     objImage.CREATION_TS = new Date().toISOString();
     objImage.Update_Ts = new Date().toISOString();
     return new Promise((resolve, reject) => {
-      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {    
         // let res = response.json();
         // let imageGUID = res["resource"][0].Image_Guid;
         resolve(objImage.toJson());
