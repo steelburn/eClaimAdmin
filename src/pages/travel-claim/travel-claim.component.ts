@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController, ModalController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
@@ -15,6 +15,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';
 import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
+import { ImageUpload_model } from '../../models/ImageUpload_model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
 //import { TravelClaim_Service } from '../../services/travelclaim_service';
 import { Services } from '../Services';
@@ -35,14 +36,20 @@ import {AddTollPage} from '../../pages/add-toll/add-toll.component';
 import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
 
 
+/**
+ * Generated class for the TravelclaimPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
 @IonicPage()
 @Component({
   selector: 'page-travelclaim',
   templateUrl: 'travel-claim.html', providers: [Services, BaseHttpService, FileTransfer]
 })
 export class TravelclaimPage {
-  isReadyToSave: boolean;
-  
+  isReadyToSave: boolean; 
+ 
   vehicles: any[];
   customers: any[];
   //storeProjects: any;
@@ -100,8 +107,7 @@ export class TravelclaimPage {
    claimRequestGUID: any;
    claimRequestData: any[];
    ngOnInit(): void {
-     this.userGUID = localStorage.getItem('g_USER_GUID');
- 
+     this.userGUID = localStorage.getItem('g_USER_GUID'); 
      this.isFormEdit = this.navParams.get('isFormEdit');
       this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
      //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
@@ -152,12 +158,12 @@ export class TravelclaimPage {
         console.log(this.claimRequestData[0].DESCRIPTION)
       }
       );
-  }
- 
+  } 
  
   constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
   {   
     this.Travelform = fb.group({
+      avatar: null,
       soc_no: '',
       distance: '', 
       //customer: '',
@@ -188,7 +194,24 @@ export class TravelclaimPage {
     this.Customer_Lookup_ngModel = name;
     this.Customer_GUID = guid;
     this.CloseCustomerLookup();
-  } 
+  }
+  
+  //---------------------Language module start---------------------//
+  public translateToMalayClicked: boolean = false;
+  public translateToEnglishClicked: boolean = true;
+
+  public translateToEnglish() {
+    this.translate.use('en');
+    this.translateToMalayClicked = !this.translateToMalayClicked;
+    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+  }
+
+  public translateToMalay() {
+    this.translate.use('ms');
+    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+    this.translateToMalayClicked = !this.translateToMalayClicked;
+  }
+  //---------------------Language module end---------------------//
  
    claimForChanged() {
     // console.log(this.claimFor)
@@ -500,8 +523,8 @@ export class TravelclaimPage {
             claimReqMainRef.FROM = this.Travel_From_ngModel;
             claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
             claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
-            claimReqMainRef.ASSIGNED_TO = this.assignedTo;           
-            claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
+            claimReqMainRef.ASSIGNED_TO = this.assignedTo;                    
+            claimReqMainRef.PROFILE_LEVEL = this.profileLevel;           
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
             claimReqMainRef.STATUS = 'Pending';
             claimReqMainRef.STAGE = this.stage;
