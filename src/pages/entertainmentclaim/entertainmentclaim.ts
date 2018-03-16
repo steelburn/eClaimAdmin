@@ -647,4 +647,4 @@ export class EntertainmentclaimPage {
       });
     });
   }
-}
+} 
