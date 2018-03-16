@@ -15,7 +15,11 @@
   "CLAIM_AMOUNT_PLACE_HOLDER": "Please Fill the Claim Amount",
   "DISTANCE_PLACE_HOLDER": "Please Click the button to Get Distance",
 
-  "TRAVEL_CLAIM_HEADING": "Travel Claim",
+  "TRAVEL_CLAIM_HEADING": "Travel Claim in malay",
+  "ENTERTAINMENT_CLAIM_HEADING": "Entertainment Claim in malay",
+  "MEDICAL_CLAIM_HEADING": "Medical Claim in malay",
+  "OVERTIME_CLAIM_HEADING": "Overtime Claim in malay",
+  "PRINT_CLAIM_HEADING": "Print Claim in malay",
   "ADD_TOLL_HEADING": "Add Toll",
   "ADD_PARKING_HEADING": "Add Parking",
   

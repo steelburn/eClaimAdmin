@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
@@ -27,6 +27,7 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 import { Services } from '../Services';
 import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';
 import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
+import { ImageUpload_model } from '../../models/ImageUpload_model';
 
 
 /**
@@ -43,6 +44,11 @@ import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
 export class EntertainmentclaimPage {
  
   Entertainmentform: FormGroup;
+  uploadFileName: string;
+  loading = false;
+  CloudFilePath: string;
+  @ViewChild('fileInput') fileInput: ElementRef;
+  travel_date: any;
   
  // vehicles;
   storeProjects: any[]; 
@@ -83,7 +89,7 @@ export class EntertainmentclaimPage {
   validDate = new Date().toISOString();
   isCustomer: boolean = false;
   claimFor: any;
-  ClaimRequestMain: any;
+  ClaimRequestMainId: any;
 
    /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
@@ -105,7 +111,7 @@ export class EntertainmentclaimPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimRequestData = data["resource"];
-        console.log(this.claimRequestData)
+        //console.log(this.claimRequestData)
         if (this.claimRequestData[0].SOC_GUID === null) {
           this.claimFor = 'customer'
           this.storeCustomers.forEach(element => {
@@ -132,11 +138,11 @@ export class EntertainmentclaimPage {
         //     this.Travel_Mode_ngModel = element.CATEGORY
         //   }
         // });
-        console.table(this.claimRequestData)
-        console.log(this.claimRequestData[0].SOC_GUID)
-        console.log(this.claimRequestData[0].DESCRIPTION)
-        console.log(this.Travel_Date_ngModel)
-        console.log(this.claimRequestData[0].TRAVEL_DATE)
+        // console.table(this.claimRequestData)
+        // console.log(this.claimRequestData[0].SOC_GUID)
+        // console.log(this.claimRequestData[0].DESCRIPTION)
+        // console.log(this.Travel_Date_ngModel)
+        // console.log(this.claimRequestData[0].TRAVEL_DATE)
       }
       );
   }
@@ -144,6 +150,7 @@ export class EntertainmentclaimPage {
   constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, private api: Services, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
   
     this.Entertainmentform = fb.group({
+      avatar: null,
       soc_no: '', 
       travel_date: ['', Validators.required],
       description: ['', Validators.required],
@@ -152,6 +159,117 @@ export class EntertainmentclaimPage {
     this.LoadProjects();    
     this.LoadCustomers();
     this.readProfile();
+  }
+
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Entertainmentform.get('avatar').setValue(file);
+      this.uploadFileName = file.name;
+      reader.onload = () => {
+        this.Entertainmentform.get('avatar').setValue({
+          filename: file.name,
+          filetype: file.type,
+          value: reader.result.split(',')[1]
+        });
+      };
+    }
+  }
+
+   //---------------------Language module start---------------------//
+   public translateToMalayClicked: boolean = false;
+   public translateToEnglishClicked: boolean = true;
+ 
+   public translateToEnglish() {
+     this.translate.use('en');
+     this.translateToMalayClicked = !this.translateToMalayClicked;
+     this.translateToEnglishClicked = !this.translateToEnglishClicked;
+   }
+ 
+   public translateToMalay() {
+     this.translate.use('ms');
+     this.translateToEnglishClicked = !this.translateToEnglishClicked;
+     this.translateToMalayClicked = !this.translateToMalayClicked;
+   }
+   //---------------------Language module end---------------------//
+
+  onSubmit() {
+    this.loading = true;
+    const queryHeaders = new Headers();
+    queryHeaders.append('filename', this.uploadFileName);
+    queryHeaders.append('Content-Type', 'multipart/form-data');
+    queryHeaders.append('fileKey', 'file');
+    queryHeaders.append('chunkedMode', 'false');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    const options = new RequestOptions({ headers: queryHeaders });
+    this.http.post('http://api.zen.com.my/api/v2/files/' + this.uploadFileName, this.Entertainmentform.get('avatar').value, options)
+      .map((response) => {
+        return response;
+      }).subscribe((response) => {
+        alert(response.status);
+      });
+    setTimeout(() => {
+      alert('done');
+      this.loading = false;
+    }, 1000);
+  }
+
+   saveIm() {
+    let uploadImage = this.UploadImage();
+    uploadImage.then((resJson) => {
+      console.table(resJson)
+      let imageResult = this.SaveImageinDB();
+      imageResult.then((objImage: ImageUpload_model) => {
+        // console.table(objImage)
+        let result = this.save_Info(objImage.Image_Guid);
+        // result.then((res) => {
+        //   // console.log(res);
+         
+        // })
+      })
+    })
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 1000);
+
+
+  }
+
+  SaveImageinDB() {
+    let objImage: ImageUpload_model = new ImageUpload_model();
+    objImage.Image_Guid = UUID.UUID();
+    objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+    objImage.CREATION_TS = new Date().toISOString();
+    objImage.Update_Ts = new Date().toISOString();
+    return new Promise((resolve, reject) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+        // let res = response.json();
+        // let imageGUID = res["resource"][0].Image_Guid;
+        resolve(objImage.toJson());
+      })
+    })
+  }
+
+  UploadImage() {   
+      this.CloudFilePath = 'eclaim/'   
+   
+    this.loading = true;
+    const queryHeaders = new Headers();
+    queryHeaders.append('filename', this.uploadFileName);
+    queryHeaders.append('Content-Type', 'multipart/form-data');
+    queryHeaders.append('fileKey', 'file');
+    queryHeaders.append('chunkedMode', 'false');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    const options = new RequestOptions({ headers: queryHeaders });
+    return new Promise((resolve, reject) => {
+      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Entertainmentform.get('avatar').value, options)
+        .map((response) => {
+          return response;
+        }).subscribe((response) => {
+          resolve(response.json());
+        })
+    })
   }
 
   GetSocNo(item: any){
@@ -179,7 +297,7 @@ export class EntertainmentclaimPage {
       .map(res => res.json())
       .subscribe(data => {
       this.storeProjects=  this.projects = data["resource"];
-        console.table(this.projects)
+       // console.table(this.projects)
       }
       );
   }
@@ -282,17 +400,27 @@ export class EntertainmentclaimPage {
     // });
   }
 
-  save(value: any) {
+  clearFile() {
+    this.Entertainmentform.get('avatar').setValue(null);
+    this.fileInput.nativeElement.value = '';
+  }
+
+  save_Info(imageGUID: string) {
+    let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date(value.travel_date).getMonth() + 1;
-    let year = new Date(value.travel_date).getFullYear();
+    let month = new Date(this.Travel_Date_ngModel).getMonth() + 1; 
+    //alert(userGUID)
+    //alert(tenantGUID)
+    let year = new Date(this.Travel_Date_ngModel).getFullYear();
+    //alert(year)
     let claimRefGUID;
     let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
     this.http
       .get(url)
       .map(res => res.json())
       .subscribe(claimRefdata => {
+        console.log(url)
         if (claimRefdata["resource"][0] == null) {
           let claimReqRef: ClaimRefMain_Model = new ClaimRefMain_Model();
           claimReqRef.CLAIM_REF_GUID = UUID.UUID();
@@ -303,24 +431,26 @@ export class EntertainmentclaimPage {
           claimReqRef.YEAR = year;
           claimReqRef.CREATION_TS = new Date().toISOString();
           claimReqRef.UPDATE_TS = new Date().toISOString();
-
+             console.table(claimReqRef);
+          alert('upper');
           this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
             var postClaimRef = response.json();
             claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
 
-            let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+            // let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
             claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
             claimReqMainRef.TENANT_GUID = tenantGUID;
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             claimReqMainRef.CLAIM_TYPE_GUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
-            claimReqMainRef.TRAVEL_DATE = value.travel_date;           
-            claimReqMainRef.DESCRIPTION = value.description;
+            claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;           
+            claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
             claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
           claimReqMainRef.STATUS = 'Pending';
           claimReqMainRef.STAGE = this.stage;
+          claimReqMainRef.ATTACHMENT_ID = imageGUID;
             // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
             claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
             claimReqMainRef.CREATION_TS = new Date().toISOString();
@@ -332,34 +462,54 @@ export class EntertainmentclaimPage {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
+          console.table(claimReqMainRef);
+          alert('lower');
           // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
           // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
-            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-              var postClaimMain = response.json();
-              this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
-              this.MainClaimSaved = true;
-              alert('Claim Has Registered.')
-            })
+            // this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
+            //   var postClaimMain = response.json();
+            //   this.ClaimRequestMainId = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+            //   this.MainClaimSaved = true;
+            //   alert('Claim Has Registered.')
+            // })
+            // return new Promise((resolve, reject) => {
+            //   this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+               
+            //     let res = data.json();
+            //     let ClaimRequestMainId1 = res["resource"][0].CLAIM_REQUEST_GUID;
+            //     resolve(ClaimRequestMainId1);
+            //   })
+            // });
           })
+          return new Promise((resolve, reject) => {
+            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+             
+              let res = data.json();
+              console.log(res)
+              let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
+              resolve(ClaimRequestMainId);
+            })
+          });
         }
         else {
+          
           claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
 
           let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
           claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
           claimReqMainRef.TENANT_GUID = tenantGUID;
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
-         // claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+         
           claimReqMainRef.CLAIM_TYPE_GUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
-          claimReqMainRef.TRAVEL_DATE = value.travel_date;          
-          claimReqMainRef.DESCRIPTION = value.description;
+          claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;          
+          claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
           claimReqMainRef.STATUS = 'Pending';
           claimReqMainRef.STAGE = this.stage;
-          // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+          claimReqMainRef.ATTACHMENT_ID = imageGUID;
           claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();         
@@ -370,18 +520,31 @@ export class EntertainmentclaimPage {
           }
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
-          }
-        this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-            var postClaimMain = response.json();
-            this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;  
-
-            this.MainClaimSaved = true;
-            alert('Claim Has Registered.')
-          })
+          }       
+          // return new Promise((resolve, reject) => {
+          //   this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+             
+          //     let res = data.json();
+          //     let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
+          //     resolve(ClaimRequestMainId);
+          //   })
+          // });
+        
+            console.log(claimReqMainRef)
+            return new Promise((resolve, reject) => {
+              this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+              
+                let res = data.json();
+                console.log(res)
+                let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
+                resolve(ClaimRequestMainId);
+              })
+            });
         }
-
       })
+     
   }
+
   emailUrl: string = 'http://api.zen.com.my/api/v2/emailnotificationtest?api_key=' + constants.DREAMFACTORY_API_KEY;
   sendEmail() {
     let name: string; let email: string
@@ -434,7 +597,7 @@ export class EntertainmentclaimPage {
       this.profileJSON = JSON.stringify(data);
       //levels: any[];
        let levels: any[] = data.profile.levels.level
-      console.table(levels)
+      //console.table(levels)
       levels.forEach(element => {
         if (element['-id'] == '1') {
           this.profileLevel = '1';
@@ -462,9 +625,9 @@ export class EntertainmentclaimPage {
             let varf: any[]= element['conditions']['condition']
             varf.forEach(condElement => {
               if (condElement['-status'] === 'approved') {
-                console.log('Next Level ' + condElement['nextlevel']['#text'])
+               // console.log('Next Level ' + condElement['nextlevel']['#text'])
               }
-              console.log('Status ' + condElement['-status'])
+              //console.log('Status ' + condElement['-status'])
             });
           }
           else {

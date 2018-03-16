@@ -30,8 +30,9 @@ export class ApproverTaskListPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+    this.claimrefguid = '243b6b02-ff10-6ad4-3907-4d3ee899644f'
     // this.claimrefguid = 'd9a3c051-e674-7c5b-81c4-dd9cd2f89b26'
-    this.claimrefguid = 'fdadf529-5277-28ef-8298-b176c38d9ebb'
+    //this.claimrefguid = 'fdadf529-5277-28ef-8298-b176c38d9ebb'
     // this.claimrefguid = 'eb341cca-cf4d-8b69-d66a-b5d01e06a77b'
     // this.claimrefguid = '12fa8f8a-f8b7-82f2-5efb-1dcc39f21391'
     //this.claimrefguid = 'e60dee1f-0460-5f14-c74f-9bbfc04e6877'       
@@ -73,12 +74,12 @@ export class ApproverTaskListPage {
 
   viewClaim(claimRequestGUID: string,level:number) {
     console.log(claimRequestGUID)
-    // this.navCtrl.push(TravelClaimViewPage, {
+    this.navCtrl.push(TravelClaimViewPage, {
       // this.navCtrl.push(EntertainmentClaimViewPage, {
         // this.navCtrl.push(MedicalClaimViewPage, {
           // this.navCtrl.push(OvertimeClaimViewPage, {
             // this.navCtrl.push(PrintClaimViewPage, {
-              this.navCtrl.push(GiftClaimViewPage, {
+              // this.navCtrl.push(GiftClaimViewPage, {
       cr_GUID: claimRequestGUID,
       level_no: level,
       approver_GUID : localStorage.getItem('g_USER_GUID')

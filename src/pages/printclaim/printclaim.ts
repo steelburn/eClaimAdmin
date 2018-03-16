@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
@@ -25,6 +25,7 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 import { Services } from '../Services';
 import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';
 import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
+import { ImageUpload_model } from '../../models/ImageUpload_model';
 /**
  * Generated class for the PrintclaimPage page.
  *
@@ -37,6 +38,11 @@ import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
   templateUrl: 'printclaim.html',  providers: [PrintingClaim_Service, BaseHttpService, FileTransfer]
 })
 export class PrintclaimPage {
+
+  uploadFileName: string;
+  loading = false;
+  CloudFilePath: string;
+  @ViewChild('fileInput') fileInput: ElementRef;
  
   public MainClaimSaved: boolean = false;
   Travel_Amount_ngModel: any;
@@ -114,6 +120,7 @@ export class PrintclaimPage {
 
     constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams,  private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
        this.Printform = fb.group({
+        avatar: null,
         soc_no: '', 
       travel_date: ['', Validators.required],
       description: ['', Validators.required],
@@ -122,11 +129,122 @@ export class PrintclaimPage {
       this.readProfile();   
     }  
 
-  save(value: any) {
+    onFileChange(event: any) {
+      const reader = new FileReader();
+      if (event.target.files && event.target.files.length > 0) {
+        const file = event.target.files[0];
+        this.Printform.get('avatar').setValue(file);
+        this.uploadFileName = file.name;
+        reader.onload = () => {
+          this.Printform.get('avatar').setValue({
+            filename: file.name,
+            filetype: file.type,
+            value: reader.result.split(',')[1]
+          });
+        };
+      }
+    }
+
+
+     //---------------------Language module start---------------------//
+  public translateToMalayClicked: boolean = false;
+  public translateToEnglishClicked: boolean = true;
+
+  public translateToEnglish() {
+    this.translate.use('en');
+    this.translateToMalayClicked = !this.translateToMalayClicked;
+    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+  }
+
+  public translateToMalay() {
+    this.translate.use('ms');
+    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+    this.translateToMalayClicked = !this.translateToMalayClicked;
+  }
+  //---------------------Language module end---------------------//
+
+  onSubmit() {
+    this.loading = true;
+    const queryHeaders = new Headers();
+    queryHeaders.append('filename', this.uploadFileName);
+    queryHeaders.append('Content-Type', 'multipart/form-data');
+    queryHeaders.append('fileKey', 'file');
+    queryHeaders.append('chunkedMode', 'false');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    const options = new RequestOptions({ headers: queryHeaders });
+    this.http.post('http://api.zen.com.my/api/v2/files/' + this.uploadFileName, this.Printform.get('avatar').value, options)
+      .map((response) => {
+        return response;
+      }).subscribe((response) => {
+        alert(response.status);
+      });
+    setTimeout(() => {
+      alert('done');
+      this.loading = false;
+    }, 1000);
+  }
+
+  saveIm() {
+    let uploadImage = this.UploadImage();
+    uploadImage.then((resJson) => {
+      console.table(resJson)
+      let imageResult = this.SaveImageinDB();
+      imageResult.then((objImage: ImageUpload_model) => {
+        // console.table(objImage)
+        let result = this.save(objImage.Image_Guid);
+        // result.then((res) => {
+        //   // console.log(res);
+         
+        // })
+      })
+    })
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 1000);
+  }
+
+  SaveImageinDB() {
+    let objImage: ImageUpload_model = new ImageUpload_model();
+    objImage.Image_Guid = UUID.UUID();
+    objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+    objImage.CREATION_TS = new Date().toISOString();
+    objImage.Update_Ts = new Date().toISOString();
+    return new Promise((resolve, reject) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+        // let res = response.json();
+        // let imageGUID = res["resource"][0].Image_Guid;
+        resolve(objImage.toJson());
+      })
+    })
+  }
+
+  UploadImage() {   
+    this.CloudFilePath = 'eclaim/'   
+ 
+  this.loading = true;
+  const queryHeaders = new Headers();
+  queryHeaders.append('filename', this.uploadFileName);
+  queryHeaders.append('Content-Type', 'multipart/form-data');
+  queryHeaders.append('fileKey', 'file');
+  queryHeaders.append('chunkedMode', 'false');
+  queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+  const options = new RequestOptions({ headers: queryHeaders });
+  return new Promise((resolve, reject) => {
+    this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Printform.get('avatar').value, options)
+      .map((response) => {
+        return response;
+      }).subscribe((response) => {
+        resolve(response.json());
+      })
+  })
+}
+
+  save(imageGUID: string) {
+    let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date(value.travel_date).getMonth() + 1;
-    let year = new Date(value.travel_date).getFullYear();
+    let month = new Date( this.Travel_Date_ngModel).getMonth() + 1;
+    let year = new Date( this.Travel_Date_ngModel).getFullYear();
     let claimRefGUID;
     let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
     this.http
@@ -148,16 +266,16 @@ export class PrintclaimPage {
             var postClaimRef = response.json();
             claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
 
-            let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+            // let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
             claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
             claimReqMainRef.TENANT_GUID = tenantGUID;
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             claimReqMainRef.CLAIM_TYPE_GUID = 'd9567482-033a-6d92-3246-f33043155746';
-            claimReqMainRef.TRAVEL_DATE = value.travel_date;
-             claimReqMainRef.START_TS = value.start_DT;
-             claimReqMainRef.END_TS = value.end_DT;
-            claimReqMainRef.DESCRIPTION = value.description;
+            claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;
+             //claimReqMainRef.START_TS = value.start_DT;
+             //claimReqMainRef.END_TS = value.end_DT;
+            claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
             claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
             claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
@@ -180,13 +298,22 @@ export class PrintclaimPage {
           // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
           // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
-            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-              var postClaimMain = response.json();
-              this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
-              this.MainClaimSaved = true;
-              alert('Claim Has Registered.')
-            })
+            // this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
+            //   var postClaimMain = response.json();
+            //   this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+            //   this.MainClaimSaved = true;
+            //   alert('Claim Has Registered.')
+            // })
           })
+          return new Promise((resolve, reject) => {
+            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+             
+              let res = data.json();
+              console.log(res)
+              let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
+              resolve(ClaimRequestMainId);
+            })
+          });
         }
         else {
           claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
@@ -197,10 +324,10 @@ export class PrintclaimPage {
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
           //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
           claimReqMainRef.CLAIM_TYPE_GUID = 'd9567482-033a-6d92-3246-f33043155746';
-          claimReqMainRef.TRAVEL_DATE = value.travel_date;
+          claimReqMainRef.TRAVEL_DATE =  this.Travel_Date_ngModel;
           // claimReqMainRef.START_TS = value.start_DT;
           // claimReqMainRef.END_TS = value.end_DT;
-          claimReqMainRef.DESCRIPTION = value.description;
+          claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;

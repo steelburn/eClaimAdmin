@@ -6,6 +6,23 @@
 -->
 <ion-header>
   <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+
+      <div class="headerInfo">
+          <ion-fab top right>
+            <button ion-fab mini class="btnClear">
+              <ion-icon name="settings"></ion-icon>
+            </button>
+            <ion-fab-list class="settingBtnFab" side="left">
+              <button ion-fab color="primary" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>
+            </ion-fab-list>
+            <ion-fab-list class="settingBtnFab" side="bottom">
+              <button ion-fab color="primary" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>
+            </ion-fab-list>
+          </ion-fab>
+        </div>
     <ion-title>{{ 'GIFT_CLAIM_HEADING' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
@@ -79,8 +96,8 @@
             </ion-item> -->
     
             <ion-item>
-              <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        
-              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" max={{validDate}} placeholder="{{ 'TRAVEL_DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
+              <ion-label stacked>{{ "GIFT_DATE_LABEL" | translate  }}</ion-label>        
+              <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Travel_Date_ngModel" formControlName="travel_date" max={{validDate}} placeholder="{{ 'TRAVEL_DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
             </ion-item>       
             
             <ion-item>
@@ -92,15 +109,25 @@
               <ion-item>
                   <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
                   <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
-                </ion-item>       
+                </ion-item>  
+                
+                <div class="form-group">
+                  <!-- <label for="avatar">Avatar</label> -->
+                  <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+                  <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+                </div>
+    
+                <ion-item>
+                  <button (click)='saveIm()' [disabled]="Giftform.invalid || loading" ion-button round style="width:100px;">{{ 'SUBMIT_BUTTON'  }}</button>
+                </ion-item>
            
             <!-- <ion-item>
               <ion-label stacked> {{ "ATTACHMENT_LABEL" | translate }} </ion-label>
             </ion-item> -->
     
-            <div class="btn">
+            <!-- <div class="btn">
               <button ion-button (click)='save(Giftform.value)'   >SUBMIT</button>
-            </div> 
+            </div>  -->
             <!-- [disabled]="!Giftform.valid"       -->
           </form>
 
