@@ -110,9 +110,10 @@ page-banksetup {
     
     .eClaimSubTitle {
         color: black;
-        font-size: 20px;
+        font-size: 16px;
         padding: 10px 0px;
         width: 100%;
+        font-weight: bold;
     } 
     
     .eClaimSubTitle1 {
@@ -242,7 +243,7 @@ page-banksetup {
     
     
     ion-toggle.toggle.toggle-md{
-        padding-left: 101px !important;
+        padding-left: 95px !important;
         padding-right: 0px !important;
     }
     
