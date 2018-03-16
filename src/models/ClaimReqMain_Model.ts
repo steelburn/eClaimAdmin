@@ -99,7 +99,7 @@ export class ClaimReqMain_Model {
         UPDATE_TS: this.UPDATE_TS,
         UPDATE_USER_GUID: this.UPDATE_USER_GUID
       };
-      return stringify ? JSON.stringify({ resource: [doc] }) : doc;
+      return stringify ? JSON.stringify({ resource: [doc] }) : doc; 
     }
   }
   
