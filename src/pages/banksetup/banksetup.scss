@@ -198,9 +198,9 @@ page-banksetup {
     
         .tblBrLeft { border-radius: 5px 0 0 5px !important;}
         .tblBrRight { border-radius: 0 5px 5px 0 !important;}
-        .TColor{background: #3176BC ;color: white;}
+        .TColor{background: #20B2AA ;color: white;}
     .linedsg {border-bottom: 1px solid gainsboro ;}
-    .graphHeaderStyle {border-top: 5px solid #3176BC ;border-bottom: 1px solid gainsboro;}
+    .graphHeaderStyle {border-top: 5px solid #20B2AA ;border-bottom: 1px solid gainsboro;}
     .fullWidth {width: 100% !important;}
     .row {
    
@@ -260,6 +260,9 @@ page-banksetup {
         padding-right: 0px !important;
     }
     
+    .toggle-md.toggle-checked .toggle-icon{
+        background-color: #20B2AA;
+    }
     .UPContent{
         width:100%;
     }
