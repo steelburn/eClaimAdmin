@@ -53,7 +53,7 @@ import { DesignationSetup_Service } from '../../services/designationsetup_servic
 export class SetupguidePage {
   Branchform: FormGroup; loading: Loading;
   CompanyClicked: boolean; HQClicked: boolean; BranchClicked: boolean; DepartmentClicked: boolean; DesignationClicked: boolean;
-  tenants: any; departments: any; designations: any;
+  tenants: any; departments: any; designations: any; tenant_company_sites: any;
 
   Department: any[] = [];
   Designation: any[] = [];
@@ -125,7 +125,7 @@ export class SetupguidePage {
       BRANCH_REGNO: [''],
       BRANCH_EMAIL: [''],
       BRANCH_CONTACT_NO: [''],
-      ISHQ_FLAG: [''],
+      //ISHQ_FLAG: [''],
 
       //-----------For Department-----------------------
       DEPARTMENT_NAME: [''],
@@ -154,6 +154,22 @@ export class SetupguidePage {
   SaveHQ() {
     this.HQClicked = false;
     this.BranchClicked = true;
+
+    //One Record should entry to Branch for HQ---------------
+    //Check if the same record exist then it will be update else insert----------------     \    
+    if (this.Branches.length <= 0) {
+      this.Branches.push({ BRANCH_GUID: UUID.UUID(), BRANCH_NAME: this.Companyname_ngModel.trim(), BRANCH_REGNO: this.HQregno_ngModel.trim(), BRANCH_EMAIL: this.Tenantemail_ngModel.trim(), BRANCH_CONTACTNO: this.Tenantcontactno_ngModel.trim(), ISHQ: true });
+    }
+    else {
+      for (var item in this.Branches) {
+        if (this.Branches[item]["ISHQ"] == true) {
+          let HQ_BRANCH_GUID: string = this.Branches[item]["BRANCH_GUID"];
+
+          this.Branches.splice(parseInt(item), 1);
+          this.Branches.push({ BRANCH_GUID: HQ_BRANCH_GUID, BRANCH_NAME: this.Companyname_ngModel.trim(), BRANCH_REGNO: this.HQregno_ngModel.trim(), BRANCH_EMAIL: this.Tenantemail_ngModel.trim(), BRANCH_CONTACTNO: this.Tenantcontactno_ngModel.trim(), ISHQ: true });         
+        }
+      }
+    }
   }
 
   BackHQ() {
@@ -265,33 +281,6 @@ export class SetupguidePage {
       if (this.Branch_Regno_ngModel != undefined && this.Branch_Regno_ngModel.trim() != "") {
         if (this.Branch_Email_ngModel != undefined && this.Branch_Email_ngModel.trim() != "") {
           if (this.Branch_Contactno_ngModel != undefined && this.Branch_Contactno_ngModel.trim() != "") {
-
-            //Check only one brach should HQ----------            
-            // var PrevHQCheck;
-            // for(var item in this.Branches){
-            //   if(this.Branches[item]["ISHQ"] == PrevHQCheck){
-            //     alert('Only One HQ for this company. !!'); return;
-            //   }
-            //   PrevHQCheck = this.Branches[item]["ISHQ"];
-            //   if (this.BranchSaveFlag == false) {
-            //     this.Branches.push({ BRANCH_GUID: UUID.UUID(), BRANCH_NAME: this.Branch_Name_ngModel.trim(), BRANCH_REGNO: this.Branch_Regno_ngModel.trim(), BRANCH_EMAIL: this.Branch_Email_ngModel.trim(), BRANCH_CONTACTNO: this.Branch_Contactno_ngModel.trim(), ISHQ: this.Branch_ISHQ_FLAG_ngModel });
-            //   }
-            //   else {
-            //     this.Branches = this.Branches.filter(item => item.BRANCH_GUID != localStorage.getItem("BRANCH_GUID"));
-            //     this.Branches.push({ BRANCH_GUID: localStorage.getItem("BRANCH_GUID"), BRANCH_NAME: this.Branch_Name_ngModel.trim(), BRANCH_REGNO: this.Branch_Regno_ngModel.trim(), BRANCH_EMAIL: this.Branch_Email_ngModel.trim(), BRANCH_CONTACTNO: this.Branch_Contactno_ngModel.trim(), ISHQ: this.Branch_ISHQ_FLAG_ngModel});
-
-            //     this.BranchSaveFlag = false;
-            //     localStorage.removeItem("BRANCH_GUID");
-            //   }
-
-            //   //Clear the Controls------------------------
-            //   this.Branch_Name_ngModel = "";
-            //   this.Branch_Regno_ngModel = "";
-            //   this.Branch_Email_ngModel = "";
-            //   this.Branch_Contactno_ngModel = "";
-            //   this.Branch_ISHQ_FLAG_ngModel = false;
-            // }
-
             if (this.BranchSaveFlag == false) {
               this.Branches.push({ BRANCH_GUID: UUID.UUID(), BRANCH_NAME: this.Branch_Name_ngModel.trim(), BRANCH_REGNO: this.Branch_Regno_ngModel.trim(), BRANCH_EMAIL: this.Branch_Email_ngModel.trim(), BRANCH_CONTACTNO: this.Branch_Contactno_ngModel.trim(), ISHQ: this.Branch_ISHQ_FLAG_ngModel });
             }
@@ -431,22 +420,48 @@ export class SetupguidePage {
         this.Branch_Email_ngModel = "";
         this.Branch_Contactno_ngModel = "";
 
-        var HQflag;
-        if (this.tenants[0]["ISHQ"] == 1) {
-          HQflag = true;
-        }
-        else {
-          HQflag = false;
-        }
+        let Url_Tenant_Company_Site: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?filter=(TENANT_COMPANY_GUID=' + localStorage.getItem('g_TENANT_COMPANY_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.http
+          .get(Url_Tenant_Company_Site)
+          .map(res => res.json())
+          .subscribe(data => {
+            this.tenant_company_sites = data.resource;
+            for (var item in this.tenant_company_sites) {             
+              var HQflag;
+              if (this.tenant_company_sites[item]["ISHQ"] == 1) {
+                HQflag = true;
+              }
+              else {
+                HQflag = false;
+              }
+              this.Branches.push({
+                BRANCH_GUID: this.tenant_company_sites[item]["TENANT_COMPANY_SITE_GUID"],
+                BRANCH_NAME: this.tenant_company_sites[item]["SITE_NAME"],
+                BRANCH_REGNO: this.tenant_company_sites[item]["REGISTRATION_NUM"],
+                BRANCH_EMAIL: this.tenant_company_sites[item]["EMAIL"],
+                BRANCH_CONTACTNO: this.tenant_company_sites[item]["CONTACT_NO"],
+                ISHQ: HQflag
+              });
+            }
+          });
 
-        this.Branches.push({
-          BRANCH_GUID: this.tenants[0]["TENANT_COMPANY_SITE_GUID"],
-          BRANCH_NAME: this.tenants[0]["SITE_NAME"],
-          BRANCH_REGNO: this.tenants[0]["BRANCH_REG_NO"],
-          BRANCH_EMAIL: this.tenants[0]["EMAIL"],
-          BRANCH_CONTACTNO: this.tenants[0]["CONTACT_NO"],
-          ISHQ: HQflag
-        });
+
+        // var HQflag;
+        // if (this.tenants[0]["ISHQ"] == 1) {
+        //   HQflag = true;
+        // }
+        // else {
+        //   HQflag = false;
+        // }
+
+        // this.Branches.push({
+        //   BRANCH_GUID: this.tenants[0]["TENANT_COMPANY_SITE_GUID"],
+        //   BRANCH_NAME: this.tenants[0]["SITE_NAME"],
+        //   BRANCH_REGNO: this.tenants[0]["BRANCH_REG_NO"],
+        //   BRANCH_EMAIL: this.tenants[0]["EMAIL"],
+        //   BRANCH_CONTACTNO: this.tenants[0]["CONTACT_NO"],
+        //   ISHQ: HQflag
+        // });
 
         //-----------For Department Model-----------------------
         this.DepartmentSaveFlag = false;
@@ -583,43 +598,49 @@ export class SetupguidePage {
   }
 
   Save_Tenant_Company_Site() {
-    //Before insert data to db first delete all the records of particular tenant then insert once again.
-
-    for (var item in this.Branches) {
-      this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = this.Branches[item]["BRANCH_GUID"];
-      this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
-      this.tenant_company_site_entry.SITE_NAME = this.Branches[item]["BRANCH_NAME"];
-      this.tenant_company_site_entry.REGISTRATION_NUM = this.Branches[item]["BRANCH_REGNO"];
-      this.tenant_company_site_entry.ADDRESS = "";
-      this.tenant_company_site_entry.ADDRESS2 = "";
-      this.tenant_company_site_entry.ADDRESS3 = "";
-      this.tenant_company_site_entry.CONTACT_NO = this.Branches[item]["BRANCH_CONTACTNO"];
-      this.tenant_company_site_entry.EMAIL = this.Branches[item]["BRANCH_EMAIL"];
-      this.tenant_company_site_entry.ACTIVATION_FLAG = "1";
-      this.tenant_company_site_entry.CONTACT_PERSON = "";
-      this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = "";
-      this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = "";
-      this.tenant_company_site_entry.WEBSITE = "";
-      this.tenant_company_site_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
-      this.tenant_company_site_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
-      this.tenant_company_site_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
-      this.tenant_company_site_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
-      if (this.Branches[item]["ISHQ"] == true) {
-        this.tenant_company_site_entry.ISHQ = "1";
-      }
-      else {
-        this.tenant_company_site_entry.ISHQ = "0";
-      }
-      this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            // this.InsertDepartment();
-
-            //alert('Tenant company Site Registered successfully');
-            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+    //Before insert data to db first delete all the records of particular tenant_company then insert once again.
+    this.tenantcompanysitesetupservice.remove_multiple(this.tenants[0]["TENANT_COMPANY_GUID"], "tenant_company_site")
+    .subscribe(
+      (response) => {
+        if (response.status == 200) {
+          for (var item in this.Branches) {
+            this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = this.Branches[item]["BRANCH_GUID"];
+            this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
+            this.tenant_company_site_entry.SITE_NAME = this.Branches[item]["BRANCH_NAME"];
+            this.tenant_company_site_entry.REGISTRATION_NUM = this.Branches[item]["BRANCH_REGNO"];
+            this.tenant_company_site_entry.ADDRESS = "";
+            this.tenant_company_site_entry.ADDRESS2 = "";
+            this.tenant_company_site_entry.ADDRESS3 = "";
+            this.tenant_company_site_entry.CONTACT_NO = this.Branches[item]["BRANCH_CONTACTNO"];
+            this.tenant_company_site_entry.EMAIL = this.Branches[item]["BRANCH_EMAIL"];
+            this.tenant_company_site_entry.ACTIVATION_FLAG = "1";
+            this.tenant_company_site_entry.CONTACT_PERSON = "";
+            this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = "";
+            this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = "";
+            this.tenant_company_site_entry.WEBSITE = "";
+            this.tenant_company_site_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+            this.tenant_company_site_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+            this.tenant_company_site_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+            this.tenant_company_site_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+            if (this.Branches[item]["ISHQ"] == true) {
+              this.tenant_company_site_entry.ISHQ = "1";
+            }
+            else {
+              this.tenant_company_site_entry.ISHQ = "0";
+            }
+            //this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
+            this.tenantcompanysitesetupservice.save(this.tenant_company_site_entry)
+              .subscribe((response) => {
+                if (response.status == 200) {
+                  // this.InsertDepartment();
+      
+                  //alert('Tenant company Site Registered successfully');
+                  //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                }
+              })
           }
-        })
-    }
+        }
+      });    
     this.InsertDepartment();
   }
 
@@ -661,7 +682,6 @@ export class SetupguidePage {
       .subscribe(
         (response) => {
           if (response.status == 200) {
-            debugger;
             for (var item in this.Designation) {
               this.designation_entry.DESIGNATION_GUID = this.Designation[item]["DESIGNATION_GUID"];
               this.designation_entry.NAME = this.Designation[item]["DESIGNATION_NAME"];
