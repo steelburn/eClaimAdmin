@@ -8,7 +8,7 @@ page-banksetup {
         left:0;
         width:100%;
         height: 100%;
-        background:black;
+        background:#D3D3D3;
         position: fixed;
         opacity: 0.7;
     }
@@ -199,9 +199,9 @@ page-banksetup {
     
         .tblBrLeft { border-radius: 5px 0 0 5px !important;}
         .tblBrRight { border-radius: 0 5px 5px 0 !important;}
-        .TColor{background: #20B2AA ;color: white;}
+        .TColor{background: #A9A9A9 ;color: white;}
     .linedsg {border-bottom: 1px solid gainsboro ;}
-    .graphHeaderStyle {border-top: 5px solid #20B2AA ;border-bottom: 1px solid gainsboro;}
+    .graphHeaderStyle {border-top: 5px solid #A9A9A9 ;border-bottom: 1px solid gainsboro;}
     .fullWidth {width: 100% !important;}
     .row {
    
@@ -266,6 +266,10 @@ page-banksetup {
     }
     .UPContent{
         width:100%;
+    }
+
+    button.item.item-block.item-md {
+        font-size: 14px !important;
     }
 
     page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched{
