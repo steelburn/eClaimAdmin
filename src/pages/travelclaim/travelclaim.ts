@@ -33,7 +33,7 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 import {Router, Request, Response, NextFunction} from 'express';
 import {AddTollPage} from '../../pages/add-toll/add-toll';
 
-import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http'; 
 
 
 /**
