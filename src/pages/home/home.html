@@ -10,7 +10,40 @@
 
 
 <ion-content padding>
-  <div class="eClaimSubTitle">MY CLAIM LIST</div>
+
+  
+    <div class="eClaimSubTitle">CLAIM HISTORY</div>
+
+    <ion-list>
+      <ion-item>
+          <table class="Tabler ">
+              <tr class="linedsg TColor">
+                  <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+  
+                  <th class="lgl1">Employee </th>
+                  <th class="lgl1">Department </th>
+                  <th class="lgl1">Month</th>
+                  <th class="lgl1 tblBrRight">Total Amount</th>
+  
+  
+              </tr>
+  
+              <tr class="col7" *ngFor="let claimhistory of claimhistorys; let i=index">
+                  <td class="lgl1">{{i+1}}</td>
+                  <td class="lgl1" >{{claimhistory.FULLNAME}}</td>
+                  <td class="lgl1" >{{claimhistory.DEPARTMENT}}</td>
+                  <td class="lgl1" >{{claimhistory.MONTH}}</td>
+                  <td class="lgl1">{{claimhistory.CLAIM_AMOUNT}}</td>
+              </tr>
+  
+  
+          </table>
+      </ion-item>
+  </ion-list>
+  
+ 
+
+ <div class="eClaimSubTitle">MY CLAIM LIST</div> 
 
   <ion-list>
     <ion-item>
@@ -41,35 +74,7 @@
     </ion-item>
   </ion-list>
   
-  <div class="eClaimSubTitle">CLAIM HISTORY</div>
-
-  <ion-list>
-    <ion-item>
-        <table class="Tabler ">
-            <tr class="linedsg TColor">
-                <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
-
-                <th class="lgl1">Employee </th>
-                <th class="lgl1">Department </th>
-                <th class="lgl1">Month</th>
-                <th class="lgl1 tblBrRight">Total Amount</th>
-
-
-            </tr>
-
-            <tr class="col7" *ngFor="let claimhistory of claimhistorys; let i=index">
-                <td class="lgl1">{{i+1}}</td>
-                <td class="lgl1" >{{claimhistory.FULLNAME}}</td>
-                <td class="lgl1" >{{claimhistory.DEPARTMENT}}</td>
-                <td class="lgl1" >{{claimhistory.MONTH}}</td>
-                <td class="lgl1">{{claimhistory.CLAIM_AMOUNT}}</td>
-            </tr>
-
-
-        </table>
-    </ion-item>
-</ion-list>
-
+ 
   <div class="eClaimSubTitle">CLAIM APPLICATION FORM</div>
 
   <div class="UPContent">
@@ -129,15 +134,5 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- <ion-card class="round1" (click)="goToProfile()">
-      <ion-card-header class="icon">
-        <ion-icon name="basket" class="iconf"></ion-icon>
-      </ion-card-header>
-      <ion-card-content class="Subtitle">
-        PROFILE SETUP
-      </ion-card-content>
-    </ion-card> -->
-
   </div>
-
 </ion-content>
