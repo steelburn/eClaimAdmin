@@ -102,7 +102,7 @@ export class MedicalclaimPage {
         //     }
         //   });
         // }
-        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;        
+        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;         
         // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
         this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
         this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
