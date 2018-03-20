@@ -15,7 +15,7 @@ import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
 
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera'; 
 //import {Camera} from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
