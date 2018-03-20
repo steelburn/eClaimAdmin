@@ -376,7 +376,7 @@ export class MedicalclaimPage {
       //     let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
       //     resolve(ClaimRequestMainId);
       //   })
-      // });
+      // }); 
   }
   emailUrl: string = 'http://api.zen.com.my/api/v2/emailnotificationtest?api_key=' + constants.DREAMFACTORY_API_KEY;
   sendEmail() {
