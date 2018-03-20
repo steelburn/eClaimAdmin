@@ -38,7 +38,7 @@ import { ImageUpload_model } from '../../models/ImageUpload_model';
   selector: 'page-overtimeclaim',
   templateUrl: 'overtimeclaim.html', providers: [OvertimeClaim_Service, BaseHttpService, FileTransfer]
 })
-export class OvertimeclaimPage {
+export class OvertimeclaimPage { 
   
    OTform: FormGroup;
    uploadFileName: string;
