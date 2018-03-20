@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map'; 
 
 import * as constants from '../../app/config/constants';
 import { MedicalClaim_Model } from '../../models/medicalclaim_model';
