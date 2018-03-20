@@ -1,7 +1,8 @@
 page-banksetup {
     
     }
-    
+
+
     .blackcontainer{
         top: 0;
         left:0;
@@ -26,6 +27,41 @@ page-banksetup {
             height: 500px;
     }
 
+        
+    .popscroll{
+        width: 96%;
+        top: 60px;
+        position: fixed;
+        height: calc(100% - 89px);
+        overflow-y: auto;
+    }
+
+    /**  STYLE 11 */
+
+    .popscroll::-webkit-scrollbar {
+        width: 10px;
+        background-color: none;
+    }
+
+.popscroll::-webkit-scrollbar-track {
+    border-radius: 10px ;
+    background: rgba(0,0,0,0.1);
+    border: none;
+  }
+  
+  .popscroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #89937A;
+    border: 1px solid #aaa;
+  }
+  
+  .popscroll::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+  }
+  
+  .popscroll::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+  }
 
     .btn{
     
@@ -74,9 +110,10 @@ page-banksetup {
     
     .eClaimSubTitle {
         color: black;
-        font-size: 20px;
+        font-size: 16px;
         padding: 10px 0px;
         width: 100%;
+        font-weight: bold;
     } 
     
     .eClaimSubTitle1 {
@@ -108,7 +145,8 @@ page-banksetup {
     } 
     .scroll{
         height: calc(100% - 48px);
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
     
     .cm{
@@ -150,7 +188,7 @@ page-banksetup {
         }
             
         td.lgl2 {
-                   font-size: 14px;
+            font-size: 14px;
             padding: 2px;
             text-align: center;
             word-wrap: break-word;
@@ -161,12 +199,33 @@ page-banksetup {
     
         .tblBrLeft { border-radius: 5px 0 0 5px !important;}
         .tblBrRight { border-radius: 0 5px 5px 0 !important;}
-        .TColor{background: #CB9D2F;color: white;}
+        .TColor{background: #20B2AA ;color: white;}
     .linedsg {border-bottom: 1px solid gainsboro ;}
-    .graphHeaderStyle {border-top: 5px solid #ca9b24;border-bottom: 1px solid gainsboro;}
+    .graphHeaderStyle {border-top: 5px solid #20B2AA ;border-bottom: 1px solid gainsboro;}
     .fullWidth {width: 100% !important;}
-    
-    
+    .row {
+   
+        border-bottom: 1px solid gainsboro !important;
+    }
+
+
+ ::-moz-placeholder {
+        font-size: 15px;
+      }
+      
+      :-ms-input-placeholder {
+        font-size: 15px;
+      }
+      
+   ::-webkit-input-placeholder {
+        font-size: 15px;
+      }
+
+      .datetime-md .datetime-placeholder { font-size: 15px; }
+
+    ion-item.item.item-block.item-md.item-checkbox {
+        background: none !important;
+    } 
 
     ion-menu#loggedOutMenu {
         min-width: 256px !important;
@@ -184,12 +243,16 @@ page-banksetup {
     
     
     ion-toggle.toggle.toggle-md{
-        padding-left: 101px !important;
+        padding-left: 95px !important;
         padding-right: 0px !important;
     }
     
     ion-toggle.toggle.toggle-md.tog{
         padding-left: 123px !important;
+        padding-right: 0px !important;
+    }
+    ion-toggle.toggle.toggle-md.yui{
+        padding-left: 40px !important;
         padding-right: 0px !important;
     }
     
@@ -198,6 +261,9 @@ page-banksetup {
         padding-right: 0px !important;
     }
     
+    .toggle-md.toggle-checked .toggle-icon{
+        background-color: #20B2AA;
+    }
     .UPContent{
         width:100%;
     }
@@ -215,6 +281,10 @@ page-banksetup {
         max-width: 150px;
         height: 100%;
         
+    }
+
+    .label-md[stacked] {
+        font-size: 14px !important;
     }
 
     .container{

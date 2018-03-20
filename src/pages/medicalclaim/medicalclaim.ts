@@ -25,7 +25,7 @@ import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
 
 import {  LoadingController, ActionSheetController,  Platform, Loading, ToastController } from 'ionic-angular';
 import { Services } from '../Services';
-import { ImageUpload_model } from '../../models/ImageUpload_model';
+import { ImageUpload_model } from '../../models/image-upload.model';
 
 
 /**

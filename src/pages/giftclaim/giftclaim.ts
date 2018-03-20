@@ -25,7 +25,7 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 import { Services } from '../Services';
 import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';
 import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
-import { ImageUpload_model } from '../../models/ImageUpload_model';
+import { ImageUpload_model } from '../../models/image-upload.model';
 /**
  * Generated class for the GiftclaimPage page.
  *

@@ -34,6 +34,9 @@ export class BanksetupPage {
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+  Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
+  TableName: string = "";
+  SortField: string = "";
 
   public banks: BankSetup_Model[] = [];
 
@@ -109,6 +112,13 @@ export class BanksetupPage {
   }
 
   constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction) {
+    
+    if(localStorage.getItem("g_USER_GUID")!="sva"){      
+      this.TableName = "main_bank";
+      this.SortField = "NAME";
+      let TableURL = this.baseResource_Url + this.TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + this.SortField + '&' + this.Key_Param;      
+      this.baseResourceUrl = TableURL;
+    }
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -158,7 +168,7 @@ export class BanksetupPage {
               this.bank_entry.NAME = this.NAME_ngModel_Add.trim();
 
               this.bank_entry.BANK_GUID = UUID.UUID();
-              this.bank_entry.TENANT_GUID = UUID.UUID();
+              this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
               this.bank_entry.DESCRIPTION = 'Savings';
               this.bank_entry.CREATION_TS = new Date().toISOString();
               this.bank_entry.CREATION_USER_GUID = '1';
@@ -189,6 +199,7 @@ export class BanksetupPage {
         );
     }
   }
+
   getBankList() {
     let self = this;
     let params: URLSearchParams = new URLSearchParams();

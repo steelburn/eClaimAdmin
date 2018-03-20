@@ -225,7 +225,8 @@ export class UserPage {
   public User_INCOMETAX_NO_Edit_ngModel: any;
   public User_BANK_NAME_Edit_ngModel: any;
   public User_ACCOUNT_NUMBER_Edit_ngModel: any;
-
+  
+  public MaritalStatusMarried: boolean = false;
   // private _users: any[];
 
   public AddUserClick() {
@@ -294,6 +295,12 @@ export class UserPage {
           this.User_PersonalNo_Edit_ngModel = this.view_user_details[0]["CONTACT_NO"];
           this.User_CompanyNo_Edit_ngModel = this.view_user_details[0]["COMPANY_CONTACT_NO"];
           this.User_Marital_Edit_ngModel = this.view_user_details[0]["MARITAL_STATUS"];
+          if( this.view_user_details[0]["MARITAL_STATUS"] == "1"){
+            this.MaritalStatusMarried = true;
+          }
+          else{
+            this.MaritalStatusMarried = false;
+          }          
           this.User_StaffID_Edit_ngModel = this.view_user_details[0]["PERSONAL_ID_TYPE"];
           this.User_ICNo_Edit_ngModel = this.view_user_details[0]["PERSONAL_ID"];
           this.User_DOB_Edit_ngModel = this.view_user_details[0]["DOB"];
@@ -2143,6 +2150,8 @@ export class UserPage {
     this.User_EPF_NUMBER_Edit_ngModel = "";
     this.User_INCOMETAX_NO_Edit_ngModel = "";
     this.User_BANK_NAME_Edit_ngModel = "";
+
+    this.MaritalStatusMarried = false;
   }
 
   lastImage: string = null;
@@ -2350,5 +2359,24 @@ export class UserPage {
         alert("error" + JSON.stringify(err));
       });
   }
-
+  
+  DisplayFamily(){
+    if(this.User_Marital_ngModel == "1"){
+      this.MaritalStatusMarried = true;
+    }
+    else 
+    {
+      this.MaritalStatusMarried = false;
+    }    
+  }
+  
+  DisplayFamily_Edit(){
+    if(this.User_Marital_Edit_ngModel == "1"){
+      this.MaritalStatusMarried = true;
+    }
+    else 
+    {
+      this.MaritalStatusMarried = false;
+    }    
+  } 
 }
