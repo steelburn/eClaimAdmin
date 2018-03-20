@@ -153,6 +153,7 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     OvertimeClaimViewPage,
     PrintClaimViewPage,
     GiftClaimViewPage,
+    TravelclaimPage,
     
     UploadPage,
 
@@ -253,6 +254,7 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     GiftClaimViewPage,
     UserPage,
     SocRegistrationPage,
+    TravelclaimPage,
 
 
     ProfileSetupPage,

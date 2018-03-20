@@ -13,7 +13,7 @@ import * as constants from '../../config/constants'
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';
+import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';     
 import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
 import { ImageUpload_model } from '../../models/ImageUpload_model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
@@ -33,7 +33,7 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 import {Router, Request, Response, NextFunction} from 'express';
 import {AddTollPage} from '../../pages/add-toll/add-toll.component';
 
-import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http'; 
 
 
 /**
@@ -47,7 +47,7 @@ import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/ht
   selector: 'page-travelclaim',
   templateUrl: 'travel-claim.html', providers: [Services, BaseHttpService, FileTransfer]
 })
-export class TravelclaimPage {
+export class TravelclaimPage {         
   isReadyToSave: boolean; 
  
   vehicles: any[];
