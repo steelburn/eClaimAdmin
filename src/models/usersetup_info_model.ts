@@ -41,6 +41,7 @@ export class UserInfo_Model {
         public PR_INCOMETAX_NUMBER: string = null,
         public BANK_GUID: string = null,
         public PR_ACCOUNT_NUMBER: string = null,
+        public ATTACHMENT_ID: string = null,
     ) { }
     static fromJson(json: any) {
         if (!json) return;
@@ -85,7 +86,8 @@ export class UserInfo_Model {
             json.PR_EPF_NUMBER,
             json.PR_INCOMETAX_NUMBER,
             json.BANK_GUID,
-            json.PR_ACCOUNT_NUMBER
+            json.PR_ACCOUNT_NUMBER,
+            json.ATTACHMENT_ID
 
         );
     }
@@ -131,7 +133,8 @@ export class UserInfo_Model {
             PR_EPF_NUMBER: this.PR_EPF_NUMBER,
             PR_INCOMETAX_NUMBER: this.PR_INCOMETAX_NUMBER,
             BANK_GUID: this.BANK_GUID,
-            PR_ACCOUNT_NUMBER: this.PR_ACCOUNT_NUMBER
+            PR_ACCOUNT_NUMBER: this.PR_ACCOUNT_NUMBER,
+            ATTACHMENT_ID: this.ATTACHMENT_ID
         };
         return stringify ? JSON.stringify({ resource: [doc] }) : doc;
     }

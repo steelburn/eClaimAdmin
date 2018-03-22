@@ -186,7 +186,6 @@ export class RolesetupPage {
 
   Save() {
     if (this.Roleform.valid) {
-
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       let options = new RequestOptions({ headers: headers });
