@@ -225,7 +225,7 @@
                         </ion-select>
                     </ion-item>
 
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label id="profile_image" color="primary" stacked>PROFILE PHOTO</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
                     </ion-item>
@@ -234,7 +234,13 @@
                     </ion-item>
                     <button ion-button icon-left (click)="UploadProfilePicture()" [disabled]="ProfileImage === null">
                         <ion-icon name="cloud-upload"></ion-icon>Upload
-                    </button>
+                    </button> -->
+
+                    <div class="form-group">
+                        <!-- <label for="avatar">Avatar</label> -->
+                        <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+                        <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+                      </div>
 
 
 
@@ -353,13 +359,19 @@
                         <ion-input type="text" formControlName="EDU_YEAR" [(ngModel)]="User_EduYear_ngModel" placeholder="{{'Please fill the Year'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHEMENT</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
                     </ion-item>
                     <button ion-button icon-left (click)="UploadCertificate()">
                         <ion-icon name="cloud-upload"></ion-icon>ATTACH
-                    </button>
+                    </button> -->
+
+                    <div class="form-group">
+                        <!-- <label for="avatar">Avatar</label> -->
+                        <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+                        <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+                      </div>
 
 
 
@@ -385,14 +397,20 @@
                         <ion-input type="text" formControlName="CERTIFICATION_GRADE" [(ngModel)]="User_CertificationGrade_ngModel" placeholder="{{'Please fill the Grade'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHMENT</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
                     </ion-item>
 
                     <button ion-button icon-left (click)="AddProfessionalCertification()">
                         <ion-icon name="cloud-upload"></ion-icon>ADD
-                    </button>
+                    </button> -->
+
+                    <div class="form-group">
+                        <!-- <label for="avatar">Avatar</label> -->
+                        <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+                        <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+                      </div>
 
                     <ion-list>
                         <ion-item>
@@ -653,15 +671,20 @@
                     </ion-item>
 
 
+                   
+
+                    <ion-item>
+                        <button (click)='Save()' >{{ 'SUBMIT_BUTTON'  }}</button>
+                        <!-- [disabled]="Userform.invalid || loading" ion-button round style="width:100px;" -->
+                    </ion-item>
 
 
 
 
 
-
-                    <div class="btn">
+                    <!-- <div class="btn">
                         <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Save()">{{"SUBMIT" | translate}}</button>
-                    </div>
+                    </div> -->
                     <!-- [disabled]="!Userform.valid" -->
                 </form>
             </ion-list>
@@ -751,7 +774,7 @@
                         </ion-select>
                     </ion-item>
 
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label id="profile_image" color="primary" stacked>PROFILE PHOTO</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
                     </ion-item>
@@ -760,7 +783,7 @@
                     </ion-item>
                     <button ion-button icon-left (click)="UploadProfilePicture()" [disabled]="ProfileImage === null">
                         <ion-icon name="cloud-upload"></ion-icon>Upload
-                    </button>
+                    </button> -->
 
                     <div class="eClaimSubTitle2">
                         <b>EMPLOYMENT DETAILS</b>
@@ -874,13 +897,13 @@
                         <ion-input type="text" formControlName="EDU_YEAR" [(ngModel)]="User_EduYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHEMENT</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
                     </ion-item>
                     <button ion-button icon-left (click)="UploadCertificate()">
                         <ion-icon name="cloud-upload"></ion-icon>ATTACH
-                    </button>
+                    </button> -->
 
 
 
@@ -906,10 +929,10 @@
                         <ion-input type="text" formControlName="CERTIFICATION_GRADE" [(ngModel)]="User_CertificationGrade_Edit_ngModel" placeholder="{{'Please fill the Grade'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHMENT</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
-                    </ion-item>
+                    </ion-item> -->
 
                     <button ion-button icon-left (click)="AddProfessionalCertificationForEdit()">
                         <ion-icon name="cloud-upload"></ion-icon>ADD
