@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController, Item } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
@@ -29,6 +29,7 @@ import { ViewUser_Model } from '../../models/viewuser_model';
 import { View_Dropdown_Model } from '../../models/view_dropdown';
 import { UserSetup_Service } from '../../services/usersetup_service';
 import { BaseHttpService } from '../../services/base-http';
+import { Services } from '../Services';
 
 import { UUID } from 'angular2-uuid';
 
@@ -38,6 +39,7 @@ declare var cordova: any;
 
 import { LoginPage } from '../login/login';
 import { Conditional } from '@angular/compiler';
+import { ImageUpload_model } from '../../models/image-upload.model';
 declare var cordova: any;
 /**
  * Generated class for the UserPage page.
@@ -52,6 +54,13 @@ declare var cordova: any;
 })
 export class UserPage {
   //selectedValue: number;
+
+  uploadFileName: string;
+  load = false;
+  CloudFilePath: string;
+  @ViewChild('fileInput') fileInput: ElementRef;
+  travel_date: any;
+
   genders: Array<{ value: number, text: string, checked: boolean }> = [];
   maritals: Array<{ value: number, text: string, checked: boolean }> = [];
   emptypes: Array<{ value: number, text: string, checked: boolean }> = [];
@@ -470,9 +479,9 @@ export class UserPage {
         }
       ]
     }); alert.present();
-  }
+  } 
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: Transfer, public toastCtrl: ToastController, public platform: Platform, private fileTransfer_new: FileTransfer) {
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: Transfer, public toastCtrl: ToastController, public platform: Platform, private fileTransfer_new: FileTransfer) {
     if (localStorage.getItem("g_USER_GUID") != null) {
       //---------Bind Designation-----------------      
       this.GetDesignation("main_designation", "NAME");
@@ -551,6 +560,7 @@ export class UserPage {
 
       this.Userform = fb.group({
         // -------------------PERSONAL DETAILS--------------------
+        avatar: null,
         NAME: ['', Validators.required],
         EMAIL: ['', Validators.required],
         LOGIN_ID: ['', Validators.required],
@@ -637,6 +647,104 @@ export class UserPage {
       this.navCtrl.push(LoginPage);
     }
   }
+
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Userform.get('avatar').setValue(file);
+      this.uploadFileName = file.name;
+      reader.onload = () => {
+        this.Userform.get('avatar').setValue({
+          filename: file.name,
+          filetype: file.type,
+          value: reader.result.split(',')[1]
+        });
+      };
+    }
+  }
+
+  onSubmit() {
+    this.load = true;
+    const queryHeaders = new Headers();
+    queryHeaders.append('filename', this.uploadFileName);
+    queryHeaders.append('Content-Type', 'multipart/form-data');
+    queryHeaders.append('fileKey', 'file');
+    queryHeaders.append('chunkedMode', 'false');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    const options = new RequestOptions({ headers: queryHeaders });
+    this.http.post('http://api.zen.com.my/api/v2/files/' + this.uploadFileName, this.Userform.get('avatar').value, options)
+      .map((response) => {
+        return response;
+      }).subscribe((response) => {
+        alert(response.status);
+      });
+    setTimeout(() => {
+      alert('done');
+      this.load = false;
+    }, 1000);
+  }
+
+  // saveIm() {
+  //   let uploadImage = this.UploadImage();
+  //   uploadImage.then((resJson) => {
+  //     console.table(resJson)
+  //     let imageResult = this.SaveImageinDB();
+  //     imageResult.then((objImage: ImageUpload_model) => {
+  //       // console.table(objImage)
+  //       let result = this.Save_User_Info(objImage.Image_Guid);
+  //       // objImage.Image_Guid
+  //       // result.then((res) => {
+  //       //   // console.log(res);
+         
+  //       // })
+  //     })
+  //   })
+  //   // setTimeout(() => {
+  //   //   this.loading = false;
+  //   // }, 1000);
+  // }
+
+  SaveImageinDB() {
+    let objImage: ImageUpload_model = new ImageUpload_model();
+    objImage.Image_Guid = UUID.UUID();
+    objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+    objImage.CREATION_TS = new Date().toISOString();
+    objImage.Update_Ts = new Date().toISOString();
+    return new Promise((resolve, reject) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+        // let res = response.json();
+        // let imageGUID = res["resource"][0].Image_Guid;
+        resolve(objImage.toJson());
+      })
+    })
+  }
+
+  UploadImage() {   
+    this.CloudFilePath = 'eclaim/'   
+ 
+  this.load = true;
+  const queryHeaders = new Headers();
+  queryHeaders.append('filename', this.uploadFileName);
+  queryHeaders.append('Content-Type', 'multipart/form-data');
+  queryHeaders.append('fileKey', 'file');
+  queryHeaders.append('chunkedMode', 'false');
+  queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+  const options = new RequestOptions({ headers: queryHeaders });
+  return new Promise((resolve, reject) => {
+    this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Userform.get('avatar').value, options)
+      .map((response) => {
+        return response;
+      }).subscribe((response) => {
+        resolve(response.json());
+      })
+  })
+}
+
+clearFile() {
+  this.Userform.get('avatar').setValue(null);
+  this.fileInput.nativeElement.value = '';
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
@@ -1143,6 +1251,7 @@ export class UserPage {
   }
 
   Save_User_Main() {
+    // imageGUID: string
     ///Bind the Tenant Guid through Tenant company Guid.----------------------
     let val = this.GetTenant_GUID(this.User_Company_ngModel.trim());
     val.then((res) => {
@@ -1163,7 +1272,14 @@ export class UserPage {
         .subscribe((response) => {
           if (response.status == 200) {
             //alert('1');
-            this.Save_User_Info();
+            let uploadImage = this.UploadImage();
+            uploadImage.then((resJson) => {
+              console.table(resJson)
+              let imageResult = this.SaveImageinDB();
+              imageResult.then((objImage: ImageUpload_model) => {
+                let result = this.Save_User_Info(objImage.Image_Guid);             
+              })
+            })          
           }
         });
     });
@@ -1205,7 +1321,7 @@ export class UserPage {
     });
   }
 
-  Save_User_Info() {
+  Save_User_Info(imageGUID: string) {
     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
     this.userinfo_entry.FULLNAME = this.User_Name_ngModel.trim();
@@ -1220,6 +1336,7 @@ export class UserPage {
     this.userinfo_entry.MARITAL_STATUS = this.User_Marital_ngModel;
     this.userinfo_entry.BRANCH = this.User_Branch_ngModel.trim();
     this.userinfo_entry.EMPLOYEE_TYPE = this.User_EmployeeType_ngModel.trim();
+    this.userinfo_entry.ATTACHMENT_ID = imageGUID;
     // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
     // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
     this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_ngModel.trim();
@@ -1242,11 +1359,14 @@ export class UserPage {
     this.userinfo_entry.EMG_CONTACT_NUMBER_1 = this.User_EMG_CONTACT_NO1_ngModel.trim();
     this.userinfo_entry.EMG_CONTACT_NAME_2 = this.User_EMG_CONTACT_NAME2_ngModel.trim();
     this.userinfo_entry.EMG_RELATIONSHIP_2 = this.User_EMG_RELATIONSHIP2_ngModel.trim();
-    this.userinfo_entry.EMG_CONTACT_NUMBER_2 = this.User_EMG_CONTACT_NO2_ngModel.trim();
+    this.userinfo_entry.EMG_CONTACT_NUMBER_2 = this.User_EMG_CONTACT_NO2_ngModel;
+    // .trim()
     this.userinfo_entry.PR_EPF_NUMBER = this.User_EPF_NUMBER_ngModel.trim();
     this.userinfo_entry.PR_INCOMETAX_NUMBER = this.User_INCOMETAX_NO_ngModel.trim();
-    this.userinfo_entry.BANK_GUID = this.User_BANK_NAME_ngModel.trim();
-    this.userinfo_entry.PR_ACCOUNT_NUMBER = this.User_ACCOUNT_NUMBER_ngModel.trim();
+    this.userinfo_entry.BANK_GUID = this.User_BANK_NAME_ngModel;
+    // .trim()
+    this.userinfo_entry.PR_ACCOUNT_NUMBER = this.User_ACCOUNT_NUMBER_ngModel;
+    // .trim()
 
     this.userservice.save_user_info(this.userinfo_entry)
       .subscribe((response) => {
@@ -1416,7 +1536,15 @@ export class UserPage {
       .subscribe((response) => {
         if (response.status == 200) {
           //alert('5');
-          this.Save_User_Qualification()
+          let uploadImage = this.UploadImage();
+          uploadImage.then((resJson) => {
+            console.table(resJson)
+            let imageResult = this.SaveImageinDB();
+            imageResult.then((objImage: ImageUpload_model) => {
+              let result = this.Save_User_Qualification(objImage.Image_Guid);             
+            })
+          })    
+          //this.Save_User_Qualification()
         }
       });
   }
@@ -1441,7 +1569,7 @@ export class UserPage {
       });
   }
 
-  Save_User_Qualification() {
+  Save_User_Qualification(imageGUID: string) {
     this.userqualification_entry.USER_QUALIFICATION_GUID = UUID.UUID();
     this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_ngModel.trim();
     //this.userqualification_entry.QUALIFICATION_GUID = "";
@@ -1451,18 +1579,28 @@ export class UserPage {
     this.userqualification_entry.UPDATE_TS = new Date().toISOString();
     this.userqualification_entry.UPDATE_USER_GUID = "",
       this.userqualification_entry.HIGHEST_QUALIFICATION = this.User_HighestQualification_ngModel.trim();
+      
     //this.userqualification_entry.HIGHEST_QUALIFICATION = "";
     this.userqualification_entry.MAJOR = this.User_Major_ngModel.trim();
     this.userqualification_entry.UNIVERSITY = this.User_University_ngModel.trim();
     this.userqualification_entry.YEAR = this.User_EduYear_ngModel.trim()
-    this.userqualification_entry.ATTACHMENT = "";
+    this.userqualification_entry.ATTACHMENT = imageGUID;
 
     this.userservice.save_user_qualification(this.userqualification_entry)
       .subscribe(
         (response) => {
           if (response.status == 200) {
 
-            this.Save_User_Certification();
+            let uploadImage = this.UploadImage();
+          uploadImage.then((resJson) => {
+            console.table(resJson)
+            let imageResult = this.SaveImageinDB();
+            imageResult.then((objImage: ImageUpload_model) => {
+              let result = this.Save_User_Certification(objImage.Image_Guid);             
+            })
+          })
+
+            //this.Save_User_Certification();
             this.Save_User_Spouse();
             this.Save_User_Children();
 
@@ -1506,13 +1644,14 @@ export class UserPage {
   }
 
   //----Multiple Entry-------------------- 
-  Save_User_Certification() {
+  Save_User_Certification(imageGUID: string) {
     for (var item in this.ProfessionalCertification) {
       this.UserCertification_Entry.certificate_guid = this.ProfessionalCertification[item]["CERTIFICATE_GUID"];
       this.UserCertification_Entry.name = this.ProfessionalCertification[item]["NAME"];
       this.UserCertification_Entry.grade = this.ProfessionalCertification[item]["GRADE"];
       this.UserCertification_Entry.passing_year = this.ProfessionalCertification[item]["YEAR"];
       this.UserCertification_Entry.user_guid = this.usermain_entry.USER_GUID;
+      this.UserCertification_Entry.attachment = imageGUID;
 
       this.UserCertification_Entry.creation_ts = new Date().toISOString();
       this.UserCertification_Entry.creation_user_guid = localStorage.getItem("g_USER_GUID");
@@ -2268,15 +2407,17 @@ export class UserPage {
   ProfileImage: any;
   fileList: FileList;
 
-  private ProfileImageDisplay(e: any): void {
-    if (e.target.files && e.target.files[0]) {
-      let reader = new FileReader();
+  // private ProfileImageDisplay(e: any): void {
+  //   if (e.target.files && e.target.files[0]) {
+  //     let reader = new FileReader();
 
-      reader.onload = (event: any) => {
-        this.ProfileImage = event.target.result;
-      }
-      reader.readAsDataURL(e.target.files[0]);
-    }
+  //     reader.onload = (event: any) => {
+  //       this.ProfileImage = event.target.result;
+  //     }
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   }
+
+
     //----------------For Uploading file to Server----------------------------
     // let url = "http://api.zen.com.my/api/v2/files/" + this.fileList[0]["name"] + "?check_exist=false"
     // //var targetPath = e.target.files.nativeElement.files[0]; 
@@ -2306,7 +2447,7 @@ export class UserPage {
     // });
 
 
-  }
+  //}
 
   uploadProfileImage() {
     let url = "http://api.zen.com.my/api/v2/files/" + this.fileList[0]["name"] + "?check_exist=false"

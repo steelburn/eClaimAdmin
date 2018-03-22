@@ -99,7 +99,7 @@ export class UserSetup_Service {
 		return this.httpService.http.post(this.baseResourceUrl1, user_info.toJson(true), options)
 			.map((response) => {
 				return response;
-			});
+			});		
 	}
 
 	save_user_main(user_main: UserMain_Model): Observable<any> {
