@@ -12,13 +12,13 @@
 
     <div class="headerInfo">
       <ion-fab top right>
-        <button ion-fab mini class="btnClear">
+        <button ion-fab mini >
           <ion-icon name="settings"></ion-icon>
         </button>
         <ion-fab-list class="settingBtnFab" side="left">
           <button ion-fab color="primary" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>
         </ion-fab-list>
-        <ion-fab-list class="settingBtnFab" side="bottom">
+        <ion-fab-list class="settingBtnFab" side="left">
           <button ion-fab color="primary" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>
         </ion-fab-list>
       </ion-fab>
