@@ -665,6 +665,7 @@ export class UserPage {
       this.fileName2 = file.name;
       if(fileChoose==='avatar3')
       this.fileName3 = file.name;
+      // this.uploadFileName = file.name;
       reader.onload = () => {
         this.Userform.get(fileChoose).setValue({
           filename: file.name,
@@ -2445,8 +2446,62 @@ clearFile(fileChoose: string) {
     });
   }
 
-  ProfileImage: any;
+  ProfileImage: any;  
   fileList: FileList;
+
+  // private ProfileImageDisplay(e: any, event: any, fileChoose: string) {
+  //   // : void
+  //   if (e.target.files ) {
+  //     // && e.target.files[0]
+  //     let reader = new FileReader();
+
+  //     reader.onload = (e: any) => {
+  //       this.ProfileImage = e.target.result;       
+  //     }
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   //}
+  //   //const reader = new FileReader();
+  //   //let reader = new FileReader();
+  //   if (event.target.files ) {
+  //     // && event.target.files.length > 0
+  //     // const file = event.target.files[0];
+  //     const file = event.target.files[0];
+  //     this.Userform.get(fileChoose).setValue(file);
+  //     // this.ProfileImage = event.target.result;
+  //     if(fileChoose==='avatar1')
+  //     this.fileName1 = file.name;
+  //     if(fileChoose==='avatar2')
+  //     this.fileName2 = file.name;
+  //     if(fileChoose==='avatar3')
+  //     this.fileName3 = file.name;
+  //     // this.uploadFileName = file.name;
+  //     reader.onload = () => {
+  //       this.Userform.get(fileChoose).setValue({
+  //         filename: file.name,
+  //         filetype: file.type,
+  //         value: reader.result.split(',')[1]
+  //       });
+  //     };
+  //   }
+  // }
+  // }
+
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+      
+      const file = e.target.files[0];
+      this.Userform.get(fileChoose).setValue(file);
+      if(fileChoose==='avatar1')
+      this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  }
+
 
   // private ProfileImageDisplay(e: any): void {
   //   if (e.target.files && e.target.files[0]) {
@@ -2457,6 +2512,7 @@ clearFile(fileChoose: string) {
   //     }
   //     reader.readAsDataURL(e.target.files[0]);
   //   }
+  // }
 
 
     //----------------For Uploading file to Server----------------------------
