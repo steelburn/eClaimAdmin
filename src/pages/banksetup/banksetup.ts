@@ -56,7 +56,7 @@ export class BanksetupPage {
   //---------------------------------------------------------------------
 
   public AddBanksClick() {
-    this.AddBanksClicked = true;
+    this.AddBanksClicked = true; this.Add_Form = true; this.Edit_Form = false;
     this.ClearControls();
   }
 
@@ -71,14 +71,20 @@ export class BanksetupPage {
 
   public EditClick(BANK_GUID: any) {
     this.ClearControls();
-    this.EditBanksClicked = true;
+    //this.EditBanksClicked = true;
+    this.AddBanksClicked = true; this.Add_Form = false; this.Edit_Form = true;
+
     this.current_bankGUID = BANK_GUID;
     var self = this;
     this.banksetupservice
       .get(BANK_GUID)
       .subscribe((data) => {
         self.bank_details = data;
-        this.NAME_ngModel_Edit = self.bank_details.NAME; localStorage.setItem('Prev_Name', self.bank_details.NAME);
+        //this.NAME_ngModel_Edit = self.bank_details.NAME; 
+
+        this.Tenant_Add_ngModel = self.bank_details.TENANT_GUID;
+        this.NAME_ngModel_Add = self.bank_details.NAME;
+        localStorage.setItem('Prev_Name', self.bank_details.NAME);
       });
   }
   public DeleteClick(BANK_GUID: any) {
@@ -110,14 +116,30 @@ export class BanksetupPage {
       ]
     }); alert.present();
   }
-
+  Tenant_Add_ngModel: any;
+  AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
+  tenants: any;
   constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction) {
-    
     if(localStorage.getItem("g_USER_GUID")!="sva"){      
       this.TableName = "main_bank";
       this.SortField = "NAME";
       let TableURL = this.baseResource_Url + this.TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + this.SortField + '&' + this.Key_Param;      
       this.baseResourceUrl = TableURL;
+      
+      this.AdminLogin=false;
+    }
+    else
+    {
+      //fill all the tenant details--------------
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;     
+      this.http
+      .get(tenantUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.tenants = data.resource;
+      });
+
+      this.AdminLogin=true;
     }
     this.http
       .get(this.baseResourceUrl)
@@ -126,7 +148,7 @@ export class BanksetupPage {
         this.banks = data.resource;
       });
     //this.getBankList();
-
+    
     this.Bankform = fb.group({
       NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
       //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z][a-zA-Z ]+'), Validators.required])],
@@ -141,7 +163,7 @@ export class BanksetupPage {
 
       //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])], 
       //NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9!@#%$&()-`.+,/\"\\s]*$'), Validators.required])], 
-
+      TENANT_NAME: [null],
     });
   }
 
@@ -151,7 +173,6 @@ export class BanksetupPage {
 
   Save_Bank() {
     if (this.Bankform.valid) {
-
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       let options = new RequestOptions({ headers: headers });
@@ -166,15 +187,35 @@ export class BanksetupPage {
             console.log("No records Found");
             if (this.Exist_Record == false) {
               this.bank_entry.NAME = this.NAME_ngModel_Add.trim();
-
-              this.bank_entry.BANK_GUID = UUID.UUID();
-              this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+              if(this.Add_Form == true){
+                this.bank_entry.BANK_GUID = UUID.UUID();
+              }
+              else{
+                this.bank_entry.BANK_GUID = this.bank_details.BANK_GUID;alert(this.bank_details.BANK_GUID);
+              }
+              
+              if(localStorage.getItem("g_USER_GUID")!="sva"){
+                this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+              }
+              else{
+                this.bank_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+              }
+              
               this.bank_entry.DESCRIPTION = 'Savings';
               this.bank_entry.CREATION_TS = new Date().toISOString();
-              this.bank_entry.CREATION_USER_GUID = '1';
+
+              if(localStorage.getItem("g_USER_GUID")!="sva"){
+                this.bank_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+              }
+              else{
+                this.bank_entry.CREATION_USER_GUID = 'sva';
+              }
+              
 
               this.bank_entry.UPDATE_TS = new Date().toISOString();
               this.bank_entry.UPDATE_USER_GUID = "";
+              
+              //--this.banksetupservice.update_bank(this.bank_entry)
 
               this.banksetupservice.save_bank(this.bank_entry)
                 .subscribe((response) => {
