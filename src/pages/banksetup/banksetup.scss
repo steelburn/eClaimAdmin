@@ -1,7 +1,9 @@
 page-banksetup {
     
     }
-
+    ion-fab[top1] {
+        top: 0 !important;
+    }
 
     .blackcontainer{
         top: 0;
@@ -110,7 +112,7 @@ page-banksetup {
     
     .eClaimSubTitle {
         color: black;
-        font-size: 16px;
+        font-size: 14px;
         padding: 10px 0px;
         width: 100%;
         font-weight: bold;

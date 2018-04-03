@@ -13,18 +13,19 @@ page-setup {
 
     .Subtitle {
       text-align: center;
-      font-size: 1vw;
+      font-size: 0.9vw;
     }
 
     .iconf{
-         font-size: 4.5vw;
-      color: rgb(34, 161, 155) ;
+         font-size: 3.5vw;
+      color: #2E86C1;
       transition: all 0.3s ease;
     }
 
     .background{
-      background:rgb(34, 161, 155) ;
+      background:#2E86C1 ;
     }
+  
 
     .icon {
       text-align: center;
@@ -51,6 +52,6 @@ page-setup {
 
     .iconf {
       font-size: 10vw;
-      color: rgb(34, 161, 155);
+      color: #2E86C1;
     }
   }
