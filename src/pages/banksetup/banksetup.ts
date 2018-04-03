@@ -41,11 +41,7 @@ export class BanksetupPage {
   public banks: BankSetup_Model[] = [];
 
   public AddBanksClicked: boolean = false;
-  public EditBanksClicked: boolean = false;
-  public Exist_Record: boolean = false;
-
   public bank_details: any;
-  public exist_record_details: any;
 
   //Set the Model Name for Add------------------------------------------
   public NAME_ngModel_Add: any;
@@ -64,9 +60,6 @@ export class BanksetupPage {
     if (this.AddBanksClicked == true) {
       this.AddBanksClicked = false;
     }
-    if (this.EditBanksClicked == true) {
-      this.EditBanksClicked = false;
-    }
   }
 
   public EditClick(BANK_GUID: any) {
@@ -80,13 +73,12 @@ export class BanksetupPage {
       .get(BANK_GUID)
       .subscribe((data) => {
         self.bank_details = data;
-        //this.NAME_ngModel_Edit = self.bank_details.NAME; 
-
         this.Tenant_Add_ngModel = self.bank_details.TENANT_GUID;
         this.NAME_ngModel_Add = self.bank_details.NAME;
-        localStorage.setItem('Prev_Name', self.bank_details.NAME);
+        localStorage.setItem('Prev_Name', self.bank_details.NAME); localStorage.setItem('Prev_TenantGuid', self.bank_details.TENANT_GUID);
       });
   }
+
   public DeleteClick(BANK_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
@@ -116,53 +108,50 @@ export class BanksetupPage {
       ]
     }); alert.present();
   }
+
   Tenant_Add_ngModel: any;
   AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
   tenants: any;
+
   constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction) {
-    if(localStorage.getItem("g_USER_GUID")!="sva"){      
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
       this.TableName = "main_bank";
       this.SortField = "NAME";
-      let TableURL = this.baseResource_Url + this.TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + this.SortField + '&' + this.Key_Param;      
+      let TableURL = this.baseResource_Url + this.TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + this.SortField + '&' + this.Key_Param;
       this.baseResourceUrl = TableURL;
-      
-      this.AdminLogin=false;
-    }
-    else
-    {
-      //fill all the tenant details--------------
-      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;     
-      this.http
-      .get(tenantUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.tenants = data.resource;
-      });
 
-      this.AdminLogin=true;
+      this.AdminLogin = false;
+    }
+    else {
+      //fill all the tenant details--------------
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      this.http
+        .get(tenantUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource;
+        });
+
+      this.AdminLogin = true;
+    }
+
+    //Display Grid---------------------------------------------
+    let view_url: string = "";
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_bank_details' + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else {
+      view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_bank_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     this.http
-      .get(this.baseResourceUrl)
+      .get(view_url)
       .map(res => res.json())
       .subscribe(data => {
         this.banks = data.resource;
       });
-    //this.getBankList();
-    
+    //----------------------------------------------------------
     this.Bankform = fb.group({
       NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z][a-zA-Z ]+'), Validators.required])],
-
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
-      //NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z][a-zA-Z0-9\\s]+$'), Validators.required])],
-
-
-      //NAME: [null, Validators.compose([Validators.pattern('^[a-z]+[_+\+/+-+.+’][a-z]+$'), Validators.required])],
-      //NAME: ["", Validators.required],
-
-
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])], 
-      //NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9!@#%$&()-`.+,/\"\\s]*$'), Validators.required])], 
       TENANT_NAME: [null],
     });
   }
@@ -173,109 +162,61 @@ export class BanksetupPage {
 
   Save_Bank() {
     if (this.Bankform.valid) {
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      let options = new RequestOptions({ headers: headers });
-      let url: string;
-      url = this.baseResource_Url + "main_bank?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.http.get(url, options)
-        .map(res => res.json())
-        .subscribe(
-        data => {
-          let res = data["resource"];
-          if (res.length == 0) {
-            console.log("No records Found");
-            if (this.Exist_Record == false) {
-              this.bank_entry.NAME = this.NAME_ngModel_Add.trim();
-              if(this.Add_Form == true){
-                this.bank_entry.BANK_GUID = UUID.UUID();
-              }
-              else{
-                this.bank_entry.BANK_GUID = this.bank_details.BANK_GUID;alert(this.bank_details.BANK_GUID);
-              }
-              
-              if(localStorage.getItem("g_USER_GUID")!="sva"){
-                this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
-              }
-              else{
-                this.bank_entry.TENANT_GUID = this.Tenant_Add_ngModel;
-              }
-              
-              this.bank_entry.DESCRIPTION = 'Savings';
-              this.bank_entry.CREATION_TS = new Date().toISOString();
+      if (this.Add_Form == true) {
+        this.bank_entry.BANK_GUID = UUID.UUID();
+      }
+      else {
+        this.bank_entry.BANK_GUID = this.bank_details.BANK_GUID;
+      }
+      this.bank_entry.NAME = this.NAME_ngModel_Add.trim();
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+      }
+      else {
+        this.bank_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+      }
+      this.bank_entry.DESCRIPTION = 'Savings';
 
-              if(localStorage.getItem("g_USER_GUID")!="sva"){
-                this.bank_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-              }
-              else{
-                this.bank_entry.CREATION_USER_GUID = 'sva';
-              }
-              
+      if (this.Add_Form == true) {
+        this.bank_entry.CREATION_TS = new Date().toISOString();
+        if (localStorage.getItem("g_USER_GUID") != "sva") {
+          this.bank_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+        }
+        else {
+          this.bank_entry.CREATION_USER_GUID = 'sva';
+        }
+        this.bank_entry.UPDATE_TS = new Date().toISOString();
+        this.bank_entry.UPDATE_USER_GUID = "";
+      }
+      else {
+        this.bank_entry.CREATION_TS = this.bank_details.CREATION_TS;
+        this.bank_entry.CREATION_USER_GUID = this.bank_details.CREATION_USER_GUID;
+        this.bank_entry.UPDATE_TS = new Date().toISOString();
+        if (localStorage.getItem("g_USER_GUID") != "sva") {
+          this.bank_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+        }
+        else {
+          this.bank_entry.UPDATE_USER_GUID = 'sva';
+        }
+      }
 
-              this.bank_entry.UPDATE_TS = new Date().toISOString();
-              this.bank_entry.UPDATE_USER_GUID = "";
-              
-              //--this.banksetupservice.update_bank(this.bank_entry)
-
+      if (this.NAME_ngModel_Add.trim() != localStorage.getItem('Prev_Name') || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
+        let val = this.CheckDuplicate();
+        val.then((res) => {
+          if (res.toString() == "0") {
+            //---Insert or Update-----------
+            if (this.Add_Form == true) {
+              //**************Save service if it is new details*************************
               this.banksetupservice.save_bank(this.bank_entry)
                 .subscribe((response) => {
                   if (response.status == 200) {
                     alert('Bank Registered successfully');
-                    //this.GlobalFunction.showAlert_New('Bank Registered successfully !!');
-                    //location.reload();
                     this.navCtrl.setRoot(this.navCtrl.getActive().component);
                   }
                 });
+              //**************************************************************************
             }
-          }
-          else {
-            console.log("Records Found");
-            alert("The Bank is already Exist.")
-          }
-        },
-        err => {
-          this.Exist_Record = false;
-          console.log("ERROR!: ", err);
-        }
-        );
-    }
-  }
-
-  getBankList() {
-    let self = this;
-    let params: URLSearchParams = new URLSearchParams();
-    self.banksetupservice.get_bank(params)
-      .subscribe((banks: BankSetup_Model[]) => {
-        self.banks = banks;
-      });
-  }
-
-  Update_Bank(BANK_GUID: any) {
-    if (this.Bankform.valid) {
-      if (this.bank_entry.NAME == null) { this.bank_entry.NAME = this.NAME_ngModel_Edit.trim(); }
-
-      this.bank_entry.DESCRIPTION = this.bank_details.DESCRIPTION.trim();
-      this.bank_entry.TENANT_GUID = this.bank_details.TENANT_GUID;
-      this.bank_entry.CREATION_TS = this.bank_details.CREATION_TS;
-      this.bank_entry.CREATION_USER_GUID = this.bank_details.CREATION_USER_GUID;
-
-      this.bank_entry.BANK_GUID = BANK_GUID;
-      this.bank_entry.UPDATE_TS = new Date().toISOString();
-      this.bank_entry.UPDATE_USER_GUID = '1';
-
-      if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_Name')) {
-        let url: string;
-        url = this.baseResource_Url + "main_bank?filter=(NAME=" + this.NAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.http.get(url)
-          .map(res => res.json())
-          .subscribe(
-          data => {
-            let res = data["resource"];
-            //console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_Name'));
-            if (res.length == 0) {
-              console.log("No records Found");
-              this.bank_entry.NAME = this.NAME_ngModel_Edit.trim();
-
+            else {
               //**************Update service if it is new details*************************
               this.banksetupservice.update_bank(this.bank_entry)
                 .subscribe((response) => {
@@ -286,25 +227,17 @@ export class BanksetupPage {
                 });
               //**************************************************************************
             }
-            else {
-              console.log("Records Found");
-              alert("The bank is already Exist. ");
-            }
-          },
-          err => {
-            this.Exist_Record = false;
-            console.log("ERROR!: ", err);
-          });
+          }
+          else {
+            alert("The Bank is already Exist.");
+          }
+        });
+        val.catch((err) => {
+          console.log(err);
+        });
       }
       else {
-        // if (this.NAME_ngModel_Edit != localStorage.getItem('Prev_Name')){
-        if (this.bank_entry.NAME == null) { this.bank_entry.NAME = localStorage.getItem('Prev_Name'); }
-        this.bank_entry.NAME = this.NAME_ngModel_Edit.trim();
-
-        //**************Update service if it is old details*************************
-
-        // alert(JSON.stringify(this.bank_entry));     
-
+        //Simple update----------
         this.banksetupservice.update_bank(this.bank_entry)
           .subscribe((response) => {
             if (response.status == 200) {
@@ -312,47 +245,35 @@ export class BanksetupPage {
               this.navCtrl.setRoot(this.navCtrl.getActive().component);
             }
           });
-        //  }
       }
     }
   }
+
+  CheckDuplicate() {
+    let url: string = "";
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      url = this.baseResource_Url + "main_bank?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')AND(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else {
+      url = this.baseResource_Url + "main_bank?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')AND(TENANT_GUID=' + this.Tenant_Add_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    let result: any;
+    return new Promise((resolve) => {
+      this.http
+        .get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          result = data["resource"];
+          resolve(result.length);
+        });
+    });
+  }
+
   ClearControls() {
     this.NAME_ngModel_Add = "";
-
-    this.NAME_ngModel_Edit = "";
+    this.Tenant_Add_ngModel = "";
   }
 }
 
-    //             let headers = new Headers();
-  //             headers.append('Content-Type', 'application/json');
-  //             let options = new RequestOptions({ headers: headers });
-  //             let url: string;
-  //             url = "http://api.zen.com.my/api/v2/zcs/_table/main_bank?filter=(NAME=" + this.bank_entry.NAME + ")&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881";
-  //             this.http.get(url, options)
-  //               .map(res => res.json())
-  //               .subscribe(
-  //               data => {
-  //                 let res = data["resource"];
-  //                 if (res.length == 0) {
-  //                   console.log("No records Found");
-  //                   if (this.Exist_Record == false) {
 
-  //                     if (this.Bankform.valid) {
-  // if(this.bank_entry.NAME == null){this.bank_entry.NAME = this.bank_entry.NAME;}
-
-
-//       else {
-//         console.log("Records Found");
-//         alert("The Bank is already Added.")
-
-//       }
-//     },
-//     err => {
-//       this.Exist_Record = false;
-//       console.log("ERROR!: ", err);
-//     }
-//     );
-// }              
-//   }
-// }
 
