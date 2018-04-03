@@ -4,11 +4,16 @@
       text-align: center;
       font-size: 1vw;
     }
-  
+    
+    .container{
+      width: calc(50% - 23px);
+      display: inline-block;
+    }
   
     .iconf {
-      font-size: 7vw;
-      color: #ca9b24;
+      font-size: 4.5vw;
+      color: #2E86C1;
+
          transition: width 2s;
     }
     
@@ -46,8 +51,9 @@
   
   
       .iconf {
-        font-size: 22vw;
-        color: #ca9b24;
+        font-size: 10vw;
+      color: #2E86C1 ;
+
       }
     }
   }

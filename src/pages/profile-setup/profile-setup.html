@@ -7,8 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>
-      <b>PROFILE</b> SETUP</ion-title>
+    <ion-title>Profile Setup</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -27,10 +26,10 @@
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-          <th class="lgl1">PROFILE NAME</th>
+          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1">Profile Name</th>
           <th class="lgl1">XML</th>
-          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+          <th class="lgl1 tblBrRight" style="width:90px">Action</th>
 
         </tr>
 
@@ -73,7 +72,7 @@
       <ion-list>
         <form [formGroup]="Profileform">
           <ion-item>
-            <ion-label stacked>{{"PROFILE NAME"}}</ion-label>
+            <ion-label stacked>{{"Profile Name"}}</ion-label>
             <ion-input type="text" formControlName="PROFILE_NAME" [(ngModel)]="PROFILENAME_ngModel_Add" placeholder="{{'Please fill in the profile name'}}"></ion-input>
           </ion-item>
           <ion-item>
@@ -108,7 +107,7 @@
       <ion-list>
         <form [formGroup]="Profileform">
           <ion-item>
-            <ion-label stacked>{{"PROFILE NAME"}}</ion-label>
+            <ion-label stacked>{{"Profile Name"}}</ion-label>
             <ion-input type="text" formControlName="PROFILE_NAME" [(ngModel)]="PROFILENAME_ngModel_Edit" placeholder="{{'Please fill in the profile name'}}"></ion-input>
           </ion-item>
           <ion-item>

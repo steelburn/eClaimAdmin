@@ -1,11 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map'; 
 
 import * as constants from '../../app/config/constants';
 import { MedicalClaim_Model } from '../../models/medicalclaim_model';
@@ -25,6 +25,7 @@ import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
 
 import {  LoadingController, ActionSheetController,  Platform, Loading, ToastController } from 'ionic-angular';
 import { Services } from '../Services';
+import { ImageUpload_model } from '../../models/image-upload.model';
 
 
 /**
@@ -41,14 +42,20 @@ import { Services } from '../Services';
 export class MedicalclaimPage {
 
   Medicalform: FormGroup;
+  uploadFileName: string;
+  loading = false;
+  CloudFilePath: string;
+  @ViewChild('fileInput') fileInput: ElementRef;
   Travel_Amount_ngModel: any;
   travelAmount: any;
   validDate = new Date().toISOString();
   isCustomer: boolean = false;
   Customer_GUID: any;
   Soc_GUID: any;
-  ClaimRequestMain: any;
+  ClaimRequestMainId: any;
   public MainClaimSaved: boolean = false;
+  travel_date: any;
+ 
   
   userGUID: any;
   Travel_Date_ngModel: any;
@@ -95,7 +102,7 @@ export class MedicalclaimPage {
         //     }
         //   });
         // }
-        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;        
+        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;         
         // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
         this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
         this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
@@ -115,20 +122,134 @@ export class MedicalclaimPage {
   constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private medicalservice: MedicalClaim_Service, private alertCtrl: AlertController, private camera: Camera,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController ) {
   
     this.Medicalform = fb.group({
-     
+      avatar: null,
       travel_date:  ['', Validators.required],      
       description: ['', Validators.required],      
      vehicleType: ['', Validators.required],
         });
-        this.readProfile();
-   
+        this.readProfile();   
   }
 
-   save(value: any) {
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Medicalform.get('avatar').setValue(file);
+      this.uploadFileName = file.name;
+      reader.onload = () => {
+        this.Medicalform.get('avatar').setValue({
+          filename: file.name,
+          filetype: file.type,
+          value: reader.result.split(',')[1]
+        });
+      };
+    }
+  }
+
+  onSubmit() {
+    this.loading = true;
+    const queryHeaders = new Headers();
+    queryHeaders.append('filename', this.uploadFileName);
+    queryHeaders.append('Content-Type', 'multipart/form-data');
+    queryHeaders.append('fileKey', 'file');
+    queryHeaders.append('chunkedMode', 'false');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    const options = new RequestOptions({ headers: queryHeaders });
+    this.http.post('http://api.zen.com.my/api/v2/files/' + this.uploadFileName, this.Medicalform.get('avatar').value, options)
+      .map((response) => {
+        return response;
+      }).subscribe((response) => {
+        alert(response.status);
+      });
+    setTimeout(() => {
+      alert('done');
+      this.loading = false;
+    }, 1000);
+  }
+
+  saveIm() {
+    let uploadImage = this.UploadImage();
+    uploadImage.then((resJson) => {
+      console.table(resJson)
+      let imageResult = this.SaveImageinDB();
+      imageResult.then((objImage: ImageUpload_model) => {
+        // console.table(objImage)
+        let result = this.save(objImage.Image_Guid);
+        // result.then((res) => {
+         
+        // })
+      })
+    })
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 1000);
+  }
+
+  SaveImageinDB() {
+    let objImage: ImageUpload_model = new ImageUpload_model();
+    objImage.Image_Guid = UUID.UUID();
+    objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+    objImage.CREATION_TS = new Date().toISOString();
+    objImage.Update_Ts = new Date().toISOString();
+    return new Promise((resolve, reject) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {    
+        // let res = response.json();
+        // let imageGUID = res["resource"][0].Image_Guid;     
+        resolve(objImage.toJson());
+      })
+    })
+  }
+
+  UploadImage() {   
+    this.CloudFilePath = 'eclaim/'   
+ 
+  this.loading = true;
+  const queryHeaders = new Headers();
+  queryHeaders.append('filename', this.uploadFileName);
+  queryHeaders.append('Content-Type', 'multipart/form-data');
+  queryHeaders.append('fileKey', 'file');
+  queryHeaders.append('chunkedMode', 'false');
+  queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+  const options = new RequestOptions({ headers: queryHeaders });
+  console.log(this.CloudFilePath);
+  return new Promise((resolve, reject) => {
+    this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Medicalform.get('avatar').value, options)
+      .map((response) => {
+        return response;        
+      }).subscribe((response) => {
+        resolve(response.json());
+      })
+  })
+}
+
+   //---------------------Language module start---------------------//
+   public translateToMalayClicked: boolean = false;
+   public translateToEnglishClicked: boolean = true;
+ 
+   public translateToEnglish() {
+     this.translate.use('en');
+     this.translateToMalayClicked = !this.translateToMalayClicked;
+     this.translateToEnglishClicked = !this.translateToEnglishClicked;
+   }
+ 
+   public translateToMalay() {
+     this.translate.use('ms');
+     this.translateToEnglishClicked = !this.translateToEnglishClicked;
+     this.translateToMalayClicked = !this.translateToMalayClicked;
+   }
+   //---------------------Language module end---------------------//
+
+   clearFile() {
+    this.Medicalform.get('avatar').setValue(null);
+    this.fileInput.nativeElement.value = '';
+  }
+
+   save(imageGUID: string) {
+    let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date(value.travel_date).getMonth() + 1;
-    let year = new Date(value.travel_date).getFullYear();
+    let month = new Date(this.travel_date).getMonth() + 1;
+    let year = new Date(this.travel_date).getFullYear();
     let claimRefGUID;
     let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
     this.http
@@ -150,15 +271,15 @@ export class MedicalclaimPage {
             var postClaimRef = response.json();
             claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
 
-            let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+            //let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
             claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
             claimReqMainRef.TENANT_GUID = tenantGUID;
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             // claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
             claimReqMainRef.CLAIM_TYPE_GUID = '40dbaf56-98e4-77b9-df95-85ec232ff714';
-            claimReqMainRef.TRAVEL_DATE = value.travel_date;           
-            claimReqMainRef.DESCRIPTION = value.description;
+            claimReqMainRef.TRAVEL_DATE = this.travel_date;           
+            claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
             //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
             claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
             claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
@@ -166,6 +287,7 @@ export class MedicalclaimPage {
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
             claimReqMainRef.STATUS = 'Pending';
             claimReqMainRef.STAGE = this.stage;
+            claimReqMainRef.ATTACHMENT_ID = imageGUID;
             claimReqMainRef.CREATION_TS = new Date().toISOString();
             claimReqMainRef.UPDATE_TS = new Date().toISOString();
             // claimReqMainRef.FROM = this.Travel_From_ngModel;
@@ -178,16 +300,22 @@ export class MedicalclaimPage {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
-          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-
-            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-              var postClaimMain = response.json();
-              this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
-              this.MainClaimSaved = true;
-              alert('Claim Has Registered.')
-            })
+            //  this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
+            //   var postClaimMain = response.json();
+            //   this.ClaimRequestMainId = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
+            //   this.MainClaimSaved = true;
+            //   alert('Claim Has Registered.')
+            // })
           })
+          return new Promise((resolve, reject) => {
+            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+             
+              let res = data.json();
+              console.log(res)
+              let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
+              resolve(ClaimRequestMainId);
+            })
+          });
         }
         else {
           claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
@@ -199,10 +327,10 @@ export class MedicalclaimPage {
           //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
           //claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
           claimReqMainRef.CLAIM_TYPE_GUID = '40dbaf56-98e4-77b9-df95-85ec232ff714';
-          claimReqMainRef.TRAVEL_DATE = value.travel_date;
+          claimReqMainRef.TRAVEL_DATE =this.travel_date; 
           // claimReqMainRef.START_TS = value.start_DT;
           // claimReqMainRef.END_TS = value.end_DT;
-          claimReqMainRef.DESCRIPTION = value.description;
+          claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
           //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
@@ -210,6 +338,7 @@ export class MedicalclaimPage {
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
           claimReqMainRef.STATUS = 'Pending';
           claimReqMainRef.STAGE = this.stage;
+          claimReqMainRef.ATTACHMENT_ID = imageGUID;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
           // claimReqMainRef.FROM = this.Travel_From_ngModel;
@@ -222,16 +351,32 @@ export class MedicalclaimPage {
           else{
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
-        this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-            var postClaimMain = response.json();
-            this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;  
+          return new Promise((resolve, reject) => {
+            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+            
+              let res = data.json();
+              console.log(res)
+              let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
+              resolve(ClaimRequestMainId);
+            })
+          });
+        // this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
+        //     var postClaimMain = response.json();
+        //     this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;  
 
-            this.MainClaimSaved = true;
-            alert('Claim Has Registered.')
-          })
+        //     this.MainClaimSaved = true;
+        //     alert('Claim Has Registered.')
+        //   })
         }
-
       })
+      // return new Promise((resolve, reject) => {
+      //   this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+         
+      //     let res = data.json();
+      //     let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
+      //     resolve(ClaimRequestMainId);
+      //   })
+      // }); 
   }
   emailUrl: string = 'http://api.zen.com.my/api/v2/emailnotificationtest?api_key=' + constants.DREAMFACTORY_API_KEY;
   sendEmail() {

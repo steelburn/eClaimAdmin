@@ -8,7 +8,8 @@ export class UserCertification_Model {
         public creation_ts: string = null,
         public creation_user_guid: string = null,
         public update_ts: string = null,
-        public update_user_guid: string = null
+        public update_user_guid: string = null,
+        public attachment: string = null
     ) { }
 
 
@@ -23,7 +24,8 @@ export class UserCertification_Model {
             json.creation_ts,
             json.creation_user_guid,
             json.update_ts,
-            json.update_user_guid
+            json.update_user_guid,
+            json.attachment
         );
     }
 
@@ -37,7 +39,8 @@ export class UserCertification_Model {
             creation_ts: this.creation_ts,
             creation_user_guid: this.creation_user_guid,
             update_ts: this.update_ts,
-            update_user_guid: this.update_user_guid
+            update_user_guid: this.update_user_guid,
+            attachment: this.attachment
         };
         return stringify ? JSON.stringify({ resource: [doc] }) : doc;
     }

@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>DASHBOARD</ion-title>
+    <ion-title><b>Dashboard</b></ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -11,7 +11,80 @@
 
 <ion-content padding>
 
+  <ion-card class="container">
+    <ion-card-header class="linedsg"><b>CLAIM HISTORY</b></ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-item>
+            <ion-label item-start>Employee Name:</ion-label>
+            <span item-end>Alan Lee Yuang Fatt</span>
+        </ion-item>
+        <ion-item>   
+          <ion-label item-start>Department:</ion-label>
+          <span item-end>Research & Development</span>
+        </ion-item>
 
+        <ion-item>   
+            <ion-label item-start>Month:</ion-label>
+            <span item-end>March</span>
+          </ion-item>
+        <ion-item>   
+          <ion-label item-start>Total Amount (RM):</ion-label>
+          <span item-end>900</span>
+        </ion-item>
+      </ion-row>
+     
+    </ion-card-content>
+  </ion-card>
+
+
+  <!-- <ion-card class="container">
+      <ion-card-header class="linedsg"><b>MY CLAIM LIST</b></ion-card-header>
+      <ion-card-content>
+          <ion-row>
+              <ion-item>
+                  <ion-label item-start>Travel Claim</ion-label>
+                  <span item-end>24/3/2018</span>
+                  <ion-label item-start>Pending</ion-label>
+                  <span item-end>Mohd Khairulnizam Hasan</span>
+                <span item-end>900</span>
+              </ion-item>
+            </ion-row>
+      </ion-card-content>
+    </ion-card> -->
+
+       
+ 
+
+ <!-- <div class="eClaimSubTitle">MY CLAIM LIST</div>  -->
+
+        <!-- <table class="Tabler ">
+            <tr class="linedsg TColor">
+                <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+
+                <th class="lgl1">Claim Type</th>
+                <th class="lgl1">Date</th>
+                <th class="lgl1">Status</th>
+                <th class="lgl1">Stage</th>
+                <th class="lgl1 tblBrRight">Amount</th>
+
+  
+            </tr>
+  
+            <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails; let i=index">
+                <td class="lgl1">{{i+1}}</td>
+                <td class="lgl1" >{{claimhistorydetail.CLAIM_TYPE}}</td>
+                <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy H:mm'}}</td>
+                <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
+                <td class="lgl1">{{claimhistorydetail.STAGE}}</td>
+                <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT}}</td>
+            </tr>
+  
+  
+        </table> -->
+ 
+  
+ 
   <div class="eClaimSubTitle">CLAIM APPLICATION FORM</div>
 
   <div class="UPContent">
@@ -44,7 +117,7 @@
     </ion-card>
 
 
-    <ion-card class="round1" (click)="goToOTClaim()">
+    <ion-card class="round1"  (click)="goToOTClaim()">
       <ion-card-header class="icon">
         <ion-icon name="stopwatch" class="iconf"></ion-icon>
       </ion-card-header>
@@ -71,15 +144,5 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card class="round1" (click)="goToProfile()">
-      <ion-card-header class="icon">
-        <ion-icon name="basket" class="iconf"></ion-icon>
-      </ion-card-header>
-      <ion-card-content class="Subtitle">
-        PROFILE SETUP
-      </ion-card-content>
-    </ion-card>
-
   </div>
-
 </ion-content>
