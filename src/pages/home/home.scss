@@ -2,7 +2,7 @@
   
     .Subtitle {
       text-align: center;
-      font-size: 1vw;
+      font-size: 0.8vw;
     }
     
     .container{
@@ -11,7 +11,7 @@
     }
   
     .iconf {
-      font-size: 4.5vw;
+      font-size: 3.5vw;
       color: #2E86C1;
 
          transition: width 2s;
@@ -20,7 +20,7 @@
     .round1 {
       float: left;
       box-shadow: none !important;
-      width: calc(16% - 20px);
+      width: calc(13% - 7px);
       margin: 10px !important;
       cursor: pointer;
       border-radius: 5px;
