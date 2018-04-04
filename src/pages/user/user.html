@@ -225,11 +225,39 @@
                         </ion-select>
                     </ion-item>
 
+
+                    <!-- <ion-item>
+                        <ion-label id="profile_image" color="primary" stacked>PROFILE PHOTO</ion-label>
+                        <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <img src="{{ProfileImage}}" style="width: 20%">
+                    </ion-item>
+                    <button ion-button icon-left (click)="UploadProfilePicture()" [disabled]="ProfileImage === null">
+                        <ion-icon name="cloud-upload"></ion-icon>Upload
+                    </button> -->
+
+                    <ion-item>
+                        <ion-label id="profile_image" color="primary" stacked>PROFILE PHOTO</ion-label>
+                        <!-- <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input> -->
+                        <ion-input type="file" id="avatar1"  (change)="ProfileImageDisplay($event, 'avatar1')"  #fileInput></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <img src="{{ProfileImage}}" style="width: 20%">
+                    </ion-item>
+                    <!-- <button ion-button icon-left (click)="UploadProfilePicture()" [disabled]="ProfileImage === null">
+                        <ion-icon name="cloud-upload"></ion-icon>Upload
+                    </button> -->
+
+                    <!-- <label for="avatar">Avatar</label> -->
+                    <!-- <div class="form-group">                        
+
                     <div class="form-group">
                         <!-- <label for="avatar">Avatar</label> -->
+
                         <input type="file" id="avatar1" (change)="onFileChange($event, 'avatar1')" #fileInput>
                         <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
-                      </div>
+                      </div> -->
 
 
                     <div class="eClaimSubTitle2">
@@ -350,8 +378,17 @@
                         <ion-icon name="cloud-upload"></ion-icon>ATTACH
                     </button> -->
 
-                    <div class="form-group">
-                        <!-- <label for="avatar">Avatar</label> -->
+                    <!-- <ion-item>
+                        <ion-label id="profile_image" color="primary" stacked>PROFILE PHOTO</ion-label>
+                        <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
+                        <ion-input type="file" id="avatar2" accept="image/*" (change)="ProfileImageDisplay($event, $e, 'avatar2')"  #fileInput></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <img src="{{ProfileImage2}}" style="width: 20%">
+                    </ion-item> -->
+
+                    <!-- <label for="avatar">Avatar</label> -->
+                    <div class="form-group">                        
                         <input type="file" id="avatar2" (change)="onFileChange($event, 'avatar2')" #fileInput>
                         <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
                       </div>
@@ -383,17 +420,28 @@
                     <!-- <ion-item>
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHMENT</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
+                    </ion-item>-->
+
+                    
+
+                    <!-- <ion-item>
+                        <ion-label id="profile_image" color="primary" stacked>PROFILE PHOTO</ion-label>
+                        <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
+                        <ion-input type="file" id="avatar3" accept="image/*" (change)="ProfileImageDisplay($event, $e, 'avatar3')"  #fileInput></ion-input>
                     </ion-item>
+                    <ion-item>
+                        <img src="{{ProfileImage3}}" style="width: 20%">
+                    </ion-item> -->
 
-                    <button ion-button icon-left (click)="AddProfessionalCertification()">
-                        <ion-icon name="cloud-upload"></ion-icon>ADD
-                    </button> -->
-
-                    <div class="form-group">
-                        <!-- <label for="avatar">Avatar</label> -->
+                    <!-- <label for="avatar">Avatar</label> -->
+                    <div class="form-group">                       
                         <input type="file" id="avatar3" (change)="onFileChange($event, 'avatar3')" #fileInput>
                         <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
                       </div>
+
+                      <button ion-button icon-left (click)="AddProfessionalCertification()">
+                        <ion-icon name="cloud-upload"></ion-icon>ADD
+                    </button>
 
                     <ion-list>
                         <ion-item>
@@ -656,10 +704,14 @@
 
                    
 
-                    <ion-item>
-                        <button (click)='Save()' >{{ 'SUBMIT_BUTTON'  }}</button>
-                        <!-- [disabled]="Userform.invalid || loading" ion-button round style="width:100px;" -->
-                    </ion-item>
+                   <!-- <ion-item>
+                        <button (click)='Save()' >{{ 'SUBMIT_BUTTON' | translate  }}</ion-button>
+                         [disabled]="Userform.invalid || loading" ion-button round style="width:100px;"
+                    </ion-item> -->
+
+                    <button ion-button icon-left (click)="Save()">
+                        {{ 'SUBMIT_BUTTON' | translate  }}
+                    </button> 
 
 
 
