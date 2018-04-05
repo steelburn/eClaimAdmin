@@ -416,7 +416,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{"GRADE"}}</ion-label>
                         <ion-input type="text" formControlName="CERTIFICATION_GRADE" [(ngModel)]="User_CertificationGrade_ngModel" placeholder="{{'Please fill the Grade'}}"></ion-input>
-                    </ion-item>
+                    </ion-item>                    
 
                     <!-- <ion-item>
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHMENT</ion-label>
@@ -436,9 +436,10 @@
 
                     <!-- <label for="avatar">Avatar</label> -->
                     <div class="form-group">                       
-                        <input type="file" id="avatar3" (change)="onFileChange($event, 'avatar3')" #fileInput>
+                        <input type="file" id="avatar3"  formControlName="ATTACHMENT_PROFESSIONAL" [(ngModel)]="User_CertificationAttachment_ngModel" (change)="onFileChange($event, 'avatar3')" #fileInput>
                         <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
                       </div>
+                      <!-- formControlName="ATTACHMENT_ID" [(ngModel)]="User_CertificationAttachment_ngModel" -->
 
                       <button ion-button icon-left (click)="AddProfessionalCertification()">
                         <ion-icon name="cloud-upload"></ion-icon>ADD
@@ -461,7 +462,8 @@
                                     <td class="lgl1">{{certificate.NAME}}</td>
                                     <td class="lgl1">{{certificate.GRADE}}</td>
                                     <td class="lgl1">{{certificate.YEAR}}</td>
-                                    <td class="lgl1">MCA.Pdf</td>
+                                    <td class="lgl1">{{certificate.ATTACHMENT}}</td>
+                                    <!-- <td class="lgl1">MCA.Pdf</td> -->
                                     <td class="lgl1 fColor">
                                         <button ion-button item-end (click)="EditProfessionalCertification(certificate.CERTIFICATE_GUID)">
                                             <ion-icon name="md-create"></ion-icon>
@@ -810,6 +812,19 @@
                         </ion-select>
                     </ion-item>
 
+                    <!-- <ion-img [width]="imgWidth" [height]="imgHeight" 
+                    src="http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881"></ion-img> -->
+
+                    <!-- <ion-img width="80" height="80" style="align-items: center" src="{{'http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881'}}"></ion-img> -->
+                    <img width="30px" height="80px" src="http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881">
+                    <!-- <ion-item>
+                        <ion-label id="profile_image" color="primary" stacked>PROFILE PHOTO</ion-label>                       
+                        <ion-input type="file" id="avatar1"  (change)="ProfileImageDisplay($event, 'avatar1')"  #fileInput></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <img src="{{ProfileImage}}" style="width: 20%">
+                    </ion-item> -->
+
                     <!-- <ion-item>
                         <ion-label id="profile_image" color="primary" stacked>PROFILE PHOTO</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
@@ -965,6 +980,15 @@
                         <ion-input type="text" formControlName="CERTIFICATION_GRADE" [(ngModel)]="User_CertificationGrade_Edit_ngModel" placeholder="{{'Please fill the Grade'}}"></ion-input>
                     </ion-item>
 
+                    <ion-item class="text">
+                        <ion-label stacked>{{"IMAGE"}}</ion-label>                        
+                    </ion-item>
+
+                    <!-- <div class="form-group">                       
+                        <input type="file" id="avatar3"  formControlName="ATTACHMENT_PROFESSIONAL" [(ngModel)]="User_CertificationAttachment_Edit_ngModel" (change)="onFileChange($event, 'avatar3')" #fileInput>
+                        <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+                      </div> -->
+
                     <!-- <ion-item>
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHMENT</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
@@ -991,7 +1015,8 @@
                                     <td class="lgl1">{{certificate.NAME}}</td>
                                     <td class="lgl1">{{certificate.GRADE}}</td>
                                     <td class="lgl1">{{certificate.YEAR}}</td>
-                                    <td class="lgl1">MCA.Pdf</td>
+                                    <td class="lgl1">{{certificate.ATTACHEMENT_ID}}</td>
+                                    <!-- <td class="lgl1">MCA.Pdf</td> -->
                                     <td class="lgl1 fColor">
                                         <button ion-button item-end (click)="EditProfessionalCertificationForEdit(certificate.CERTIFICATE_GUID)">
                                             <ion-icon name="md-create"></ion-icon>

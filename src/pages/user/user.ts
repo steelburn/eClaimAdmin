@@ -214,6 +214,7 @@ export class UserPage {
   public User_Certification_Edit_ngModel: any;
   public User_CertificationYear_Edit_ngModel: any;
   public User_CertificationGrade_Edit_ngModel: any;
+  public User_CertificationAttachment_Edit_ngModel: any;
 
   public User_Address1_Edit_ngModel: any;
   public User_Address2_Edit_ngModel: any;
@@ -318,6 +319,7 @@ export class UserPage {
           this.User_ICNo_Edit_ngModel = this.view_user_details[0]["PERSONAL_ID"];
           this.User_DOB_Edit_ngModel = this.view_user_details[0]["DOB"];
           this.User_Gender_Edit_ngModel = this.view_user_details[0]["GENDER"];
+          //this.User_Gender_Edit_ngModel = this.view_user_details[0]["GENDER"];
 
           //------------------------EMPLOYMENT DETAILS----------------------------------
           this.USER_INFO_GUID_FOR_UPDATE = this.view_user_details[0]["USER_INFO_GUID"];
@@ -379,7 +381,7 @@ export class UserPage {
       .subscribe(
         data => {
           for (var item in data["resource"]) {
-            this.ProfessionalCertification.push({ CERTIFICATE_GUID: data["resource"][item]["certificate_guid"], NAME: data["resource"][item]["name"], GRADE: data["resource"][item]["grade"], YEAR: data["resource"][item]["passing_year"] });
+            this.ProfessionalCertification.push({ CERTIFICATE_GUID: data["resource"][item]["certificate_guid"], NAME: data["resource"][item]["name"], GRADE: data["resource"][item]["grade"], YEAR: data["resource"][item]["passing_year"], ATTACHMENT: data["resource"][item]["attachment"] });
           }
         });
 
@@ -486,6 +488,7 @@ export class UserPage {
   } 
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: Transfer, public toastCtrl: ToastController, public platform: Platform, private fileTransfer_new: FileTransfer) {
+    this.ProfileImageGet();
     if (localStorage.getItem("g_USER_GUID") != null) {
       //---------Bind Designation-----------------      
       this.GetDesignation("main_designation", "NAME");
@@ -513,6 +516,7 @@ export class UserPage {
 
       //---------Bind Grid------------------------
       this.BindGrid("view_user_display_new");
+      
 
 
       // this.http
@@ -603,6 +607,7 @@ export class UserPage {
         CERTIFICATION: ['', Validators.required],
         CERTIFICATION_YEAR: ['', Validators.required],
         CERTIFICATION_GRADE: ['', Validators.required],
+        ATTACHMENT_PROFESSIONAL: ['', Validators.required],
 
         // -------------------RESIDENTIAL ADDRESS----------------------------
         USER_ADDRESS1: ['', Validators.required],
@@ -654,6 +659,8 @@ export class UserPage {
     }
   }
 
+  public attachment_ref: any;
+
   onFileChange(event: any, fileChoose: string) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
@@ -664,7 +671,10 @@ export class UserPage {
       if(fileChoose==='avatar2')
       this.fileName2 = file.name;
       if(fileChoose==='avatar3')
-      this.fileName3 = file.name;
+      this.fileName3 = file.name;   
+      //alert(file.name); 
+      this.attachment_ref = file.name;
+      alert(this.attachment_ref);  
       // this.uploadFileName = file.name;
       reader.onload = () => {
         this.Userform.get(fileChoose).setValue({
@@ -919,6 +929,7 @@ clearFile(fileChoose: string) {
   User_Certification_ngModel: any;
   User_CertificationGrade_ngModel: any;
   User_CertificationYear_ngModel: any;
+  User_CertificationAttachment_ngModel: any;
   CertificateSaveFlag: boolean = false;
 
   AddProfessionalCertification() {
@@ -926,11 +937,11 @@ clearFile(fileChoose: string) {
       if (this.User_CertificationGrade_ngModel != undefined && this.User_CertificationGrade_ngModel.trim() != "") {
         if (this.User_CertificationYear_ngModel != undefined && this.User_CertificationYear_ngModel.trim() != "") {
           if (this.CertificateSaveFlag == false) {
-            this.ProfessionalCertification.push({ CERTIFICATE_GUID: UUID.UUID(), NAME: this.User_Certification_ngModel.trim(), GRADE: this.User_CertificationGrade_ngModel.trim(), YEAR: this.User_CertificationYear_ngModel.trim() });
+            this.ProfessionalCertification.push({ CERTIFICATE_GUID: UUID.UUID(), NAME: this.User_Certification_ngModel.trim(), GRADE: this.User_CertificationGrade_ngModel.trim(), YEAR: this.User_CertificationYear_ngModel.trim(),  ATTACHMENT: this.attachment_ref  });
           }
           else {
             this.ProfessionalCertification = this.ProfessionalCertification.filter(item => item.CERTIFICATE_GUID != localStorage.getItem("CERTIFICATE_GUID"));
-            this.ProfessionalCertification.push({ CERTIFICATE_GUID: localStorage.getItem("CERTIFICATE_GUID"), NAME: this.User_Certification_ngModel.trim(), GRADE: this.User_CertificationGrade_ngModel.trim(), YEAR: this.User_CertificationYear_ngModel.trim() });
+            this.ProfessionalCertification.push({ CERTIFICATE_GUID: localStorage.getItem("CERTIFICATE_GUID"), NAME: this.User_Certification_ngModel.trim(), GRADE: this.User_CertificationGrade_ngModel.trim(), YEAR: this.User_CertificationYear_ngModel.trim(), ATTACHMENT: this.attachment_ref });
 
             this.CertificateSaveFlag = false;
             localStorage.removeItem("SPOUSE_GUID");
@@ -940,6 +951,7 @@ clearFile(fileChoose: string) {
           this.User_Certification_ngModel = "";
           this.User_CertificationGrade_ngModel = "";
           this.User_CertificationYear_ngModel = "";
+          this.User_CertificationAttachment_ngModel  = "";
         }
         else {
           alert("Fill Year !!");
@@ -960,11 +972,11 @@ clearFile(fileChoose: string) {
         if (this.User_CertificationYear_Edit_ngModel.toString() != undefined && this.User_CertificationYear_Edit_ngModel.toString().trim() != "") {
 
           if (this.CertificateSaveFlag == false) {
-            this.ProfessionalCertification.push({ CERTIFICATE_GUID: UUID.UUID(), NAME: this.User_Certification_Edit_ngModel.trim(), GRADE: this.User_CertificationGrade_Edit_ngModel.trim(), YEAR: this.User_CertificationYear_Edit_ngModel.trim() });
+            this.ProfessionalCertification.push({ CERTIFICATE_GUID: UUID.UUID(), NAME: this.User_Certification_Edit_ngModel.trim(), GRADE: this.User_CertificationGrade_Edit_ngModel.trim(), YEAR: this.User_CertificationYear_Edit_ngModel.trim(), ATTACHMENT_EDIT: this.attachment_ref });
           }
           else {
             this.ProfessionalCertification = this.ProfessionalCertification.filter(item => item.CERTIFICATE_GUID != localStorage.getItem("CERTIFICATE_GUID"));
-            this.ProfessionalCertification.push({ CERTIFICATE_GUID: localStorage.getItem("CERTIFICATE_GUID"), NAME: this.User_Certification_Edit_ngModel.trim(), GRADE: this.User_CertificationGrade_Edit_ngModel.trim(), YEAR: this.User_CertificationYear_Edit_ngModel.toString().trim() });
+            this.ProfessionalCertification.push({ CERTIFICATE_GUID: localStorage.getItem("CERTIFICATE_GUID"), NAME: this.User_Certification_Edit_ngModel.trim(), GRADE: this.User_CertificationGrade_Edit_ngModel.trim(), YEAR: this.User_CertificationYear_Edit_ngModel.toString().trim(), ATTACHMENT_EDIT: this.attachment_ref });
 
             this.CertificateSaveFlag = false;
             localStorage.removeItem("SPOUSE_GUID");
@@ -974,6 +986,7 @@ clearFile(fileChoose: string) {
           this.User_Certification_Edit_ngModel = "";
           this.User_CertificationGrade_Edit_ngModel = "";
           this.User_CertificationYear_Edit_ngModel = "";
+          this.User_CertificationAttachment_Edit_ngModel = "";
         }
         else {
           alert("Fill Year !!");
@@ -2500,6 +2513,22 @@ clearFile(fileChoose: string) {
       }
       reader.readAsDataURL(e.target.files[0]);
     }
+  }
+
+  public ImageField: any;
+  //baseUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/files/eclaim/car1.jpg' + constants.DREAMFACTORY_API_KEY;
+  //http://api.zen.com.my/api/v2/files/eclaim/car1.jpg
+  baseUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/files/eclaim/car1.jpg' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+
+
+  private ProfileImageGet(){
+    this.http
+    .get(this.baseUrl)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.ImageField = data.resource;
+      console.table(this.ImageField);
+    });
   }
 
 
