@@ -89,6 +89,20 @@ export class TenantCompanySiteSetup_Service {
             });
     }
 
+    remove_multiple(id: string, tablename: string) {       
+        let url_multiple = this.baseResource_Url + tablename + "?filter=(TENANT_COMPANY_GUID=" + id + ")";
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+
+        return this.httpService.http
+            .delete(url_multiple, { headers: queryHeaders })
+            .map((response) => {
+                var result: any = response.json();
+				//return result.PAGE_GUID;
+				return response;
+            });
+	}
 
     get(id: string, params?: URLSearchParams): Observable<TenantCompanySiteSetup_Model> {
         var queryHeaders = new Headers();

@@ -88,13 +88,18 @@ import {AddTollPage} from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+
+import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
+
 import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 
-
-
+import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
+import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
+import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
+import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 
 @NgModule({
   declarations: [
@@ -143,6 +148,12 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     AdminsetupPage,
     ApproverTaskListPage,
     TravelClaimViewPage,
+    EntertainmentClaimViewPage,
+    MedicalClaimViewPage,
+    OvertimeClaimViewPage,
+    PrintClaimViewPage,
+    GiftClaimViewPage,
+    TravelclaimPage,
     
     UploadPage,
 
@@ -236,8 +247,14 @@ import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
     TabsPage,
     ApproverTaskListPage,
     TravelClaimViewPage,
+    EntertainmentClaimViewPage,
+    MedicalClaimViewPage,
+    OvertimeClaimViewPage,
+    PrintClaimViewPage,
+    GiftClaimViewPage,
     UserPage,
     SocRegistrationPage,
+    TravelclaimPage,
 
 
     ProfileSetupPage,
