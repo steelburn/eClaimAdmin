@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController,  Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -35,39 +35,46 @@ export class BanksetupPage {
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
-  TableName: string = "";
-  SortField: string = "";
-
   public banks: BankSetup_Model[] = [];
 
   public AddBanksClicked: boolean = false;
   public bank_details: any;
 
+  Tenant_Add_ngModel: any;
+  AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
+  tenants: any;
+
   //Set the Model Name for Add------------------------------------------
   public NAME_ngModel_Add: any;
   //---------------------------------------------------------------------
 
-  //Set the Model Name for edit------------------------------------------
-  public NAME_ngModel_Edit: any;
-  //---------------------------------------------------------------------
-
   public AddBanksClick() {
+    if(this.Edit_Form == false){
     this.AddBanksClicked = true; this.Add_Form = true; this.Edit_Form = false;
     this.ClearControls();
+    }
+    else{
+      alert('Sorry !! You are in Edit Mode.');
+    }
   }
 
   public CloseBanksClick() {
     if (this.AddBanksClicked == true) {
       this.AddBanksClicked = false;
+      this.Add_Form = true; this.Edit_Form = false;
     }
   }
 
   public EditClick(BANK_GUID: any) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
     this.ClearControls();
-    //this.EditBanksClicked = true;
     this.AddBanksClicked = true; this.Add_Form = false; this.Edit_Form = true;
 
-    this.current_bankGUID = BANK_GUID;
+    //this.current_bankGUID = BANK_GUID;
     var self = this;
     this.banksetupservice
       .get(BANK_GUID)
@@ -76,6 +83,8 @@ export class BanksetupPage {
         this.Tenant_Add_ngModel = self.bank_details.TENANT_GUID;
         this.NAME_ngModel_Add = self.bank_details.NAME;
         localStorage.setItem('Prev_Name', self.bank_details.NAME); localStorage.setItem('Prev_TenantGuid', self.bank_details.TENANT_GUID);
+
+        this.loading.dismissAll();
       });
   }
 
@@ -109,21 +118,19 @@ export class BanksetupPage {
     }); alert.present();
   }
 
-  Tenant_Add_ngModel: any;
-  AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
-  tenants: any;
+  loading: Loading;
+  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
 
-  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction) {
-    if (localStorage.getItem("g_USER_GUID") != "sva") {
-      this.TableName = "main_bank";
-      this.SortField = "NAME";
-      let TableURL = this.baseResource_Url + this.TableName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + 'order=' + this.SortField + '&' + this.Key_Param;
-      this.baseResourceUrl = TableURL;
+    //Clear all storage values-------------------------------
+    localStorage.removeItem("Prev_Name");
+    localStorage.removeItem("Prev_TenantGuid");
 
-      this.AdminLogin = false;
-    }
-    else {
-      //fill all the tenant details--------------
+    //fill all the tenant details----------------------------
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
       let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
       this.http
         .get(tenantUrl)
@@ -133,6 +140,9 @@ export class BanksetupPage {
         });
 
       this.AdminLogin = true;
+    }
+    else {
+      this.AdminLogin = false;
     }
 
     //Display Grid---------------------------------------------
@@ -148,6 +158,8 @@ export class BanksetupPage {
       .map(res => res.json())
       .subscribe(data => {
         this.banks = data.resource;
+
+        this.loading.dismissAll();
       });
     //----------------------------------------------------------
     this.Bankform = fb.group({
@@ -162,22 +174,9 @@ export class BanksetupPage {
 
   Save_Bank() {
     if (this.Bankform.valid) {
+      //for Save Set Entities------------------------------------------------------------------------
       if (this.Add_Form == true) {
         this.bank_entry.BANK_GUID = UUID.UUID();
-      }
-      else {
-        this.bank_entry.BANK_GUID = this.bank_details.BANK_GUID;
-      }
-      this.bank_entry.NAME = this.NAME_ngModel_Add.trim();
-      if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
-      }
-      else {
-        this.bank_entry.TENANT_GUID = this.Tenant_Add_ngModel;
-      }
-      this.bank_entry.DESCRIPTION = 'Savings';
-
-      if (this.Add_Form == true) {
         this.bank_entry.CREATION_TS = new Date().toISOString();
         if (localStorage.getItem("g_USER_GUID") != "sva") {
           this.bank_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
@@ -188,7 +187,9 @@ export class BanksetupPage {
         this.bank_entry.UPDATE_TS = new Date().toISOString();
         this.bank_entry.UPDATE_USER_GUID = "";
       }
+      //for Update Set Entities----------------------------------------------------------------------
       else {
+        this.bank_entry.BANK_GUID = this.bank_details.BANK_GUID;
         this.bank_entry.CREATION_TS = this.bank_details.CREATION_TS;
         this.bank_entry.CREATION_USER_GUID = this.bank_details.CREATION_USER_GUID;
         this.bank_entry.UPDATE_TS = new Date().toISOString();
@@ -199,6 +200,21 @@ export class BanksetupPage {
           this.bank_entry.UPDATE_USER_GUID = 'sva';
         }
       }
+      this.bank_entry.NAME = this.NAME_ngModel_Add.trim();
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+      }
+      else {
+        this.bank_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+      }
+      this.bank_entry.DESCRIPTION = 'Savings';
+
+      //Load the Controller--------------------------------
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+      });
+      this.loading.present();
+      //--------------------------------------------------
 
       if (this.NAME_ngModel_Add.trim() != localStorage.getItem('Prev_Name') || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
         let val = this.CheckDuplicate();
@@ -211,6 +227,12 @@ export class BanksetupPage {
                 .subscribe((response) => {
                   if (response.status == 200) {
                     alert('Bank Registered successfully');
+
+                    //Remove all storage values-----------------------------------------
+                    localStorage.removeItem("Prev_Name");
+                    localStorage.removeItem("Prev_TenantGuid");
+                    //------------------------------------------------------------------
+
                     this.navCtrl.setRoot(this.navCtrl.getActive().component);
                   }
                 });
@@ -222,6 +244,12 @@ export class BanksetupPage {
                 .subscribe((response) => {
                   if (response.status == 200) {
                     alert('Bank updated successfully');
+
+                    //Remove all storage values-----------------------------------------
+                    localStorage.removeItem("Prev_Name");
+                    localStorage.removeItem("Prev_TenantGuid");
+                    //------------------------------------------------------------------
+
                     this.navCtrl.setRoot(this.navCtrl.getActive().component);
                   }
                 });
@@ -230,6 +258,7 @@ export class BanksetupPage {
           }
           else {
             alert("The Bank is already Exist.");
+            this.loading.dismissAll();
           }
         });
         val.catch((err) => {
@@ -242,6 +271,12 @@ export class BanksetupPage {
           .subscribe((response) => {
             if (response.status == 200) {
               alert('Bank updated successfully');
+
+              //Remove all storage values-----------------------------------------
+              localStorage.removeItem("Prev_Name");
+              localStorage.removeItem("Prev_TenantGuid");
+              //------------------------------------------------------------------
+
               this.navCtrl.setRoot(this.navCtrl.getActive().component);
             }
           });
