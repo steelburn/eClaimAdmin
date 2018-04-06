@@ -143,10 +143,25 @@ export class MileagesetupPage {
       });
       this.loading.present();
 
-      //Clear all storage values-------------------------------
-      localStorage.removeItem("Prev_Category");
-      localStorage.removeItem("Prev_TenantGuid");
-      localStorage.removeItem("Prev_RateDate");
+      //Clear localStorage value--------------------------------
+      if (localStorage.getItem('Prev_Category') == null) {
+        localStorage.setItem('Prev_Category', null);
+      }
+      else {
+        localStorage.removeItem("Prev_Category");
+      }
+      if (localStorage.getItem('Prev_TenantGuid') == null) {
+        localStorage.setItem('Prev_TenantGuid', null);
+      }
+      else {
+        localStorage.removeItem("Prev_TenantGuid");
+      }
+      if (localStorage.getItem('Prev_RateDate') == null) {
+        localStorage.setItem('Prev_RateDate', null);
+      }
+      else {
+        localStorage.removeItem("Prev_RateDate");
+      }
 
       //fill all the tenant details----------------------------
       if (localStorage.getItem("g_USER_GUID") == "sva") {
