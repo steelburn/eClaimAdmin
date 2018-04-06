@@ -13,127 +13,138 @@
 <ion-content padding>
   <ion-fab top right edge>
     <button ion-fab mini (click)="AddSocClick()">
-        <ion-icon name="add"></ion-icon>
+      <ion-icon name="add"></ion-icon>
     </button>
-</ion-fab>
+  </ion-fab>
 
 
-<ion-list>
-  <ion-item>
+  <ion-list>
+    <ion-item>
       <table class="Tabler">
-          <tr class="linedsg TColor">
-              <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
-              <th class="lgl1">{{ 'SOC_NUMBER' | translate }}</th>
-              <th class="lgl1">{{ 'PROJECT_NAME' | translate }}</th>
-              <th class="lgl1">{{ 'CUSTOMER_NAME' | translate }}</th>
-              <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
-          </tr>
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
+          <th class="lgl1">{{ 'SOC_NUMBER' | translate }}</th>
+          <th class="lgl1">{{ 'PROJECT_NAME' | translate }}</th>
+          <th class="lgl1">{{ 'CUSTOMER_NAME' | translate }}</th>
+          <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
+        </tr>
 
-          <tr class="col7" *ngFor="let soc of socs; let i=index">
-            <td class="lgl1">{{i+1}}</td>
-            <td class="lgl1">{{soc.soc}}</td>
-            <td class="lgl1">{{soc.project_name}}</td>
-            <td class="lgl1">{{soc.customer_name}}</td>
-
-            <td class="lgl1 fColor">
-              <button ion-button item-end (click)="EditClick(soc.TENANT_GUID)">
-                  <ion-icon name="md-create"></ion-icon>
-              </button>
-              <!-- <button ion-button item-end><ion-icon (click)="EditClick(soc.SOC_GUID)" name="md-create"></ion-icon></button> -->
-              <!-- <button ion-button item-end><ion-icon name="md-close"></ion-icon></button> -->
-              <button ion-button item-end (click)="DeleteClick(soc.TENANT_GUID)">
-                <ion-icon name="md-close"></ion-icon>
+        <tr class="col7" *ngFor="let soc of socs; let i=index">
+          <td class="lgl1">{{i+1}}</td>
+          <td class="lgl1">{{soc.soc}}</td>
+          <td class="lgl1">{{soc.project_name}}</td>
+          <td class="lgl1">{{soc.customer_name}}</td>
+          <td class="lgl1" *ngIf="AdminLogin">{{soc.TENANT_ACCOUNT_NAME}}</td>
+          <td class="lgl1 fColor">
+            <!-- <button ion-button item-end (click)="EditClick(soc.TENANT_GUID)">
+              <ion-icon name="md-create"></ion-icon>
             </button>
+            <button ion-button item-end (click)="DeleteClick(soc.TENANT_GUID)">
+              <ion-icon name="md-close"></ion-icon>
+            </button> -->
+            <button ion-button item-end><ion-icon (click)="EditClick(soc.SOC_GUID)" name="md-create"></ion-icon></button> -->
+            <button ion-button item-end><ion-icon name="md-close" (click)="DeleteClick(soc.TENANT_GUID)"></ion-icon></button>            
           </td>
         </tr>
-              
+
       </table>
-  </ion-item>
-</ion-list>
+    </ion-item>
+  </ion-list>
 
 
-<div class="blackcontainer" *ngIf="AddSocClicked">
-</div>
-<div class="popup" padding *ngIf="AddSocClicked">
+  <div class="blackcontainer" *ngIf="AddSocClicked">
+  </div>
+  <div class="popup" padding *ngIf="AddSocClicked">
 
-  <ion-card class="cm">
+    <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">
 
-          <div class="icHeaderText">REGISTER NEW SOC NUMBER</div>
-          <button class="btnR" (click)="CloseSocClick()">
-              <ion-icon name="md-close"></ion-icon>
-          </button>
+        <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW SOC NUMBER</div>
+        <div class="icHeaderText" *ngIf="Edit_Form">UPDATE SOC NUMBER</div>
+
+        <button class="btnR" (click)="CloseSocClick()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+
       </ion-card-header>
+
       <ion-list class="scroll">
-          <form  [formGroup]="Socform">
+        <form [formGroup]="Socform">
+          <ion-item *ngIf="AdminLogin">
+            <ion-label stacked>{{"TENANT"}}</ion-label>
+            <ion-select formControlName="TENANT_NAME" [(ngModel)]="Tenant_Add_ngModel" placeholder="{{'Please fill the Tenant'}}">
+              <ion-option *ngFor="let tenant of tenants" value="{{tenant.TENANT_GUID}}">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
+            </ion-select>
+          </ion-item>
 
-            <ion-item>
-              <ion-label stacked>{{ 'SOC_NUMBER' | translate }}</ion-label>
-              <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Add" placeholder="{{'Please fill the soc no'}}"></ion-input>
-            </ion-item>
-            
-            <ion-item>
-              <ion-label stacked>{{ 'PROJECT_NAME' | translate }}</ion-label>
-              <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label stacked>{{ 'SOC_NUMBER' | translate }}</ion-label>
+            <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Add" placeholder="{{'Please fill the soc no'}}"></ion-input>
+          </ion-item>
 
-            <ion-item>
-              <ion-label stacked>{{ 'CUSTOMER_NAME' | translate }}</ion-label>
-              <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label stacked>{{ 'PROJECT_NAME' | translate }}</ion-label>
+            <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
+          </ion-item>
 
-              <div class="btn">
-                  <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Socform.valid" (click)="Save()">Submit</button>
-              </div>
+          <ion-item>
+            <ion-label stacked>{{ 'CUSTOMER_NAME' | translate }}</ion-label>
+            <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
+          </ion-item>
 
-          </form>
+          <div class="btn">
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Socform.valid" (click)="Save()">Submit</button>
+          </div>
+
+        </form>
       </ion-list>
-  </ion-card>
+    </ion-card>
 
-</div>
-<!-- add Tenant form end-->
+  </div>
+  <!-- add Tenant form end-->
 
 
-<!-- Edit -->
-<div class="blackcontainer" *ngIf="EditSocClicked">
-</div>
-<div class="popup" padding *ngIf="EditSocClicked">
+  <!-- Edit -->
+  <div class="blackcontainer" *ngIf="EditSocClicked">
+  </div>
+  <div class="popup" padding *ngIf="EditSocClicked">
 
-  <ion-card class="cm">
+    <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">
 
-          <div class="icHeaderText">UPDATE SOC NUMBER</div>
-          <button class="btnR" (click)="CloseSocClick()">
-              <ion-icon name="md-close"></ion-icon>
-          </button>
+        <div class="icHeaderText">UPDATE SOC NUMBER</div>
+        <button class="btnR" (click)="CloseSocClick()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
       </ion-card-header>
       <ion-list class="scroll">
-          <form  [formGroup]="Socform">
+        <form [formGroup]="Socform">
 
-            <ion-item>
-              <ion-label stacked>{{ 'SOC_NUMBER' | translate }}</ion-label>
-              <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Edit" placeholder="{{'Please fill the soc no'}}"></ion-input>
-            </ion-item>
-            
-            <ion-item>
-              <ion-label stacked>{{ 'PROJECT_NAME' | translate }}</ion-label>
-              <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Edit" placeholder="{{'Please fill the project name'}}"></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label stacked>{{ 'SOC_NUMBER' | translate }}</ion-label>
+            <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Edit" placeholder="{{'Please fill the soc no'}}"></ion-input>
+          </ion-item>
 
-            <ion-item>
-              <ion-label stacked>{{ 'CUSTOMER_NAME' | translate }}</ion-label>
-              <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Edit" placeholder="{{'Please fill the project name'}}"></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label stacked>{{ 'PROJECT_NAME' | translate }}</ion-label>
+            <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Edit" placeholder="{{'Please fill the project name'}}"></ion-input>
+          </ion-item>
 
-              <div class="btn">
-                  <button ion-button class="bgColor-grey fontColor-white btnStyle1"  (click)="Update(soc_details_main.TENANT_GUID)">Submit</button>
-              </div>
+          <ion-item>
+            <ion-label stacked>{{ 'CUSTOMER_NAME' | translate }}</ion-label>
+            <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Edit" placeholder="{{'Please fill the project name'}}"></ion-input>
+          </ion-item>
 
-          </form>
+          <div class="btn">
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(soc_details_main.TENANT_GUID)">Submit</button>
+          </div>
+
+        </form>
       </ion-list>
-  </ion-card>
+    </ion-card>
 
-</div>
+  </div>
 
 
 </ion-content>
