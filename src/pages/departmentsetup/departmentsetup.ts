@@ -35,7 +35,6 @@ export class DepartmentsetupPage {
   public departments: DepartmentSetup_Model[] = [];
 
   public AddDepartmentClicked: boolean = false;
-  public EditDepartmentClicked: boolean = false;
   public Exist_Record: boolean = false;
 
   public department_details: any;
@@ -44,11 +43,6 @@ export class DepartmentsetupPage {
   //Set the Model Name for Add------------------------------------------
   public NAME_ngModel_Add: any;
   public DESCRIPTION_ngModel_Add: any;
-  //---------------------------------------------------------------------
-
-  //Set the Model Name for edit------------------------------------------
-  public NAME_ngModel_Edit: any;
-  public DESCRIPTION_ngModel_Edit: any;
   //---------------------------------------------------------------------
 
   Tenant_Add_ngModel: any;
@@ -137,9 +131,19 @@ export class DepartmentsetupPage {
       });
       this.loading.present();
 
-      //Clear all storage values-------------------------------
-      localStorage.removeItem("Prev_Name");
-      localStorage.removeItem("Prev_TenantGuid");
+      //Clear localStorage value--------------------------------
+      if (localStorage.getItem('Prev_Name') == null) {
+        localStorage.setItem('Prev_Name', null);
+      }
+      else {
+        localStorage.removeItem("Prev_Name");
+      }
+      if (localStorage.getItem('Prev_TenantGuid') == null) {
+        localStorage.setItem('Prev_TenantGuid', null);
+      }
+      else {
+        localStorage.removeItem("Prev_TenantGuid");
+      }
 
       //fill all the tenant details----------------------------
       if (localStorage.getItem("g_USER_GUID") == "sva") {

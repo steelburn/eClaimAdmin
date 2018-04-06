@@ -178,11 +178,34 @@ export class SocRegistrationPage {
       });
       this.loading.present();
 
-      //Clear all storage values-------------------------------
-      localStorage.removeItem("PREV_TENANT_GUID");
-      localStorage.removeItem("PREV_SOC_NO");
-      localStorage.removeItem("PREV_PROJECT_NAME");
-      localStorage.removeItem("PREV_CUSTOMER_NAME");
+      //Clear localStorage value--------------------------------      
+      if (localStorage.getItem('PREV_TENANT_GUID') == null) {
+        localStorage.setItem('PREV_TENANT_GUID', null);
+      }
+      else {
+        localStorage.removeItem("PREV_TENANT_GUID");
+      }
+
+      if (localStorage.getItem('PREV_SOC_NO') == null) {
+        localStorage.setItem('PREV_SOC_NO', null);
+      }
+      else {
+        localStorage.removeItem("PREV_SOC_NO");
+      }
+
+      if (localStorage.getItem('PREV_PROJECT_NAME') == null) {
+        localStorage.setItem('PREV_PROJECT_NAME', null);
+      }
+      else {
+        localStorage.removeItem("PREV_PROJECT_NAME");
+      }
+
+      if (localStorage.getItem('PREV_CUSTOMER_NAME') == null) {
+        localStorage.setItem('PREV_CUSTOMER_NAME', null);
+      }
+      else {
+        localStorage.removeItem("PREV_CUSTOMER_NAME");
+      }      
 
       //fill all the tenant details----------------------------
       if (localStorage.getItem("g_USER_GUID") == "sva") {
