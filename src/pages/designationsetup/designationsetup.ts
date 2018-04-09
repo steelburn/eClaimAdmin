@@ -131,9 +131,19 @@ export class DesignationsetupPage {
       });
       this.loading.present();
 
-      //Clear all storage values-------------------------------
-      localStorage.removeItem("Prev_Name");
-      localStorage.removeItem("Prev_TenantGuid");
+      //Clear localStorage value--------------------------------
+      if (localStorage.getItem('Prev_Name') == null) {
+        localStorage.setItem('Prev_Name', null);
+      }
+      else {
+        localStorage.removeItem("Prev_Name");
+      }
+      if (localStorage.getItem('Prev_TenantGuid') == null) {
+        localStorage.setItem('Prev_TenantGuid', null);
+      }
+      else {
+        localStorage.removeItem("Prev_TenantGuid");
+      }
 
       //fill all the tenant details----------------------------
       if (localStorage.getItem("g_USER_GUID") == "sva") {
