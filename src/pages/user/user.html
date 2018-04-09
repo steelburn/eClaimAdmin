@@ -948,6 +948,11 @@
                         <ion-input type="text" formControlName="EDU_YEAR" [(ngModel)]="User_EduYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}"></ion-input>
                     </ion-item>
 
+                    <div class="form-group">                        
+                        <input type="file" id="avatar2" (change)="onFileChange($event, 'avatar2')" #fileInput>
+                        <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+                      </div>
+
                     <!-- <ion-item>
                         <ion-label id="certificate_image" color="primary" stacked>ATTACHEMENT</ion-label>
                         <ion-input type="file" accept="image/*" (change)="ProfileImageDisplay($event)"></ion-input>
@@ -955,11 +960,6 @@
                     <button ion-button icon-left (click)="UploadCertificate()">
                         <ion-icon name="cloud-upload"></ion-icon>ATTACH
                     </button> -->
-
-
-
-
-
 
                     <div class="eClaimSubTitle2">
                         <b>PROFESSIONAL CERTIFICATIONS</b>

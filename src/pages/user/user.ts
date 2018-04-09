@@ -272,7 +272,7 @@ export class UserPage {
     this.ClearControls();
 
     this.loading = this.loadingCtrl.create({
-      content: 'Loading...',
+     // content: 'Loading...',
     });
     this.loading.present();
 
@@ -488,7 +488,7 @@ export class UserPage {
   } 
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: Transfer, public toastCtrl: ToastController, public platform: Platform, private fileTransfer_new: FileTransfer) {
-    this.ProfileImageGet();
+    //this.ProfileImageGet();
     if (localStorage.getItem("g_USER_GUID") != null) {
       //---------Bind Designation-----------------      
       this.GetDesignation("main_designation", "NAME");
@@ -774,7 +774,7 @@ clearFile(fileChoose: string) {
 
   BindGrid(ViewName: string) {
     this.loading = this.loadingCtrl.create({
-      content: 'Loading...',
+      //content: 'Loading...',
     });
     this.loading.present();
 
@@ -1287,6 +1287,7 @@ clearFile(fileChoose: string) {
       this.usermain_entry.LOGIN_ID = this.User_LoginId_ngModel.trim();
       this.usermain_entry.PASSWORD = this.User_Password_ngModel.trim();
       this.usermain_entry.EMAIL = this.User_Email_ngModel.trim();
+      
       this.usermain_entry.ACTIVATION_FLAG = 1;
       this.usermain_entry.CREATION_TS = new Date().toISOString();
       this.usermain_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
@@ -1302,7 +1303,9 @@ clearFile(fileChoose: string) {
               console.table(resJson)
               let imageResult = this.SaveImageinDB(this.fileName1);
               imageResult.then((objImage: ImageUpload_model) => {
-                let result = this.Save_User_Info(objImage.Image_Guid);             
+                let result = this.Save_User_Info(objImage.Image_Guid); 
+                debugger   
+                alert("User Main inserted");         
               })
             })          
           }
@@ -1331,6 +1334,8 @@ clearFile(fileChoose: string) {
 
       this.usermain_entry.UPDATE_TS = new Date().toISOString();
       this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+      // alert(this.usermain_entry.EMAIL);
+      // alert(this.User_Email_ngModel);
 
       this.userservice.update_user_main(this.usermain_entry)
         .subscribe((response) => {
@@ -1399,6 +1404,7 @@ clearFile(fileChoose: string) {
       .subscribe((response) => {
         if (response.status == 200) {          
           this.Save_User_Address();
+          alert("User Info inserted");
         }
       });
       return new Promise((resolve, reject) => {
@@ -1433,9 +1439,9 @@ clearFile(fileChoose: string) {
     this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_Edit_ngModel;
     this.userinfo_entry.DEPT_GUID = this.User_Department_Edit_ngModel;
     this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_Edit_ngModel;
-    this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_Edit_ngModel.trim();
+    this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_Edit_ngModel;
     this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_Edit_ngModel;
-    this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_Edit_ngModel.trim();
+    this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_Edit_ngModel;
     this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.User_Branch_Edit_ngModel;
 
     this.userinfo_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
@@ -1447,16 +1453,16 @@ clearFile(fileChoose: string) {
     // this.userinfo_entry.POST_CODE
     // this.userinfo_entry.COUNTRY_GUID
     // this.userinfo_entry.STATE_GUID
-    this.userinfo_entry.EMG_CONTACT_NAME_1 = this.User_EMG_CONTACT_NAME1_Edit_ngModel.trim();
-    this.userinfo_entry.EMG_RELATIONSHIP_1 = this.User_EMG_RELATIONSHIP_Edit_ngModel.trim();
-    this.userinfo_entry.EMG_CONTACT_NUMBER_1 = this.User_EMG_CONTACT_NO1_Edit_ngModel.trim();
-    this.userinfo_entry.EMG_CONTACT_NAME_2 = this.User_EMG_CONTACT_NAME2_Edit_ngModel.trim();
-    this.userinfo_entry.EMG_RELATIONSHIP_2 = this.User_EMG_RELATIONSHIP2_Edit_ngModel.trim();
-    this.userinfo_entry.EMG_CONTACT_NUMBER_2 = this.User_EMG_CONTACT_NO2_Edit_ngModel.trim();
-    this.userinfo_entry.PR_EPF_NUMBER = this.User_EPF_NUMBER_Edit_ngModel.trim();
-    this.userinfo_entry.PR_INCOMETAX_NUMBER = this.User_INCOMETAX_NO_Edit_ngModel.trim();
+    this.userinfo_entry.EMG_CONTACT_NAME_1 = this.User_EMG_CONTACT_NAME1_Edit_ngModel;
+    this.userinfo_entry.EMG_RELATIONSHIP_1 = this.User_EMG_RELATIONSHIP_Edit_ngModel;
+    this.userinfo_entry.EMG_CONTACT_NUMBER_1 = this.User_EMG_CONTACT_NO1_Edit_ngModel;
+    this.userinfo_entry.EMG_CONTACT_NAME_2 = this.User_EMG_CONTACT_NAME2_Edit_ngModel;
+    this.userinfo_entry.EMG_RELATIONSHIP_2 = this.User_EMG_RELATIONSHIP2_Edit_ngModel;
+    this.userinfo_entry.EMG_CONTACT_NUMBER_2 = this.User_EMG_CONTACT_NO2_Edit_ngModel;
+    this.userinfo_entry.PR_EPF_NUMBER = this.User_EPF_NUMBER_Edit_ngModel;
+    this.userinfo_entry.PR_INCOMETAX_NUMBER = this.User_INCOMETAX_NO_Edit_ngModel;
     this.userinfo_entry.BANK_GUID = this.User_BANK_NAME_Edit_ngModel;
-    this.userinfo_entry.PR_ACCOUNT_NUMBER = this.User_ACCOUNT_NUMBER_Edit_ngModel.trim();
+    this.userinfo_entry.PR_ACCOUNT_NUMBER = this.User_ACCOUNT_NUMBER_Edit_ngModel;
 
     this.userservice.update_user_info(this.userinfo_entry)
       .subscribe((response) => {
@@ -1470,21 +1476,22 @@ clearFile(fileChoose: string) {
     this.useraddress_entry.USER_ADDRESS_GUID = UUID.UUID();
     this.useraddress_entry.USER_GUID = this.usermain_entry.USER_GUID;
     //ADDRESS_TYPE
-    this.useraddress_entry.USER_ADDRESS1 = this.User_Address1_ngModel.trim();
-    this.useraddress_entry.USER_ADDRESS2 = this.User_Address2_ngModel.trim();
-    this.useraddress_entry.USER_ADDRESS3 = this.User_Address3_ngModel.trim();
+    this.useraddress_entry.USER_ADDRESS1 = this.User_Address1_ngModel;
+    this.useraddress_entry.USER_ADDRESS2 = this.User_Address2_ngModel;
+    this.useraddress_entry.USER_ADDRESS3 = this.User_Address3_ngModel;
     this.useraddress_entry.CREATION_TS = new Date().toISOString();
     this.useraddress_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.useraddress_entry.UPDATE_TS = new Date().toISOString();
     this.useraddress_entry.UPDATE_USER_GUID = "";
-    this.useraddress_entry.POST_CODE = this.User_PostCode_ngModel.trim();
-    this.useraddress_entry.COUNTRY_GUID = this.User_Country_ngModel.trim();
-    this.useraddress_entry.STATE_GUID = this.User_State_ngModel.trim();
+    this.useraddress_entry.POST_CODE = this.User_PostCode_ngModel;
+    this.useraddress_entry.COUNTRY_GUID = this.User_Country_ngModel;
+    this.useraddress_entry.STATE_GUID = this.User_State_ngModel;
     this.userservice.save_user_address(this.useraddress_entry)
 
       .subscribe((response) => {
         if (response.status == 200) {          
           this.Save_User_Company();
+          alert("User Address inserted");
         }
       });
   }
@@ -1493,9 +1500,9 @@ clearFile(fileChoose: string) {
     this.useraddress_entry.USER_ADDRESS_GUID = this.USER_GUID_FOR_ADDRESS;
     this.useraddress_entry.USER_GUID = this.usermain_entry.USER_GUID;
     //ADDRESS_TYPE
-    this.useraddress_entry.USER_ADDRESS1 = this.User_Address1_Edit_ngModel.trim();
-    this.useraddress_entry.USER_ADDRESS2 = this.User_Address2_Edit_ngModel.trim();
-    this.useraddress_entry.USER_ADDRESS3 = this.User_Address3_Edit_ngModel.trim();
+    this.useraddress_entry.USER_ADDRESS1 = this.User_Address1_Edit_ngModel;
+    this.useraddress_entry.USER_ADDRESS2 = this.User_Address2_Edit_ngModel;
+    this.useraddress_entry.USER_ADDRESS3 = this.User_Address3_Edit_ngModel;
 
     this.useraddress_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
     this.useraddress_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
@@ -1503,15 +1510,17 @@ clearFile(fileChoose: string) {
     this.useraddress_entry.UPDATE_TS = new Date().toISOString();
     this.useraddress_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
-    this.useraddress_entry.POST_CODE = this.User_PostCode_Edit_ngModel.trim();
+    this.useraddress_entry.POST_CODE = this.User_PostCode_Edit_ngModel;
     this.useraddress_entry.COUNTRY_GUID = this.User_Country_Edit_ngModel;
     this.useraddress_entry.STATE_GUID = this.User_State_Edit_ngModel;
+    //alert(this.User_Address3_Edit_ngModel);
 
     this.userservice.update_user_address(this.useraddress_entry)
       .subscribe((response) => {
         if (response.status == 200) {
           //alert('3');
           this.Update_User_Company();
+          alert(this.useraddress_entry.USER_ADDRESS2);
         }
       });
   }
@@ -1519,8 +1528,8 @@ clearFile(fileChoose: string) {
   Save_User_Company() {
     this.usercompany_entry.USER_COMPANY_GUID = UUID.UUID();
     this.usercompany_entry.USER_GUID = this.usermain_entry.USER_GUID;
-    this.usercompany_entry.TENANT_COMPANY_SITE_GUID = this.User_Branch_ngModel.trim();
-    this.usercompany_entry.COMPANY_CONTACT_NO = this.User_CompanyNo_ngModel.trim();
+    this.usercompany_entry.TENANT_COMPANY_SITE_GUID = this.User_Branch_ngModel;
+    this.usercompany_entry.COMPANY_CONTACT_NO = this.User_CompanyNo_ngModel;
     this.usercompany_entry.CREATION_TS = new Date().toISOString();
     this.usercompany_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.usercompany_entry.UPDATE_TS = new Date().toISOString();
@@ -1530,6 +1539,7 @@ clearFile(fileChoose: string) {
       .subscribe((response) => {
         if (response.status == 200) {          
           this.Save_User_Contact();
+          alert("User Company inserted");
         }
       });
   }
@@ -1538,7 +1548,7 @@ clearFile(fileChoose: string) {
     this.usercompany_entry.USER_COMPANY_GUID = this.USER_GUID_FOR_COMPANY_CONTACT;
     this.usercompany_entry.USER_GUID = this.usermain_entry.USER_GUID;
     this.usercompany_entry.TENANT_COMPANY_SITE_GUID = this.User_Branch_Edit_ngModel;
-    this.usercompany_entry.COMPANY_CONTACT_NO = this.User_CompanyNo_Edit_ngModel.trim();
+    this.usercompany_entry.COMPANY_CONTACT_NO = this.User_CompanyNo_Edit_ngModel;
 
     this.usercompany_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
     this.usercompany_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
@@ -1572,7 +1582,8 @@ clearFile(fileChoose: string) {
             console.table(resJson)
             let imageResult = this.SaveImageinDB(this.fileName2);
             imageResult.then((objImage: ImageUpload_model) => {
-              let result = this.Save_User_Qualification(objImage.Image_Guid);             
+              let result = this.Save_User_Qualification(objImage.Image_Guid);    
+              alert("User Contact inserted");         
             })
           })    
           //this.Save_User_Qualification()
@@ -1581,7 +1592,7 @@ clearFile(fileChoose: string) {
   }
 
   Update_User_Contact() {
-    this.usercontact_entry.CONTACT_NO = this.User_PersonalNo_Edit_ngModel.trim();
+    this.usercontact_entry.CONTACT_NO = this.User_PersonalNo_Edit_ngModel;
     this.usercontact_entry.CONTACT_INFO_GUID = this.USER_GUID_FOR_CONTACT;
     this.usercontact_entry.USER_GUID = this.usermain_entry.USER_GUID;
 
@@ -1594,8 +1605,15 @@ clearFile(fileChoose: string) {
     this.userservice.update_user_contact(this.usercontact_entry)
       .subscribe((response) => {
         if (response.status == 200) {
-          //alert('5');
-          this.Update_User_Qualification()
+          let uploadImage = this.UploadImage('avatar2', this.fileName2);
+          uploadImage.then((resJson) => {
+            console.table(resJson)
+            let imageResult = this.SaveImageinDB(this.fileName2);
+            imageResult.then((objImage: ImageUpload_model) => {
+              let result = this.Update_User_Qualification(objImage.Image_Guid);             
+            })
+          })    
+          //this.Update_User_Qualification()
         }
       });
   }
@@ -1603,19 +1621,19 @@ clearFile(fileChoose: string) {
   Save_User_Qualification(imageGUID: string) {
     let userqualification_entry: UserQualification_Model = new UserQualification_Model();
     this.userqualification_entry.USER_QUALIFICATION_GUID = UUID.UUID();
-    this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_ngModel.trim();
+    this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_ngModel;
     //this.userqualification_entry.QUALIFICATION_GUID = "";
     this.userqualification_entry.USER_GUID = this.usermain_entry.USER_GUID;
     this.userqualification_entry.CREATION_TS = new Date().toISOString();
     this.userqualification_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.userqualification_entry.UPDATE_TS = new Date().toISOString();
     this.userqualification_entry.UPDATE_USER_GUID = "",
-      this.userqualification_entry.HIGHEST_QUALIFICATION = this.User_HighestQualification_ngModel.trim();
+      this.userqualification_entry.HIGHEST_QUALIFICATION = this.User_HighestQualification_ngModel;
       
     //this.userqualification_entry.HIGHEST_QUALIFICATION = "";
-    this.userqualification_entry.MAJOR = this.User_Major_ngModel.trim();
-    this.userqualification_entry.UNIVERSITY = this.User_University_ngModel.trim();
-    this.userqualification_entry.YEAR = this.User_EduYear_ngModel.trim()
+    this.userqualification_entry.MAJOR = this.User_Major_ngModel;
+    this.userqualification_entry.UNIVERSITY = this.User_University_ngModel;
+    this.userqualification_entry.YEAR = this.User_EduYear_ngModel;
     this.userqualification_entry.ATTACHMENT = imageGUID;
     console.log(imageGUID);
 
@@ -1629,7 +1647,8 @@ clearFile(fileChoose: string) {
             console.table(resJson)
             let imageResult = this.SaveImageinDB(this.fileName3);
             imageResult.then((objImage: ImageUpload_model) => {
-              let result = this.Save_User_Certification(objImage.Image_Guid);             
+              let result = this.Save_User_Certification(objImage.Image_Guid);     
+              alert("User Qualification inserted");        
             })
           })
 
@@ -1653,7 +1672,8 @@ clearFile(fileChoose: string) {
         });
   }
 
-  Update_User_Qualification() {
+  Update_User_Qualification(imageGUID: string) {
+    let userqualification_entry: UserQualification_Model = new UserQualification_Model();
     this.userqualification_entry.USER_QUALIFICATION_GUID = this.USER_QUALIFICATION_GUID_FOR_UPDATE;
     this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_ngModel;
     //this.userqualification_entry.QUALIFICATION_GUID = "";
@@ -1666,23 +1686,42 @@ clearFile(fileChoose: string) {
     this.userqualification_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID"),
 
       this.userqualification_entry.HIGHEST_QUALIFICATION = this.User_HighestQualification_Edit_ngModel;
-    this.userqualification_entry.MAJOR = this.User_Major_Edit_ngModel.trim();
-    this.userqualification_entry.UNIVERSITY = this.User_University_Edit_ngModel.trim();
+    this.userqualification_entry.MAJOR = this.User_Major_Edit_ngModel;
+    this.userqualification_entry.UNIVERSITY = this.User_University_Edit_ngModel;
     this.userqualification_entry.YEAR = this.User_EduYear_Edit_ngModel;
-    this.userqualification_entry.ATTACHMENT = "";
+    this.userqualification_entry.ATTACHMENT = imageGUID;
 
     this.userservice.update_user_qualification(this.userqualification_entry)
       .subscribe(
         (response) => {
           if (response.status == 200) {
 
-            this.Update_User_Certification();
+            let uploadImage = this.UploadImage('avatar3', this.fileName3);
+          uploadImage.then((resJson) => {
+            console.table(resJson)
+            let imageResult = this.SaveImageinDB(this.fileName3);
+            imageResult.then((objImage: ImageUpload_model) => {
+              let result = this.Update_User_Certification(objImage.Image_Guid);             
+            })
+          })
+
+            //this.Update_User_Certification();
             this.Update_User_Spouse();
             this.Update_User_Children();
 
             alert('User Updated Successfully!!');
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
+        });
+
+        return new Promise((resolve, reject) => {
+          this.api.postData('user_qualification', userqualification_entry.toJson(true)).subscribe((data) => {
+           
+            let res = data.json();
+            console.log(res)
+            let ClaimRequestMainIdType2 = res["resource"][0].USER_QUALIFICATION_GUID;
+            resolve(ClaimRequestMainIdType2);
+          })
         });
   }
 
@@ -1710,6 +1749,7 @@ clearFile(fileChoose: string) {
 
               // alert('User Inserted Successfully!!');
               // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              alert("User Certification inserted");
             }
           });
 
@@ -1725,7 +1765,7 @@ clearFile(fileChoose: string) {
     }
   }
 
-  Update_User_Certification() {
+  Update_User_Certification(imageGUID: string) {
     //first Delete all the records------------------------------------------------------------    
     this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_certification")
       .subscribe(
@@ -1739,6 +1779,7 @@ clearFile(fileChoose: string) {
               this.UserCertification_Entry.grade = this.ProfessionalCertification[item]["GRADE"];
               this.UserCertification_Entry.passing_year = this.ProfessionalCertification[item]["YEAR"];
               this.UserCertification_Entry.user_guid = this.usermain_entry.USER_GUID;
+              this.UserCertification_Entry.attachment = imageGUID;
 
               this.UserCertification_Entry.creation_ts = this.usermain_entry.CREATION_TS;
               this.UserCertification_Entry.creation_user_guid = this.usermain_entry.CREATION_USER_GUID;
@@ -1778,6 +1819,7 @@ clearFile(fileChoose: string) {
 
               // alert('User Inserted Successfully!!');
               // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              alert("User Spouse inserted");
             }
           });
     }
@@ -1836,6 +1878,7 @@ clearFile(fileChoose: string) {
             if (response.status == 200) {
               // alert('User Inserted Successfully!!');
               // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              alert("User Child inserted");
             }
           });
     }
@@ -2076,7 +2119,7 @@ clearFile(fileChoose: string) {
   }
 
   Update(USER_GUID: any) {
-    if (this.Userform) {
+    if (this.Userform) {     
       this.loading = this.loadingCtrl.create({
         content: 'Please wait...',
       });
@@ -2521,15 +2564,15 @@ clearFile(fileChoose: string) {
   baseUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/files/eclaim/car1.jpg' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 
 
-  private ProfileImageGet(){
-    this.http
-    .get(this.baseUrl)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.ImageField = data.resource;
-      console.table(this.ImageField);
-    });
-  }
+  // private ProfileImageGet(){
+  //   this.http
+  //   .get(this.baseUrl)
+  //   .map(res => res.json())
+  //   .subscribe(data => {
+  //     this.ImageField = data.resource;
+  //     console.table(this.ImageField);
+  //   });
+  // }
 
 
   // private ProfileImageDisplay(e: any): void {
@@ -2575,57 +2618,57 @@ clearFile(fileChoose: string) {
 
   //}
 
-  uploadProfileImage() {
-    let url = "http://api.zen.com.my/api/v2/files/" + this.fileList[0]["name"] + "?check_exist=false"
-    var targetPath = "../../assets/img/";
-    var filename = this.fileList[0]["name"];
-    var options = {
-      fileKey: "ionicfile",
-      fileName: "ica-slidebox-img-1.png",
-      chunkedMode: false,
-      mimeType: "multipart/form-data",
-      params: { 'fileName': filename },
-      headers: { 'Content-Type': 'application/json', 'X-Dreamfactory-API-Key': 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881' }
-    };
+  // uploadProfileImage() {
+  //   let url = "http://api.zen.com.my/api/v2/files/" + this.fileList[0]["name"] + "?check_exist=false"
+  //   var targetPath = "../../assets/img/";
+  //   var filename = this.fileList[0]["name"];
+  //   var options = {
+  //     fileKey: "ionicfile",
+  //     fileName: "ica-slidebox-img-1.png",
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': filename },
+  //     headers: { 'Content-Type': 'application/json', 'X-Dreamfactory-API-Key': 'cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881' }
+  //   };
 
-    const fileTransfer: TransferObject = this.transfer.create();
-    this.loading = this.loadingCtrl.create({
-      content: 'Uploading...',
-    });
-    this.loading.present();
+  //   const fileTransfer: TransferObject = this.transfer.create();
+  //   this.loading = this.loadingCtrl.create({
+  //     content: 'Uploading...',
+  //   });
+  //   this.loading.present();
 
-    fileTransfer.upload(targetPath, url, options).then(data => {
-      this.loading.dismissAll()
-      this.presentToast('Image succesful uploaded.');
-    }, err => {
-      this.loading.dismissAll()
-      this.presentToast('Error while uploading file.');
-    });
-  }
+  //   fileTransfer.upload(targetPath, url, options).then(data => {
+  //     this.loading.dismissAll()
+  //     this.presentToast('Image succesful uploaded.');
+  //   }, err => {
+  //     this.loading.dismissAll()
+  //     this.presentToast('Error while uploading file.');
+  //   });
+  // }
 
-  UploadProfilePicture() {
-    debugger;
-    const fileTransfer: TransferObject = this.transfer.create();
+  // UploadProfilePicture() {
+  //   debugger;
+  //   const fileTransfer: TransferObject = this.transfer.create();
 
-    let url = "http://api.zen.com.my/api/v2/files/" + "ica-slidebox-img-1.png" + "?check_exist=false"
-    let options: FileUploadOptions = {
-      fileKey: 'file',
-      fileName: 'ica-slidebox-img-1.png',
-      chunkedMode: false,
-      mimeType: "multipart/form-data",
-      params: { 'fileName': 'ica-slidebox-img-1.png' },
-      headers: { 'Content-Type': 'application/json', 'X-Dreamfactory-API-Key': constants.DREAMFACTORY_API_KEY }
-    }
-    //fileTransfer.upload(this.ProfileImage, url, options1)
-    fileTransfer.upload("../../assets/img/ica-slidebox-img-1.png", url, options)
-      .then((data) => {
-        // success
-        alert("success");
-      }, (err) => {
-        // error
-        alert("error" + JSON.stringify(err));
-      });
-  }
+  //   let url = "http://api.zen.com.my/api/v2/files/" + "ica-slidebox-img-1.png" + "?check_exist=false"
+  //   let options: FileUploadOptions = {
+  //     fileKey: 'file',
+  //     fileName: 'ica-slidebox-img-1.png',
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': 'ica-slidebox-img-1.png' },
+  //     headers: { 'Content-Type': 'application/json', 'X-Dreamfactory-API-Key': constants.DREAMFACTORY_API_KEY }
+  //   }
+  //   //fileTransfer.upload(this.ProfileImage, url, options1)
+  //   fileTransfer.upload("../../assets/img/ica-slidebox-img-1.png", url, options)
+  //     .then((data) => {
+  //       // success
+  //       alert("success");
+  //     }, (err) => {
+  //       // error
+  //       alert("error" + JSON.stringify(err));
+  //     });
+  // }
   
   DisplayFamily(){
     if(this.User_Marital_ngModel == "1"){
