@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController,  Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -12,6 +12,8 @@ import { DepartmentSetup_Service } from '../../services/departmentsetup_service'
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
+import { LoginPage } from '../login/login';
+
 /**
  * Generated class for the DepartmentsetupPage page.
  *
@@ -33,7 +35,6 @@ export class DepartmentsetupPage {
   public departments: DepartmentSetup_Model[] = [];
 
   public AddDepartmentClicked: boolean = false;
-  public EditDepartmentClicked: boolean = false;
   public Exist_Record: boolean = false;
 
   public department_details: any;
@@ -44,22 +45,17 @@ export class DepartmentsetupPage {
   public DESCRIPTION_ngModel_Add: any;
   //---------------------------------------------------------------------
 
-  //Set the Model Name for edit------------------------------------------
-  public NAME_ngModel_Edit: any;
-  public DESCRIPTION_ngModel_Edit: any;
-  //---------------------------------------------------------------------
-
   Tenant_Add_ngModel: any;
   AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
   tenants: any;
   Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
 
   public AddDepartmentClick() {
-    if(this.Edit_Form == false){
+    if (this.Edit_Form == false) {
       this.AddDepartmentClicked = true; this.Add_Form = true; this.Edit_Form = false;
       this.ClearControls();
     }
-    else{
+    else {
       alert('Sorry !! You are in Edit Mode.');
     }
   }
@@ -125,56 +121,71 @@ export class DepartmentsetupPage {
 
   loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private departmentsetupservice: DepartmentSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
-    this.loading = this.loadingCtrl.create({
-      content: 'Loading...',
-    });
-    this.loading.present();
+    if (localStorage.getItem("g_USER_GUID") == null) {
+      alert('Sorry !! Please Login.');
+      this.navCtrl.push(LoginPage);
+    }
+    else {
+      this.loading = this.loadingCtrl.create({
+        content: 'Loading...',
+      });
+      this.loading.present();
 
-    //Clear all storage values-------------------------------
-    localStorage.removeItem("Prev_Name");
-    localStorage.removeItem("Prev_TenantGuid");
+      //Clear localStorage value--------------------------------
+      if (localStorage.getItem('Prev_Name') == null) {
+        localStorage.setItem('Prev_Name', null);
+      }
+      else {
+        localStorage.removeItem("Prev_Name");
+      }
+      if (localStorage.getItem('Prev_TenantGuid') == null) {
+        localStorage.setItem('Prev_TenantGuid', null);
+      }
+      else {
+        localStorage.removeItem("Prev_TenantGuid");
+      }
 
-    //fill all the tenant details----------------------------
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
-      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      //fill all the tenant details----------------------------
+      if (localStorage.getItem("g_USER_GUID") == "sva") {
+        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+        this.http
+          .get(tenantUrl)
+          .map(res => res.json())
+          .subscribe(data => {
+            this.tenants = data.resource;
+          });
+        this.AdminLogin = true;
+      }
+      else {
+        this.AdminLogin = false;
+      }
+
+      //Display Grid---------------------------------------------
+      if (localStorage.getItem("g_USER_GUID") == "sva") {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.AdminLogin = true;
+      }
+      else {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.AdminLogin = false;
+      }
+
       this.http
-        .get(tenantUrl)
+        .get(this.baseResourceUrl)
         .map(res => res.json())
         .subscribe(data => {
-          this.tenants = data.resource;
+          this.departments = data.resource;
+
+          this.loading.dismissAll();
         });
-      this.AdminLogin = true;
-    }
-    else {
-      this.AdminLogin = false;
-    }
+      //-------------------------------------------------------
 
-    //Display Grid---------------------------------------------
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.AdminLogin = true;
-    }
-    else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.AdminLogin = false;
-    }
-
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.departments = data.resource;
-        
-        this.loading.dismissAll();
+      this.Departmentform = fb.group({
+        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TENANT_NAME: [null],
       });
-    //-------------------------------------------------------
-
-    this.Departmentform = fb.group({
-      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      TENANT_NAME: [null],
-    });
-
+    }
   }
 
   ionViewDidLoad() {
@@ -219,7 +230,7 @@ export class DepartmentsetupPage {
       else {
         this.department_entry.TENANT_GUID = this.Tenant_Add_ngModel;
       }
-      
+
       //Load the Controller--------------------------------
       this.loading = this.loadingCtrl.create({
         content: 'Please wait...',
@@ -227,7 +238,7 @@ export class DepartmentsetupPage {
       this.loading.present();
       //--------------------------------------------------
 
-      if (this.NAME_ngModel_Add.trim() != localStorage.getItem('Prev_Name') || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
+      if (this.NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_Name').toUpperCase() || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
         let val = this.CheckDuplicate();
         val.then((res) => {
           if (res.toString() == "0") {
@@ -243,7 +254,7 @@ export class DepartmentsetupPage {
                     localStorage.removeItem("Prev_Name");
                     localStorage.removeItem("Prev_TenantGuid");
                     //------------------------------------------------------------------
-                    
+
                     this.navCtrl.setRoot(this.navCtrl.getActive().component);
                   }
                 });
@@ -260,7 +271,7 @@ export class DepartmentsetupPage {
                     localStorage.removeItem("Prev_Name");
                     localStorage.removeItem("Prev_TenantGuid");
                     //------------------------------------------------------------------
-                    
+
                     this.navCtrl.setRoot(this.navCtrl.getActive().component);
                   }
                 });
@@ -291,7 +302,7 @@ export class DepartmentsetupPage {
               this.navCtrl.setRoot(this.navCtrl.getActive().component);
             }
           });
-      }    
+      }
     }
   }
 

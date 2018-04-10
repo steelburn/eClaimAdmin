@@ -12,6 +12,7 @@ import { DesignationSetup_Service } from '../../services/designationsetup_servic
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the DesignationsetupPage page.
@@ -120,55 +121,70 @@ export class DesignationsetupPage {
 
   loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private designationsetupservice: DesignationSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
-    this.loading = this.loadingCtrl.create({
-      content: 'Loading...',
-    });
-    this.loading.present();
+    if (localStorage.getItem("g_USER_GUID") == null) {
+      alert('Sorry !! Please Login.');
+      this.navCtrl.push(LoginPage);
+    }
+    else {
+      this.loading = this.loadingCtrl.create({
+        content: 'Loading...',
+      });
+      this.loading.present();
 
-    //Clear all storage values-------------------------------
-    localStorage.removeItem("Prev_Name");
-    localStorage.removeItem("Prev_TenantGuid");
+      //Clear localStorage value--------------------------------
+      if (localStorage.getItem('Prev_Name') == null) {
+        localStorage.setItem('Prev_Name', null);
+      }
+      else {
+        localStorage.removeItem("Prev_Name");
+      }
+      if (localStorage.getItem('Prev_TenantGuid') == null) {
+        localStorage.setItem('Prev_TenantGuid', null);
+      }
+      else {
+        localStorage.removeItem("Prev_TenantGuid");
+      }
 
-    //fill all the tenant details----------------------------
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
-      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      //fill all the tenant details----------------------------
+      if (localStorage.getItem("g_USER_GUID") == "sva") {
+        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+        this.http
+          .get(tenantUrl)
+          .map(res => res.json())
+          .subscribe(data => {
+            this.tenants = data.resource;
+          });
+        this.AdminLogin = true;
+      }
+      else {
+        this.AdminLogin = false;
+      }
+
+      //Display Grid---------------------------------------------
+      if (localStorage.getItem("g_USER_GUID") == "sva") {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_designation_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.AdminLogin = true;
+      }
+      else {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_designation_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.AdminLogin = false;
+      }
+
       this.http
-        .get(tenantUrl)
+        .get(this.baseResourceUrl)
         .map(res => res.json())
         .subscribe(data => {
-          this.tenants = data.resource;
-
+          this.designations = data.resource;
           this.loading.dismissAll();
         });
-      this.AdminLogin = true;
-    }
-    else {
-      this.AdminLogin = false;
-    }
+      //-------------------------------------------------------
 
-    //Display Grid---------------------------------------------
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_designation_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.AdminLogin = true;
-    }
-    else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_designation_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.AdminLogin = false;
-    }
-
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.designations = data.resource;
+      this.Designationform = fb.group({
+        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TENANT_NAME: [null],
       });
-    //-------------------------------------------------------
-
-    this.Designationform = fb.group({
-      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      TENANT_NAME: [null],
-    });
+    }
   }
 
   ionViewDidLoad() {
@@ -221,7 +237,7 @@ export class DesignationsetupPage {
       this.loading.present();
       //--------------------------------------------------
 
-      if (this.NAME_ngModel_Add.trim() != localStorage.getItem('Prev_Name') || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
+      if (this.NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_Name').toUpperCase() || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
         let val = this.CheckDuplicate();
         val.then((res) => {
           if (res.toString() == "0") {

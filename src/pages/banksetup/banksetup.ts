@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController,  Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -13,6 +13,7 @@ import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
 import { GlobalFunction } from '../../shared/GlobalFunction';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the BanksetupPage page.
@@ -49,11 +50,11 @@ export class BanksetupPage {
   //---------------------------------------------------------------------
 
   public AddBanksClick() {
-    if(this.Edit_Form == false){
-    this.AddBanksClicked = true; this.Add_Form = true; this.Edit_Form = false;
-    this.ClearControls();
+    if (this.Edit_Form == false) {
+      this.AddBanksClicked = true; this.Add_Form = true; this.Edit_Form = false;
+      this.ClearControls();
     }
-    else{
+    else {
       alert('Sorry !! You are in Edit Mode.');
     }
   }
@@ -120,52 +121,68 @@ export class BanksetupPage {
 
   loading: Loading;
   constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController) {
-    this.loading = this.loadingCtrl.create({
-      content: 'Loading...',
-    });
-    this.loading.present();
+    if (localStorage.getItem("g_USER_GUID") == null) {
+      alert('Sorry !! Please Login.');
+      this.navCtrl.push(LoginPage);
+    }
+    else {
+      this.loading = this.loadingCtrl.create({
+        content: 'Loading...',
+      });
+      this.loading.present();
 
-    //Clear all storage values-------------------------------
-    localStorage.removeItem("Prev_Name");
-    localStorage.removeItem("Prev_TenantGuid");
+      //Clear localStorage value--------------------------------
+      if (localStorage.getItem('Prev_Name') == null) {
+        localStorage.setItem('Prev_Name', null);
+      }
+      else {
+        localStorage.removeItem("Prev_Name");
+      }
+      if (localStorage.getItem('Prev_TenantGuid') == null) {
+        localStorage.setItem('Prev_TenantGuid', null);
+      }
+      else {
+        localStorage.removeItem("Prev_TenantGuid");
+      }
+      
+      //fill all the tenant details----------------------------
+      if (localStorage.getItem("g_USER_GUID") == "sva") {
+        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+        this.http
+          .get(tenantUrl)
+          .map(res => res.json())
+          .subscribe(data => {
+            this.tenants = data.resource;
+          });
 
-    //fill all the tenant details----------------------------
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
-      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+        this.AdminLogin = true;
+      }
+      else {
+        this.AdminLogin = false;
+      }
+
+      //Display Grid---------------------------------------------
+      let view_url: string = "";
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_bank_details' + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      }
+      else {
+        view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_bank_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+      }
       this.http
-        .get(tenantUrl)
+        .get(view_url)
         .map(res => res.json())
         .subscribe(data => {
-          this.tenants = data.resource;
+          this.banks = data.resource;
+
+          this.loading.dismissAll();
         });
-
-      this.AdminLogin = true;
-    }
-    else {
-      this.AdminLogin = false;
-    }
-
-    //Display Grid---------------------------------------------
-    let view_url: string = "";
-    if (localStorage.getItem("g_USER_GUID") != "sva") {
-      view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_bank_details' + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    }
-    else {
-      view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_bank_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-    }
-    this.http
-      .get(view_url)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.banks = data.resource;
-
-        this.loading.dismissAll();
+      //----------------------------------------------------------
+      this.Bankform = fb.group({
+        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TENANT_NAME: [null],
       });
-    //----------------------------------------------------------
-    this.Bankform = fb.group({
-      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      TENANT_NAME: [null],
-    });
+    }
   }
 
   ionViewDidLoad() {
@@ -216,7 +233,7 @@ export class BanksetupPage {
       this.loading.present();
       //--------------------------------------------------
 
-      if (this.NAME_ngModel_Add.trim() != localStorage.getItem('Prev_Name') || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
+      if (this.NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_Name').toUpperCase() || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
         let val = this.CheckDuplicate();
         val.then((res) => {
           if (res.toString() == "0") {
