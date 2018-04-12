@@ -178,10 +178,18 @@ export class BanksetupPage {
           this.loading.dismissAll();
         });
       //----------------------------------------------------------
-      this.Bankform = fb.group({
-        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        TENANT_NAME: [null],
-      });
+
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.Bankform = fb.group({
+          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],         
+        });
+      }
+      else{
+        this.Bankform = fb.group({
+          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          TENANT_NAME: [null, Validators.required],
+        });
+      }
     }
   }
 

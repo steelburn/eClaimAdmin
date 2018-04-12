@@ -178,12 +178,19 @@ export class DesignationsetupPage {
           this.loading.dismissAll();
         });
       //-------------------------------------------------------
-
-      this.Designationform = fb.group({
-        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        TENANT_NAME: [null],
-      });
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.Designationform = fb.group({
+          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          DESCRIPTION: [null],
+        });
+      }
+      else {
+        this.Designationform = fb.group({
+          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          DESCRIPTION: [null],
+          TENANT_NAME: [null, Validators.required],
+        });
+      }
     }
   }
 
