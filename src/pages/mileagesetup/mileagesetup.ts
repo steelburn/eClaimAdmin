@@ -132,8 +132,8 @@ export class MileagesetupPage {
   }
 
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private mileagesetupservice: MileageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {    
-    if (localStorage.getItem("g_USER_GUID") == null){
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private mileagesetupservice: MileageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
@@ -198,14 +198,24 @@ export class MileagesetupPage {
         });
       //-------------------------------------------------------
 
-      this.Mileageform = fb.group({
-        CATEGORY: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        RATE_PER_UNIT: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        RATE_DATE: ["", Validators.required],
-        ACTIVATION_FLAG: ["", Validators.required],
-        TENANT_NAME: [null],
-      });
-    }    
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.Mileageform = fb.group({
+          CATEGORY: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          RATE_PER_UNIT: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          RATE_DATE: ["", Validators.required],
+          ACTIVATION_FLAG: [""],
+        });
+      }
+      else {
+        this.Mileageform = fb.group({
+          CATEGORY: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          RATE_PER_UNIT: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          RATE_DATE: ["", Validators.required],
+          ACTIVATION_FLAG: [""],
+          TENANT_NAME: [null, Validators.required],
+        });
+      }
+    }
   }
 
   ionViewDidLoad() {
