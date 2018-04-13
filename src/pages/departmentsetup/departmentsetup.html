@@ -13,36 +13,41 @@
 
 
 <ion-content padding>
-    <ion-fab top right edge>
-      <button ion-fab mini (click)="AddDepartmentClick()"><ion-icon name="add"></ion-icon></button>
-    </ion-fab>
-    
-    <ion-list>
-      <ion-item>
-          <table class="Tabler">
-              <tr class="linedsg TColor">
-                  <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
-                  <th class="lgl1">{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</th>
-                  <!-- <th class="lgl1">{{ 'DEPARTMENT_CLAIM_COMPANY' | translate }}</th> -->
-                  <th class="lgl1">{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</th>
-                  <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
-  
-              </tr>
-  
-              <tr class="col7" *ngFor="let department of departments; let i=index">
-                  <td class="lgl1">{{i+1}}</td>
-                  <td class="lgl1">{{department.NAME}}</td>
-                  <!-- <td class="lgl1">{{department.COMPANY}}</td> -->
-                  <td class="lgl1">{{department.DESCRIPTION}}</td>
-                  <td class="lgl1 fColor">
-                      <button ion-button item-end  (click)="EditClick(department.DEPARTMENT_GUID)"><ion-icon name="md-create"></ion-icon></button>
-                      <button ion-button item-end (click)="DeleteClick(department.DEPARTMENT_GUID)"><ion-icon name="md-close"></ion-icon></button>
-                  </td>
-              </tr>
-  
-  
-          </table>
-      </ion-item>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="AddDepartmentClick()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-list>
+    <ion-item>
+      <table class="Tabler">
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
+          <th class="lgl1">{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</th>
+          <th class="lgl1">{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</th>
+          <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
+        </tr>
+
+        <tr class="col7" *ngFor="let department of departments; let i=index">
+          <td class="lgl1">{{i+1}}</td>
+          <td class="lgl1">{{department.NAME}}</td>
+          <td class="lgl1">{{department.DESCRIPTION}}</td>
+          <td class="lgl1" *ngIf="AdminLogin">{{department.TENANT_ACCOUNT_NAME}}</td>
+          <td class="lgl1 fColor">
+            <button ion-button item-end (click)="EditClick(department.DEPARTMENT_GUID)">
+              <ion-icon name="md-create"></ion-icon>
+            </button>
+            <button ion-button item-end (click)="DeleteClick(department.DEPARTMENT_GUID)">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+          </td>
+        </tr>
+
+
+      </table>
+    </ion-item>
   </ion-list>
 
   <!-- add department form start-->
@@ -52,80 +57,39 @@
 
     <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">
-
-        <div class="icHeaderText">REGISTER NEW DEPARTMENT</div>
+        
+        <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW DEPARTMENT</div>
+        <div class="icHeaderText" *ngIf="Edit_Form">UPDATE DEPARTMENT</div>
+        
         <button class="btnR" (click)="CloseDepartmentClick()">
-          <ion-icon name="md-close"></ion-icon> 
+          <ion-icon name="md-close"></ion-icon>
         </button>
 
       </ion-card-header>
 
       <ion-list>
         <form [formGroup]="Departmentform">
-          <ion-item>
-            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" 
-            placeholder="{{'Please fill in the tittle of department'}}"></ion-input>
+          <ion-item *ngIf="AdminLogin">
+            <ion-label stacked>{{"TENANT"}}</ion-label>
+            <ion-select formControlName="TENANT_NAME" [(ngModel)]="Tenant_Add_ngModel" placeholder="{{'Please fill the Tenant'}}">
+              <ion-option *ngFor="let tenant of tenants" value="{{tenant.TENANT_GUID}}">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
+            </ion-select>
           </ion-item>
 
-          <!-- <ion-item>
-            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_COMPANY' | translate }}</ion-label>
-            <ion-input type="text" formControlName="COMPANY" [(ngModel)]="COMPANY_ngModel_Add" 
-            placeholder="{{'Please fill in the company ame of department'}}"></ion-input>
-          </ion-item> -->
+          <ion-item>
+            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</ion-label>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the tittle of department'}}"></ion-input>
+          </ion-item>
 
           <ion-item>
             <ion-label stacked>{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</ion-label>
-            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" 
-            placeholder="{{'Please fill in the description'}}"></ion-input>
+            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Departmentform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Departmentform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+          </div>
         </form>
       </ion-list>
     </ion-card>
   </div>
-
-  <!-- edit claimtype form start-->
-   <div class="blackcontainer" *ngIf="EditDepartmentClicked">
-  </div>
-  <div class="popup" padding *ngIf="EditDepartmentClicked">
-    <ion-card class="cm">
-      <ion-card-header class="icTitle headerColor-white ">
-        <div class="icHeaderText">UPDATE DEPARTMENT</div>
-        <button class="btnR" (click)="CloseDepartmentClick()">
-          <ion-icon name="md-close"></ion-icon> 
-        </button>
-      </ion-card-header>
-
-      <ion-list>
-        <form [formGroup]="Departmentform">
-          <ion-item>
-            
-            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" 
-             placeholder="{{'Please fill in the tittle in the department'}}"></ion-input>
-          </ion-item>
-
-
-          <!-- <ion-item>
-            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_COMPANY' | translate }}</ion-label>
-            <ion-input type="text" formControlName="COMPANY" [(ngModel)]="COMPANY_ngModel_Edit" 
-            placeholder="{{'Please fill in the company name of the department'}}"></ion-input>
-          </ion-item> -->
-
-          <ion-item>
-            <ion-label stacked>{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</ion-label>
-            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit"
-             placeholder="{{'Please fill in the description'}}"></ion-input>
-          </ion-item>
-          <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(department_details.DEPARTMENT_GUID)">{{"SUBMIT" | translate}}</button></div>
-        </form>
-      </ion-list>
-    </ion-card>
-  </div> 
-  <!-- edit bank form end-->
-
- 
 </ion-content>

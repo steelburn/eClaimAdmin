@@ -126,7 +126,7 @@
           </ion-item>
 
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT" | translate}}</button>
           </div>
         </form>
         <!-- [disabled]="!Moduleform.valid" -->

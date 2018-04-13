@@ -12,8 +12,7 @@ import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
 
 import * as constants from '../../app/config/constants';
 import { UserInfo_Model } from '../../models/usersetup_info_model';

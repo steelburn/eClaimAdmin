@@ -157,46 +157,46 @@
           <div style="width: 47%; display:inline-table !important;">
             <ion-card class="cb5 contentHeight3">
               <ion-row>
-                <ion-item class="lgl1 bgColor-lightGrey posRelative">
+                <ion-item class="lgl1">
                   <ion-label item-start>{{"AVAILABLE MODULES" | translate}}</ion-label>
-                  <button item-end ion-button color="primary" class="posAbsolute fullHeight topZero rightZero btnStyle2 marginZero" (click)="SelectAllAvailableModule()">
+                  <button item-end ion-button color="primary" (click)="SelectAllAvailableModule()">
                     <ion-icon name="ios-arrow-forward"></ion-icon>
                   </button>
                 </ion-item>
               </ion-row>
-              <div class="contentHeight3 overflowTrue">
+   
                 <ion-list>
                   <ion-item *ngFor="let module of modules">
                     <ion-label>{{module.NAME}}</ion-label>
                     <ion-checkbox color="secondary" checked="false" (ionChange)="SelectFromAvailbleModule($event, module)" item-end></ion-checkbox>
                   </ion-item>
                 </ion-list>
-              </div>
+    
             </ion-card>
           </div>
 
           <div style="width: 47%; display:inline-table !important;">
-            <ion-card class="cb5 contentHeight3">
+            <ion-card class="cb5">
               <ion-row>
-                <ion-item class="lgl1 bgColor-lightGrey posRelative">
+                <ion-item class="lgl1">
                   <ion-label item-start>{{"ASSIGNED MODULES" | translate}}</ion-label>
-                  <button item-end ion-button color="primary" class="posAbsolute fullHeight topZero rightZero btnStyle2 marginZero" (click)="SelectAllAssignedModule()">
+                  <button item-end ion-button color="primary" (click)="SelectAllAssignedModule()">
                     <ion-icon name="ios-arrow-back"></ion-icon>
                   </button>
                 </ion-item>
               </ion-row>
-              <div class="contentHeight3 overflowTrue">
+      
                 <ion-list>
                   <ion-item *ngFor="let module_assigned of Module_Assign">
                     <ion-label>{{module_assigned.MODULE_NAME}}</ion-label>
                     <ion-checkbox color="secondary" checked="false" (ionChange)="RemoveSelectionFromAssignedModule($event,module_assigned)" item-end></ion-checkbox>
                   </ion-item>
                 </ion-list>
-              </div>
+      
             </ion-card>
           </div>
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Rolemoduleform.valid" (click)="Update_RoleModule()">{{"SUBMIT" | translate}}</button>
+            <button ion-button [disabled]="!Rolemoduleform.valid" (click)="Update_RoleModule()">{{"SUBMIT" | translate}}</button>
           </div>
         </form>
 

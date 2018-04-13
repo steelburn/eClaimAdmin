@@ -1,7 +1,9 @@
 page-banksetup {
     
     }
-
+    ion-fab[top1] {
+        top: 0 !important;
+    }
 
     .blackcontainer{
         top: 0;
@@ -14,7 +16,7 @@ page-banksetup {
     }
     
     .popup{
-        width: 96%;
+        width: 97%;
         top: 60px;
         position: fixed;
             height: 500px;
@@ -125,8 +127,8 @@ page-banksetup {
     
     .eClaimSubTitle2 {
         color: black;
-        font-size: 16px;
-        margin-left: 20px;
+        font-size: 18px;
+        margin-left: 15px;
         margin-top: 10px;
         width: 100%;
     } 
