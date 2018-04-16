@@ -56,11 +56,11 @@
       <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
       <button ion-button type="button" (click)="clearFile()">clear file</button>
     </ion-item>
-
+   
     <div class="btn">
         <button ion-button (click)='saveIm()' [disabled]="Printform.invalid || loading" >{{ 'SUBMIT' }}</button>
-    </div>
-     
+    </div>    
+
 
   </form>
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { Services } from '../Services';
 import { TranslateService } from '@ngx-translate/core';
-import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -11,6 +10,11 @@ import * as constants from '../../config/constants';
 // import { BaseHttpService } from '../../services/base-http';
 import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view.component';
+import { EntertainmentClaimViewPage } from '../../pages/entertainment-claim-view/entertainment-claim-view';
+import { MedicalClaimViewPage } from '../../pages/medical-claim-view/medical-claim-view';
+import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-claim-view';
+import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-view';
+import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
 
 @IonicPage()
 @Component({
@@ -25,7 +29,9 @@ export class ApproverTaskListPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
-    this.claimrefguid = '243b6b02-ff10-6ad4-3907-4d3ee899644f'
+    //this.claimrefguid = '243b6b02-ff10-6ad4-3907-4d3ee899644f'
+    this.claimrefguid = '7f595e19-3e20-b9ee-8505-a86215278eb1'
+    // this.claimrefguid = 'c9623104-ac0c-e811-0fbf-eb9864ec263c'
     // this.claimrefguid = 'd9a3c051-e674-7c5b-81c4-dd9cd2f89b26'
     //this.claimrefguid = 'fdadf529-5277-28ef-8298-b176c38d9ebb'
     // this.claimrefguid = 'eb341cca-cf4d-8b69-d66a-b5d01e06a77b'
@@ -69,12 +75,12 @@ export class ApproverTaskListPage {
 
   viewClaim(claimRequestGUID: string,level:number) {
     console.log(claimRequestGUID)
-    this.navCtrl.push(TravelClaimViewPage, {
-      // this.navCtrl.push(EntertainmentClaimViewPage, {
-        // this.navCtrl.push(MedicalClaimViewPage, {
-          // this.navCtrl.push(OvertimeClaimViewPage, {
-            // this.navCtrl.push(PrintClaimViewPage, {
-              // this.navCtrl.push(GiftClaimViewPage, {
+    //this.navCtrl.push(TravelClaimViewPage, {
+       //this.navCtrl.push(EntertainmentClaimViewPage, {
+         //this.navCtrl.push(MedicalClaimViewPage, {
+           this.navCtrl.push(OvertimeClaimViewPage, {
+             //this.navCtrl.push(PrintClaimViewPage, {
+               //this.navCtrl.push(GiftClaimViewPage, {
       cr_GUID: claimRequestGUID,
       level_no: level,
       approver_GUID : localStorage.getItem('g_USER_GUID')

@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { PrintingClaimViewPage } from './printing-claim-view';
+import { PrintClaimViewPage } from './print-claim-view';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    PrintingClaimViewPage,
+    PrintClaimViewPage,
   ],
   imports: [
-    IonicPageModule.forChild(PrintingClaimViewPage),
+    IonicPageModule.forChild(PrintClaimViewPage),  TranslateModule.forChild()
   ],
 })
 export class PrintClaimViewPageModule {}

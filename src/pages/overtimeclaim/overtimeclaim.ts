@@ -53,21 +53,21 @@ export class OvertimeclaimPage {
   Travelform: FormGroup;
 
   items: string[];  
-  Travel_Date_ngModel: any;
-  Travel_Description_ngModel: any;
+  OT_Date_ngModel: any;
+  OT_Description_ngModel: any;
   public assignedTo: any;
   public profileLevel: any; 
   public stage: any;
   public profileJSON: any;
 
 
-  public Travel_SOC_No_ngModel: any;
-  public Travel_ProjectName_ngModel: any;
-  public Travel_From_ngModel: any;
-  public Travel_Destination_ngModel: any;
-  public Travel_Distance_ngModel: any;
-  public Travel_Mode_ngModel: any;
-  Travel_Amount_ngModel: any;
+  public OT_SOC_No_ngModel: any;
+  public OT_ProjectName_ngModel: any;
+  public OT_From_ngModel: any;
+  public OT_Destination_ngModel: any;
+  public OT_Distance_ngModel: any;
+  public OT_Mode_ngModel: any;
+  OT_Amount_ngModel: any;
   Project_Lookup_ngModel: any;
   Travel_Customer_ngModel: any;
   Customer_Lookup_ngModel: any;
@@ -128,25 +128,21 @@ export class OvertimeclaimPage {
           this.storeProjects.forEach(element => {
             if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
               this.Project_Lookup_ngModel = element.project_name
-              this.Travel_SOC_No_ngModel = element.soc
+              this.OT_SOC_No_ngModel = element.soc
             }
           });
-        }
-        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;  
-        this.Start_DT_ngModel = this.claimRequestData[0].START_TS;
-        this.End_DT_ngModel = this.claimRequestData[0].END_TS;      
+        }        
+        this.OT_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();         
+        this.Start_DT_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();          
+        this.End_DT_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
         // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+        this.OT_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+        this.OT_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
         // this.vehicles.forEach(element => {
         //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
         //     this.Travel_Mode_ngModel = element.CATEGORY
         //   }
-        // });
-        console.table(this.claimRequestData)       
-        console.log(this.claimRequestData[0].DESCRIPTION)
-        console.log(this.Travel_Date_ngModel)
-        console.log(this.claimRequestData[0].TRAVEL_DATE)
+        // });       
       }
       );
   }
@@ -282,7 +278,7 @@ export class OvertimeclaimPage {
 }
 
   GetSocNo(item: any){
-    this.Travel_SOC_No_ngModel = item.soc;
+    this.OT_SOC_No_ngModel = item.soc;
     this.Project_Lookup_ngModel = item.project_name;
     this.Soc_GUID = item.SOC_GUID;
     this.CloseProjectLookup();
@@ -448,8 +444,8 @@ export class OvertimeclaimPage {
     let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date(this.Travel_Date_ngModel).getMonth() + 1;
-    let year = new Date(this.Travel_Date_ngModel).getFullYear();
+    let month = new Date(this.OT_Date_ngModel).getMonth() + 1;
+    let year = new Date(this.OT_Date_ngModel).getFullYear();
     let claimRefGUID;
     let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
     this.http
@@ -477,17 +473,17 @@ export class OvertimeclaimPage {
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             claimReqMainRef.CLAIM_TYPE_GUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
-            claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;
+            claimReqMainRef.TRAVEL_DATE = this.OT_Date_ngModel;
             claimReqMainRef.START_TS = this.Start_DT_ngModel;
             claimReqMainRef.END_TS = this.End_DT_ngModel;
-            claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+            claimReqMainRef.DESCRIPTION = this.OT_Description_ngModel;
             claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
             claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
             claimReqMainRef.STATUS = 'Pending';
             claimReqMainRef.STAGE = this.stage;
             //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
+            claimReqMainRef.CLAIM_AMOUNT = this.OT_Amount_ngModel
             claimReqMainRef.CREATION_TS = new Date().toISOString();
             claimReqMainRef.UPDATE_TS = new Date().toISOString();
             // claimReqMainRef.FROM = this.Travel_From_ngModel;
@@ -529,17 +525,17 @@ export class OvertimeclaimPage {
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
           claimReqMainRef.MILEAGE_GUID = this.VehicleId;
           claimReqMainRef.CLAIM_TYPE_GUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
-          claimReqMainRef.TRAVEL_DATE =  this.Travel_Date_ngModel;             
+          claimReqMainRef.TRAVEL_DATE =  this.OT_Date_ngModel;             
           claimReqMainRef.START_TS =this.Start_DT_ngModel;
           claimReqMainRef.END_TS =this.End_DT_ngModel;
-          claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+          claimReqMainRef.DESCRIPTION = this.OT_Description_ngModel;
           claimReqMainRef.ASSIGNED_TO = this.assignedTo;               
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
           claimReqMainRef.STATUS = 'Pending';
           claimReqMainRef.STAGE = this.stage;
           //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
-          claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+          claimReqMainRef.CLAIM_AMOUNT = this.OT_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
           // claimReqMainRef.FROM = this.Travel_From_ngModel;
