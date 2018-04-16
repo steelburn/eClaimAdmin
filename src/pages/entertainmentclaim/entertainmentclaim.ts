@@ -403,6 +403,7 @@ export class EntertainmentclaimPage {
 
   clearFile() {
     this.Entertainmentform.get('avatar').setValue(null);
+    console.log(this.fileInput);
     this.fileInput.nativeElement.value = '';
   }
 
