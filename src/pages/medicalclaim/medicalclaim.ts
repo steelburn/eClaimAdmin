@@ -46,7 +46,7 @@ export class MedicalclaimPage {
   loading = false;
   CloudFilePath: string;
   @ViewChild('fileInput') fileInput: ElementRef;
-  Travel_Amount_ngModel: any;
+  Medical_Amount_ngModel: any;
   travelAmount: any;
   validDate = new Date().toISOString();
   isCustomer: boolean = false;
@@ -58,8 +58,8 @@ export class MedicalclaimPage {
  
   
   userGUID: any;
-  Travel_Date_ngModel: any;
-  Travel_Description_ngModel: any;
+  Medical_Date_ngModel: any;
+  Medical_Description_ngModel: any;
   public assignedTo: any;
   public profileLevel: any; 
   public stage: any;
@@ -102,19 +102,16 @@ export class MedicalclaimPage {
         //     }
         //   });
         // }
-        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;         
+        //this.Medical_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
+        this.Medical_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();         
         // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+        this.Medical_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+        this.Medical_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
         // this.vehicles.forEach(element => {
         //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
         //     this.Travel_Mode_ngModel = element.CATEGORY
         //   }
-        // });
-        console.table(this.claimRequestData)       
-        console.log(this.claimRequestData[0].DESCRIPTION)
-        console.log(this.Travel_Date_ngModel)
-        console.log(this.claimRequestData[0].TRAVEL_DATE)
+        // });        
       }
       );
   }
@@ -279,9 +276,9 @@ export class MedicalclaimPage {
             // claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
             claimReqMainRef.CLAIM_TYPE_GUID = '40dbaf56-98e4-77b9-df95-85ec232ff714';
             claimReqMainRef.TRAVEL_DATE = this.travel_date;           
-            claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+            claimReqMainRef.DESCRIPTION = this.Medical_Description_ngModel;
             //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+            claimReqMainRef.CLAIM_AMOUNT = this.Medical_Amount_ngModel;
             claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
             claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
@@ -330,9 +327,9 @@ export class MedicalclaimPage {
           claimReqMainRef.TRAVEL_DATE =this.travel_date; 
           // claimReqMainRef.START_TS = value.start_DT;
           // claimReqMainRef.END_TS = value.end_DT;
-          claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+          claimReqMainRef.DESCRIPTION = this.Medical_Description_ngModel;
           //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
-          claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+          claimReqMainRef.CLAIM_AMOUNT = this.Medical_Amount_ngModel;
           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;

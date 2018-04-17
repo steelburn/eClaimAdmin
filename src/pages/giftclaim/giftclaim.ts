@@ -51,12 +51,12 @@ export class GiftclaimPage {
   
     items: string[];  
   
-    public Travel_SOC_No_ngModel: any;
-    public Travel_ProjectName_ngModel: any;    
+    public Gift_SOC_No_ngModel: any;
+    public Gift_ProjectName_ngModel: any;    
     // public Travel_Mode_ngModel: any;
-    Travel_Amount_ngModel: any;
+    Gift_Amount_ngModel: any;
     Project_Lookup_ngModel: any;
-    Travel_Customer_ngModel: any;
+    Gift_Customer_ngModel: any;
     Customer_Lookup_ngModel: any;
     Customer_GUID: any;
     Soc_GUID: any;
@@ -66,8 +66,8 @@ export class GiftclaimPage {
     public profileLevel: any; 
     public stage: any;
     public profileJSON: any;
-    Travel_Date_ngModel: any;
-    Travel_Description_ngModel: any;
+    Gift_Date_ngModel: any;
+    Gift_Description_ngModel: any;
   
   
     public socGUID : any;
@@ -120,24 +120,19 @@ export class GiftclaimPage {
           this.storeProjects.forEach(element => {
             if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
               this.Project_Lookup_ngModel = element.project_name
-              this.Travel_SOC_No_ngModel = element.soc
+              this.Gift_SOC_No_ngModel = element.soc
             }
           });
-        }
-        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;        
+        }       
+        this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();  
         // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+        this.Gift_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+        this.Gift_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
         // this.vehicles.forEach(element => {
         //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
         //     this.Travel_Mode_ngModel = element.CATEGORY
         //   }
-        // });
-        console.table(this.claimRequestData)
-        console.log(this.claimRequestData[0].SOC_GUID)
-        console.log(this.claimRequestData[0].DESCRIPTION)
-        console.log(this.Travel_Date_ngModel)
-        console.log(this.claimRequestData[0].TRAVEL_DATE)
+        // });       
       }
       );
   }
@@ -191,7 +186,7 @@ onFileChange(event: any) {
 }
 
 GetSocNo(item: any){
-  this.Travel_SOC_No_ngModel = item.soc;
+  this.Gift_SOC_No_ngModel = item.soc;
   this.Project_Lookup_ngModel = item.project_name;
   this.Soc_GUID = item.SOC_GUID;
   this.CloseProjectLookup();
@@ -448,8 +443,8 @@ clearFile() {
     let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date(this.Travel_Date_ngModel).getMonth() + 1;
-    let year = new Date(this.Travel_Date_ngModel).getFullYear();
+    let month = new Date(this.Gift_Date_ngModel).getMonth() + 1;
+    let year = new Date(this.Gift_Date_ngModel).getFullYear();
     let claimRefGUID;
     let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
     this.http
@@ -477,10 +472,10 @@ clearFile() {
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             claimReqMainRef.CLAIM_TYPE_GUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
-            claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;
+            claimReqMainRef.TRAVEL_DATE = this.Gift_Date_ngModel;
             // claimReqMainRef.START_TS = value.start_DT;
             // claimReqMainRef.END_TS = value.end_DT;
-            claimReqMainRef.DESCRIPTION =this.Travel_Description_ngModel;
+            claimReqMainRef.DESCRIPTION =this.Gift_Description_ngModel;
             claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
             claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
@@ -488,7 +483,7 @@ clearFile() {
             claimReqMainRef.STAGE = this.stage;
             claimReqMainRef.ATTACHMENT_ID = imageGUID;
             // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+            claimReqMainRef.CLAIM_AMOUNT = this.Gift_Amount_ngModel;
             claimReqMainRef.CREATION_TS = new Date().toISOString();
             claimReqMainRef.UPDATE_TS = new Date().toISOString();
             // claimReqMainRef.FROM = this.Travel_From_ngModel;
@@ -530,10 +525,10 @@ clearFile() {
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
           claimReqMainRef.MILEAGE_GUID = this.VehicleId;
           claimReqMainRef.CLAIM_TYPE_GUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
-          claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;
+          claimReqMainRef.TRAVEL_DATE = this.Gift_Date_ngModel;
           // claimReqMainRef.START_TS = value.start_DT;
           // claimReqMainRef.END_TS = value.end_DT;
-          claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+          claimReqMainRef.DESCRIPTION = this.Gift_Description_ngModel;
           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
@@ -541,7 +536,7 @@ clearFile() {
           claimReqMainRef.STAGE = this.stage;
           claimReqMainRef.ATTACHMENT_ID = imageGUID;
           // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
-          claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+          claimReqMainRef.CLAIM_AMOUNT = this.Gift_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
           // claimReqMainRef.FROM = this.Travel_From_ngModel;

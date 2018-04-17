@@ -114,7 +114,7 @@ export class TravelclaimPage {
      if (this.isFormEdit)
        this.GetDataforEdit();
    }
-
+  
    GetDataforEdit() {
     this.http
       .get(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
@@ -139,17 +139,30 @@ export class TravelclaimPage {
             }
           });
         }
-        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
+        //this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
+        this.Travel_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+        //this.Travel_Date_ngModel = this.claimRequestData[0]["TRAVEL_DATE"];       
+        //this.Travel_Date_ngModel = this.claimRequestData[0].START_TS;
+        this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();   
+        this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();     
+        //this.Travel_Date_ngModel = this.claimRequestData[0].END_TS;        
         this.Travel_From_ngModel = this.claimRequestData[0].FROM;
         this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
         this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
         //this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
-        this.Travel_Amount_ngModel = this.claimRequestData[0].CLAIM_AMOUNT;
+        //this.Travel_Amount_ngModel = this.claimRequestData[0].CLAIM_AMOUNT;
+        this.Travel_Amount_ngModel = '1015.00';
+        console.log(this.claimRequestData[0].CLAIM_AMOUNT);
+        //this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
         this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
-       
+        this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
+        console.log(this.claimRequestData[0].MILEAGE_GUID);
+       console.table(this.vehicles);
         this.vehicles.forEach(element => {
+          //alert('test');
           if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
-            this.Travel_Mode_ngModel = element.CATEGORY
+            this.Travel_Mode_ngModel = element.CATEGORY;
+            console.log(element.CATEGORY);
           }
         });
         console.table(this.claimRequestData)
@@ -506,18 +519,21 @@ export class TravelclaimPage {
             var postClaimRef = response.json();
             claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
 
+            let claimId = '58c59b56-289e-31a2-f708-138e81a9c823';
             let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
             claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
             claimReqMainRef.TENANT_GUID = tenantGUID;
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+            alert(this.VehicleId);
             claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
-            claimReqMainRef.TRAVEL_DATE = value.travel_date;
+            //claimReqMainRef.TRAVEL_DATE = value.travel_date;
+            claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;
             claimReqMainRef.START_TS = value.start_DT;
             claimReqMainRef.END_TS = value.end_DT;
             claimReqMainRef.DESCRIPTION = value.description;
-            claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
+            //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
+            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
             claimReqMainRef.CREATION_TS = new Date().toISOString();
             claimReqMainRef.UPDATE_TS = new Date().toISOString();
             claimReqMainRef.FROM = this.Travel_From_ngModel;
@@ -548,6 +564,7 @@ export class TravelclaimPage {
           })
         }
         else {
+          let claimId = '58c59b56-289e-31a2-f708-138e81a9c823';
           claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
 
           let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
@@ -555,12 +572,13 @@ export class TravelclaimPage {
           claimReqMainRef.TENANT_GUID = tenantGUID;
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
           claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+          alert(this.VehicleId);
           claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
           claimReqMainRef.TRAVEL_DATE = value.travel_date;
           claimReqMainRef.START_TS = value.start_DT;
           claimReqMainRef.END_TS = value.end_DT;
           claimReqMainRef.DESCRIPTION = value.description;
-          claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+          //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
@@ -658,7 +676,7 @@ export class TravelclaimPage {
     });
   }
 
-  readProfile() {
+  readProfile() {    
     return this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => {
       this.profileJSON = JSON.stringify(data);
       //levels: any[];
@@ -682,6 +700,8 @@ export class TravelclaimPage {
                       let userInfo: any[] = data["resource"]
                       userInfo.forEach(approverElm => {
                         this.stage = approverElm.DEPT_GUID
+                        console.log(approverElm.DEPT_GUID);
+                        console.log(this.stage);
                       });
                     });
                 });
@@ -708,7 +728,7 @@ export class TravelclaimPage {
                 });
               });
               
-          }
+          }         
         }
       });
     });

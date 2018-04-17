@@ -25,7 +25,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">
+  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">      
 
     <ion-list-header>
       Select Entertainment Claim For:
@@ -78,7 +78,7 @@
           {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
       </ion-item>
     </div>
-
+    
 
     <ion-item>
       <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
@@ -150,3 +150,4 @@
     </ion-card>
   </div>
 </ion-content>
+
