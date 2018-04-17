@@ -22,7 +22,7 @@
     </ion-fab>
 
 
-<!-- 
+    <!-- 
     <div class="eClaimSubTitle">
         <b>ACCOUNT DETAILS</b>
     </div> -->
@@ -63,7 +63,7 @@
             </table>
         </ion-item>
     </ion-list>
-<!-- 
+    <!-- 
     <div class="eClaimSubTitle">
         <b>HQ DETAILS</b>
     </div>
@@ -149,8 +149,9 @@
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
+                <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW TENANT</div>
+                <div class="icHeaderText" *ngIf="Edit_Form">UPDATE TENANT</div>
 
-                <div class="icHeaderText">REGISTER NEW TENANT</div>
                 <button class="btnR" (click)="CloseTenantClick()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>
@@ -304,8 +305,9 @@
     <div class="popup" padding *ngIf="AddTUserClicked">
 
         <ion-card class="cm">
-            <ion-card-header class="icTitle headerColor-white ">                
+            <ion-card-header class="icTitle headerColor-white ">
                 <div class="icHeaderText">ADD USER</div>
+
                 <button class="btnR" (click)="CloseTUserClick()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>
@@ -339,10 +341,10 @@
                             <td class="lgl1">{{tenantuser.EMAIL}}</td>
                             <td class="lgl1">{{tenantuser.ROLENAME}}</td>
                             <td class="lgl1 fColor">
-                                <button ion-button item-end>
+                                <button ion-button item-end (click)="EditUserClick(tenantuser.USER_GUID)">
                                     <ion-icon name="md-create"></ion-icon>
                                 </button>
-                                <button ion-button item-end>
+                                <button ion-button item-end (click)="DeleteUserClick(tenantuser.USER_GUID)">
                                     <ion-icon name="md-close"></ion-icon>
                                 </button>
 
@@ -367,7 +369,9 @@
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
 
-                <div class="icHeaderText">ASSIGN USER</div>
+                <div class="icHeaderText" *ngIf="Add_User_Form">ASSIGN USER</div>
+                <div class="icHeaderText" *ngIf="Edit_User_Form">UPDATE USER</div>
+
                 <button class="btnR" (click)="CloseTTUserClick()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>
