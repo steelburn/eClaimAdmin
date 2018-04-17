@@ -704,20 +704,20 @@ export class SetupguidePage {
       });
   }
 
-  Save_Tenant_User_Address() {
-
+  Save_User_Address() {
+    //Code for user_Address---------- 
   }
 
-  Save_Tenant_User_Contact() {
-
+  Save_User_Contact() {
+    //Code for user_contact---------- 
   }
 
-  Save_Tenant_User_Company() {
-
+  Save_User_Company() {
+    //Code for user_company---------- 
   }
 
-  Save_Tenant_User_Role() {
-
+  Save_User_Role() {
+    //Code for user_role---------- 
   }
 
   Save_Tenant_Main() {
