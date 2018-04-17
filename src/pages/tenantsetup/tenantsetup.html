@@ -337,7 +337,7 @@
                             <td class="lgl1">{{tenantuser.LOGIN_ID}}</td>
                             <td class="lgl1">{{tenantuser.PASSWORD}}</td>
                             <td class="lgl1">{{tenantuser.EMAIL}}</td>
-                            <td class="lgl1">ADMIN </td>
+                            <td class="lgl1">{{tenantuser.ROLENAME}}</td>
                             <td class="lgl1 fColor">
                                 <button ion-button item-end>
                                     <ion-icon name="md-create"></ion-icon>
@@ -390,15 +390,21 @@
 
                     </ion-item>
 
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label stacked>User Role</ion-label>
                         <ion-input type="text" formControlName="TUSERROLE" [(ngModel)]="User_Role_ngModel_Add" placeholder="{{'Please fill in the role of the user'}}"></ion-input>
+                    </ion-item> -->
 
+                    <ion-item>
+                        <ion-label stacked>{{"User Role"}}</ion-label>
+                        <ion-select formControlName="TUSERROLE" [(ngModel)]="User_Role_ngModel_Add" placeholder="{{'Please fill the Role'}}">
+                            <ion-option *ngFor="let role of roles" value="{{role.ROLE_GUID}}">{{role.NAME}}</ion-option>
+                        </ion-select>
                     </ion-item>
 
 
                     <div class="btn">
-                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Save_Tenant_User()">{{"SUBMIT" | translate}}</button>
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!TenantUSerform.valid" (click)="Save_Tenant_User()">{{"SUBMIT" | translate}}</button>
                     </div>
                 </form>
 

@@ -23,6 +23,7 @@ import { UserInfo_Model } from '../../models/usersetup_info_model';
 import { UserContact_Model } from '../../models/user_contact_model';
 import { UserCompany_Model } from '../../models/user_company_model';
 import { UserAddress_Model } from '../../models/usersetup_address_model';
+import { UserRole_Model } from '../../models/user_role_model'
 
 import { UserSetup_Service } from '../../services/usersetup_service';
 
@@ -52,6 +53,7 @@ export class TenantsetupPage {
   usercontact_entry: UserContact_Model = new UserContact_Model();
   usercompany_entry: UserCompany_Model = new UserCompany_Model();
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
+  userrole_entry: UserRole_Model = new UserRole_Model();
 
   Tenantform: FormGroup; TenantUSerform: FormGroup;
 
@@ -121,6 +123,7 @@ export class TenantsetupPage {
 
   public tenant_details: any;
   public exist_record_details: any;
+  public roles: any;
 
   public AddTenantClick() {
     this.AddTenantClicked = true;
@@ -247,6 +250,9 @@ export class TenantsetupPage {
           this.tenants = data.resource; //console.log(data.resource);
         });
 
+      //Bind Role----------------------------------------
+      this.BindRole();
+
       this.Tenantform = fb_tenant.group({
         //SITE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],      
         //REGISTRATION_NUM: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
@@ -268,11 +274,14 @@ export class TenantsetupPage {
         ADDRESS2: ["", Validators.required],
         ADDRESS3: ["", Validators.required],
         CONTACT_NO: ["", Validators.required],
-        EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
+        //EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
+        EMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
         CONTACT_PERSON: ["", Validators.required],
         CONTACT_PERSON_NO: ["", Validators.required],
-        CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
-        WEBSITE: ["", Validators.required],
+        //CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern('\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b'), Validators.required])],
+        CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+        //WEBSITE: ["", Validators.required],
+        WEBSITE: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],
         ISHQ_FLAG: ["", Validators.required],
         ACTIVE_FLAG: ["", Validators.required],
       });
@@ -281,7 +290,7 @@ export class TenantsetupPage {
         //-------------For Tenant User--------------------
         TULOGINID: ["", Validators.required],
         TUPASSWORD: ["", Validators.required],
-        TUEMAIL: ["", Validators.required],
+        TUEMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
         TUSERROLE: ["", Validators.required],
         //------------------------------------------------
       });
@@ -294,6 +303,16 @@ export class TenantsetupPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TenantsetupPage');
+  }
+
+  BindRole() {
+    let url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_role' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http
+      .get(url)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.roles = data.resource;
+      });
   }
 
   Save_Tenant_Main() {
@@ -481,6 +500,26 @@ export class TenantsetupPage {
     this.userservice.save_user_company(this.usercompany_entry)
       .subscribe((response) => {
         if (response.status == 200) {
+          // alert('Tenant User Registered successfully');
+          // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          this.Save_Tenant_User_Role();
+        }
+      });
+  }
+
+  Save_Tenant_User_Role() {
+    this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
+    this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    this.userrole_entry.ROLE_GUID = this.User_Role_ngModel_Add.trim();
+    this.userrole_entry.ACTIVATION_FLAG = "1";
+    this.userrole_entry.CREATION_TS = new Date().toISOString();
+    this.userrole_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.userrole_entry.UPDATE_TS = new Date().toISOString();
+    this.userrole_entry.UPDATE_USER_GUID = "";
+
+    this.userservice.save_user_role(this.userrole_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
           alert('Tenant User Registered successfully');
           this.navCtrl.setRoot(this.navCtrl.getActive().component);
         }
@@ -596,33 +635,33 @@ export class TenantsetupPage {
         this.http.get(url)
           .map(res => res.json())
           .subscribe(
-          data => {
-            let res = data["resource"];
-            console.log('Current Name : ' + this.SITE_NAME_ngModel_Edit.trim() + ', Previous Name : ' + localStorage.getItem('Prev_ten_Category'));
+            data => {
+              let res = data["resource"];
+              console.log('Current Name : ' + this.SITE_NAME_ngModel_Edit.trim() + ', Previous Name : ' + localStorage.getItem('Prev_ten_Category'));
 
-            if (res.length == 0) {
-              console.log("No records Found");
-              this.tenant_company_site_entry.SITE_NAME = this.SITE_NAME_ngModel_Edit.trim();
+              if (res.length == 0) {
+                console.log("No records Found");
+                this.tenant_company_site_entry.SITE_NAME = this.SITE_NAME_ngModel_Edit.trim();
 
-              //**************Update service if it is new details*************************
-              this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Tenant updated successfully');
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
-              //**************************************************************************
-            }
-            else {
-              console.log("Records Found");
-              alert("The Tenant is already Exist. ");
-            }
-          },
-          err => {
-            this.Exist_Record = false;
-            console.log("ERROR!: ", err);
-          });
+                //**************Update service if it is new details*************************
+                this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+                      alert('Tenant updated successfully');
+                      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+                //**************************************************************************
+              }
+              else {
+                console.log("Records Found");
+                alert("The Tenant is already Exist. ");
+              }
+            },
+            err => {
+              this.Exist_Record = false;
+              console.log("ERROR!: ", err);
+            });
       }
       else {
         if (this.tenant_company_site_entry.SITE_NAME == null) { this.tenant_company_site_entry.SITE_NAME = localStorage.getItem('Prev_ten_Category'); }
