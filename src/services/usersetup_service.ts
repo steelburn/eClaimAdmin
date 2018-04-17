@@ -279,6 +279,18 @@ export class UserSetup_Service {
 			});
 	}
 
+	update_user_role(user_role: UserRole_Model): Observable<any> {
+		var queryHeaders = new Headers();
+		queryHeaders.append('Content-Type', 'application/json');
+		//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+		let options = new RequestOptions({ headers: queryHeaders });
+		return this.httpService.http.patch(this.baseResourceUrl6, user_role.toJson(true), options)
+			.map((response) => {
+				return response;
+			});
+	}
+
 	update_user_qualification(user_qualification: UserQualification_Model): Observable<any> {
 		var queryHeaders = new Headers();
 		queryHeaders.append('Content-Type', 'application/json');
@@ -290,7 +302,7 @@ export class UserSetup_Service {
 			.map((response) => {
 				return response;
 			});
-	}
+	}	
 
 	get(id: string, params?: URLSearchParams): Observable<UserAddress_Model> {
 		alert('stating of service');
