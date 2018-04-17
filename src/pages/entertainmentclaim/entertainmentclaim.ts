@@ -64,17 +64,17 @@ export class EntertainmentclaimPage {
   public stage: any;
   public profileJSON: any;
 
-  public Travel_SOC_No_ngModel: any;
-  public Travel_ProjectName_ngModel: any;  
-  public Travel_Mode_ngModel: any;
-  Travel_Amount_ngModel: any;
+  public Entertainment_SOC_No_ngModel: any;
+  public Entertainment_ProjectName_ngModel: any;  
+  public Entertainment_Mode_ngModel: any;
+  Entertainment_Amount_ngModel: any;
   Project_Lookup_ngModel: any;
   Travel_Customer_ngModel: any;
   Customer_Lookup_ngModel: any;
   Customer_GUID: any; 
   Soc_GUID: any;
-  Travel_Date_ngModel: any;
-  Travel_Description_ngModel: any;
+  Entertainment_Date_ngModel: any;
+  Entertainment_Description_ngModel: any;
 
   public socGUID: any;
   public AddTravelClicked: boolean = false;
@@ -126,14 +126,14 @@ export class EntertainmentclaimPage {
           this.storeProjects.forEach(element => {
             if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
               this.Project_Lookup_ngModel = element.project_name
-              this.Travel_SOC_No_ngModel = element.soc
+              this.Entertainment_SOC_No_ngModel = element.soc
             }
           });
-        }
-        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;        
+        }       
+        this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();        
         // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+        this.Entertainment_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+        this.Entertainment_Description_ngModel = this.claimRequestData[0].DESCRIPTION;       
         // this.vehicles.forEach(element => {
         //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
         //     this.Travel_Mode_ngModel = element.CATEGORY
@@ -274,7 +274,7 @@ export class EntertainmentclaimPage {
   }
 
   GetSocNo(item: any){
-    this.Travel_SOC_No_ngModel = item.soc;
+    this.Entertainment_SOC_No_ngModel = item.soc;
     this.Project_Lookup_ngModel = item.project_name;
     this.Soc_GUID = item.SOC_GUID;
     this.CloseProjectLookup();
@@ -403,6 +403,7 @@ export class EntertainmentclaimPage {
 
   clearFile() {
     this.Entertainmentform.get('avatar').setValue(null);
+    console.log(this.fileInput);
     this.fileInput.nativeElement.value = '';
   }
 
@@ -410,10 +411,10 @@ export class EntertainmentclaimPage {
     let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date(this.Travel_Date_ngModel).getMonth() + 1; 
+    let month = new Date(this.Entertainment_Date_ngModel).getMonth() + 1; 
     //alert(userGUID)
     //alert(tenantGUID)
-    let year = new Date(this.Travel_Date_ngModel).getFullYear();
+    let year = new Date(this.Entertainment_Date_ngModel).getFullYear();
     //alert(year)
     let claimRefGUID;
     let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
@@ -444,8 +445,8 @@ export class EntertainmentclaimPage {
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             claimReqMainRef.CLAIM_TYPE_GUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
-            claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;           
-            claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+            claimReqMainRef.TRAVEL_DATE = this.Entertainment_Date_ngModel;           
+            claimReqMainRef.DESCRIPTION = this.Entertainment_Description_ngModel;
             claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
@@ -453,7 +454,7 @@ export class EntertainmentclaimPage {
           claimReqMainRef.STAGE = this.stage;
           claimReqMainRef.ATTACHMENT_ID = imageGUID;
             // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
+            claimReqMainRef.CLAIM_AMOUNT = this.Entertainment_Amount_ngModel;
             claimReqMainRef.CREATION_TS = new Date().toISOString();
             claimReqMainRef.UPDATE_TS = new Date().toISOString();           
            // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
@@ -503,15 +504,15 @@ export class EntertainmentclaimPage {
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
          
           claimReqMainRef.CLAIM_TYPE_GUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
-          claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;          
-          claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+          claimReqMainRef.TRAVEL_DATE = this.Entertainment_Date_ngModel;          
+          claimReqMainRef.DESCRIPTION = this.Entertainment_Description_ngModel;
           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
           claimReqMainRef.STATUS = 'Pending';
           claimReqMainRef.STAGE = this.stage;
           claimReqMainRef.ATTACHMENT_ID = imageGUID;
-          claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+          claimReqMainRef.CLAIM_AMOUNT = this.Entertainment_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();         
           //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;

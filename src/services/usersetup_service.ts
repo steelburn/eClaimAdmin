@@ -98,6 +98,7 @@ export class UserSetup_Service {
 		//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		let options = new RequestOptions({ headers: queryHeaders });
+		alert(user_info);
 		return this.httpService.http.post(this.baseResourceUrl1, user_info.toJson(true), options)
 			.map((response) => {
 				return response;
