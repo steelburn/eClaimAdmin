@@ -25,7 +25,7 @@ import { TenantCompanySiteSetup_Model } from '../../models/tenantcompanysitesetu
 import { TenantCompanySiteSetup_Service } from '../../services/tenantcompanysitesetup_service';
 
 import { UserMain_Model } from '../../models/user_main_model';
-// import { UserInfo_Model } from '../../models/usersetup_info_model';
+import { UserInfo_Model } from '../../models/usersetup_info_model';
 // import { UserContact_Model } from '../../models/user_contact_model';
 // import { UserCompany_Model } from '../../models/user_company_model';
 // import { UserAddress_Model } from '../../models/usersetup_address_model';
@@ -51,7 +51,13 @@ import { DesignationSetup_Service } from '../../services/designationsetup_servic
   templateUrl: 'setupguide.html', providers: [BaseHttpService, TenantMainSetup_Service, TenantCompanySetup_Service, TenantCompanySiteSetup_Service, UserSetup_Service, DepartmentSetup_Service, DesignationSetup_Service]
 })
 export class SetupguidePage {
-  Branchform: FormGroup; loading: Loading;
+  Branchform1: FormGroup;
+  Branchform2: FormGroup;
+  Branchform3: FormGroup;
+  Branchform4: FormGroup;
+  Branchform5: FormGroup;
+
+  loading: Loading;
   CompanyClicked: boolean; HQClicked: boolean; BranchClicked: boolean; DepartmentClicked: boolean; DesignationClicked: boolean;
   tenants: any; departments: any; designations: any; tenant_company_sites: any;
 
@@ -94,7 +100,8 @@ export class SetupguidePage {
   tenant_company_site_entry: TenantCompanySiteSetup_Model = new TenantCompanySiteSetup_Model();
 
   usermain_entry: UserMain_Model = new UserMain_Model();
-  // userinfo_entry: UserInfo_Model = new UserInfo_Model();
+  userinfo_entry: UserInfo_Model = new UserInfo_Model();
+  
   // usercontact_entry: UserContact_Model = new UserContact_Model();
   // usercompany_entry: UserCompany_Model = new UserCompany_Model();
   // useraddress_entry: UserAddress_Model = new UserAddress_Model();
@@ -102,44 +109,70 @@ export class SetupguidePage {
   department_entry: DepartmentSetup_Model = new DepartmentSetup_Model();
   designation_entry: DesignationSetup_Model = new DesignationSetup_Model();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, private loadingCtrl: LoadingController, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private departmentsetupservice: DepartmentSetup_Service, private designationsetupservice: DesignationSetup_Service) {
-    //on the page load all the details of tenant get display----------------------------------
-    this.BindControls();
+  isReadonly: boolean = false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb1: FormBuilder, fb2: FormBuilder, fb3: FormBuilder, fb4: FormBuilder, fb5: FormBuilder, private loadingCtrl: LoadingController, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private departmentsetupservice: DepartmentSetup_Service, private designationsetupservice: DesignationSetup_Service) {
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+
+    }
+    else {
+      //on the page load all the details of tenant get display----------------------------------
+      this.BindControls();
+    }
 
     this.CompanyClicked = true; this.HQClicked = false; this.BranchClicked = false; this.DepartmentClicked = false; this.DesignationClicked = false;
     this.Branch_ISHQ_FLAG_ngModel = false;
-    this.Branchform = fb.group({
+
+    this.Branchform1 = fb1.group({
       //-----------For Tenant Company-------------------
-      TENANT_NAME: [''],
-      USER_ID: [''],
-      PASSWORD: [''],
-
-      //-----------For Tenant HQ------------------------
-      COMPANY_NAME: [''],
-      HQ_REGNO: [''],
-      TENANT_EMAIL: [''],
-      TENANT_CONTACTNO: [''],
-
-      //-----------For Branch---------------------------
-      BRANCH_NAME: [''],
-      BRANCH_REGNO: [''],
-      BRANCH_EMAIL: [''],
-      BRANCH_CONTACT_NO: [''],
-      //ISHQ_FLAG: [''],
-
-      //-----------For Department-----------------------
-      DEPARTMENT_NAME: [''],
-      DEPARTMENT_DESCRIPTION: [''],
-
-      //-----------For Designation----------------------
-      DESINATION_NAME: [''],
-      DESIGNATION_DESC: [''],
-
+      TENANT_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      USER_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      PASSWORD: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
     });
+
+    this.Branchform2 = fb2.group({
+      //-----------For Tenant HQ------------------------
+      COMPANY_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      HQ_REGNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      TENANT_EMAIL: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+      TENANT_CONTACTNO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+    });
+
+    this.Branchform3 = fb3.group({
+      //-----------For Branch---------------------------
+      BRANCH_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      BRANCH_REGNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      BRANCH_EMAIL: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+      BRANCH_CONTACT_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      //ISHQ_FLAG: [''],
+    });
+
+    this.Branchform4 = fb4.group({
+      //-----------For Department-----------------------
+      DEPARTMENT_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      DEPARTMENT_DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+    });
+
+    this.Branchform5 = fb5.group({
+      //-----------For Designation----------------------
+      DESINATION_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      DESIGNATION_DESC: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+    });
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetupguidePage');
+  }
+
+  Readonly() {
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.isReadonly = true;
+    }
+    else {
+      this.isReadonly = false;
+    }
+    return this.isReadonly;
   }
 
   SkipSetup() {
@@ -166,7 +199,7 @@ export class SetupguidePage {
           let HQ_BRANCH_GUID: string = this.Branches[item]["BRANCH_GUID"];
 
           this.Branches.splice(parseInt(item), 1);
-          this.Branches.push({ BRANCH_GUID: HQ_BRANCH_GUID, BRANCH_NAME: this.Companyname_ngModel.trim(), BRANCH_REGNO: this.HQregno_ngModel.trim(), BRANCH_EMAIL: this.Tenantemail_ngModel.trim(), BRANCH_CONTACTNO: this.Tenantcontactno_ngModel.trim(), ISHQ: true });         
+          this.Branches.push({ BRANCH_GUID: HQ_BRANCH_GUID, BRANCH_NAME: this.Companyname_ngModel.trim(), BRANCH_REGNO: this.HQregno_ngModel.trim(), BRANCH_EMAIL: this.Tenantemail_ngModel.trim(), BRANCH_CONTACTNO: this.Tenantcontactno_ngModel.trim(), ISHQ: true });
         }
       }
     }
@@ -178,8 +211,13 @@ export class SetupguidePage {
   }
 
   SaveBranch() {
-    this.BranchClicked = false;
-    this.DepartmentClicked = true;
+    if (this.Branches.length > 0) {
+      this.BranchClicked = false;
+      this.DepartmentClicked = true;
+    }
+    else {
+      alert('Please Register Branch !!');
+    }
   }
 
   BackBranch() {
@@ -188,8 +226,13 @@ export class SetupguidePage {
   }
 
   SaveDepartment() {
-    this.DesignationClicked = true;
-    this.DepartmentClicked = false;
+    if (this.Department.length > 0) {
+      this.DesignationClicked = true;
+      this.DepartmentClicked = false;
+    }
+    else {
+      alert('Please Register Department !!');
+    }
   }
 
   BackDepartment() {
@@ -198,13 +241,26 @@ export class SetupguidePage {
   }
 
   SaveDesignation() {
-    //Save/Update to User_main---------------------------------------
-    this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-    });
-    this.loading.present();
+    if (this.Designation.length > 0) {
+      //Save/Update to User_main---------------------------------------
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+      });
+      this.loading.present();
 
-    this.Save_User_Main();
+      this.Save_User_Main();
+    }
+    else {
+      alert('Please Register Designation !!');
+    }
+
+    //Save/Update to User_main---------------------------------------
+    // this.loading = this.loadingCtrl.create({
+    //   content: 'Please wait...',
+    // });
+    // this.loading.present();
+
+    // this.Save_User_Main();
 
     // this.loading.dismissAll();
     // this.navCtrl.push(SetupPage);
@@ -426,7 +482,7 @@ export class SetupguidePage {
           .map(res => res.json())
           .subscribe(data => {
             this.tenant_company_sites = data.resource;
-            for (var item in this.tenant_company_sites) {             
+            for (var item in this.tenant_company_sites) {
               var HQflag;
               if (this.tenant_company_sites[item]["ISHQ"] == 1) {
                 HQflag = true;
@@ -535,179 +591,411 @@ export class SetupguidePage {
   }
 
   Save_User_Main() {
-    this.usermain_entry.TENANT_GUID = localStorage.getItem('g_TENANT_GUID');
-    this.usermain_entry.USER_GUID = localStorage.getItem('g_USER_GUID');
-    this.usermain_entry.STAFF_ID = this.tenants[0]["STAFF_ID"];
+    //Setup Entity for Super Admin--------------------
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.usermain_entry.TENANT_GUID = UUID.UUID();
+      this.usermain_entry.USER_GUID = UUID.UUID();
+      this.usermain_entry.STAFF_ID = "";
 
-    this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
-    this.usermain_entry.PASSWORD = this.Password_ngModel.trim();
+      this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
+      this.usermain_entry.PASSWORD = this.Password_ngModel.trim();
 
-    this.usermain_entry.EMAIL = this.tenants[0]["USER_EMAIL"];
-    this.usermain_entry.ACTIVATION_FLAG = this.tenants[0]["USER_ACTIVATION_FLAG"];
-    this.usermain_entry.CREATION_TS = this.tenants[0]["USER_CREATION_TS"];
-    this.usermain_entry.CREATION_USER_GUID = this.tenants[0]["USER_CREATION_GUID"];
-    this.usermain_entry.UPDATE_TS = new Date().toISOString();
-    this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.usermain_entry.EMAIL = this.Tenantemail_ngModel;
+      this.usermain_entry.ACTIVATION_FLAG = 1;
+      this.usermain_entry.CREATION_TS = new Date().toISOString();
+      this.usermain_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.usermain_entry.UPDATE_TS = new Date().toISOString();
+      this.usermain_entry.UPDATE_USER_GUID = "";
+    }
+    //Setup Entity for Tenant Admin-------------------
+    else {
+      this.usermain_entry.TENANT_GUID = localStorage.getItem('g_TENANT_GUID');
+      this.usermain_entry.USER_GUID = localStorage.getItem('g_USER_GUID');
+      this.usermain_entry.STAFF_ID = this.tenants[0]["STAFF_ID"];
 
-    this.userservice.update_user_main(this.usermain_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-          // alert('User main updated sucessfully !!');
-          this.Save_Tenant_Main();
-        }
-      });
+      this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
+      this.usermain_entry.PASSWORD = this.Password_ngModel.trim();
+
+      this.usermain_entry.EMAIL = this.tenants[0]["USER_EMAIL"];
+      this.usermain_entry.ACTIVATION_FLAG = this.tenants[0]["USER_ACTIVATION_FLAG"];
+      this.usermain_entry.CREATION_TS = this.tenants[0]["USER_CREATION_TS"];
+      this.usermain_entry.CREATION_USER_GUID = this.tenants[0]["USER_CREATION_GUID"];
+      this.usermain_entry.UPDATE_TS = new Date().toISOString();
+      this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.userservice.save_user_main(this.usermain_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            // alert('User main updated sucessfully !!');
+            this.Save_User_Info();
+
+            // this.Save_Tenant_Main();
+          }
+        });
+    }
+    else {
+      this.userservice.update_user_main(this.usermain_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            // alert('User main updated sucessfully !!');
+            this.Save_Tenant_Main();
+          }
+        });
+    }
   }
+  
+  Save_User_Info() {
+    let userinfo_entry: UserInfo_Model = new UserInfo_Model();
+     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
+     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
+     this.userinfo_entry.FULLNAME = "";
+     //NICKNAME
+     //SALUTATION
+     //MANAGER_USER_GUID
+     this.userinfo_entry.PERSONAL_ID_TYPE = "";
+     this.userinfo_entry.PERSONAL_ID = "";
+     this.userinfo_entry.DOB = "";
+     this.userinfo_entry.GENDER = "";
+     this.userinfo_entry.JOIN_DATE = "";
+     this.userinfo_entry.MARITAL_STATUS = "";
 
+     this.userinfo_entry.BRANCH = this.Branches[0]["BRANCH_GUID"];
+     
+     this.userinfo_entry.EMPLOYEE_TYPE = "";     
+     this.userinfo_entry.ATTACHMENT_ID = "";
+     
+     // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
+     // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
+     this.userinfo_entry.EMPLOYEE_STATUS = "";
+     this.userinfo_entry.DEPT_GUID = "";
+     this.userinfo_entry.DESIGNATION_GUID = "";
+     this.userinfo_entry.RESIGNATION_DATE = "";
+     this.userinfo_entry.TENANT_COMPANY_GUID = "";
+     this.userinfo_entry.CONFIRMATION_DATE = "";
+
+     this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[0]["BRANCH_GUID"];
+
+     this.userinfo_entry.CREATION_TS = new Date().toISOString();
+     this.userinfo_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+     this.userinfo_entry.UPDATE_TS = new Date().toISOString();
+     this.userinfo_entry.UPDATE_USER_GUID = "";
+ 
+     // this.userinfo_entry.POST_CODE
+     // this.userinfo_entry.COUNTRY_GUID
+     // this.userinfo_entry.STATE_GUID
+     this.userinfo_entry.EMG_CONTACT_NAME_1 = "";
+     this.userinfo_entry.EMG_RELATIONSHIP_1 = "";
+     this.userinfo_entry.EMG_CONTACT_NUMBER_1 = "";
+     this.userinfo_entry.EMG_CONTACT_NAME_2 = "";
+     this.userinfo_entry.EMG_RELATIONSHIP_2 = "";
+     this.userinfo_entry.EMG_CONTACT_NUMBER_2 = "";   
+     this.userinfo_entry.PR_EPF_NUMBER = "";
+     this.userinfo_entry.PR_INCOMETAX_NUMBER = "";
+     this.userinfo_entry.BANK_GUID = "";     
+     this.userinfo_entry.PR_ACCOUNT_NUMBER = "";
+ 
+     this.userservice.save_user_info(this.userinfo_entry)
+       .subscribe((response) => {
+         if (response.status == 200) {          
+          this.Save_Tenant_Main();
+         }
+       });
+   }
+  
   Save_Tenant_Main() {
-    this.tenant_main_entry.TENANT_GUID = localStorage.getItem('g_TENANT_GUID');
-    this.tenant_main_entry.PARENT_TENANT_GUID = "";
-    this.tenant_main_entry.TENANT_ACCOUNT_NAME = this.Tenant_Name_ngModel.trim();
-    this.tenant_main_entry.ACTIVATION_FLAG = this.tenants[0]["ACTIVATION_FLAG"];
-    this.tenant_main_entry.CREATION_TS = this.tenants[0]["CREATION_TS"];
-    this.tenant_main_entry.CREATION_USER_GUID = this.tenants[0]["USER_GUID"];
-    this.tenant_main_entry.UPDATE_TS = new Date().toISOString();
-    this.tenant_main_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-
-    this.TenantMainSetupService.update(this.tenant_main_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-          //alert('Tenant Main Registered successfully');
-          this.Save_Tenant_Company();
-        }
-      })
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.tenant_main_entry.TENANT_GUID = this.usermain_entry.TENANT_GUID;
+      this.tenant_main_entry.PARENT_TENANT_GUID = "";
+      this.tenant_main_entry.TENANT_ACCOUNT_NAME = this.Tenant_Name_ngModel.trim();
+      this.tenant_main_entry.ACTIVATION_FLAG = "1";
+      this.tenant_main_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+      this.tenant_main_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.tenant_main_entry.UPDATE_TS = new Date().toISOString();
+      this.tenant_main_entry.UPDATE_USER_GUID = "";
+    }
+    else {
+      this.tenant_main_entry.TENANT_GUID = localStorage.getItem('g_TENANT_GUID');
+      this.tenant_main_entry.PARENT_TENANT_GUID = "";
+      this.tenant_main_entry.TENANT_ACCOUNT_NAME = this.Tenant_Name_ngModel.trim();
+      this.tenant_main_entry.ACTIVATION_FLAG = this.tenants[0]["ACTIVATION_FLAG"];
+      this.tenant_main_entry.CREATION_TS = this.tenants[0]["CREATION_TS"];
+      this.tenant_main_entry.CREATION_USER_GUID = this.tenants[0]["USER_GUID"];
+      this.tenant_main_entry.UPDATE_TS = new Date().toISOString();
+      this.tenant_main_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.TenantMainSetupService.save(this.tenant_main_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            //alert('Tenant Main Registered successfully');
+            this.Save_Tenant_Company();
+          }
+        })
+    }
+    else {
+      this.TenantMainSetupService.update(this.tenant_main_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            //alert('Tenant Main Registered successfully');
+            this.Save_Tenant_Company();
+          }
+        })
+    }
   }
 
   Save_Tenant_Company() {
-    this.tenant_company_entry.TENANT_COMPANY_GUID = this.tenants[0]["TENANT_COMPANY_GUID"];
-    this.tenant_company_entry.TENANT_GUID = this.tenant_main_entry.TENANT_GUID;
-    this.tenant_company_entry.NAME = this.Companyname_ngModel.trim();
-    this.tenant_company_entry.REGISTRATION_NO = this.HQregno_ngModel.trim();
-    this.tenant_company_entry.ACTIVATION_FLAG = this.tenant_main_entry.ACTIVATION_FLAG;
-    this.tenant_company_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
-    this.tenant_company_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
-    this.tenant_company_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
-    this.tenant_company_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.tenant_company_entry.TENANT_COMPANY_GUID = UUID.UUID();
+      this.tenant_company_entry.TENANT_GUID = this.usermain_entry.TENANT_GUID;
+      this.tenant_company_entry.NAME = this.Companyname_ngModel.trim();
+      this.tenant_company_entry.REGISTRATION_NO = this.HQregno_ngModel.trim();
+      this.tenant_company_entry.ACTIVATION_FLAG = this.tenant_main_entry.ACTIVATION_FLAG;
+      this.tenant_company_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+      this.tenant_company_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+      this.tenant_company_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+      this.tenant_company_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+    }
+    else {
+      this.tenant_company_entry.TENANT_COMPANY_GUID = this.tenants[0]["TENANT_COMPANY_GUID"];
+      this.tenant_company_entry.TENANT_GUID = this.tenant_main_entry.TENANT_GUID;
+      this.tenant_company_entry.NAME = this.Companyname_ngModel.trim();
+      this.tenant_company_entry.REGISTRATION_NO = this.HQregno_ngModel.trim();
+      this.tenant_company_entry.ACTIVATION_FLAG = this.tenant_main_entry.ACTIVATION_FLAG;
+      this.tenant_company_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+      this.tenant_company_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+      this.tenant_company_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+      this.tenant_company_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+    }
 
-    this.TenantCompanySetupService.update(this.tenant_company_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-          //alert('Tenant Company Registered successfully');
-          this.Save_Tenant_Company_Site();
-        }
-      })
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.TenantCompanySetupService.save(this.tenant_company_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            //alert('Tenant Company Registered successfully');
+            this.Save_Tenant_Company_Site();
+          }
+        })
+    }
+    else {
+      this.TenantCompanySetupService.update(this.tenant_company_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            //alert('Tenant Company Registered successfully');
+            this.Save_Tenant_Company_Site();
+          }
+        })
+    }
+
   }
 
   Save_Tenant_Company_Site() {
-    //Before insert data to db first delete all the records of particular tenant_company then insert once again.
-    this.tenantcompanysitesetupservice.remove_multiple(this.tenants[0]["TENANT_COMPANY_GUID"], "tenant_company_site")
-    .subscribe(
-      (response) => {
-        if (response.status == 200) {
-          for (var item in this.Branches) {
-            this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = this.Branches[item]["BRANCH_GUID"];
-            this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
-            this.tenant_company_site_entry.SITE_NAME = this.Branches[item]["BRANCH_NAME"];
-            this.tenant_company_site_entry.REGISTRATION_NUM = this.Branches[item]["BRANCH_REGNO"];
-            this.tenant_company_site_entry.ADDRESS = "";
-            this.tenant_company_site_entry.ADDRESS2 = "";
-            this.tenant_company_site_entry.ADDRESS3 = "";
-            this.tenant_company_site_entry.CONTACT_NO = this.Branches[item]["BRANCH_CONTACTNO"];
-            this.tenant_company_site_entry.EMAIL = this.Branches[item]["BRANCH_EMAIL"];
-            this.tenant_company_site_entry.ACTIVATION_FLAG = "1";
-            this.tenant_company_site_entry.CONTACT_PERSON = "";
-            this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = "";
-            this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = "";
-            this.tenant_company_site_entry.WEBSITE = "";
-            this.tenant_company_site_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
-            this.tenant_company_site_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
-            this.tenant_company_site_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
-            this.tenant_company_site_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
-            if (this.Branches[item]["ISHQ"] == true) {
-              this.tenant_company_site_entry.ISHQ = "1";
-            }
-            else {
-              this.tenant_company_site_entry.ISHQ = "0";
-            }
-            //this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
-            this.tenantcompanysitesetupservice.save(this.tenant_company_site_entry)
-              .subscribe((response) => {
-                if (response.status == 200) {
-                  // this.InsertDepartment();
-      
-                  //alert('Tenant company Site Registered successfully');
-                  //this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                }
-              })
-          }
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      for (var item in this.Branches) {
+        this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = this.Branches[item]["BRANCH_GUID"];
+        this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
+        this.tenant_company_site_entry.SITE_NAME = this.Branches[item]["BRANCH_NAME"];
+        this.tenant_company_site_entry.REGISTRATION_NUM = this.Branches[item]["BRANCH_REGNO"];
+        this.tenant_company_site_entry.ADDRESS = "";
+        this.tenant_company_site_entry.ADDRESS2 = "";
+        this.tenant_company_site_entry.ADDRESS3 = "";
+        this.tenant_company_site_entry.CONTACT_NO = this.Branches[item]["BRANCH_CONTACTNO"];
+        this.tenant_company_site_entry.EMAIL = this.Branches[item]["BRANCH_EMAIL"];
+        this.tenant_company_site_entry.ACTIVATION_FLAG = "1";
+        this.tenant_company_site_entry.CONTACT_PERSON = "";
+        this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = "";
+        this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = "";
+        this.tenant_company_site_entry.WEBSITE = "";
+        this.tenant_company_site_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+        this.tenant_company_site_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+        this.tenant_company_site_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+        this.tenant_company_site_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+
+        if (this.Branches[item]["ISHQ"] == true) {
+          this.tenant_company_site_entry.ISHQ = "1";
         }
-      });    
-    this.InsertDepartment();
+        else {
+          this.tenant_company_site_entry.ISHQ = "0";
+        }
+
+        //this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
+        this.tenantcompanysitesetupservice.save(this.tenant_company_site_entry)
+          .subscribe((response) => {
+            if (response.status == 200) {
+              // this.InsertDepartment();
+
+              //alert('Tenant company Site Registered successfully');
+              //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            }
+          })
+      }
+      this.InsertDepartment();
+    }
+    else {
+      //Before insert data to db first delete all the records of particular tenant_company then insert once again.
+      this.tenantcompanysitesetupservice.remove_multiple(this.tenants[0]["TENANT_COMPANY_GUID"], "tenant_company_site")
+        .subscribe(
+          (response) => {
+            if (response.status == 200) {
+              for (var item in this.Branches) {
+                this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = this.Branches[item]["BRANCH_GUID"];
+                this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
+                this.tenant_company_site_entry.SITE_NAME = this.Branches[item]["BRANCH_NAME"];
+                this.tenant_company_site_entry.REGISTRATION_NUM = this.Branches[item]["BRANCH_REGNO"];
+                this.tenant_company_site_entry.ADDRESS = "";
+                this.tenant_company_site_entry.ADDRESS2 = "";
+                this.tenant_company_site_entry.ADDRESS3 = "";
+                this.tenant_company_site_entry.CONTACT_NO = this.Branches[item]["BRANCH_CONTACTNO"];
+                this.tenant_company_site_entry.EMAIL = this.Branches[item]["BRANCH_EMAIL"];
+                this.tenant_company_site_entry.ACTIVATION_FLAG = "1";
+                this.tenant_company_site_entry.CONTACT_PERSON = "";
+                this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = "";
+                this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = "";
+                this.tenant_company_site_entry.WEBSITE = "";
+                this.tenant_company_site_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+                this.tenant_company_site_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+                this.tenant_company_site_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+                this.tenant_company_site_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+
+                if (this.Branches[item]["ISHQ"] == true) {
+                  this.tenant_company_site_entry.ISHQ = "1";
+                }
+                else {
+                  this.tenant_company_site_entry.ISHQ = "0";
+                }
+
+                //this.tenantcompanysitesetupservice.update(this.tenant_company_site_entry)
+                this.tenantcompanysitesetupservice.save(this.tenant_company_site_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+                      // this.InsertDepartment();
+
+                      //alert('Tenant company Site Registered successfully');
+                      //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  })
+              }
+            }
+          });
+      this.InsertDepartment();
+    }
   }
 
   InsertDepartment() {
-    //Before insert data to db first delete all the records of particular tenant then insert once again.
-    this.departmentsetupservice.remove_multiple(this.tenant_company_entry.TENANT_GUID, "main_department")
-      .subscribe(
-        (response) => {
-          if (response.status == 200) {
-            for (var item in this.Department) {
-              this.department_entry.DEPARTMENT_GUID = this.Department[item]["DEPARTMENT_GUID"];
-              this.department_entry.NAME = this.Department[item]["DEPARTMENT_NAME"];
-              this.department_entry.DESCRIPTION = this.Department[item]["DEPARTMENT_DESC"];
-              this.department_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
-              this.department_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
-              this.department_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
-              this.department_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
-              this.department_entry.TENANT_GUID = this.tenant_company_entry.TENANT_GUID;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      for (var item in this.Department) {
+        this.department_entry.DEPARTMENT_GUID = this.Department[item]["DEPARTMENT_GUID"];
+        this.department_entry.NAME = this.Department[item]["DEPARTMENT_NAME"];
+        this.department_entry.DESCRIPTION = this.Department[item]["DEPARTMENT_DESC"];
+        this.department_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+        this.department_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+        this.department_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+        this.department_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+        this.department_entry.TENANT_GUID = this.tenant_company_entry.TENANT_GUID;
 
-              this.departmentsetupservice.save(this.department_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    //alert('Department Registered successfully');
+        this.departmentsetupservice.save(this.department_entry)
+          .subscribe((response) => {
+            if (response.status == 200) {
+              //alert('Department Registered successfully');
 
-                    //this.InsertDesignation();
-                  }
-                })
+              //this.InsertDesignation();
             }
-            this.InsertDesignation();
-          }
-        });
+          })
+      }
+      this.InsertDesignation();
+    }
+    else {
+      //Before insert data to db first delete all the records of particular tenant then insert once again.
+      this.departmentsetupservice.remove_multiple(this.tenant_company_entry.TENANT_GUID, "main_department")
+        .subscribe(
+          (response) => {
+            if (response.status == 200) {
+              for (var item in this.Department) {
+                this.department_entry.DEPARTMENT_GUID = this.Department[item]["DEPARTMENT_GUID"];
+                this.department_entry.NAME = this.Department[item]["DEPARTMENT_NAME"];
+                this.department_entry.DESCRIPTION = this.Department[item]["DEPARTMENT_DESC"];
+                this.department_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+                this.department_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+                this.department_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+                this.department_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+                this.department_entry.TENANT_GUID = this.tenant_company_entry.TENANT_GUID;
+
+                this.departmentsetupservice.save(this.department_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+                      //alert('Department Registered successfully');
+
+                      //this.InsertDesignation();
+                    }
+                  })
+              }
+              this.InsertDesignation();
+            }
+          });
+    }
   }
 
   InsertDesignation() {
     let SaveDesigFlag: boolean = false;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      for (var item in this.Designation) {
+        this.designation_entry.DESIGNATION_GUID = this.Designation[item]["DESIGNATION_GUID"];
+        this.designation_entry.NAME = this.Designation[item]["DESIGNATION_NAME"];
+        this.designation_entry.DESCRIPTION = this.Designation[item]["DESIGNATION_DESC"];
+        this.designation_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+        this.designation_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+        this.designation_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+        this.designation_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+        this.designation_entry.TENANT_GUID = this.tenant_company_entry.TENANT_GUID;
 
-    //Before insert data to db first delete all the records of particular tenant then insert once again.
-    this.designationsetupservice.remove_multiple(this.tenant_company_entry.TENANT_GUID, "main_designation")
-      .subscribe(
-        (response) => {
-          if (response.status == 200) {
-            for (var item in this.Designation) {
-              this.designation_entry.DESIGNATION_GUID = this.Designation[item]["DESIGNATION_GUID"];
-              this.designation_entry.NAME = this.Designation[item]["DESIGNATION_NAME"];
-              this.designation_entry.DESCRIPTION = this.Designation[item]["DESIGNATION_DESC"];
-              this.designation_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
-              this.designation_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
-              this.designation_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
-              this.designation_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
-              this.designation_entry.TENANT_GUID = this.tenant_company_entry.TENANT_GUID;
+        this.designationsetupservice.save(this.designation_entry)
+          .subscribe((response) => {
+            if (response.status == 200) {
 
-              this.designationsetupservice.save(this.designation_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-              
-                    //alert('Designation Registered successfully');
-                    SaveDesigFlag = true; 
-                  }
-                });
+              //alert('Designation Registered successfully');
+              SaveDesigFlag = true;
             }
-            // if (SaveDesigFlag == true) {
+          });
+      }
+      // if (SaveDesigFlag == true) {
+      alert('Setup done successfully !!');
+      this.loading.dismissAll();
+      this.navCtrl.push(SetupPage);
+    }
+    else {
+      //Before insert data to db first delete all the records of particular tenant then insert once again.
+      this.designationsetupservice.remove_multiple(this.tenant_company_entry.TENANT_GUID, "main_designation")
+        .subscribe(
+          (response) => {
+            if (response.status == 200) {
+              for (var item in this.Designation) {
+                this.designation_entry.DESIGNATION_GUID = this.Designation[item]["DESIGNATION_GUID"];
+                this.designation_entry.NAME = this.Designation[item]["DESIGNATION_NAME"];
+                this.designation_entry.DESCRIPTION = this.Designation[item]["DESIGNATION_DESC"];
+                this.designation_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
+                this.designation_entry.CREATION_USER_GUID = this.tenant_main_entry.CREATION_USER_GUID;
+                this.designation_entry.UPDATE_TS = this.tenant_main_entry.UPDATE_TS;
+                this.designation_entry.UPDATE_USER_GUID = this.tenant_main_entry.UPDATE_USER_GUID;
+                this.designation_entry.TENANT_GUID = this.tenant_company_entry.TENANT_GUID;
+
+                this.designationsetupservice.save(this.designation_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+
+                      //alert('Designation Registered successfully');
+                      SaveDesigFlag = true;
+                    }
+                  });
+              }
+              // if (SaveDesigFlag == true) {
               alert('Setup done successfully !!');
               this.loading.dismissAll();
               this.navCtrl.push(SetupPage);
-            // }                       
-          }          
-        });
+              // }                       
+            }
+          });
+    }
   }
 
 }
