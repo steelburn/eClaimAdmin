@@ -101,7 +101,7 @@ export class SetupguidePage {
 
   usermain_entry: UserMain_Model = new UserMain_Model();
   userinfo_entry: UserInfo_Model = new UserInfo_Model();
-  
+
   // usercontact_entry: UserContact_Model = new UserContact_Model();
   // usercompany_entry: UserCompany_Model = new UserCompany_Model();
   // useraddress_entry: UserAddress_Model = new UserAddress_Model();
@@ -645,65 +645,81 @@ export class SetupguidePage {
         });
     }
   }
-  
+
   Save_User_Info() {
     let userinfo_entry: UserInfo_Model = new UserInfo_Model();
-     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
-     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
-     this.userinfo_entry.FULLNAME = "";
-     //NICKNAME
-     //SALUTATION
-     //MANAGER_USER_GUID
-     this.userinfo_entry.PERSONAL_ID_TYPE = "";
-     this.userinfo_entry.PERSONAL_ID = "";
-     this.userinfo_entry.DOB = "";
-     this.userinfo_entry.GENDER = "";
-     this.userinfo_entry.JOIN_DATE = "";
-     this.userinfo_entry.MARITAL_STATUS = "";
+    this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
+    this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    this.userinfo_entry.FULLNAME = "";
+    //NICKNAME
+    //SALUTATION
+    //MANAGER_USER_GUID
+    this.userinfo_entry.PERSONAL_ID_TYPE = "";
+    this.userinfo_entry.PERSONAL_ID = "";
+    this.userinfo_entry.DOB = "";
+    this.userinfo_entry.GENDER = "";
+    this.userinfo_entry.JOIN_DATE = "";
+    this.userinfo_entry.MARITAL_STATUS = "";
 
-     this.userinfo_entry.BRANCH = this.Branches[0]["BRANCH_GUID"];
-     
-     this.userinfo_entry.EMPLOYEE_TYPE = "";     
-     this.userinfo_entry.ATTACHMENT_ID = "";
-     
-     // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
-     // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
-     this.userinfo_entry.EMPLOYEE_STATUS = "";
-     this.userinfo_entry.DEPT_GUID = "";
-     this.userinfo_entry.DESIGNATION_GUID = "";
-     this.userinfo_entry.RESIGNATION_DATE = "";
-     this.userinfo_entry.TENANT_COMPANY_GUID = "";
-     this.userinfo_entry.CONFIRMATION_DATE = "";
+    this.userinfo_entry.BRANCH = this.Branches[0]["BRANCH_GUID"];
 
-     this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[0]["BRANCH_GUID"];
+    this.userinfo_entry.EMPLOYEE_TYPE = "";
+    this.userinfo_entry.ATTACHMENT_ID = "";
 
-     this.userinfo_entry.CREATION_TS = new Date().toISOString();
-     this.userinfo_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-     this.userinfo_entry.UPDATE_TS = new Date().toISOString();
-     this.userinfo_entry.UPDATE_USER_GUID = "";
- 
-     // this.userinfo_entry.POST_CODE
-     // this.userinfo_entry.COUNTRY_GUID
-     // this.userinfo_entry.STATE_GUID
-     this.userinfo_entry.EMG_CONTACT_NAME_1 = "";
-     this.userinfo_entry.EMG_RELATIONSHIP_1 = "";
-     this.userinfo_entry.EMG_CONTACT_NUMBER_1 = "";
-     this.userinfo_entry.EMG_CONTACT_NAME_2 = "";
-     this.userinfo_entry.EMG_RELATIONSHIP_2 = "";
-     this.userinfo_entry.EMG_CONTACT_NUMBER_2 = "";   
-     this.userinfo_entry.PR_EPF_NUMBER = "";
-     this.userinfo_entry.PR_INCOMETAX_NUMBER = "";
-     this.userinfo_entry.BANK_GUID = "";     
-     this.userinfo_entry.PR_ACCOUNT_NUMBER = "";
- 
-     this.userservice.save_user_info(this.userinfo_entry)
-       .subscribe((response) => {
-         if (response.status == 200) {          
+    // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
+    // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
+    this.userinfo_entry.EMPLOYEE_STATUS = "";
+    this.userinfo_entry.DEPT_GUID = "";
+    this.userinfo_entry.DESIGNATION_GUID = "";
+    this.userinfo_entry.RESIGNATION_DATE = "";
+    this.userinfo_entry.TENANT_COMPANY_GUID = "";
+    this.userinfo_entry.CONFIRMATION_DATE = "";
+
+    this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[0]["BRANCH_GUID"];
+
+    this.userinfo_entry.CREATION_TS = new Date().toISOString();
+    this.userinfo_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.userinfo_entry.UPDATE_TS = new Date().toISOString();
+    this.userinfo_entry.UPDATE_USER_GUID = "";
+
+    // this.userinfo_entry.POST_CODE
+    // this.userinfo_entry.COUNTRY_GUID
+    // this.userinfo_entry.STATE_GUID
+    this.userinfo_entry.EMG_CONTACT_NAME_1 = "";
+    this.userinfo_entry.EMG_RELATIONSHIP_1 = "";
+    this.userinfo_entry.EMG_CONTACT_NUMBER_1 = "";
+    this.userinfo_entry.EMG_CONTACT_NAME_2 = "";
+    this.userinfo_entry.EMG_RELATIONSHIP_2 = "";
+    this.userinfo_entry.EMG_CONTACT_NUMBER_2 = "";
+    this.userinfo_entry.PR_EPF_NUMBER = "";
+    this.userinfo_entry.PR_INCOMETAX_NUMBER = "";
+    this.userinfo_entry.BANK_GUID = "";
+    this.userinfo_entry.PR_ACCOUNT_NUMBER = "";
+
+    this.userservice.save_user_info(this.userinfo_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
           this.Save_Tenant_Main();
-         }
-       });
-   }
-  
+        }
+      });
+  }
+
+  Save_Tenant_User_Address() {
+
+  }
+
+  Save_Tenant_User_Contact() {
+
+  }
+
+  Save_Tenant_User_Company() {
+
+  }
+
+  Save_Tenant_User_Role() {
+
+  }
+
   Save_Tenant_Main() {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       this.tenant_main_entry.TENANT_GUID = this.usermain_entry.TENANT_GUID;
