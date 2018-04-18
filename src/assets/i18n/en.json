@@ -136,7 +136,7 @@
   "TRAVEL_DATE_LABEL": "Travel Date",
   "ENTERTAINMENT_DATE_LABEL": "Entertainment Date",
   "MEDICAL_DATE_LABEL": "Medical Date",
-  "PRINT_DATE_LABEL": "Pritn Date",
+  "PRINT_DATE_LABEL": "Pritnt Date",
   "OVERTIME_DATE_LABEL": "Overtime Date",
   "GIFT_DATE_LABEL": "Gift Date",
   "CALENDAR_REF_LABEL": "Calendar Reference",
@@ -158,8 +158,10 @@
   "PAY_BY_LABEL": "Pay By",
   "SOC_NUMBER_LABEL":"SOC Number",
   "CLAIM_APPLIED_DATE_LABEL":"Claim Applied Date",
-  "STATUS_LABEL":"Status",
-  "TOTAL_AMOUNT_LABEL":"Total Amount",
+  "STATUS_LABEL":"Status",  
+  "TOTAL_CLAIM_AMOUNT_LABEL":"Total Amount",
+  "REMARKS_LABEL": "Remarks",
+  "REMARKS_PLACE_HOLDER": "Please fill the Remarks",
  "STAGE_LABEL":"Stage",
  "BANK_NAME_LABEL": "Bank Name"  
 } 

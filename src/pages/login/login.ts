@@ -36,7 +36,8 @@ export class LoginPage {
       //-----------Check if the login as super vendor-----------------------
       if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
         localStorage.setItem("g_USER_GUID", "sva");
-        this.navCtrl.push(AdminsetupPage);
+        //this.navCtrl.push(AdminsetupPage);
+        this.navCtrl.push(SetupguidePage);
       }
       else {
         let url: string;

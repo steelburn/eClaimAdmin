@@ -241,13 +241,23 @@ export class SocRegistrationPage {
           this.loading.dismissAll();
         });
       //-------------------------------------------------------
-
-      this.Socform = fb.group({
-        soc: ["", Validators.required],
-        project_name: ["", Validators.required],
-        customer_name: ["", Validators.required],
-        TENANT_NAME: [null],
-      });
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.Socform = fb.group({
+          soc: ["", Validators.required],
+          project_name: ["", Validators.required],
+          customer_name: ["", Validators.required],
+        });
+      }
+      else
+      {
+        this.Socform = fb.group({
+          soc: ["", Validators.required],
+          project_name: ["", Validators.required],
+          customer_name: ["", Validators.required],
+          TENANT_NAME: [null, Validators.required],
+        });
+      }
+      
     }
   }
 

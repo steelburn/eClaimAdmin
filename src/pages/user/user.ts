@@ -61,7 +61,11 @@ export class UserPage {
   uploadFileName: string;
   load = false;
   CloudFilePath: string;
-  @ViewChild('fileInput') fileInput: ElementRef;
+  //@ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('fileInput1') fileInput1: ElementRef;
+  @ViewChild('fileInput2') fileInput2: ElementRef;
+  @ViewChild('fileInput3') fileInput3: ElementRef;
+
   travel_date: any;
 
   genders: Array<{ value: number, text: string, checked: boolean }> = [];
@@ -630,9 +634,14 @@ export class UserPage {
     })
   }
 
-  clearFile(fileChoose: string) {
-    this.Userform.get(fileChoose).setValue(null);
-    this.fileInput.nativeElement.value = '';
+  clearFile(fileChoose: any) {
+    console.log(fileChoose);
+    this.Userform.get(fileChoose).setValue(null);   
+    //console.log(this.fileInput);
+    // this.fileInput1.nativeElement.value = '';
+    this.fileInput2.nativeElement.value = '';
+    this.fileInput3.nativeElement.value = '';
+   
   }
 
   ionViewDidLoad() {

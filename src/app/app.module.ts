@@ -13,7 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ConferenceApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
+
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
@@ -29,9 +29,6 @@ import { RolesetupPage } from '../pages/rolesetup/rolesetup';
 import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup';
 import { QualificationsetupPage } from '../pages/qualificationsetup/qualificationsetup';
 import { SubsciptionsetupPage } from '../pages/subsciptionsetup/subsciptionsetup';
-import { SchedulePage } from '../pages/schedule/schedule';
-import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
-import { SessionDetailPage } from '../pages/session-detail/session-detail';
 import { SignupPage } from '../pages/signup/signup';
 import { SpeakerListPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -104,11 +101,9 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 @NgModule({
   declarations: [
     ConferenceApp,
-    AboutPage,
     AccountPage,
     LoginPage,
     PopoverPage,
-    SchedulePage,
     MedicalclaimPage,
     PrintclaimPage,
     GiftclaimPage,
@@ -121,8 +116,6 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     TravelclaimPage,
     StatesetupPage,
     SetupguidePage,
-    ScheduleFilterPage,
-    SessionDetailPage,
     SignupPage,
     SpeakerListPage,
     SubmodulesetupPage,
@@ -188,12 +181,8 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
-        { component: SchedulePage, name: 'Schedule', segment: 'schedule' },
-        { component: SessionDetailPage, name: 'SessionDetail', segment: 'sessionDetail/:name' },
-        { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
         { component: SpeakerListPage, name: 'Home', segment: 'Home' },
         { component: SetupPage, name: 'Setup', segment: 'Setup' },
-        { component: AboutPage, name: 'About', segment: 'about' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' }
@@ -205,13 +194,9 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
   bootstrap: [IonicApp],
   entryComponents: [
     ConferenceApp,
-    AboutPage,
     AccountPage,
     LoginPage,
     PopoverPage,
-    SchedulePage,
-    ScheduleFilterPage,
-    SessionDetailPage,
     SetupguidePage,
     SignupPage,
     StatesetupPage,

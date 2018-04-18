@@ -45,7 +45,7 @@ export class PrintclaimPage {
   @ViewChild('fileInput') fileInput: ElementRef;
  
   public MainClaimSaved: boolean = false;
-  Travel_Amount_ngModel: any;
+  Print_Amount_ngModel: any;
     Customer_GUID: any;
     Soc_GUID: any;  
     ClaimRequestMain: any;
@@ -55,8 +55,8 @@ export class PrintclaimPage {
     validDate = new Date().toISOString();
 
     userGUID: any;
-    Travel_Date_ngModel: any;
-    Travel_Description_ngModel: any;
+    Print_Date_ngModel: any;
+    Print_Description_ngModel: any;
     public assignedTo: any;
     public profileLevel: any; 
     public stage: any;
@@ -99,19 +99,16 @@ export class PrintclaimPage {
         //     }
         //   });
         // }
-        this.Travel_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;        
+        // this.Print_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
+        this.Print_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();        
         // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+        this.Print_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+        this.Print_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
         // this.vehicles.forEach(element => {
         //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
         //     this.Travel_Mode_ngModel = element.CATEGORY
         //   }
-        // });
-        console.table(this.claimRequestData)       
-        console.log(this.claimRequestData[0].DESCRIPTION)
-        console.log(this.Travel_Date_ngModel)
-        console.log(this.claimRequestData[0].TRAVEL_DATE)
+        // });       
       }
       );
   }
@@ -243,10 +240,11 @@ export class PrintclaimPage {
     let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date( this.Travel_Date_ngModel).getMonth() + 1;
-    let year = new Date( this.Travel_Date_ngModel).getFullYear();
+    let month = new Date( this.Print_Date_ngModel).getMonth() + 1;
+    let year = new Date( this.Print_Date_ngModel).getFullYear();
     let claimRefGUID;
     let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+    console.log(this.Print_Date_ngModel);
     this.http
       .get(url)
       .map(res => res.json())
@@ -272,17 +270,17 @@ export class PrintclaimPage {
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
             //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             claimReqMainRef.CLAIM_TYPE_GUID = 'd9567482-033a-6d92-3246-f33043155746';
-            claimReqMainRef.TRAVEL_DATE = this.Travel_Date_ngModel;
+            claimReqMainRef.TRAVEL_DATE = this.Print_Date_ngModel;
              //claimReqMainRef.START_TS = value.start_DT;
              //claimReqMainRef.END_TS = value.end_DT;
-            claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+            claimReqMainRef.DESCRIPTION = this.Print_Description_ngModel;
             claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
             claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
             claimReqMainRef.PROFILE_JSON = this.profileJSON;
             claimReqMainRef.STATUS = 'Pending';
             claimReqMainRef.STAGE = this.stage;
             //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-            claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel
+            claimReqMainRef.CLAIM_AMOUNT = this.Print_Amount_ngModel
             claimReqMainRef.CREATION_TS = new Date().toISOString();
             claimReqMainRef.UPDATE_TS = new Date().toISOString();
             //claimReqMainRef.FROM = this.Travel_From_ngModel;
@@ -324,17 +322,17 @@ export class PrintclaimPage {
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
           //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
           claimReqMainRef.CLAIM_TYPE_GUID = 'd9567482-033a-6d92-3246-f33043155746';
-          claimReqMainRef.TRAVEL_DATE =  this.Travel_Date_ngModel;
+          claimReqMainRef.TRAVEL_DATE =  this.Print_Date_ngModel;
           // claimReqMainRef.START_TS = value.start_DT;
           // claimReqMainRef.END_TS = value.end_DT;
-          claimReqMainRef.DESCRIPTION = this.Travel_Description_ngModel;
+          claimReqMainRef.DESCRIPTION = this.Print_Description_ngModel;
           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
           claimReqMainRef.PROFILE_JSON = this.profileJSON;
           claimReqMainRef.STATUS = 'Pending';
           claimReqMainRef.STAGE = this.stage;
           //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
-          claimReqMainRef.CLAIM_AMOUNT = this.Travel_Amount_ngModel;
+          claimReqMainRef.CLAIM_AMOUNT = this.Print_Amount_ngModel;
           claimReqMainRef.CREATION_TS = new Date().toISOString();
           claimReqMainRef.UPDATE_TS = new Date().toISOString();
           // claimReqMainRef.FROM = this.Travel_From_ngModel;
