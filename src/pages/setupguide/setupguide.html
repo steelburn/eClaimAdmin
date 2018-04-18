@@ -21,11 +21,12 @@
 
       <ion-card-content *ngIf="CompanyClicked">
         <ion-list>
-          <form [formGroup]="Branchform">
+          <form [formGroup]="Branchform1">
 
             <ion-item>
               <ion-label stacked>{{"TENANT NAME"}}</ion-label>
-              <ion-input type="text" formControlName="TENANT_NAME" [(ngModel)]="Tenant_Name_ngModel" placeholder="{{'Please fill in the name of tenant'}}"></ion-input>
+              <ion-input type="text" formControlName="TENANT_NAME" [(ngModel)]="Tenant_Name_ngModel" placeholder="{{'Please fill in the name of tenant'}}"
+                [readonly]="Readonly()"></ion-input>
             </ion-item>
 
             <ion-item>
@@ -39,7 +40,7 @@
             </ion-item>
 
             <div class="btn">
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveCompany()">NEXT
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform1.valid" (click)="SaveCompany()">NEXT
                 <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
               </button>
               <a ion-button color="primary" (click)="SkipSetup()">SKIP</a>
@@ -57,7 +58,7 @@
 
       <ion-card-content *ngIf="HQClicked">
         <ion-list>
-          <form [formGroup]="Branchform">
+          <form [formGroup]="Branchform2">
 
             <div style="width: 47%; display:inline-table !important;">
               <ion-item>
@@ -87,7 +88,7 @@
               <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="BackHQ()">
                 <ion-icon name="ios-arrow-back" style="padding: 10px;"></ion-icon>BACK
               </button>
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveHQ()">NEXT
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform2.valid" (click)="SaveHQ()">NEXT
                 <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
               </button>
             </div>
@@ -104,7 +105,7 @@
 
       <ion-card-content *ngIf="BranchClicked">
         <ion-list>
-          <form [formGroup]="Branchform">
+          <form [formGroup]="Branchform3">
             <div style="width: 47%; display:inline-table !important;">
               <ion-item>
                 <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
@@ -136,13 +137,13 @@
                   <ion-toggle formControlName="ISHQ_FLAG" [(ngModel)]="Branch_ISHQ_FLAG_ngModel"></ion-toggle>                 
                 </ion-item> -->
 
-             
+
 
               </div>
 
             </div>
             <div class="btn">
-              <button ion-button icon-left (click)="AddBranch()">
+              <button ion-button icon-left [disabled]="!Branchform3.valid" (click)="AddBranch()">
                 ADD
                 <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
               </button>
@@ -166,11 +167,11 @@
                     <td class="lgl1">{{branch.BRANCH_REGNO}}</td>
                     <td class="lgl1">{{branch.BRANCH_EMAIL}}</td>
                     <td class="lgl1">{{branch.BRANCH_CONTACTNO}}</td>
-                    <td class="lgl1">                      
+                    <td class="lgl1">
                       <ion-icon *ngIf="branch.ISHQ==true" md="md-done-all"></ion-icon>
                       <ion-icon *ngIf="branch.ISHQ==false" md="md-close"></ion-icon>
                     </td>
-                    
+
                     <td class="lgl1 fColor">
                       <button ion-button item-end (click)="EditBranch(branch.BRANCH_GUID)">
                         <ion-icon name="md-create"></ion-icon>
@@ -188,7 +189,8 @@
               <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="BackBranch()">
                 <ion-icon name="ios-arrow-back" style="padding: 10px;"></ion-icon>BACK
               </button>
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveBranch()">NEXT
+              <!-- [disabled]="!Branchform3.valid" -->
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="SaveBranch()">NEXT
                 <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
               </button>
               <a ion-button color="primary" (click)="SaveBranch()">SKIP</a>
@@ -206,7 +208,7 @@
 
       <ion-card-content *ngIf="DepartmentClicked">
         <ion-list>
-          <form [formGroup]="Branchform">
+          <form [formGroup]="Branchform4">
 
             <ion-item>
               <ion-label stacked>{{"DEPARTMENT NAME"}}</ion-label>
@@ -218,7 +220,7 @@
               <ion-input type="text" formControlName="DEPARTMENT_DESCRIPTION" [(ngModel)]="Department_Desc_ngModel" placeholder="{{'Please fill in the department description of your company'}}"></ion-input>
             </ion-item>
             <div class="btn">
-              <button ion-button icon-left (click)="AddDepartment()">
+              <button ion-button icon-left [disabled]="!Branchform4.valid" (click)="AddDepartment()">
                 ADD
                 <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
               </button>
@@ -252,10 +254,11 @@
             </ion-list>
 
             <div class="btn">
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="BackDepartment()">
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="BackDepartment()">
                 <ion-icon name="ios-arrow-back" style="padding: 10px;"></ion-icon>BACK
               </button>
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveDepartment()">NEXT
+              <!-- [disabled]="!Branchform4.valid" -->
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="SaveDepartment()">NEXT
                 <ion-icon name="ios-arrow-forward" style="padding: 10px;"></ion-icon>
               </button>
             </div>
@@ -272,7 +275,7 @@
 
       <ion-card-content *ngIf="DesignationClicked">
         <ion-list>
-          <form [formGroup]="Branchform">
+          <form [formGroup]="Branchform5">
 
             <ion-item>
               <ion-label stacked>{{"DESIGNATION NAME"}}</ion-label>
@@ -284,11 +287,12 @@
               <ion-input type="text" formControlName="DESIGNATION_DESC" [(ngModel)]="Designation_Desc_ngModel" placeholder="{{'Please fill in the designation description of your company'}}"></ion-input>
             </ion-item>
             <div class="btn">
-              <button ion-button icon-left (click)="AddDesignation()">
+              <button ion-button icon-left [disabled]="!Branchform5.valid" (click)="AddDesignation()">
                 ADD
                 <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>
               </button>
             </div>
+
             <ion-list>
               <ion-item>
                 <table class="Tabler">
@@ -317,10 +321,11 @@
             </ion-list>
 
             <div class="btn">
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="BackDesignation()">
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="BackDesignation()">
                 <ion-icon name="ios-arrow-back" style="padding: 10px;"></ion-icon>BACK
               </button>
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="SaveDesignation()">FINISH</button>
+              <!-- [disabled]="!Branchform6.valid" -->
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="SaveDesignation()">FINISH</button>
             </div>
 
           </form>
