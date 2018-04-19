@@ -17,7 +17,56 @@
         </button>
     </ion-fab>
 
-    <div class="eClaimSubTitle">
+    <ion-list>
+        <ion-item>
+            <table class="Tabler">
+                <tr class="linedsg TColor">
+
+                    <th class="lgl1 tblBrLeft" style="width:60px">NO</th>
+                    <th class="lgl1">{{ 'NAME' | translate }}</th>                    
+                    <th class="lgl1">{{ 'STAFF ID' | translate }}</th>
+                    <th class="lgl1">{{ 'COMPANY' | translate }}</th>
+                    <th class="lgl1">{{ 'DEPARTMENT' | translate }}</th>
+                    <th class="lgl1">{{ 'DESIGNATION' | translate }}</th>
+                    <th class="lgl1">{{ 'EMAIL' | translate }}</th>
+                    <!-- <th class="lgl1">{{ 'LOGINID' | translate }}</th> -->
+                    <th class="lgl1">{{ 'JOINING DATE' | translate }}</th>
+                    <th class="lgl1">{{ 'STATUS' | translate }}</th>
+
+                    <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
+                </tr>
+
+                <tr class="col7" *ngFor="let user of userview; let i=index">
+
+                    <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{user.FULLNAME}}</td>
+                    <td class="lgl1">{{user.PERSONAL_ID}}</td>
+                    <td class="lgl1">{{user.tenant_company_name}}, {{user.SITE_NAME}} </td>
+                    <td class="lgl1">{{user.department_name}}</td>
+                    <td class="lgl1">{{user.designation_name}}</td>
+                    <td class="lgl1">{{user.EMAIL}}</td>
+                    <td class="lgl1">{{user.JOIN_DATE}}</td>
+                    <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
+                    
+                    <!-- <td class="lgl1">{{user.LOGIN_ID}}</td> -->
+
+
+                    <td class="lgl1 fColor">
+                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
+                            <ion-icon name="md-create"></ion-icon>
+                        </button>
+                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
+                            <ion-icon name="md-close"></ion-icon>
+                        </button>
+                    </td>
+                </tr>
+
+            </table>
+        </ion-item>
+    </ion-list>
+
+
+    <!-- <div class="eClaimSubTitle">
         <b>{{ 'PERSONAL_DETAILS' | translate }}</b>
     </div>
 
@@ -70,7 +119,7 @@
                     <th class="lgl1">{{ 'DEPARTMENT' | translate }}</th>
                     <th class="lgl1">{{ 'JOIN_DATE' | translate }}</th>
                     <th class="lgl1">{{ 'BRANCH' | translate }}</th>
-                    <!-- <th class="lgl1">APPROVER</th> -->
+                    <th class="lgl1">APPROVER</th>
                     <th class="lgl1">{{ 'STATUS' | translate }} </th>
                     <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
                 </tr>
@@ -82,7 +131,7 @@
                     <td class="lgl1">{{user.department_name}}</td>
                     <td class="lgl1">{{user.JOIN_DATE}}</td>
                     <td class="lgl1">{{user.SITE_NAME}}</td>
-                    <!-- <td class="lgl1">{{user.APPROVER1}}</td> -->
+                    <td class="lgl1">{{user.APPROVER1}}</td>
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
@@ -134,7 +183,7 @@
                 </tr>
             </table>
         </ion-item>
-    </ion-list>
+    </ion-list> -->
 
 
     <!-- add Tenant form start-->
