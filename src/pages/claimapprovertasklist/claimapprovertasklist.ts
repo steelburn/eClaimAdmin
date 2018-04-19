@@ -33,6 +33,7 @@ export class ClaimapprovertasklistPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
     
     this.claimrefguid=navParams.get("claimRefGuid");
+   // alert(this.claimrefguid);
     if(this.claimrefguid!='null'){
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
@@ -49,7 +50,7 @@ BindData()
   .subscribe(data => {
     this.claimrequestdetails= data["resource"];
   });
-  console.table(this.claimrequestdetails);
+  //console.table(this.claimrequestdetails);
 }
 
 onSearchInput(ev: any) {  
@@ -105,7 +106,7 @@ else{
   }
 
   approveClaims(){
-console.table(this.claimrequestdetails);
+//console.table(this.claimrequestdetails);
 
   }
   ionViewDidLoad() {

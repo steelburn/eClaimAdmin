@@ -32,6 +32,7 @@ import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistoryd
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+import{ClaimReportPage} from '../pages/claim-report/claim-report';
 
 import { UploadPage } from'../pages/upload/upload';
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
@@ -85,7 +86,7 @@ export class ConferenceApp {
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},  
     { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 2, icon: 'settings' },
-   
+    { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
   ];
   loggedInPages: PageInterface[] = [
     { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
