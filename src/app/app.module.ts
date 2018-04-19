@@ -92,6 +92,7 @@ import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistoryd
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+import{ClaimReportPage} from '../pages/claim-report/claim-report';
 
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
@@ -158,12 +159,9 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
     ClaimtasklistPage,
-    UserclaimslistPage
 
-    
-
-
-
+    UserclaimslistPage,
+    ClaimReportPage
   ],
 
 
@@ -252,11 +250,8 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     ClaimtasklistPage,
     UserclaimslistPage,
 
-
+    ClaimReportPage
     UploadPage
-
-
-
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

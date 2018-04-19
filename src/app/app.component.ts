@@ -32,6 +32,7 @@ import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistoryd
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+import{ClaimReportPage} from '../pages/claim-report/claim-report';
 
 import { UploadPage } from'../pages/upload/upload';
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
