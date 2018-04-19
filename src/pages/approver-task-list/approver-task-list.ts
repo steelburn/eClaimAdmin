@@ -76,9 +76,9 @@ export class ApproverTaskListPage {
   viewClaim(claimRequestGUID: string,level:number) {
     console.log(claimRequestGUID)
     //this.navCtrl.push(TravelClaimViewPage, {
-       //this.navCtrl.push(EntertainmentClaimViewPage, {
+       this.navCtrl.push(EntertainmentClaimViewPage, {
          //this.navCtrl.push(MedicalClaimViewPage, {
-           this.navCtrl.push(OvertimeClaimViewPage, {
+           //this.navCtrl.push(OvertimeClaimViewPage, {
              //this.navCtrl.push(PrintClaimViewPage, {
                //this.navCtrl.push(GiftClaimViewPage, {
       cr_GUID: claimRequestGUID,
