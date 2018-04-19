@@ -7,9 +7,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>USER CLAIM LIST</ion-title>
+    <ion-title>User Claim List</ion-title>
   </ion-navbar>
 
+  <ion-toolbar no-border-top>
+    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
@@ -28,21 +31,19 @@
         <ion-label></ion-label>
          <ion-label></ion-label>
       </ion-item>
-      <ion-item>
-          <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
-        </ion-item>
+
 
         <ion-list>
             <ion-item>
                 <table class="Tabler ">
                     <tr class="linedsg TColor">
-                        <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-                        <!-- <th class="lgl1">S NO.</th> -->
-                        <th class="lgl1">CLAIM TYPE</th>
-                        <th class="lgl1">DATE</th>
-                        <th class="lgl1">STATUS</th>
-                        <th class="lgl1">STAGE</th>
-                        <th class="lgl1">AMOUNT</th>
+                        <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+              
+                        <th class="lgl1">Claim Type</th>
+                        <th class="lgl1">Date</th>
+                        <th class="lgl1">Status</th>
+                        <th class="lgl1">Stage</th>
+                        <th class="lgl1 tblBrRight">Amount</th>
                         <!-- <th class="lgl1 tblBrRight" style="width:80px">ACTION</th> -->
           
                     </tr>

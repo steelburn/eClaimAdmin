@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>SETUP</ion-title>
+    <ion-title><b>Setup</b></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,105 +15,45 @@
 
 
  <ion-content padding>
-  <div class="blackcontainer" >
-  </div>
-  <div class="popup" padding >
-          <ion-card class="container">
-            <ion-card-header color="pure" class="icTitle background">
-              STEP 1 : REGISTER YOUR HEAD QUARTER
+   <ion-card class="round" (click)="goToBanksetup()">
+            <ion-card-header class="icon">
+              <ion-icon name="logo-usd" class="iconf"></ion-icon>
             </ion-card-header>
-            <ion-card-content>
-                <ion-list>
-                    <form [formGroup]="Branchform">
-            
-                     
-            
-                      <ion-item>
-                        <ion-label stacked>{{"HEAD QUATER NAME"}}</ion-label>
-                        <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" placeholder="{{'Please fill in the name of head quater of your company'}}"></ion-input>
-                      </ion-item>
-                      <ion-item>
-                          <ion-label stacked>{{"HEAD QUARTER ADDRESS"}}</ion-label>
-                          <ion-input type="text"  placeholder="{{'Please fill in the address of headquarter'}}"></ion-input>
-                        </ion-item>
-                        
-                        <ion-item>
-                            <ion-label stacked>{{"HEAD QUARTER REG NO."}}</ion-label>
-                            <ion-input type="text"  placeholder="{{'Please fill in the registration number of headquarter'}}"></ion-input>
-                          </ion-item>
-            
-                      <div class="btn">
-                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="Save()">NEXT</button>
-                      </div>
-                    </form>
-                  </ion-list>
-
+            <ion-card-content class="Subtitle">
+            BANK 
             </ion-card-content>
           </ion-card>
 
-          <ion-card>
-              <ion-card-header color="pure" class="icTitle2 background">
-                STEP 2 : REGISTER YOUR BRANCH OF YOUR TENANT COMPANY
-              </ion-card-header>
-          
-            </ion-card>
 
-            <ion-card>
-              <ion-card-header color="pure" class="icTitle2 background">
-                STEP 3 : REGISTER YOUR DEPARTMENT OF YOUR TENANT COMPANY
-              </ion-card-header>
-          
-            </ion-card>
-
-            <ion-card>
-              <ion-card-header color="pure" class="icTitle2 background">
-                STEP 4 : REGISTER YOUR DESIGNATION OF YOUR TENANT COMPANY
-              </ion-card-header>
-          
-            </ion-card>
-
-     
-     </div>
-    <!--
-  <ion-card class="round" (click)="goToBanksetup()">
-    <ion-card-header class="icon">
-      <ion-icon name="logo-usd" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-     BANK 
-    </ion-card-content>
-  </ion-card>
+        <ion-card class="round" (click)="goToCashcardsetup()">
+          <ion-card-header class="icon">
+            <ion-icon name="cash" class="iconf"></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="Subtitle">
+          CASH CARD 
+          </ion-card-content>
+        </ion-card>
 
 
-  <ion-card class="round" (click)="goToCashcardsetup()">
-    <ion-card-header class="icon">
-      <ion-icon name="cash" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-    CASH CARD 
-    </ion-card-content>
-  </ion-card>
-
-
-  <ion-card class="round" (click)="goToClaimtypesetup()">
-  <ion-card-header class="icon">
-    <ion-icon name="list" class="iconf"></ion-icon>
-  </ion-card-header>
-  <ion-card-content class="Subtitle">
-    CLAIM TYPE 
-  </ion-card-content>
-</ion-card>
+      <ion-card class="round" (click)="goToClaimtypesetup()">
+        <ion-card-header class="icon">
+          <ion-icon name="list" class="iconf"></ion-icon>
+        </ion-card-header>
+        <ion-card-content class="Subtitle">
+          CLAIM TYPE 
+        </ion-card-content>
+      </ion-card>
 
   
 
-  <ion-card class="round" (click)="goToDesignationsetup()">
-    <ion-card-header class="icon">
-      <ion-icon name="person" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-     DESIGNATION 
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="round" (click)="goToDesignationsetup()">
+      <ion-card-header class="icon">
+        <ion-icon name="person" class="iconf"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="Subtitle">
+      DESIGNATION 
+      </ion-card-content>
+    </ion-card>
 
   <ion-card class="round" (click)="goToDepartmentsetup()">
     <ion-card-header class="icon">
@@ -181,5 +121,27 @@
     <ion-card-content class="Subtitle">
      TENANT COMPANY & SITE 
     </ion-card-content>
-  </ion-card> -->
+    </ion-card>
+
+    <ion-card class="round"  (click)="goToCountrysetup()">
+        <ion-card-header class="icon">
+          <ion-icon name="ios-pin" class="iconf"></ion-icon>
+        </ion-card-header>
+        <ion-card-content class="Subtitle">
+        COUNTRY
+        </ion-card-content>
+      </ion-card>
+
+        
+
+        <ion-card class="round"  (click)="goToStatesetup()">
+            <ion-card-header class="icon">
+              <ion-icon name="ios-pin-outline" class="iconf"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="Subtitle">
+             STATE
+            </ion-card-content>
+        </ion-card>
+
+
 </ion-content>

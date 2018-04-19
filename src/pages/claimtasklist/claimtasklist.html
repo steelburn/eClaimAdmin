@@ -7,30 +7,28 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>CLAIM TASK LIST</ion-title>
+    <ion-title>Admin Task List</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top>
+    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-item>
-        <!-- <ion-searchbar type="text" #filter (keyup)="0" placeholder="{{'SEARCH_FULLNAME' | translate}}"></ion-searchbar> -->
-        <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
-      </ion-item>
+
 
       <ion-list>
           <ion-item>
               <table class="Tabler ">
                   <tr class="linedsg TColor">
-                      <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-                      <th class="lgl1">EMPLOYEE</th>
-                      <th class="lgl1">DEPARTMENT</th>
-                      <th class="lgl1">MONTH</th>
-                      <!-- <th class="lgl1">YEAR</th> -->
-                      <th class="lgl1">TOTAL</th>
-                      <th class="lgl1 tblBrRight" style="width:80px">ACTION</th>
+                      <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+                      <th class="lgl1">Employee</th>
+                      <th class="lgl1">Department</th>
+                      <th class="lgl1">Month</th>
+                      <th class="lgl1">Total</th>
+                      <th class="lgl1 tblBrRight" style="width:80px">Action</th>
       
                   </tr>
       

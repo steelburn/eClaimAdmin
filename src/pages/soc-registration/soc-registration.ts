@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -11,11 +11,14 @@ import { SocMain_Model } from '../../models/socmain_model';
 import { SocProject_Model } from '../../models/soc_project_model';
 import { SocCustomer_Model } from '../../models/soc_customer_model';
 import { SocMain_Service } from '../../services/socmain_service';
+
 import { Tenant_Main_Model } from '../../models/tenant_main_model';
 import { View_SOC_Model } from '../../models/view_soc_model';
+
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
+import { LoginPage } from '../login/login';
 
 
 /**
@@ -39,23 +42,11 @@ export class SocRegistrationPage {
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-
-  baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_project' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  baseResourceUrl2: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_customer' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  baseResourceUrl3: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_registration' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
+  
   public socs: View_SOC_Model[] = [];
-  //public socs: SocMain_Model[] = []; 
-  // public socs: SocProject_Model[] = []; 
-  // public socs: SocMain_Model[] = []; 
-
   public soc_main: SocMain_Model[] = [];
   public soc_project: SocProject_Model[] = [];
   public soc_customer: SocCustomer_Model[] = [];
-
-  // public socs: any;
 
   public soc_details_main: any;
   public soc_details_project: any;
@@ -71,72 +62,55 @@ export class SocRegistrationPage {
   public SOC_NO_ngModel_Add: any;
   public PROJECT_NAME_ngModel_Add: any;
   public CUSTOMER_NAME_ngModel_Add: any;
+  
+  Tenant_Add_ngModel: any;
+  AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
+  tenants: any;
+  Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  public SOC_NO_ngModel_Edit: any;
-  public PROJECT_NAME_ngModel_Edit: any;
-  public CUSTOMER_NAME_ngModel_Edit: any;
-
-  //public AddSocClicked: boolean = false;
   public AddSocClick() {
-    //this.ClearControls();
-    this.AddSocClicked = true;
+    if (this.Edit_Form == false) {
+      this.AddSocClicked = true; this.Add_Form = true; this.Edit_Form = false;
+      this.ClearControls();
+    }
+    else {
+      alert('Sorry !! You are in Edit Mode.');
+    }
   }
 
   public CloseSocClick() {
-
     if (this.AddSocClicked == true) {
       this.AddSocClicked = false;
-    }
-    if (this.EditSocClicked == true) {
-      this.EditSocClicked = false;
+      this.Add_Form = true; this.Edit_Form = false;
     }
   }
-
-  public SOC_GUID_FOR_UPDATE: any;
-  public PROJECT_GUID_FOR_UPDATE: any;
-  public CUSTOMER_GUID_FOR_UPDATE: any;
 
   public EditClick(id: any) {
-    this.TENANT_GUID_UPDATE = id;
-    this.EditSocClicked = true;
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
-    let url1 = this.baseResource_Url + "main_customer?filter=(TENANT_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    let url2 = this.baseResource_Url + "main_project?filter=(TENANT_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    let url = this.baseResource_Url + "soc_registration?filter=(TENANT_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.http.get(url1, options)
-      .map(res => res.json())
-      .subscribe(
-      data => {
-        //let res = data["resource"];
-        this.soc_details_main = data["resource"];
-        this.CUSTOMER_GUID_FOR_UPDATE = this.soc_details_main[0]["CUSTOMER_GUID"];
-        this.CUSTOMER_NAME_ngModel_Edit = this.soc_details_main[0]["NAME"];
-      });
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+    this.ClearControls();
+    this.AddSocClicked = true; this.Add_Form = false; this.Edit_Form = true;
 
-    this.http.get(url2, options)
+    var self = this;
+    let SocEditUrl = this.baseResource_Url + "view_soc_edit?filter=(SOC_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http.get(SocEditUrl)
       .map(res => res.json())
       .subscribe(
-      data => {
-        //let res = data["resource"];
-        this.soc_details_main = data["resource"];
-        this.PROJECT_GUID_FOR_UPDATE = this.soc_details_main[0]["PROJECT_GUID"];
-        this.PROJECT_NAME_ngModel_Edit = this.soc_details_main[0]["NAME"];
-      });
+        data => {
+          this.soc_details_main = data["resource"];
 
-    this.http.get(url, options)
-      .map(res => res.json())
-      .subscribe(
-      data => {
-        //let res = data["resource"];
-        this.soc_details_main = data["resource"];
-        this.SOC_GUID_FOR_UPDATE = this.soc_details_main[0]["SOC_GUID"];
-        this.SOC_NO_ngModel_Edit = this.soc_details_main[0]["soc"];
-      });
+          this.Tenant_Add_ngModel = self.soc_details_main[0]["TENANT_GUID"]; localStorage.setItem('PREV_TENANT_GUID', self.soc_details_main[0]["TENANT_GUID"]);
+          this.SOC_NO_ngModel_Add = self.soc_details_main[0]["SOC_NO"]; localStorage.setItem('PREV_SOC_NO', self.soc_details_main[0]["SOC_NO"]);
+          this.PROJECT_NAME_ngModel_Add = self.soc_details_main[0]["PROJECT_NAME"]; localStorage.setItem('PREV_PROJECT_NAME', self.soc_details_main[0]["PROJECT_NAME"]);
+          this.CUSTOMER_NAME_ngModel_Add = self.soc_details_main[0]["CUSTOMER_NAME"]; localStorage.setItem('PREV_CUSTOMER_NAME', self.soc_details_main[0]["CUSTOMER_NAME"]);
+
+          this.loading.dismissAll();
+        });
   }
 
-  public DeleteClick(TENANT_GUID: any) {
+  public DeleteClick(SOC_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
       message: 'Do you want to remove ?',
@@ -153,32 +127,138 @@ export class SocRegistrationPage {
           handler: () => {
             console.log('OK clicked');
             var self = this;
-            this.socservice.remove(TENANT_GUID)
-              .subscribe(() => {
-                self.socs = self.socs.filter((item) => {
-                  return item.TENANT_GUID != TENANT_GUID
+
+            //before delete get id of main_customer and main_project table, according to that id delete the record
+            let SocEditUrl = this.baseResource_Url + "view_soc_edit?filter=(SOC_GUID=" + SOC_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+            this.http.get(SocEditUrl)
+              .map(res => res.json())
+              .subscribe(
+                data => {
+                  this.soc_details_main = data["resource"];
+
+                  //Remove from main_customer-----------------------
+                  this.socservice.remove_customer(self.soc_details_main[0]["CUSTOMER_GUID"])
+                    .subscribe(() => {
+                      self.socs = self.socs.filter((item) => {
+                        return item.SOC_GUID != SOC_GUID;
+                      });
+                    });
+
+                  //Remove from main_project------------------------
+                  this.socservice.remove_project(self.soc_details_main[0]["PROJECT_GUID"])
+                    .subscribe(() => {
+                      self.socs = self.socs.filter((item) => {
+                        return item.SOC_GUID != SOC_GUID;
+                      });
+                    });
+
+                  //Remove from soc_main----------------------------
+                  this.socservice.remove_soc(SOC_GUID)
+                    .subscribe(() => {
+                      self.socs = self.socs.filter((item) => {
+                        return item.SOC_GUID != SOC_GUID
+                      });
+                    });
                 });
-              });
           }
         }
       ]
     }); alert.present();
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private socservice: SocMain_Service, private alertCtrl: AlertController) {
-    this.http
-      .get(this.baseResourceUrl3)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.socs = data.resource;
-        //console.table(this.socs)
+  loading: Loading;
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private socservice: SocMain_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    if (localStorage.getItem("g_USER_GUID") == null) {
+      alert('Sorry !! Please Login.');
+      this.navCtrl.push(LoginPage);
+    }
+    else {
+      this.loading = this.loadingCtrl.create({
+        content: 'Loading...',
       });
-    this.Socform = fb.group({
+      this.loading.present();
 
-      soc: ["", Validators.required],
-      project_name: ["", Validators.required],
-      customer_name: ["", Validators.required],
-    });
+      //Clear localStorage value--------------------------------      
+      if (localStorage.getItem('PREV_TENANT_GUID') == null) {
+        localStorage.setItem('PREV_TENANT_GUID', null);
+      }
+      else {
+        localStorage.removeItem("PREV_TENANT_GUID");
+      }
+
+      if (localStorage.getItem('PREV_SOC_NO') == null) {
+        localStorage.setItem('PREV_SOC_NO', null);
+      }
+      else {
+        localStorage.removeItem("PREV_SOC_NO");
+      }
+
+      if (localStorage.getItem('PREV_PROJECT_NAME') == null) {
+        localStorage.setItem('PREV_PROJECT_NAME', null);
+      }
+      else {
+        localStorage.removeItem("PREV_PROJECT_NAME");
+      }
+
+      if (localStorage.getItem('PREV_CUSTOMER_NAME') == null) {
+        localStorage.setItem('PREV_CUSTOMER_NAME', null);
+      }
+      else {
+        localStorage.removeItem("PREV_CUSTOMER_NAME");
+      }      
+
+      //fill all the tenant details----------------------------
+      if (localStorage.getItem("g_USER_GUID") == "sva") {
+        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+        this.http
+          .get(tenantUrl)
+          .map(res => res.json())
+          .subscribe(data => {
+            this.tenants = data.resource;
+          });
+        this.AdminLogin = true;
+      }
+      else {
+        this.AdminLogin = false;
+      }
+
+      //Display Grid---------------------------------------------
+      if (localStorage.getItem("g_USER_GUID") == "sva") {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_soc_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.AdminLogin = true;
+      }
+      else {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_soc_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.AdminLogin = false;
+      }
+
+      this.http
+        .get(this.baseResourceUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.socs = data.resource;
+
+          this.loading.dismissAll();
+        });
+      //-------------------------------------------------------
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.Socform = fb.group({
+          soc: ["", Validators.required],
+          project_name: ["", Validators.required],
+          customer_name: ["", Validators.required],
+        });
+      }
+      else
+      {
+        this.Socform = fb.group({
+          soc: ["", Validators.required],
+          project_name: ["", Validators.required],
+          customer_name: ["", Validators.required],
+          TENANT_NAME: [null, Validators.required],
+        });
+      }
+      
+    }
   }
 
   ionViewDidLoad() {
@@ -186,160 +266,216 @@ export class SocRegistrationPage {
   }
 
   Save() {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
-    let url: string;
-    url = this.baseResource_Url + "soc_main?filter=(SOC_NO=" + this.SOC_NO_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.http.get(url, options)
-      .map(res => res.json())
-      .subscribe(
-      data => {
-        let res = data["resource"];
-        if (res.length == 0) {
-          console.log("No records Found");
-          if (this.Exist_Record == false) {
+    //Save Customer----------------
+    this.SaveCustomer();
+  }
 
-            this.customer_entry.NAME = this.CUSTOMER_NAME_ngModel_Add.trim();
-            this.tenant_entry.TENANT_GUID = UUID.UUID();
-            this.customer_entry.TENANT_GUID = this.tenant_entry.TENANT_GUID;
-            this.customer_entry.CUSTOMER_GUID = UUID.UUID();
-            this.customer_entry.CREATION_TS = new Date().toISOString();
-            this.customer_entry.CREATION_USER_GUID = "1";
-            this.customer_entry.UPDATE_TS = new Date().toISOString();
-            this.customer_entry.UPDATE_USER_GUID = "";
+  SaveCustomer() {
+    //for Save Set Entities-------------------------------------------------------------    
+    if (this.Add_Form == true) {
+      this.customer_entry.CUSTOMER_GUID = UUID.UUID();
+      this.customer_entry.CREATION_TS = new Date().toISOString();
+      this.customer_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.customer_entry.UPDATE_TS = new Date().toISOString();
+      this.customer_entry.UPDATE_USER_GUID = "";
+    }
+    //for Update Set Entities------------------------------------------------------------
+    else {
+      this.customer_entry.CUSTOMER_GUID = this.soc_details_main[0]["CUSTOMER_GUID"];
+      this.customer_entry.CREATION_TS = this.soc_details_main[0]["CREATION_TS"];
+      this.customer_entry.CREATION_USER_GUID = this.soc_details_main[0]["CREATION_USER_GUID"];
+      this.customer_entry.UPDATE_TS = new Date().toISOString();
+      this.customer_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    //Common Entities-------------------------------------------------------------------
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.customer_entry.TENANT_GUID = this.Tenant_Add_ngModel.trim();
+    }
+    else {
+      this.customer_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    this.customer_entry.NAME = this.CUSTOMER_NAME_ngModel_Add.trim();
 
+    //Loader-------------------------------
+    this.loading = this.loadingCtrl.create({
+      content: 'Please Wait...',
+    });
+    this.loading.present();
+    //-------------------------------------
+
+    if (this.Tenant_Add_ngModel != localStorage.getItem('PREV_TENANT_GUID') || this.SOC_NO_ngModel_Add.trim().toUpperCase() != localStorage.getItem('PREV_SOC_NO').toUpperCase() || this.PROJECT_NAME_ngModel_Add != localStorage.getItem('PREV_PROJECT_NAME') || this.CUSTOMER_NAME_ngModel_Add != localStorage.getItem('PREV_CUSTOMER_NAME')) {
+      let val = this.CheckDuplicate();
+      val.then((res) => {
+        if (res.toString() == "0") {
+          //**************Save service if it is new details***************************
+          if (this.Add_Form == true) {
             this.socservice.save_customer(this.customer_entry)
               .subscribe((response) => {
                 if (response.status == 200) {
-                  alert('Customer Registered successfully');
-                  //location.reload();
-                  this.navCtrl.setRoot(this.navCtrl.getActive().component);
-
-                  this.project_entry.NAME = this.PROJECT_NAME_ngModel_Add.trim();
-                  this.project_entry.PROJECT_GUID = UUID.UUID();
-                  this.project_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
-                  this.project_entry.CUSTOMER_LOCATION_GUID = "1";
-                  // this.project_entry.TENANT_GUID = "1";
-                  this.project_entry.TENANT_GUID = this.tenant_entry.TENANT_GUID;
-                  this.project_entry.ACTIVATION_FLAG = "1";
-                  this.project_entry.CREATION_TS = new Date().toISOString();
-                  this.project_entry.CREATION_USER_GUID = "1";
-                  this.project_entry.UPDATE_TS = new Date().toISOString();
-                  this.socservice.save_project(this.project_entry)
-                    .subscribe((response) => {
-                      if (response.status == 200) {
-                        alert('Project Registered successfully');
-                        //location.reload();
-                        this.navCtrl.setRoot(this.navCtrl.getActive().component);
-
-                        this.soc_entry.SOC_NO = this.SOC_NO_ngModel_Add.trim();
-                        this.soc_entry.PROJECT_GUID = this.project_entry.PROJECT_GUID
-                        this.soc_entry.SOC_GUID = UUID.UUID();
-                        this.soc_entry.TENANT_GUID = this.tenant_entry.TENANT_GUID;
-                        this.soc_entry.CREATION_TS = new Date().toISOString();
-                        this.soc_entry.CREATION_USER_GUID = "1";
-                        this.soc_entry.UPDATE_TS = new Date().toISOString();
-                        this.socservice.save_main(this.soc_entry)
-                          .subscribe((response) => {
-                            if (response.status == 200) {
-                              alert('SOC Main Registered successfully');
-                              //location.reload();
-                              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                            }
-                          });
-                      }
-                    });
-
+                  //alert('Customer Registered successfully');
+                  this.SaveProject();
+                  //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                }
+              });
+          }
+          //**************Update service if it is new details*************************
+          else {
+            this.socservice.update_customer(this.customer_entry)
+              .subscribe((response) => {
+                if (response.status == 200) {
+                  //alert('Customer Updated successfully');
+                  this.SaveProject();
                 }
               });
           }
         }
         else {
-          console.log("Records Found");
-          alert("The soc registration is already Exist.")
-
+          alert("The SOC is already Exist.");
+          this.loading.dismissAll();
         }
-      },
-      err => {
-        this.Exist_Record = false;
-        console.log("ERROR!: ", err);
       });
+      val.catch((err) => {
+        console.log(err);
+      });
+    }
+    else {
+      //Simple update----------------------------------------------------------
+      this.socservice.update_customer(this.customer_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            //alert('Customer Updated successfully');
+            this.SaveProject();
+          }
+        });
+    }
   }
 
-
-
-  SOC_GUID_UPDATE: any;
-  TENANT_GUID_UPDATE: any;
-
-  Update(TENANT_GUID: any) {
-    if (this.Socform) {
-      let url: string;
-
-      if (this.Exist_Record == false) {
-
-        this.customer_entry.NAME = this.CUSTOMER_NAME_ngModel_Edit;
-        this.customer_entry.CUSTOMER_GUID = this.CUSTOMER_GUID_FOR_UPDATE;
-        alert('customer' + this.CUSTOMER_GUID_FOR_UPDATE);
-        this.customer_entry.TENANT_GUID = this.TENANT_GUID_UPDATE;
-        alert(this.TENANT_GUID_UPDATE);
-        this.customer_entry.DESCRIPTION = "1";
-        this.customer_entry.CREATION_TS = new Date().toISOString();
-        this.customer_entry.CREATION_USER_GUID = "1";
-        this.customer_entry.UPDATE_TS = new Date().toISOString();
-        this.customer_entry.UPDATE_USER_GUID = "";
-
-        this.socservice.edit_customer(this.customer_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Customer updated successfully');
-              //location.reload();
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
-
-        this.project_entry.NAME = this.PROJECT_NAME_ngModel_Edit;
-        this.project_entry.PROJECT_GUID = this.PROJECT_GUID_FOR_UPDATE;
-        this.project_entry.TENANT_GUID = this.TENANT_GUID_UPDATE;
-        this.project_entry.CUSTOMER_GUID = this.CUSTOMER_GUID_FOR_UPDATE;
-        //alert('project guid' + this.PROJECT_GUID_FOR_UPDATE);
-        //this.project_entry.CUSTOMER_GUID =  this.CUSTOMER_GUID_FOR_UPDATE;
-        this.project_entry.CUSTOMER_LOCATION_GUID = "1";
-        //this.project_entry.TENANT_GUID = "1";
-        this.project_entry.ACTIVATION_FLAG = "1";
-        this.project_entry.CREATION_TS = new Date().toISOString();
-        this.project_entry.CREATION_USER_GUID = "1";
-        this.project_entry.UPDATE_TS = new Date().toISOString();
-
-
-        this.socservice.edit_project(this.project_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Project updated successfully');
-              //location.reload();
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
-
-        this.soc_entry.SOC_NO = this.SOC_NO_ngModel_Edit.trim();
-        //this.soc_entry.PROJECT_GUID = this.project_entry.PROJECT_GUID              
-        this.soc_entry.PROJECT_GUID = this.PROJECT_GUID_FOR_UPDATE;
-        this.soc_entry.SOC_GUID = this.SOC_GUID_FOR_UPDATE;
-        this.soc_entry.TENANT_GUID = this.TENANT_GUID_UPDATE;
-        this.soc_entry.CREATION_TS = new Date().toISOString();
-        this.soc_entry.CREATION_USER_GUID = "1";
-        this.soc_entry.UPDATE_TS = new Date().toISOString();
-
-        this.socservice.edit_soc(this.soc_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('SOC Main updated successfully');
-              //location.reload();
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
-      }
+  SaveProject() {
+    //for Save Set Entities-------------------------------------------------------------
+    if (this.Add_Form == true) {
+      this.project_entry.PROJECT_GUID = UUID.UUID();
     }
+    //for Update Set Entities------------------------------------------------------------
+    else {
+      this.project_entry.PROJECT_GUID = this.soc_details_main[0]["PROJECT_GUID"];
+    }
+    //Common Entities-------------------------------------------------------------------
+    this.project_entry.NAME = this.PROJECT_NAME_ngModel_Add.trim();
+    this.project_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
+    this.project_entry.CUSTOMER_LOCATION_GUID = "NA";
+    this.project_entry.TENANT_GUID = this.customer_entry.TENANT_GUID;
+    this.project_entry.ACTIVATION_FLAG = "1";
+    this.project_entry.CREATION_TS = this.customer_entry.CREATION_TS;
+    this.project_entry.CREATION_USER_GUID = this.customer_entry.CREATION_USER_GUID;
+    this.project_entry.UPDATE_TS = this.customer_entry.UPDATE_TS;
+    this.project_entry.UPDATE_USER_GUID = this.customer_entry.UPDATE_USER_GUID;
+
+    //**************Save service if it is new details***************************
+    if (this.Add_Form == true) {
+      this.socservice.save_project(this.project_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            //alert('Project Registered successfully');
+            this.SaveSOC();
+            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        });
+    }
+    //**************Update service if it is new details*************************
+    else {
+      this.socservice.update_project(this.project_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            //alert('Project Updated successfully');
+            this.SaveSOC();
+          }
+        });
+    }
+  }
+
+  SaveSOC() {
+    //for Save Set Entities-------------------------------------------------------------
+    if (this.Add_Form == true) {
+      this.soc_entry.SOC_GUID = UUID.UUID();
+    }
+    //for Update Set Entities------------------------------------------------------------
+    else {
+      this.soc_entry.SOC_GUID = this.soc_details_main[0]["SOC_GUID"];
+    }
+    //Common Entities-------------------------------------------------------------------
+    this.soc_entry.SOC_NO = this.SOC_NO_ngModel_Add.trim();
+    this.soc_entry.PROJECT_GUID = this.project_entry.PROJECT_GUID;
+    this.soc_entry.TENANT_GUID = this.customer_entry.TENANT_GUID;
+    this.soc_entry.CREATION_TS = this.customer_entry.CREATION_TS;
+    this.soc_entry.CREATION_USER_GUID = this.customer_entry.CREATION_USER_GUID;
+    this.soc_entry.UPDATE_TS = this.customer_entry.UPDATE_TS;
+    this.soc_entry.UPDATE_USER_GUID = this.customer_entry.UPDATE_USER_GUID;
+
+    //**************Save service if it is new details***************************
+    if (this.Add_Form == true) {
+      this.socservice.save_main(this.soc_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            alert('SOC Registered successfully');
+            //this.loading.dismissAll();
+
+            //Remove all storage values-----------------------------------------
+            localStorage.removeItem("PREV_TENANT_GUID");
+            localStorage.removeItem("PREV_SOC_NO");
+            localStorage.removeItem("PREV_PROJECT_NAME");
+            localStorage.removeItem("PREV_CUSTOMER_NAME");
+            //------------------------------------------------------------------
+
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        });
+    }
+    //**************Update service if it is new details*************************
+    else {
+      this.socservice.update_soc(this.soc_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            alert('SOC Updated successfully');
+            //this.loading.dismissAll();
+
+            //Remove all storage values-----------------------------------------            
+            localStorage.removeItem("PREV_TENANT_GUID");
+            localStorage.removeItem("PREV_SOC_NO");
+            localStorage.removeItem("PREV_PROJECT_NAME");
+            localStorage.removeItem("PREV_CUSTOMER_NAME");
+            //------------------------------------------------------------------
+
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        });
+    }
+  }
+
+  CheckDuplicate() {
+    let url: string = "";
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      url = this.baseResource_Url + "view_soc_details?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')AND(soc=' + this.SOC_NO_ngModel_Add.trim() + ')AND(project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ')AND(customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else {
+      url = this.baseResource_Url + "view_soc_details?filter=(TENANT_GUID=" + this.Tenant_Add_ngModel + ')AND(soc=' + this.SOC_NO_ngModel_Add.trim() + ')AND(project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ')AND(customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    let result: any;
+    return new Promise((resolve) => {
+      this.http
+        .get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          result = data["resource"];
+          resolve(result.length);
+        });
+    });
+  }
+
+  ClearControls() {
+    this.Tenant_Add_ngModel = "";
+    this.SOC_NO_ngModel_Add = "";
+    this.PROJECT_NAME_ngModel_Add = "";
+    this.CUSTOMER_NAME_ngModel_Add = "";
   }
 }
 

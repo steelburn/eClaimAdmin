@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>ADMIN SETUP</ion-title>
+    <ion-title>Admin Setup</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -92,18 +92,28 @@
 
   <ion-card class="round" (click)="goToClaimHistory()">
     <ion-card-header class="icon">
-      <ion-icon name="ios-git-network" class="iconf"></ion-icon>
+      <ion-icon name="ios-list-box-outline" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
      CLAIM HISTORY
     </ion-card-content>
   </ion-card>
 
+  <ion-card class="round" (click)="goApproverTaskList()">
+    <ion-card-header class="icon">
+      <ion-icon name="md-checkbox-outline" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+     APPROVER TASK LIST
+    </ion-card-content>
+  </ion-card>
+
+
   
 
   <ion-card class="round" (click)="goToClaimRequetList()">
     <ion-card-header class="icon">
-      <ion-icon name="ios-git-network" class="iconf"></ion-icon>
+      <ion-icon name="ios-checkbox-outline" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
      SUPERIOR TASK LIST
@@ -112,7 +122,7 @@
 
   <ion-card class="round" (click)="goToClaimTaskList()">
       <ion-card-header class="icon">
-        <ion-icon name="ios-git-network" class="iconf"></ion-icon>
+        <ion-icon name="md-clipboard" class="iconf"></ion-icon>
       </ion-card-header>
       <ion-card-content class="Subtitle">
        ADMIN TASK LIST
@@ -121,12 +131,13 @@
 
     <ion-card class="round" (click)="goToUserClaimList()">
       <ion-card-header class="icon">
-        <ion-icon name="ios-git-network" class="iconf"></ion-icon>
+        <ion-icon name="ios-clipboard-outline" class="iconf"></ion-icon>
       </ion-card-header>
       <ion-card-content class="Subtitle">
       USER CLAIM LIST
       </ion-card-content>
     </ion-card>
+
 
     <ion-card class="round" (click)="goToClaimReport()">
       <ion-card-header class="icon">
@@ -136,6 +147,26 @@
        CLAIM REPORT
       </ion-card-content>
     </ion-card>
+
+
+    <ion-card class="round" (click)="goToProfile()">
+      <ion-card-header class="icon">
+        <ion-icon name="basket" class="iconf"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="Subtitle">
+        PROFILE SETUP
+      </ion-card-content>
+    </ion-card>
+  <!-- <ion-card class="round" (click)="goToUser()">
+    <ion-card-header class="icon">
+      <ion-icon name="people" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+     USER 
+    </ion-card-content>
+  </ion-card> -->
+
+
   <!-- <ion-card class="round" (click)="goToSubModulesetup()">
     <ion-card-header class="icon">
       <ion-icon name="ios-git-network-outline" class="iconf"></ion-icon>

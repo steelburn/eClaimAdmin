@@ -16,9 +16,8 @@ import { RolesetupPage } from '../rolesetup/rolesetup';
 import { TenantsetupPage } from '../tenantsetup/tenantsetup';
 import { UserPage } from '../user/user';
 import { SocRegistrationPage } from '../soc-registration/soc-registration';
-
-
-
+import { CountrysetupPage } from '../countrysetup/countrysetup';
+import { StatesetupPage } from '../statesetup/statesetup';
 
 import { TenantCompanySetup_Model } from '../../models/tenantcompanysetup_model';
 import { TenantCompanySiteSetup_Model } from '../../models/tenantcompanysitesetup_model';
@@ -210,8 +209,14 @@ export class SetupPage {
     this.navCtrl.push(PaymenttypesetupPage)
   }
 
+  goToStatesetup(){
+    this.navCtrl.push(StatesetupPage)
+  }
 
   
+  goToCountrysetup(){
+    this.navCtrl.push(CountrysetupPage)
+  }
 
       goToQualificationsetup(){
     this.navCtrl.push(QualificationsetupPage)
@@ -306,7 +311,7 @@ export class SetupPage {
       //-------------Get all the details of previous tenant_company_site------------------------------
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/tenant_company_site?filter=(TENANT_COMPANY_SITE_GUID=" + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http
-        .get(this.baseResourceUrl)
+        .get(this.baseResourceUrl)     
         .map(res => res.json())
         .subscribe(data => {
           this.hqDetails = data.resource;

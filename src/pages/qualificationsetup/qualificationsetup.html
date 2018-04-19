@@ -5,16 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>QUALIFICATION SETUP </ion-title>
+    <ion-title>{{ 'QUALIFICATION_CLAIM_HEADING' | translate }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
       <ion-fab top right edge>
       <button ion-fab mini (click)="AddQualifyClick()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
@@ -24,11 +21,11 @@
       <ion-item>
         <table class="Tabler">
           <tr class="linedsg TColor">
-            <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-            <th class="lgl1">QUALIFICATION</th>
-            <th class="lgl1">DESCRIPTION</th>
+            <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
+            <th class="lgl1">{{ 'QUALIFICATION' | translate }}</th>
+            <th class="lgl1">{{ 'DESCRIPTION' | translate }}</th>
   
-            <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+            <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
   
           </tr>
   
@@ -67,13 +64,13 @@
      <ion-list>
         <form [formGroup]="Qualifyform">
           <ion-item>            
-            <ion-label stacked>{{"QUALIFICATION"}}</ion-label>
+            <ion-label stacked>{{ 'QUALIFICATION' | translate }}</ion-label>
             <ion-input type="text" formControlName="TYPE_NAME" [(ngModel)]="TYPE_NAME_ngModel_Add"
               placeholder="{{'Please fill in the qualification'}}"></ion-input>
           </ion-item>
 
           <ion-item>            
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{ 'DESCRIPTION' | translate }}</ion-label>
             <ion-input type="text" formControlName="TYPE_DESC" [(ngModel)]="TYPE_DESC_ngModel_Add"
               placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
@@ -101,13 +98,13 @@
       <ion-list>
         <form [formGroup]="Qualifyform">
           <ion-item>
-            <ion-label stacked>{{"QUALIFICATION"}}</ion-label>
+            <ion-label stacked>{{ 'QUALIFICATION' | translate }}</ion-label>
             <ion-input type="text" formControlName="TYPE_NAME" [(ngModel)]="TYPE_NAME_ngModel_Edit"
              placeholder="{{'Please fill in the name of qualification'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{ 'DESCRIPTION' | translate }}</ion-label>
             <ion-input type="text" formControlName="TYPE_DESC" [(ngModel)]="TYPE_DESC_ngModel_Edit" 
              placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>

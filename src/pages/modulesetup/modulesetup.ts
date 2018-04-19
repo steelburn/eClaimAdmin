@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -11,7 +11,7 @@ import { ModuleSetup_Model } from '../../models/modulesetup_model';
 import { ModuleSetup_Service } from '../../services/modulesetup_service';
 
 import { ModulePageSetup_Model } from '../../models/modulepagesetup_model';
-import { ModulePageSetup_Service } from '../../services/ModulePageSetup_Service';
+import { ModulePageSetup_Service } from '../../services/modulepagesetup_service';
 
 import { BaseHttpService } from '../../services/base-http';
 
@@ -77,7 +77,6 @@ export class ModulesetupPage {
   }
 
   public CloseModuleClick() {
-
     if (this.AddModuleClicked == true) {
       this.AddModuleClicked = false;
     }
@@ -87,11 +86,14 @@ export class ModulesetupPage {
   }
 
   public EditClick(MODULE_GUID: any) {
-
     //this.ClearControls();
     this.EditModuleClicked = true;
     var self = this;
 
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
     //------------Bind Controls-------------------------------------- 
     this.modulesetupservice
       .get(MODULE_GUID)
@@ -117,6 +119,7 @@ export class ModulesetupPage {
           CheckModulePage.push(this.modulepages[itemA]["PAGE_GUID"]);
         }
         this.PAGE_ngModel_Edit = CheckModulePage;
+        this.loading.dismissAll();
       });
   }
 
@@ -155,9 +158,14 @@ export class ModulesetupPage {
       ]
     }); alert.present();
   }
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private modulesetupservice: ModuleSetup_Service, private modulepagesetupservice: ModulePageSetup_Service, private alertCtrl: AlertController) {
+  
+  loading: Loading;
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private modulesetupservice: ModuleSetup_Service, private modulepagesetupservice: ModulePageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.loading = this.loadingCtrl.create({
+        content: 'Loading...',
+      });
+      this.loading.present();
 
       //Bind Page Dropdownlist------------------
       this.GetPage();
@@ -190,13 +198,15 @@ export class ModulesetupPage {
             }
             Previous_MODULE_GUID = data.resource[itemA]["MODULE_GUID"];
           }
+          this.loading.dismissAll();
         });
       //----------------------------------------
 
       this.Moduleform = fb.group({
-        NAME: ["", Validators.required],
-        DESCRIPTION: ["", Validators.required],
-        PAGE: ["", Validators.required]
+        //NAME: [null, Validators.required],
+        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        DESCRIPTION: [null],
+        PAGE: [null, Validators.required]
       });
     }
     else {
@@ -285,6 +295,7 @@ export class ModulesetupPage {
         });
     }
   }
+  
   Update(MODULE_GUID: any) {
     if (this.Moduleform.valid) {
       if (this.module_entry.NAME == null) { this.module_entry.NAME = this.NAME_ngModel_Edit; }

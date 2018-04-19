@@ -3,13 +3,77 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>DASHBOARD</ion-title>
+    <ion-title>
+      <b>Dashboard</b>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 
 <ion-content padding>
+<!-- 
+  <ion-card class="container">
+    <ion-card-header class="linedsg">
+      <b>CLAIM HISTORY</b>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+
+      
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="container">
+    <ion-card-header class="linedsg">
+      <b>MY CLAIM LIST</b>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-label item-start>
+          <h2>Travel Claim</h2>
+          <h3>24/3/2018</h3>
+        </ion-label>
+        <ion-item item-end>
+            <h2>Pending</h2>
+            <h3>Superior</h3>
+        </ion-item>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+ -->
+
+
+
+  <!-- <div class="eClaimSubTitle">MY CLAIM LIST</div>  -->
+
+  <!-- <table class="Tabler ">
+            <tr class="linedsg TColor">
+                <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+
+                <th class="lgl1">Claim Type</th>
+                <th class="lgl1">Date</th>
+                <th class="lgl1">Status</th>
+                <th class="lgl1">Stage</th>
+                <th class="lgl1 tblBrRight">Amount</th>
+
+  
+            </tr>
+  
+            <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails; let i=index">
+                <td class="lgl1">{{i+1}}</td>
+                <td class="lgl1" >{{claimhistorydetail.CLAIM_TYPE}}</td>
+                <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy H:mm'}}</td>
+                <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
+                <td class="lgl1">{{claimhistorydetail.STAGE}}</td>
+                <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT}}</td>
+            </tr>
+  
+  
+        </table> -->
+
 
 
   <div class="eClaimSubTitle">CLAIM APPLICATION FORM</div>
@@ -71,6 +135,13 @@
       </ion-card-content>
     </ion-card>
 
+    <ion-card class="round1">
+      <ion-card-header class="icon">
+        <ion-icon name="ios-keypad-outline" class="iconf"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="Subtitle">
+        OTHER CLAIM
+      </ion-card-content>
+    </ion-card>
   </div>
-
 </ion-content>

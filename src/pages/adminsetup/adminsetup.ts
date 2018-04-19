@@ -10,10 +10,18 @@ import {PagesetupPage} from'../pagesetup/pagesetup';
 import {ModulesetupPage} from'../modulesetup/modulesetup';
 import {SubmodulesetupPage} from'../submodulesetup/submodulesetup';
 import { ClaimhistoryPage } from '../claimhistory/claimhistory';
+import { ProfileSetupPage } from '../profile-setup/profile-setup.component';
+import { ApproverTaskListPage } from '../approver-task-list/approver-task-list';
+
+
 import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
 import{ClaimtasklistPage} from '../claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../userclaimslist/userclaimslist'
 import{ClaimReportPage} from '../claim-report/claim-report';
+
+
+
+import { UserPage } from '../user/user';
 
 
 /**
@@ -65,12 +73,22 @@ export class AdminsetupPage {
     this.navCtrl.push(ModulesetupPage)
   }
 
+  goToUser(){
+    this.navCtrl.push(UserPage)
+  }
+
+
   goToSubModulesetup(){
     this.navCtrl.push(SubmodulesetupPage)
   }
   goToClaimHistory(){
     this.navCtrl.push(ClaimhistoryPage)
   }
+
+  goApproverTaskList(){
+    this.navCtrl.push(ApproverTaskListPage)
+  }
+
   goToClaimRequetList(){
     this.navCtrl.push(ClaimapprovertasklistPage,{
     claimRefGuid:'null'
@@ -81,6 +99,9 @@ export class AdminsetupPage {
   }
   goToUserClaimList(){
     this.navCtrl.push(UserclaimslistPage)
+  }
+  goToProfile(){
+    this.navCtrl.push(ProfileSetupPage)
   }
 
   goToClaimReport(){

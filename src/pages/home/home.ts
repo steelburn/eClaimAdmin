@@ -5,13 +5,12 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { ConferenceData } from '../../providers/conference-data';
 import { MedicalclaimPage } from '../medicalclaim/medicalclaim';
-import { SessionDetailPage } from '../session-detail/session-detail';
-import { AboutPage } from '../about/about';
 import { PrintclaimPage } from '../printclaim/printclaim';
 import { GiftclaimPage } from '../giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../entertainmentclaim/entertainmentclaim';
-import { TravelclaimPage } from '../travelclaim/travelclaim';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
+import { ProfileSetupPage } from '../profile-setup/profile-setup.component';
 @Component({
   selector: 'page-speaker-list',
   templateUrl: 'home.html'
@@ -52,20 +51,18 @@ export class SpeakerListPage {
      goToEntertainmentClaim(){
     this.navCtrl.push(EntertainmentclaimPage)
   }
+  goToProfile()
+  {
+    this.navCtrl.push(ProfileSetupPage)
+  }
 
        goToTravelClaim(){
     this.navCtrl.push(TravelclaimPage)
   }
 
-  goToSessionDetail(session: any) {
-    this.navCtrl.push(SessionDetailPage, {
-      name: session.name,
-      session: session
-    });
-  }
-  goToAbout(){
-    this.navCtrl.push(AboutPage)
-  }
+
+  
+ 
 
 
   goToSpeakerTwitter(speaker: any) {

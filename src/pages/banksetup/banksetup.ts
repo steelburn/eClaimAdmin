@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -13,6 +14,7 @@ import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
 import { GlobalFunction } from '../../shared/GlobalFunction';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the BanksetupPage page.
@@ -23,7 +25,7 @@ import { GlobalFunction } from '../../shared/GlobalFunction';
 @IonicPage()
 @Component({
   selector: 'page-banksetup',
-  templateUrl: 'banksetup.html', providers: [BankSetup_Service, BaseHttpService, GlobalFunction]
+  templateUrl: 'banksetup.html', providers: [BankSetup_Service, BaseHttpService, GlobalFunction, TitleCasePipe]
 })
 export class BanksetupPage {
   NAME: any;
@@ -34,50 +36,60 @@ export class BanksetupPage {
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-
+  Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
   public banks: BankSetup_Model[] = [];
 
   public AddBanksClicked: boolean = false;
-  public EditBanksClicked: boolean = false;
-  public Exist_Record: boolean = false;
-
   public bank_details: any;
-  public exist_record_details: any;
+
+  Tenant_Add_ngModel: any;
+  AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
+  tenants: any;
 
   //Set the Model Name for Add------------------------------------------
   public NAME_ngModel_Add: any;
   //---------------------------------------------------------------------
 
-  //Set the Model Name for edit------------------------------------------
-  public NAME_ngModel_Edit: any;
-  //---------------------------------------------------------------------
-
   public AddBanksClick() {
-    this.AddBanksClicked = true;
-    this.ClearControls();
+    if (this.Edit_Form == false) {
+      this.AddBanksClicked = true; this.Add_Form = true; this.Edit_Form = false;
+      this.ClearControls();
+    }
+    else {
+      alert('Sorry !! You are in Edit Mode.');
+    }
   }
 
   public CloseBanksClick() {
     if (this.AddBanksClicked == true) {
       this.AddBanksClicked = false;
-    }
-    if (this.EditBanksClicked == true) {
-      this.EditBanksClicked = false;
+      this.Add_Form = true; this.Edit_Form = false;
     }
   }
 
   public EditClick(BANK_GUID: any) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
     this.ClearControls();
-    this.EditBanksClicked = true;
-    this.current_bankGUID = BANK_GUID;
+    this.AddBanksClicked = true; this.Add_Form = false; this.Edit_Form = true;
+
+    //this.current_bankGUID = BANK_GUID;
     var self = this;
     this.banksetupservice
       .get(BANK_GUID)
       .subscribe((data) => {
         self.bank_details = data;
-        this.NAME_ngModel_Edit = self.bank_details.NAME; localStorage.setItem('Prev_Name', self.bank_details.NAME);
+        this.Tenant_Add_ngModel = self.bank_details.TENANT_GUID;
+        this.NAME_ngModel_Add = self.bank_details.NAME;
+        localStorage.setItem('Prev_Name', self.bank_details.NAME); localStorage.setItem('Prev_TenantGuid', self.bank_details.TENANT_GUID);
+
+        this.loading.dismissAll();
       });
   }
+
   public DeleteClick(BANK_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
@@ -108,199 +120,253 @@ export class BanksetupPage {
     }); alert.present();
   }
 
-  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction) {
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.banks = data.resource;
-      });
-    //this.getBankList();
+  loading: Loading;
+  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+    if (localStorage.getItem("g_USER_GUID") == null) {
+      alert('Sorry !! Please Login.');
+      this.navCtrl.push(LoginPage);
+    }
+    else {
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        //Clear localStorage value--------------------------------      
+        this.ClearLocalStorage()
 
-    this.Bankform = fb.group({
-      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z][a-zA-Z ]+'), Validators.required])],
+        //fill all the tenant details----------------------------      
+        this.FillTenant();
 
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
-      //NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z][a-zA-Z0-9\\s]+$'), Validators.required])],
+        //Display Grid---------------------------------------------      
+        this.DisplayGrid();
 
-
-      //NAME: [null, Validators.compose([Validators.pattern('^[a-z]+[_+\+/+-+.+’][a-z]+$'), Validators.required])],
-      //NAME: ["", Validators.required],
-
-
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])], 
-      //NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9!@#%$&()-`.+,/\"\\s]*$'), Validators.required])], 
-
-    });
+        //----------------------------------------------------------
+        if (localStorage.getItem("g_USER_GUID") != "sva") {
+          this.Bankform = fb.group({
+            NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          });
+        }
+        else {
+          this.Bankform = fb.group({
+            NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            TENANT_NAME: [null, Validators.required],
+          });
+        }
+      }
+      else {
+        alert('Sorry!!, You are not authorized.');
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      }
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BanksetupPage');
   }
 
-  Save_Bank() {
-    if (this.Bankform.valid) {
-
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      let options = new RequestOptions({ headers: headers });
-      let url: string;
-      url = this.baseResource_Url + "main_bank?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.http.get(url, options)
-        .map(res => res.json())
-        .subscribe(
-        data => {
-          let res = data["resource"];
-          if (res.length == 0) {
-            console.log("No records Found");
-            if (this.Exist_Record == false) {
-              this.bank_entry.NAME = this.NAME_ngModel_Add.trim();
-
-              this.bank_entry.BANK_GUID = UUID.UUID();
-              this.bank_entry.TENANT_GUID = UUID.UUID();
-              this.bank_entry.DESCRIPTION = 'Savings';
-              this.bank_entry.CREATION_TS = new Date().toISOString();
-              this.bank_entry.CREATION_USER_GUID = '1';
-
-              this.bank_entry.UPDATE_TS = new Date().toISOString();
-              this.bank_entry.UPDATE_USER_GUID = "";
-
-              this.banksetupservice.save_bank(this.bank_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Bank Registered successfully');
-                    //this.GlobalFunction.showAlert_New('Bank Registered successfully !!');
-                    //location.reload();
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
-            }
-          }
-          else {
-            console.log("Records Found");
-            alert("The Bank is already Exist.")
-          }
-        },
-        err => {
-          this.Exist_Record = false;
-          console.log("ERROR!: ", err);
-        }
-        );
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_Name') == null) {
+      localStorage.setItem('Prev_Name', null);
+    }
+    else {
+      localStorage.removeItem("Prev_Name");
+    }
+    if (localStorage.getItem('Prev_TenantGuid') == null) {
+      localStorage.setItem('Prev_TenantGuid', null);
+    }
+    else {
+      localStorage.removeItem("Prev_TenantGuid");
     }
   }
-  getBankList() {
-    let self = this;
-    let params: URLSearchParams = new URLSearchParams();
-    self.banksetupservice.get_bank(params)
-      .subscribe((banks: BankSetup_Model[]) => {
-        self.banks = banks;
+
+  FillTenant() {
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      this.http
+        .get(tenantUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource;
+        });
+
+      this.AdminLogin = true;
+    }
+    else {
+      this.AdminLogin = false;
+    }
+  }
+
+  DisplayGrid() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
+    let view_url: string = "";
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_bank_details' + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else {
+      view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_bank_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    this.http
+      .get(view_url)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.banks = data.resource;
+
+        this.loading.dismissAll();
       });
   }
 
-  Update_Bank(BANK_GUID: any) {
+  Save_Bank() {
     if (this.Bankform.valid) {
-      if (this.bank_entry.NAME == null) { this.bank_entry.NAME = this.NAME_ngModel_Edit.trim(); }
+      //for Save Set Entities------------------------------------------------------------------------
+      if (this.Add_Form == true) {
+        this.SetEntityForAdd()
+      }
+      //for Update Set Entities----------------------------------------------------------------------
+      else {
+        this.SetEntityForUpdate();
+      }
+      //Common Entitity For Insert/Update-----------------    
+      this.SetCommonEntityForAddUpdate();
 
-      this.bank_entry.DESCRIPTION = this.bank_details.DESCRIPTION.trim();
-      this.bank_entry.TENANT_GUID = this.bank_details.TENANT_GUID;
-      this.bank_entry.CREATION_TS = this.bank_details.CREATION_TS;
-      this.bank_entry.CREATION_USER_GUID = this.bank_details.CREATION_USER_GUID;
+      //Load the Controller--------------------------------
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+      });
+      this.loading.present();
+      //--------------------------------------------------
 
-      this.bank_entry.BANK_GUID = BANK_GUID;
-      this.bank_entry.UPDATE_TS = new Date().toISOString();
-      this.bank_entry.UPDATE_USER_GUID = '1';
-
-      if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_Name')) {
-        let url: string;
-        url = this.baseResource_Url + "main_bank?filter=(NAME=" + this.NAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.http.get(url)
-          .map(res => res.json())
-          .subscribe(
-          data => {
-            let res = data["resource"];
-            //console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_Name'));
-            if (res.length == 0) {
-              console.log("No records Found");
-              this.bank_entry.NAME = this.NAME_ngModel_Edit.trim();
-
-              //**************Update service if it is new details*************************
-              this.banksetupservice.update_bank(this.bank_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Bank updated successfully');
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+      if (this.NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_Name').toUpperCase() || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
+        let val = this.CheckDuplicate();
+        val.then((res) => {
+          if (res.toString() == "0") {
+            //---Insert or Update-----------
+            if (this.Add_Form == true) {
+              //**************Save service if it is new details*************************              
+              this.Insert();
               //**************************************************************************
             }
             else {
-              console.log("Records Found");
-              alert("The bank is already Exist. ");
+              //**************Update service if it is new details*************************              
+              this.Update();
+              //**************************************************************************
             }
-          },
-          err => {
-            this.Exist_Record = false;
-            console.log("ERROR!: ", err);
-          });
+          }
+          else {
+            alert("The Bank is already Exist.");
+            this.loading.dismissAll();
+          }
+        });
+        val.catch((err) => {
+          console.log(err);
+        });
       }
       else {
-        // if (this.NAME_ngModel_Edit != localStorage.getItem('Prev_Name')){
-        if (this.bank_entry.NAME == null) { this.bank_entry.NAME = localStorage.getItem('Prev_Name'); }
-        this.bank_entry.NAME = this.NAME_ngModel_Edit.trim();
-
-        //**************Update service if it is old details*************************
-
-        // alert(JSON.stringify(this.bank_entry));     
-
-        this.banksetupservice.update_bank(this.bank_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Bank updated successfully');
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
-        //  }
+        //Simple update----------        
+        this.Update();
       }
     }
   }
+
+  SetEntityForAdd() {
+    if (this.Add_Form == true) {
+      this.bank_entry.BANK_GUID = UUID.UUID();
+      this.bank_entry.CREATION_TS = new Date().toISOString();
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.bank_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      }
+      else {
+        this.bank_entry.CREATION_USER_GUID = 'sva';
+      }
+      this.bank_entry.UPDATE_TS = new Date().toISOString();
+      this.bank_entry.UPDATE_USER_GUID = "";
+    }
+  }
+
+  SetEntityForUpdate() {
+    this.bank_entry.BANK_GUID = this.bank_details.BANK_GUID;
+    this.bank_entry.CREATION_TS = this.bank_details.CREATION_TS;
+    this.bank_entry.CREATION_USER_GUID = this.bank_details.CREATION_USER_GUID;
+    this.bank_entry.UPDATE_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.bank_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.bank_entry.UPDATE_USER_GUID = 'sva';
+    }
+  }
+
+  SetCommonEntityForAddUpdate() {
+    this.bank_entry.NAME = this.titlecasePipe.transform(this.NAME_ngModel_Add.trim());
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    else {
+      this.bank_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+    }
+    this.bank_entry.DESCRIPTION = 'Savings';
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_Name");
+    localStorage.removeItem("Prev_TenantGuid");
+  }
+
+  Insert() {
+    this.banksetupservice.save_bank(this.bank_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Bank Registered successfully');
+
+          //Remove all storage values-----------------------------------------          
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  Update() {
+    this.banksetupservice.update_bank(this.bank_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Bank updated successfully');
+
+          //Remove all storage values-----------------------------------------          
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  CheckDuplicate() {
+    let url: string = "";
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      url = this.baseResource_Url + "main_bank?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')AND(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else {
+      url = this.baseResource_Url + "main_bank?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')AND(TENANT_GUID=' + this.Tenant_Add_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    let result: any;
+    return new Promise((resolve) => {
+      this.http
+        .get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          result = data["resource"];
+          resolve(result.length);
+        });
+    });
+  }
+
   ClearControls() {
     this.NAME_ngModel_Add = "";
-
-    this.NAME_ngModel_Edit = "";
+    this.Tenant_Add_ngModel = "";
   }
 }
 
-    //             let headers = new Headers();
-  //             headers.append('Content-Type', 'application/json');
-  //             let options = new RequestOptions({ headers: headers });
-  //             let url: string;
-  //             url = "http://api.zen.com.my/api/v2/zcs/_table/main_bank?filter=(NAME=" + this.bank_entry.NAME + ")&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881";
-  //             this.http.get(url, options)
-  //               .map(res => res.json())
-  //               .subscribe(
-  //               data => {
-  //                 let res = data["resource"];
-  //                 if (res.length == 0) {
-  //                   console.log("No records Found");
-  //                   if (this.Exist_Record == false) {
 
-  //                     if (this.Bankform.valid) {
-  // if(this.bank_entry.NAME == null){this.bank_entry.NAME = this.bank_entry.NAME;}
-
-
-//       else {
-//         console.log("Records Found");
-//         alert("The Bank is already Added.")
-
-//       }
-//     },
-//     err => {
-//       this.Exist_Record = false;
-//       console.log("ERROR!: ", err);
-//     }
-//     );
-// }              
-//   }
-// }
 

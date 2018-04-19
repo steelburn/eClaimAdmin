@@ -4,13 +4,10 @@ import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage';
-import{ TranslateService } from '@ngx-translate/core';
-import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
-import { SchedulePage } from '../pages/schedule/schedule';
 import { SetupPage } from '../pages/setup/setup';
 import { SpeakerListPage } from '../pages/home/home';
 import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
@@ -18,7 +15,7 @@ import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
-import { TravelclaimPage } from '../pages/travelclaim/travelclaim';
+import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { UserPage } from '../pages/user/user';
@@ -29,12 +26,31 @@ import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from'../pages/pagesetup/pagesetup';
 import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
 import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+
 import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
 import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 import{ClaimReportPage} from '../pages/claim-report/claim-report';
+
+import { UploadPage } from'../pages/upload/upload';
+import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
+import { StatesetupPage } from '../pages/statesetup/statesetup';
+
+import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
+//import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
+
+
+import { SetupguidePage } from '../pages/setupguide/setupguide';
+
+import { TranslateService } from '@ngx-translate/core';
+
+import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
+
 
 export interface PageInterface {
 
@@ -69,9 +85,8 @@ export class ConferenceApp {
   appPages: PageInterface[] = [
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},  
-    { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 4, icon: 'settings' },
-    { title: 'APPROVER TASK', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'checkbox-outline' },
-
+    { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 2, icon: 'settings' },
+   
   ];
   loggedInPages: PageInterface[] = [
     { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -83,7 +98,8 @@ export class ConferenceApp {
   ];
 
 
-  rootPage: any = LoginPage;
+  // rootPage: any = LoginPage;
+  rootPage = 'LoginPage';
   
   constructor(
 
@@ -94,11 +110,22 @@ export class ConferenceApp {
     public confData: ConferenceData,
      storage: Storage,
      statusbar:StatusBar,
-     splashScreen: SplashScreen,translate: TranslateService
-  ) { 
+     splashScreen: SplashScreen, public translate: TranslateService
+  ) {
+    
+    this.translateToEnglish();
+    this.translate.setDefaultLang('en'); //Fallback language
+
+    platform.ready().then(() => {
+    });
+
+    
 
     translate.setDefaultLang('en');
     platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
+
+
+
     // Check if the user has already seen the tutorial
 
 
@@ -179,5 +206,20 @@ export class ConferenceApp {
       return 'primary';
     }
     return;
+  }
+
+  public translateToMalayClicked: boolean = false;
+  public translateToEnglishClicked: boolean = true;
+
+  public translateToEnglish() {   
+    this.translate.use('en');
+    this.translateToMalayClicked = !this.translateToMalayClicked;
+    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+  }
+
+  public translateToMalay() {
+    this.translate.use('ms');
+    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+    this.translateToMalayClicked = !this.translateToMalayClicked;
   }
 }

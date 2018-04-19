@@ -40,8 +40,7 @@ export class TenantCompanySetup_Service {
             });
     }
 
-    update(tenant_main: TenantCompanySetup_Model): Observable<any> {
-       
+    update(tenant_main: TenantCompanySetup_Model): Observable<any> {       
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);

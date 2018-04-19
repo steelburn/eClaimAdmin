@@ -7,51 +7,32 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>CLAIM HISTORY</ion-title>
+    <ion-title>Claim History</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top>
+    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-item>
-        <!-- <ion-searchbar type="text" #filter (keyup)="0" placeholder="{{'SEARCH_FULLNAME' | translate}}"></ion-searchbar> -->
-        <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
-      </ion-item>
 
-      <!-- <ion-item>
-        <button ion-button item-end (click)="goToEmailTest()"><ion-icon name="md-eye"></ion-icon></button>
-      </ion-item> -->
-
- <!-- <ion-list>
-        <ion-item>
-                <ion-label stack>EMPLOYEE</ion-label>
-                 <ion-radio value="employee" (ionSelect)="onFilter($event)"></ion-radio>
-                <ion-select  placeholder="{{'EMPLOYEE'}}" multiple="true" (ionSelect)="onFilter_Name($event)">
-                    <ion-option *ngFor="let claimhistory of claimhistorys" [value]="claimhistory.FULLNAME">{{claimhistory.FULLNAME}}</ion-option>
-                  </ion-select>
-        </ion-item>
-        <ion-item>
-                <ion-label stack>MONTH</ion-label>                 
-                <ion-select multiple="true" (ionSelect)="onFilter_Month($event)">
-                    <ion-option *ngFor="let claimhistory of claimhistorys" [value]="claimhistory.MONTH">{{claimhistory.MONTH}}</ion-option>
-                  </ion-select>
-         </ion-item>
-</ion-list> -->
 
 
   <ion-list>
     <ion-item>
         <table class="Tabler ">
             <tr class="linedsg TColor">
-                <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-                <th class="lgl1">EMPLOYEE <ion-icon class="ion-funnel" md="md-funnel"  (click)="EmpClick()"></ion-icon>  </th>
-                <th class="lgl1">DEPARTMENT <ion-icon class="ion-funnel" md="md-funnel"  (click)="DeptClick()"></ion-icon></th>
-                <th class="lgl1">MONTH<ion-icon class="ion-funnel" md="md-funnel" (click)="MonthClick()"></ion-icon></th>
+                <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+
+                <th class="lgl1">Employee <ion-icon class="ion-funnel" md="md-funnel"  (click)="EmpClick()"></ion-icon>  </th>
+                <th class="lgl1">Department <ion-icon class="ion-funnel" md="md-funnel"  (click)="DeptClick()"></ion-icon></th>
+                <th class="lgl1">Month<ion-icon class="ion-funnel" md="md-funnel" (click)="MonthClick()"></ion-icon></th>
                 <!-- <th class="lgl1">YEAR</th> -->
-                <th class="lgl1">TOTAL</th>
-                <th class="lgl1 tblBrRight" style="width:80px">ACTION</th>
+                <th class="lgl1">Total Amount</th>
+                <th class="lgl1 tblBrRight" style="width:80px">Action</th>
+
 
             </tr>
 

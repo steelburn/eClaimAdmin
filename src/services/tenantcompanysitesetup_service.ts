@@ -21,6 +21,9 @@ export class TenantCompanySiteSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site';
     baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
+    baseResourceUrl_view: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_tenant_edit';
+
+
     constructor(private httpService: BaseHttpService, private nav: NavController) { };
 
     private handleError(error: any) {
@@ -89,6 +92,20 @@ export class TenantCompanySiteSetup_Service {
             });
     }
 
+    remove_multiple(id: string, tablename: string) {       
+        let url_multiple = this.baseResource_Url + tablename + "?filter=(TENANT_COMPANY_GUID=" + id + ")";
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+
+        return this.httpService.http
+            .delete(url_multiple, { headers: queryHeaders })
+            .map((response) => {
+                var result: any = response.json();
+				//return result.PAGE_GUID;
+				return response;
+            });
+	}
 
     get(id: string, params?: URLSearchParams): Observable<TenantCompanySiteSetup_Model> {
         var queryHeaders = new Headers();
@@ -98,6 +115,7 @@ export class TenantCompanySiteSetup_Service {
         //alert(id);
         return this.httpService.http
             .get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders })
+            //.get(this.baseResourceUrl_view + '/' + id, { search: params, headers: queryHeaders })
             .map((response) => {
                 var result: any = response.json();
                 let tenanttype: TenantCompanySiteSetup_Model = TenantCompanySiteSetup_Model.fromJson(result);
