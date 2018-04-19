@@ -53,7 +53,7 @@ export class EntertainmentclaimPage {
   
  // vehicles;
   storeProjects: any[]; 
-  projects: any; 
+  public projects: any[]; 
   customers: any; 
   storeCustomers: any[];
   vehicles: any[];  
@@ -112,7 +112,9 @@ export class EntertainmentclaimPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimRequestData = data["resource"];
-        //console.log(this.claimRequestData)
+        console.log(this.claimRequestData)
+        console.log(this.claimRequestGUID)
+        console.log(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
         if (this.claimRequestData[0].SOC_GUID === null) {
           this.claimFor = 'customer'
           this.storeCustomers.forEach(element => {
@@ -298,7 +300,8 @@ export class EntertainmentclaimPage {
       .map(res => res.json())
       .subscribe(data => {
       this.storeProjects=  this.projects = data["resource"];
-       // console.table(this.projects)
+        console.table(this.projects)
+       console.table(this.storeProjects);
       }
       );
   }
@@ -428,13 +431,14 @@ export class EntertainmentclaimPage {
           claimReqRef.CLAIM_REF_GUID = UUID.UUID();
           claimReqRef.USER_GUID = userGUID;
           claimReqRef.TENANT_GUID = tenantGUID;
-          claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+           claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+          //claimReqRef.REF_NO = userGUID;
           claimReqRef.MONTH = month;
           claimReqRef.YEAR = year;
           claimReqRef.CREATION_TS = new Date().toISOString();
           claimReqRef.UPDATE_TS = new Date().toISOString();
              console.table(claimReqRef);
-          alert('upper');
+         
           this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
             var postClaimRef = response.json();
             claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
@@ -465,7 +469,7 @@ export class EntertainmentclaimPage {
             claimReqMainRef.SOC_GUID = this.Soc_GUID;
           }
           console.table(claimReqMainRef);
-          alert('lower');
+         
           // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
           // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
