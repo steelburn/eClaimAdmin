@@ -57,7 +57,7 @@
 
       <ion-item>
         <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
-        <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ 'SOC_NUMBER_PLACE_HOLDER' | translate }}"></ion-input>
+        <ion-input [(ngModel)]="OT_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ 'SOC_NUMBER_PLACE_HOLDER' | translate }}"></ion-input>
       </ion-item>
     </div>
 
@@ -78,7 +78,7 @@
 
     <ion-item>
       <ion-label stacked>{{ "OVERTIME_DATE_LABEL" | translate }}</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Travel_Date_ngModel" formControlName="travel_date" max={{validDate}}
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="OT_Date_ngModel" formControlName="travel_date" max={{validDate}}
         placeholder="{{ 'TRAVEL_DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
     </ion-item>
 
@@ -97,12 +97,12 @@
     <ion-item>
       <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-label> {{travelAmount | number}} </ion-label>
-      <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
+      <ion-input type="number" formControlName="vehicleType" [(ngModel)]="OT_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
-      <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
+      <ion-input type="text" formControlName="description" [(ngModel)]="OT_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
 
