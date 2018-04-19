@@ -13,6 +13,7 @@ import { ClaimhistoryPage } from '../claimhistory/claimhistory';
 import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
 import{ClaimtasklistPage} from '../claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../userclaimslist/userclaimslist'
+import{ClaimReportPage} from '../claim-report/claim-report';
 
 
 /**
@@ -80,6 +81,10 @@ export class AdminsetupPage {
   }
   goToUserClaimList(){
     this.navCtrl.push(UserclaimslistPage)
+  }
+
+  goToClaimReport(){
+    this.navCtrl.push(ClaimReportPage)
   }
 
   ionViewDidLoad() {

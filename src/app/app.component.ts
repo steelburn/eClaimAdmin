@@ -34,6 +34,7 @@ import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistoryd
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+import{ClaimReportPage} from '../pages/claim-report/claim-report';
 
 export interface PageInterface {
 
