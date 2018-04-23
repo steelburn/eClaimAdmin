@@ -28,7 +28,7 @@
                     <th class="lgl1">{{ 'ACCOUNT_NO' | translate }}</th>
                     <!-- <th class="lgl1">PASSWORD</th> -->
                     <th class="lgl1">{{ 'MANAGEMENT_URL' | translate }}</th>
-                    <th class="lgl1">{{ 'DESCRIPTION' | translate }}</th>
+                    <th class="lgl1" style="display: none;">{{ 'DESCRIPTION' | translate }}</th>
                     <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
                     <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
                 </tr>
@@ -39,7 +39,7 @@
                     <td class="lgl1">{{cashcard.ACCOUNT_ID}}</td>
                     <!-- <td class="lgl1">{{cashcard.ACCOUNT_PASSWORD}}</td> -->
                     <td class="lgl1">{{cashcard.MANAGEMENT_URL}}</td>
-                    <td class="lgl1">{{cashcard.DESCRIPTION}}</td>
+                    <td class="lgl1" style="display: none;">{{cashcard.DESCRIPTION}}</td>
                     <td class="lgl1" *ngIf="AdminLogin">{{cashcard.TENANT_ACCOUNT_NAME}}</td>
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="EditClick(cashcard.CASHCARD_GUID)">
@@ -97,7 +97,7 @@
                         <ion-input type="text" formControlName="MANAGEMENT_URL" [(ngModel)]="MANAGEMENT_URL_ngModel_Add" placeholder="{{'Please fill in the management URL'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item>
+                    <ion-item style="display: none;">
                         <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
                         <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
                     </ion-item>

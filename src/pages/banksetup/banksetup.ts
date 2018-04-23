@@ -129,7 +129,7 @@ export class BanksetupPage {
     else {
       if (localStorage.getItem("g_USER_GUID") != "sva") {
         //Clear localStorage value--------------------------------      
-        this.ClearLocalStorage()
+        this.ClearLocalStorage();
 
         //fill all the tenant details----------------------------      
         this.FillTenant();
@@ -151,7 +151,7 @@ export class BanksetupPage {
         }
       }
       else {
-        alert('Sorry!!, You are not authorized.');
+        alert('Sorry!! You are not authorized.');
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
@@ -220,7 +220,7 @@ export class BanksetupPage {
     if (this.Bankform.valid) {
       //for Save Set Entities------------------------------------------------------------------------
       if (this.Add_Form == true) {
-        this.SetEntityForAdd()
+        this.SetEntityForAdd();
       }
       //for Update Set Entities----------------------------------------------------------------------
       else {
