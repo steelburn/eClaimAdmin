@@ -27,7 +27,7 @@
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'DESIGNATION_NAME' | translate }}</th>
-          <th class="lgl1">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
+          <th class="lgl1" style="display: none;">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
@@ -35,7 +35,7 @@
         <tr class="col7" *ngFor="let designation of designations; let i=index">
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{designation.NAME}}</td>
-          <td class="lgl1">{{designation.DESCRIPTION}}</td>
+          <td class="lgl1" style="display: none;">{{designation.DESCRIPTION}}</td>
           <td class="lgl1" *ngIf="AdminLogin">{{designation.TENANT_ACCOUNT_NAME}}</td>
           <td class="lgl1 fColor">
             <button ion-button item-end (click)="EditClick(designation.DESIGNATION_GUID)">
@@ -59,14 +59,14 @@
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW DESIGNATION</div>
-        <div class="icHeaderText" *ngIf="Edit_Form">UPDATE DESIGNATION</div>
+        <div class="icHeaderText">{{ HeaderText }}</div>
 
         <button class="btnR" (click)="CloseDesignationClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
 
       </ion-card-header>
+      
       <ion-list>
         <form [formGroup]="Designationform">
           <ion-item *ngIf="AdminLogin">
@@ -81,7 +81,7 @@
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the title of the designation'}}"></ion-input>
           </ion-item>
 
-          <ion-item>
+          <ion-item style="display: none;">
             <ion-label stacked>{{ 'DESIGNATION_DESCRIPTION' | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
@@ -90,7 +90,9 @@
           </div>
         </form>
       </ion-list>
+
     </ion-card>
+    
   </div>
   <!-- add designation form end-->
 </ion-content>

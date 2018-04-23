@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-//import { FormBuilder, FormGroup } from '@angular/forms';
+import { TitleCasePipe } from '@angular/common';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -13,7 +13,7 @@ import { QualificationSetup_Service } from '../../services/qualificationsetup_se
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
-
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the QualificationsetupPage page.
@@ -24,7 +24,7 @@ import { UUID } from 'angular2-uuid';
 @IonicPage()
 @Component({
   selector: 'page-qualificationsetup',
-  templateUrl: 'qualificationsetup.html', providers: [QualificationSetup_Service, BaseHttpService]
+  templateUrl: 'qualificationsetup.html', providers: [QualificationSetup_Service, BaseHttpService, TitleCasePipe]
 
 })
 export class QualificationsetupPage {
@@ -32,44 +32,56 @@ export class QualificationsetupPage {
   Qualifyform: FormGroup;
   //qualificationsetup: QualificationSetup_Model = new QualificationSetup_Model();
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_qualification_type' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_qualification_type' + '?order=TYPE_NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   public qualificationsetups: QualificationSetup_Model[] = [];
 
-  public AddQualifyClicked: boolean = false; 
+  public AddQualifyClicked: boolean = false;
   public EditQualifyClicked: boolean = false;
   public Exist_Record: boolean = false;
 
-  public qualification_details: any; 
+  public qualification_details: any;
   public exist_record_details: any;
 
-//Set the Model Name for Add------------------------------------------
-public TYPE_NAME_ngModel_Add: any;
-public TYPE_DESC_ngModel_Add: any;
-//---------------------------------------------------------------------
+  //Set the Model Name for Add------------------------------------------
+  public TYPE_NAME_ngModel_Add: any;
+  public TYPE_DESC_ngModel_Add: any;
+  //---------------------------------------------------------------------
 
-//Set the Model Name for edit------------------------------------------
-public TYPE_NAME_ngModel_Edit: any;
-public TYPE_DESC_ngModel_Edit: any;
-//---------------------------------------------------------------------
+  //Set the Model Name for edit------------------------------------------
+  public TYPE_NAME_ngModel_Edit: any;
+  public TYPE_DESC_ngModel_Edit: any;
+  //---------------------------------------------------------------------
+  HeaderText: string; Add_Form: boolean = false; Edit_Form: boolean = false;
 
-    public AddQualifyClick() {
-        this.AddQualifyClicked = true;
-        this.ClearControls(); 
+  public AddQualifyClick() {
+    if (this.Edit_Form == false) {
+      this.AddQualifyClicked = true; this.Add_Form = true; this.Edit_Form = false; this.HeaderText = "REGISTER NEW QUALIFICATION";
+      this.ClearControls();
     }
+    else {
+      alert('Sorry !! You are in Edit Mode.');
+    }
+  }
 
-    public EditClick(QUALIFICATION_TYPE_GUID: any) {
-      this.ClearControls();    
-     this.EditQualifyClicked = true;
-     var self = this;
-      this.qualificationsetupservice
+  public EditClick(QUALIFICATION_TYPE_GUID: any) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+    this.ClearControls();
+    this.AddQualifyClicked = true; this.Add_Form = false; this.Edit_Form = true; this.HeaderText = "UPDATE NEW QUALIFICATION";
+
+    var self = this;
+    this.qualificationsetupservice
       .get(QUALIFICATION_TYPE_GUID)
       .subscribe((data) => {
-      self.qualification_details = data;
-      this.TYPE_NAME_ngModel_Edit = self.qualification_details.TYPE_NAME; localStorage.setItem('Prev_qu_Name', self.qualification_details.TYPE_NAME);
-      this.TYPE_DESC_ngModel_Edit = self.qualification_details.TYPE_DESC;
-   });
+        self.qualification_details = data;
+        this.TYPE_NAME_ngModel_Add = self.qualification_details.TYPE_NAME; localStorage.setItem('Prev_qu_Name', self.qualification_details.TYPE_NAME);
+        this.TYPE_DESC_ngModel_Add = self.qualification_details.TYPE_DESC;
+        this.loading.dismissAll();
+      });
   }
 
   public DeleteClick(QUALIFICATION_TYPE_GUID: any) {
@@ -102,199 +114,195 @@ public TYPE_DESC_ngModel_Edit: any;
     }); alert.present();
   }
 
-      public CloseQualifyClick() {
+  public CloseQualifyClick() {
 
- if (this.AddQualifyClicked == true) {
+    if (this.AddQualifyClicked == true) {
       this.AddQualifyClicked = false;
+      this.Add_Form = true; this.Edit_Form = false;
     }
-    if (this.EditQualifyClicked == true) {
-      this.EditQualifyClicked = false;
-    }
-    }
+  }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,fb:FormBuilder, public http: Http, private httpService: BaseHttpService, private qualificationsetupservice: QualificationSetup_Service, private alertCtrl: AlertController) {
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.qualificationsetups = data.resource;
+  loading: Loading;
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private qualificationsetupservice: QualificationSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+    if (localStorage.getItem("g_USER_GUID") == null) {
+      alert('Sorry !! Please Login.');
+      this.navCtrl.push(LoginPage);
+    }
+    else {
+      //Clear localStorage value--------------------------------      
+      this.ClearLocalStorage();
+
+      //Display Grid---------------------------- 
+      this.DisplayGrid();
+
+      //Load the Form control---------------------------      
+      this.Qualifyform = fb.group({
+        TYPE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TYPE_DESC: [null],
       });
-
-
-this.Qualifyform = fb.group({
-      //TYPE_NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])],
-      TYPE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      
-      //TYPE_NAME: ["", Validators.required],
-      //TYPE_DESC: ["", Validators.required],
-      //TYPE_DESC: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
-      TYPE_DESC: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      
-    });
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad QualificationsetupPage');
   }
 
-  Save() {
-    if (this.Qualifyform.valid) {
-
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      let options = new RequestOptions({ headers: headers });
-      let url: string;
-      url = this.baseResource_Url + "main_qualification_type?filter=(TYPE_NAME=" + this.TYPE_NAME_ngModel_Add + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.http.get(url, options)
-        .map(res => res.json())
-        .subscribe(
-        data => {
-          let res = data["resource"];
-          if (res.length == 0) {
-            console.log("No records Found");
-            if (this.Exist_Record == false) {
-              this.Qualify_entry.TYPE_NAME = this.TYPE_NAME_ngModel_Add.trim();
-              this.Qualify_entry.TYPE_DESC = this.TYPE_DESC_ngModel_Add.trim();
-
-      this.Qualify_entry.QUALIFICATION_TYPE_GUID = UUID.UUID();
-      this.Qualify_entry.TENANT_GUID = UUID.UUID();
-      this.Qualify_entry.CREATION_TS = new Date().toISOString();
-      this.Qualify_entry.CREATION_USER_GUID = '1';
-      this.Qualify_entry.UPDATE_TS = new Date().toISOString();
-      this.Qualify_entry.UPDATE_USER_GUID = "";
-
-      this.qualificationsetupservice.save(this.Qualify_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Qualification Type Registered successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        });
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_qu_Name') == null) {
+      localStorage.setItem('Prev_qu_Name', null);
+    }
+    else {
+      localStorage.removeItem("Prev_qu_Name");
     }
   }
-  else {
-    console.log("Records Found");
-    alert("The Qualification is already Exist.")  
-  } 
-},
-err => {
-  this.Exist_Record = false;
-  console.log("ERROR!: ", err);
-}
-);
-}
-}
-getBankList() {
-  let self = this;
-  let params: URLSearchParams = new URLSearchParams();
-  self.qualificationsetupservice.get_qualification(params)
-    .subscribe((qualificationsetups: QualificationSetup_Model[]) => {
-      self.qualificationsetups = qualificationsetups;
+
+  DisplayGrid() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
     });
-}
+    this.loading.present();
 
-      Update(QUALIFICATION_TYPE_GUID: any) {  
-        if (this.Qualifyform.valid) {  
-     if(this.Qualify_entry.TYPE_NAME==null){this.Qualify_entry.TYPE_NAME = this.TYPE_NAME_ngModel_Edit.trim();}
-     if(this.Qualify_entry.TYPE_DESC==null){this.Qualify_entry.TYPE_DESC = this.TYPE_DESC_ngModel_Edit.trim();}
-   
-      this.Qualify_entry.TENANT_GUID = this.qualification_details.TENANT_GUID
-      this.Qualify_entry.CREATION_TS = this.qualification_details.CREATION_TS;
-      this.Qualify_entry.CREATION_USER_GUID = this.qualification_details.CREATION_USER_GUID;
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.qualificationsetups = data.resource;
+        this.loading.dismissAll();
+      });
+  }
 
-      this.Qualify_entry.QUALIFICATION_TYPE_GUID = QUALIFICATION_TYPE_GUID;
-      this.Qualify_entry.UPDATE_TS = new Date().toISOString();
-      this.Qualify_entry.UPDATE_USER_GUID = '1';
+  Save() {
+    if (this.Qualifyform.valid) {
+      //for Save Set Entities------------------------------------------------------------------------
+      if (this.Add_Form == true) {
+        this.SetEntityForAdd();
+      }
+      //for Update Set Entities----------------------------------------------------------------------
+      else {
+        this.SetEntityForUpdate();
+      }
+      //Common Entitity For Insert/Update-----------------    
+      this.SetCommonEntityForAddUpdate();
 
-      if (this.TYPE_NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_qu_Name')) {
-        let url: string;
-        url = this.baseResource_Url + "main_qualification_type?filter=(TYPE_NAME=" + this.TYPE_NAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.http.get(url)
-          .map(res => res.json())
-          .subscribe(
-          data => {
-            let res = data["resource"];
-            console.log('Current Name : ' + this.TYPE_NAME_ngModel_Edit.trim() + ', Previous Name : ' + localStorage.getItem('Prev_qu_Name'));
+      //Load the Controller--------------------------------
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+      });
+      this.loading.present();
+      //--------------------------------------------------
 
-            if (res.length == 0) {
-              console.log("No records Found");
-              this.Qualify_entry.TYPE_NAME = this.TYPE_NAME_ngModel_Edit.trim();
-              
-              //**************Update service if it is new details*************************
-              this.qualificationsetupservice.update(this.Qualify_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Qualification updated successfully');
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+      if (this.TYPE_NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_qu_Name').toUpperCase()) {
+        let val = this.CheckDuplicate();
+        val.then((res) => {
+          if (res.toString() == "0") {
+            //---Insert or Update-----------
+            if (this.Add_Form == true) {
+              //**************Save service if it is new details*************************              
+              this.Insert();
               //**************************************************************************
             }
             else {
-              console.log("Records Found");
-              alert("The Qualification is already Exist. ");
+              //**************Update service if it is new details*************************              
+              this.Update();
+              //**************************************************************************
             }
-          },
-          err => {
-            this.Exist_Record = false;
-            console.log("ERROR!: ", err);
-          });
-      }
-      else {
-        if (this.Qualify_entry.TYPE_NAME == null) { this.Qualify_entry.TYPE_NAME = localStorage.getItem('Prev_qu_Name'); }
-        
-        //**************Update service if it is old details*************************
-     
-      
-      this.qualificationsetupservice.update(this.Qualify_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Qualification Type updated successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+          else {
+            alert("The Qualification is already Exist.");
+            this.loading.dismissAll();
           }
         });
+        val.catch((err) => {
+          console.log(err);
+        });
+      }
+      else {
+        //Simple update---------- 
+        this.Update();
+      }
     }
   }
-      }
-      ClearControls()
-      {
-        this.TYPE_NAME_ngModel_Add = "";
-        this.TYPE_DESC_ngModel_Add = "";
-    
-        this.TYPE_NAME_ngModel_Edit = "";
-        this.TYPE_DESC_ngModel_Edit = "";
-      }
+
+  SetEntityForAdd() {
+    this.Qualify_entry.QUALIFICATION_TYPE_GUID = UUID.UUID();
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.Qualify_entry.TENANT_GUID = UUID.UUID();
+    }
+    else {
+      this.Qualify_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    this.Qualify_entry.CREATION_TS = new Date().toISOString();
+    this.Qualify_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.Qualify_entry.UPDATE_TS = new Date().toISOString();
+    this.Qualify_entry.UPDATE_USER_GUID = "";
+  }
+
+  SetEntityForUpdate() {
+    this.Qualify_entry.QUALIFICATION_TYPE_GUID = this.qualification_details.QUALIFICATION_TYPE_GUID;
+    this.Qualify_entry.TENANT_GUID = this.qualification_details.TENANT_GUID
+    this.Qualify_entry.CREATION_TS = this.qualification_details.CREATION_TS;
+    this.Qualify_entry.CREATION_USER_GUID = this.qualification_details.CREATION_USER_GUID;
+    this.Qualify_entry.UPDATE_TS = new Date().toISOString();
+    this.Qualify_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+  }
+
+  SetCommonEntityForAddUpdate() {
+    this.Qualify_entry.TYPE_NAME = this.titlecasePipe.transform(this.TYPE_NAME_ngModel_Add.trim());
+    this.Qualify_entry.TYPE_DESC = this.titlecasePipe.transform(this.TYPE_DESC_ngModel_Add.trim());
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_qu_Name");
+  }
+
+  CheckDuplicate() {
+    let url: string = "";
+    url = this.baseResource_Url + "main_qualification_type?filter=(TYPE_NAME=" + this.TYPE_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+    let result: any;
+    return new Promise((resolve) => {
+      this.http
+        .get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          result = data["resource"];
+          resolve(result.length);
+        });
+    });
+  }
+
+  Insert() {
+    this.qualificationsetupservice.save(this.Qualify_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Qualification Registered successfully');
+
+          //Remove all storage values-----------------------------------------          
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  Update() {
+    this.qualificationsetupservice.update(this.Qualify_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Qualification Updated Successfully');
+
+          //Remove all storage values-----------------------------------------          
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  ClearControls() {
+    this.TYPE_NAME_ngModel_Add = "";
+    this.TYPE_DESC_ngModel_Add = "";
+  }
 }
- // if (this.Qualifyform.valid) {
-      
-    //         let headers = new Headers();
-    //         headers.append('Content-Type', 'application/json');
-    //         let options = new RequestOptions({ headers: headers });
-    //         let url: string;
-    //         url = "http://api.zen.com.my/api/v2/zcs/_table/main_qualification_type?filter=(TYPE_NAME=" + this.Qualify_entry.TYPE_NAME + ")&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881";
-    //         this.http.get(url, options)
-    //           .map(res => res.json())
-    //           .subscribe(
-    //           data => {
-    //             let res = data["resource"];
-    //             if (res.length == 0) {
-    //               console.log("No records Found");
-    //               if (this.Exist_Record == false) {
-
-// else {
-//   console.log("Records Found");
-//   alert("The Qualification is already Added.")
-  
-// }
-// },
-// err => {
-//   this.Exist_Record = false;
-//   console.log("ERROR!: ", err);
-// }
-// );
-// }
-// }
-// }
-
