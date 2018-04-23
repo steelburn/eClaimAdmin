@@ -29,7 +29,7 @@
           <th class="lgl1">{{ 'DESIGNATION_NAME' | translate }}</th>
           <th class="lgl1" style="display: none;">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>          
         </tr>
 
         <tr class="col7" *ngFor="let designation of designations; let i=index">
@@ -54,7 +54,7 @@
   <!-- add designation form start-->
   <div class="blackcontainer" *ngIf="AddDesignationClicked">
   </div>
-  <div class="popup" padding *ngIf="AddDesignationClicked">
+  <div class="popup" padding *ngIf="AddDesignationClicked">    
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
@@ -90,7 +90,7 @@
           </div>
         </form>
       </ion-list>
-
+      
     </ion-card>
     
   </div>
