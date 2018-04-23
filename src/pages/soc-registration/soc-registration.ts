@@ -10,6 +10,7 @@ import * as constants from '../../app/config/constants';
 import { SocMain_Model } from '../../models/socmain_model';
 import { SocProject_Model } from '../../models/soc_project_model';
 import { SocCustomer_Model } from '../../models/soc_customer_model';
+import { SocCustomerLocation_Model } from '../../models/soc_customer_location_model';
 import { SocMain_Service } from '../../services/socmain_service';
 
 import { Tenant_Main_Model } from '../../models/tenant_main_model';
@@ -36,6 +37,7 @@ export class SocRegistrationPage {
   soc_entry: SocMain_Model = new SocMain_Model();
   project_entry: SocProject_Model = new SocProject_Model();
   customer_entry: SocCustomer_Model = new SocCustomer_Model();
+  customer_location_entry: SocCustomerLocation_Model = new SocCustomerLocation_Model();
   tenant_entry: Tenant_Main_Model = new Tenant_Main_Model();
   view_entry: View_SOC_Model = new View_SOC_Model();
   Socform: FormGroup;
@@ -62,6 +64,18 @@ export class SocRegistrationPage {
   public SOC_NO_ngModel_Add: any;
   public PROJECT_NAME_ngModel_Add: any;
   public CUSTOMER_NAME_ngModel_Add: any;
+
+  public LOCATION_NAME_ngModel_Add: any;
+  public REGISTRATION_NO_ngModel_Add: any;
+  public ADDRESS1_ngModel_Add: any;
+  public ADDRESS2_ngModel_Add: any;
+  public ADDRESS3_ngModel_Add: any;
+  public CONTACT_PERSON_ngModel_Add: any;
+  public CONTACT_PERSON_MOBILE_NO_ngModel_Add: any;
+  public CONTACT_NO1_ngModel_Add: any;
+  public CONTACT_NO2_ngModel_Add: any;
+  public EMAIL_ngModel_Add: any;
+  public DIVISION_ngModel_Add: any;
 
   Tenant_Add_ngModel: any;
   AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
@@ -95,6 +109,7 @@ export class SocRegistrationPage {
 
     var self = this;
     let SocEditUrl = this.baseResource_Url + "view_soc_edit?filter=(SOC_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
     this.http.get(SocEditUrl)
       .map(res => res.json())
       .subscribe(
@@ -105,6 +120,18 @@ export class SocRegistrationPage {
           this.SOC_NO_ngModel_Add = self.soc_details_main[0]["SOC_NO"]; localStorage.setItem('PREV_SOC_NO', self.soc_details_main[0]["SOC_NO"]);
           this.PROJECT_NAME_ngModel_Add = self.soc_details_main[0]["PROJECT_NAME"]; localStorage.setItem('PREV_PROJECT_NAME', self.soc_details_main[0]["PROJECT_NAME"]);
           this.CUSTOMER_NAME_ngModel_Add = self.soc_details_main[0]["CUSTOMER_NAME"]; localStorage.setItem('PREV_CUSTOMER_NAME', self.soc_details_main[0]["CUSTOMER_NAME"]);
+
+          this.LOCATION_NAME_ngModel_Add = self.soc_details_main[0]["CUSTOMER_LOCATION_NAME"];
+          this.REGISTRATION_NO_ngModel_Add = self.soc_details_main[0]["RIGISTRATION_NO"];
+          this.ADDRESS1_ngModel_Add = self.soc_details_main[0]["ADDRESS1"];
+          this.ADDRESS2_ngModel_Add = self.soc_details_main[0]["ADDRESS2"];
+          this.ADDRESS3_ngModel_Add = self.soc_details_main[0]["ADDRESS3"];
+          this.CONTACT_PERSON_ngModel_Add = self.soc_details_main[0]["CONTACT_PERSON"];
+          this.CONTACT_PERSON_MOBILE_NO_ngModel_Add = self.soc_details_main[0]["CONTACT_PERSON_MOBILE_NO"];
+          this.CONTACT_NO1_ngModel_Add = self.soc_details_main[0]["CONTACT_NO1"];
+          this.CONTACT_NO2_ngModel_Add = self.soc_details_main[0]["CONTACT_NO2"];
+          this.EMAIL_ngModel_Add = self.soc_details_main[0]["EMAIL"];
+          this.DIVISION_ngModel_Add = self.soc_details_main[0]["DIVISION"];
 
           this.loading.dismissAll();
         });
@@ -138,6 +165,14 @@ export class SocRegistrationPage {
 
                   //Remove from main_customer-----------------------
                   this.socservice.remove_customer(self.soc_details_main[0]["CUSTOMER_GUID"])
+                    .subscribe(() => {
+                      self.socs = self.socs.filter((item) => {
+                        return item.SOC_GUID != SOC_GUID;
+                      });
+                    });
+
+                  //Remove from main_customer_location------------------------
+                  this.socservice.remove_customer_location(self.soc_details_main[0]["CUSTOMER_LOCATION_GUID"])
                     .subscribe(() => {
                       self.socs = self.socs.filter((item) => {
                         return item.SOC_GUID != SOC_GUID;
@@ -187,16 +222,38 @@ export class SocRegistrationPage {
         //-------------------------------------------------------
         if (localStorage.getItem("g_USER_GUID") != "sva") {
           this.Socform = fb.group({
-            soc: ["", Validators.required],
-            project_name: ["", Validators.required],
-            customer_name: ["", Validators.required],
+            soc: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            address2: [null],
+            address3: [null],
+            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_no2: [null],
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+            division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
           });
         }
         else {
           this.Socform = fb.group({
-            soc: ["", Validators.required],
-            project_name: ["", Validators.required],
-            customer_name: ["", Validators.required],
+            soc: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            address2: [null],
+            address3: [null],
+            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_no2: [null],
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+            division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             TENANT_NAME: [null, Validators.required],
           });
         }
@@ -366,7 +423,8 @@ export class SocRegistrationPage {
     this.socservice.save_customer(this.customer_entry)
       .subscribe((response) => {
         if (response.status == 200) {
-          this.SaveProject();
+          this.SaveCustomerLocation();
+          //this.SaveProject();
         }
       });
   }
@@ -375,6 +433,77 @@ export class SocRegistrationPage {
     this.socservice.update_customer(this.customer_entry)
       .subscribe((response) => {
         if (response.status == 200) {
+          this.SaveProject();
+        }
+      });
+  }
+
+  SaveCustomerLocation() {
+    //for Save Set Entities-------------------------------------------------------------
+    if (this.Add_Form == true) {
+      this.SetEntityForCustomerLocationAdd();
+    }
+    //for Update Set Entities------------------------------------------------------------
+    else {
+      this.SetEntityForCustomerLocationUpdate();
+    }
+    //Common Entities-------------------------------------------------------------------
+    this.SetCommonEntityForCustomerLocationAddUpdate();
+
+    //**************Save service if it is new details***************************
+    if (this.Add_Form == true) {
+      this.InsertCustomerLocation();
+    }
+    //**************Update service if it is new details*************************
+    else {
+      this.UpdateCustomerLocation();
+    }
+  }
+
+  SetEntityForCustomerLocationAdd() {
+    this.customer_location_entry.CUSTOMER_LOCATION_GUID = UUID.UUID();
+  }
+
+  SetEntityForCustomerLocationUpdate() {
+    this.customer_location_entry.CUSTOMER_LOCATION_GUID = this.soc_details_main[0]["CUSTOMER_LOCATION_GUID"];
+  }
+
+  SetCommonEntityForCustomerLocationAddUpdate() {
+    this.customer_location_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
+    this.customer_location_entry.NAME = this.titlecasePipe.transform(this.LOCATION_NAME_ngModel_Add.trim());
+    this.customer_location_entry.DESCRIPTION = "NA";
+    this.customer_location_entry.RIGISTRATION_NO = this.REGISTRATION_NO_ngModel_Add.trim();
+    this.customer_location_entry.ADDRESS1 = this.titlecasePipe.transform(this.ADDRESS1_ngModel_Add.trim());
+    this.customer_location_entry.ADDRESS2 = this.titlecasePipe.transform(this.ADDRESS2_ngModel_Add.trim());
+    this.customer_location_entry.ADDRESS3 = this.titlecasePipe.transform(this.ADDRESS3_ngModel_Add.trim());
+    this.customer_location_entry.CONTACT_PERSON = this.titlecasePipe.transform(this.CONTACT_PERSON_ngModel_Add.trim());
+    this.customer_location_entry.CONTACT_PERSON_MOBILE_NO = this.CONTACT_PERSON_MOBILE_NO_ngModel_Add.trim();
+    this.customer_location_entry.CONTACT_NO1 = this.CONTACT_NO1_ngModel_Add.trim();
+    this.customer_location_entry.CONTACT_NO2 = this.CONTACT_NO2_ngModel_Add.trim();
+    this.customer_location_entry.EMAIL = this.EMAIL_ngModel_Add.trim().toLowerCase();
+    this.customer_location_entry.DIVISION = this.titlecasePipe.transform(this.DIVISION_ngModel_Add.trim());
+
+    this.customer_location_entry.CREATION_TS = this.customer_entry.CREATION_TS;
+    this.customer_location_entry.CREATION_USER_GUID = this.customer_entry.CREATION_USER_GUID;
+    this.customer_location_entry.UPDATE_TS = this.customer_entry.UPDATE_TS;
+    this.customer_location_entry.UPDATE_USER_GUID = this.customer_entry.UPDATE_USER_GUID
+  }
+
+  InsertCustomerLocation() {
+    this.socservice.save_customer_location(this.customer_location_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+
+          this.SaveProject();
+        }
+      });
+  }
+
+  UpdateCustomerLocation() {
+    this.socservice.update_customer_location(this.customer_location_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+
           this.SaveProject();
         }
       });
@@ -472,7 +601,7 @@ export class SocRegistrationPage {
   }
 
   SetCommonEntityForSOCAddUpdate() {
-    this.soc_entry.SOC_NO = this.titlecasePipe.transform(this.SOC_NO_ngModel_Add.trim());
+    this.soc_entry.SOC_NO = this.SOC_NO_ngModel_Add.trim();
     this.soc_entry.PROJECT_GUID = this.project_entry.PROJECT_GUID;
     this.soc_entry.TENANT_GUID = this.customer_entry.TENANT_GUID;
     this.soc_entry.CREATION_TS = this.customer_entry.CREATION_TS;
