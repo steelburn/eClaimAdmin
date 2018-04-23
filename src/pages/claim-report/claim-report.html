@@ -1,0 +1,115 @@
+<!--
+  Generated template for the ClaimReportPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>claim-report</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-item>
+
+        <ion-label>Department :</ion-label>
+        <ion-select interface="action-sheet">
+                <ion-option value="nes">NES</ion-option>
+                <ion-option value="n64">Nintendo64</ion-option>
+                <ion-option value="ps">PlayStation</ion-option>
+                <ion-option value="genesis">Sega Genesis</ion-option>
+                <ion-option value="saturn">Sega Saturn</ion-option>
+                <ion-option value="snes">SNES</ion-option>
+                <ion-option value="nes">NES</ion-option>
+                <ion-option value="n64">Nintendo64</ion-option>
+                <ion-option value="ps">PlayStation</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>User Name :</ion-label>
+        <select class="TColor">
+            <option value="Bala">Bala</option>
+            <option value="Pratap">Pratap</option>
+            <option value="ajay">ajay</option>
+        </select>
+    </ion-item>
+
+    <ion-item>
+    <ion-label>Claim Month :</ion-label>
+    <select class="TColor" style="width:100px">
+        <option value="Jan">Jan</option>
+        <option value="Feb">Feb</option>
+        <option value="Mar">Mar</option>
+        <option value="Apr">Apr</option>
+        <option value="May">May</option>
+        <option value="Jun">Jun</option>
+        <option value="Jul">Jul</option>
+        <option value="Aug">Aug</option>
+        <option value="Sep">Sep</option>
+        <option value="Oct">Oct</option>
+        <option value="Nov">Nov</option>
+        <option value="Dec">Dec</option>
+    </select>
+    <ion-label>Claim Type:</ion-label>
+    <select class="TColor" style="width:100px">
+        <option value="Travel">Travel Claim</option>
+        <option value="Medical">Medical Claim</option>
+        <option value="Gift">Gift Claim</option>
+        <option value="Entertainment">Entertainment Claim</option>
+    </select>
+
+
+</ion-item>
+
+    <ion-list>
+        <ion-item>
+            <table class="Tabler ">
+                <tr class="linedsg TColor">
+                    <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
+                    <th class="lgl1">DATE</th>
+                    <th class="lgl1">SOC#</th>
+                    <!-- <th class="lgl1">Location as per SOC</th> -->
+                    <th class="lgl1">Customer</th>
+                    <!-- <th class="lgl1">Remarks(Location- if is not at customer location)</th> -->
+                    <!-- <th class="lgl1">Recommended Post Code</th> -->
+                    <th class="lgl1">From</th>
+                    <th class="lgl1">To</th>
+                    <th class="lgl1">Distance (KM)</th>
+                    <!-- <th class="lgl1">Distance(Outstn/Oths)KM</th> -->
+                    <!-- <th class="lgl1">Type</th> -->
+                    <th class="lgl1">Mileage(RM)</th>
+                    <!-- <th class="lgl1">Parking(GST Inclusive)</th> -->
+                    <!-- <th class="lgl1">Parking (Without GST)</th> -->
+                    <!-- <th class="lgl1">TnGo</th>
+                    <th class="lgl1">Public Transport</th>
+                    <th class="lgl1">Hotel(Incl GST)</th>
+                    <th class="lgl1">Outstation Allowance</th> -->
+                    <th class="lgl1">Total(RM)</th>
+
+
+
+                </tr>
+
+                <tr class="col7" *ngFor="let claim of claimsList; let i=index">
+                    <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{claim.TRAVEL_DATE | date:'M/d/y'}}</td>
+                    <td class="lgl1">{{claim.SOC_NO}}</td>
+                    <td class="lgl1">{{claim.CUSTOMER_NAME}}</td>
+                    <td class="lgl1">{{claim.FROM}}</td>
+                    <td class="lgl1">{{claim.TO}}</td>
+                    <td class="lgl1">{{claim.DISTANCE_KM}}</td>
+                    <td class="lgl1">{{claim.MILEAGE_AMOUNT}}</td>
+                    <td class="lgl1">{{claim.CLAIM_AMOUNT}}</td>
+                </tr>
+
+
+            </table>
+        </ion-item>
+    </ion-list>
+
+</ion-content>
