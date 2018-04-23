@@ -26,7 +26,7 @@
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'PAYMENT_NAME' | translate }}</th>
-          <th class="lgl1">{{ 'PAYMENT_DESCRIPTION' | translate }}</th>
+          <th class="lgl1" style="display: none;">{{ 'PAYMENT_DESCRIPTION' | translate }}</th>
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
@@ -34,7 +34,7 @@
         <tr class="col7" *ngFor="let paymenttype of paymenttypes; let i=index">
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{paymenttype.NAME}}</td>
-          <td class="lgl1">{{paymenttype.DESCRIPTION}}</td>
+          <td class="lgl1" style="display: none;">{{paymenttype.DESCRIPTION}}</td>
           <td class="lgl1" *ngIf="AdminLogin">{{paymenttype.TENANT_ACCOUNT_NAME}}</td>
           <td class="lgl1 fColor">
             <button ion-button item-end (click)="EditClick(paymenttype.PAYMENT_TYPE_GUID)">
@@ -80,7 +80,7 @@
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the payment'}}"></ion-input>
           </ion-item>
 
-          <ion-item>
+          <ion-item style="display: none;">
             <ion-label stacked>{{ 'PAYMENT_DESCRIPTION' | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
