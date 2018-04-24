@@ -245,8 +245,8 @@ export class MedicalclaimPage {
     let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date(this.travel_date).getMonth() + 1;
-    let year = new Date(this.travel_date).getFullYear();
+    let month = new Date(this.Medical_Date_ngModel).getMonth() + 1;
+    let year = new Date(this.Medical_Date_ngModel).getFullYear();
     let claimRefGUID;
     let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
     this.http
@@ -275,7 +275,7 @@ export class MedicalclaimPage {
             //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
             // claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
             claimReqMainRef.CLAIM_TYPE_GUID = '40dbaf56-98e4-77b9-df95-85ec232ff714';
-            claimReqMainRef.TRAVEL_DATE = this.travel_date;           
+            claimReqMainRef.TRAVEL_DATE = this.Medical_Date_ngModel;           
             claimReqMainRef.DESCRIPTION = this.Medical_Description_ngModel;
             //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
             claimReqMainRef.CLAIM_AMOUNT = this.Medical_Amount_ngModel;
@@ -324,7 +324,7 @@ export class MedicalclaimPage {
           //claimReqMainRef.MILEAGE_GUID = this.VehicleId;
           //claimReqMainRef.CLAIM_TYPE_GUID = '58c59b56-289e-31a2-f708-138e81a9c823';
           claimReqMainRef.CLAIM_TYPE_GUID = '40dbaf56-98e4-77b9-df95-85ec232ff714';
-          claimReqMainRef.TRAVEL_DATE =this.travel_date; 
+          claimReqMainRef.TRAVEL_DATE =this.Medical_Date_ngModel; 
           // claimReqMainRef.START_TS = value.start_DT;
           // claimReqMainRef.END_TS = value.end_DT;
           claimReqMainRef.DESCRIPTION = this.Medical_Description_ngModel;

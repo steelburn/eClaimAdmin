@@ -17,6 +17,7 @@ import { ApproverTaskListPage } from '../approver-task-list/approver-task-list';
 import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
 import{ClaimtasklistPage} from '../claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../userclaimslist/userclaimslist'
+import{ClaimReportPage} from '../claim-report/claim-report';
 
 
 
@@ -101,6 +102,10 @@ export class AdminsetupPage {
   }
   goToProfile(){
     this.navCtrl.push(ProfileSetupPage)
+  }
+
+  goToClaimReport(){
+    this.navCtrl.push(ClaimReportPage)
   }
 
   ionViewDidLoad() {

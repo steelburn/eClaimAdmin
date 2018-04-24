@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-//import { FormBuilder, FormGroup } from '@angular/forms';
+import { TitleCasePipe } from '@angular/common';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -24,7 +24,7 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-paymenttypesetup',
-  templateUrl: 'paymenttypesetup.html', providers: [PaymentTypeSetup_Service, BaseHttpService]
+  templateUrl: 'paymenttypesetup.html', providers: [PaymentTypeSetup_Service, BaseHttpService, TitleCasePipe]
 })
 export class PaymenttypesetupPage {
   Paymenttype_entry: PaymentTypeSetup_Model = new PaymentTypeSetup_Model();
@@ -36,7 +36,7 @@ export class PaymenttypesetupPage {
 
   public paymenttypes: PaymentTypeSetup_Model[] = [];
 
-  public AddPaymentTypeClicked: boolean = false;  
+  public AddPaymentTypeClicked: boolean = false;
   public Exist_Record: boolean = false;
 
   public paymenttype_details: any;
@@ -62,7 +62,7 @@ export class PaymenttypesetupPage {
     }
   }
 
-  public EditClick(PAYMENT_TYPE_GUID: any) {    
+  public EditClick(PAYMENT_TYPE_GUID: any) {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
     });
@@ -120,81 +120,43 @@ export class PaymenttypesetupPage {
       this.Add_Form = true; this.Edit_Form = false;
     }
   }
-  
+
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private paymenttypesetupservice: PaymentTypeSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private paymenttypesetupservice: PaymentTypeSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
     else {
-      this.loading = this.loadingCtrl.create({
-        content: 'Loading...',
-      });
-      this.loading.present();
-      
-      //Clear localStorage value--------------------------------
-      if (localStorage.getItem('Prev_Name') == null) {
-        localStorage.setItem('Prev_Name', null);
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        //Clear localStorage value--------------------------------
+        this.ClearLocalStorage();
+
+        //fill all the tenant details----------------------------
+        this.FillTenant();
+
+        //Display Grid---------------------------------------------
+        this.DisplayGrid();
       }
       else {
-        localStorage.removeItem("Prev_Name");
-      }
-      if (localStorage.getItem('Prev_TenantGuid') == null) {
-        localStorage.setItem('Prev_TenantGuid', null);
-      }
-      else {
-        localStorage.removeItem("Prev_TenantGuid");
+        alert('Sorry!! You are not authorized.');
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
 
-      //fill all the tenant details----------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
-        this.http
-          .get(tenantUrl)
-          .map(res => res.json())
-          .subscribe(data => {
-            this.tenants = data.resource;
-          });
-        this.AdminLogin = true;
-      }
-      else {
-        this.AdminLogin = false;
-      }
-
-      //Display Grid---------------------------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_payment_type_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = true;
-      }
-      else {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_payment_type_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = false;
-      }
-
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.paymenttypes = data.resource;
-
-          this.loading.dismissAll();
-        });
       //-------------------------------------------------------
       if (localStorage.getItem("g_USER_GUID") != "sva") {
         this.Paymenttypeform = fb.group({
           NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          DESCRIPTION: [null],          
+          DESCRIPTION: [null],
         });
       }
-      else
-      {
+      else {
         this.Paymenttypeform = fb.group({
           NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
           DESCRIPTION: [null],
           TENANT_NAME: [null, Validators.required],
         });
-      }      
+      }
     }
   }
 
@@ -202,44 +164,74 @@ export class PaymenttypesetupPage {
     console.log('ionViewDidLoad PaymenttypesetupPage');
   }
 
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_Name') == null) {
+      localStorage.setItem('Prev_Name', null);
+    }
+    else {
+      localStorage.removeItem("Prev_Name");
+    }
+    if (localStorage.getItem('Prev_TenantGuid') == null) {
+      localStorage.setItem('Prev_TenantGuid', null);
+    }
+    else {
+      localStorage.removeItem("Prev_TenantGuid");
+    }
+  }
+
+  FillTenant() {
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      this.http
+        .get(tenantUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource;
+        });
+      this.AdminLogin = true;
+    }
+    else {
+      this.AdminLogin = false;
+    }
+  }
+
+  DisplayGrid() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_payment_type_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = true;
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_payment_type_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = false;
+    }
+
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.paymenttypes = data.resource;
+
+        this.loading.dismissAll();
+      });
+  }
+
   Save() {
     if (this.Paymenttypeform.valid) {
       //for Save Set Entities-------------------------------------------------------------
       if (this.Add_Form == true) {
-        this.Paymenttype_entry.PAYMENT_TYPE_GUID = UUID.UUID();
-        this.Paymenttype_entry.CREATION_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.Paymenttype_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.Paymenttype_entry.CREATION_USER_GUID = 'sva';
-        }
-        this.Paymenttype_entry.UPDATE_TS = new Date().toISOString();
-        this.Paymenttype_entry.UPDATE_USER_GUID = "";
+        this.SetEntityForAdd();
       }
       //for Update Set Entities------------------------------------------------------------
       else {
-        this.Paymenttype_entry.PAYMENT_TYPE_GUID = this.paymenttype_details.PAYMENT_TYPE_GUID;
-        this.Paymenttype_entry.CREATION_TS = this.paymenttype_details.CREATION_TS;
-        this.Paymenttype_entry.CREATION_USER_GUID = this.paymenttype_details.CREATION_USER_GUID;
-        this.Paymenttype_entry.UPDATE_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.Paymenttype_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.Paymenttype_entry.UPDATE_USER_GUID = 'sva';
-        }
+        this.SetEntityForUpdate();
       }
-
-      this.Paymenttype_entry.NAME = this.NAME_ngModel_Add.trim();
-      this.Paymenttype_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
-
-      if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.Paymenttype_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
-      }
-      else {
-        this.Paymenttype_entry.TENANT_GUID = this.Tenant_Add_ngModel;
-      }
+      //Common Entitity For Insert/Update------------------------------------------------- 
+      this.SetCommonEntityForAddUpdate();
 
       //Load the Controller--------------------------------
       this.loading = this.loadingCtrl.create({
@@ -255,36 +247,12 @@ export class PaymenttypesetupPage {
             //---Insert or Update-------------------------------------------------------
             if (this.Add_Form == true) {
               //**************Save service if it is new details*************************
-              this.paymenttypesetupservice.save(this.Paymenttype_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Payment Type Registered successfully');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_Name");
-                    localStorage.removeItem("Prev_TenantGuid");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Insert();
               //**************************************************************************
             }
             else {
               //**************Update service if it is new details*************************
-              this.paymenttypesetupservice.update(this.Paymenttype_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Payment Type updated successfully');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_Name");
-                    localStorage.removeItem("Prev_TenantGuid");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Update();
               //**************************************************************************
             }
           }
@@ -299,21 +267,83 @@ export class PaymenttypesetupPage {
       }
       else {
         //Simple update----------------------------------------------------------
-        this.paymenttypesetupservice.update(this.Paymenttype_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Payment Type updated successfully');
-
-              //Remove all storage values-----------------------------------------
-              localStorage.removeItem("Prev_Name");
-              localStorage.removeItem("Prev_TenantGuid");
-              //------------------------------------------------------------------
-
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
+        this.Update();
       }
     }
+  }
+
+  SetEntityForAdd() {
+    this.Paymenttype_entry.PAYMENT_TYPE_GUID = UUID.UUID();
+    this.Paymenttype_entry.CREATION_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.Paymenttype_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.Paymenttype_entry.CREATION_USER_GUID = 'sva';
+    }
+    this.Paymenttype_entry.UPDATE_TS = new Date().toISOString();
+    this.Paymenttype_entry.UPDATE_USER_GUID = "";
+  }
+
+  SetEntityForUpdate() {
+    this.Paymenttype_entry.PAYMENT_TYPE_GUID = this.paymenttype_details.PAYMENT_TYPE_GUID;
+    this.Paymenttype_entry.CREATION_TS = this.paymenttype_details.CREATION_TS;
+    this.Paymenttype_entry.CREATION_USER_GUID = this.paymenttype_details.CREATION_USER_GUID;
+    this.Paymenttype_entry.UPDATE_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.Paymenttype_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.Paymenttype_entry.UPDATE_USER_GUID = 'sva';
+    }
+  }
+
+  SetCommonEntityForAddUpdate() {
+    this.Paymenttype_entry.NAME = this.titlecasePipe.transform(this.NAME_ngModel_Add.trim());
+    this.Paymenttype_entry.DESCRIPTION = this.titlecasePipe.transform(this.DESCRIPTION_ngModel_Add.trim());
+
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.Paymenttype_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    else {
+      this.Paymenttype_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+    }
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_Name");
+    localStorage.removeItem("Prev_TenantGuid");
+  }
+
+  Insert() {
+    this.paymenttypesetupservice.save(this.Paymenttype_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Payment Type Registered successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+
+  }
+
+  Update() {
+    this.paymenttypesetupservice.update(this.Paymenttype_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Payment Type updated successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
   }
 
   CheckDuplicate() {

@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -24,7 +25,7 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-banksetup',
-  templateUrl: 'banksetup.html', providers: [BankSetup_Service, BaseHttpService, GlobalFunction]
+  templateUrl: 'banksetup.html', providers: [BankSetup_Service, BaseHttpService, GlobalFunction, TitleCasePipe]
 })
 export class BanksetupPage {
   NAME: any;
@@ -120,32 +121,38 @@ export class BanksetupPage {
   }
 
   loading: Loading;
-  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController) {
+  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
     else {
-      //Clear localStorage value--------------------------------      
-      this.ClearLocalStorage()
-
-      //fill all the tenant details----------------------------      
-      this.FillTenant();
-
-      //Display Grid---------------------------------------------      
-      this.DisplayGrid();
-
-      //----------------------------------------------------------
       if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.Bankform = fb.group({
-          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        });
+        //Clear localStorage value--------------------------------      
+        this.ClearLocalStorage();
+
+        //fill all the tenant details----------------------------      
+        this.FillTenant();
+
+        //Display Grid---------------------------------------------      
+        this.DisplayGrid();
+
+        //----------------------------------------------------------
+        if (localStorage.getItem("g_USER_GUID") != "sva") {
+          this.Bankform = fb.group({
+            NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          });
+        }
+        else {
+          this.Bankform = fb.group({
+            NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            TENANT_NAME: [null, Validators.required],
+          });
+        }
       }
       else {
-        this.Bankform = fb.group({
-          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          TENANT_NAME: [null, Validators.required],
-        });
+        alert('Sorry!! You are not authorized.');
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
   }
@@ -213,7 +220,7 @@ export class BanksetupPage {
     if (this.Bankform.valid) {
       //for Save Set Entities------------------------------------------------------------------------
       if (this.Add_Form == true) {
-        this.SetEntityForAdd()
+        this.SetEntityForAdd();
       }
       //for Update Set Entities----------------------------------------------------------------------
       else {
@@ -290,7 +297,7 @@ export class BanksetupPage {
   }
 
   SetCommonEntityForAddUpdate() {
-    this.bank_entry.NAME = this.NAME_ngModel_Add.trim();
+    this.bank_entry.NAME = this.titlecasePipe.transform(this.NAME_ngModel_Add.trim());
     if (localStorage.getItem("g_USER_GUID") != "sva") {
       this.bank_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
     }
