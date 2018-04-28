@@ -30,6 +30,11 @@
             </ion-item>
 
             <ion-item>
+              <ion-label stacked>{{"CONTACT PERSON"}}</ion-label>
+              <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="ContactPerson_ngModel" placeholder="{{'Please fill in the contact person'}}"></ion-input>
+            </ion-item>
+
+            <ion-item style="display: none">
               <ion-label stacked>{{"USER ID"}}</ion-label>
               <ion-input type="text" formControlName="USER_ID" [(ngModel)]="Userid_ngModel" placeholder="{{'Please fill in the user id'}}"></ion-input>
             </ion-item>
@@ -215,7 +220,7 @@
               <ion-input type="text" formControlName="DEPARTMENT_NAME" [(ngModel)]="Department_Name_ngModel" placeholder="{{'Please fill in the department name of your company'}}"></ion-input>
             </ion-item>
 
-            <ion-item>
+            <ion-item style="display: none;">
               <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
               <ion-input type="text" formControlName="DEPARTMENT_DESCRIPTION" [(ngModel)]="Department_Desc_ngModel" placeholder="{{'Please fill in the department description of your company'}}"></ion-input>
             </ion-item>
@@ -232,14 +237,14 @@
                   <tr class="linedsg TColor">
                     <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
                     <th class="lgl1">NAME</th>
-                    <th class="lgl1">DESCRIPTION</th>
+                    <th class="lgl1" style="display: none;">DESCRIPTION</th>
                     <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
                   </tr>
 
                   <tr class="col7" *ngFor="let dept of Department; let i=index">
                     <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{dept.DEPARTMENT_NAME}}</td>
-                    <td class="lgl1">{{dept.DEPARTMENT_DESC}}</td>
+                    <td class="lgl1" style="display: none;">{{dept.DEPARTMENT_DESC}}</td>
                     <td class="lgl1 fColor">
                       <button ion-button item-end (click)="EditDepartment(dept.DEPARTMENT_GUID)">
                         <ion-icon name="md-create"></ion-icon>
@@ -282,7 +287,7 @@
               <ion-input type="text" formControlName="DESINATION_NAME" [(ngModel)]="Designation_Name_ngModel" placeholder="{{'Please fill in the designation name of your company'}}"></ion-input>
             </ion-item>
 
-            <ion-item>
+            <ion-item style="display: none;">
               <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
               <ion-input type="text" formControlName="DESIGNATION_DESC" [(ngModel)]="Designation_Desc_ngModel" placeholder="{{'Please fill in the designation description of your company'}}"></ion-input>
             </ion-item>
@@ -299,14 +304,14 @@
                   <tr class="linedsg TColor">
                     <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
                     <th class="lgl1">NAME</th>
-                    <th class="lgl1">DESCRIPTION</th>
+                    <th class="lgl1" style="display: none;">DESCRIPTION</th>
                     <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
                   </tr>
 
                   <tr class="col7" *ngFor="let desig of Designation; let i=index">
                     <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{desig.DESIGNATION_NAME}}</td>
-                    <td class="lgl1">{{desig.DESIGNATION_DESC}}</td>
+                    <td class="lgl1" style="display: none;">{{desig.DESIGNATION_DESC}}</td>
                     <td class="lgl1 fColor">
                       <button ion-button item-end (click)="EditDesignation(desig.DESIGNATION_GUID)">
                         <ion-icon name="md-create"></ion-icon>
