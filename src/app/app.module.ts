@@ -250,7 +250,7 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     ClaimtasklistPage,
     UserclaimslistPage,
 
-    ClaimReportPage
+    ClaimReportPage,
     UploadPage
   ],
   providers: [

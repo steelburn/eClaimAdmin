@@ -27,18 +27,85 @@ $headings-font-weight: 300;
 // The "primary" color is the only required color in the map.
 
 $colors: ( 
-    primary:  #134C71,
-    secondary: #32db64, 
-    danger: #f53d3d, 
-    light: #f8f9fa, 
+    secondary: #3F51B5,
+    secondary50: #E8EAF6,
+    secondary100: #C5CAE9,
+    secondary200: #9FA8DA, 
+    secondary300:#7986CB,
+    secondary400:#5C6BC0,
+    secondary500:#3F51B5,
+    secondary600:#3949AB,
+    secondary700:#303F9F,
+    secondary800:#283593,
+    secondary00:#1A237E,
+    secondaryA100:#8C9EFF,
+    secondaryA200:#536DFE,
+    secondaryA400:#3D5AFE,
+    secondaryA700: #304FFE,
+    
+    primary: #B71C1C, 
+    primary50: #E0F2F1, 
+    primary100:#B2DFDB,
+    primary200:#80CBC4,
+    primary300:#4DB6AC,
+    primary400:#26A69A,
+    primary500:#009688,
+    primary600:#00897B,
+    primary700:#00796B,
+    primary800:#00695C,
+    primary900:#004D40,
+    primaryA100:#A7FFEB,
+    primaryA200:#64FFDA,
+    primaryA400:#1DE9B6,
+    primaryA700:#00BFA5,
+
+    danger: #F44336, 
+    danger50:#FFEBEE,
+    danger100:#FFCDD2,
+    danger200:#EF9A9A,
+    danger300:#E57373,
+    danger400:#EF5350,
+    danger500:#F44336,
+    danger600:#E53935,
+    danger700:#D32F2F,
+    danger800:#C62828,
+    danger900:#B71C1C,
+    dangerA100:#FF8A80,
+    dangerA200:#FF5252,
+    dangerA400:#FF1744,
+    dangerA700:#D50000,
+
+    natural: #795548, 
+    natural50:#EFEBE9,
+    natural100:#D7CCC8,
+    natural200:#BCAAA4,
+    natural300:#A1887F,
+    natural400:#8D6E63,
+    natural500:#795548,
+    natural600:#6D4C41,
+    natural700:#5D4037,
+    natural800:#4E342E,
+    natural900:#3E2723,
+
     dark: #222, 
-    favorite: #69BB7B, 
-    twitter: #2E86C1,
-    google: #dc4a38, 
-    vimeo: #23b6ea, 
-    facebook: #3b5998,
-    pure: white
+    light: #F0F0F0, 
+    pure: white,
+
+
+    dablugre: #607D8B,
+    dablugre50:#ECEFF1,
+    dablugre100:#CFD8DC,
+    dablugre200:#B0BEC5,
+    dablugre300:#90A4AE,
+    dablugre400:#78909C,
+    dablugre500:#607D8B,
+    dablugre600:#546E7A,
+    dablugre700:#455A64,
+    dablugre800:#37474F,
+    dablugre900:#263238,
+
     );
+
 
 
 // App iOS Variables
@@ -51,11 +118,10 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-// Use the primary color as the background for the toolbar-md-background
-$toolbar-md-background:                   color($colors, primary);
 
-// Change the color of the segment button text
-$toolbar-md-active-color:                 #fff;
+
+
+
 
 
 // App Windows Variables
@@ -90,3 +156,19 @@ $toolbar-md-active-color:                 #fff;
 
 @import "roboto";
 @import "noto-sans";
+
+//font-weight
+
+$font-weight-light:	300;
+$font-weight-regular:	400;
+$font-weight-bold:	600;
+
+//font-size
+
+$font-size-small:	12;
+$font-size-regular:  16;
+$font-size-large:	24;
+$font-size-x-large:	32;
+$font-size-xx-large:	48;
+$font-size-xxx-large:	64;
+$font-size-xxxx-large:	96;
