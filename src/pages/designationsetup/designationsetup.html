@@ -29,12 +29,12 @@
           <th class="lgl1">{{ 'DESIGNATION_NAME' | translate }}</th>
           <th class="lgl1" style="display: none;">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>          
+          <th class="lgl1 tblBrRight" style="width:90px" style="text-align: justify;">{{ 'ACTION' | translate }}</th>          
         </tr>
 
         <tr class="col7" *ngFor="let designation of designations; let i=index">
           <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{designation.NAME}}</td>
+          <td class="lgl1" style="text-align: justify;">{{designation.NAME}}</td>
           <td class="lgl1" style="display: none;">{{designation.DESCRIPTION}}</td>
           <td class="lgl1" *ngIf="AdminLogin">{{designation.TENANT_ACCOUNT_NAME}}</td>
           <td class="lgl1 fColor">

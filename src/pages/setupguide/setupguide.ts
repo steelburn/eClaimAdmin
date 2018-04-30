@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -48,7 +49,7 @@ import { DesignationSetup_Service } from '../../services/designationsetup_servic
 @IonicPage()
 @Component({
   selector: 'page-setupguide',
-  templateUrl: 'setupguide.html', providers: [BaseHttpService, TenantMainSetup_Service, TenantCompanySetup_Service, TenantCompanySiteSetup_Service, UserSetup_Service, DepartmentSetup_Service, DesignationSetup_Service]
+  templateUrl: 'setupguide.html', providers: [BaseHttpService, TenantMainSetup_Service, TenantCompanySetup_Service, TenantCompanySiteSetup_Service, UserSetup_Service, DepartmentSetup_Service, DesignationSetup_Service, TitleCasePipe]
 })
 export class SetupguidePage {
   Branchform1: FormGroup;
@@ -69,6 +70,7 @@ export class SetupguidePage {
   Tenant_Name_ngModel: any;
   Userid_ngModel: any;
   Password_ngModel: any;
+  ContactPerson_ngModel: any;
 
   //-----------For Tenant HQ Model------------------------
   Companyname_ngModel: any;
@@ -110,9 +112,11 @@ export class SetupguidePage {
   designation_entry: DesignationSetup_Model = new DesignationSetup_Model();
 
   isReadonly: boolean = false;
+  Mode: string = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb1: FormBuilder, fb2: FormBuilder, fb3: FormBuilder, fb4: FormBuilder, fb5: FormBuilder, private loadingCtrl: LoadingController, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private departmentsetupservice: DepartmentSetup_Service, private designationsetupservice: DesignationSetup_Service) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb1: FormBuilder, fb2: FormBuilder, fb3: FormBuilder, fb4: FormBuilder, fb5: FormBuilder, private loadingCtrl: LoadingController, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private departmentsetupservice: DepartmentSetup_Service, private designationsetupservice: DesignationSetup_Service, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
+      //Clear all controls-------------------------
 
     }
     else {
@@ -126,8 +130,10 @@ export class SetupguidePage {
     this.Branchform1 = fb1.group({
       //-----------For Tenant Company-------------------
       TENANT_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      USER_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      //USER_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      USER_ID: [null],
       PASSWORD: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      CONTACT_PERSON: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
     });
 
     this.Branchform2 = fb2.group({
@@ -150,13 +156,13 @@ export class SetupguidePage {
     this.Branchform4 = fb4.group({
       //-----------For Department-----------------------
       DEPARTMENT_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      DEPARTMENT_DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      DEPARTMENT_DESCRIPTION: [null],
     });
 
     this.Branchform5 = fb5.group({
       //-----------For Designation----------------------
       DESINATION_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      DESIGNATION_DESC: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      DESIGNATION_DESC: [null],
     });
 
   }
@@ -191,7 +197,7 @@ export class SetupguidePage {
     //One Record should entry to Branch for HQ---------------
     //Check if the same record exist then it will be update else insert----------------     \    
     if (this.Branches.length <= 0) {
-      this.Branches.push({ BRANCH_GUID: UUID.UUID(), BRANCH_NAME: this.Companyname_ngModel.trim(), BRANCH_REGNO: this.HQregno_ngModel.trim(), BRANCH_EMAIL: this.Tenantemail_ngModel.trim(), BRANCH_CONTACTNO: this.Tenantcontactno_ngModel.trim(), ISHQ: true });
+      this.Branches.push({ BRANCH_GUID: UUID.UUID(), BRANCH_NAME: this.titlecasePipe.transform(this.Companyname_ngModel.trim()), BRANCH_REGNO: this.HQregno_ngModel.trim(), BRANCH_EMAIL: this.Tenantemail_ngModel.trim(), BRANCH_CONTACTNO: this.Tenantcontactno_ngModel.trim(), ISHQ: true });
     }
     else {
       for (var item in this.Branches) {
@@ -199,7 +205,7 @@ export class SetupguidePage {
           let HQ_BRANCH_GUID: string = this.Branches[item]["BRANCH_GUID"];
 
           this.Branches.splice(parseInt(item), 1);
-          this.Branches.push({ BRANCH_GUID: HQ_BRANCH_GUID, BRANCH_NAME: this.Companyname_ngModel.trim(), BRANCH_REGNO: this.HQregno_ngModel.trim(), BRANCH_EMAIL: this.Tenantemail_ngModel.trim(), BRANCH_CONTACTNO: this.Tenantcontactno_ngModel.trim(), ISHQ: true });
+          this.Branches.push({ BRANCH_GUID: HQ_BRANCH_GUID, BRANCH_NAME: this.titlecasePipe.transform(this.Companyname_ngModel.trim()), BRANCH_REGNO: this.HQregno_ngModel.trim(), BRANCH_EMAIL: this.Tenantemail_ngModel.trim(), BRANCH_CONTACTNO: this.Tenantcontactno_ngModel.trim(), ISHQ: true });
         }
       }
     }
@@ -280,52 +286,52 @@ export class SetupguidePage {
 
   AddDesignation() {
     if (this.Designation_Name_ngModel != undefined && this.Designation_Name_ngModel.trim() != "") {
-      if (this.Designation_Desc_ngModel != undefined && this.Designation_Desc_ngModel.trim() != "") {
-        if (this.DesignationSaveFlag == false) {
-          this.Designation.push({ DESIGNATION_GUID: UUID.UUID(), DESIGNATION_NAME: this.Designation_Name_ngModel.trim(), DESIGNATION_DESC: this.Designation_Desc_ngModel.trim() });
-        }
-        else {
-          this.Designation = this.Designation.filter(item => item.DESIGNATION_GUID != localStorage.getItem("DESIGNATION_GUID"));
-          this.Designation.push({ DESIGNATION_GUID: localStorage.getItem("DESIGNATION_GUID"), DESIGNATION_NAME: this.Designation_Name_ngModel.trim(), DESIGNATION_DESC: this.Designation_Desc_ngModel.trim() });
-
-          this.DesignationSaveFlag = false;
-          localStorage.removeItem("DESIGNATION_GUID");
-        }
-
-        //Clear the Controls------------------------
-        this.Designation_Name_ngModel = "";
-        this.Designation_Desc_ngModel = "";
+      //if (this.Designation_Desc_ngModel != undefined && this.Designation_Desc_ngModel.trim() != "") {
+      if (this.DesignationSaveFlag == false) {
+        this.Designation.push({ DESIGNATION_GUID: UUID.UUID(), DESIGNATION_NAME: this.titlecasePipe.transform(this.Designation_Name_ngModel.trim()), DESIGNATION_DESC: this.Designation_Desc_ngModel });
       }
       else {
-        alert("Fill Description !!");
+        this.Designation = this.Designation.filter(item => item.DESIGNATION_GUID != localStorage.getItem("DESIGNATION_GUID"));
+        this.Designation.push({ DESIGNATION_GUID: localStorage.getItem("DESIGNATION_GUID"), DESIGNATION_NAME: this.titlecasePipe.transform(this.Designation_Name_ngModel.trim()), DESIGNATION_DESC: this.Designation_Desc_ngModel });
+
+        this.DesignationSaveFlag = false;
+        localStorage.removeItem("DESIGNATION_GUID");
       }
+
+      //Clear the Controls------------------------
+      this.Designation_Name_ngModel = "";
+      this.Designation_Desc_ngModel = "";
+      // }
+      // else {
+      //   alert("Fill Description !!");
+      // }
     }
     else {
       alert("Fill Designation !!");
     }
   }
 
-  AddDepartment() {
+  AddDepartment() {    
     if (this.Department_Name_ngModel != undefined && this.Department_Name_ngModel.trim() != "") {
-      if (this.Department_Desc_ngModel != undefined && this.Department_Desc_ngModel.trim() != "") {
-        if (this.DepartmentSaveFlag == false) {
-          this.Department.push({ DEPARTMENT_GUID: UUID.UUID(), DEPARTMENT_NAME: this.Department_Name_ngModel.trim(), DEPARTMENT_DESC: this.Department_Desc_ngModel.trim() });
-        }
-        else {
-          this.Department = this.Department.filter(item => item.DEPARTMENT_GUID != localStorage.getItem("DEPARTMENT_GUID"));
-          this.Department.push({ DEPARTMENT_GUID: localStorage.getItem("DEPARTMENT_GUID"), DEPARTMENT_NAME: this.Department_Name_ngModel.trim(), DEPARTMENT_DESC: this.Department_Desc_ngModel.trim() });
-
-          this.DepartmentSaveFlag = false;
-          localStorage.removeItem("DEPARTMENT_GUID");
-        }
-
-        //Clear the Controls------------------------
-        this.Department_Name_ngModel = "";
-        this.Department_Desc_ngModel = "";
+      //if (this.Department_Desc_ngModel != undefined && this.Department_Desc_ngModel.trim() != "") {
+      if (this.DepartmentSaveFlag == false) {
+        this.Department.push({ DEPARTMENT_GUID: UUID.UUID(), DEPARTMENT_NAME: this.titlecasePipe.transform(this.Department_Name_ngModel.trim()), DEPARTMENT_DESC: this.Department_Desc_ngModel });
       }
       else {
-        alert("Fill Description !!");
+        this.Department = this.Department.filter(item => item.DEPARTMENT_GUID != localStorage.getItem("DEPARTMENT_GUID"));
+        this.Department.push({ DEPARTMENT_GUID: localStorage.getItem("DEPARTMENT_GUID"), DEPARTMENT_NAME: this.titlecasePipe.transform(this.Department_Name_ngModel.trim()), DEPARTMENT_DESC: this.Department_Desc_ngModel });
+
+        this.DepartmentSaveFlag = false;
+        localStorage.removeItem("DEPARTMENT_GUID");
       }
+
+      //Clear the Controls------------------------
+      this.Department_Name_ngModel = "";
+      this.Department_Desc_ngModel = "";
+      //}
+      // else {
+      //   alert("Fill Description !!");
+      // }
     }
     else {
       alert("Fill Department !!");
@@ -338,11 +344,11 @@ export class SetupguidePage {
         if (this.Branch_Email_ngModel != undefined && this.Branch_Email_ngModel.trim() != "") {
           if (this.Branch_Contactno_ngModel != undefined && this.Branch_Contactno_ngModel.trim() != "") {
             if (this.BranchSaveFlag == false) {
-              this.Branches.push({ BRANCH_GUID: UUID.UUID(), BRANCH_NAME: this.Branch_Name_ngModel.trim(), BRANCH_REGNO: this.Branch_Regno_ngModel.trim(), BRANCH_EMAIL: this.Branch_Email_ngModel.trim(), BRANCH_CONTACTNO: this.Branch_Contactno_ngModel.trim(), ISHQ: this.Branch_ISHQ_FLAG_ngModel });
+              this.Branches.push({ BRANCH_GUID: UUID.UUID(), BRANCH_NAME: this.titlecasePipe.transform(this.Branch_Name_ngModel.trim()), BRANCH_REGNO: this.Branch_Regno_ngModel.trim(), BRANCH_EMAIL: this.Branch_Email_ngModel.trim(), BRANCH_CONTACTNO: this.Branch_Contactno_ngModel.trim(), ISHQ: this.Branch_ISHQ_FLAG_ngModel });
             }
             else {
               this.Branches = this.Branches.filter(item => item.BRANCH_GUID != localStorage.getItem("BRANCH_GUID"));
-              this.Branches.push({ BRANCH_GUID: localStorage.getItem("BRANCH_GUID"), BRANCH_NAME: this.Branch_Name_ngModel.trim(), BRANCH_REGNO: this.Branch_Regno_ngModel.trim(), BRANCH_EMAIL: this.Branch_Email_ngModel.trim(), BRANCH_CONTACTNO: this.Branch_Contactno_ngModel.trim(), ISHQ: this.Branch_ISHQ_FLAG_ngModel });
+              this.Branches.push({ BRANCH_GUID: localStorage.getItem("BRANCH_GUID"), BRANCH_NAME: this.titlecasePipe.transform(this.Branch_Name_ngModel.trim()), BRANCH_REGNO: this.Branch_Regno_ngModel.trim(), BRANCH_EMAIL: this.Branch_Email_ngModel.trim(), BRANCH_CONTACTNO: this.Branch_Contactno_ngModel.trim(), ISHQ: this.Branch_ISHQ_FLAG_ngModel });
 
               this.BranchSaveFlag = false;
               localStorage.removeItem("BRANCH_GUID");
@@ -446,6 +452,7 @@ export class SetupguidePage {
 
   BindControls() {
     let Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_tenant_setup_guide' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')and(USER_GUID=' + localStorage.getItem('g_USER_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log(Url);
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
     });
@@ -456,102 +463,104 @@ export class SetupguidePage {
       .map(res => res.json())
       .subscribe(data => {
         this.tenants = data.resource;
+        if (data.resource.length > 0) {
+          //-----------For Tenant Company Model-------------------
+          this.Tenant_Name_ngModel = this.tenants[0]["TENANT_ACCOUNT_NAME"];
+          this.Userid_ngModel = this.tenants[0]["LOGIN_ID"];
+          this.Password_ngModel = this.tenants[0]["PASSWORD"];
+          this.ContactPerson_ngModel = this.tenants[0]["CONTACT_PERSON_NAME"];
 
-        //-----------For Tenant Company Model-------------------
-        this.Tenant_Name_ngModel = this.tenants[0]["TENANT_ACCOUNT_NAME"];
-        this.Userid_ngModel = this.tenants[0]["LOGIN_ID"];
-        this.Password_ngModel = this.tenants[0]["PASSWORD"];
+          //-----------For Tenant HQ Model------------------------
+          this.Companyname_ngModel = this.tenants[0]["NAME"];
+          this.HQregno_ngModel = this.tenants[0]["Company_RegNo"];
+          this.Tenantemail_ngModel = this.tenants[0]["EMAIL"];
+          this.Tenantcontactno_ngModel = this.tenants[0]["CONTACT_NO"];
 
-        //-----------For Tenant HQ Model------------------------
-        this.Companyname_ngModel = this.tenants[0]["NAME"];
-        this.HQregno_ngModel = this.tenants[0]["Company_RegNo"];
-        this.Tenantemail_ngModel = this.tenants[0]["EMAIL"];
-        this.Tenantcontactno_ngModel = this.tenants[0]["CONTACT_NO"];
+          //-----------For Branch Model---------------------------
+          this.BranchSaveFlag = false;
+          this.Branches = [];
+          this.Branch_Name_ngModel = "";
+          this.Branch_Regno_ngModel = "";
+          this.Branch_Email_ngModel = "";
+          this.Branch_Contactno_ngModel = "";
 
-        //-----------For Branch Model---------------------------
-        this.BranchSaveFlag = false;
-        this.Branches = [];
-        this.Branch_Name_ngModel = "";
-        this.Branch_Regno_ngModel = "";
-        this.Branch_Email_ngModel = "";
-        this.Branch_Contactno_ngModel = "";
-
-        let Url_Tenant_Company_Site: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?filter=(TENANT_COMPANY_GUID=' + localStorage.getItem('g_TENANT_COMPANY_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.http
-          .get(Url_Tenant_Company_Site)
-          .map(res => res.json())
-          .subscribe(data => {
-            this.tenant_company_sites = data.resource;
-            for (var item in this.tenant_company_sites) {
-              var HQflag;
-              if (this.tenant_company_sites[item]["ISHQ"] == 1) {
-                HQflag = true;
+          let Url_Tenant_Company_Site: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?filter=(TENANT_COMPANY_GUID=' + localStorage.getItem('g_TENANT_COMPANY_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+          this.http
+            .get(Url_Tenant_Company_Site)
+            .map(res => res.json())
+            .subscribe(data => {
+              this.tenant_company_sites = data.resource;
+              for (var item in this.tenant_company_sites) {
+                var HQflag;
+                if (this.tenant_company_sites[item]["ISHQ"] == 1) {
+                  HQflag = true;
+                }
+                else {
+                  HQflag = false;
+                }
+                this.Branches.push({
+                  BRANCH_GUID: this.tenant_company_sites[item]["TENANT_COMPANY_SITE_GUID"],
+                  BRANCH_NAME: this.tenant_company_sites[item]["SITE_NAME"],
+                  BRANCH_REGNO: this.tenant_company_sites[item]["REGISTRATION_NUM"],
+                  BRANCH_EMAIL: this.tenant_company_sites[item]["EMAIL"],
+                  BRANCH_CONTACTNO: this.tenant_company_sites[item]["CONTACT_NO"],
+                  ISHQ: HQflag
+                });
               }
-              else {
-                HQflag = false;
+            });
+
+
+          // var HQflag;
+          // if (this.tenants[0]["ISHQ"] == 1) {
+          //   HQflag = true;
+          // }
+          // else {
+          //   HQflag = false;
+          // }
+
+          // this.Branches.push({
+          //   BRANCH_GUID: this.tenants[0]["TENANT_COMPANY_SITE_GUID"],
+          //   BRANCH_NAME: this.tenants[0]["SITE_NAME"],
+          //   BRANCH_REGNO: this.tenants[0]["BRANCH_REG_NO"],
+          //   BRANCH_EMAIL: this.tenants[0]["EMAIL"],
+          //   BRANCH_CONTACTNO: this.tenants[0]["CONTACT_NO"],
+          //   ISHQ: HQflag
+          // });
+
+          //-----------For Department Model-----------------------
+          this.DepartmentSaveFlag = false;
+          this.Department = [];
+          this.Department_Name_ngModel = "";
+          this.Department_Desc_ngModel = "";
+
+          let Url_Dept: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_department' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+          this.http
+            .get(Url_Dept)
+            .map(res => res.json())
+            .subscribe(data => {
+              this.departments = data.resource;
+              for (var item in this.departments) {
+                this.Department.push({ DEPARTMENT_GUID: this.departments[item]["DEPARTMENT_GUID"], DEPARTMENT_NAME: this.departments[item]["NAME"], DEPARTMENT_DESC: this.departments[item]["DESCRIPTION"] });
               }
-              this.Branches.push({
-                BRANCH_GUID: this.tenant_company_sites[item]["TENANT_COMPANY_SITE_GUID"],
-                BRANCH_NAME: this.tenant_company_sites[item]["SITE_NAME"],
-                BRANCH_REGNO: this.tenant_company_sites[item]["REGISTRATION_NUM"],
-                BRANCH_EMAIL: this.tenant_company_sites[item]["EMAIL"],
-                BRANCH_CONTACTNO: this.tenant_company_sites[item]["CONTACT_NO"],
-                ISHQ: HQflag
-              });
-            }
-          });
+            });
 
+          //-----------For Designation Model----------------------
+          this.DesignationSaveFlag = false;
+          this.Designation = [];
+          this.Designation_Name_ngModel = "";
+          this.Designation_Desc_ngModel = "";
 
-        // var HQflag;
-        // if (this.tenants[0]["ISHQ"] == 1) {
-        //   HQflag = true;
-        // }
-        // else {
-        //   HQflag = false;
-        // }
-
-        // this.Branches.push({
-        //   BRANCH_GUID: this.tenants[0]["TENANT_COMPANY_SITE_GUID"],
-        //   BRANCH_NAME: this.tenants[0]["SITE_NAME"],
-        //   BRANCH_REGNO: this.tenants[0]["BRANCH_REG_NO"],
-        //   BRANCH_EMAIL: this.tenants[0]["EMAIL"],
-        //   BRANCH_CONTACTNO: this.tenants[0]["CONTACT_NO"],
-        //   ISHQ: HQflag
-        // });
-
-        //-----------For Department Model-----------------------
-        this.DepartmentSaveFlag = false;
-        this.Department = [];
-        this.Department_Name_ngModel = "";
-        this.Department_Desc_ngModel = "";
-
-        let Url_Dept: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_department' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.http
-          .get(Url_Dept)
-          .map(res => res.json())
-          .subscribe(data => {
-            this.departments = data.resource;
-            for (var item in this.departments) {
-              this.Department.push({ DEPARTMENT_GUID: this.departments[item]["DEPARTMENT_GUID"], DEPARTMENT_NAME: this.departments[item]["NAME"], DEPARTMENT_DESC: this.departments[item]["DESCRIPTION"] });
-            }
-          });
-
-        //-----------For Designation Model----------------------
-        this.DesignationSaveFlag = false;
-        this.Designation = [];
-        this.Designation_Name_ngModel = "";
-        this.Designation_Desc_ngModel = "";
-
-        let Url_Desig: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.http
-          .get(Url_Desig)
-          .map(res => res.json())
-          .subscribe(data => {
-            this.designations = data.resource;
-            for (var item in this.designations) {
-              this.Designation.push({ DESIGNATION_GUID: this.designations[item]["DESIGNATION_GUID"], DESIGNATION_NAME: this.designations[item]["NAME"], DESIGNATION_DESC: this.designations[item]["DESCRIPTION"] });
-            }
-          });
+          let Url_Desig: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+          this.http
+            .get(Url_Desig)
+            .map(res => res.json())
+            .subscribe(data => {
+              this.designations = data.resource;
+              for (var item in this.designations) {
+                this.Designation.push({ DESIGNATION_GUID: this.designations[item]["DESIGNATION_GUID"], DESIGNATION_NAME: this.designations[item]["NAME"], DESIGNATION_DESC: this.designations[item]["DESCRIPTION"] });
+              }
+            });
+        }
         this.loading.dismissAll();
       });
   }
@@ -561,6 +570,7 @@ export class SetupguidePage {
     this.Tenant_Name_ngModel = "";
     this.Userid_ngModel = "";
     this.Password_ngModel = "";
+    this.ContactPerson_ngModel = "";
 
     //-----------For Tenant HQ Model------------------------
     this.Companyname_ngModel = "";
@@ -591,13 +601,14 @@ export class SetupguidePage {
   }
 
   Save_User_Main() {
-    //Setup Entity for Super Admin--------------------
+    //Setup Entity for Super Admin--------------------    
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       this.usermain_entry.TENANT_GUID = UUID.UUID();
       this.usermain_entry.USER_GUID = UUID.UUID();
       this.usermain_entry.STAFF_ID = "";
 
-      this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
+      //this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
+      this.usermain_entry.LOGIN_ID = this.Tenantemail_ngModel;
       this.usermain_entry.PASSWORD = this.Password_ngModel.trim();
 
       this.usermain_entry.EMAIL = this.Tenantemail_ngModel;
@@ -606,6 +617,8 @@ export class SetupguidePage {
       this.usermain_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
       this.usermain_entry.UPDATE_TS = new Date().toISOString();
       this.usermain_entry.UPDATE_USER_GUID = "";
+
+      this.usermain_entry.IS_TENANT_ADMIN = "1";
     }
     //Setup Entity for Tenant Admin-------------------
     else {
@@ -613,15 +626,18 @@ export class SetupguidePage {
       this.usermain_entry.USER_GUID = localStorage.getItem('g_USER_GUID');
       this.usermain_entry.STAFF_ID = this.tenants[0]["STAFF_ID"];
 
-      this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
+      //this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
+      this.usermain_entry.LOGIN_ID = this.Tenantemail_ngModel;
       this.usermain_entry.PASSWORD = this.Password_ngModel.trim();
 
-      this.usermain_entry.EMAIL = this.tenants[0]["USER_EMAIL"];
+      this.usermain_entry.EMAIL = this.Tenantemail_ngModel;
       this.usermain_entry.ACTIVATION_FLAG = this.tenants[0]["USER_ACTIVATION_FLAG"];
       this.usermain_entry.CREATION_TS = this.tenants[0]["USER_CREATION_TS"];
       this.usermain_entry.CREATION_USER_GUID = this.tenants[0]["USER_CREATION_GUID"];
       this.usermain_entry.UPDATE_TS = new Date().toISOString();
       this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+      this.usermain_entry.IS_TENANT_ADMIN = "1";
     }
 
     if (localStorage.getItem("g_USER_GUID") == "sva") {
@@ -640,7 +656,7 @@ export class SetupguidePage {
         .subscribe((response) => {
           if (response.status == 200) {
             // alert('User main updated sucessfully !!');
-            this.Save_Tenant_Main();
+            this.Save_User_Info();
           }
         });
     }
@@ -648,34 +664,49 @@ export class SetupguidePage {
 
   Save_User_Info() {
     let userinfo_entry: UserInfo_Model = new UserInfo_Model();
-    this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
+
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
+      this.userinfo_entry.TENANT_COMPANY_GUID = UUID.UUID();
+    }
+    else {
+      this.userinfo_entry.USER_INFO_GUID = this.tenants[0]["USER_INFO_GUID"];
+      this.userinfo_entry.TENANT_COMPANY_GUID = this.tenants[0]["TENANT_COMPANY_GUID"];
+    }
+
     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
-    this.userinfo_entry.FULLNAME = "";
+    this.userinfo_entry.FULLNAME = this.titlecasePipe.transform(this.ContactPerson_ngModel.trim());
     //NICKNAME
     //SALUTATION
-    //MANAGER_USER_GUID
+    this.userinfo_entry.MANAGER_USER_GUID = this.userinfo_entry.USER_INFO_GUID;
     this.userinfo_entry.PERSONAL_ID_TYPE = "";
     this.userinfo_entry.PERSONAL_ID = "";
     this.userinfo_entry.DOB = "";
-    this.userinfo_entry.GENDER = "";
+    this.userinfo_entry.GENDER = "1";
     this.userinfo_entry.JOIN_DATE = "";
-    this.userinfo_entry.MARITAL_STATUS = "";
+    this.userinfo_entry.MARITAL_STATUS = "0";
 
-    this.userinfo_entry.BRANCH = this.Branches[0]["BRANCH_GUID"];
+    for (var item in this.Branches) {
+      if (this.Branches[item]["ISHQ"] == true) {
+        this.userinfo_entry.BRANCH = this.Branches[item]["BRANCH_GUID"];
+        this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[item]["BRANCH_GUID"];
+      }
+    }
 
     this.userinfo_entry.EMPLOYEE_TYPE = "";
     this.userinfo_entry.ATTACHMENT_ID = "";
 
     // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
     // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
-    this.userinfo_entry.EMPLOYEE_STATUS = "";
-    this.userinfo_entry.DEPT_GUID = "";
-    this.userinfo_entry.DESIGNATION_GUID = "";
+    this.userinfo_entry.EMPLOYEE_STATUS = "0";
+    this.userinfo_entry.DEPT_GUID = this.Department[0]["DEPARTMENT_GUID"];
+    this.userinfo_entry.DESIGNATION_GUID = this.Designation[0]["DESIGNATION_GUID"];
     this.userinfo_entry.RESIGNATION_DATE = "";
-    this.userinfo_entry.TENANT_COMPANY_GUID = "";
+
+    // this.userinfo_entry.TENANT_COMPANY_GUID = UUID.UUID();
     this.userinfo_entry.CONFIRMATION_DATE = "";
 
-    this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[0]["BRANCH_GUID"];
+    //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[0]["BRANCH_GUID"];
 
     this.userinfo_entry.CREATION_TS = new Date().toISOString();
     this.userinfo_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
@@ -693,15 +724,25 @@ export class SetupguidePage {
     this.userinfo_entry.EMG_CONTACT_NUMBER_2 = "";
     this.userinfo_entry.PR_EPF_NUMBER = "";
     this.userinfo_entry.PR_INCOMETAX_NUMBER = "";
-    this.userinfo_entry.BANK_GUID = "";
+    this.userinfo_entry.BANK_GUID = ""; //---------------------Required-----------------------------------
     this.userinfo_entry.PR_ACCOUNT_NUMBER = "";
 
-    this.userservice.save_user_info(this.userinfo_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-          this.Save_Tenant_Main();
-        }
-      });
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.userservice.save_user_info(this.userinfo_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            this.Save_Tenant_Main();
+          }
+        });
+    }
+    else {
+      this.userservice.update_user_info(this.userinfo_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            this.Save_Tenant_Main();
+          }
+        });
+    }
   }
 
   Save_User_Address() {
@@ -724,7 +765,7 @@ export class SetupguidePage {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       this.tenant_main_entry.TENANT_GUID = this.usermain_entry.TENANT_GUID;
       this.tenant_main_entry.PARENT_TENANT_GUID = "";
-      this.tenant_main_entry.TENANT_ACCOUNT_NAME = this.Tenant_Name_ngModel.trim();
+      this.tenant_main_entry.TENANT_ACCOUNT_NAME = this.titlecasePipe.transform(this.Tenant_Name_ngModel.trim());
       this.tenant_main_entry.ACTIVATION_FLAG = "1";
       this.tenant_main_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
       this.tenant_main_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
@@ -763,9 +804,10 @@ export class SetupguidePage {
 
   Save_Tenant_Company() {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
-      this.tenant_company_entry.TENANT_COMPANY_GUID = UUID.UUID();
+      //this.tenant_company_entry.TENANT_COMPANY_GUID = UUID.UUID();
+      this.tenant_company_entry.TENANT_COMPANY_GUID = this.userinfo_entry.TENANT_COMPANY_GUID;
       this.tenant_company_entry.TENANT_GUID = this.usermain_entry.TENANT_GUID;
-      this.tenant_company_entry.NAME = this.Companyname_ngModel.trim();
+      this.tenant_company_entry.NAME = this.titlecasePipe.transform(this.Companyname_ngModel.trim());
       this.tenant_company_entry.REGISTRATION_NO = this.HQregno_ngModel.trim();
       this.tenant_company_entry.ACTIVATION_FLAG = this.tenant_main_entry.ACTIVATION_FLAG;
       this.tenant_company_entry.CREATION_TS = this.tenant_main_entry.CREATION_TS;
@@ -811,7 +853,7 @@ export class SetupguidePage {
       for (var item in this.Branches) {
         this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = this.Branches[item]["BRANCH_GUID"];
         this.tenant_company_site_entry.TENANT_COMPANY_GUID = this.tenant_company_entry.TENANT_COMPANY_GUID;
-        this.tenant_company_site_entry.SITE_NAME = this.Branches[item]["BRANCH_NAME"];
+        this.tenant_company_site_entry.SITE_NAME = this.titlecasePipe.transform(this.Branches[item]["BRANCH_NAME"]);
         this.tenant_company_site_entry.REGISTRATION_NUM = this.Branches[item]["BRANCH_REGNO"];
         this.tenant_company_site_entry.ADDRESS = "";
         this.tenant_company_site_entry.ADDRESS2 = "";
@@ -846,6 +888,7 @@ export class SetupguidePage {
             }
           })
       }
+      
       this.InsertDepartment();
     }
     else {

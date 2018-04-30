@@ -135,7 +135,7 @@ export class SocRegistrationPage {
 
           this.loading.dismissAll();
         });
-  }
+  }  
 
   public DeleteClick(SOC_GUID: any) {
     let alert = this.alertCtrl.create({
@@ -235,7 +235,8 @@ export class SocRegistrationPage {
             contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             contact_no2: [null],
             email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-            division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            //division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            division: [null],
           });
         }
         else {
@@ -253,7 +254,8 @@ export class SocRegistrationPage {
             contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             contact_no2: [null],
             email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-            division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            //division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            division: [null],
             TENANT_NAME: [null, Validators.required],
           });
         }
@@ -264,7 +266,7 @@ export class SocRegistrationPage {
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
-  }
+  }  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SocRegistrationPage');
