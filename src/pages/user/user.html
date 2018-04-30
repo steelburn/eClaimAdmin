@@ -23,7 +23,7 @@
                 <tr class="linedsg TColor">
 
                     <th class="lgl1 tblBrLeft" style="width:60px">NO</th>
-                    <th class="lgl1">{{ 'NAME' | translate }}</th>                    
+                    <th class="lgl1">{{ 'NAME' | translate }}</th>
                     <th class="lgl1">{{ 'STAFF ID' | translate }}</th>
                     <th class="lgl1">{{ 'COMPANY' | translate }}</th>
                     <th class="lgl1">{{ 'DEPARTMENT' | translate }}</th>
@@ -40,14 +40,15 @@
 
                     <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{user.FULLNAME}}</td>
-                    <td class="lgl1">{{user.PERSONAL_ID}}</td>
+                    <!-- <td class="lgl1">{{user.PERSONAL_ID}}</td> -->
+                    <td class="lgl1">{{user.STAFF_ID}}</td>
                     <td class="lgl1">{{user.tenant_company_name}}, {{user.SITE_NAME}} </td>
                     <td class="lgl1">{{user.department_name}}</td>
                     <td class="lgl1">{{user.designation_name}}</td>
                     <td class="lgl1">{{user.EMAIL}}</td>
-                    <td class="lgl1">{{user.JOIN_DATE}}</td>
+                    <td class="lgl1">{{user.JOIN_DATE | date:'dd/MM/yyyy'}}</td>
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
-                    
+
                     <!-- <td class="lgl1">{{user.LOGIN_ID}}</td> -->
 
 
@@ -738,10 +739,9 @@
                         </ion-select>
                     </ion-item>
 
-
                     <ion-item class="text">
-
-                        <img style="width: 10%" height="80px" src="http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881">
+                        <!-- <img style="width: 10%" height="80px" src="http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881"> -->
+                        <img style="width: 10%" height="80px" [src]="Profile_Image_Display">                        
                     </ion-item>
 
                     <div class="eClaimSubTitle2">

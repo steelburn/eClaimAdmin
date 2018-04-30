@@ -271,11 +271,13 @@ export class UserPage {
 
   public EmployeeTypeAdjuster: any;
 
+  public Profile_Image_Display: any;
+
   public EditClick_Personaldetails(id: any) {
     this.ClearControls();
 
     this.loading = this.loadingCtrl.create({
-      // content: 'Loading...',
+      content: 'Loading...',
     });
     this.loading.present();
 
@@ -289,6 +291,7 @@ export class UserPage {
     let url_user_Professional_Certification = this.baseResourceUrl2_URL + "user_certification?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url_user_Spouse = this.baseResourceUrl2_URL + "user_spouse?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url_user_Children = this.baseResourceUrl2_URL + "user_children?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let url_user_Image = this.baseResourceUrl2_URL + "view_image_retrieve?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     //----------------Get the Details from Db and bind Controls---------------------------------
     this.http.get(url_user_edit, options)
@@ -323,11 +326,11 @@ export class UserPage {
           this.USER_GUID_FOR_CONTACT = this.view_user_details[0]["CONTACT_INFO_GUID"];
 
           this.User_Company_Edit_ngModel = this.view_user_details[0]["COMPANY_GUID"]; this.GetBranch("tenant_company_site", this.User_Company_Edit_ngModel, "SITE_NAME");
-          
-          this.GetDesignation('main_designation', 'NAME'); 
-          this.GetDepartment('main_department', 'NAME'); 
+
+          this.GetDesignation('main_designation', 'NAME');
+          this.GetDepartment('main_department', 'NAME');
           this.BindBank('main_bank', 'NAME');
-          
+
           this.User_Designation_Edit_ngModel = this.view_user_details[0]["DESIGNATION_GUID"];
           this.User_Department_Edit_ngModel = this.view_user_details[0]["DEPT_GUID"];
           this.User_JoinDate_Edit_ngModel = this.view_user_details[0]["JOIN_DATE"];
@@ -406,7 +409,18 @@ export class UserPage {
           }
         });
 
-
+    //------------------------Profile Image------------------------
+    this.http.get(url_user_Image, options)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          if (data["resource"].length <= 0) {
+            this.Profile_Image_Display = "assets/img/noPreview.png";
+          }
+          else {
+            this.Profile_Image_Display = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/" + data["resource"][0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY;
+          }
+        });
   }
 
   public DeleteClick(USER_GUID: any) {
@@ -565,7 +579,7 @@ export class UserPage {
         this.fileName3 = file.name;
       //alert(file.name); 
       this.attachment_ref = file.name;
-      alert(this.attachment_ref);
+      //alert(this.attachment_ref);
       // this.uploadFileName = file.name;
       reader.onload = () => {
         this.Userform.get(fileChoose).setValue({
@@ -590,10 +604,10 @@ export class UserPage {
       .map((response) => {
         return response;
       }).subscribe((response) => {
-        alert(response.status);
+        //alert(response.status);
       });
     setTimeout(() => {
-      alert('done');
+      //alert('done');
       this.load = false;
     }, 1000);
   }
@@ -636,12 +650,12 @@ export class UserPage {
 
   clearFile(fileChoose: any) {
     console.log(fileChoose);
-    this.Userform.get(fileChoose).setValue(null);   
+    this.Userform.get(fileChoose).setValue(null);
     //console.log(this.fileInput);
     // this.fileInput1.nativeElement.value = '';
     this.fileInput2.nativeElement.value = '';
     this.fileInput3.nativeElement.value = '';
-   
+
   }
 
   ionViewDidLoad() {
@@ -655,13 +669,14 @@ export class UserPage {
     this.loading.present();
 
     let TableURL_User: string;
-
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       TableURL_User = this.BaseTableURL + ViewName + '?' + this.Key_Param;
     }
-    else {
+    else if(localStorage.getItem("g_ISHQ") == "1" && localStorage.getItem("g_IS_TENANT_AMDIN") == "1"){
       TableURL_User = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + this.Key_Param;
-      //TableURL_User = this.BaseTableURL + ViewName + '?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&' + this.Key_Param;
+    }
+    else {      
+      TableURL_User = this.BaseTableURL + ViewName + '?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&' + this.Key_Param;
     }
     this.http
       .get(TableURL_User)
@@ -674,14 +689,14 @@ export class UserPage {
 
   GetDesignation(TableName: string, SortField: string) {
     let TableURL: string; let TempUser_Company_ngModel: any;
-    if(this.AddUserClicked == true){
+    if (this.AddUserClicked == true) {
       TempUser_Company_ngModel = this.User_Company_ngModel.trim();
     }
-    else{
+    else {
       TempUser_Company_ngModel = this.view_user_details[0]["COMPANY_GUID"];
     }
 
-    let val = this.GetTenant_GUID(TempUser_Company_ngModel);    
+    let val = this.GetTenant_GUID(TempUser_Company_ngModel);
     val.then((res) => {
       TableURL = this.BaseTableURL + TableName + '?filter=(TENANT_GUID=' + res.toString() + ')&order=' + SortField + '&' + this.Key_Param;
 
@@ -715,15 +730,13 @@ export class UserPage {
       });
   }
 
-  //public guid: any;
-
   GetDepartment(TableName: string, SortField: string) {
     let TableURL: string;
     let TempUser_Company_ngModel: any;
-    if(this.AddUserClicked == true){
+    if (this.AddUserClicked == true) {
       TempUser_Company_ngModel = this.User_Company_ngModel.trim();
     }
-    else{
+    else {
       TempUser_Company_ngModel = this.view_user_details[0]["COMPANY_GUID"];
     }
 
@@ -793,10 +806,10 @@ export class UserPage {
   BindBank(TableName: string, SortField: string) {
     let TableURL: string;
     let TempUser_Company_ngModel: any;
-    if(this.AddUserClicked == true){
+    if (this.AddUserClicked == true) {
       TempUser_Company_ngModel = this.User_Company_ngModel.trim();
     }
-    else{
+    else {
       TempUser_Company_ngModel = this.view_user_details[0]["COMPANY_GUID"];
     }
 
@@ -1212,8 +1225,8 @@ export class UserPage {
               console.table(resJson)
               let imageResult = this.SaveImageinDB(this.fileName1);
               imageResult.then((objImage: ImageUpload_model) => {
-                let result = this.Save_User_Info(objImage.Image_Guid);               
-                alert("User Main inserted");
+                let result = this.Save_User_Info(objImage.Image_Guid);
+                //alert("User Main inserted");
               })
             })
           }
@@ -1313,7 +1326,7 @@ export class UserPage {
       .subscribe((response) => {
         if (response.status == 200) {
           this.Save_User_Address();
-          alert("User Info inserted");
+          //alert("User Info inserted");
         }
       });
     // return new Promise((resolve, reject) => {
@@ -1400,7 +1413,7 @@ export class UserPage {
       .subscribe((response) => {
         if (response.status == 200) {
           this.Save_User_Company();
-          alert("User Address inserted");
+          //alert("User Address inserted");
         }
       });
   }
@@ -1429,7 +1442,7 @@ export class UserPage {
         if (response.status == 200) {
           //alert('3');
           this.Update_User_Company();
-          alert(this.useraddress_entry.USER_ADDRESS2);
+          //alert(this.useraddress_entry.USER_ADDRESS2);
         }
       });
   }
@@ -1448,7 +1461,7 @@ export class UserPage {
       .subscribe((response) => {
         if (response.status == 200) {
           this.Save_User_Contact();
-          alert("User Company inserted");
+          //alert("User Company inserted");
         }
       });
   }
@@ -1492,7 +1505,7 @@ export class UserPage {
             let imageResult = this.SaveImageinDB(this.fileName2);
             imageResult.then((objImage: ImageUpload_model) => {
               let result = this.Save_User_Qualification(objImage.Image_Guid);
-              alert("User Contact inserted");
+              //alert("User Contact inserted");
             })
           })
           //this.Save_User_Qualification()
@@ -1557,7 +1570,7 @@ export class UserPage {
               let imageResult = this.SaveImageinDB(this.fileName3);
               imageResult.then((objImage: ImageUpload_model) => {
                 let result = this.Save_User_Certification(objImage.Image_Guid);
-                alert("User Qualification inserted");
+                //alert("User Qualification inserted");
               })
             })
 
@@ -1658,7 +1671,7 @@ export class UserPage {
 
               // alert('User Inserted Successfully!!');
               // this.navCtrl.setRoot(this.navCtrl.getActive().component);
-              alert("User Certification inserted");
+              //alert("User Certification inserted");
             }
           });
 
@@ -1728,7 +1741,7 @@ export class UserPage {
 
               // alert('User Inserted Successfully!!');
               // this.navCtrl.setRoot(this.navCtrl.getActive().component);
-              alert("User Spouse inserted");
+              //alert("User Spouse inserted");
             }
           });
     }
@@ -1787,7 +1800,7 @@ export class UserPage {
             if (response.status == 200) {
               // alert('User Inserted Successfully!!');
               // this.navCtrl.setRoot(this.navCtrl.getActive().component);
-              alert("User Child inserted");
+              //alert("User Child inserted");
             }
           });
     }
@@ -2134,7 +2147,7 @@ export class UserPage {
   }
 
   lastImage: string = null;
-  loading: Loading;  
+  loading: Loading;
 
   public pathForImage(img: any) {
     if (img === null) {
@@ -2241,8 +2254,6 @@ export class UserPage {
   //baseUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/files/eclaim/car1.jpg' + constants.DREAMFACTORY_API_KEY;
   //http://api.zen.com.my/api/v2/files/eclaim/car1.jpg
   baseUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/files/eclaim/car1.jpg' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-
-  
 
   DisplayFamily() {
     if (this.User_Marital_ngModel == "1") {
