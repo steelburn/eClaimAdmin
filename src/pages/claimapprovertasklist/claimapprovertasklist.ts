@@ -10,6 +10,13 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { BaseHttpService } from '../../services/base-http';
 import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
+import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view.component';
+import { EntertainmentClaimViewPage } from '../../pages/entertainment-claim-view/entertainment-claim-view';
+import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-claim-view';
+import { MedicalClaimViewPage } from '../../pages/medical-claim-view/medical-claim-view';
+import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-view';
+import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
+
 
 /**
  * Generated class for the ClaimapprovertasklistPage page.
@@ -29,6 +36,8 @@ export class ClaimapprovertasklistPage {
   claimrequestdetails:any[];
  selectAll:boolean;
  claimrefguid:any;
+ claimRequestGUID: string;
+ level: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
     
@@ -111,6 +120,28 @@ else{
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimapprovertasklistPage');
+  }
+
+  viewClaim(claimRequestGUID: string, level: any, claimType: any) {
+    this.claimRequestGUID = claimRequestGUID;
+    this.level = level;
+
+    switch (claimType) {
+      case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': this.pushPage(GiftClaimViewPage); break;
+      case '37067b3d-1bf4-33a3-2b60-3ca40baf589a': this.pushPage(OvertimeClaimViewPage); break;
+      case '40dbaf56-98e4-77b9-df95-85ec232ff714': this.pushPage(MedicalClaimViewPage); break;
+      case '58c59b56-289e-31a2-f708-138e81a9c823': this.pushPage(TravelClaimViewPage); break;
+      case 'd9567482-033a-6d92-3246-f33043155746': this.pushPage(PrintClaimViewPage); break;
+      case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': this.pushPage(EntertainmentClaimViewPage); break;
+    }
+  }
+
+  pushPage(claimType: any) {
+    this.navCtrl.push(claimType, {
+      cr_GUID: this.claimRequestGUID,
+      level_no: this.level,
+      approver_GUID: localStorage.getItem('g_USER_GUID')
+    });
   }
 
 }

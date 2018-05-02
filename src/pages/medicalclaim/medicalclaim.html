@@ -1,10 +1,3 @@
-<!--
-  Generated template for the MedicalclaimPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -32,13 +25,13 @@
 
     <ion-item>
       <ion-label stacked>{{ "MEDICAL_DATE_LABEL" | translate }}</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="Medical_Date_ngModel" max={{validDate}} placeholder="{{ 'TRAVEL_DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
+      <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="Medical_Date_ngModel" max={{validDate}} placeholder="{{ 'DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-label> {{travelAmount | number}} </ion-label>
-      <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Medical_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
+      <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Medical_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
     <ion-item>
@@ -52,7 +45,7 @@
     </ion-item>
 
     <div class="btn">
-      <button ion-button (click)='saveIm()' [disabled]="Medicalform.invalid || loading">{{ 'SUBMIT' }}</button>
+      <button ion-button (click)='saveIm(Medicalform.value)' [disabled]="Medicalform.invalid || loading">{{ 'SUBMIT' }}</button>
     </div>
 
 
