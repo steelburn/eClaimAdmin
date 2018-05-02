@@ -11,3 +11,7 @@ npm install @ngx-translate/core @ngx-translate/http-loader
 npm install --save-dev @angular/tsc-wrapped
 
 npm install @ngx-translate/http-loader@latest --save
+
+#plugin to install for sha1 encryption
+npm install crypto-js --save
+npm install @types/crypto-js

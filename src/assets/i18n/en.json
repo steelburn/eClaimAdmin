@@ -103,10 +103,10 @@
   
 
   "DESIGNATION_SETUP_HEADING": "Designation Setup",
-  "DESIGNATION_NAME": "Name",
+  "DESIGNATION_NAME": "Title",
   "DESIGNATION_DESCRIPTION": "Description",
   "DEPARTMENT_CLAIM_HEADING": "Department Setup",
-  "DEPARTMENT_CLAIM_TITLE": "Title",
+  "DEPARTMENT_CLAIM_TITLE": "Department Name",
   "DEPARTMENT_CLAIM_COMPANY": "Company",
   "DEPARTMENT_CLAIM_DESCRIPTION": "Description",
   "MILEAGE_SETUP_HEADING": "Mileage Setup",

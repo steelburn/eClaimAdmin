@@ -1,5 +1,5 @@
 ﻿import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule,Http } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -8,7 +8,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
-import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ConferenceApp } from './app.component';
@@ -50,20 +50,19 @@ import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
-import { PeermissionPage } from'../pages/peermission/peermission';
-import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
-import { PagesetupPage } from'../pages/pagesetup/pagesetup';
-import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';  
-import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
+import { PeermissionPage } from '../pages/peermission/peermission';
+import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
+import { PagesetupPage } from '../pages/pagesetup/pagesetup';
+import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
+import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
 
-import { UploadPage } from'../pages/upload/upload';
+import { UploadPage } from '../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
-import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
-import {  FileUploadOptions  } from '@ionic-native/file-transfer';
-
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 // import {AddTollPage} from '../pages/add-toll/add-toll';
@@ -73,14 +72,16 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
 import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
 
-import {AddTollPage} from '../pages/add-toll/add-toll.component';
+import { AddTollPage } from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
-import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
+import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
+
 
 import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
@@ -88,6 +89,7 @@ import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 import{ClaimReportPage} from '../pages/claim-report/claim-report';
 
+import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
@@ -96,6 +98,8 @@ import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 import { ApiManagerProvider } from '../providers//api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
+
+import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 @NgModule({
   declarations: [
@@ -146,10 +150,7 @@ import { ProfileManagerProvider } from '../providers/profile-manager.provider';
     PrintClaimViewPage,
     GiftClaimViewPage,
     TravelclaimPage,
-    
     UploadPage,
-
-
     ProfileSetupPage,
     AddTollPage,
 
@@ -159,21 +160,22 @@ import { ProfileManagerProvider } from '../providers/profile-manager.provider';
     ClaimtasklistPage,
 
     UserclaimslistPage,
-    ClaimReportPage
-  ],
+    ClaimReportPage,
 
+    CustomerSetupPage
+  ],
 
   imports: [
     BrowserModule,
     HttpModule, HttpClientModule,
     TranslateModule.forRoot
-    ({
-      loader:{
-        provide:TranslateLoader,
-        useFactory:(createTranslateLoader),
-        deps:[HttpClient]
-      }
-    }),
+      ({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps: [HttpClient]
+        }
+      }),
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
@@ -200,7 +202,7 @@ import { ProfileManagerProvider } from '../providers/profile-manager.provider';
     ModulesetupPage,
     MedicalclaimPage,
     TravelclaimPage,
-     PrintclaimPage,
+    PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
     EntertainmentclaimPage,
@@ -248,15 +250,18 @@ import { ProfileManagerProvider } from '../providers/profile-manager.provider';
     ClaimtasklistPage,
     UserclaimslistPage,
 
-    ClaimReportPage,
-    UploadPage
+    ClaimReportPage,   
+    UploadPage,
+
+    CustomerSetupPage
+
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData, HttpClientModule, ApiManagerProvider,
     UserData,
     InAppBrowser,
-    SplashScreen,StatusBar, Services,
+    SplashScreen, StatusBar, Services,
 
     Camera, ProfileManagerProvider,
     File,

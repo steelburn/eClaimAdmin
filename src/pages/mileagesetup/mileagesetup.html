@@ -37,8 +37,8 @@
         <tr class="col7" *ngFor="let mileage of mileages; let i=index">
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{mileage.CATEGORY}}</td>
-          <td class="lgl1">{{mileage.RATE_PER_UNIT}}</td>
-          <td class="lgl1">{{mileage.RATE_DATE}}</td>
+          <td class="lgl1">{{mileage.RATE_PER_UNIT | number : '1.2-2'}}</td>
+          <td class="lgl1">{{mileage.RATE_DATE | date:'dd/MM/yyyy'}}</td>
           <td class="lgl1">
             <ion-toggle *ngIf="mileage.ACTIVATION_FLAG==1" checked=true></ion-toggle>
             <ion-toggle *ngIf="mileage.ACTIVATION_FLAG==0" checked=false></ion-toggle>
@@ -90,7 +90,7 @@
 
           <ion-item>
             <ion-label stacked>{{ 'MILEAGE_PER_UNIT' | translate }}</ion-label>
-            <ion-input type="number" formControlName="RATE_PER_UNIT" [(ngModel)]="RATE_PER_UNIT_ngModel_Add" placeholder="{{'Please fill in the unit of mileage'}}"></ion-input>
+            <ion-input type="number" formControlName="RATE_PER_UNIT" [(ngModel)]="RATE_PER_UNIT_ngModel_Add" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="{{'Please fill in the unit of mileage'}}"></ion-input>
           </ion-item>
 
           <ion-item>
