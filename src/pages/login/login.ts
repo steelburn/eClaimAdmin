@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { NavController } from 'ionic-angular';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+import CryptoJS from 'crypto-js';
 
 import { UserData } from '../../providers/user-data';
 import { TabsPage } from '../tabs/tabs';
@@ -41,9 +42,11 @@ export class LoginPage {
       }
       else {        
         let url: string;
-        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        console.log(url);
-        //http://api.zen.com.my/api/v2/zcs/_table/vw_login?filter=(LOGIN_ID=bcfb798b-355e-2a9b-baaf-37289d1f1ba3)and(PASSWORD=password)&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881        
+
+       
+        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA1(this.login.password) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        //url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
         this.http
           .get(url)
           .map(res => res.json())
@@ -57,9 +60,10 @@ export class LoginPage {
               localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
               localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
               localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
+              localStorage.setItem("g_IS_TENANT_AMDIN", res[0]["IS_TENANT_ADMIN"]); 
               
               //Setup Guide for only Hq Users
-              if(res[0]["ISHQ"] == "1"){
+              if(res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1"){
                 this.navCtrl.push(SetupguidePage);
               }
               else{
@@ -74,6 +78,7 @@ export class LoginPage {
               localStorage.removeItem("g_TENANT_COMPANY_GUID");
               localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
               localStorage.removeItem("g_ISHQ");
+              localStorage.removeItem("g_IS_TENANT_ADMIN");
 
               alert("Invalid Login!!")
               this.login.username = "";

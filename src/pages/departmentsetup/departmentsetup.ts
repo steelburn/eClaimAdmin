@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -23,7 +24,7 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-departmentsetup',
-  templateUrl: 'departmentsetup.html', providers: [DepartmentSetup_Service, BaseHttpService]
+  templateUrl: 'departmentsetup.html', providers: [DepartmentSetup_Service, BaseHttpService, TitleCasePipe]
 })
 export class DepartmentsetupPage {
   department_entry: DepartmentSetup_Model = new DepartmentSetup_Model();
@@ -120,64 +121,26 @@ export class DepartmentsetupPage {
   }
 
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private departmentsetupservice: DepartmentSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private departmentsetupservice: DepartmentSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
     else {
-      this.loading = this.loadingCtrl.create({
-        content: 'Loading...',
-      });
-      this.loading.present();
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        //Clear localStorage value--------------------------------
+        this.ClearLocalStorage();
 
-      //Clear localStorage value--------------------------------
-      if (localStorage.getItem('Prev_Name') == null) {
-        localStorage.setItem('Prev_Name', null);
+        //fill all the tenant details----------------------------
+        this.FillTenant();
+
+        //Display Grid---------------------------------------------
+        this.DisplayGrid();
       }
       else {
-        localStorage.removeItem("Prev_Name");
+        alert('Sorry!! You are not authorized.');
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
-      if (localStorage.getItem('Prev_TenantGuid') == null) {
-        localStorage.setItem('Prev_TenantGuid', null);
-      }
-      else {
-        localStorage.removeItem("Prev_TenantGuid");
-      }
-
-      //fill all the tenant details----------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
-        this.http
-          .get(tenantUrl)
-          .map(res => res.json())
-          .subscribe(data => {
-            this.tenants = data.resource;
-          });
-        this.AdminLogin = true;
-      }
-      else {
-        this.AdminLogin = false;
-      }
-
-      //Display Grid---------------------------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = true;
-      }
-      else {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = false;
-      }
-
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.departments = data.resource;
-
-          this.loading.dismissAll();
-        });
       //-------------------------------------------------------
       if (localStorage.getItem("g_USER_GUID") != "sva") {
         this.Departmentform = fb.group({
@@ -199,44 +162,74 @@ export class DepartmentsetupPage {
     console.log('ionViewDidLoad DepartmentsetupPage');
   }
 
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_Name') == null) {
+      localStorage.setItem('Prev_Name', null);
+    }
+    else {
+      localStorage.removeItem("Prev_Name");
+    }
+    if (localStorage.getItem('Prev_TenantGuid') == null) {
+      localStorage.setItem('Prev_TenantGuid', null);
+    }
+    else {
+      localStorage.removeItem("Prev_TenantGuid");
+    }
+  }
+
+  FillTenant() {
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      this.http
+        .get(tenantUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource;
+        });
+      this.AdminLogin = true;
+    }
+    else {
+      this.AdminLogin = false;
+    }
+  }
+
+  DisplayGrid() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = true;
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = false;
+    }
+
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.departments = data.resource;
+
+        this.loading.dismissAll();
+      });
+  }
+
   Save() {
     if (this.Departmentform.valid) {
       //for Save Set Entities-------------------------------------------------------------
       if (this.Add_Form == true) {
-        this.department_entry.DEPARTMENT_GUID = UUID.UUID();
-        this.department_entry.CREATION_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.department_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.department_entry.CREATION_USER_GUID = 'sva';
-        }
-        this.department_entry.UPDATE_TS = new Date().toISOString();
-        this.department_entry.UPDATE_USER_GUID = "";
+        this.SetEntityForAdd();
       }
       //for Update Set Entities------------------------------------------------------------
       else {
-        this.department_entry.DEPARTMENT_GUID = this.department_details.DEPARTMENT_GUID;
-        this.department_entry.CREATION_TS = this.department_details.CREATION_TS;
-        this.department_entry.CREATION_USER_GUID = this.department_details.CREATION_USER_GUID;
-        this.department_entry.UPDATE_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.department_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.department_entry.UPDATE_USER_GUID = 'sva';
-        }
+        this.SetEntityForUpdate();
       }
 
-      this.department_entry.NAME = this.NAME_ngModel_Add.trim();
-      this.department_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
-
-      if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.department_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
-      }
-      else {
-        this.department_entry.TENANT_GUID = this.Tenant_Add_ngModel;
-      }
+      //Common Entitity For Insert/Update------------------------------------------------- 
+      this.SetCommonEntityForAddUpdate();
 
       //Load the Controller--------------------------------
       this.loading = this.loadingCtrl.create({
@@ -252,36 +245,12 @@ export class DepartmentsetupPage {
             //---Insert or Update-------------------------------------------------------
             if (this.Add_Form == true) {
               //**************Save service if it is new details*************************
-              this.departmentsetupservice.save(this.department_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Department Registered successfully');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_Name");
-                    localStorage.removeItem("Prev_TenantGuid");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Insert();
               //**************************************************************************
             }
             else {
               //**************Update service if it is new details*************************
-              this.departmentsetupservice.update(this.department_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Department updated successfully');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_Name");
-                    localStorage.removeItem("Prev_TenantGuid");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Update();
               //**************************************************************************
             }
           }
@@ -296,21 +265,82 @@ export class DepartmentsetupPage {
       }
       else {
         //Simple update----------------------------------------------------------
-        this.departmentsetupservice.update(this.department_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Department updated successfully');
-
-              //Remove all storage values-----------------------------------------
-              localStorage.removeItem("Prev_Name");
-              localStorage.removeItem("Prev_TenantGuid");
-              //------------------------------------------------------------------
-
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
+        this.Update();
       }
     }
+  }
+
+  SetEntityForAdd() {
+    this.department_entry.DEPARTMENT_GUID = UUID.UUID();
+    this.department_entry.CREATION_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.department_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.department_entry.CREATION_USER_GUID = 'sva';
+    }
+    this.department_entry.UPDATE_TS = new Date().toISOString();
+    this.department_entry.UPDATE_USER_GUID = "";
+  }
+
+  SetEntityForUpdate() {
+    this.department_entry.DEPARTMENT_GUID = this.department_details.DEPARTMENT_GUID;
+    this.department_entry.CREATION_TS = this.department_details.CREATION_TS;
+    this.department_entry.CREATION_USER_GUID = this.department_details.CREATION_USER_GUID;
+    this.department_entry.UPDATE_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.department_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.department_entry.UPDATE_USER_GUID = 'sva';
+    }
+  }
+
+  SetCommonEntityForAddUpdate() {
+    this.department_entry.NAME = this.titlecasePipe.transform(this.NAME_ngModel_Add.trim());
+    this.department_entry.DESCRIPTION = this.titlecasePipe.transform(this.DESCRIPTION_ngModel_Add.trim());
+
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.department_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    else {
+      this.department_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+    }
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_Name");
+    localStorage.removeItem("Prev_TenantGuid");
+  }
+
+  Insert() {
+    this.departmentsetupservice.save(this.department_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Department Registered successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  Update() {
+    this.departmentsetupservice.update(this.department_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Department updated successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
   }
 
   CheckDuplicate() {

@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -23,7 +24,7 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-designationsetup',
-  templateUrl: 'designationsetup.html', providers: [DesignationSetup_Service, BaseHttpService]
+  templateUrl: 'designationsetup.html', providers: [DesignationSetup_Service, BaseHttpService, TitleCasePipe]
 })
 export class DesignationsetupPage {
 
@@ -49,11 +50,13 @@ export class DesignationsetupPage {
   AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
   tenants: any;
   Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
+  HeaderText: string = "";
 
   public AddDesignationClick() {
     if (this.Edit_Form == false) {
       this.AddDesignationClicked = true; this.Add_Form = true; this.Edit_Form = false;
       this.ClearControls();
+      this.HeaderText = "REGISTER NEW DESIGNATION";
     }
     else {
       alert('Sorry !! You are in Edit Mode.');
@@ -68,6 +71,7 @@ export class DesignationsetupPage {
 
     this.ClearControls();
     this.AddDesignationClicked = true; this.Add_Form = false; this.Edit_Form = true;
+    this.HeaderText = "UPDATE DESIGNATION";
 
     var self = this;
     this.designationsetupservice
@@ -120,76 +124,40 @@ export class DesignationsetupPage {
   }
 
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private designationsetupservice: DesignationSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private designationsetupservice: DesignationSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
     else {
-      this.loading = this.loadingCtrl.create({
-        content: 'Loading...',
-      });
-      this.loading.present();
-
-      //Clear localStorage value--------------------------------
-      if (localStorage.getItem('Prev_Name') == null) {
-        localStorage.setItem('Prev_Name', null);
-      }
-      else {
-        localStorage.removeItem("Prev_Name");
-      }
-      if (localStorage.getItem('Prev_TenantGuid') == null) {
-        localStorage.setItem('Prev_TenantGuid', null);
-      }
-      else {
-        localStorage.removeItem("Prev_TenantGuid");
-      }
-
-      //fill all the tenant details----------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
-        this.http
-          .get(tenantUrl)
-          .map(res => res.json())
-          .subscribe(data => {
-            this.tenants = data.resource;
-          });
-        this.AdminLogin = true;
-      }
-      else {
-        this.AdminLogin = false;
-      }
-
-      //Display Grid---------------------------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_designation_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = true;
-      }
-      else {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_designation_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = false;
-      }
-
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.designations = data.resource;
-          this.loading.dismissAll();
-        });
-      //-------------------------------------------------------
       if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.Designationform = fb.group({
-          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          DESCRIPTION: [null],
-        });
+        //Clear localStorage value--------------------------------
+        this.ClearLocalStorage();
+
+        //fill all the tenant details----------------------------
+        this.FillTenant();
+
+        //Display Grid---------------------------------------------
+        this.DisplayGrid();
+
+        //-------------------------------------------------------
+        if (localStorage.getItem("g_USER_GUID") != "sva") {
+          this.Designationform = fb.group({
+            NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            DESCRIPTION: [null],
+          });
+        }
+        else {
+          this.Designationform = fb.group({
+            NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            DESCRIPTION: [null],
+            TENANT_NAME: [null, Validators.required],
+          });
+        }
       }
       else {
-        this.Designationform = fb.group({
-          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          DESCRIPTION: [null],
-          TENANT_NAME: [null, Validators.required],
-        });
+        alert('Sorry!! You are not authorized.');
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
   }
@@ -198,44 +166,73 @@ export class DesignationsetupPage {
     console.log('ionViewDidLoad DesignationsetupPage');
   }
 
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_Name') == null) {
+      localStorage.setItem('Prev_Name', null);
+    }
+    else {
+      localStorage.removeItem("Prev_Name");
+    }
+    if (localStorage.getItem('Prev_TenantGuid') == null) {
+      localStorage.setItem('Prev_TenantGuid', null);
+    }
+    else {
+      localStorage.removeItem("Prev_TenantGuid");
+    }
+  }
+
+  FillTenant() {
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      this.http
+        .get(tenantUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource;
+        });
+      this.AdminLogin = true;
+    }
+    else {
+      this.AdminLogin = false;
+    }
+  }
+
+  DisplayGrid() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_designation_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = true;
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_designation_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = false;
+    }
+
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.designations = data.resource;
+        this.loading.dismissAll();
+      });
+  }
+
   Save() {
     if (this.Designationform.valid) {
       //for Save Set Entities-------------------------------------------------------------
       if (this.Add_Form == true) {
-        this.designation_entry.DESIGNATION_GUID = UUID.UUID();
-        this.designation_entry.CREATION_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.designation_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.designation_entry.CREATION_USER_GUID = 'sva';
-        }
-        this.designation_entry.UPDATE_TS = new Date().toISOString();
-        this.designation_entry.UPDATE_USER_GUID = "";
+        this.SetEntityForAdd();
       }
       //for Update Set Entities------------------------------------------------------------
       else {
-        this.designation_entry.DESIGNATION_GUID = this.designation_details.DESIGNATION_GUID;
-        this.designation_entry.CREATION_TS = this.designation_details.CREATION_TS;
-        this.designation_entry.CREATION_USER_GUID = this.designation_details.CREATION_USER_GUID;
-        this.designation_entry.UPDATE_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.designation_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.designation_entry.UPDATE_USER_GUID = 'sva';
-        }
+        this.SetEntityForUpdate();
       }
-
-      this.designation_entry.NAME = this.NAME_ngModel_Add.trim();
-      this.designation_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
-
-      if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.designation_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
-      }
-      else {
-        this.designation_entry.TENANT_GUID = this.Tenant_Add_ngModel;
-      }
+      //Common Entitity For Insert/Update------------------------------------------------- 
+      this.SetCommonEntityForAddUpdate();
 
       //Load the Controller--------------------------------
       this.loading = this.loadingCtrl.create({
@@ -251,36 +248,12 @@ export class DesignationsetupPage {
             //---Insert or Update-------------------------------------------------------
             if (this.Add_Form == true) {
               //**************Save service if it is new details*************************
-              this.designationsetupservice.save(this.designation_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Designation Registered successfully');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_Name");
-                    localStorage.removeItem("Prev_TenantGuid");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Insert();              
               //**************************************************************************
             }
             else {
               //**************Update service if it is new details*************************
-              this.designationsetupservice.update(this.designation_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Designation updated successfully');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_Name");
-                    localStorage.removeItem("Prev_TenantGuid");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Update();              
               //**************************************************************************
             }
           }
@@ -295,21 +268,82 @@ export class DesignationsetupPage {
       }
       else {
         //Simple update----------------------------------------------------------
-        this.designationsetupservice.update(this.designation_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Designation updated successfully');
-
-              //Remove all storage values-----------------------------------------
-              localStorage.removeItem("Prev_Name");
-              localStorage.removeItem("Prev_TenantGuid");
-              //------------------------------------------------------------------
-
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
+        this.Update();
       }
     }
+  }
+
+  SetEntityForAdd() {
+    this.designation_entry.DESIGNATION_GUID = UUID.UUID();
+    this.designation_entry.CREATION_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.designation_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.designation_entry.CREATION_USER_GUID = 'sva';
+    }
+    this.designation_entry.UPDATE_TS = new Date().toISOString();
+    this.designation_entry.UPDATE_USER_GUID = "";
+  }
+
+  SetEntityForUpdate() {
+    this.designation_entry.DESIGNATION_GUID = this.designation_details.DESIGNATION_GUID;
+    this.designation_entry.CREATION_TS = this.designation_details.CREATION_TS;
+    this.designation_entry.CREATION_USER_GUID = this.designation_details.CREATION_USER_GUID;
+    this.designation_entry.UPDATE_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.designation_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.designation_entry.UPDATE_USER_GUID = 'sva';
+    }
+  }
+
+  SetCommonEntityForAddUpdate() {
+    this.designation_entry.NAME = this.titlecasePipe.transform(this.NAME_ngModel_Add.trim());
+    this.designation_entry.DESCRIPTION = this.titlecasePipe.transform(this.DESCRIPTION_ngModel_Add.trim());
+
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.designation_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    else {
+      this.designation_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+    }
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_Name");
+    localStorage.removeItem("Prev_TenantGuid");
+  }
+
+  Insert() {
+    this.designationsetupservice.save(this.designation_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Designation Registered successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  Update() {
+    this.designationsetupservice.update(this.designation_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Designation updated successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
   }
 
   CheckDuplicate() {

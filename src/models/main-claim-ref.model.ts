@@ -1,4 +1,5 @@
 export class MainClaimReferanceModel {
+
     constructor(  
       public CLAIM_REF_GUID: string = null,
       public USER_GUID: string = null,

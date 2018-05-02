@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
+
 //import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -23,7 +25,7 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-mileagesetup',
-  templateUrl: 'mileagesetup.html', providers: [MileageSetup_Service, BaseHttpService]
+  templateUrl: 'mileagesetup.html', providers: [MileageSetup_Service, BaseHttpService, TitleCasePipe]
 })
 export class MileagesetupPage {
   mileage_entry: MileageSetup_Model = new MileageSetup_Model();
@@ -81,7 +83,7 @@ export class MileagesetupPage {
 
         this.Tenant_Add_ngModel = self.mileage_details.TENANT_GUID;
         this.CATEGORY_ngModel_Add = self.mileage_details.CATEGORY; localStorage.setItem('Prev_Category', self.mileage_details.CATEGORY); localStorage.setItem('Prev_TenantGuid', self.mileage_details.TENANT_GUID); localStorage.setItem('Prev_RateDate', new Date(self.mileage_details.RATE_DATE).toISOString());
-        this.RATE_PER_UNIT_ngModel_Add = self.mileage_details.RATE_PER_UNIT;
+        this.RATE_PER_UNIT_ngModel_Add =  self.mileage_details.RATE_PER_UNIT.toFixed(2);
         this.RATE_DATE_ngModel_Add = new Date(self.mileage_details.RATE_DATE).toISOString();
 
         if (self.mileage_details.ACTIVATION_FLAG == "1") {
@@ -132,70 +134,26 @@ export class MileagesetupPage {
   }
 
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private mileagesetupservice: MileageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private mileagesetupservice: MileageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
     else {
-      this.loading = this.loadingCtrl.create({
-        content: 'Loading...',
-      });
-      this.loading.present();
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        //Clear localStorage value--------------------------------
+        this.ClearLocalStorage();
 
-      //Clear localStorage value--------------------------------
-      if (localStorage.getItem('Prev_Category') == null) {
-        localStorage.setItem('Prev_Category', null);
+        //fill all the tenant details----------------------------
+        this.FillTenant();
+
+        //Display Grid---------------------------------------------
+        this.DisplayGrid();
       }
       else {
-        localStorage.removeItem("Prev_Category");
+        alert('Sorry!! You are not authorized.');
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
-      if (localStorage.getItem('Prev_TenantGuid') == null) {
-        localStorage.setItem('Prev_TenantGuid', null);
-      }
-      else {
-        localStorage.removeItem("Prev_TenantGuid");
-      }
-      if (localStorage.getItem('Prev_RateDate') == null) {
-        localStorage.setItem('Prev_RateDate', null);
-      }
-      else {
-        localStorage.removeItem("Prev_RateDate");
-      }
-
-      //fill all the tenant details----------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
-        this.http
-          .get(tenantUrl)
-          .map(res => res.json())
-          .subscribe(data => {
-            this.tenants = data.resource;
-          });
-        this.AdminLogin = true;
-      }
-      else {
-        this.AdminLogin = false;
-      }
-
-      //Display Grid---------------------------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_mileage_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = true;
-      }
-      else {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_mileage_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = false;
-      }
-
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.mileages = data.resource;
-
-          this.loading.dismissAll();
-        });
       //-------------------------------------------------------
 
       if (localStorage.getItem("g_USER_GUID") != "sva") {
@@ -222,61 +180,90 @@ export class MileagesetupPage {
     console.log('ionViewDidLoad MileagesetupPage');
   }
 
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_Category') == null) {
+      localStorage.setItem('Prev_Category', null);
+    }
+    else {
+      localStorage.removeItem("Prev_Category");
+    }
+    if (localStorage.getItem('Prev_TenantGuid') == null) {
+      localStorage.setItem('Prev_TenantGuid', null);
+    }
+    else {
+      localStorage.removeItem("Prev_TenantGuid");
+    }
+    if (localStorage.getItem('Prev_RateDate') == null) {
+      localStorage.setItem('Prev_RateDate', null);
+    }
+    else {
+      localStorage.removeItem("Prev_RateDate");
+    }
+  }
+
+  FillTenant() {
+    //fill all the tenant details----------------------------
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      this.http
+        .get(tenantUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource;
+        });
+      this.AdminLogin = true;
+    }
+    else {
+      this.AdminLogin = false;
+    }
+  }
+
+  DisplayGrid() {
+    //Display Grid---------------------------------------------
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_mileage_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = true;
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_mileage_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = false;
+    }
+
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.mileages = data.resource;
+
+        this.loading.dismissAll();
+      });
+  }
+
   Save() {
     if (this.Mileageform.valid) {
       //for Save Set Entities-------------------------------------------------------------
       if (this.Add_Form == true) {
-        this.mileage_entry.MILEAGE_GUID = UUID.UUID();
-
-        this.mileage_entry.CATEGORY = this.CATEGORY_ngModel_Add.trim();
-        this.mileage_entry.RATE_PER_UNIT = this.RATE_PER_UNIT_ngModel_Add.trim();
-        this.mileage_entry.RATE_DATE = this.RATE_DATE_ngModel_Add.trim();
-        this.mileage_entry.ACTIVATION_FLAG = this.ACTIVATION_FLAG_ngModel_Add;
-
-        this.mileage_entry.CREATION_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.mileage_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.mileage_entry.CREATION_USER_GUID = 'sva';
-        }
-        this.mileage_entry.UPDATE_TS = new Date().toISOString();
-        this.mileage_entry.UPDATE_USER_GUID = "";
+        this.SetEntityForAdd();
       }
       //for Update Set Entities------------------------------------------------------------
       else {
-        this.mileage_entry.MILEAGE_GUID = this.mileage_details.MILEAGE_GUID;
-
-        if (this.mileage_entry.CATEGORY == null) { this.mileage_entry.CATEGORY = this.CATEGORY_ngModel_Add.trim(); }
-        if (this.mileage_entry.RATE_PER_UNIT == null) { this.mileage_entry.RATE_PER_UNIT = this.RATE_PER_UNIT_ngModel_Add; }
-        if (this.mileage_entry.RATE_DATE == null) { this.mileage_entry.RATE_DATE = this.RATE_DATE_ngModel_Add.trim(); }
-        if (this.mileage_entry.ACTIVATION_FLAG == null) { this.mileage_entry.ACTIVATION_FLAG = this.ACTIVATION_FLAG_ngModel_Add; }
-
-        this.mileage_entry.CREATION_TS = this.mileage_details.CREATION_TS;
-        this.mileage_entry.CREATION_USER_GUID = this.mileage_details.CREATION_USER_GUID;
-        this.mileage_entry.UPDATE_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.mileage_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.mileage_entry.UPDATE_USER_GUID = 'sva';
-        }
+        this.SetEntityForUpdate();
       }
-
-      if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.mileage_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
-      }
-      else {
-        this.mileage_entry.TENANT_GUID = this.Tenant_Add_ngModel;
-      }
+      //Common Entitity For Insert/Update------------------------------------------------- 
+      this.SetCommonEntityForAddUpdate();
 
       //Load the Controller--------------------------------
       this.loading = this.loadingCtrl.create({
         content: 'Please wait...',
       });
       this.loading.present();
-      //-------------------------------------------------- 
 
+      //---------------------------------------------------
       if (this.CATEGORY_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_Category').toUpperCase() || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid') || this.RATE_DATE_ngModel_Add != localStorage.getItem('Prev_RateDate')) {
         let val = this.CheckDuplicate();
         val.then((res) => {
@@ -284,38 +271,12 @@ export class MileagesetupPage {
             //---Insert or Update-------------------------------------------------------
             if (this.Add_Form == true) {
               //**************Save service if it is new details*************************
-              this.mileagesetupservice.save(this.mileage_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Mileage Registered successfully');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_Category");
-                    localStorage.removeItem("Prev_TenantGuid");
-                    localStorage.removeItem("Prev_RateDate");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Insert();
               //**************************************************************************
             }
             else {
               //**************Update service if it is new details*************************
-              this.mileagesetupservice.update(this.mileage_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Mileage updated successfully');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_Category");
-                    localStorage.removeItem("Prev_TenantGuid");
-                    localStorage.removeItem("Prev_RateDate");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Update();
               //**************************************************************************
             }
           }
@@ -330,22 +291,92 @@ export class MileagesetupPage {
       }
       else {
         //Simple update----------------------------------------------------------
-        this.mileagesetupservice.update(this.mileage_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Mileage updated successfully');
-
-              //Remove all storage values-----------------------------------------
-              localStorage.removeItem("Prev_Category");
-              localStorage.removeItem("Prev_TenantGuid");
-              localStorage.removeItem("Prev_RateDate");
-              //------------------------------------------------------------------
-
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
+        this.Update();
       }
     }
+  }
+
+  SetEntityForAdd() {
+    this.mileage_entry.MILEAGE_GUID = UUID.UUID();
+
+    this.mileage_entry.CATEGORY = this.titlecasePipe.transform(this.CATEGORY_ngModel_Add.trim());
+    this.mileage_entry.RATE_PER_UNIT = this.RATE_PER_UNIT_ngModel_Add.trim();
+    this.mileage_entry.RATE_DATE = this.RATE_DATE_ngModel_Add.trim();
+    this.mileage_entry.ACTIVATION_FLAG = this.ACTIVATION_FLAG_ngModel_Add;
+
+    this.mileage_entry.CREATION_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.mileage_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.mileage_entry.CREATION_USER_GUID = 'sva';
+    }
+    this.mileage_entry.UPDATE_TS = new Date().toISOString();
+    this.mileage_entry.UPDATE_USER_GUID = "";
+  }
+
+  SetEntityForUpdate() {
+    this.mileage_entry.MILEAGE_GUID = this.mileage_details.MILEAGE_GUID;
+
+    if (this.mileage_entry.CATEGORY == null) { this.mileage_entry.CATEGORY = this.titlecasePipe.transform(this.CATEGORY_ngModel_Add.trim()); }
+    if (this.mileage_entry.RATE_PER_UNIT == null) { this.mileage_entry.RATE_PER_UNIT = this.RATE_PER_UNIT_ngModel_Add; }
+    if (this.mileage_entry.RATE_DATE == null) { this.mileage_entry.RATE_DATE = this.RATE_DATE_ngModel_Add.trim(); }
+    if (this.mileage_entry.ACTIVATION_FLAG == null) { this.mileage_entry.ACTIVATION_FLAG = this.ACTIVATION_FLAG_ngModel_Add; }
+
+    this.mileage_entry.CREATION_TS = this.mileage_details.CREATION_TS;
+    this.mileage_entry.CREATION_USER_GUID = this.mileage_details.CREATION_USER_GUID;
+    this.mileage_entry.UPDATE_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.mileage_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.mileage_entry.UPDATE_USER_GUID = 'sva';
+    }
+  }
+
+  SetCommonEntityForAddUpdate() {
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.mileage_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    else {
+      this.mileage_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+    }
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_Category");
+    localStorage.removeItem("Prev_TenantGuid");
+    localStorage.removeItem("Prev_RateDate");
+  }
+
+  Insert() {
+    this.mileagesetupservice.save(this.mileage_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Mileage Registered successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  Update() {
+    this.mileagesetupservice.update(this.mileage_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Mileage updated successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
   }
 
   CheckDuplicate() {
