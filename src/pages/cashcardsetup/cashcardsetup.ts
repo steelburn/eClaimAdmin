@@ -132,99 +132,117 @@ export class CashcardsetupPage {
       this.navCtrl.push(LoginPage);
     }
     else {
-      this.loading = this.loadingCtrl.create({
-        content: 'Loading...',
-      });
-      this.loading.present();
-
-      //Clear localStorage value--------------------------------      
-      if (localStorage.getItem('Prev_TenantGuid') == null) {
-        localStorage.setItem('Prev_TenantGuid', null);
-      }
-      else {
-        localStorage.removeItem("Prev_TenantGuid");
-      }
-
-      if (localStorage.getItem('Prev_ACCOUNT_ID') == null) {
-        localStorage.setItem('Prev_ACCOUNT_ID', null);
-      }
-      else {
-        localStorage.removeItem("Prev_ACCOUNT_ID");
-      }
-
-      if (localStorage.getItem('Prev_CASHCARD_SNO') == null) {
-        localStorage.setItem('Prev_CASHCARD_SNO', null);
-      }
-      else {
-        localStorage.removeItem("Prev_CASHCARD_SNO");
-      }
-
-      if (localStorage.getItem('Prev_MANAGEMENT_URL') == null) {
-        localStorage.setItem('Prev_MANAGEMENT_URL', null);
-      }
-      else {
-        localStorage.removeItem("Prev_MANAGEMENT_URL");
-      }
-
-      //fill all the tenant details----------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
-        this.http
-          .get(tenantUrl)
-          .map(res => res.json())
-          .subscribe(data => {
-            this.tenants = data.resource;
-          });
-        this.AdminLogin = true;
-      }
-      else {
-        this.AdminLogin = false;
-      }
-
-      //Display Grid---------------------------------------------
-      if (localStorage.getItem("g_USER_GUID") == "sva") {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_cashcard_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = true;
-      }
-      else {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_cashcard_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.AdminLogin = false;
-      }
-
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.cashcards = data.resource;
-
-          this.loading.dismissAll();
-        });
-      //-------------------------------------------------------
       if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.Cashform = fb.group({
-          CASHCARD_SNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          ACCOUNT_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          ACCOUNT_PASSWORD: [null, Validators.compose([Validators.pattern('((?=.*\)(?=.*[a-zA-Z0-9]).{4,20})'), Validators.required])],
-          //MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])],          
-          MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],          
-          
-          //For email validation
-          //Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
-          DESCRIPTION: [null],          
-        });
+        //Clear localStorage value--------------------------------      
+        this.ClearLocalStorage();
+
+        //fill all the tenant details----------------------------
+        this.FillTenant();
+
+        //Display Grid---------------------------------------------
+        this.DisplayGrid();
+
+        //-------------------------------------------------------
+        if (localStorage.getItem("g_USER_GUID") != "sva") {
+          this.Cashform = fb.group({
+            CASHCARD_SNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            ACCOUNT_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            ACCOUNT_PASSWORD: [null, Validators.compose([Validators.pattern('((?=.*\)(?=.*[a-zA-Z0-9]).{4,20})'), Validators.required])],
+            //MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])],          
+            MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],
+
+            //For email validation
+            //Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
+            DESCRIPTION: [null],
+          });
+        }
+        else {
+          this.Cashform = fb.group({
+            CASHCARD_SNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            ACCOUNT_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            ACCOUNT_PASSWORD: [null, Validators.compose([Validators.pattern('((?=.*\)(?=.*[a-zA-Z0-9]).{6,20})'), Validators.required])],
+            //MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])],
+            MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],
+            DESCRIPTION: [null],
+            TENANT_NAME: [null, Validators.required],
+          });
+        }
       }
       else {
-        this.Cashform = fb.group({
-          CASHCARD_SNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          ACCOUNT_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          ACCOUNT_PASSWORD: [null, Validators.compose([Validators.pattern('((?=.*\)(?=.*[a-zA-Z0-9]).{6,20})'), Validators.required])],
-          //MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])],
-          MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],          
-          DESCRIPTION: [null],
-          TENANT_NAME: [null, Validators.required],
-        });
+        alert('Sorry!! You are not authorized.');
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
+  }
+
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_TenantGuid') == null) {
+      localStorage.setItem('Prev_TenantGuid', null);
+    }
+    else {
+      localStorage.removeItem("Prev_TenantGuid");
+    }
+
+    if (localStorage.getItem('Prev_ACCOUNT_ID') == null) {
+      localStorage.setItem('Prev_ACCOUNT_ID', null);
+    }
+    else {
+      localStorage.removeItem("Prev_ACCOUNT_ID");
+    }
+
+    if (localStorage.getItem('Prev_CASHCARD_SNO') == null) {
+      localStorage.setItem('Prev_CASHCARD_SNO', null);
+    }
+    else {
+      localStorage.removeItem("Prev_CASHCARD_SNO");
+    }
+
+    if (localStorage.getItem('Prev_MANAGEMENT_URL') == null) {
+      localStorage.setItem('Prev_MANAGEMENT_URL', null);
+    }
+    else {
+      localStorage.removeItem("Prev_MANAGEMENT_URL");
+    }
+  }
+
+  FillTenant() {
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      this.http
+        .get(tenantUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource;
+        });
+      this.AdminLogin = true;
+    }
+    else {
+      this.AdminLogin = false;
+    }
+  }
+
+  DisplayGrid() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_cashcard_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = true;
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_cashcard_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = false;
+    }
+
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.cashcards = data.resource;
+
+        this.loading.dismissAll();
+      });
   }
 
   ionViewDidLoad() {
@@ -235,59 +253,15 @@ export class CashcardsetupPage {
     if (this.Cashform.valid) {
       //for Save Set Entities-------------------------------------------------------------
       if (this.Add_Form == true) {
-        this.cashcard_entry.CASHCARD_SNO = this.CASHCARD_SNO_ngModel_Add.trim();
-        this.cashcard_entry.ACCOUNT_ID = this.ACCOUNT_ID_ngModel_Add.trim();
-        this.cashcard_entry.ACCOUNT_PASSWORD = this.ACCOUNT_PASSWORD_ngModel_Add.trim();
-        this.cashcard_entry.MANAGEMENT_URL = this.MANAGEMENT_URL_ngModel_Add;
-        this.cashcard_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add;
-
-        this.cashcard_entry.CASHCARD_GUID = UUID.UUID();
-        this.cashcard_entry.CREATION_TS = new Date().toISOString();
-        this.cashcard_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-        this.cashcard_entry.UPDATE_TS = new Date().toISOString();
-        this.cashcard_entry.UPDATE_USER_GUID = "";
-        this.cashcard_entry.TENANT_GUID = UUID.UUID();
-
-        //=====================================================================================
-        this.cashcard_entry.CASHCARD_GUID = UUID.UUID();
-        this.cashcard_entry.CREATION_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.cashcard_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.cashcard_entry.CREATION_USER_GUID = 'sva';
-        }
-        this.cashcard_entry.UPDATE_TS = new Date().toISOString();
-        this.cashcard_entry.UPDATE_USER_GUID = "";
+        this.SetEntityForAdd();
       }
       //for Update Set Entities------------------------------------------------------------
       else {
-        this.cashcard_entry.CASHCARD_GUID = this.cashcard_details.CASHCARD_GUID;
-        this.cashcard_entry.CREATION_TS = this.cashcard_details.CREATION_TS;
-        this.cashcard_entry.CREATION_USER_GUID = this.cashcard_details.CREATION_USER_GUID;
-        this.cashcard_entry.UPDATE_TS = new Date().toISOString();
-        if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.cashcard_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-        }
-        else {
-          this.cashcard_entry.UPDATE_USER_GUID = 'sva';
-        }
+        this.SetEntityForUpdate();
       }
 
-      //Common Entry-------------
-      this.cashcard_entry.CASHCARD_SNO = this.CASHCARD_SNO_ngModel_Add.trim();
-      this.cashcard_entry.ACCOUNT_ID = this.ACCOUNT_ID_ngModel_Add.trim();
-      this.cashcard_entry.ACCOUNT_PASSWORD = this.ACCOUNT_PASSWORD_ngModel_Add.trim();
-      this.cashcard_entry.MANAGEMENT_URL = this.MANAGEMENT_URL_ngModel_Add;
-      this.cashcard_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add;
-      this.cashcard_entry.ACTIVATION_FLAG = 1;
-
-      if (localStorage.getItem("g_USER_GUID") != "sva") {
-        this.cashcard_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
-      }
-      else {
-        this.cashcard_entry.TENANT_GUID = this.Tenant_Add_ngModel;
-      }
+      //Common Entry---------------------------------------
+      this.SetCommonEntityForAddUpdate();
 
       //Load the Controller--------------------------------
       this.loading = this.loadingCtrl.create({
@@ -303,40 +277,12 @@ export class CashcardsetupPage {
             //---Insert or Update-------------------------------------------------------
             if (this.Add_Form == true) {
               //**************Save service if it is new details*************************
-              this.cashcardsetupservice.save(this.cashcard_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Cashcard Registered successfully.');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_TenantGuid");
-                    localStorage.removeItem("Prev_ACCOUNT_ID");
-                    localStorage.removeItem("Prev_CASHCARD_SNO");
-                    localStorage.removeItem("Prev_MANAGEMENT_URL");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              this.Insert();
               //**************************************************************************
             }
             else {
-              //**************Update service if it is new details*************************
-              this.cashcardsetupservice.update(this.cashcard_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Cashcard updated successfully.');
-
-                    //Remove all storage values-----------------------------------------
-                    localStorage.removeItem("Prev_TenantGuid");
-                    localStorage.removeItem("Prev_ACCOUNT_ID");
-                    localStorage.removeItem("Prev_CASHCARD_SNO");
-                    localStorage.removeItem("Prev_MANAGEMENT_URL");
-                    //------------------------------------------------------------------
-
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+              //**************Update service if it is new details*************************             
+              this.Update();
               //**************************************************************************
             }
           }
@@ -350,24 +296,105 @@ export class CashcardsetupPage {
         });
       }
       else {
-        //Simple update----------------------------------------------------------
-        this.cashcardsetupservice.update(this.cashcard_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Cashcard updated successfully.');
-
-              //Remove all storage values-----------------------------------------
-              localStorage.removeItem("Prev_TenantGuid");
-              localStorage.removeItem("Prev_ACCOUNT_ID");
-              localStorage.removeItem("Prev_CASHCARD_SNO");
-              localStorage.removeItem("Prev_MANAGEMENT_URL");
-              //------------------------------------------------------------------
-
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
+        //Simple update----------------------------------------------------------        
+        this.Update();
       }
     }
+  }
+
+  SetEntityForAdd() {
+    if (this.Add_Form == true) {
+      this.cashcard_entry.CASHCARD_SNO = this.CASHCARD_SNO_ngModel_Add.trim();
+      this.cashcard_entry.ACCOUNT_ID = this.ACCOUNT_ID_ngModel_Add.trim();
+      this.cashcard_entry.ACCOUNT_PASSWORD = this.ACCOUNT_PASSWORD_ngModel_Add.trim();
+      this.cashcard_entry.MANAGEMENT_URL = this.MANAGEMENT_URL_ngModel_Add;
+      this.cashcard_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add;
+
+      this.cashcard_entry.CASHCARD_GUID = UUID.UUID();
+      this.cashcard_entry.CREATION_TS = new Date().toISOString();
+      this.cashcard_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.cashcard_entry.UPDATE_TS = new Date().toISOString();
+      this.cashcard_entry.UPDATE_USER_GUID = "";
+      this.cashcard_entry.TENANT_GUID = UUID.UUID();
+
+      //=====================================================================================
+      this.cashcard_entry.CASHCARD_GUID = UUID.UUID();
+      this.cashcard_entry.CREATION_TS = new Date().toISOString();
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.cashcard_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      }
+      else {
+        this.cashcard_entry.CREATION_USER_GUID = 'sva';
+      }
+      this.cashcard_entry.UPDATE_TS = new Date().toISOString();
+      this.cashcard_entry.UPDATE_USER_GUID = "";
+    }
+  }
+
+  SetEntityForUpdate() {
+    this.cashcard_entry.CASHCARD_GUID = this.cashcard_details.CASHCARD_GUID;
+    this.cashcard_entry.CREATION_TS = this.cashcard_details.CREATION_TS;
+    this.cashcard_entry.CREATION_USER_GUID = this.cashcard_details.CREATION_USER_GUID;
+    this.cashcard_entry.UPDATE_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.cashcard_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.cashcard_entry.UPDATE_USER_GUID = 'sva';
+    }
+  }
+
+  SetCommonEntityForAddUpdate() {
+    this.cashcard_entry.CASHCARD_SNO = this.CASHCARD_SNO_ngModel_Add.trim();
+    this.cashcard_entry.ACCOUNT_ID = this.ACCOUNT_ID_ngModel_Add.trim();
+    this.cashcard_entry.ACCOUNT_PASSWORD = this.ACCOUNT_PASSWORD_ngModel_Add.trim();
+    this.cashcard_entry.MANAGEMENT_URL = this.MANAGEMENT_URL_ngModel_Add;
+    this.cashcard_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add;
+    this.cashcard_entry.ACTIVATION_FLAG = 1;
+
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.cashcard_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    else {
+      this.cashcard_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+    }
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_TenantGuid");
+    localStorage.removeItem("Prev_ACCOUNT_ID");
+    localStorage.removeItem("Prev_CASHCARD_SNO");
+    localStorage.removeItem("Prev_MANAGEMENT_URL");
+  }
+
+  Insert() {
+    this.cashcardsetupservice.save(this.cashcard_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Cashcard Registered successfully.');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  Update() {
+    this.cashcardsetupservice.update(this.cashcard_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Cashcard updated successfully.');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
   }
 
   CheckDuplicate() {

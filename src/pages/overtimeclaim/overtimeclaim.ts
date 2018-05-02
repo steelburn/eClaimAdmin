@@ -1,21 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-//import { FormBuilder, FormGroup } from '@angular/forms';
-
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
-
 import * as constants from '../../app/config/constants';
 import { OvertimeClaim_Model } from '../../models/overtimeclaim_model';
 //import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { View_SOC_Model } from '../../models/view_soc_model';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
 import { BaseHttpService } from '../../services/base-http';
-
 import { UUID } from 'angular2-uuid';
-
 import { Camera, CameraOptions } from '@ionic-native/camera';
 //import {Camera} from 'ionic-native';
 import { File } from '@ionic-native/file';
@@ -27,12 +22,8 @@ import { Services } from '../Services';
 import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
 import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/image-upload.model';
-/**
- * Generated class for the OvertimeclaimPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+
 @IonicPage()
 @Component({
   selector: 'page-overtimeclaim',
@@ -60,7 +51,6 @@ export class OvertimeclaimPage {
   public stage: any;
   public profileJSON: any;
 
-
   public OT_SOC_No_ngModel: any;
   public OT_ProjectName_ngModel: any;
   public OT_From_ngModel: any;
@@ -73,6 +63,7 @@ export class OvertimeclaimPage {
   Customer_Lookup_ngModel: any;
   Customer_GUID: any;
   Soc_GUID: any;
+  TenantGUID: any;
 
   userGUID: any;
   public socGUID : any;
@@ -147,7 +138,8 @@ export class OvertimeclaimPage {
       );
   }
 
-  constructor(platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private overtimeservice: OvertimeClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+  constructor(public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private overtimeservice: OvertimeClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+    this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
     platform.ready().then(() => {
@@ -160,7 +152,8 @@ export class OvertimeclaimPage {
       start_DT: ['', Validators.required],
       end_DT: ['', Validators.required], 
       description: ['', Validators.required],     
-      vehicleType: ['', Validators.required],
+      claim_amount: ['', Validators.required],
+      attachment_GUID : ''
     });
     
     this.LoadProjects();   
@@ -222,23 +215,20 @@ export class OvertimeclaimPage {
     }, 1000);
   }
 
-  saveIm() {
+  saveIm(formValues: any) {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
       console.table(resJson)
       let imageResult = this.SaveImageinDB();
       imageResult.then((objImage: ImageUpload_model) => {
         // console.table(objImage)
-        let result = this.save(objImage.Image_Guid);
+        let result = this.submitAction(objImage.Image_Guid, formValues);
         // result.then((res) => {
         //   // console.log(res);
          
         // })
       })
-    })
-    // setTimeout(() => {
-    //   this.loading = false;
-    // }, 1000);
+    })    
   }
 
   SaveImageinDB() {
@@ -288,19 +278,17 @@ export class OvertimeclaimPage {
     this.Customer_Lookup_ngModel = name;
     this.Customer_GUID = guid;
     this.CloseCustomerLookup();
-  }
-
- 
+  } 
 
   claimForChanged() {
     // console.log(this.claimFor)
-    if (this.claimFor == 'customer') this.isCustomer = true;
+    if (this.claimFor == 'seg_customer') this.isCustomer = true;
     else this.isCustomer = false;
   }
 
   LoadProjects() {
     this.http
-      .get(Services.getUrl('soc_registration'))
+      .get(Services.getUrl('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID))
       .map(res => res.json())
       .subscribe(data => {
       this.storeProjects=  this.projects = data["resource"];
@@ -311,7 +299,7 @@ export class OvertimeclaimPage {
 
   LoadCustomers() {
     this.http
-      .get(Services.getUrl('main_customer'))
+      .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
       .map(res => res.json())
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
@@ -323,9 +311,7 @@ export class OvertimeclaimPage {
   public CloseTravelClick() {
     this.AddToLookupClicked = false;
     this.AddTravelClicked = false;
-  }
-
- 
+  } 
 
   public CloseProjectLookup() {
     if (this.ProjectLookupClicked == true) {
@@ -370,33 +356,7 @@ export class OvertimeclaimPage {
   //  this.projects=  this.filterProjects({
   //   project_name: val
   //   });
-  }
-
-
-  // filterProjects(params?: any) {
-  //   if (!params) {
-
-  //     //return this.storeProjects;
-  //   }
-
-  //     return this.projects.filter((item) =>{
-
-  //     return this.storeProjects;
-  //   }
-
-  //   return this.projects.filter((item) => {
-
-  //     for (let key in params) {
-  //       let field = item[key];
-  //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-  //         return item;
-  //       } else if (field == params[key]) {
-  //         return item;
-  //       }
-  //     }
-  //     return null;
-  //   });
-  // }
+  } 
 
   searchCustomer(searchString: any) {
     let val = searchString.target.value;
@@ -407,157 +367,132 @@ export class OvertimeclaimPage {
     // this.customers = this.filterCustomer({
     //   NAME: val
     // });
-  }
-
-  // filterCustomer(params?: any) {
-  //   if (!params) {
-  //     return this.storeCustomers;
-  //   }
-
-  //   return this.customers.filter((item) => {
-  //     for (let key in params) {
-  //       let field = item[key];
-  //       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-  //         return item;
-  //       } else if (field == params[key]) {
-  //         return item;
-  //       }
-  //     }
-  //     return null;
-  //   });
-  // }
-
-  takePhoto() {
-    // Camera.getPicture().then((imageData) => {
-    //     this.imageURL = imageData
-    // }, (err) => {
-    //     console.log(err);
-    // });
-  }
+  } 
 
   clearFile() {
     this.OTform.get('avatar').setValue(null);
     this.fileInput.nativeElement.value = '';
   }
 
-  save(imageGUID: string) {
-    let claimReqMainRef: MainClaimRequestModel = new MainClaimRequestModel();
-    let userGUID = localStorage.getItem('g_USER_GUID');
-    let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-    let month = new Date(this.OT_Date_ngModel).getMonth() + 1;
-    let year = new Date(this.OT_Date_ngModel).getFullYear();
-    let claimRefGUID;
-    let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
-    this.http
-      .get(url)
-      .map(res => res.json())
-      .subscribe(claimRefdata => {
-        if (claimRefdata["resource"][0] == null) {
-          let claimReqRef: MainClaimReferanceModel = new MainClaimReferanceModel();
-          claimReqRef.CLAIM_REF_GUID = UUID.UUID();
-          claimReqRef.USER_GUID = userGUID;
-          claimReqRef.TENANT_GUID = tenantGUID;
-          claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
-          claimReqRef.MONTH = month;
-          claimReqRef.YEAR = year;
-          claimReqRef.CREATION_TS = new Date().toISOString();
-          claimReqRef.UPDATE_TS = new Date().toISOString();
+  submitAction(imageGUID :any,formValues: any) {
+    formValues.claimTypeGUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
+    formValues.attachment_GUID = imageGUID;
+    this.travelAmount = formValues.claim_amount;
+    formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+    this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+  }
 
-          this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
-            var postClaimRef = response.json();
-            claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
+  // save(imageGUID: string) {
+  //   let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+  //   let userGUID = localStorage.getItem('g_USER_GUID');
+  //   let tenantGUID = localStorage.getItem('g_TENANT_GUID');
+  //   let month = new Date(this.OT_Date_ngModel).getMonth() + 1;
+  //   let year = new Date(this.OT_Date_ngModel).getFullYear();
+  //   let claimRefGUID;
+  //   let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
+  //   this.http
+  //     .get(url)
+  //     .map(res => res.json())
+  //     .subscribe(claimRefdata => {
+  //       if (claimRefdata["resource"][0] == null) {
+  //         let claimReqRef: ClaimRefMain_Model = new ClaimRefMain_Model();
+  //         claimReqRef.CLAIM_REF_GUID = UUID.UUID();
+  //         claimReqRef.USER_GUID = userGUID;
+  //         claimReqRef.TENANT_GUID = tenantGUID;
+  //         claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
+  //         claimReqRef.MONTH = month;
+  //         claimReqRef.YEAR = year;
+  //         claimReqRef.CREATION_TS = new Date().toISOString();
+  //         claimReqRef.UPDATE_TS = new Date().toISOString();
 
-            // let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
-            claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
-            claimReqMainRef.TENANT_GUID = tenantGUID;
-            claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
-            claimReqMainRef.MILEAGE_GUID = this.VehicleId;
-            claimReqMainRef.CLAIM_TYPE_GUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
-            claimReqMainRef.TRAVEL_DATE = this.OT_Date_ngModel;
-            claimReqMainRef.START_TS = this.Start_DT_ngModel;
-            claimReqMainRef.END_TS = this.End_DT_ngModel;
-            claimReqMainRef.DESCRIPTION = this.OT_Description_ngModel;
-            claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
-            claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
-            claimReqMainRef.PROFILE_JSON = this.profileJSON;
-            claimReqMainRef.STATUS = 'Pending';
-            claimReqMainRef.STAGE = this.stage;
-            //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-            claimReqMainRef.CLAIM_AMOUNT = this.OT_Amount_ngModel
-            claimReqMainRef.CREATION_TS = new Date().toISOString();
-            claimReqMainRef.UPDATE_TS = new Date().toISOString();
-            // claimReqMainRef.FROM = this.Travel_From_ngModel;
-            // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
-            // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
-           // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
-           if(this.isCustomer){
-            claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
-          }
-          else{
-            claimReqMainRef.SOC_GUID = this.Soc_GUID;
-          }
-          // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-          // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+  //         this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
+  //           var postClaimRef = response.json();
+  //           claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
 
-            // this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-            //   var postClaimMain = response.json();
-            //   this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
-            //   this.MainClaimSaved = true;
-            //   alert('Claim Has Registered.')
-            // })
-          })
-          return new Promise((resolve, reject) => {
-            this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
+  //           // let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+  //           claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
+  //           claimReqMainRef.TENANT_GUID = tenantGUID;
+  //           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+  //           claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+  //           claimReqMainRef.CLAIM_TYPE_GUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
+  //           claimReqMainRef.TRAVEL_DATE = this.OT_Date_ngModel;
+  //           claimReqMainRef.START_TS = this.Start_DT_ngModel;
+  //           claimReqMainRef.END_TS = this.End_DT_ngModel;
+  //           claimReqMainRef.DESCRIPTION = this.OT_Description_ngModel;
+  //           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
+  //           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
+  //           claimReqMainRef.PROFILE_JSON = this.profileJSON;
+  //           claimReqMainRef.STATUS = 'Pending';
+  //           claimReqMainRef.STAGE = this.stage;
+  //           claimReqMainRef.ATTACHMENT_ID = imageGUID;
+  //           //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
+  //           claimReqMainRef.CLAIM_AMOUNT = this.OT_Amount_ngModel
+  //           claimReqMainRef.CREATION_TS = new Date().toISOString();
+  //           claimReqMainRef.UPDATE_TS = new Date().toISOString();
+  //           // claimReqMainRef.FROM = this.Travel_From_ngModel;
+  //           // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+  //           // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+  //          // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+  //          if(this.isCustomer){
+  //           claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
+  //         }
+  //         else{
+  //           claimReqMainRef.SOC_GUID = this.Soc_GUID;
+  //         }         
+  //         })
+  //         return new Promise((resolve, reject) => {
+  //           this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
              
-              let res = data.json();
-              console.log(res)
-              let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
-              resolve(ClaimRequestMainId);
-            })
-          });
-        }
-        else {
-          claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+  //             let res = data.json();
+  //             console.log(res)
+  //             let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
+  //             resolve(ClaimRequestMainId);
+  //           })
+  //         });
+  //       }
+  //       else {
+  //         claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
 
-          let claimReqMainRef: MainClaimRequestModel = new MainClaimRequestModel();
-          claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
-          claimReqMainRef.TENANT_GUID = tenantGUID;
-          claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
-          claimReqMainRef.MILEAGE_GUID = this.VehicleId;
-          claimReqMainRef.CLAIM_TYPE_GUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
-          claimReqMainRef.TRAVEL_DATE =  this.OT_Date_ngModel;             
-          claimReqMainRef.START_TS =this.Start_DT_ngModel;
-          claimReqMainRef.END_TS =this.End_DT_ngModel;
-          claimReqMainRef.DESCRIPTION = this.OT_Description_ngModel;
-          claimReqMainRef.ASSIGNED_TO = this.assignedTo;               
-          claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
-          claimReqMainRef.PROFILE_JSON = this.profileJSON;
-          claimReqMainRef.STATUS = 'Pending';
-          claimReqMainRef.STAGE = this.stage;
-          //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
-          claimReqMainRef.CLAIM_AMOUNT = this.OT_Amount_ngModel;
-          claimReqMainRef.CREATION_TS = new Date().toISOString();
-          claimReqMainRef.UPDATE_TS = new Date().toISOString();
-          // claimReqMainRef.FROM = this.Travel_From_ngModel;
-          // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
-          // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
-          //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
-          if(this.isCustomer){
-            claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
-          }
-          else{
-            claimReqMainRef.SOC_GUID = this.Soc_GUID;
-          }
-        this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-            var postClaimMain = response.json();
-            this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;  
+  //         let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+  //         claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
+  //         claimReqMainRef.TENANT_GUID = tenantGUID;
+  //         claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
+  //         claimReqMainRef.MILEAGE_GUID = this.VehicleId;
+  //         claimReqMainRef.CLAIM_TYPE_GUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
+  //         claimReqMainRef.TRAVEL_DATE =  this.OT_Date_ngModel;             
+  //         claimReqMainRef.START_TS =this.Start_DT_ngModel;
+  //         claimReqMainRef.END_TS =this.End_DT_ngModel;
+  //         claimReqMainRef.DESCRIPTION = this.OT_Description_ngModel;
+  //         claimReqMainRef.ASSIGNED_TO = this.assignedTo;               
+  //         claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
+  //         claimReqMainRef.PROFILE_JSON = this.profileJSON;
+  //         claimReqMainRef.STATUS = 'Pending';
+  //         claimReqMainRef.STAGE = this.stage;
+  //         claimReqMainRef.ATTACHMENT_ID = imageGUID;          
+  //         //claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
+  //         claimReqMainRef.CLAIM_AMOUNT = this.OT_Amount_ngModel;
+  //         claimReqMainRef.CREATION_TS = new Date().toISOString();
+  //         claimReqMainRef.UPDATE_TS = new Date().toISOString();
+  //         // claimReqMainRef.FROM = this.Travel_From_ngModel;
+  //         // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
+  //         // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
+  //         //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
+  //         if(this.isCustomer){
+  //           claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
+  //         }
+  //         else{
+  //           claimReqMainRef.SOC_GUID = this.Soc_GUID;
+  //         }
+  //       this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
+  //           var postClaimMain = response.json();
+  //           this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;  
 
-            this.MainClaimSaved = true;
-            alert('Claim Has Registered.')
-          })
-        }
-      })
-  } 
+  //           this.MainClaimSaved = true;
+  //           alert('Claim Has Registered.')
+  //         })
+  //       }
+  //     })
+  // } 
 
   emailUrl: string = 'http://api.zen.com.my/api/v2/emailnotificationtest?api_key=' + constants.DREAMFACTORY_API_KEY;
   sendEmail() {
