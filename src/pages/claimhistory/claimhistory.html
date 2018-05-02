@@ -6,171 +6,50 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Claim History</ion-title>
-  </ion-navbar>
-  <ion-toolbar no-border-top>
-    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
-  </ion-toolbar>
+    <ion-navbar>
+        <ion-title>Claim History</ion-title>
+    </ion-navbar>
+    <ion-toolbar no-border-top>
+        <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
+    </ion-toolbar>
 </ion-header>
-
 
 <ion-content padding>
 
-
-
-
-  <ion-list>
-    <ion-item>
-        <table class="Tabler ">
-            <tr class="linedsg TColor">
-                <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
-
-                <th class="lgl1">Employee <ion-icon class="ion-funnel" md="md-funnel"  (click)="EmpClick()"></ion-icon>  </th>
-                <th class="lgl1">Department <ion-icon class="ion-funnel" md="md-funnel"  (click)="DeptClick()"></ion-icon></th>
-                <th class="lgl1">Month<ion-icon class="ion-funnel" md="md-funnel" (click)="MonthClick()"></ion-icon></th>
-                <!-- <th class="lgl1">YEAR</th> -->
-                <th class="lgl1">Total Amount</th>
-                <th class="lgl1 tblBrRight" style="width:80px">Action</th>
-
-
-            </tr>
-
-            <tr class="col7" *ngFor="let claimhistory of claimhistorys; let i=index">
-                <td class="lgl1">{{i+1}}</td>
-                <td class="lgl1 tblBrLeft" >{{claimhistory.FULLNAME}}</td>
-                <td class="lgl1" >{{claimhistory.DEPARTMENT}}</td>
-                <td class="lgl1" >{{claimhistory.MONTH}}</td>
-                 <!-- <td class="lgl1">{{claimhistory.YEAR}}</td> -->
-                <td class="lgl1">{{claimhistory.CLAIM_AMOUNT}}</td>
-                <td class="lgl1 fColor">
-                    <button ion-button item-end (click)="goToClaimHistoryDetail(claimhistory.CLAIM_REF_GUID,claimhistory.USER_GUID,claimhistory.MONTH)"><ion-icon name="md-eye"></ion-icon></button>
-                    <!-- <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button> -->
-                </td>
-            </tr>
-
-
-        </table>
-    </ion-item>
-</ion-list>
-
-<div class="cool-div" *ngIf="EmpClicked">
-    <ion-card>
-            <ion-item>
-                    
-                            <ion-label> Employees
-                            <button style="float:right" (click)="EmployeeClose()">
-                              <ion-icon name="md-close"></ion-icon>
-                            </button>
-                        </ion-label>
-                        </ion-item>
-        <!-- <ul>
-            <li *ngFor="let employee of fullNameDD"> 
-                    <input type="checkbox" [(ngModel)]="employee.selected" (change)="checkIfAllSelected(employee);">
-                    {{employee}}
-                    </li>
-                </ul> -->
-                
-        <ion-item *ngFor="let employee of fullNameDD">   
-                <ion-label>{{employee}}</ion-label>                                     
-                
-                <ion-checkbox color="secondary" [(ngModel)]="employee.checked" (ionChange)="onFilter_Name($event,employee)"></ion-checkbox>
-        </ion-item>
-            
-</ion-card>
-        <!-- [(ngModel)]="employee.checked" [checked]="isChecked(employee)" <ion-label hidden stack>EMPLOYEE</ion-label>
-        <ion-select interface="popover" [(ngModel)]="employee" (ionChange)="onFilter_Name($event)" multiple="true" >
-                <ion-option *ngFor="let employee of fullNameDD" [value]="employee">{{employee}}</ion-option>
-            </ion-select> -->
-</div>
-
-<div class="cool-div-dept" *ngIf="DeptClicked">
-    <ion-card>
-            <ion-item>
-                    
-                            <ion-label> Departments
-                            <button style="float:right" (click)="DeptClose()">
-                              <ion-icon name="md-close"></ion-icon>
-                            </button>
-                        </ion-label>
-                        </ion-item>
-        <!-- <ul>
-            <li *ngFor="let employee of fullNameDD"> 
-                    <input type="checkbox" [(ngModel)]="employee.selected" (change)="checkIfAllSelected(employee);">
-                    {{employee}}
-                    </li>
-                </ul> -->
-                
-        <ion-item *ngFor="let department of departmentDD">   
-                <ion-label>{{department}}</ion-label>                                     
-                
-                <ion-checkbox color="secondary" [(ngModel)]="department.checked" (ionChange)="onFilter_Dept($event,department)"></ion-checkbox>
-        </ion-item>
-            
-</ion-card>
-        <!-- [(ngModel)]="employee.checked" [checked]="isChecked(employee)" <ion-label hidden stack>EMPLOYEE</ion-label>
-        <ion-select interface="popover" [(ngModel)]="employee" (ionChange)="onFilter_Name($event)" multiple="true" >
-                <ion-option *ngFor="let employee of fullNameDD" [value]="employee">{{employee}}</ion-option>
-            </ion-select> -->
-</div>
-
-<div class="cool-div-month" *ngIf="MonthClicked">
-    <ion-card>
+    <ion-list>
         <ion-item>
-            <!-- <ion-card-header class="icTitle headerColor-white "> -->
-                    <!-- <div class="icHeaderText">UPDATE BRANCH</div>class="btnR" -->
-                    <ion-label> MONTHS
-                    <button style="float:right" (click)="MonthClose()">
-                      <ion-icon name="md-close"></ion-icon>
-                    </button>
-                </ion-label>
-                  <!-- </ion-card-header> -->
-                </ion-item>
-            <ion-item>
-                    <ion-label>Jan </ion-label> 
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                  </ion-item>     <ion-item> 
-                       <ion-label>Feb</ion-label> 
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                </ion-item>
-                <ion-item> <ion-label>Mar</ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                
-                </ion-item>
-            <ion-item>
-                    <ion-label>Apr </ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                </ion-item> <ion-item>
-                        <ion-label>May </ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                </ion-item><ion-item>
-                        <ion-label>Jun </ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-               
-                </ion-item>
-            <ion-item>
-                    <ion-label>Jul</ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                </ion-item><ion-item>
-                        <ion-label>Aug</ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                </ion-item>
-                <ion-item>
-                        <ion-label>Sep</ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                    <ion-label>Oct</ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                </ion-item><ion-item>
-                        <ion-label>Nov</ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-                </ion-item>
-                <ion-item>
-                        <ion-label>Dec</ion-label>
-                    <ion-checkbox color="secondary"  (ionChange)="onFilter_Month($event)"></ion-checkbox>
-            </ion-item>
-    </ion-card>
-</div>
+            <table class="Tabler ">
+                <tr class="linedsg TColor">
+                    <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
 
+                    <th class="lgl1">Employee
+                    </th>
+                    <th class="lgl1">Department
+                    </th>
+                    <th class="lgl1">Month
+                    </th>
+                    <!-- <th class="lgl1">YEAR</th> -->
+                    <th class="lgl1">Total Amount</th>
+                    <th class="lgl1 tblBrRight" style="width:80px">Action</th>
+
+
+                </tr>
+
+                <tr class="col7" *ngFor="let claimhistory of claimhistorys; let i=index">
+                    <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1 tblBrLeft">{{claimhistory.FULLNAME}}</td>
+                    <td class="lgl1">{{claimhistory.DEPARTMENT}}</td>
+                    <td class="lgl1">{{claimhistory.MONTH}}</td>
+                    <!-- <td class="lgl1">{{claimhistory.YEAR}}</td> -->
+                    <td class="lgl1">{{claimhistory.CLAIM_AMOUNT}}</td>
+                    <td class="lgl1 fColor">
+                        <button ion-button item-end (click)="goToClaimHistoryDetail(claimhistory.CLAIM_REF_GUID,claimhistory.USER_GUID,claimhistory.MONTH)">
+                            <ion-icon name="md-eye"></ion-icon>
+                        </button>
+                        <!-- <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button> -->
+                    </td>
+                </tr>
+            </table>
+        </ion-item>
+    </ion-list>
 </ion-content>

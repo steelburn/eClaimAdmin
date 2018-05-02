@@ -9,8 +9,8 @@ import * as constants from '../../config/constants';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';     
-import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';     
+import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/ImageUpload_model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
 //import { TravelClaim_Service } from '../../services/travelclaim_service';
