@@ -42,8 +42,11 @@ export class LoginPage {
       }
       else {        
         let url: string;
+
+       
         url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA1(this.login.password) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         //url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
         this.http
           .get(url)
           .map(res => res.json())
