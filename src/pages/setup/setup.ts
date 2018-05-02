@@ -25,6 +25,8 @@ import { TenantCompanySetup_Service } from '../../services/tenantcompanysetup_se
 import { TenantCompanySiteSetup_Service } from '../../services/tenantcompanysitesetup_service';
 import { BaseHttpService } from '../../services/base-http';
 
+import { CustomerSetupPage } from '../customer-setup/customer-setup';
+
 import { UUID } from 'angular2-uuid';
 
 import { LoginPage } from '../login/login';
@@ -185,6 +187,10 @@ export class SetupPage {
 
   goToUser(){
     this.navCtrl.push(UserPage)
+  }
+
+  goToCustomer(){
+    this.navCtrl.push(CustomerSetupPage);
   }
 
   goToSOC(){

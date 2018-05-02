@@ -1,4 +1,5 @@
-export class ClaimRefMain_Model {
+export class MainClaimReferanceModel {
+
     constructor(  
       public CLAIM_REF_GUID: string = null,
       public USER_GUID: string = null,
@@ -18,7 +19,7 @@ export class ClaimRefMain_Model {
   
     static fromJson(json: any) {
       if (!json) return;
-      return new ClaimRefMain_Model(
+      return new MainClaimReferanceModel(
         json.CLAIM_REF_GUID,
         json.USER_GUID,
         json.TENANT_GUID,
