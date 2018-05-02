@@ -64,7 +64,6 @@ import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileUploadOptions } from '@ionic-native/file-transfer';
-
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 // import {AddTollPage} from '../pages/add-toll/add-toll';
@@ -98,6 +97,8 @@ import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/en
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
 import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
+
+import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 @NgModule({
   declarations: [
@@ -158,7 +159,9 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     ClaimtasklistPage,
 
     UserclaimslistPage,
-    ClaimReportPage
+    ClaimReportPage,
+
+    CustomerSetupPage
   ],
 
   imports: [
@@ -247,7 +250,9 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     UserclaimslistPage,
 
     ClaimReportPage,
-    UploadPage
+    UploadPage,
+
+    CustomerSetupPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
