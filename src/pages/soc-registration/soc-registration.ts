@@ -120,22 +120,23 @@ export class SocRegistrationPage {
           this.SOC_NO_ngModel_Add = self.soc_details_main[0]["SOC_NO"]; localStorage.setItem('PREV_SOC_NO', self.soc_details_main[0]["SOC_NO"]);
           this.PROJECT_NAME_ngModel_Add = self.soc_details_main[0]["PROJECT_NAME"]; localStorage.setItem('PREV_PROJECT_NAME', self.soc_details_main[0]["PROJECT_NAME"]);
           this.CUSTOMER_NAME_ngModel_Add = self.soc_details_main[0]["CUSTOMER_NAME"]; localStorage.setItem('PREV_CUSTOMER_NAME', self.soc_details_main[0]["CUSTOMER_NAME"]);
-
-          this.LOCATION_NAME_ngModel_Add = self.soc_details_main[0]["CUSTOMER_LOCATION_NAME"];
-          this.REGISTRATION_NO_ngModel_Add = self.soc_details_main[0]["RIGISTRATION_NO"];
-          this.ADDRESS1_ngModel_Add = self.soc_details_main[0]["ADDRESS1"];
-          this.ADDRESS2_ngModel_Add = self.soc_details_main[0]["ADDRESS2"];
-          this.ADDRESS3_ngModel_Add = self.soc_details_main[0]["ADDRESS3"];
-          this.CONTACT_PERSON_ngModel_Add = self.soc_details_main[0]["CONTACT_PERSON"];
-          this.CONTACT_PERSON_MOBILE_NO_ngModel_Add = self.soc_details_main[0]["CONTACT_PERSON_MOBILE_NO"];
-          this.CONTACT_NO1_ngModel_Add = self.soc_details_main[0]["CONTACT_NO1"];
-          this.CONTACT_NO2_ngModel_Add = self.soc_details_main[0]["CONTACT_NO2"];
-          this.EMAIL_ngModel_Add = self.soc_details_main[0]["EMAIL"];
-          this.DIVISION_ngModel_Add = self.soc_details_main[0]["DIVISION"];
+          this.Customer_GUID = this.soc_details_main[0]["CUSTOMER_GUID"];
+          
+          // this.LOCATION_NAME_ngModel_Add = self.soc_details_main[0]["CUSTOMER_LOCATION_NAME"];
+          // this.REGISTRATION_NO_ngModel_Add = self.soc_details_main[0]["REGISTRATION_NO"];
+          // this.ADDRESS1_ngModel_Add = self.soc_details_main[0]["ADDRESS1"];
+          // this.ADDRESS2_ngModel_Add = self.soc_details_main[0]["ADDRESS2"];
+          // this.ADDRESS3_ngModel_Add = self.soc_details_main[0]["ADDRESS3"];
+          // this.CONTACT_PERSON_ngModel_Add = self.soc_details_main[0]["CONTACT_PERSON"];
+          // this.CONTACT_PERSON_MOBILE_NO_ngModel_Add = self.soc_details_main[0]["CONTACT_PERSON_MOBILE_NO"];
+          // this.CONTACT_NO1_ngModel_Add = self.soc_details_main[0]["CONTACT_NO1"];
+          // this.CONTACT_NO2_ngModel_Add = self.soc_details_main[0]["CONTACT_NO2"];
+          // this.EMAIL_ngModel_Add = self.soc_details_main[0]["EMAIL"];
+          // this.DIVISION_ngModel_Add = self.soc_details_main[0]["DIVISION"];
 
           this.loading.dismissAll();
         });
-  }  
+  }
 
   public DeleteClick(SOC_GUID: any) {
     let alert = this.alertCtrl.create({
@@ -155,7 +156,7 @@ export class SocRegistrationPage {
             console.log('OK clicked');
             var self = this;
 
-            //before delete get id of main_customer and main_project table, according to that id delete the record
+            //before delete get id of main_project table, according to that id delete the record
             let SocEditUrl = this.baseResource_Url + "view_soc_edit?filter=(SOC_GUID=" + SOC_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
             this.http.get(SocEditUrl)
               .map(res => res.json())
@@ -164,20 +165,20 @@ export class SocRegistrationPage {
                   this.soc_details_main = data["resource"];
 
                   //Remove from main_customer-----------------------
-                  this.socservice.remove_customer(self.soc_details_main[0]["CUSTOMER_GUID"])
-                    .subscribe(() => {
-                      self.socs = self.socs.filter((item) => {
-                        return item.SOC_GUID != SOC_GUID;
-                      });
-                    });
+                  // this.socservice.remove_customer(self.soc_details_main[0]["CUSTOMER_GUID"])
+                  //   .subscribe(() => {
+                  //     self.socs = self.socs.filter((item) => {
+                  //       return item.SOC_GUID != SOC_GUID;
+                  //     });
+                  //   });
 
                   //Remove from main_customer_location------------------------
-                  this.socservice.remove_customer_location(self.soc_details_main[0]["CUSTOMER_LOCATION_GUID"])
-                    .subscribe(() => {
-                      self.socs = self.socs.filter((item) => {
-                        return item.SOC_GUID != SOC_GUID;
-                      });
-                    });
+                  // this.socservice.remove_customer_location(self.soc_details_main[0]["CUSTOMER_LOCATION_GUID"])
+                  //   .subscribe(() => {
+                  //     self.socs = self.socs.filter((item) => {
+                  //       return item.SOC_GUID != SOC_GUID;
+                  //     });
+                  //   });
 
                   //Remove from main_project------------------------
                   this.socservice.remove_project(self.soc_details_main[0]["PROJECT_GUID"])
@@ -201,6 +202,17 @@ export class SocRegistrationPage {
     }); alert.present();
   }
 
+  CustomerLookupClicked: boolean = false;
+  public CustomerLookup() {
+    this.CustomerLookupClicked = true;
+  }
+
+  public CloseCustomerLookup() {
+    if (this.CustomerLookupClicked == true) {
+      this.CustomerLookupClicked = false;
+    }
+  }
+
   loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private socservice: SocMain_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
@@ -219,24 +231,25 @@ export class SocRegistrationPage {
         //Display Grid---------------------------------------------
         this.DisplayGrid();
 
+        this.LoadCustomers();
+
         //-------------------------------------------------------
         if (localStorage.getItem("g_USER_GUID") != "sva") {
           this.Socform = fb.group({
             soc: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            address2: [null],
-            address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-            //division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            division: [null],
+            // location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // address2: [null],
+            // address3: [null],
+            // contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // contact_no2: [null],
+            // email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],            
+            // division: [null],
           });
         }
         else {
@@ -245,17 +258,16 @@ export class SocRegistrationPage {
             project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            address2: [null],
-            address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-            //division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            division: [null],
+            // registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // address2: [null],
+            // address3: [null],
+            // contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            // contact_no2: [null],
+            // email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+            // division: [null],
             TENANT_NAME: [null, Validators.required],
           });
         }
@@ -266,10 +278,61 @@ export class SocRegistrationPage {
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
-  }  
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SocRegistrationPage');
+  }
+
+  customers: any[];
+  storeCustomers: any[];
+
+  LoadCustomers() {
+    let CustomerUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_customer' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http
+      .get(CustomerUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.storeCustomers = this.customers = data["resource"];
+
+        //this.loading.dismissAll();
+      });
+  }
+
+  searchCustomer(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.customers = this.storeCustomers;
+      return;
+    }
+    this.customers = this.filterCustomer({
+      NAME: val
+    });
+  }
+
+  filterCustomer(params?: any) {
+    if (!params) {
+      return this.storeCustomers;
+    }
+
+    return this.customers.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+
+  Customer_GUID: any;
+  GetCustomer(guid: any, name: any) {
+    this.CUSTOMER_NAME_ngModel_Add = name;
+    this.Customer_GUID = guid;
+    this.CloseCustomerLookup();
   }
 
   ClearLocalStorage() {
@@ -344,21 +407,192 @@ export class SocRegistrationPage {
   }
 
   Save() {
-    //Save Customer----------------
-    this.SaveCustomer();
+    //Save Customer----------------    
+    //this.SaveCustomer();
+
+    if (this.Customer_GUID != "") {
+      this.SaveProject();
+    }
+    else {
+      alert("Sorry!! Please enter valid customer.");
+    }
   }
 
-  SaveCustomer() {
-    //for Save Set Entities-------------------------------------------------------------    
+  // SaveCustomer() {
+  //   //for Save Set Entities-------------------------------------------------------------    
+  //   if (this.Add_Form == true) {
+  //     this.SetEntityForCustomerAdd();
+  //   }
+  //   //for Update Set Entities------------------------------------------------------------
+  //   else {
+  //     this.SetEntityForCustomerUpdate();
+  //   }
+  //   //Common Entities-------------------------------------------------------------------
+  //   this.SetCommonEntityForCustomerAddUpdate();
+
+  //   //Loader-------------------------------
+  //   this.loading = this.loadingCtrl.create({
+  //     content: 'Please Wait...',
+  //   });
+  //   this.loading.present();
+  //   //-------------------------------------
+
+  //   if (this.Tenant_Add_ngModel != localStorage.getItem('PREV_TENANT_GUID') || this.SOC_NO_ngModel_Add.trim().toUpperCase() != localStorage.getItem('PREV_SOC_NO').toUpperCase() || this.PROJECT_NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('PREV_PROJECT_NAME').toUpperCase() || this.CUSTOMER_NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('PREV_CUSTOMER_NAME').toUpperCase()) {
+  //     let val = this.CheckDuplicate();
+  //     val.then((res) => {
+  //       if (res.toString() == "0") {
+  //         //**************Save service if it is new details***************************
+  //         if (this.Add_Form == true) {
+  //           this.InsertCustomer();
+  //         }
+  //         //**************Update service if it is new details*************************
+  //         else {
+  //           this.UpdateCustomer();
+  //         }
+  //       }
+  //       else {
+  //         alert("The SOC is already Exist.");
+  //         this.loading.dismissAll();
+  //       }
+  //     });
+  //     val.catch((err) => {
+  //       console.log(err);
+  //     });
+  //   }
+  //   else {
+  //     //Simple update----------------------------------------------------------
+  //     this.UpdateCustomer();
+  //   }
+  // }
+
+  // SetEntityForCustomerAdd() {
+  //   //this.customer_entry.CUSTOMER_GUID = UUID.UUID();
+  //   this.customer_entry.CUSTOMER_GUID = UUID.UUID();
+  //   this.customer_entry.CREATION_TS = new Date().toISOString();
+  //   this.customer_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+  //   this.customer_entry.UPDATE_TS = new Date().toISOString();
+  //   this.customer_entry.UPDATE_USER_GUID = "";
+  // }
+
+  // SetEntityForCustomerUpdate() {
+  //   this.customer_entry.CUSTOMER_GUID = this.soc_details_main[0]["CUSTOMER_GUID"];
+  //   this.customer_entry.CREATION_TS = this.soc_details_main[0]["CREATION_TS"];
+  //   this.customer_entry.CREATION_USER_GUID = this.soc_details_main[0]["CREATION_USER_GUID"];
+  //   this.customer_entry.UPDATE_TS = new Date().toISOString();
+  //   this.customer_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+  // }
+
+  // SetCommonEntityForCustomerAddUpdate() {
+  //   if (localStorage.getItem("g_USER_GUID") == "sva") {
+  //     this.customer_entry.TENANT_GUID = this.Tenant_Add_ngModel.trim();
+  //   }
+  //   else {
+  //     this.customer_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+  //   }
+  //   this.customer_entry.NAME = this.titlecasePipe.transform(this.CUSTOMER_NAME_ngModel_Add.trim());
+  // }
+
+  // InsertCustomer() {
+  //   this.socservice.save_customer(this.customer_entry)
+  //     .subscribe((response) => {
+  //       if (response.status == 200) {
+  //         this.SaveCustomerLocation();
+  //         //this.SaveProject();
+  //       }
+  //     });
+  // }
+
+  // UpdateCustomer() {
+  //   this.socservice.update_customer(this.customer_entry)
+  //     .subscribe((response) => {
+  //       if (response.status == 200) {
+  //         this.SaveProject();
+  //       }
+  //     });
+  // }
+
+  // SaveCustomerLocation() {
+  //   //for Save Set Entities-------------------------------------------------------------
+  //   if (this.Add_Form == true) {
+  //     this.SetEntityForCustomerLocationAdd();
+  //   }
+  //   //for Update Set Entities------------------------------------------------------------
+  //   else {
+  //     this.SetEntityForCustomerLocationUpdate();
+  //   }
+  //   //Common Entities-------------------------------------------------------------------
+  //   this.SetCommonEntityForCustomerLocationAddUpdate();
+
+  //   //**************Save service if it is new details***************************
+  //   if (this.Add_Form == true) {
+  //     this.InsertCustomerLocation();
+  //   }
+  //   //**************Update service if it is new details*************************
+  //   else {
+  //     this.UpdateCustomerLocation();
+  //   }
+  // }
+
+  // SetEntityForCustomerLocationAdd() {
+  //   this.customer_location_entry.CUSTOMER_LOCATION_GUID = UUID.UUID();
+  // }
+
+  // SetEntityForCustomerLocationUpdate() {
+  //   this.customer_location_entry.CUSTOMER_LOCATION_GUID = this.soc_details_main[0]["CUSTOMER_LOCATION_GUID"];
+  // }
+
+  // SetCommonEntityForCustomerLocationAddUpdate() {
+  //   this.customer_location_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
+  //   this.customer_location_entry.NAME = this.titlecasePipe.transform(this.LOCATION_NAME_ngModel_Add.trim());
+  //   this.customer_location_entry.DESCRIPTION = "NA";
+  //   this.customer_location_entry.REGISTRATION_NO = this.REGISTRATION_NO_ngModel_Add.trim();
+  //   this.customer_location_entry.ADDRESS1 = this.titlecasePipe.transform(this.ADDRESS1_ngModel_Add.trim());
+  //   this.customer_location_entry.ADDRESS2 = this.titlecasePipe.transform(this.ADDRESS2_ngModel_Add.trim());
+  //   this.customer_location_entry.ADDRESS3 = this.titlecasePipe.transform(this.ADDRESS3_ngModel_Add.trim());
+  //   this.customer_location_entry.CONTACT_PERSON = this.titlecasePipe.transform(this.CONTACT_PERSON_ngModel_Add.trim());
+  //   this.customer_location_entry.CONTACT_PERSON_MOBILE_NO = this.CONTACT_PERSON_MOBILE_NO_ngModel_Add.trim();
+  //   this.customer_location_entry.CONTACT_NO1 = this.CONTACT_NO1_ngModel_Add.trim();
+  //   this.customer_location_entry.CONTACT_NO2 = this.CONTACT_NO2_ngModel_Add.trim();
+  //   this.customer_location_entry.EMAIL = this.EMAIL_ngModel_Add.trim().toLowerCase();
+  //   this.customer_location_entry.DIVISION = this.titlecasePipe.transform(this.DIVISION_ngModel_Add.trim());
+
+  //   this.customer_location_entry.CREATION_TS = this.customer_entry.CREATION_TS;
+  //   this.customer_location_entry.CREATION_USER_GUID = this.customer_entry.CREATION_USER_GUID;
+  //   this.customer_location_entry.UPDATE_TS = this.customer_entry.UPDATE_TS;
+  //   this.customer_location_entry.UPDATE_USER_GUID = this.customer_entry.UPDATE_USER_GUID
+  // }
+
+  // InsertCustomerLocation() {
+  //   this.socservice.save_customer_location(this.customer_location_entry)
+  //     .subscribe((response) => {
+  //       if (response.status == 200) {
+
+  //         this.SaveProject();
+  //       }
+  //     });
+  // }
+
+  // UpdateCustomerLocation() {
+  //   this.socservice.update_customer_location(this.customer_location_entry)
+  //     .subscribe((response) => {
+  //       if (response.status == 200) {
+
+  //         this.SaveProject();
+  //       }
+  //     });
+  // }
+
+  SaveProject() {
+    //for Save Set Entities-------------------------------------------------------------
     if (this.Add_Form == true) {
-      this.SetEntityForCustomerAdd();
+      this.SetEntityForProjectAdd();
     }
     //for Update Set Entities------------------------------------------------------------
     else {
-      this.SetEntityForCustomerUpdate();
+      this.SetEntityForProjectUpdate();
     }
     //Common Entities-------------------------------------------------------------------
-    this.SetCommonEntityForCustomerAddUpdate();
+    this.SetCommonEntityForProjectAddUpdate();
 
     //Loader-------------------------------
     this.loading = this.loadingCtrl.create({
@@ -373,11 +607,11 @@ export class SocRegistrationPage {
         if (res.toString() == "0") {
           //**************Save service if it is new details***************************
           if (this.Add_Form == true) {
-            this.InsertCustomer();
+            this.InsertProject();
           }
           //**************Update service if it is new details*************************
           else {
-            this.UpdateCustomer();
+            this.UpdateProject();
           }
         }
         else {
@@ -391,166 +625,47 @@ export class SocRegistrationPage {
     }
     else {
       //Simple update----------------------------------------------------------
-      this.UpdateCustomer();
-    }
-  }
-
-  SetEntityForCustomerAdd() {
-    this.customer_entry.CUSTOMER_GUID = UUID.UUID();
-    this.customer_entry.CREATION_TS = new Date().toISOString();
-    this.customer_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-    this.customer_entry.UPDATE_TS = new Date().toISOString();
-    this.customer_entry.UPDATE_USER_GUID = "";
-  }
-
-  SetEntityForCustomerUpdate() {
-    this.customer_entry.CUSTOMER_GUID = this.soc_details_main[0]["CUSTOMER_GUID"];
-    this.customer_entry.CREATION_TS = this.soc_details_main[0]["CREATION_TS"];
-    this.customer_entry.CREATION_USER_GUID = this.soc_details_main[0]["CREATION_USER_GUID"];
-    this.customer_entry.UPDATE_TS = new Date().toISOString();
-    this.customer_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-  }
-
-  SetCommonEntityForCustomerAddUpdate() {
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
-      this.customer_entry.TENANT_GUID = this.Tenant_Add_ngModel.trim();
-    }
-    else {
-      this.customer_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
-    }
-    this.customer_entry.NAME = this.titlecasePipe.transform(this.CUSTOMER_NAME_ngModel_Add.trim());
-  }
-
-  InsertCustomer() {
-    this.socservice.save_customer(this.customer_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-          this.SaveCustomerLocation();
-          //this.SaveProject();
-        }
-      });
-  }
-
-  UpdateCustomer() {
-    this.socservice.update_customer(this.customer_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-          this.SaveProject();
-        }
-      });
-  }
-
-  SaveCustomerLocation() {
-    //for Save Set Entities-------------------------------------------------------------
-    if (this.Add_Form == true) {
-      this.SetEntityForCustomerLocationAdd();
-    }
-    //for Update Set Entities------------------------------------------------------------
-    else {
-      this.SetEntityForCustomerLocationUpdate();
-    }
-    //Common Entities-------------------------------------------------------------------
-    this.SetCommonEntityForCustomerLocationAddUpdate();
-
-    //**************Save service if it is new details***************************
-    if (this.Add_Form == true) {
-      this.InsertCustomerLocation();
-    }
-    //**************Update service if it is new details*************************
-    else {
-      this.UpdateCustomerLocation();
-    }
-  }
-
-  SetEntityForCustomerLocationAdd() {
-    this.customer_location_entry.CUSTOMER_LOCATION_GUID = UUID.UUID();
-  }
-
-  SetEntityForCustomerLocationUpdate() {
-    this.customer_location_entry.CUSTOMER_LOCATION_GUID = this.soc_details_main[0]["CUSTOMER_LOCATION_GUID"];
-  }
-
-  SetCommonEntityForCustomerLocationAddUpdate() {
-    this.customer_location_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
-    this.customer_location_entry.NAME = this.titlecasePipe.transform(this.LOCATION_NAME_ngModel_Add.trim());
-    this.customer_location_entry.DESCRIPTION = "NA";
-    this.customer_location_entry.RIGISTRATION_NO = this.REGISTRATION_NO_ngModel_Add.trim();
-    this.customer_location_entry.ADDRESS1 = this.titlecasePipe.transform(this.ADDRESS1_ngModel_Add.trim());
-    this.customer_location_entry.ADDRESS2 = this.titlecasePipe.transform(this.ADDRESS2_ngModel_Add.trim());
-    this.customer_location_entry.ADDRESS3 = this.titlecasePipe.transform(this.ADDRESS3_ngModel_Add.trim());
-    this.customer_location_entry.CONTACT_PERSON = this.titlecasePipe.transform(this.CONTACT_PERSON_ngModel_Add.trim());
-    this.customer_location_entry.CONTACT_PERSON_MOBILE_NO = this.CONTACT_PERSON_MOBILE_NO_ngModel_Add.trim();
-    this.customer_location_entry.CONTACT_NO1 = this.CONTACT_NO1_ngModel_Add.trim();
-    this.customer_location_entry.CONTACT_NO2 = this.CONTACT_NO2_ngModel_Add.trim();
-    this.customer_location_entry.EMAIL = this.EMAIL_ngModel_Add.trim().toLowerCase();
-    this.customer_location_entry.DIVISION = this.titlecasePipe.transform(this.DIVISION_ngModel_Add.trim());
-
-    this.customer_location_entry.CREATION_TS = this.customer_entry.CREATION_TS;
-    this.customer_location_entry.CREATION_USER_GUID = this.customer_entry.CREATION_USER_GUID;
-    this.customer_location_entry.UPDATE_TS = this.customer_entry.UPDATE_TS;
-    this.customer_location_entry.UPDATE_USER_GUID = this.customer_entry.UPDATE_USER_GUID
-  }
-
-  InsertCustomerLocation() {
-    this.socservice.save_customer_location(this.customer_location_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-
-          this.SaveProject();
-        }
-      });
-  }
-
-  UpdateCustomerLocation() {
-    this.socservice.update_customer_location(this.customer_location_entry)
-      .subscribe((response) => {
-        if (response.status == 200) {
-
-          this.SaveProject();
-        }
-      });
-  }
-
-  SaveProject() {
-    //for Save Set Entities-------------------------------------------------------------
-    if (this.Add_Form == true) {
-      this.SetEntityForProjectAdd();
-    }
-    //for Update Set Entities------------------------------------------------------------
-    else {
-      this.SetEntityForProjectUpdate();
-    }
-    //Common Entities-------------------------------------------------------------------
-    this.SetCommonEntityForProjectAddUpdate();
-
-    //**************Save service if it is new details***************************
-    if (this.Add_Form == true) {
-      this.InsertProject();
-    }
-    //**************Update service if it is new details*************************
-    else {
       this.UpdateProject();
     }
   }
 
   SetEntityForProjectAdd() {
     this.project_entry.PROJECT_GUID = UUID.UUID();
+
+    this.project_entry.CREATION_TS = new Date().toISOString();
+    this.project_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.project_entry.UPDATE_TS = new Date().toISOString();
+    this.project_entry.UPDATE_USER_GUID = "";
   }
 
   SetEntityForProjectUpdate() {
     this.project_entry.PROJECT_GUID = this.soc_details_main[0]["PROJECT_GUID"];
+
+    this.project_entry.CREATION_TS = this.soc_details_main[0]["CREATION_TS"];
+    this.project_entry.CREATION_USER_GUID = this.soc_details_main[0]["CREATION_USER_GUID"];
+    this.project_entry.UPDATE_TS = new Date().toISOString();
+    this.project_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
   }
 
   SetCommonEntityForProjectAddUpdate() {
     this.project_entry.NAME = this.titlecasePipe.transform(this.PROJECT_NAME_ngModel_Add.trim());
-    this.project_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
+    //this.project_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
+    this.project_entry.CUSTOMER_GUID = this.Customer_GUID;
     this.project_entry.CUSTOMER_LOCATION_GUID = "NA";
-    this.project_entry.TENANT_GUID = this.customer_entry.TENANT_GUID;
+
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.project_entry.TENANT_GUID = this.Tenant_Add_ngModel.trim();
+    }
+    else {
+      this.project_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+
+    //this.project_entry.TENANT_GUID = this.customer_entry.TENANT_GUID;
     this.project_entry.ACTIVATION_FLAG = "1";
-    this.project_entry.CREATION_TS = this.customer_entry.CREATION_TS;
-    this.project_entry.CREATION_USER_GUID = this.customer_entry.CREATION_USER_GUID;
-    this.project_entry.UPDATE_TS = this.customer_entry.UPDATE_TS;
-    this.project_entry.UPDATE_USER_GUID = this.customer_entry.UPDATE_USER_GUID;
+    // this.project_entry.CREATION_TS = new Date().toISOString();
+    // this.project_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    // this.project_entry.UPDATE_TS = new Date().toISOString();
+    // this.project_entry.UPDATE_USER_GUID = "";
   }
 
   InsertProject() {
@@ -605,11 +720,11 @@ export class SocRegistrationPage {
   SetCommonEntityForSOCAddUpdate() {
     this.soc_entry.SOC_NO = this.SOC_NO_ngModel_Add.trim();
     this.soc_entry.PROJECT_GUID = this.project_entry.PROJECT_GUID;
-    this.soc_entry.TENANT_GUID = this.customer_entry.TENANT_GUID;
-    this.soc_entry.CREATION_TS = this.customer_entry.CREATION_TS;
-    this.soc_entry.CREATION_USER_GUID = this.customer_entry.CREATION_USER_GUID;
-    this.soc_entry.UPDATE_TS = this.customer_entry.UPDATE_TS;
-    this.soc_entry.UPDATE_USER_GUID = this.customer_entry.UPDATE_USER_GUID;
+    this.soc_entry.TENANT_GUID = this.project_entry.TENANT_GUID;
+    this.soc_entry.CREATION_TS = this.project_entry.CREATION_TS;
+    this.soc_entry.CREATION_USER_GUID = this.project_entry.CREATION_USER_GUID;
+    this.soc_entry.UPDATE_TS = this.project_entry.UPDATE_TS;
+    this.soc_entry.UPDATE_USER_GUID = this.project_entry.UPDATE_USER_GUID;
   }
 
   InsertSOC() {
@@ -669,12 +784,30 @@ export class SocRegistrationPage {
         });
     });
   }
+  
+  isReadonly: boolean = false;
+  Readonly() {    
+    return this.isReadonly = true;
+  }
 
   ClearControls() {
     this.Tenant_Add_ngModel = "";
     this.SOC_NO_ngModel_Add = "";
     this.PROJECT_NAME_ngModel_Add = "";
     this.CUSTOMER_NAME_ngModel_Add = "";
+    // this.LOCATION_NAME_ngModel_Add = "";
+    // this.REGISTRATION_NO_ngModel_Add = "";
+    // this.ADDRESS1_ngModel_Add = "";
+    // this.ADDRESS2_ngModel_Add = "";
+    // this.ADDRESS3_ngModel_Add = "";
+    // this.CONTACT_PERSON_ngModel_Add = "";
+    // this.CONTACT_PERSON_MOBILE_NO_ngModel_Add = "";
+    // this.CONTACT_NO1_ngModel_Add = "";
+    // this.CONTACT_NO2_ngModel_Add = "";
+    // this.EMAIL_ngModel_Add = "";
+    // this.DIVISION_ngModel_Add = "";
+
+    this.Customer_GUID = "";
   }
 }
 

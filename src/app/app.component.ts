@@ -51,6 +51,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
 
+import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
+
 
 export interface PageInterface {
 

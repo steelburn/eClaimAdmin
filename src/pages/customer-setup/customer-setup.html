@@ -1,53 +1,49 @@
 <!--
-  Generated template for the SocRegistrationPage page.
+  Generated template for the CustomerSetupPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
+
   <ion-navbar>
-    <ion-title>{{ 'SOC_REGISTRATION_HEADING' | translate }}</ion-title>
+    <ion-title>Customer Registration</ion-title>
   </ion-navbar>
+
 </ion-header>
+
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddSocClick()">
+    <button ion-fab mini (click)="AddCustomerClick()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-
 
   <ion-list>
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
-          <th class="lgl1">{{ 'SOC_NUMBER' | translate }}</th>
-          <th class="lgl1">{{ 'PROJECT_NAME' | translate }}</th>
-          <th class="lgl1">{{ 'CUSTOMER_NAME' | translate }}</th>
-          <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
+          <th class="lgl1">{{ 'Name' | translate }}</th>
+          <th class="lgl1">{{ 'Location' | translate }}</th>
+          <th class="lgl1">{{ 'Email' | translate }}</th>
+          <th class="lgl1">{{ 'Mobile No' | translate }}</th>          
           <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let soc of socs; let i=index">
+        <tr class="col7" *ngFor="let customer of customers; let i=index">
           <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{soc.soc}}</td>
-          <td class="lgl1">{{soc.project_name}}</td>
-          <td class="lgl1">{{soc.customer_name}}</td>
-          <td class="lgl1" *ngIf="AdminLogin">{{soc.TENANT_ACCOUNT_NAME}}</td>
+          <td class="lgl1">{{customer.CUSTOMER_NAME}}</td>
+          <td class="lgl1">{{customer.CUSTOMER_LOCATION_NAME}}</td>
+          <td class="lgl1">{{customer.EMAIL}}</td>          
+          <td class="lgl1">{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
           <td class="lgl1 fColor">
-            <!-- <button ion-button item-end (click)="EditClick(soc.TENANT_GUID)">
-              <ion-icon name="md-create"></ion-icon>
-            </button>
-            <button ion-button item-end (click)="DeleteClick(soc.TENANT_GUID)">
-              <ion-icon name="md-close"></ion-icon>
-            </button> -->
             <button ion-button item-end>
-              <ion-icon (click)="EditClick(soc.SOC_GUID)" name="md-create"></ion-icon>
+              <ion-icon (click)="EditClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)" name="md-create"></ion-icon>
             </button>
             <button ion-button item-end>
-              <ion-icon name="md-close" (click)="DeleteClick(soc.SOC_GUID)"></ion-icon>
+              <ion-icon name="md-close" (click)="DeleteClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)"></ion-icon>
             </button>
           </td>
         </tr>
@@ -56,43 +52,34 @@
     </ion-item>
   </ion-list>
 
-
-  <div class="blackcontainer" *ngIf="AddSocClicked">
+  <div class="blackcontainer" *ngIf="AddCustomerClicked">
   </div>
-  <div class="popup" padding *ngIf="AddSocClicked">
+  <div class="popup" padding *ngIf="AddCustomerClicked">
 
     <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW SOC NUMBER</div>
-        <div class="icHeaderText" *ngIf="Edit_Form">UPDATE SOC NUMBER</div>
+        <!-- <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW CUSTOMER</div>
+        <div class="icHeaderText" *ngIf="Edit_Form">UPDATE CUSTOMER</div> -->
 
-        <button class="btnR" (click)="CloseSocClick()">
+        <div class="icHeaderText">{{TitleHeader}}</div>
+
+        <button class="btnR" (click)="CloseCustomerClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
 
       </ion-card-header>
 
       <ion-list class="scroll">
-        <form [formGroup]="Socform">
+        <form [formGroup]="Customerform">
           <ion-item *ngIf="AdminLogin">
             <ion-label stacked>{{"TENANT"}}</ion-label>
             <ion-select formControlName="TENANT_NAME" [(ngModel)]="Tenant_Add_ngModel" placeholder="{{'Please fill the Tenant'}}">
               <ion-option *ngFor="let tenant of tenants" value="{{tenant.TENANT_GUID}}">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
             </ion-select>
-          </ion-item>
+          </ion-item>          
 
           <ion-item>
-            <ion-label stacked>{{ 'SOC_NUMBER' | translate }}</ion-label>
-            <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Add" placeholder="{{'Please fill the soc no'}}"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label stacked>{{ 'PROJECT_NAME' | translate }}</ion-label>
-            <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
-          </ion-item>
-
-          <!-- <ion-item>
             <ion-label stacked>{{ 'CUSTOMER_NAME' | translate }}</ion-label>
             <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
           </ion-item>
@@ -150,45 +137,15 @@
           <ion-item>
             <ion-label stacked>{{ 'Division' | translate }}</ion-label>
             <ion-input type="text" formControlName="division" [(ngModel)]="DIVISION_ngModel_Add" placeholder="{{'Please fill the division'}}"></ion-input>
-          </ion-item> -->
-
-          <ion-item>
-            <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [(ngModel)]="CUSTOMER_NAME_ngModel_Add" type="text" formControlName="customer_name" placeholder=" {{ 'CUSTOMER_NAME_PLACE_HOLDER' | translate }} " [readonly]="Readonly()"></ion-input>
-            <button ion-button outline item-end icon-left (click)="CustomerLookup()">
-              <ion-icon name="eye"></ion-icon>
-              {{ "CUSTOMER LOOKUP" | translate }} </button>
           </ion-item>
 
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Socform.valid" (click)="Save()">Submit</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Customerform.valid" (click)="Save()">Submit</button>
           </div>
 
         </form>
       </ion-list>
     </ion-card>
 
-    <div class="blackcontainer" *ngIf="CustomerLookupClicked">
-    </div>
-    <div class="popup" padding *ngIf="CustomerLookupClicked">
-      <ion-card>
-        <ion-card-header class="icTitle headerColor-white ">
-          <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
-          <button class="btnR" (click)="CloseCustomerLookup()">
-            <ion-icon name="md-close"></ion-icon>
-          </button>
-        </ion-card-header>
-        <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder='{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
-        <ion-list>
-          <ion-item-sliding *ngFor="let item of customers">
-            <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID, item.NAME)">
-              <ion-label>{{item.NAME}}</ion-label>
-            </button>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-card>
-    </div>
-
   </div>
-  <!-- add Tenant form end-->
 </ion-content>

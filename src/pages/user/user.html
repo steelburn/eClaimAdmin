@@ -215,12 +215,12 @@
                         <ion-input type="email" formControlName="EMAIL" [(ngModel)]="User_Email_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item class="text" style="display: none;">
                         <ion-label stacked>{{ 'LOGINID' | translate }}</ion-label>
                         <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_ngModel" placeholder="{{'Please fill the Login ID'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item class="text" style="display: none;">
                         <ion-label stacked>{{ 'PASSWORD_LABEL' | translate }}</ion-label>
                         <ion-input type="password" formControlName="PASSWORD" [(ngModel)]="User_Password_ngModel" placeholder="{{'Please fill the Password'}}"></ion-input>
                     </ion-item>
@@ -237,7 +237,8 @@
 
                     <ion-item class="text">
                         <ion-label stacked>{{ 'MARITAL_STATUS' | translate }}</ion-label>
-                        <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_ngModel" placeholder="{{'Please select marital status'}}">
+                        <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_ngModel" placeholder="{{'Please select marital status'}}"
+                            (ionChange)="DisplayFamily()">
                             <ion-option [value]="0">Single</ion-option>
                             <ion-option [value]="1">Married</ion-option>
                         </ion-select>
@@ -285,7 +286,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{ 'COMPANY' | translate }}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{'Please fill the company'}}"
-                            (ionChange)="GetBranch('tenant_company_site', User_Company_ngModel,'SITE_NAME'); GetDesignation('main_designation', 'NAME'); GetDepartment('main_department', 'NAME'); BindBank('main_bank', 'NAME')">
+                            (ionChange)="GetBranch('tenant_company_site', User_Company_ngModel,'SITE_NAME'); GetDesignation('main_designation', 'NAME'); GetDepartment('main_department', 'NAME'); BindBank('main_bank', 'NAME'); BindApprover1('view_get_tenant_admin')">
                             <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
@@ -336,14 +337,19 @@
                         </ion-select>
                     </ion-item>
 
-
-
                     <ion-item class="text">
                         <ion-label stacked>{{ 'EMPLOYEE_STATUS' | translate }}</ion-label>
                         <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_ngModel" placeholder="{{'Please select employement status'}}">
                             <ion-option value="0">Probation</ion-option>
                             <ion-option value="1">Confirmed</ion-option>
                             <ion-option value="2">Terminated</ion-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item class="text">
+                        <ion-label stacked>{{"Manager"}}</ion-label>
+                        <ion-select formControlName="APPROVER1" [(ngModel)]="User_Approver1_ngModel" placeholder="{{'Please select Approver'}}">
+                            <ion-option *ngFor="let approver of approvers" [value]="approver.USER_GUID" selected="true">{{approver.FULLNAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -405,7 +411,7 @@
 
                         <button ion-button type="button" (click)="clearFile('avatar3')">clear file</button>
                         <button ion-button (click)="AddProfessionalCertification()">
-                            <ion-icon name="cloud-upload"></ion-icon>ADD
+                            <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>ADD
                         </button>
                     </ion-item>
 
@@ -481,110 +487,110 @@
                         </ion-select>
                     </ion-item>
 
+                    <div *ngIf="MaritalStatusMarried">
+                        <div class="eClaimSubTitle2">
+                            <b>{{'FAMILY_DETAILS' | translate}}</b>
+                        </div>
 
-                    <div class="eClaimSubTitle2">
-                        <b>{{'FAMILY_DETAILS' | translate}}</b>
+                        <ion-item class="text">
+                            <ion-label stacked>{{'SPOUSE_NAME' | translate}}</ion-label>
+                            <ion-input type="text" formControlName="SPOUSENAME" [(ngModel)]="User_Spouse_Name_ngModel" placeholder="{{'Please fill the Spouse Name'}}"></ion-input>
+                        </ion-item>
+
+                        <ion-item class="text">
+                            <ion-label stacked>{{'IC_NUMBER' | translate}}</ion-label>
+                            <ion-input type="text" formControlName="SPOUSE_ICNUMBER" [(ngModel)]="User_Spouse_IcNumber_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
+                        </ion-item>
+                        <ion-item class="text">
+                            <button ion-button icon-left (click)="AddFamilyDetails()">
+                                <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>ADD
+                            </button>
+                        </ion-item>
+                        <ion-list>
+                            <ion-item>
+                                <table class="Tabler">
+                                    <tr class="linedsg TColor">
+                                        <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
+                                        <th class="lgl1">NAME</th>
+                                        <th class="lgl1">IC NUMBER</th>
+                                        <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
+                                    </tr>
+
+                                    <tr class="col7" *ngFor="let family of FamilyDetails; let i=index">
+                                        <td class="lgl1">{{i+1}}</td>
+                                        <td class="lgl1">{{family.NAME}}</td>
+                                        <td class="lgl1">{{family.ICNO}}</td>
+                                        <td class="lgl1 fColor">
+                                            <button ion-button item-end (click)="EditFamilyDetails(family.SPOUSE_GUID)">
+                                                <ion-icon name="md-create"></ion-icon>
+                                            </button>
+                                            <button ion-button item-end (click)="RemoveFamilyDetails(family.SPOUSE_GUID)">
+                                                <ion-icon name="md-close"></ion-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ion-item>
+                        </ion-list>
+
+                        <ion-item class="text">
+                            <ion-label stacked>{{'CHILD_NAME' | translate}}</ion-label>
+                            <ion-input type="text" formControlName="CHILDNAME" [(ngModel)]="User_Child_Name_ngModel" placeholder="{{'Please fill the Child Name'}}"></ion-input>
+                        </ion-item>
+                        <ion-item class="text">
+                            <ion-label stacked>{{'IC_NUMBER' | translate}}</ion-label>
+                            <ion-input type="text" formControlName="CHILD_ICNUMBER" [(ngModel)]="User_Child_IcNumber_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
+                        </ion-item>
+                        <ion-item class="text">
+                            <ion-label stacked>{{'GENDER' | translate}}</ion-label>
+                            <ion-select formControlName="CHILD_GENDER" [(ngModel)]="User_Child_Gender_ngModel" placeholder="{{'Please Select Gender'}}">
+                                <ion-option value="MALE">MALE</ion-option>
+                                <ion-option value="FEMALE">FEMALE</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <ion-item class="text">
+                            <ion-label stacked>{{'SPOUSE' | translate}}</ion-label>
+                            <ion-select formControlName="SPOUSE_CHILD" [(ngModel)]="User_SpouseChild_ngModel" placeholder="{{'Please Select Spouse'}}">
+                                <ion-option *ngFor="let family of FamilyDetails" [value]="family.NAME" selected="true">{{ family.NAME }}</ion-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <ion-item class="text">
+                            <button ion-button icon-left (click)="AddChildren()">
+                                <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>ADD
+                            </button>
+                        </ion-item>
+                        <ion-list>
+                            <ion-item>
+                                <table class="Tabler">
+                                    <tr class="linedsg TColor">
+                                        <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
+                                        <th class="lgl1">NAME</th>
+                                        <th class="lgl1">IC NUMBER</th>
+                                        <th class="lgl1">GENDER</th>
+                                        <th class="lgl1">SPOUSE</th>
+                                        <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
+                                    </tr>
+
+                                    <tr class="col7" *ngFor="let chilren of ChildrenDetails; let i=index">
+                                        <td class="lgl1">{{i+1}}</td>
+                                        <td class="lgl1">{{chilren.NAME}}</td>
+                                        <td class="lgl1">{{chilren.ICNO}}</td>
+                                        <td class="lgl1">{{chilren.GENDER}}</td>
+                                        <td class="lgl1">{{chilren.SPOUSE}}</td>
+                                        <td class="lgl1 fColor">
+                                            <button ion-button item-end (click)="EditChildren(chilren.CHILD_GUID)">
+                                                <ion-icon name="md-create"></ion-icon>
+                                            </button>
+                                            <button ion-button item-end (click)="RemoveChildren(chilren.CHILD_GUID)">
+                                                <ion-icon name="md-close"></ion-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ion-item>
+                        </ion-list>
                     </div>
-
-                    <ion-item class="text">
-                        <ion-label stacked>{{'SPOUSE_NAME' | translate}}</ion-label>
-                        <ion-input type="text" formControlName="SPOUSENAME" [(ngModel)]="User_Spouse_Name_ngModel" placeholder="{{'Please fill the Spouse Name'}}"></ion-input>
-                    </ion-item>
-
-                    <ion-item class="text">
-                        <ion-label stacked>{{'IC_NUMBER' | translate}}</ion-label>
-                        <ion-input type="text" formControlName="SPOUSE_ICNUMBER" [(ngModel)]="User_Spouse_IcNumber_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
-                    </ion-item>
-                    <ion-item class="text">
-                        <button ion-button icon-left (click)="AddFamilyDetails()">
-                            <ion-icon name="cloud-upload"></ion-icon>ADD
-                        </button>
-                    </ion-item>
-                    <ion-list>
-                        <ion-item>
-                            <table class="Tabler">
-                                <tr class="linedsg TColor">
-                                    <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
-                                    <th class="lgl1">NAME</th>
-                                    <th class="lgl1">IC NUMBER</th>
-                                    <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
-                                </tr>
-
-                                <tr class="col7" *ngFor="let family of FamilyDetails; let i=index">
-                                    <td class="lgl1">{{i+1}}</td>
-                                    <td class="lgl1">{{family.NAME}}</td>
-                                    <td class="lgl1">{{family.ICNO}}</td>
-                                    <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditFamilyDetails(family.SPOUSE_GUID)">
-                                            <ion-icon name="md-create"></ion-icon>
-                                        </button>
-                                        <button ion-button item-end (click)="RemoveFamilyDetails(family.SPOUSE_GUID)">
-                                            <ion-icon name="md-close"></ion-icon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </ion-item>
-                    </ion-list>
-
-                    <ion-item class="text">
-                        <ion-label stacked>{{'CHILD_NAME' | translate}}</ion-label>
-                        <ion-input type="text" formControlName="CHILDNAME" [(ngModel)]="User_Child_Name_ngModel" placeholder="{{'Please fill the Child Name'}}"></ion-input>
-                    </ion-item>
-                    <ion-item class="text">
-                        <ion-label stacked>{{'IC_NUMBER' | translate}}</ion-label>
-                        <ion-input type="text" formControlName="CHILD_ICNUMBER" [(ngModel)]="User_Child_IcNumber_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
-                    </ion-item>
-                    <ion-item class="text">
-                        <ion-label stacked>{{'GENDER' | translate}}</ion-label>
-                        <ion-select formControlName="CHILD_GENDER" [(ngModel)]="User_Child_Gender_ngModel" placeholder="{{'Please Select Gender'}}">
-                            <ion-option value="MALE">MALE</ion-option>
-                            <ion-option value="FEMALE">FEMALE</ion-option>
-                        </ion-select>
-                    </ion-item>
-                    <ion-item class="text">
-                        <ion-label stacked>{{'SPOUSE' | translate}}</ion-label>
-                        <ion-select formControlName="SPOUSE_CHILD" [(ngModel)]="User_SpouseChild_ngModel" placeholder="{{'Please Select Spouse'}}">
-                            <ion-option *ngFor="let family of FamilyDetails" [value]="family.NAME" selected="true">{{ family.NAME }}</ion-option>
-                        </ion-select>
-                    </ion-item>
-
-                    <ion-item class="text">
-                        <button ion-button icon-left (click)="AddChildren()">
-                            <ion-icon name="cloud-upload"></ion-icon>ADD
-                        </button>
-                    </ion-item>
-                    <ion-list>
-                        <ion-item>
-                            <table class="Tabler">
-                                <tr class="linedsg TColor">
-                                    <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
-                                    <th class="lgl1">NAME</th>
-                                    <th class="lgl1">IC NUMBER</th>
-                                    <th class="lgl1">GENDER</th>
-                                    <th class="lgl1">SPOUSE</th>
-                                    <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
-                                </tr>
-
-                                <tr class="col7" *ngFor="let chilren of ChildrenDetails; let i=index">
-                                    <td class="lgl1">{{i+1}}</td>
-                                    <td class="lgl1">{{chilren.NAME}}</td>
-                                    <td class="lgl1">{{chilren.ICNO}}</td>
-                                    <td class="lgl1">{{chilren.GENDER}}</td>
-                                    <td class="lgl1">{{chilren.SPOUSE}}</td>
-                                    <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditChildren(chilren.CHILD_GUID)">
-                                            <ion-icon name="md-create"></ion-icon>
-                                        </button>
-                                        <button ion-button item-end (click)="RemoveChildren(chilren.CHILD_GUID)">
-                                            <ion-icon name="md-close"></ion-icon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </ion-item>
-                    </ion-list>
-
                     <div class="eClaimSubTitle2">
                         <b>{{'EMERGENCY_CONTACT_DETAILS' | translate}}</b>
                     </div>
@@ -647,7 +653,7 @@
                     </ion-item>
 
                     <div class="btn">
-                        <button ion-button icon-left (click)="Save()">
+                        <button ion-button icon-left [disabled]="!Userform.valid" (click)="Save()">
                             {{ 'SUBMIT_BUTTON' | translate }}
                         </button>
                     </div>
@@ -687,12 +693,12 @@
                         <ion-input type="email" formControlName="EMAIL" [(ngModel)]="User_Email_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item class="text" style="display: none;">
                         <ion-label stacked>{{ 'LOGINID' | translate }}</ion-label>
                         <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item class="text" style="display: none;">
                         <ion-label stacked>{{ 'PASSWORD' | translate }}</ion-label>
                         <ion-input type="password" formControlName="PASSWORD" [(ngModel)]="User_Password_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
@@ -741,7 +747,7 @@
 
                     <ion-item class="text">
                         <!-- <img style="width: 10%" height="80px" src="http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881"> -->
-                        <img style="width: 10%" height="80px" [src]="Profile_Image_Display">                        
+                        <img [src]="Profile_Image_Display" style="width: 20%">
                     </ion-item>
 
                     <div class="eClaimSubTitle2">
@@ -751,7 +757,7 @@
                     <ion-item class="text">
                         <ion-label stacked>{{ 'COMPANY' | translate }}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{'Please fill the company'}}"
-                            (ionChange)="GetBranch('tenant_company_site', User_Company_Edit_ngModel,'SITE_NAME')">
+                            (ionChange)="GetBranch('tenant_company_site', User_Company_Edit_ngModel,'SITE_NAME'); BindApprover1('view_get_tenant_admin')">
                             <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
@@ -814,6 +820,13 @@
                         </ion-select>
                     </ion-item>
 
+                    <ion-item class="text">
+                        <ion-label stacked>{{"Manager"}}</ion-label>
+                        <ion-select formControlName="APPROVER1" [(ngModel)]="User_Approver1_Edit_ngModel" placeholder="{{'Please select Approver'}}">
+                            <ion-option *ngFor="let approver of approvers" [value]="approver.USER_GUID" selected="true">{{approver.FULLNAME}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+
                     <div class="eClaimSubTitle2">
                         <b>{{ 'EDUCATIONAL_QUALIFICATION' | translate }}</b>
                     </div>
@@ -873,7 +886,7 @@
 
                     <ion-item>
                         <button ion-button icon-left (click)="AddProfessionalCertificationForEdit()">
-                            <ion-icon name="cloud-upload"></ion-icon>ADD
+                            <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>ADD
                         </button>
                     </ion-item>
                     <ion-list>
@@ -946,110 +959,110 @@
                         </ion-select>
                     </ion-item>
 
+                    <div *ngIf="MaritalStatusMarried">
+                        <div class="eClaimSubTitle2">
+                            <b>{{'FAMILY_DETAILS' | translate}}</b>
+                        </div>
 
-                    <div class="eClaimSubTitle2">
-                        <b>{{'FAMILY_DETAILS' | translate}}</b>
+                        <ion-item class="text">
+                            <ion-label stacked>{{'SPOUSE_NAME' | translate}}</ion-label>
+                            <ion-input type="text" formControlName="SPOUSENAME" [(ngModel)]="User_Spouse_Name_Edit_ngModel" placeholder="{{'Please fill the Spouse Name'}}"></ion-input>
+                        </ion-item>
+
+                        <ion-item class="text">
+                            <ion-label stacked>{{'IC_NUMBER' | translate}}</ion-label>
+                            <ion-input type="text" formControlName="SPOUSE_ICNUMBER" [(ngModel)]="User_Spouse_IcNumber_Edit_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <button ion-button icon-left (click)="AddFamilyDetailsForEdit()">
+                                <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>ADD
+                            </button>
+                        </ion-item>
+                        <ion-list>
+                            <ion-item>
+                                <table class="Tabler">
+                                    <tr class="linedsg TColor">
+                                        <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
+                                        <th class="lgl1">NAME</th>
+                                        <th class="lgl1">IC NUMBER</th>
+                                        <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
+                                    </tr>
+
+                                    <tr class="col7" *ngFor="let family of FamilyDetails; let i=index">
+                                        <td class="lgl1">{{i+1}}</td>
+                                        <td class="lgl1">{{family.NAME}}</td>
+                                        <td class="lgl1">{{family.ICNO}}</td>
+                                        <td class="lgl1 fColor">
+                                            <button ion-button item-end (click)="EditFamilyDetailsForEdit(family.SPOUSE_GUID)">
+                                                <ion-icon name="md-create"></ion-icon>
+                                            </button>
+                                            <button ion-button item-end (click)="RemoveFamilyDetails(family.SPOUSE_GUID)">
+                                                <ion-icon name="md-close"></ion-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ion-item>
+                        </ion-list>
+
+                        <ion-item class="text">
+                            <ion-label stacked>{{'CHILD_NAME' | translate}}</ion-label>
+                            <ion-input type="text" formControlName="CHILDNAME" [(ngModel)]="User_Child_Name_Edit_ngModel" placeholder="{{'Please fill the Child Name'}}"></ion-input>
+                        </ion-item>
+                        <ion-item class="text">
+                            <ion-label stacked>{{'IC_NUMBER' | translate}}</ion-label>
+                            <ion-input type="text" formControlName="CHILD_ICNUMBER" [(ngModel)]="User_Child_IcNumber_Edit_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
+                        </ion-item>
+                        <ion-item class="text">
+                            <ion-label stacked>{{'GENDER' | translate}}</ion-label>
+                            <ion-select formControlName="CHILD_GENDER" [(ngModel)]="User_Child_Gender_Edit_ngModel" placeholder="{{'Please Select Gender'}}">
+                                <ion-option value="MALE">MALE</ion-option>
+                                <ion-option value="FEMALE">FEMALE</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <ion-item class="text">
+                            <ion-label stacked>{{'SPOUSE' | translate}}</ion-label>
+                            <ion-select formControlName="SPOUSE_CHILD" [(ngModel)]="User_SpouseChild_Edit_ngModel" placeholder="{{'Please Select Spouse'}}">
+                                <ion-option *ngFor="let family of FamilyDetails" [value]="family.NAME">{{ family.NAME }}</ion-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <ion-item class="text">
+                            <button ion-button icon-left (click)="AddChildrenForEdit()">
+                                <ion-icon name="md-add-circle" style="padding: 10px;"></ion-icon>ADD
+                            </button>
+                        </ion-item>
+                        <ion-list>
+                            <ion-item>
+                                <table class="Tabler">
+                                    <tr class="linedsg TColor">
+                                        <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
+                                        <th class="lgl1">NAME</th>
+                                        <th class="lgl1">IC NUMBER</th>
+                                        <th class="lgl1">GENDER</th>
+                                        <th class="lgl1">SPOUSE</th>
+                                        <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
+                                    </tr>
+
+                                    <tr class="col7" *ngFor="let chilren of ChildrenDetails; let i=index">
+                                        <td class="lgl1">{{i+1}}</td>
+                                        <td class="lgl1">{{chilren.NAME}}</td>
+                                        <td class="lgl1">{{chilren.ICNO}}</td>
+                                        <td class="lgl1">{{chilren.GENDER}}</td>
+                                        <td class="lgl1">{{chilren.SPOUSE}}</td>
+                                        <td class="lgl1 fColor">
+                                            <button ion-button item-end (click)="EditChildrenForEdit(chilren.CHILD_GUID)">
+                                                <ion-icon name="md-create"></ion-icon>
+                                            </button>
+                                            <button ion-button item-end (click)="RemoveChildren(chilren.CHILD_GUID)">
+                                                <ion-icon name="md-close"></ion-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ion-item>
+                        </ion-list>
                     </div>
-
-                    <ion-item class="text">
-                        <ion-label stacked>{{'SPOUSE_NAME' | translate}}</ion-label>
-                        <ion-input type="text" formControlName="SPOUSENAME" [(ngModel)]="User_Spouse_Name_Edit_ngModel" placeholder="{{'Please fill the Spouse Name'}}"></ion-input>
-                    </ion-item>
-
-                    <ion-item class="text">
-                        <ion-label stacked>{{'IC_NUMBER' | translate}}</ion-label>
-                        <ion-input type="text" formControlName="SPOUSE_ICNUMBER" [(ngModel)]="User_Spouse_IcNumber_Edit_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <button ion-button icon-left (click)="AddFamilyDetailsForEdit()">
-                            <ion-icon name="cloud-upload"></ion-icon>ADD
-                        </button>
-                    </ion-item>
-                    <ion-list>
-                        <ion-item>
-                            <table class="Tabler">
-                                <tr class="linedsg TColor">
-                                    <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
-                                    <th class="lgl1">NAME</th>
-                                    <th class="lgl1">IC NUMBER</th>
-                                    <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
-                                </tr>
-
-                                <tr class="col7" *ngFor="let family of FamilyDetails; let i=index">
-                                    <td class="lgl1">{{i+1}}</td>
-                                    <td class="lgl1">{{family.NAME}}</td>
-                                    <td class="lgl1">{{family.ICNO}}</td>
-                                    <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditFamilyDetailsForEdit(family.SPOUSE_GUID)">
-                                            <ion-icon name="md-create"></ion-icon>
-                                        </button>
-                                        <button ion-button item-end (click)="RemoveFamilyDetails(family.SPOUSE_GUID)">
-                                            <ion-icon name="md-close"></ion-icon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </ion-item>
-                    </ion-list>
-
-                    <ion-item class="text">
-                        <ion-label stacked>{{'CHILD_NAME' | translate}}</ion-label>
-                        <ion-input type="text" formControlName="CHILDNAME" [(ngModel)]="User_Child_Name_Edit_ngModel" placeholder="{{'Please fill the Child Name'}}"></ion-input>
-                    </ion-item>
-                    <ion-item class="text">
-                        <ion-label stacked>{{'IC_NUMBER' | translate}}</ion-label>
-                        <ion-input type="text" formControlName="CHILD_ICNUMBER" [(ngModel)]="User_Child_IcNumber_Edit_ngModel" placeholder="{{'Please fill the IC Number'}}"></ion-input>
-                    </ion-item>
-                    <ion-item class="text">
-                        <ion-label stacked>{{'GENDER' | translate}}</ion-label>
-                        <ion-select formControlName="CHILD_GENDER" [(ngModel)]="User_Child_Gender_Edit_ngModel" placeholder="{{'Please Select Gender'}}">
-                            <ion-option value="MALE">MALE</ion-option>
-                            <ion-option value="FEMALE">FEMALE</ion-option>
-                        </ion-select>
-                    </ion-item>
-                    <ion-item class="text">
-                        <ion-label stacked>{{'SPOUSE' | translate}}</ion-label>
-                        <ion-select formControlName="SPOUSE_CHILD" [(ngModel)]="User_SpouseChild_Edit_ngModel" placeholder="{{'Please Select Spouse'}}">
-                            <ion-option *ngFor="let family of FamilyDetails" [value]="family.NAME">{{ family.NAME }}</ion-option>
-                        </ion-select>
-                    </ion-item>
-
-                    <ion-item class="text">
-                        <button ion-button icon-left (click)="AddChildrenForEdit()">
-                            <ion-icon name="cloud-upload"></ion-icon>ADD
-                        </button>
-                    </ion-item>
-                    <ion-list>
-                        <ion-item>
-                            <table class="Tabler">
-                                <tr class="linedsg TColor">
-                                    <th class="lgl1 tblBrLeft" style="width:60px;">NO</th>
-                                    <th class="lgl1">NAME</th>
-                                    <th class="lgl1">IC NUMBER</th>
-                                    <th class="lgl1">GENDER</th>
-                                    <th class="lgl1">SPOUSE</th>
-                                    <th class="lgl1 tblBrRight" style="width:90px;">ACTION</th>
-                                </tr>
-
-                                <tr class="col7" *ngFor="let chilren of ChildrenDetails; let i=index">
-                                    <td class="lgl1">{{i+1}}</td>
-                                    <td class="lgl1">{{chilren.NAME}}</td>
-                                    <td class="lgl1">{{chilren.ICNO}}</td>
-                                    <td class="lgl1">{{chilren.GENDER}}</td>
-                                    <td class="lgl1">{{chilren.SPOUSE}}</td>
-                                    <td class="lgl1 fColor">
-                                        <button ion-button item-end (click)="EditChildrenForEdit(chilren.CHILD_GUID)">
-                                            <ion-icon name="md-create"></ion-icon>
-                                        </button>
-                                        <button ion-button item-end (click)="RemoveChildren(chilren.CHILD_GUID)">
-                                            <ion-icon name="md-close"></ion-icon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </ion-item>
-                    </ion-list>
-
 
                     <div class="eClaimSubTitle2">
                         <b>{{'EMERGENCY_CONTACT_DETAILS' | translate}}</b>
@@ -1113,7 +1126,7 @@
                     </ion-item>
 
                     <div class="btn">
-                        <button ion-button (click)="Update(view_user_details[0].USER_GUID)">{{"SUBMIT" | translate}}</button>
+                        <button ion-button [disabled]="!Userform.valid" (click)="Update(view_user_details[0].USER_GUID)">{{"SUBMIT" | translate}}</button>
                     </div>
                 </form>
 
