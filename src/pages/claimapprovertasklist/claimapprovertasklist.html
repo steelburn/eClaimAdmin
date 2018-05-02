@@ -10,7 +10,7 @@
     <ion-title>Superior Task List</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top>
-    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -45,7 +45,7 @@
             <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails; let i=index">
                 <td class="lgl1">
                   <ion-item>
-                    <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID)"> </ion-checkbox>
+                    <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID,claimrequestdetail.PROFILE_LEVEL)"> </ion-checkbox>
                   </ion-item>
                 </td>
                 <td class="lgl1">{{i+1}}</td>

@@ -67,6 +67,9 @@ import {  FileUploadOptions  } from '@ionic-native/file-transfer';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+import { ApiManagerProvider } from '../providers//api-manager.provider';
+import { ProfileManagerProvider } from '../providers/profile-manager.provider';
+
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 // import { Services } from '../pages/Services';
 
@@ -251,7 +254,7 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     UserclaimslistPage,
 
     ClaimReportPage
-    UploadPage
+    //UploadPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -265,7 +268,7 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     FilePath,
     FileTransfer,
     //FileUploadOptions,
-    FileTransferObject
+    FileTransferObject,ApiManagerProvider,ProfileManagerProvider
   ]
 })
 export class AppModule { }

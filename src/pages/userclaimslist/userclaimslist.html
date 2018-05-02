@@ -11,7 +11,7 @@
   </ion-navbar>
 
   <ion-toolbar no-border-top>
-    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -48,10 +48,10 @@
           
                     </tr>
           
-                    <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails; let i=index">
+                    <tr class="col7" *ngFor="let claimhistorydetail of userClaimhistorydetails; let i=index">
                         <td class="lgl1">{{i+1}}</td>
                         <td class="lgl1" >{{claimhistorydetail.CLAIM_TYPE}}</td>
-                        <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy H:mm'}}</td>
+                        <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                         <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
                         <td class="lgl1">{{claimhistorydetail.STAGE}}</td>
                         <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT}}</td>

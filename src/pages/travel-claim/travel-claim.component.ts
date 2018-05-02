@@ -13,8 +13,8 @@ import * as constants from '../../config/constants'
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';     
-import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';     
+import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/ImageUpload_model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
 //import { TravelClaim_Service } from '../../services/travelclaim_service';
@@ -505,7 +505,7 @@ export class TravelclaimPage {
       .map(res => res.json())
       .subscribe(claimRefdata => {
         if (claimRefdata["resource"][0] == null) {
-          let claimReqRef: ClaimRefMain_Model = new ClaimRefMain_Model();
+          let claimReqRef: MainClaimReferanceModel = new MainClaimReferanceModel();
           claimReqRef.CLAIM_REF_GUID = UUID.UUID();
           claimReqRef.USER_GUID = this.userGUID;
           claimReqRef.TENANT_GUID = tenantGUID;
@@ -520,7 +520,7 @@ export class TravelclaimPage {
             claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
 
             let claimId = '58c59b56-289e-31a2-f708-138e81a9c823';
-            let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+            let claimReqMainRef: MainClaimRequestModel = new MainClaimRequestModel();
             claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
             claimReqMainRef.TENANT_GUID = tenantGUID;
             claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
@@ -567,7 +567,7 @@ export class TravelclaimPage {
           let claimId = '58c59b56-289e-31a2-f708-138e81a9c823';
           claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
 
-          let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+          let claimReqMainRef: MainClaimRequestModel = new MainClaimRequestModel();
           claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
           claimReqMainRef.TENANT_GUID = tenantGUID;
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;

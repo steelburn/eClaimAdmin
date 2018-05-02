@@ -5,7 +5,7 @@ import { Platform } from 'ionic-angular';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Services } from '../Services';
 import * as constants from '../../config/constants';
-import { ClaimWorkFlowHistory_Model } from '../../models/ClaimWorkFlowHistory_Model';
+import { ClaimWorkFlowHistoryModel } from '../../models/claim-work-flow-history.model';
 import {TravelclaimPage} from '../../pages/travelclaim/travelclaim';
 import {MedicalclaimPage} from '../../pages/medicalclaim/medicalclaim';
 import { UUID } from 'angular2-uuid';
@@ -95,7 +95,7 @@ export class MedicalClaimViewPage {
   SubmitAction() {
     if (this.ToggleNgModel) {
       // || this.Remarks_NgModel.toString().length < 25
-      let claimHistoryRef: ClaimWorkFlowHistory_Model = new ClaimWorkFlowHistory_Model();
+      let claimHistoryRef: ClaimWorkFlowHistoryModel = new ClaimWorkFlowHistoryModel();
       claimHistoryRef.CLAIM_WFH_GUID = UUID.UUID();
       claimHistoryRef.CLAIM_REQUEST_GUID = this.claimRequestGUID;
       claimHistoryRef.REMARKS = this.Remarks_NgModel;
@@ -115,7 +115,7 @@ export class MedicalClaimViewPage {
       if (this.Remarks_NgModel === undefined) {
         alert('Please input valid Remarks');
       }
-      let claimHistoryRef: ClaimWorkFlowHistory_Model = new ClaimWorkFlowHistory_Model();
+      let claimHistoryRef: ClaimWorkFlowHistoryModel = new ClaimWorkFlowHistoryModel();
       claimHistoryRef.CLAIM_WFH_GUID = UUID.UUID();
       claimHistoryRef.CLAIM_REQUEST_GUID = this.claimRequestGUID;
       claimHistoryRef.REMARKS = this.Remarks_NgModel;

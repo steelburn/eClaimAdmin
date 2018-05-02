@@ -20,8 +20,8 @@ import { UUID } from 'angular2-uuid';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
-import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';
-import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
+import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 
 import {  LoadingController, ActionSheetController,  Platform, Loading, ToastController } from 'ionic-angular';
 import { Services } from '../Services';
@@ -242,7 +242,7 @@ export class MedicalclaimPage {
   }
 
    save(imageGUID: string) {
-    let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+    let claimReqMainRef: MainClaimRequestModel = new MainClaimRequestModel();
     let userGUID = localStorage.getItem('g_USER_GUID');
     let tenantGUID = localStorage.getItem('g_TENANT_GUID');
     let month = new Date(this.Medical_Date_ngModel).getMonth() + 1;
@@ -254,7 +254,7 @@ export class MedicalclaimPage {
       .map(res => res.json())
       .subscribe(claimRefdata => {
         if (claimRefdata["resource"][0] == null) {
-          let claimReqRef: ClaimRefMain_Model = new ClaimRefMain_Model();
+          let claimReqRef: MainClaimReferanceModel = new MainClaimReferanceModel();
           claimReqRef.CLAIM_REF_GUID = UUID.UUID();
           claimReqRef.USER_GUID = userGUID;
           claimReqRef.TENANT_GUID = tenantGUID;
@@ -317,7 +317,7 @@ export class MedicalclaimPage {
         else {
           claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
 
-          let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+          let claimReqMainRef: MainClaimRequestModel = new MainClaimRequestModel();
           claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
           claimReqMainRef.TENANT_GUID = tenantGUID;
           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
