@@ -33,3 +33,4 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 www/build/
+package-lock.json
