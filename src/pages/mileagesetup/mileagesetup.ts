@@ -264,7 +264,11 @@ export class MileagesetupPage {
       this.loading.present();
 
       //---------------------------------------------------
-      if (this.CATEGORY_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_Category').toUpperCase() || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid') || this.RATE_DATE_ngModel_Add != localStorage.getItem('Prev_RateDate')) {
+
+      let strPrev_Category: string = "";
+      if (localStorage.getItem('Prev_Category') != null) { strPrev_Category = localStorage.getItem('Prev_Category').toUpperCase(); }
+
+      if (this.CATEGORY_ngModel_Add.trim().toUpperCase() != strPrev_Category || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid') || this.RATE_DATE_ngModel_Add != localStorage.getItem('Prev_RateDate')) {
         let val = this.CheckDuplicate();
         val.then((res) => {
           if (res.toString() == "0") {
@@ -382,10 +386,10 @@ export class MileagesetupPage {
   CheckDuplicate() {
     let url: string = "";
     if (localStorage.getItem("g_USER_GUID") != "sva") {
-      url = this.baseResource_Url + "main_mileage?filter=(CATEGORY=" + this.CATEGORY_ngModel_Add.trim() + ')AND(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')AND(RATE_DATE=' + this.RATE_DATE_ngModel_Add + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_mileage?filter=CATEGORY=" + this.CATEGORY_ngModel_Add.trim() + ' AND TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ' AND RATE_DATE=' + this.RATE_DATE_ngModel_Add + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     else {
-      url = this.baseResource_Url + "main_mileage?filter=(CATEGORY=" + this.CATEGORY_ngModel_Add.trim() + ')AND(TENANT_GUID=' + this.Tenant_Add_ngModel + ')AND(RATE_DATE=' + this.RATE_DATE_ngModel_Add + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_mileage?filter=CATEGORY=" + this.CATEGORY_ngModel_Add.trim() + ' AND TENANT_GUID=' + this.Tenant_Add_ngModel + ' AND RATE_DATE=' + this.RATE_DATE_ngModel_Add + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     let result: any;
     return new Promise((resolve) => {

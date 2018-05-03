@@ -238,7 +238,10 @@ export class DepartmentsetupPage {
       this.loading.present();
       //--------------------------------------------------
 
-      if (this.NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_Name').toUpperCase() || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
+      let strPrev_Name: string = "";
+      if (localStorage.getItem('Prev_Name') != null) { strPrev_Name = localStorage.getItem('Prev_Name').toUpperCase(); }
+
+      if (this.NAME_ngModel_Add.trim().toUpperCase() != strPrev_Name || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
         let val = this.CheckDuplicate();
         val.then((res) => {
           if (res.toString() == "0") {
@@ -346,10 +349,10 @@ export class DepartmentsetupPage {
   CheckDuplicate() {
     let url: string = "";
     if (localStorage.getItem("g_USER_GUID") != "sva") {
-      url = this.baseResource_Url + "main_department?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')AND(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_department?filter=NAME=" + this.NAME_ngModel_Add.trim() + ' AND TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     else {
-      url = this.baseResource_Url + "main_department?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')AND(TENANT_GUID=' + this.Tenant_Add_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_department?filter=NAME=" + this.NAME_ngModel_Add.trim() + ' AND TENANT_GUID=' + this.Tenant_Add_ngModel + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     let result: any;
     return new Promise((resolve) => {
