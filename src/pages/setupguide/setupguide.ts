@@ -6,6 +6,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import CryptoJS from 'crypto-js';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
@@ -39,6 +40,8 @@ import { DepartmentSetup_Service } from '../../services/departmentsetup_service'
 import { DesignationSetup_Model } from '../../models/designationsetup_model';
 import { DesignationSetup_Service } from '../../services/designationsetup_service';
 
+import { GlobalFunction } from '../../shared/GlobalFunction';
+
 /**
  * Generated class for the SetupguidePage page.
  *
@@ -49,7 +52,7 @@ import { DesignationSetup_Service } from '../../services/designationsetup_servic
 @IonicPage()
 @Component({
   selector: 'page-setupguide',
-  templateUrl: 'setupguide.html', providers: [BaseHttpService, TenantMainSetup_Service, TenantCompanySetup_Service, TenantCompanySiteSetup_Service, UserSetup_Service, DepartmentSetup_Service, DesignationSetup_Service, TitleCasePipe]
+  templateUrl: 'setupguide.html', providers: [BaseHttpService, TenantMainSetup_Service, TenantCompanySetup_Service, TenantCompanySiteSetup_Service, UserSetup_Service, DepartmentSetup_Service, DesignationSetup_Service, TitleCasePipe, GlobalFunction]
 })
 export class SetupguidePage {
   Branchform1: FormGroup;
@@ -101,6 +104,8 @@ export class SetupguidePage {
   tenant_company_entry: TenantCompanySetup_Model = new TenantCompanySetup_Model();
   tenant_company_site_entry: TenantCompanySiteSetup_Model = new TenantCompanySiteSetup_Model();
 
+  // GlobalFunction_New: GlobalFunction = new GlobalFunction();
+
   usermain_entry: UserMain_Model = new UserMain_Model();
   userinfo_entry: UserInfo_Model = new UserInfo_Model();
 
@@ -114,10 +119,14 @@ export class SetupguidePage {
   isReadonly: boolean = false;
   Mode: string = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb1: FormBuilder, fb2: FormBuilder, fb3: FormBuilder, fb4: FormBuilder, fb5: FormBuilder, private loadingCtrl: LoadingController, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private departmentsetupservice: DepartmentSetup_Service, private designationsetupservice: DesignationSetup_Service, private titlecasePipe: TitleCasePipe) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb1: FormBuilder, fb2: FormBuilder, fb3: FormBuilder, fb4: FormBuilder, fb5: FormBuilder, private loadingCtrl: LoadingController, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private departmentsetupservice: DepartmentSetup_Service, private designationsetupservice: DesignationSetup_Service, private titlecasePipe: TitleCasePipe, private Global_Function: GlobalFunction) {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       //Clear all controls-------------------------
 
+      var strPassword = Global_Function.Random();
+      //this.Password_ngModel = Global_Function.Random().toString();
+      this.Password_ngModel = CryptoJS.SHA1(strPassword).toString();
+      alert(strPassword);
     }
     else {
       //on the page load all the details of tenant get display----------------------------------
@@ -287,6 +296,7 @@ export class SetupguidePage {
   AddDesignation() {
     if (this.Designation_Name_ngModel != undefined && this.Designation_Name_ngModel.trim() != "") {
       //if (this.Designation_Desc_ngModel != undefined && this.Designation_Desc_ngModel.trim() != "") {
+      
       if (this.DesignationSaveFlag == false) {
         this.Designation.push({ DESIGNATION_GUID: UUID.UUID(), DESIGNATION_NAME: this.titlecasePipe.transform(this.Designation_Name_ngModel.trim()), DESIGNATION_DESC: this.Designation_Desc_ngModel });
       }
@@ -314,6 +324,7 @@ export class SetupguidePage {
   AddDepartment() {    
     if (this.Department_Name_ngModel != undefined && this.Department_Name_ngModel.trim() != "") {
       //if (this.Department_Desc_ngModel != undefined && this.Department_Desc_ngModel.trim() != "") {
+      
       if (this.DepartmentSaveFlag == false) {
         this.Department.push({ DEPARTMENT_GUID: UUID.UUID(), DEPARTMENT_NAME: this.titlecasePipe.transform(this.Department_Name_ngModel.trim()), DEPARTMENT_DESC: this.Department_Desc_ngModel });
       }
@@ -452,7 +463,7 @@ export class SetupguidePage {
 
   BindControls() {
     let Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_tenant_setup_guide' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')and(USER_GUID=' + localStorage.getItem('g_USER_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log(Url);
+    
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
     });
@@ -608,10 +619,10 @@ export class SetupguidePage {
       this.usermain_entry.STAFF_ID = "";
 
       //this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
-      this.usermain_entry.LOGIN_ID = this.Tenantemail_ngModel;
-      this.usermain_entry.PASSWORD = this.Password_ngModel.trim();
+      this.usermain_entry.LOGIN_ID = this.Tenantemail_ngModel.trim();
+      this.usermain_entry.PASSWORD = this.Password_ngModel;
 
-      this.usermain_entry.EMAIL = this.Tenantemail_ngModel;
+      this.usermain_entry.EMAIL = this.Tenantemail_ngModel.trim();
       this.usermain_entry.ACTIVATION_FLAG = 1;
       this.usermain_entry.CREATION_TS = new Date().toISOString();
       this.usermain_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
@@ -627,10 +638,10 @@ export class SetupguidePage {
       this.usermain_entry.STAFF_ID = this.tenants[0]["STAFF_ID"];
 
       //this.usermain_entry.LOGIN_ID = this.Userid_ngModel.trim();
-      this.usermain_entry.LOGIN_ID = this.Tenantemail_ngModel;
-      this.usermain_entry.PASSWORD = this.Password_ngModel.trim();
+      this.usermain_entry.LOGIN_ID = this.Tenantemail_ngModel.trim();
+      this.usermain_entry.PASSWORD = this.Password_ngModel;
 
-      this.usermain_entry.EMAIL = this.Tenantemail_ngModel;
+      this.usermain_entry.EMAIL = this.Tenantemail_ngModel.trim();
       this.usermain_entry.ACTIVATION_FLAG = this.tenants[0]["USER_ACTIVATION_FLAG"];
       this.usermain_entry.CREATION_TS = this.tenants[0]["USER_CREATION_TS"];
       this.usermain_entry.CREATION_USER_GUID = this.tenants[0]["USER_CREATION_GUID"];
@@ -941,7 +952,7 @@ export class SetupguidePage {
     }
   }
 
-  InsertDepartment() {
+  InsertDepartment() {    
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       for (var item in this.Department) {
         this.department_entry.DEPARTMENT_GUID = this.Department[item]["DEPARTMENT_GUID"];
@@ -1057,4 +1068,5 @@ export class SetupguidePage {
     }
   }
 
+  
 }

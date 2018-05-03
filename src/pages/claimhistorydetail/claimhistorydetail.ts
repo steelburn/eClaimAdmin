@@ -24,13 +24,15 @@ import { BaseHttpService } from '../../services/base-http';
 })
 export class ClaimhistorydetailPage {
   claimhistorydetails: any[]; 
+  claimhistorydetails1: any[]; 
   userdetails: any; 
   claimrefguid:any;
   userguid:any;
   month:any;
   baseResourceUrl: string;
   baseResourceUrl1: string;
-  
+  searchboxValue: string;
+
   
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
    this.claimrefguid=navParams.get("claimRefGuid");
@@ -49,9 +51,7 @@ export class ClaimhistorydetailPage {
     .get(this.baseResourceUrl1)
     .map(res => res.json())
     .subscribe(data => {
-      //alert(JSON.stringify(data));
       this.userdetails= data["resource"];
-      //alert(this.userdetails);
     });
   };
   BindData()
@@ -61,20 +61,23 @@ export class ClaimhistorydetailPage {
     .map(res => res.json())
     .subscribe(data => {
       this.claimhistorydetails= data["resource"];
+      this.claimhistorydetails1=this.claimhistorydetails;
     });
   }
   onSearchInput(ev: any) {  
     // alert('hi')
-          let val = ev.target.value;
+          let val = this.searchboxValue;
           if (val && val.trim() != '') {
-           this.claimhistorydetails = this.claimhistorydetails.filter((item) => {
+           this.claimhistorydetails = this.claimhistorydetails1.filter((item) => {
         let claimtype:number;
         let status:number;
         let stage:number;
         let amount:number;
-             console.log(item);
+        let date:number;
              if(item.CLAIM_TYPE!=null)
              {claimtype=item.CLAIM_TYPE.toLowerCase().indexOf(val.toLowerCase())}
+             if(item.TRAVEL_DATE!=null)
+             {date=item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase())}
              if(item.STATUS!=null)
              {status=item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase())}
              if(item.STAGE!=null)
@@ -83,6 +86,7 @@ export class ClaimhistorydetailPage {
              {amount=item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
              return (
                (claimtype > -1) 
+             || (date > -1) 
              || (status > -1) 
              || ( stage> -1)
              || (amount> -1) 
@@ -91,7 +95,7 @@ export class ClaimhistorydetailPage {
          }
          else
          {
-           this.BindData();
+          this.claimhistorydetails=this.claimhistorydetails1;
          }
    }
 

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { NavController } from 'ionic-angular';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+import CryptoJS from 'crypto-js';
 
 import { UserData } from '../../providers/user-data';
 import { TabsPage } from '../tabs/tabs';
@@ -41,7 +42,11 @@ export class LoginPage {
       }
       else {        
         let url: string;
-        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+       
+        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA1(this.login.password) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        //url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
         this.http
           .get(url)
           .map(res => res.json())

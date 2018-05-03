@@ -132,6 +132,7 @@ export class TenantsetupPage {
   public AddTenantClick() {
     this.AddTenantClicked = true; this.Add_Form = true; this.Edit_Form = false;
     this.ClearControls();
+
   }
 
   public AddTUserClick(TENANT_GUID: any, TENANT_COMPANY_GUID: any, TENANT_COMPANY_SITE_GUID: any) {
@@ -171,6 +172,7 @@ export class TenantsetupPage {
     this.ClearUserControls();
     this.AddTTUserClicked = true;
     this.Add_User_Form = true; this.Edit_User_Form = false;
+    alert(this.tenantusers.EMAIL);
   }
 
   public CloseTTUserClick() {

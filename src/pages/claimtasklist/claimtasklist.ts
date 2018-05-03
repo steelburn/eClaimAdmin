@@ -28,7 +28,9 @@ import { ResourceLoader } from '@angular/compiler';
 export class ClaimtasklistPage {
 
   //ClaimHistory_Model = new ClaimHistory_Model();
-  public claimTaskLists:any[];
+   claimTaskLists:any[];
+   claimTaskLists1:any[];
+   searchboxValue: string;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?filter=(ASSIGNED_TO='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
@@ -42,14 +44,15 @@ BindData()
   .map(res => res.json())
   .subscribe(data => {
     this.claimTaskLists= data["resource"];
+    this.claimTaskLists1=this.claimTaskLists;
   });
 }
 
 onSearchInput(ev: any) {  
   // alert('hi')
-        let val = ev.target.value;
+        let val = this.searchboxValue;
         if (val && val.trim() != '') {
-         this.claimTaskLists = this.claimTaskLists.filter((item) => {
+         this.claimTaskLists = this.claimTaskLists1.filter((item) => {
       let fullname:number;
       let month:number;
       let dept:number;
@@ -73,7 +76,7 @@ onSearchInput(ev: any) {
        }
        else
        {
-         this.BindData();
+        this.claimTaskLists=this.claimTaskLists1;
        }
  }
 

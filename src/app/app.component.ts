@@ -40,16 +40,13 @@ import { StatesetupPage } from '../pages/statesetup/statesetup';
 
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
 //import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
-
-
 import { SetupguidePage } from '../pages/setupguide/setupguide';
-
 import { TranslateService } from '@ngx-translate/core';
-
 import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
+
+import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 
 export interface PageInterface {
@@ -96,8 +93,6 @@ export class ConferenceApp {
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
     { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
   ];
-
-
   // rootPage: any = LoginPage;
   rootPage = 'LoginPage';
   
@@ -117,18 +112,12 @@ export class ConferenceApp {
     this.translate.setDefaultLang('en'); //Fallback language
 
     platform.ready().then(() => {
-    });
-
-    
+    });    
 
     translate.setDefaultLang('en');
     platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
 
-
-
     // Check if the user has already seen the tutorial
-
-
     // load the conference data
     confData.load();
 
@@ -140,9 +129,6 @@ export class ConferenceApp {
 
     this.listenToLoginEvents();
   }
-
-
-
 
   openPage(page: PageInterface) {
     let params = {};
