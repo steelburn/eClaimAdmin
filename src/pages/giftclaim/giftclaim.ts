@@ -71,7 +71,7 @@ export class GiftclaimPage {
     travelAmount: any;
     validDate = new Date().toISOString();
     ClaimRequestMain: any;
-    isCustomer: boolean = false;
+    isCustomer: boolean = true;
 
      /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
@@ -361,30 +361,7 @@ searchProject(searchString: any) {
 }
 
 
-// filterProjects(params?: any) {
-//   if (!params) {
 
-//     //return this.storeProjects;
-//   }
-
-//     return this.projects.filter((item) =>{
-
-//     return this.storeProjects;
-//   }
-
-//   return this.projects.filter((item) => {
-
-//     for (let key in params) {
-//       let field = item[key];
-//       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-//         return item;
-//       } else if (field == params[key]) {
-//         return item;
-//       }
-//     }
-//     return null;
-//   });
-// }
 
 searchCustomer(searchString: any) {
   let val = searchString.target.value;
@@ -397,32 +374,20 @@ searchCustomer(searchString: any) {
   // });
 }
 
-// filterCustomer(params?: any) {
-//   if (!params) {
-//     return this.storeCustomers;
-//   }
-
-//   return this.customers.filter((item) => {
-//     for (let key in params) {
-//       let field = item[key];
-//       if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-//         return item;
-//       } else if (field == params[key]) {
-//         return item;
-//       }
-//     }
-//     return null;
-//   });
-// }
-
 clearFile() {
   this.Giftform.get('avatar').setValue(null);
   this.fileInput.nativeElement.value = '';
 }
 
+allowanceGUID: any;
+onAllowanceSelect(allowance: any) {
+  this.allowanceGUID = allowance.ALLOWANCE_GUID;
+}
+
 submitAction(imageGUID: any,formValues: any) {
   // alert(JSON.parse(formValues) )     
   formValues.claimTypeGUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
+  formValues.meal_allowance = this.allowanceGUID;
   formValues.attachment_GUID = imageGUID;       
   this.travelAmount = formValues.claim_amount;
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;

@@ -84,7 +84,7 @@ export class OvertimeclaimPage {
   travelAmount: any;
   validDate = new Date().toISOString();
   ClaimRequestMain: any;
-  isCustomer: boolean = false;
+  isCustomer: boolean = true;
 
    /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
@@ -374,8 +374,14 @@ export class OvertimeclaimPage {
     this.fileInput.nativeElement.value = '';
   }
 
+  allowanceGUID: any;
+  onAllowanceSelect(allowance: any) {
+    this.allowanceGUID = allowance.ALLOWANCE_GUID;
+  }
+
   submitAction(imageGUID :any,formValues: any) {
     formValues.claimTypeGUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
+    formValues.meal_allowance = this.allowanceGUID;
     formValues.attachment_GUID = imageGUID;
     this.travelAmount = formValues.claim_amount;
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
