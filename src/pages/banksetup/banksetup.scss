@@ -11,10 +11,11 @@ page-banksetup {
         width: calc(50% - 23px);
         display: inline-block;
       }
+  
     
       .iconf {
         font-size: 3.5vw;
-        color: #2E86C1;
+        color: #009688;
   
            transition: width 2s;
       }
@@ -367,7 +368,8 @@ page-banksetup {
         
             .iconf {
               font-size: 10vw;
-            color: #2E86C1 ;
+              color  :#009688,
+
       
             }
         }    
