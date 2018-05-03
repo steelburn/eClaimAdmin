@@ -191,7 +191,10 @@ export class QualificationsetupPage {
       this.loading.present();
       //--------------------------------------------------
 
-      if (this.TYPE_NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_qu_Name').toUpperCase()) {
+      let strPrev_qu_Name: string = "";
+      if (localStorage.getItem('Prev_qu_Name') != null) { strPrev_qu_Name = localStorage.getItem('Prev_qu_Name').toUpperCase(); }
+
+      if (this.TYPE_NAME_ngModel_Add.trim().toUpperCase() != strPrev_qu_Name) {
         let val = this.CheckDuplicate();
         val.then((res) => {
           if (res.toString() == "0") {
@@ -257,7 +260,7 @@ export class QualificationsetupPage {
 
   CheckDuplicate() {
     let url: string = "";
-    url = this.baseResource_Url + "main_qualification_type?filter=(TYPE_NAME=" + this.TYPE_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    url = this.baseResource_Url + "main_qualification_type?filter=TYPE_NAME=" + this.TYPE_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     let result: any;
     return new Promise((resolve) => {
