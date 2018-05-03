@@ -64,6 +64,9 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+import { ApiManagerProvider } from '../providers//api-manager.provider';
+import { ProfileManagerProvider } from '../providers/profile-manager.provider';
+
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -243,10 +246,12 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
     ClaimtasklistPage,
     UserclaimslistPage,
 
+
     ClaimReportPage,   
     UploadPage,
 
     CustomerSetupPage
+
 
   ],
   providers: [
@@ -261,7 +266,7 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
     FilePath,
     FileTransfer,
     //FileUploadOptions,
-    FileTransferObject
+    FileTransferObject,ApiManagerProvider,ProfileManagerProvider
   ]
 })
 export class AppModule { }

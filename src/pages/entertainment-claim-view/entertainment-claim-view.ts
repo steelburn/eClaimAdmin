@@ -5,7 +5,7 @@ import { Platform } from 'ionic-angular';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Services } from '../Services';
 import * as constants from '../../config/constants';
-import { ClaimWorkFlowHistory_Model } from '../../models/ClaimWorkFlowHistory_Model';
+import { ClaimWorkFlowHistoryModel } from '../../models/claim-work-flow-history.model';
 import {TravelclaimPage} from '../../pages/travelclaim/travelclaim';
 import {EntertainmentclaimPage} from '../../pages/entertainmentclaim/entertainmentclaim';
 import { UUID } from 'angular2-uuid';
@@ -54,7 +54,6 @@ export class EntertainmentClaimViewPage {
   //     this.ToggleNgModel = true
   //   }
   // }
-
   // emailUrl: string = 'http://api.zen.com.my/api/v2/emailnotificationtest?api_key=' + constants.DREAMFACTORY_API_KEY;
   // sendEmail() {
   //   let name: string; let email: string
