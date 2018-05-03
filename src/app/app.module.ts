@@ -13,7 +13,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ConferenceApp } from './app.component';
 
-
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
@@ -92,7 +91,6 @@ import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 import{ClaimReportPage} from '../pages/claim-report/claim-report';
 
-import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
