@@ -36,7 +36,7 @@
     </ion-item>
     <ion-item>
         <ion-label> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
-        <ion-label> {{ totalClaimAmount }} </ion-label>
+        <ion-label> {{ totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
     </ion-item>
     <ion-item>
         <ion-label> {{ "STATUS_LABEL" | translate }} </ion-label>
@@ -46,12 +46,27 @@
         <ion-label> {{ "STAGE_LABEL" | translate }} </ion-label>
         <ion-label> {{ claim.STAGE }} </ion-label>
     </ion-item>
+
+    <ion-item>
+        <!-- <ion-toggle [(ngModel)]="ToggleNgModel" (ionChange)="isAccepted($event)" checked="false"></ion-toggle>
+        <ion-label *ngIf="isRemarksAccepted">Accepted</ion-label>
+        <ion-label *ngIf="!isRemarksAccepted">Rejected</ion-label> -->
+
+        <ion-label> {{ "REMARKS_LABEL" | translate }} </ion-label>
+        <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
+        <button ion-button outline item-start (click)="isAccepted('Accepted')">
+            {{ "ACCEPT_BUTTON" | translate }} </button>
+        <button ion-button outline item-start (click)="isAccepted('Rejected')">
+            {{ "REJECT_BUTTON" | translate }} </button>
+    </ion-item>
  
-        <ion-item>
+        <!-- <ion-item>
             <ion-toggle [(ngModel)]="ToggleNgModel" (ionChange)="isAccepted($event)" checked="false"></ion-toggle>
+            <ion-label *ngIf="isRemarksAccepted">Accepted</ion-label>
+            <ion-label *ngIf="!isRemarksAccepted">Rejected</ion-label>
             <ion-label> {{ "REMARKS_LABEL" | translate }} </ion-label>
             <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
-        </ion-item>
+        </ion-item> -->
            <ion-item>
         <button ion-button outline item-start icon-left (click)="SubmitAction()">
             <ion-icon name="eye"></ion-icon>

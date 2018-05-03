@@ -41,7 +41,6 @@ import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
-import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
@@ -64,8 +63,10 @@ import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileUploadOptions } from '@ionic-native/file-transfer';
-
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+import { ApiManagerProvider } from '../providers//api-manager.provider';
+import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 // import { Services } from '../pages/Services';
@@ -77,27 +78,31 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-
-
-import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
+import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
 
 import { AddTollPage } from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 
+
+import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
+import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
+import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
+import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
+import{ClaimReportPage} from '../pages/claim-report/claim-report';
+
 import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
-
-import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
-import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist'
-import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
-import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
-import { ClaimReportPage } from '../pages/claim-report/claim-report';
-
+import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
 import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
+import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
+import { ApiManagerProvider } from '../providers//api-manager.provider';
+import { ProfileManagerProvider } from '../providers/profile-manager.provider';
+
+import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 @NgModule({
   declarations: [
@@ -158,7 +163,9 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     ClaimtasklistPage,
 
     UserclaimslistPage,
-    ClaimReportPage
+    ClaimReportPage,
+
+    CustomerSetupPage
   ],
 
   imports: [
@@ -246,22 +253,27 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
     ClaimtasklistPage,
     UserclaimslistPage,
 
-    ClaimReportPage,
-    UploadPage
+
+    ClaimReportPage,   
+    UploadPage,
+
+    CustomerSetupPage
+
+
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ConferenceData, HttpClientModule,
+    ConferenceData, HttpClientModule, ApiManagerProvider,
     UserData,
     InAppBrowser,
     SplashScreen, StatusBar, Services,
 
-    Camera,
+    Camera, ProfileManagerProvider,
     File,
     FilePath,
     FileTransfer,
     //FileUploadOptions,
-    FileTransferObject
+    FileTransferObject,ApiManagerProvider,ProfileManagerProvider
   ]
 })
 export class AppModule { }

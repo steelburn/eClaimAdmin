@@ -1,19 +1,13 @@
-<!--
-  Generated template for the ClaimapprovertasklistPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
     <ion-title>Superior Task List</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top>
-    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content padding>
     <ion-item>
@@ -45,7 +39,7 @@
             <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails; let i=index">
                 <td class="lgl1">
                   <ion-item>
-                    <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID)"> </ion-checkbox>
+                    <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID,claimrequestdetail.PROFILE_LEVEL)"> </ion-checkbox>
                   </ion-item>
                 </td>
                 <td class="lgl1">{{i+1}}</td>
@@ -56,9 +50,9 @@
                 <td class="lgl1">{{claimrequestdetail.STAGE}}</td>
                 <td class="lgl1">{{claimrequestdetail.CLAIM_AMOUNT}}</td>
                 <td class="lgl1 fColor">
-                  <button ion-button item-end><ion-icon name="md-eye"></ion-icon></button>
+                  <button ion-button item-end (click)='viewClaim(claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
               </td>
-            </tr>
+            </tr>   
   
   
         </table>

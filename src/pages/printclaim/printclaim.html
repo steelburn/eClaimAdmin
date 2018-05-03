@@ -36,19 +36,19 @@
   <form [formGroup]="Printform">
 
     <ion-item>
-      <ion-label stacked>{{ "PRINT_DATE_LABEL" | translate }}</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="Print_Date_ngModel" max={{validDate}} placeholder="{{ 'TRAVEL_DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
+      <ion-label stacked>{{ "PRINTING_DATE_LABEL" | translate }}</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="Printing_Date_ngModel" max={{validDate}} placeholder="{{ 'DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-label> {{travelAmount | number}} </ion-label>
-      <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Print_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
+      <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Printing_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
-      <ion-input type="text" formControlName="description" [(ngModel)]="Print_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
+      <ion-input type="text" formControlName="description" [(ngModel)]="Printing_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
     <ion-item>
@@ -58,7 +58,7 @@
     </ion-item>
    
     <div class="btn">
-        <button ion-button (click)='saveIm()' [disabled]="Printform.invalid || loading" >{{ 'SUBMIT' }}</button>
+        <button ion-button (click)='saveIm(Printform.value)' [disabled]="Printform.invalid || loading" >{{ 'SUBMIT' }}</button>
     </div>    
 
 
