@@ -68,10 +68,6 @@ import { ApiManagerProvider } from '../providers//api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 
 // import {AddTollPage} from '../pages/add-toll/add-toll';
-// import { Services } from '../pages/Services';
-
-
-//import { TravelClaim_Service } from '../services/travelclaim_service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -83,7 +79,6 @@ import { AddTollPage } from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
-
 
 import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'

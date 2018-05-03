@@ -85,7 +85,7 @@ export class TravelclaimPage {
   travelAmount: any;
   validDate = new Date().toISOString();
   ClaimRequestMain: any;
-  isCustomer: boolean = false;
+  isCustomer: boolean = true;
 
    /********FORM EDIT VARIABLES***********/
    vehicleCategory: any;
