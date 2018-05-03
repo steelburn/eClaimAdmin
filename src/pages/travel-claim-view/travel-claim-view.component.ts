@@ -5,7 +5,7 @@ import { Platform } from 'ionic-angular';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Services } from '../Services';
 import * as constants from '../../config/constants';
-import { ClaimWorkFlowHistory_Model } from '../../models/ClaimWorkFlowHistory_Model';
+import { ClaimWorkFlowHistoryModel } from '../../models/claim-work-flow-history.model';
 import {TravelclaimPage} from '../../pages/travel-claim/travel-claim.component';
 import { UUID } from 'angular2-uuid';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
@@ -54,11 +54,13 @@ export class TravelClaimViewPage {
   }
 
   SubmitAction() {
+
     if (!this.isRemarksAccepted) {
       if (this.Remarks_NgModel === undefined) {
         alert('Please input valid Remarks');
         return;
       }
+
     }
     this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
   }

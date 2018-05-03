@@ -20,8 +20,8 @@ import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
 import { Services } from '../Services';
-import { ClaimRefMain_Model } from '../../models/ClaimRefMain_Model';
-import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
+import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 

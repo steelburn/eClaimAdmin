@@ -121,7 +121,7 @@ export class SocRegistrationPage {
           this.PROJECT_NAME_ngModel_Add = self.soc_details_main[0]["PROJECT_NAME"]; localStorage.setItem('PREV_PROJECT_NAME', self.soc_details_main[0]["PROJECT_NAME"]);
           this.CUSTOMER_NAME_ngModel_Add = self.soc_details_main[0]["CUSTOMER_NAME"]; localStorage.setItem('PREV_CUSTOMER_NAME', self.soc_details_main[0]["CUSTOMER_NAME"]);
           this.Customer_GUID = this.soc_details_main[0]["CUSTOMER_GUID"];
-          
+
           // this.LOCATION_NAME_ngModel_Add = self.soc_details_main[0]["CUSTOMER_LOCATION_NAME"];
           // this.REGISTRATION_NO_ngModel_Add = self.soc_details_main[0]["REGISTRATION_NO"];
           // this.ADDRESS1_ngModel_Add = self.soc_details_main[0]["ADDRESS1"];
@@ -601,7 +601,16 @@ export class SocRegistrationPage {
     this.loading.present();
     //-------------------------------------
 
-    if (this.Tenant_Add_ngModel != localStorage.getItem('PREV_TENANT_GUID') || this.SOC_NO_ngModel_Add.trim().toUpperCase() != localStorage.getItem('PREV_SOC_NO').toUpperCase() || this.PROJECT_NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('PREV_PROJECT_NAME').toUpperCase() || this.CUSTOMER_NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('PREV_CUSTOMER_NAME').toUpperCase()) {
+    let strPREV_SOC_NO: string = "";
+    if (localStorage.getItem('PREV_SOC_NO') != null) { strPREV_SOC_NO = localStorage.getItem('PREV_SOC_NO').toUpperCase(); }
+
+    let strPREV_PROJECT_NAME: string = "";
+    if (localStorage.getItem('PREV_PROJECT_NAME') != null) { strPREV_PROJECT_NAME = localStorage.getItem('PREV_PROJECT_NAME').toUpperCase(); }
+
+    let strPREV_CUSTOMER_NAME: string = "";
+    if (localStorage.getItem('PREV_CUSTOMER_NAME') != null) { strPREV_CUSTOMER_NAME = localStorage.getItem('PREV_CUSTOMER_NAME').toUpperCase(); }
+
+    if (this.Tenant_Add_ngModel != localStorage.getItem('PREV_TENANT_GUID') || this.SOC_NO_ngModel_Add.trim().toUpperCase() != strPREV_SOC_NO || this.PROJECT_NAME_ngModel_Add.trim().toUpperCase() != strPREV_PROJECT_NAME || this.CUSTOMER_NAME_ngModel_Add.trim().toUpperCase() != strPREV_CUSTOMER_NAME) {
       let val = this.CheckDuplicate();
       val.then((res) => {
         if (res.toString() == "0") {
@@ -768,10 +777,10 @@ export class SocRegistrationPage {
   CheckDuplicate() {
     let url: string = "";
     if (localStorage.getItem("g_USER_GUID") != "sva") {
-      url = this.baseResource_Url + "view_soc_details?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')AND(soc=' + this.SOC_NO_ngModel_Add.trim() + ')AND(project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ')AND(customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "view_soc_details?filter=TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ' AND soc=' + this.SOC_NO_ngModel_Add.trim() + ' AND project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ' AND customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     else {
-      url = this.baseResource_Url + "view_soc_details?filter=(TENANT_GUID=" + this.Tenant_Add_ngModel + ')AND(soc=' + this.SOC_NO_ngModel_Add.trim() + ')AND(project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ')AND(customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "view_soc_details?filter=TENANT_GUID=" + this.Tenant_Add_ngModel + ' AND soc=' + this.SOC_NO_ngModel_Add.trim() + ' AND project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ' AND customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     let result: any;
     return new Promise((resolve) => {
@@ -784,9 +793,9 @@ export class SocRegistrationPage {
         });
     });
   }
-  
+
   isReadonly: boolean = false;
-  Readonly() {    
+  Readonly() {
     return this.isReadonly = true;
   }
 
