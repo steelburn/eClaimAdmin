@@ -22,6 +22,7 @@ import { LoadingController, ActionSheetController, Platform, Loading, ToastContr
 import { Services } from '../Services';
 import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
 import { MainClaimRequestModel } from '../../models/main-claim-request.model';
+//import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 
@@ -379,7 +380,7 @@ export class EntertainmentclaimPage {
   }
 
   submitAction(imageGUID: any,formValues: any) {
-    let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+    //let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     formValues.claimTypeGUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
     formValues.meal_allowance = this.allowanceGUID;
     formValues.attachment_GUID = imageGUID;   
