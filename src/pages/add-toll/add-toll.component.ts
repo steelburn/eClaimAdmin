@@ -60,28 +60,7 @@ export class AddTollPage {
         });
       };
     }
-  }
-
-  onSubmit() {
-    this.loading = true;
-    const queryHeaders = new Headers();
-    queryHeaders.append('filename', this.uploadFileName);
-    queryHeaders.append('Content-Type', 'multipart/form-data');
-    queryHeaders.append('fileKey', 'file');
-    queryHeaders.append('chunkedMode', 'false');
-    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-    const options = new RequestOptions({ headers: queryHeaders });
-    this.http.post('http://api.zen.com.my/api/v2/files/' + this.uploadFileName, this.DetailsForm.get('avatar').value, options)
-      .map((response) => {
-        return response;
-      }).subscribe((response) => {
-        alert(response.status);
-      });
-    setTimeout(() => {
-      alert('done');
-      this.loading = false;
-    }, 1000);
-  }
+  } 
 
   LoadPayments() {
     this.http
@@ -105,12 +84,7 @@ export class AddTollPage {
           // console.log(res);
         })
       })
-    })
-    // setTimeout(() => {
-    //   this.loading = false;
-    // }, 1000);
-
-
+    })   
   }
 
   ngOnInit(): void {
@@ -141,7 +115,6 @@ export class AddTollPage {
         resolve(claimDetailsGuid);
       })
     });
-
   }
 
   SaveImageinDB() {

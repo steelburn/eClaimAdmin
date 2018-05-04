@@ -10,7 +10,7 @@
     <ion-title>Admin Task List</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top>
-    <ion-searchbar  (ionInput)="onSearchInput($event)" ></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

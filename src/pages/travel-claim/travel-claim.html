@@ -1,16 +1,10 @@
-<!--
-  Generated template for the TravelclaimPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar> 
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
-        </button>
-        
-   
+        </button>        
+
             <ion-fab top1 right>
               <button ion-fab mini class="btnClear">
                 <ion-icon name="settings"></ion-icon>
@@ -23,13 +17,50 @@
      
     <ion-title>{{ 'TRAVEL_CLAIM_HEADING' | translate }}</ion-title>  
   </ion-navbar>
- </ion-header>
-
+ </ion-header>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
 <ion-content padding>
 
-
-  <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">
+    <ion-segment [(ngModel)]="claimFor" color="danger" >
+        <ion-segment-button value="seg_customer" (click)="claimForChanged()">
+          {{"CUSTOMER_TITLE" | translate }}
+        </ion-segment-button>
+        <ion-segment-button value="seg_project" (click)="claimForChanged()">
+          {{"PROJECT_TITLE" | translate }}
+        </ion-segment-button>
+      </ion-segment>
+    
+      <div [ngSwitch]="claimFor">
+        <div *ngSwitchDefault>
+          <ion-item>
+            <button color="danger" ion-button outline item-start icon-left (click)="CustomerLookup()">
+              <ion-icon name="eye"></ion-icon>
+              {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
+          </ion-item>
+          <ion-item>
+            <ion-label color="danger" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
+            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
+          </ion-item>
+        </div>
+        <div *ngSwitchCase="'seg_project'">
+          <ion-item>
+            <button color="danger" ion-button outline item-start icon-left (click)="ProjectLookup()">
+              <ion-icon name="eye"></ion-icon>
+              {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
+          </ion-item>
+          <ion-item >
+            <ion-label color="primary" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
+            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
+              type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="danger" stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
+            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
+              type="text" disabled="true"></ion-input>
+          </ion-item>
+        </div>
+      </div>
+  <!-- <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">
 
       <ion-list-header>
         Select Travel Claim For:
@@ -44,9 +75,7 @@
         <ion-label>Project</ion-label>
         <ion-radio value="project"></ion-radio> 
       </ion-item>
-    </ion-list>
-
-  <form [formGroup]="Travelform">
+    </ion-list> 
 
       <div *ngIf="claimFor=='project'">
   
@@ -62,10 +91,9 @@
             <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
             <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ 'SOC_NUMBER_PLACE_HOLDER' | translate }}"></ion-input>
           </ion-item>
-        </div>     
+        </div>      -->
 
-      <div *ngIf="claimFor=='customer'">
-
+      <!-- <div *ngIf="claimFor=='customer'">
 
           <ion-item>
             <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
@@ -74,46 +102,67 @@
               <ion-icon name="eye"></ion-icon>
               {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
           </ion-item>
-        </div>
+        </div> -->
 
-        <ion-item>
+        <form [formGroup]="Travelform">
+
+        <!-- <ion-item>
           <ion-label stacked>{{ "TRAVEL_DATE_LABEL" | translate  }}</ion-label>        
-          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="Travel_Date_ngModel"  max={{validDate}} placeholder="{{ 'TRAVEL_DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
-        </ion-item>
+          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="travel_date" [(ngModel)]="Travel_Date_ngModel"  max={{validDate}} placeholder="{{ 'DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
+        </ion-item> -->
     
         <ion-item>
-          <ion-label stacked>{{ "START_DT_LABEL" | translate }}</ion-label>
+          <ion-label color="danger" stacked>{{ "START_DT_LABEL" | translate }}</ion-label>
           <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="start_DT" [(ngModel)]="Start_DT_ngModel" max={{validDate}} placeholder="{{ 'START_DATETIME_PLACE_HOLDER' | translate }}"></ion-datetime>
         </ion-item>
     
         <ion-item>
-          <ion-label stacked>{{ "END_DT_LABEL" | translate }}</ion-label>
+          <ion-label color="danger" stacked>{{ "END_DT_LABEL" | translate }}</ion-label>
           <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" [(ngModel)]="End_DT_ngModel" max={{validDate}} placeholder="{{ 'END_DATETIME_PLACE_HOLDER' | translate }}"></ion-datetime>
         </ion-item>
-    
 
         <ion-item>
-            <ion-label stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
+          <ion-label color="danger" stacked>{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
+          <ion-select [(ngModel)]="Meal_Allowance_ngModel" formControlName="meal_allowance">
+            <ion-option *ngFor="let allowance of allowanceList" (ionSelect)="onAllowanceSelect(allowance)">{{allowance.ALLOWANCE_NAME}} - {{allowance.ALLOWANCE_AMOUNT}}</ion-option>
+          </ion-select>
+        </ion-item>    
+
+        <ion-item>
+            <ion-label color="danger" stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
             <ion-select formControlName="vehicleType" [(ngModel)]="Travel_Mode_ngModel" placeholder="{{ 'TRAVEL_TYPE_PLACE_HOLDER' | translate }}">
-              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="SetPrice(vehicle)">{{vehicle.CATEGORY}}</ion-option>
+              <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="onVehicleSelect(vehicle)">{{vehicle.CATEGORY}}</ion-option>
+              <!-- (ionSelect)="SetPrice(vehicle)" -->
             </ion-select>
           </ion-item>
   
-        <ion-item>
+        <!-- <ion-item>
           <ion-label stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
           <ion-input [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" placeholder=" {{ 'ORIGIN_PLACE_PLACE_HOLDER' | translate }} "></ion-input>
           <button ion-button outline item-end icon-left (click)="AddLookupClick()">
             <ion-icon name="eye"></ion-icon>
             {{ "GET_ORIGIN_BUTTON" | translate  }} </button>    
+        </ion-item> -->
+
+        <ion-item>
+          <ion-label color="danger" stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
+          <ion-input (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" placeholder=" {{ 'ORIGIN_PLACE_PLACE_HOLDER' | translate }} "></ion-input>
+    
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="danger" stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
+          <ion-input (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination" placeholder=" {{ 'DESTINATION_PLACE_PLACE_HOLDER' | translate }} "></ion-input>
+    
         </ion-item>
     
-        <ion-item>
+        <!-- <ion-item>
           <ion-label stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
           <ion-input [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination" placeholder=" {{ 'DESTINATION_PLACE_PLACE_HOLDER' | translate }} "></ion-input>
           <button ion-button outline item-end icon-left (click)="AddToLookupClick()">
             <ion-icon name="eye"></ion-icon>
             {{ "GET_DESTINATION_BUTTON" | translate }} </button>
-        </ion-item>
+        </ion-item> -->
     
         <ion-item>      
           <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>
@@ -122,13 +171,13 @@
 
 
         <ion-item>
-            <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
-   
-            <ion-input type="number" formControlName="vehicleType" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
+            <ion-label color="danger" stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>   
+            <ion-input [(ngModel)]="travelAmount" type="text" formControlName="claim_amount" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
+            <!-- <ion-input type="number" formControlName="travel_amount" [(ngModel)]="Travel_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input> -->
           </ion-item>
 
           <ion-item>
-              <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
+              <ion-label color="danger" stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
               <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
             </ion-item>      
             
@@ -136,21 +185,32 @@
               <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">
             </ion-item> -->
 
-        <div class="btn">
-          <button ion-button (click)='save(Travelform.value)'>SUBMIT</button>
-        </div>
-  
+        <!-- <div class="btn">
+          <button ion-button (click)='save(Travelform.value)' [disabled]="Travelform.invalid || loading">SUBMIT</button>
+        </div> -->
 
-        <a (click)="showAddToll()" *ngIf="MainClaimSaved">
+        <div class="btn">
+          <button ion-button color="danger" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "SUBMIT_BUTTON" | translate }}</button>
+        </div>  
+
+        <!-- <a (click)="showAddToll()" *ngIf="MainClaimSaved">
           <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Toll</a>
         <a (click)="showAddParking()" *ngIf="MainClaimSaved">
-          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a>
-    
+          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a> -->
+          <ion-item *ngIf="MainClaimSaved">
+            <a (click)="showAddToll()">
+              <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_TOLL_LABEL" | translate }} </a>
+            <!-- *ngIf="MainClaimSaved" -->
+            <a (click)="showAddParking()">
+              <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_PARKING_LABEL" | translate }} </a>
+            <a (click)="showAddAccommodation()">
+              <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_Accommodation_HEADING" | translate }} </a>
+          </ion-item>    
       </form>
 
-      <div class="blackcontainer" *ngIf="AddLookupClicked">
+      <div class="blackcontainer" *ngIf="AddLookupClicked || AddToLookupClicked">
       </div>
-      <div class="popup" padding *ngIf="AddLookupClicked">
+      <div class="popup" padding *ngIf="AddLookupClicked || AddToLookupClicked">
         <ion-card>
           <ion-card-header class="icTitle headerColor-white ">
     
