@@ -59,7 +59,7 @@ export class CashcardsetupPage {
       this.ClearControls();
     }
     else {
-      alert('Sorry !! You are in Edit Mode.');
+      alert('Sorry, You are in edit mode.');
     }
   }
 
@@ -128,7 +128,7 @@ export class CashcardsetupPage {
   loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private cashcardsetupservice: CashcardSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     if (localStorage.getItem("g_USER_GUID") == null) {
-      alert('Sorry !! Please Login.');
+      alert('Sorry, Please login.');
       this.navCtrl.push(LoginPage);
     }
     else {
@@ -400,10 +400,10 @@ export class CashcardsetupPage {
   CheckDuplicate() {
     let url: string = "";
     if (localStorage.getItem("g_USER_GUID") != "sva") {
-      url = this.baseResource_Url + "main_cashcard?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')AND(ACCOUNT_ID=' + this.ACCOUNT_ID_ngModel_Add.trim() + ')AND(CASHCARD_SNO=' + this.CASHCARD_SNO_ngModel_Add.trim() + ')AND(MANAGEMENT_URL=' + this.MANAGEMENT_URL_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_cashcard?filter=TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ' AND ACCOUNT_ID=' + this.ACCOUNT_ID_ngModel_Add.trim() + ' AND CASHCARD_SNO=' + this.CASHCARD_SNO_ngModel_Add.trim() + ' AND MANAGEMENT_URL=' + this.MANAGEMENT_URL_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     else {
-      url = this.baseResource_Url + "main_cashcard?filter=(TENANT_GUID=" + this.Tenant_Add_ngModel + ')AND(ACCOUNT_ID=' + this.ACCOUNT_ID_ngModel_Add.trim() + ')AND(CASHCARD_SNO=' + this.CASHCARD_SNO_ngModel_Add.trim() + ')AND(MANAGEMENT_URL=' + this.MANAGEMENT_URL_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_cashcard?filter=TENANT_GUID=" + this.Tenant_Add_ngModel + ' AND ACCOUNT_ID=' + this.ACCOUNT_ID_ngModel_Add.trim() + ' AND CASHCARD_SNO=' + this.CASHCARD_SNO_ngModel_Add.trim() + ' AND MANAGEMENT_URL=' + this.MANAGEMENT_URL_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;      
     }
     let result: any;
     return new Promise((resolve) => {

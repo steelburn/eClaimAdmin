@@ -232,8 +232,14 @@ export class MedicalclaimPage {
     this.fileInput.nativeElement.value = '';
   }
 
+  allowanceGUID: any;
+  onAllowanceSelect(allowance: any) {
+    this.allowanceGUID = allowance.ALLOWANCE_GUID;
+  }
+
   submitAction(imageGUID: any,formValues: any) {   
     formValues.claimTypeGUID = '40dbaf56-98e4-77b9-df95-85ec232ff714';
+    formValues.meal_allowance = this.allowanceGUID;
     formValues.attachment_GUID = imageGUID;   
     this.travelAmount = formValues.claim_amount;
     // formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;

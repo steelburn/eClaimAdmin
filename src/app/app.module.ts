@@ -13,7 +13,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ConferenceApp } from './app.component';
 
-
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
@@ -65,14 +64,7 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { ApiManagerProvider } from '../providers//api-manager.provider';
-import { ProfileManagerProvider } from '../providers/profile-manager.provider';
-
 // import {AddTollPage} from '../pages/add-toll/add-toll';
-// import { Services } from '../pages/Services';
-
-
-//import { TravelClaim_Service } from '../services/travelclaim_service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -85,14 +77,12 @@ import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 
-
 import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
 import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
 import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
 import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
 import{ClaimReportPage} from '../pages/claim-report/claim-report';
 
-import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';

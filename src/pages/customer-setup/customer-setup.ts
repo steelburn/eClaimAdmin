@@ -30,9 +30,9 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-customer-setup',
-  templateUrl: 'customer-setup.html', providers: [SocMain_Service, BaseHttpService, TitleCasePipe]  
+  templateUrl: 'customer-setup.html', providers: [SocMain_Service, BaseHttpService, TitleCasePipe]
 })
-export class CustomerSetupPage {  
+export class CustomerSetupPage {
   customer_entry: SocCustomer_Model = new SocCustomer_Model();
   customer_location_entry: SocCustomerLocation_Model = new SocCustomerLocation_Model();
   tenant_entry: Tenant_Main_Model = new Tenant_Main_Model();
@@ -41,11 +41,11 @@ export class CustomerSetupPage {
 
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
- 
-  public customers: any; public customer_details: any;
-  public soc_customer: SocCustomer_Model[] = [];  
 
-  public AddCustomerClicked: boolean = false;  
+  public customers: any; public customer_details: any;
+  public soc_customer: SocCustomer_Model[] = [];
+
+  public AddCustomerClicked: boolean = false;
   public Exist_Record: boolean = false;
 
   public CUSTOMER_NAME_ngModel_Add: any;
@@ -65,7 +65,7 @@ export class CustomerSetupPage {
   AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
   tenants: any;
   Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
-  TitleHeader: string="";
+  TitleHeader: string = "";
 
   public AddCustomerClick() {
     if (this.Edit_Form == false) {
@@ -82,14 +82,14 @@ export class CustomerSetupPage {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
     });
-    
+
     this.loading.present();
     this.ClearControls();
     this.AddCustomerClicked = true; this.Add_Form = false; this.Edit_Form = true;
     this.TitleHeader = "UPDATE CUSTOMER";
 
     var self = this;
-    let CustomerEditUrl = this.baseResource_Url + "view_customer_details?filter=(CUSTOMER_GUID=" + CUSTOMER_GUID + ')AND(CUSTOMER_LOCATION_GUID='+ CUSTOMER_LOCATION_GUID +')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let CustomerEditUrl = this.baseResource_Url + "view_customer_details?filter=(CUSTOMER_GUID=" + CUSTOMER_GUID + ')AND(CUSTOMER_LOCATION_GUID=' + CUSTOMER_LOCATION_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     this.http.get(CustomerEditUrl)
       .map(res => res.json())
@@ -97,7 +97,7 @@ export class CustomerSetupPage {
         data => {
           this.customer_details = data["resource"];
 
-          this.Tenant_Add_ngModel = self.customer_details[0]["TENANT_GUID"]; localStorage.setItem('PREV_TENANT_GUID', self.customer_details[0]["TENANT_GUID"]);          
+          this.Tenant_Add_ngModel = self.customer_details[0]["TENANT_GUID"]; localStorage.setItem('PREV_TENANT_GUID', self.customer_details[0]["TENANT_GUID"]);
           this.CUSTOMER_NAME_ngModel_Add = self.customer_details[0]["CUSTOMER_NAME"]; localStorage.setItem('PREV_CUSTOMER_NAME', self.customer_details[0]["CUSTOMER_NAME"]);
           this.LOCATION_NAME_ngModel_Add = self.customer_details[0]["CUSTOMER_LOCATION_NAME"];
           this.REGISTRATION_NO_ngModel_Add = self.customer_details[0]["REGISTRATION_NO"];
@@ -125,8 +125,8 @@ export class CustomerSetupPage {
       this.Add_Form = true; this.Edit_Form = false;
     }
   }
-  
-  loading: Loading; 
+
+  loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private socservice: SocMain_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
@@ -146,7 +146,7 @@ export class CustomerSetupPage {
 
         //-------------------------------------------------------
         if (localStorage.getItem("g_USER_GUID") != "sva") {
-          this.Customerform = fb.group({            
+          this.Customerform = fb.group({
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
@@ -157,12 +157,12 @@ export class CustomerSetupPage {
             contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],            
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
             division: [null],
           });
         }
         else {
-          this.Customerform = fb.group({            
+          this.Customerform = fb.group({
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
@@ -186,7 +186,7 @@ export class CustomerSetupPage {
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
-  } 
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CustomerSetupPage');
@@ -198,7 +198,7 @@ export class CustomerSetupPage {
     }
     else {
       localStorage.removeItem("PREV_TENANT_GUID");
-    }    
+    }
 
     if (localStorage.getItem('PREV_CUSTOMER_NAME') == null) {
       localStorage.setItem('PREV_CUSTOMER_NAME', null);
@@ -273,7 +273,10 @@ export class CustomerSetupPage {
     this.loading.present();
     //-------------------------------------
 
-    if (this.Tenant_Add_ngModel != localStorage.getItem('PREV_TENANT_GUID') || this.CUSTOMER_NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('PREV_CUSTOMER_NAME').toUpperCase()) {
+    let strPREV_CUSTOMER_NAME: string = "";
+    if (localStorage.getItem('PREV_CUSTOMER_NAME') != null) { strPREV_CUSTOMER_NAME = localStorage.getItem('PREV_CUSTOMER_NAME').toUpperCase(); }
+
+    if (this.Tenant_Add_ngModel != localStorage.getItem('PREV_TENANT_GUID') || this.CUSTOMER_NAME_ngModel_Add.trim().toUpperCase() != strPREV_CUSTOMER_NAME) {
       let val = this.CheckDuplicate();
       val.then((res) => {
         if (res.toString() == "0") {
@@ -331,7 +334,7 @@ export class CustomerSetupPage {
     this.socservice.save_customer(this.customer_entry)
       .subscribe((response) => {
         if (response.status == 200) {
-          this.SaveCustomerLocation();          
+          this.SaveCustomerLocation();
         }
       });
   }
@@ -435,11 +438,11 @@ export class CustomerSetupPage {
 
   CheckDuplicate() {
     let url: string = "";
-    if (localStorage.getItem("g_USER_GUID") != "sva") {      
-      url = this.baseResource_Url + "main_customer?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')AND(NAME=' + this.CUSTOMER_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      url = this.baseResource_Url + "main_customer?filter=TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ' AND NAME=' + this.CUSTOMER_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-    else {      
-      url = this.baseResource_Url + "main_customer?filter=(TENANT_GUID=" + this.Tenant_Add_ngModel + ')AND(NAME=' + this.CUSTOMER_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    else {
+      url = this.baseResource_Url + "main_customer?filter=TENANT_GUID=" + this.Tenant_Add_ngModel + ' AND NAME=' + this.CUSTOMER_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     let result: any;
     return new Promise((resolve) => {
@@ -454,7 +457,7 @@ export class CustomerSetupPage {
   }
 
   ClearControls() {
-    this.Tenant_Add_ngModel = "";    
+    this.Tenant_Add_ngModel = "";
     this.CUSTOMER_NAME_ngModel_Add = "";
     this.LOCATION_NAME_ngModel_Add = "";
     this.REGISTRATION_NO_ngModel_Add = "";
