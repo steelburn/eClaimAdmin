@@ -48,6 +48,8 @@ import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component'
 
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
+import { ChangePasswordPage } from '../pages/change-password/change-password';
+
 
 export interface PageInterface {
 
@@ -83,7 +85,7 @@ export class ConferenceApp {
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},  
     { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 2, icon: 'settings' },
-    { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+    { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },    
   ];
   loggedInPages: PageInterface[] = [
     { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -91,7 +93,10 @@ export class ConferenceApp {
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
+    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' },
+    { title: 'CHANGE PASSWORD', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+    { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' },
+    { title: 'SIGN OUT', name: 'LoginPage', component: LoginPage, icon: 'log-out' },
   ];
   // rootPage: any = LoginPage;
   rootPage = 'LoginPage';
