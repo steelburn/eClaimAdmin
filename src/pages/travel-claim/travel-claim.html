@@ -59,50 +59,7 @@
               type="text" disabled="true"></ion-input>
           </ion-item>
         </div>
-      </div>
-  <!-- <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">
-
-      <ion-list-header>
-        Select Travel Claim For:
-      </ion-list-header>
-  
-      <ion-item>
-        <ion-label>Customer</ion-label>
-        <ion-radio value="customer" checked="true"></ion-radio>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Project</ion-label>
-        <ion-radio value="project"></ion-radio> 
-      </ion-item>
-    </ion-list> 
-
-      <div *ngIf="claimFor=='project'">
-  
-          <ion-item>
-            <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ 'PROJECT_LOOKUP_PLACE_HOLDER' | translate }} "></ion-input>
-            <button ion-button outline item-end icon-left (click)="ProjectLookup()">
-              <ion-icon name="eye"></ion-icon>
-              {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item>
-     
-          <ion-item>
-            <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
-            <ion-input [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ 'SOC_NUMBER_PLACE_HOLDER' | translate }}"></ion-input>
-          </ion-item>
-        </div>      -->
-
-      <!-- <div *ngIf="claimFor=='customer'">
-
-          <ion-item>
-            <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text"  placeholder=" {{ 'CUSTOMER_NAME_PLACE_HOLDER' | translate }} "></ion-input>
-            <button ion-button outline item-end icon-left (click)="CustomerLookup()">
-              <ion-icon name="eye"></ion-icon>
-              {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item>
-        </div> -->
+      </div> 
 
         <form [formGroup]="Travelform">
 
@@ -181,31 +138,21 @@
               <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
             </ion-item>      
             
-            <!-- <ion-item>
-              <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">
-            </ion-item> -->
-
-        <!-- <div class="btn">
-          <button ion-button (click)='save(Travelform.value)' [disabled]="Travelform.invalid || loading">SUBMIT</button>
-        </div> -->
+           
 
         <div class="btn">
           <button ion-button color="danger" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "SUBMIT_BUTTON" | translate }}</button>
         </div>  
-
-        <!-- <a (click)="showAddToll()" *ngIf="MainClaimSaved">
-          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Toll</a>
-        <a (click)="showAddParking()" *ngIf="MainClaimSaved">
-          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon> Add Parking</a> -->
-          <ion-item *ngIf="MainClaimSaved">
+       
+          <!-- <ion-item *ngIf="MainClaimSaved">
             <a (click)="showAddToll()">
               <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_TOLL_LABEL" | translate }} </a>
-            <!-- *ngIf="MainClaimSaved" -->
+           
             <a (click)="showAddParking()">
               <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_PARKING_LABEL" | translate }} </a>
             <a (click)="showAddAccommodation()">
               <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_Accommodation_HEADING" | translate }} </a>
-          </ion-item>    
+          </ion-item>     -->
       </form>
 
       <div class="blackcontainer" *ngIf="AddLookupClicked || AddToLookupClicked">
@@ -271,5 +218,28 @@
                 </ion-item-sliding>
               </ion-list>
             </ion-card>
-          </div>   
+          </div>  
+          
+          <ion-fab bottom right >
+            <button ion-fab  mini color="secondary400">
+              <ion-icon name="add"></ion-icon>
+            </button>
+            <ion-fab-list side="top">
+              <button ion-fab (click)="showAddToll()">
+                <ion-icon name="car"></ion-icon>
+                <ion-label>{{ "ADD_TOLL_LABEL" | translate }}</ion-label>
+              </button>
+              <button ion-fab (click)="showAddParking()">
+                <ion-icon name="car"></ion-icon>
+                <ion-label>{{ "ADD_PARKING_LABEL" | translate }}</ion-label>
+              </button>   
+              <button ion-fab (click)="showAddAccommodation()">
+                <ion-icon name="car"></ion-icon>
+                <ion-label>{{ "ADD_Accommodation_HEADING" | translate }}</ion-label>
+              </button>  
+              <button ion-fab (click)="showMealAllowance()">
+                <ion-icon name="car"></ion-icon>
+                <ion-label>{{ "ADD_MEAL_ALLOWANCE_HEADING" | translate }}</ion-label>
+              </button>  </ion-fab-list>
+          </ion-fab>
 </ion-content>
