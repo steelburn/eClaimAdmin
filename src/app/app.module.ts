@@ -94,6 +94,8 @@ import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
+import { ChangePasswordPage } from '../pages/change-password/change-password';
+
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -155,7 +157,9 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
     UserclaimslistPage,
     ClaimReportPage,
 
-    CustomerSetupPage
+    CustomerSetupPage,
+
+    ChangePasswordPage
   ],
 
   imports: [
@@ -176,7 +180,8 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
         { component: SetupPage, name: 'Setup', segment: 'Setup' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
-        { component: SignupPage, name: 'SignupPage', segment: 'signup' }
+        { component: SignupPage, name: 'SignupPage', segment: 'signup' },
+        { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -247,7 +252,9 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
     ClaimReportPage,   
     UploadPage,
 
-    CustomerSetupPage
+    CustomerSetupPage,
+
+    ChangePasswordPage
 
 
   ],

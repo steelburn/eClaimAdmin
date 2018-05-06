@@ -342,7 +342,7 @@ export class BanksetupPage {
           this.RemoveStorageValues();
           //------------------------------------------------------------------
 
-          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);          
         }
       });
   }
