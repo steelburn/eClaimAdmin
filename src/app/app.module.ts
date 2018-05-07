@@ -46,6 +46,7 @@ import { StatesetupPage } from '../pages/statesetup/statesetup';
 import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
+import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
@@ -91,6 +92,7 @@ import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-cla
 import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
 import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
+import { MiscellaneousClaimViewPage } from '../pages/miscellaneous-claim-view/miscellaneous-claim-view';
 import { ApiManagerProvider } from '../providers//api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 
@@ -109,6 +111,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     GiftclaimPage,
     OvertimeclaimPage,
     EntertainmentclaimPage,
+    MiscellaneousClaimPage,
     PeermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
@@ -146,6 +149,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     OvertimeClaimViewPage,
     PrintClaimViewPage,
     GiftClaimViewPage,
+    MiscellaneousClaimViewPage,
     TravelclaimPage,
     UploadPage,
     ProfileSetupPage,
@@ -155,7 +159,6 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
     ClaimtasklistPage,
-
     UserclaimslistPage,
     ClaimReportPage,
 
@@ -206,6 +209,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     GiftclaimPage,
     OvertimeclaimPage,
     EntertainmentclaimPage,
+    MiscellaneousClaimPage,
     BanksetupPage,
     BranchsetupPage,
     CompanysetupPage,
@@ -235,6 +239,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     OvertimeClaimViewPage,
     PrintClaimViewPage,
     GiftClaimViewPage,
+    MiscellaneousClaimViewPage,
     UserPage,
     SocRegistrationPage,
     TravelclaimPage,
