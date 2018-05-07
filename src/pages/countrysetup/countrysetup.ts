@@ -34,7 +34,7 @@ export class CountrysetupPage {
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   public countries: CountrySetup_Model[] = [];
 
-  public AddCountryClicked: boolean = false;  
+  public AddCountryClicked: boolean = false;
   public Exist_Record: boolean = false;
 
   public country_details: any;
@@ -108,7 +108,7 @@ export class CountrysetupPage {
 
   public CloseCountryClick() {
     if (this.AddCountryClicked == true) {
-      this.AddCountryClicked = false; 
+      this.AddCountryClicked = false;
       this.Add_Form = true; this.Edit_Form = false;
     }
   }
@@ -182,7 +182,10 @@ export class CountrysetupPage {
       this.loading.present();
       //--------------------------------------------------
 
-      if (this.NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_country').toUpperCase()) {
+      let strPrev_country: string = "";
+      if (localStorage.getItem('Prev_country') != null) { strPrev_country = localStorage.getItem('Prev_country').toUpperCase(); }
+
+      if (this.NAME_ngModel_Add.trim().toUpperCase() != strPrev_country) {
         let val = this.CheckDuplicate();
         val.then((res) => {
           if (res.toString() == "0") {
@@ -240,7 +243,7 @@ export class CountrysetupPage {
 
   CheckDuplicate() {
     let url: string = "";
-    url = this.baseResource_Url + "main_country?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    url = this.baseResource_Url + "main_country?filter=NAME=" + this.NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     let result: any;
     return new Promise((resolve) => {

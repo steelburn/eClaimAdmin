@@ -46,6 +46,8 @@ export class ClaimapprovertasklistPage {
   searchboxValue: string;
   checkboxDataList: Checkboxlist[]=[];
   loginUserGuid:string;
+  claimRequestGUID:any;
+  level:any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
@@ -53,7 +55,7 @@ export class ClaimapprovertasklistPage {
     this.claimrefguid = navParams.get("claimRefGuid");
     // alert(this.claimrefguid);
     if (this.claimrefguid != 'null') {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     }
     else {
@@ -113,26 +115,33 @@ export class ClaimapprovertasklistPage {
     }
   }
 
-  getCheckboxValue(event: Checkbox, claimRequestGuid: any,level:number) {
+  getCheckboxValue(event:Checkbox,claimRequestGuid:any){
+    // console.log(event);
     // alert(event.id);
     // alert(event.checked);
     // alert(claimRequestGuid);
-
-    let checkboxData: Checkboxlist = new Checkboxlist(event.checked,claimRequestGuid,level);
-    if (event.checked) {
-      this.checkboxDataList.push(checkboxData);
-    }
-    else {
-      let chkItem: Checkboxlist = this.checkboxDataList.find(item => item.ClaimRequestGuid == claimRequestGuid);
-      const index: number = this.checkboxDataList.indexOf(chkItem);
-      if (index !== -1) {
-        this.checkboxDataList.splice(index, 1);
-      }
-    }
-    // console.log(this.checkboxDataList);
-    // alert(this.checkboxDataList.length);
-    // alert(this.checkboxDataList.find(item => item.Chkid == event.id).Chkid + ","+this.checkboxDataList.find(item => item.Chkid == event.id).Checked+ ","+this.checkboxDataList.find(item => item.Chkid == event.id).claimRequestGuid);
   }
+
+  // getCheckboxValue(event: Checkbox, claimRequestGuid: any,level:number) {
+  //   // alert(event.id);
+  //   // alert(event.checked);
+  //   // alert(claimRequestGuid);
+
+  //   let checkboxData: Checkboxlist = new Checkboxlist(event.checked,claimRequestGuid,level);
+  //   if (event.checked) {
+  //     this.checkboxDataList.push(checkboxData);
+  //   }
+  //   else {
+  //     let chkItem: Checkboxlist = this.checkboxDataList.find(item => item.ClaimRequestGuid == claimRequestGuid);
+  //     const index: number = this.checkboxDataList.indexOf(chkItem);
+  //     if (index !== -1) {
+  //       this.checkboxDataList.splice(index, 1);
+  //     }
+  //   }
+  //   // console.log(this.checkboxDataList);
+  //   // alert(this.checkboxDataList.length);
+  //   // alert(this.checkboxDataList.find(item => item.Chkid == event.id).Chkid + ","+this.checkboxDataList.find(item => item.Chkid == event.id).Checked+ ","+this.checkboxDataList.find(item => item.Chkid == event.id).claimRequestGuid);
+  // }
 
 approveClaims() {
     //console.table(this.claimrequestdetails);
@@ -144,7 +153,7 @@ if(this.checkboxDataList.length>0)
   this.checkboxDataList.forEach(element => {
     if(element.Checked)
     {
-      //debugger;
+      debugger;
       this.profileMngProvider.ProcessProfileMng(null, this.loginUserGuid, element.level, element.ClaimRequestGuid, true);
       count++;
       
@@ -157,14 +166,19 @@ if(count>0)
 {
   alert("Claim(s) approved successfully.");
 }
+this.BindData();
+this.checkboxDataList=[];
 }
-else{alert("Please select the claim(s) which you want to approve.")}
-  }
+else{alert("Please select the claim(s) which you want to approve.")
+}
+}
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimapprovertasklistPage');
   }
 
-  viewClaim(claimRequestGUID: string, level: any, claimType: any) {
+viewClaim(claimRequestGUID: string, level: any, claimType: any) {
     this.claimRequestGUID = claimRequestGUID;
     this.level = level;
 

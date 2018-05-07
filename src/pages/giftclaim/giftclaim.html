@@ -1,19 +1,19 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary500">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
 
 
-      <ion-fab top1 right>
-        <button ion-fab mini >
-          <ion-icon name="settings"></ion-icon>
-        </button>
-        <ion-fab-list class="settingBtnFab" side="left">
-          <button ion-fab color="light" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>
-          <button ion-fab color="light" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>
-        </ion-fab-list>
-      </ion-fab>
+    <ion-fab top1 right>
+      <button ion-fab mini>
+        <ion-icon name="settings"></ion-icon>
+      </button>
+      <ion-fab-list class="settingBtnFab" side="left">
+        <button ion-fab color="light" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>
+        <button ion-fab color="light" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>
+      </ion-fab-list>
+    </ion-fab>
 
     <ion-title>{{ 'GIFT_CLAIM_HEADING' | translate }}</ion-title>
   </ion-navbar>
@@ -22,104 +22,64 @@
 
 <ion-content padding>
 
-    <ion-segment [(ngModel)]="claimFor" color="danger">
-        <ion-segment-button value="seg_customer" (click)="claimForChanged()">
-          {{"CUSTOMER_TITLE" | translate }}
-        </ion-segment-button>
-        <ion-segment-button value="seg_project" (click)="claimForChanged()">
-          {{"PROJECT_TITLE" | translate }}
-        </ion-segment-button>
-      </ion-segment>
-  
-      <div [ngSwitch]="claimFor">
-        <div *ngSwitchDefault>
-          <ion-item>
-              <button color="danger" ion-button outline item-end icon-left (click)="CustomerLookup()">
-                  <ion-icon name="eye"></ion-icon>
-                  {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
-  
-          </ion-item>
-        </div>
-        <div *ngSwitchCase="'seg_project'">
-          <ion-item>
-            <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
-              type="text"></ion-input>
-            <button color="danger" ion-button outline item-end icon-left (click)="ProjectLookup()">
-              <ion-icon name="eye"></ion-icon>
-              {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
-            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Gift_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
-              type="text" disabled="true" ></ion-input>
-          </ion-item>
-        </div>
-      </div>
-  <!-- <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">
+  <ion-segment [(ngModel)]="claimFor" color="primary500">
+    <ion-segment-button value="seg_customer" (click)="claimForChanged()">
+      {{"CUSTOMER_TITLE" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="seg_project" (click)="claimForChanged()">
+      {{"PROJECT_TITLE" | translate }}
+    </ion-segment-button>
+  </ion-segment>
 
-    <ion-list-header>
-      Select Travel Claim For:
-    </ion-list-header>
-
-    <ion-item>
-      <ion-label>Customer</ion-label>
-      <ion-radio value="customer" checked="true"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Project</ion-label>
-      <ion-radio value="project"></ion-radio>
-    </ion-item>
-  </ion-list>  
-
-    <div *ngIf="claimFor=='project'">
-
+  <div [ngSwitch]="claimFor">
+    <div *ngSwitchDefault>
       <ion-item>
-        <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-        <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ 'PROJECT_LOOKUP_PLACE_HOLDER' | translate }} "></ion-input>
-        <button ion-button outline item-end icon-left (click)="ProjectLookup()">
-          <ion-icon name="eye"></ion-icon>
-          {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
-      </ion-item>
-
-      <ion-item>
-        <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
-        <ion-input [(ngModel)]="Gift_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ 'SOC_NUMBER_PLACE_HOLDER' | translate }}"></ion-input>
-      </ion-item>
-    </div>
-
-    <div *ngIf="claimFor=='customer'">
-
-      <ion-item>
-        <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-        <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ 'CUSTOMER_NAME_PLACE_HOLDER' | translate }} "></ion-input>
-        <button ion-button outline item-end icon-left (click)="CustomerLookup()">
+        <button color="primary500" ion-button outline item-start icon-left (click)="CustomerLookup()">
           <ion-icon name="eye"></ion-icon>
           {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
       </ion-item>
-    </div> -->
+      <ion-item>
+        <ion-label color="primary500" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
+        <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
 
-    <form [formGroup]="Giftform">
+      </ion-item>
+    </div>
+    <div *ngSwitchCase="'seg_project'">
+      <ion-item>
+        <button color="primary500" ion-button outline item-start icon-left (click)="ProjectLookup()">
+          <ion-icon name="eye"></ion-icon>
+          {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary500" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
+        <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
+          type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary500" stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
+        <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Gift_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
+          type="text" disabled="true"></ion-input>
+      </ion-item>
+    </div>
+  </div>
+
+
+  <form [formGroup]="Giftform">
 
     <ion-item>
-      <ion-label stacked>{{ "GIFT_DATE_LABEL" | translate }}</ion-label>
+      <ion-label color="primary500" stacked>{{ "GIFT_DATE_LABEL" | translate }}</ion-label>
       <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Gift_Date_ngModel" formControlName="travel_date" max={{validDate}}
         placeholder="{{ 'DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
     </ion-item>
 
     <ion-item>
-      <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
-      <ion-label> {{travelAmount | number}} </ion-label>
+      <ion-label color="primary500" stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Gift_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
+      <ion-label color="primary500" stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
       <ion-input type="text" formControlName="description" [(ngModel)]="Gift_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
@@ -128,9 +88,9 @@
       <button ion-button (click)="clearFile()">clear file</button>
     </ion-item>
 
-  <div class="btn">
+    <div class="btn">
       <button ion-button (click)='saveIm(Giftform.value)' [disabled]="Giftform.invalid || loading">{{ 'SUBMIT' }}</button>
-  </div>
+    </div>
 
   </form>
 
@@ -155,7 +115,7 @@
       </ion-list>
     </ion-card>
   </div>
-     
+
   <div class="blackcontainer" *ngIf="ProjectLookupClicked">
   </div>
   <div class="popup" padding *ngIf="ProjectLookupClicked">
@@ -199,4 +159,3 @@
     </ion-card>
   </div>
 </ion-content>
-
