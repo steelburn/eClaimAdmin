@@ -59,7 +59,6 @@
               type="text" disabled="true"></ion-input>
           </ion-item>
         </div>
-      </div>
 
 
         <form [formGroup]="Travelform">
@@ -123,22 +122,26 @@
               <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
             </ion-item>      
             
-         
 
         <div class="btn">
           <button ion-button color="primary500" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "SUBMIT_BUTTON" | translate }}</button>
         </div>  
 
+       
+          <!-- <ion-item *ngIf="MainClaimSaved">
+
+
       
           <ion-item *ngIf="MainClaimSaved">
+
             <a (click)="showAddToll()">
               <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_TOLL_LABEL" | translate }} </a>
-            <!-- *ngIf="MainClaimSaved" -->
+           
             <a (click)="showAddParking()">
               <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_PARKING_LABEL" | translate }} </a>
             <a (click)="showAddAccommodation()">
               <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_Accommodation_HEADING" | translate }} </a>
-          </ion-item>    
+          </ion-item>     -->
       </form>
 
       <div class="blackcontainer" *ngIf="AddLookupClicked || AddToLookupClicked">
@@ -204,5 +207,28 @@
                 </ion-item-sliding>
               </ion-list>
             </ion-card>
-          </div>   
+          </div>  
+          
+          <ion-fab bottom right >
+            <button ion-fab  mini color="secondary400">
+              <ion-icon name="add"></ion-icon>
+            </button>
+            <ion-fab-list side="top">
+              <button ion-fab (click)="showAddToll()">
+                <ion-icon name="car"></ion-icon>
+                <ion-label>{{ "ADD_TOLL_LABEL" | translate }}</ion-label>
+              </button>
+              <button ion-fab (click)="showAddParking()">
+                <ion-icon name="car"></ion-icon>
+                <ion-label>{{ "ADD_PARKING_LABEL" | translate }}</ion-label>
+              </button>   
+              <button ion-fab (click)="showAddAccommodation()">
+                <ion-icon name="car"></ion-icon>
+                <ion-label>{{ "ADD_Accommodation_HEADING" | translate }}</ion-label>
+              </button>  
+              <button ion-fab (click)="showMealAllowance()">
+                <ion-icon name="car"></ion-icon>
+                <ion-label>{{ "ADD_MEAL_ALLOWANCE_HEADING" | translate }}</ion-label>
+              </button>  </ion-fab-list>
+          </ion-fab>
 </ion-content>

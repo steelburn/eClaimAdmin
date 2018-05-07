@@ -125,7 +125,7 @@ export class SetupguidePage {
 
       var strPassword = Global_Function.Random();
       //this.Password_ngModel = Global_Function.Random().toString();
-      this.Password_ngModel = CryptoJS.SHA1(strPassword).toString();
+      this.Password_ngModel = CryptoJS.SHA256(strPassword).toString(CryptoJS.enc.Hex);
       alert(strPassword);
     }
     else {

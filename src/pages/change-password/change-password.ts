@@ -74,18 +74,20 @@ export class ChangePasswordPage {
   New_Password_ngModel: any = "";
   Confirm_Password_ngModel: any = "";
 
-  ChangeePassword() {
-    if (this.ChangePasswordForm.valid) {
-      //check current password is match with database
-      debugger;
-      if (this.user_details[0]["PASSWORD"] == CryptoJS.SHA1(this.Current_Password_ngModel.trim().toUpperCase())) {
+  ChangePassword() {
+    if (this.ChangePasswordForm.valid) {      
+      // let hash = CryptoJS.SHA256(this.Current_Password_ngModel.trim()).toString(CryptoJS.enc.Hex);
+      // console.log(hash);
+
+      //check current password is match with database      
+      if (this.user_details[0]["PASSWORD"] == CryptoJS.SHA256(this.Current_Password_ngModel.trim()).toString(CryptoJS.enc.Hex)) {
         if (this.Current_Password_ngModel.trim().toUpperCase() != this.Confirm_Password_ngModel.trim().toUpperCase()) {
           if (this.New_Password_ngModel.trim().toUpperCase() == this.Confirm_Password_ngModel.trim().toUpperCase()) {            
             this.usermain_entry.TENANT_GUID = this.user_details[0]["TENANT_GUID"];
             this.usermain_entry.USER_GUID = localStorage.getItem("g_USER_GUID");
             this.usermain_entry.STAFF_ID = this.user_details[0]["STAFF_ID"];
             this.usermain_entry.LOGIN_ID = this.user_details[0]["LOGIN_ID"];
-            this.usermain_entry.PASSWORD = CryptoJS.SHA1(this.Confirm_Password_ngModel.trim()).toString();
+            this.usermain_entry.PASSWORD = CryptoJS.SHA256(this.Confirm_Password_ngModel.trim()).toString(CryptoJS.enc.Hex);
             this.usermain_entry.EMAIL = this.user_details[0]["EMAIL"];
             this.usermain_entry.ACTIVATION_FLAG = this.user_details[0]["ACTIVATION_FLAG"];
 
@@ -94,6 +96,8 @@ export class ChangePasswordPage {
 
             this.usermain_entry.UPDATE_TS = new Date().toISOString();
             this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+            this.usermain_entry.IS_TENANT_ADMIN = this.user_details[0]["IS_TENANT_ADMIN"];
 
             this.userservice.update_user_main(this.usermain_entry)
               .subscribe((response) => {

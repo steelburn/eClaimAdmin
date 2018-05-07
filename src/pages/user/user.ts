@@ -256,7 +256,7 @@ export class UserPage {
     //Generate Password Encrypt-----------------
     var strPassword = this.Global_Function.Random();
     //this.User_Password_ngModel = Global_Function.Random().toString();
-    this.User_Password_ngModel = CryptoJS.SHA1(strPassword).toString();
+    this.User_Password_ngModel = CryptoJS.SHA256(strPassword).toString(CryptoJS.enc.Hex);
     //console.log(this.User_Password_ngModel);
     alert(strPassword);
   }
