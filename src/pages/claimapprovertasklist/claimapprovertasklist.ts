@@ -49,9 +49,6 @@ export class ClaimapprovertasklistPage {
   claimRequestGUID:any;
   level:any;
 
-  claimRequestGUID: string;
- level: string;
-
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
    this.loginUserGuid=localStorage.getItem("g_USER_GUID");
