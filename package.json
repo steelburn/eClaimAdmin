@@ -57,6 +57,7 @@
     "crypto-js": "^3.1.9-1",
     "external-editor": "^2.2.0",
     "figures": "^2.0.0",
+    "font-awesome": "4.7.0",
     "ionic-angular": "^3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
