@@ -20,7 +20,7 @@ import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-
 import { MedicalClaimViewPage } from '../../pages/medical-claim-view/medical-claim-view';
 import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
-
+import { MiscellaneousClaimViewPage } from '../../pages/miscellaneous-claim-view/miscellaneous-claim-view';
 
 /**
  * Generated class for the ClaimapprovertasklistPage page.
@@ -185,6 +185,7 @@ else{alert("Please select the claim(s) which you want to approve.")}
       case '58c59b56-289e-31a2-f708-138e81a9c823': this.pushPage(TravelClaimViewPage); break;
       case 'd9567482-033a-6d92-3246-f33043155746': this.pushPage(PrintClaimViewPage); break;
       case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': this.pushPage(EntertainmentClaimViewPage); break;
+      case '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86': this.pushPage(MiscellaneousClaimViewPage); break;
     }
   }
 
