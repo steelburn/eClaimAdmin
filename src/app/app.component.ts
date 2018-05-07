@@ -95,7 +95,7 @@ export class ConferenceApp {
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
     { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' },
     { title: 'CHANGE PASSWORD', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
-    { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' },
+    // { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' },
     { title: 'SIGN OUT', name: 'LoginPage', component: LoginPage, icon: 'log-out' },
   ];
   // rootPage: any = LoginPage;
