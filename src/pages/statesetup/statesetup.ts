@@ -205,8 +205,11 @@ export class StatesetupPage {
       });
       this.loading.present();
       //--------------------------------------------------
+      debugger;
+      let strPrev_Value: string = "";
+      if(localStorage.getItem('Previ_state')!=null) { strPrev_Value = localStorage.getItem('Previ_state').toUpperCase();}
 
-      if (this.STATE_NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Previ_state').toUpperCase()) {
+      if (this.STATE_NAME_ngModel_Add.trim().toUpperCase() != strPrev_Value) {
         let val = this.CheckDuplicate();
         val.then((res) => {
           if (res.toString() == "0") {
@@ -223,7 +226,7 @@ export class StatesetupPage {
             }
           }
           else {
-            alert("The Country is already Exist.");
+            alert("The State is already Exist.");
             this.loading.dismissAll();
           }
         });
@@ -265,7 +268,8 @@ export class StatesetupPage {
 
   CheckDuplicate() {
     let url: string = "";
-    url = this.baseResource_Url + "main_state?filter=(NAME=" + this.STATE_NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    debugger;
+    url = this.baseResource_Url + "main_state?filter=NAME=" + this.STATE_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     let result: any;
     return new Promise((resolve) => {

@@ -254,7 +254,7 @@ export class ClaimtypePage {
 
   CheckDuplicate() {
     let url: string = "";
-    url = this.baseResource_Url + "main_claim_type?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    url = this.baseResource_Url + "main_claim_type?filter=NAME=" + this.NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     let result: any;
     return new Promise((resolve) => {

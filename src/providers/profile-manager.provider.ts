@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { ApiManagerProvider } from '../providers/api-manager.provider';
 import { ClaimWorkFlowHistoryModel } from './../models/claim-work-flow-history.model';
@@ -14,7 +14,7 @@ export class ProfileManagerProvider {
     userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; level: any;
     mainClaimReq: MainClaimRequestModel; claimRequestGUID: any; isRemarksAccepted: any;
   
-    constructor(public http: HttpClient, public api: ApiManagerProvider) {
+    constructor(public http: Http, public api: ApiManagerProvider) {
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
       this.userGUID = localStorage.getItem('g_USER_GUID');
     }
@@ -209,7 +209,8 @@ export class ProfileManagerProvider {
       claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
       claimReqMainRef.TENANT_GUID = this.TenantGUID;
       claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
-      claimReqMainRef.MILEAGE_GUID = this.formValues.vehicleType
+      claimReqMainRef.MILEAGE_GUID = this.formValues.vehicleType;
+      claimReqMainRef.ALLOWANCE_GUID = this.formValues.meal_allowance;
       claimReqMainRef.CLAIM_TYPE_GUID = this.formValues.claimTypeGUID;
       claimReqMainRef.TRAVEL_DATE = this.formValues.travel_date;
       claimReqMainRef.START_TS = this.formValues.start_DT;
@@ -272,8 +273,10 @@ export class ProfileManagerProvider {
       let month = new Date(formValues.travel_date).getMonth() + 1;
       let year = new Date(formValues.travel_date).getFullYear();
   
-      this.api.getClaimRequestByClaimReqGUID('3d1a5bd4-7263-1203-dfd1-efbbf1621372').subscribe(data => {
-        let stringProfileJSON = this.profileJSON= data[0].PROFILE_JSON
+      // this.api.getClaimRequestByClaimReqGUID('3d1a5bd4-7263-1203-dfd1-efbbf1621372').subscribe(data => {
+        this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => { 
+        let stringProfileJSON = this.profileJSON =  JSON.stringify(data); 
+        // let stringProfileJSON = this.profileJSON= data[0].PROFILE_JSON
         let profileJSON = JSON.parse(stringProfileJSON);
         let levels = profileJSON.profile.levels.level;
         this.getInfoLevels(levels, '1');
