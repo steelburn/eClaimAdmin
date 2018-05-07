@@ -43,8 +43,8 @@ export class LoginPage {
       else {        
         let url: string;
 
-       
-        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA1(this.login.password) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        //CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex)
+        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         //url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
         this.http
@@ -80,7 +80,7 @@ export class LoginPage {
               localStorage.removeItem("g_ISHQ");
               localStorage.removeItem("g_IS_TENANT_ADMIN");
 
-              alert("Invalid Login!!")
+              alert("Invalid login.")
               this.login.username = "";
               this.login.password = "";
             }

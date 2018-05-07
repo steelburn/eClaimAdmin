@@ -256,7 +256,8 @@ export class UserPage {
     //Generate Password Encrypt-----------------
     var strPassword = this.Global_Function.Random();
     //this.User_Password_ngModel = Global_Function.Random().toString();
-    this.User_Password_ngModel = CryptoJS.SHA1(strPassword).toString();
+    this.User_Password_ngModel = CryptoJS.SHA256(strPassword).toString(CryptoJS.enc.Hex);
+    //console.log(this.User_Password_ngModel);
     alert(strPassword);
   }
 
@@ -889,7 +890,12 @@ export class UserPage {
         TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')&' + this.Key_Param;
       }
       else{
-        TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')AND(USER_GUID!=' + this.view_user_details[0]["USER_GUID"] + ')&' + this.Key_Param;
+        if(localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_IS_TENANT_AMDIN") == "1"){
+          TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')&' + this.Key_Param;
+        }
+        else{
+          TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')AND(USER_GUID!=' + this.view_user_details[0]["USER_GUID"] + ')&' + this.Key_Param;
+        }        
       }
       
       this.http
@@ -1563,6 +1569,8 @@ export class UserPage {
             let imageResult = this.SaveImageinDB(this.fileName2);
             imageResult.then((objImage: ImageUpload_model) => {
               let result = this.Save_User_Qualification(objImage.Image_Guid);
+              
+              
               //alert("User Contact inserted");
             })
           })
@@ -1606,6 +1614,7 @@ export class UserPage {
   }
 
   Save_User_Qualification(imageGUID: string) {
+    debugger;
     let userqualification_entry: UserQualification_Model = new UserQualification_Model();
     this.userqualification_entry.USER_QUALIFICATION_GUID = UUID.UUID();
     this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_ngModel;

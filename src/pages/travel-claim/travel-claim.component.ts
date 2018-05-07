@@ -85,7 +85,7 @@ export class TravelclaimPage {
   travelAmount: any;
   validDate = new Date().toISOString();
   ClaimRequestMain: any;
-  isCustomer: boolean = false;
+  isCustomer: boolean = true;
 
    /********FORM EDIT VARIABLES***********/
    vehicleCategory: any;
@@ -437,27 +437,6 @@ export class TravelclaimPage {
     });
   }
 
-//   onSearchInput(ev: any) {  
-//     let val = ev.target.value;
-//     if (val && val.trim() != '') {
-//      this.projects = this.projects.filter((item) => {
-   
-//        console.log(item);
-//        return ((item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) > -1) 
-//        || ((item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) > -1) 
-//        || (item.YEAR.toString().toLowerCase().indexOf(val.toLowerCase()) > -1))
-//        || (item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) > -1
-//      ) 
-//      );
-//      })
-//    }
-//    else
-//    {
-//     //  this.BindData();
-//     return null;
-//    }
-// }
-
 // Search project start:
     
   searchProject(searchString: any) {
@@ -540,6 +519,14 @@ export class TravelclaimPage {
       // MainClaim: localStorage.getItem("g_CR_GUID"),
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-ssh55de7e742',
       ClaimMethodName: 'Accommodation'
+    });
+  }
+
+  showMealAllowance() {
+    this.navCtrl.push(AddTollPage, {
+      // MainClaim: localStorage.getItem("g_CR_GUID"),
+      ClaimMethod: '0ebb7e5f-ssha-11e8-a50c-ssh55de7e742',
+      ClaimMethodName: 'Meal Allowance'
     });
   }
 

@@ -27,42 +27,50 @@ $headings-font-weight: 300;
 // The "primary" color is the only required color in the map.
 
 $colors: ( 
-    primary:  #134C71,
-    secondary: #32db64, 
-    danger: #f53d3d, 
-    light: #f8f9fa, 
+
+
+    secondary400:#CDDC39,
+    primary: #689F38, 
+    primary500:#8BC34A,
     dark: #222, 
-    favorite: #69BB7B, 
-    twitter: #2E86C1,
-    google: #dc4a38, 
-    vimeo: #23b6ea, 
-    facebook: #3b5998,
-    pure: white
+    light: white, 
+    pure: #DCEDC8
+
     );
+
 
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-
+//For iOS
+$card-ios-margin-left: 0;
+$card-ios-margin-right: 0;
+$card-ios-margin-top: 0;
+$card-ios-margin-bottom: 0;
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-// Use the primary color as the background for the toolbar-md-background
-$toolbar-md-background:                   color($colors, primary);
+//For Android
 
-// Change the color of the segment button text
-$toolbar-md-active-color:                 #fff;
+$card-md-margin-left: 0;
+$card-md-margin-right: 0;
+$card-md-margin-top: 0;
+$card-md-margin-bottom: 0;
 
 
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
+//For Windows Phone
 
-
+$card-wp-margin-left: 0;
+$card-wp-margin-right: 0;
+$card-wp-margin-top: 0;
+$card-wp-margin-bottom: 0;
 
 // App Theme
 // --------------------------------------------------
@@ -90,3 +98,29 @@ $toolbar-md-active-color:                 #fff;
 
 @import "roboto";
 @import "noto-sans";
+
+//font-weight
+
+$font-weight-light:	300;
+$font-weight-regular:	400;
+$font-weight-bold:	600;
+
+//font-size
+
+$font-size-small:	8;
+$font-size-regular:  16;
+$font-size-large:	24;
+$font-size-x-large:	32;
+$font-size-xx-large:	48;
+$font-size-xxx-large:	64;
+$font-size-xxxx-large:	96;
+
+// Word Wrapping
+@mixin word-wrap() {
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+  }
