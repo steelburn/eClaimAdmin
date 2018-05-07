@@ -22,8 +22,7 @@ page-banksetup {
       
       .round1 {
         float: left;
-        box-shadow: none !important;
-        width: calc(13% - 7px);
+        width: calc(15% - 7px);
         margin: 10px !important;
         cursor: pointer;
         border-radius: 5px;
@@ -112,12 +111,12 @@ page-banksetup {
     
     .btnR{
         width: 33px !important;
-        height: 38px;
-        right: 26px;
+        height: 37px !important;
+        right: 16px !important;
         font-size: 22px !important;
-        top: 26px;
-        background: #ff6b6b;
-        color: #fff;
+        top: 16px !important;
+        background: #ff6b6b !important;
+        color: #fff !important;
         position: absolute !important ;
     }
     
@@ -354,7 +353,7 @@ page-banksetup {
 
           // Todo: remove when this issue https://github.com/ionic-team/ionic/issues/11212 is fixed
           @media(max-width: 700px) {
-            .round {
+            .round1 {
               width: calc(100% - 20px);
               min-height: 100px;
             }

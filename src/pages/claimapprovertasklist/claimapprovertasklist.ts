@@ -46,9 +46,8 @@ export class ClaimapprovertasklistPage {
   searchboxValue: string;
   checkboxDataList: Checkboxlist[]=[];
   loginUserGuid:string;
-
-  claimRequestGUID: string;
- level: string;
+  claimRequestGUID:any;
+  level:any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
@@ -56,7 +55,7 @@ export class ClaimapprovertasklistPage {
     this.claimrefguid = navParams.get("claimRefGuid");
     // alert(this.claimrefguid);
     if (this.claimrefguid != 'null') {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     }
     else {
@@ -154,7 +153,7 @@ if(this.checkboxDataList.length>0)
   this.checkboxDataList.forEach(element => {
     if(element.Checked)
     {
-      //debugger;
+      debugger;
       this.profileMngProvider.ProcessProfileMng(null, this.loginUserGuid, element.level, element.ClaimRequestGuid, true);
       count++;
       
@@ -167,14 +166,19 @@ if(count>0)
 {
   alert("Claim(s) approved successfully.");
 }
+this.BindData();
+this.checkboxDataList=[];
 }
-else{alert("Please select the claim(s) which you want to approve.")}
-  }
+else{alert("Please select the claim(s) which you want to approve.")
+}
+}
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimapprovertasklistPage');
   }
 
-  viewClaim(claimRequestGUID: string, level: any, claimType: any) {
+viewClaim(claimRequestGUID: string, level: any, claimType: any) {
     this.claimRequestGUID = claimRequestGUID;
     this.level = level;
 

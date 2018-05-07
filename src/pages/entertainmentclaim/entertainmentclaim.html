@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary500">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -20,7 +20,7 @@
 
 <ion-content padding>
 
-    <ion-segment [(ngModel)]="claimFor" color="danger">
+    <ion-segment [(ngModel)]="claimFor" color="primary500">
         <ion-segment-button value="seg_customer" (click)="claimForChanged()">
           {{"CUSTOMER_TITLE" | translate }}
         </ion-segment-button>
@@ -32,18 +32,18 @@
       <div [ngSwitch]="claimFor">
         <div *ngSwitchDefault>
           <ion-item>
-            <button color="danger" ion-button outline item-start icon-left (click)="CustomerLookup()">
+            <button color="primary500" ion-button outline item-start icon-left (click)="CustomerLookup()">
               <ion-icon name="eye"></ion-icon>
               {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
           </ion-item>
           <ion-item>
-            <ion-label color="primary" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
+            <ion-label color="primary500" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
             <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
           </ion-item>
         </div>
         <div *ngSwitchCase="'seg_project'">
           <ion-item>
-            <button color="danger" ion-button outline item-start icon-left (click)="ProjectLookup()">
+            <button color="primary500" ion-button outline item-start icon-left (click)="ProjectLookup()">
               <ion-icon name="eye"></ion-icon>
               {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
           </ion-item>
@@ -59,65 +59,23 @@
           </ion-item>
         </div>
       </div>
-  <!-- <ion-list radio-group [(ngModel)]="claimFor" (ionChange)="claimForChanged()">      
 
-    <ion-list-header>
-      Select Entertainment Claim For:
-    </ion-list-header>
-
-    <ion-item>
-      <ion-label>Customer</ion-label>
-      <ion-radio value="customer" checked="true"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Project</ion-label>
-      <ion-radio value="project"></ion-radio>
-    </ion-item>
-  </ion-list>   
-
-    <div *ngIf="claimFor=='project'">
-
-      <ion-item>
-        <ion-label stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-        <ion-input [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ 'PROJECT_LOOKUP_PLACE_HOLDER' | translate }} "></ion-input>
-        <button ion-button outline item-end icon-left (click)="ProjectLookup()">
-          <ion-icon name="eye"></ion-icon>
-          {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
-      </ion-item>
-
-      <ion-item>
-        <ion-label stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
-        <ion-input [(ngModel)]="Entertainment_SOC_No_ngModel" [ngModelOptions]="{standalone: true}" type="text" disabled="true" placeholder="{{ 'SOC_NUMBER_PLACE_HOLDER' | translate }}"></ion-input>
-      </ion-item>
-    </div>
-
-    <div *ngIf="claimFor=='customer'">
-
-      <ion-item>
-        <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-        <ion-input [(ngModel)]="Customer_Lookup_ngModel" [ngModelOptions]="{standalone: true}" type="text" placeholder=" {{ 'CUSTOMER_NAME_PLACE_HOLDER' | translate }} "></ion-input>
-        <button ion-button outline item-end icon-left (click)="CustomerLookup()">
-          <ion-icon name="eye"></ion-icon>
-          {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
-      </ion-item>
-    </div> -->
     
     <form [formGroup]="Entertainmentform">
         <ion-item>
-            <ion-label stacked>{{ "ENTERTAINMENT_DATE_LABEL" | translate }}</ion-label>
+            <ion-label color="primary" stacked>{{ "ENTERTAINMENT_DATE_LABEL" | translate }}</ion-label>
             <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Entertainment_Date_ngModel" formControlName="travel_date" max={{validDate}}
               placeholder="{{ 'DATE_PLACE_HOLDER' | translate }}"></ion-datetime>
           </ion-item>
 
     <ion-item>
-      <ion-label stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+      <ion-label color="primary" stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
 
       <ion-input type="number" formControlName="claim_amount" [(ngModel)]="Entertainment_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
+      <ion-label color="primary" stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
       <ion-input type="text" formControlName="description" [(ngModel)]="Entertainment_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
     </ion-item>
 
@@ -127,7 +85,7 @@
     </ion-item>
 
     <div class="btn">     
-       <button ion-button (click)='saveIm(Entertainmentform.value)' [disabled]="Entertainmentform.invalid || loading" >{{ 'SUBMIT'}}</button>
+       <button ion-button color="primary500" (click)='saveIm(Entertainmentform.value)' [disabled]="Entertainmentform.invalid || loading" >{{ 'SUBMIT'}}</button>
     </div>
   </form>
 

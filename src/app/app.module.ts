@@ -65,6 +65,8 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+
+
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
 export function createTranslateLoader(http: HttpClient) {
