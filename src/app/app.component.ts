@@ -21,20 +21,20 @@ import { UserData } from '../providers/user-data';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
-import { PeermissionPage } from'../pages/peermission/peermission';
-import { RolemodulesetupPage } from'../pages/rolemodulesetup/rolemodulesetup';
-import { PagesetupPage } from'../pages/pagesetup/pagesetup';
-import { ModulesetupPage } from'../pages/modulesetup/modulesetup';
-import { SubmodulesetupPage } from'../pages/submodulesetup/submodulesetup';
+import { PeermissionPage } from '../pages/peermission/peermission';
+import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
+import { PagesetupPage } from '../pages/pagesetup/pagesetup';
+import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
+import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
 
-import { ClaimhistoryPage } from'../pages/claimhistory/claimhistory';
-import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
-import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
-import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
-import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
-import{ClaimReportPage} from '../pages/claim-report/claim-report';
+import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
+import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
+import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist'
+import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
+import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
+import { ClaimReportPage } from '../pages/claim-report/claim-report';
 
-import { UploadPage } from'../pages/upload/upload';
+import { UploadPage } from '../pages/upload/upload';
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
 
@@ -42,9 +42,9 @@ import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-
 //import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
 import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
+import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
 
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
@@ -69,6 +69,7 @@ export interface PageInterface {
 export class ConferenceApp {
 
   public setupPageClicked: boolean = false;
+  blnLogIn: boolean = false;
 
   //public setupPageClick() {
   //  this.setupPageClicked = !this.setupPageClicked;
@@ -83,52 +84,53 @@ export class ConferenceApp {
   // the login page disables the left menu
   appPages: PageInterface[] = [
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings'},  
+    { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
     { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 2, icon: 'settings' },
-    { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },    
+    { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
   ];
   loggedInPages: PageInterface[] = [
-    { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
-    { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
+    // { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
+    { title: 'CHANGE PASSWORD', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+    // { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
+    { title: 'SIGN OUT', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' },
-    { title: 'CHANGE PASSWORD', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
-    { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' },
-    { title: 'SIGN OUT', name: 'LoginPage', component: LoginPage, icon: 'log-out' },
+    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' },    
+    { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' }    
   ];
   // rootPage: any = LoginPage;
   rootPage = 'LoginPage';
-  
-  constructor(
 
+  constructor(
     public events: Events,
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
     public confData: ConferenceData,
-     storage: Storage,
-     statusbar:StatusBar,
-     splashScreen: SplashScreen, public translate: TranslateService
+    storage: Storage,
+    statusbar: StatusBar,
+    splashScreen: SplashScreen, public translate: TranslateService
   ) {
-    
+    // if(localStorage.getItem("g_LogIn") == "true"){this.blnLogIn = true;}
+    // alert(localStorage.getItem("g_LogIn"));
+
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
     platform.ready().then(() => {
-    });    
+    });
 
     translate.setDefaultLang('en');
-    platform.ready().then(()=> { statusbar.styleDefault();splashScreen.hide();});
+    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
 
     // Check if the user has already seen the tutorial
     // load the conference data
     confData.load();
 
-    // decide which menu items should be hidden by current login status stored in local storage
+    // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      this.enableMenu(hasLoggedIn === true);
+      this.enableMenu(hasLoggedIn === true); 
     });
     this.enableMenu(true);
 
@@ -150,8 +152,8 @@ export class ConferenceApp {
     // tabs even if changing them from the menu
     if (this.nav.getActiveChildNav() && page.index != undefined) {
       this.nav.getActiveChildNav().select(page.index);
-    // Set the root of the nav with params if it's a tab index
-  } else {
+      // Set the root of the nav with params if it's a tab index
+    } else {
       this.nav.setRoot(page.name, params).catch((err: any) => {
         console.log(`Didn't set nav root: ${err}`);
       });
@@ -202,7 +204,7 @@ export class ConferenceApp {
   public translateToMalayClicked: boolean = false;
   public translateToEnglishClicked: boolean = true;
 
-  public translateToEnglish() {   
+  public translateToEnglish() {
     this.translate.use('en');
     this.translateToMalayClicked = !this.translateToMalayClicked;
     this.translateToEnglishClicked = !this.translateToEnglishClicked;
