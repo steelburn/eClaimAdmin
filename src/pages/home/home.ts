@@ -11,6 +11,8 @@ import { OvertimeclaimPage } from '../overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { ProfileSetupPage } from '../profile-setup/profile-setup.component';
+import { MiscellaneousClaimPage } from '../miscellaneous-claim/miscellaneous-claim';
+
 @Component({
   selector: 'page-speaker-list',
   templateUrl: 'home.html'
@@ -51,6 +53,7 @@ export class SpeakerListPage {
      goToEntertainmentClaim(){
     this.navCtrl.push(EntertainmentclaimPage)
   }
+
   goToProfile()
   {
     this.navCtrl.push(ProfileSetupPage)
@@ -60,9 +63,9 @@ export class SpeakerListPage {
     this.navCtrl.push(TravelclaimPage)
   }
 
-
-  
- 
+  goToMiscellaneousClaim(){
+    this.navCtrl.push(MiscellaneousClaimPage)
+  } 
 
 
   goToSpeakerTwitter(speaker: any) {
