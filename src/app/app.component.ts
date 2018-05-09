@@ -111,9 +111,6 @@ export class ConferenceApp {
     storage: Storage,
     statusbar: StatusBar,
     splashScreen: SplashScreen, public translate: TranslateService
-  ) {
-    // if(localStorage.getItem("g_LogIn") == "true"){this.blnLogIn = true;}
-    // alert(localStorage.getItem("g_LogIn"));
 
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
@@ -132,9 +129,11 @@ export class ConferenceApp {
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn === true); 
     });
+    // this.enableMenu(true);
     this.enableMenu(true);
-
     this.listenToLoginEvents();
+
+    this.userData.logout();this.enableMenu(false);
   }
 
   openPage(page: PageInterface) {
