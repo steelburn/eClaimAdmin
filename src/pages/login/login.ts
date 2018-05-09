@@ -22,7 +22,7 @@ import { SetupguidePage } from '../setupguide/setupguide';
 })
 export class LoginPage {
   login: { username?: string, password?: string } = {};
-  submitted = false;
+  submitted = false; 
 
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
@@ -37,6 +37,10 @@ export class LoginPage {
       //-----------Check if the login as super vendor-----------------------
       if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
         localStorage.setItem("g_USER_GUID", "sva");
+        
+        //navigate to app.component page
+        this.userData.login(this.login.username);
+
         //this.navCtrl.push(AdminsetupPage);
         this.navCtrl.push(SetupguidePage);
       }
@@ -68,7 +72,10 @@ export class LoginPage {
               }
               else{
                 this.navCtrl.push(SetupPage);
-              }              
+              }
+              
+              //navigate to app.component page
+              this.userData.login(this.login.username);
             }
             else {
               localStorage.removeItem("g_USER_GUID");
@@ -95,8 +102,4 @@ export class LoginPage {
   onSignup() {
     this.navCtrl.push(SignupPage);
   }
-
-
-
-
 }
