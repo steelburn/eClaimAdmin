@@ -100,10 +100,7 @@ export class ConferenceApp {
     { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' }    
   ];
   // rootPage: any = LoginPage;
-  rootPage = 'LoginPage';
-
-
-    public events: Events,   
+  rootPage = 'LoginPage';    
 
   constructor(
     public events: Events,
