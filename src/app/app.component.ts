@@ -103,7 +103,7 @@ export class ConferenceApp {
   
   constructor(
 
-    public events: Events,
+    public events: Events,   
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
