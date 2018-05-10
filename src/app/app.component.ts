@@ -102,6 +102,9 @@ export class ConferenceApp {
   // rootPage: any = LoginPage;
   rootPage = 'LoginPage';
 
+
+    public events: Events,   
+
   constructor(
     public events: Events,
     public userData: UserData,
@@ -111,6 +114,7 @@ export class ConferenceApp {
     storage: Storage,
     statusbar: StatusBar,
     splashScreen: SplashScreen, public translate: TranslateService
+     ) {
 
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
