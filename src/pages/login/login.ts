@@ -28,7 +28,7 @@ export class LoginPage {
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   constructor(public navCtrl: NavController, public userData: UserData, public http: Http) {
-    localStorage.clear();
+    localStorage.clear(); 
   }
 
   onLogin(form: NgForm) {
@@ -75,7 +75,7 @@ export class LoginPage {
               }
               
               //navigate to app.component page
-              this.userData.login(this.login.username);
+              // this.userData.login(this.login.username);
             }
             else {
               localStorage.removeItem("g_USER_GUID");

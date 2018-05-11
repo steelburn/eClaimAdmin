@@ -652,6 +652,17 @@
                         <ion-input type="text" formControlName="ACCOUNT_NUMBER" [(ngModel)]="User_ACCOUNT_NUMBER_ngModel" placeholder="{{'Please fill the Account Number'}}"></ion-input>
                     </ion-item>
 
+                    <div class="eClaimSubTitle2">
+                        <b>{{'ROLE DETAILS' | translate}}</b>
+                    </div>
+
+                    <ion-item>
+                        <ion-label stacked>{{"Role"}}</ion-label>
+                        <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Add" placeholder="{{'Please select role'}}" multiple="true">
+                          <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                        </ion-select>
+                      </ion-item>
+
                     <div class="btn">
                         <button ion-button icon-left [disabled]="!Userform.valid" (click)="Save()">
                             {{ 'SUBMIT_BUTTON' | translate }}
@@ -1124,6 +1135,17 @@
                         <ion-label stacked>{{'ACCOUNT_NUMBER' | translate}}</ion-label>
                         <ion-input type="text" formControlName="ACCOUNT_NUMBER" [(ngModel)]="User_ACCOUNT_NUMBER_Edit_ngModel" placeholder="{{'Please fill the Account Number'}}"></ion-input>
                     </ion-item>
+
+                    <div class="eClaimSubTitle2">
+                        <b>{{'ROLE DETAILS' | translate}}</b>
+                    </div>
+
+                    <ion-item>
+                        <ion-label stacked>{{"Role"}}</ion-label>
+                        <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}" multiple="true">
+                          <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                        </ion-select>
+                      </ion-item>
 
                     <div class="btn">
                         <button ion-button [disabled]="!Userform.valid" (click)="Update(view_user_details[0].USER_GUID)">{{"SUBMIT" | translate}}</button>

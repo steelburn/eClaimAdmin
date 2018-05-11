@@ -52,7 +52,6 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 
 
 export interface PageInterface {
-
   title: string;
   name: string;
   component: any;
@@ -68,7 +67,7 @@ export interface PageInterface {
 })
 export class ConferenceApp {
 
-  public setupPageClicked: boolean = false;
+  //public setupPageClicked: boolean = false;
 
   //public setupPageClick() {
   //  this.setupPageClicked = !this.setupPageClicked;
@@ -110,7 +109,7 @@ export class ConferenceApp {
     storage: Storage,
     statusbar: StatusBar,
     splashScreen: SplashScreen, public translate: TranslateService
-  ) {    
+  ) {
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -128,11 +127,12 @@ export class ConferenceApp {
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn === true); 
     });
-    // this.enableMenu(true);
+    
     this.enableMenu(true);
     this.listenToLoginEvents();
 
-    this.userData.logout();this.enableMenu(false);
+    this.userData.logout(); 
+    this.enableMenu(false);
   }
 
   openPage(page: PageInterface) {
