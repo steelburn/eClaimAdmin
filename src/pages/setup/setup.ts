@@ -30,8 +30,8 @@ import { CustomerSetupPage } from '../customer-setup/customer-setup';
 import { UUID } from 'angular2-uuid';
 
 import { LoginPage } from '../login/login';
-import {  Inject } from '@angular/core';
-import {  AlertController } from 'ionic-angular';
+import { Inject } from '@angular/core';
+import { AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -49,7 +49,6 @@ import * as constants from '../../app/config/constants';
  */
 
 
-
 @IonicPage()
 @Component({
   selector: 'page-setup',
@@ -64,7 +63,6 @@ export class SetupPage {
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_branch' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   public branchs: any; public hqDetails: any;
-
 
   public AddBranchsClicked: boolean = false;
   public EditBranchsClicked: boolean = false;
@@ -98,7 +96,6 @@ export class SetupPage {
       this.EditBranchsClicked = false;
     }
   }
-
 
   public EditClick(BRANCH_GUID: any) {
     // this.ClearControls();
@@ -142,7 +139,7 @@ export class SetupPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private alertCtrl: AlertController) {
-  
+
     if (localStorage.getItem("g_USER_GUID") != null) {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/vw_tenantcompanysitedetails?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http
@@ -161,76 +158,65 @@ export class SetupPage {
     else {
       this.navCtrl.push(LoginPage);
     }
-  
-  
   }
 
-  goToBanksetup(){
+  goToBanksetup() {
     this.navCtrl.push(BanksetupPage)
   }
 
-
-
-
-  goToBranchsetup(){
+  goToBranchsetup() {
     this.navCtrl.push(BranchsetupPage)
   }
 
-    goToCashcardsetup(){
+  goToCashcardsetup() {
     this.navCtrl.push(CashcardsetupPage)
   }
 
-
-    goToClaimtypesetup(){
+  goToClaimtypesetup() {
     this.navCtrl.push(ClaimtypePage)
   }
 
-  goToUser(){
+  goToUser() {
     this.navCtrl.push(UserPage)
   }
 
-  goToCustomer(){
+  goToCustomer() {
     this.navCtrl.push(CustomerSetupPage);
   }
 
-  goToSOC(){
+  goToSOC() {
     this.navCtrl.push(SocRegistrationPage)
   }
-  
-  goToCompanysetup(){
+
+  goToCompanysetup() {
     this.navCtrl.push(CompanysetupPage)
   }
 
-  goToDesignationsetup(){
+  goToDesignationsetup() {
     this.navCtrl.push(DesignationsetupPage)
   }
 
-  goToDepartmentsetup(){
+  goToDepartmentsetup() {
     this.navCtrl.push(DepartmentsetupPage)
   }
 
- 
-
-      goToPaymenttypesetup(){
+  goToPaymenttypesetup() {
     this.navCtrl.push(PaymenttypesetupPage)
   }
 
-  goToStatesetup(){
+  goToStatesetup() {
     this.navCtrl.push(StatesetupPage)
   }
 
-  
-  goToCountrysetup(){
+  goToCountrysetup() {
     this.navCtrl.push(CountrysetupPage)
   }
 
-      goToQualificationsetup(){
+  goToQualificationsetup() {
     this.navCtrl.push(QualificationsetupPage)
   }
 
- 
-
-      goToMileagesetup(){
+  goToMileagesetup() {
     this.navCtrl.push(MileagesetupPage)
   }
 
@@ -240,8 +226,6 @@ export class SetupPage {
 
   Save() {
     if (this.Branchform.valid) {
-  
-
       this.Save_Tenant_Company();
     }
   }
@@ -253,7 +237,7 @@ export class SetupPage {
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-  
+
         if (data.resource[0] != undefined) {
           this.tenant_company_entry.TENANT_COMPANY_GUID = data.resource[0]["TENANT_COMPANY_GUID"];
           this.Save_Tenant_Company_Site();
@@ -317,7 +301,7 @@ export class SetupPage {
       //-------------Get all the details of previous tenant_company_site------------------------------
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/tenant_company_site?filter=(TENANT_COMPANY_SITE_GUID=" + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http
-        .get(this.baseResourceUrl)     
+        .get(this.baseResourceUrl)
         .map(res => res.json())
         .subscribe(data => {
           this.hqDetails = data.resource;
