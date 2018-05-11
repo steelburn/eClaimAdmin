@@ -50,7 +50,7 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 
-
+import { DashboardPage } from '../pages/dashboard/dashboard';
 export interface PageInterface {
 
   title: string;
@@ -83,6 +83,7 @@ export class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
+    // { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, tabComponent: DashboardPage, index: 4, icon: 'apps' },
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
     { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 2, icon: 'settings' },
@@ -103,7 +104,7 @@ export class ConferenceApp {
   rootPage = 'LoginPage';
 
 
-    public events: Events,   
+    //public events: Events,   
 
   constructor(
     public events: Events,
