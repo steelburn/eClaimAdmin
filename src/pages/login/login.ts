@@ -15,7 +15,7 @@ import { SetupPage } from '../setup/setup';
 import { AdminsetupPage } from '../adminsetup/adminsetup';
 import { SetupguidePage } from '../setupguide/setupguide';
 
-
+import { DashboardPage } from '../dashboard/dashboard';
 @Component({
   selector: 'page-user',
   templateUrl: 'login.html'
@@ -32,6 +32,7 @@ export class LoginPage {
   }
 
   onLogin(form: NgForm) {
+    // this.navCtrl.push(DashboardPage);
     this.submitted = true;
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
@@ -71,7 +72,8 @@ export class LoginPage {
                 this.navCtrl.push(SetupguidePage);
               }
               else{
-                this.navCtrl.push(SetupPage);
+                //this.navCtrl.push(SetupPage);
+                this.navCtrl.push(DashboardPage);
               }
               
               //navigate to app.component page

@@ -46,6 +46,7 @@ import { StatesetupPage } from '../pages/statesetup/statesetup';
 import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
+import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
@@ -64,7 +65,8 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-
+import { Chart } from 'chart.js';
+import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
 
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
@@ -91,13 +93,14 @@ import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-cla
 import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
 import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
+import { MiscellaneousClaimViewPage } from '../pages/miscellaneous-claim-view/miscellaneous-claim-view';
 import { ApiManagerProvider } from '../providers//api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
-
+import { DashboardPage } from '../pages/dashboard/dashboard';
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -109,6 +112,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     GiftclaimPage,
     OvertimeclaimPage,
     EntertainmentclaimPage,
+    MiscellaneousClaimPage,
     PeermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
@@ -146,6 +150,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     OvertimeClaimViewPage,
     PrintClaimViewPage,
     GiftClaimViewPage,
+    MiscellaneousClaimViewPage,
     TravelclaimPage,
     UploadPage,
     ProfileSetupPage,
@@ -155,18 +160,18 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
     ClaimtasklistPage,
-
     UserclaimslistPage,
     ClaimReportPage,
 
     CustomerSetupPage,
 
-    ChangePasswordPage
+    ChangePasswordPage,
+    DashboardPage
   ],
 
   imports: [
     BrowserModule,
-    HttpModule, HttpClientModule,
+    HttpModule, HttpClientModule,ChartsModule,
     TranslateModule.forRoot
       ({
         loader: {
@@ -206,6 +211,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     GiftclaimPage,
     OvertimeclaimPage,
     EntertainmentclaimPage,
+    MiscellaneousClaimPage,
     BanksetupPage,
     BranchsetupPage,
     CompanysetupPage,
@@ -235,6 +241,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     OvertimeClaimViewPage,
     PrintClaimViewPage,
     GiftClaimViewPage,
+    MiscellaneousClaimViewPage,
     UserPage,
     SocRegistrationPage,
     TravelclaimPage,
@@ -256,7 +263,8 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 
     CustomerSetupPage,
 
-    ChangePasswordPage
+    ChangePasswordPage,
+    DashboardPage
 
 
   ],
