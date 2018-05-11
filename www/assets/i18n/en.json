@@ -38,7 +38,7 @@
   "CASHCARD_SETUP_HEADING": "Cashcard Setup",
   "USER_REGISTRATION_HEADING": "User Registration",
   "PERSONAL_DETAILS": "Personal Details",
-  "RESIDENTIAL_ADDRESS": "Residential Address",
+  "RESIDENTIAL_ADDRESS": "Residential Address",  
   
   "NAME": "Name",
   "EMAIL": "Email",
@@ -147,7 +147,7 @@
   "CLAIM_AMOUNT_LABEL": "Claim Amount",
   "ATTACHMENT_LABEL": "Attachment",
   "CURRENCY_NAME_LABEL": "(RM)",
-  "DISTANCE_LABEL": "Distance in KM",
+  "DISTANCE_LABEL": "Distance in KM",  
   "ADD_TOLL_LABEL": "Add Toll",
   "ADD_PARKING_LABEL": "Add Parking",
   "MEAL_ALLOWANCE_LABEL": "Meal Allowance",  
@@ -162,11 +162,15 @@
   "CLAIM_APPLIED_DATE_LABEL":"Claim Applied Date",
   "STATUS_LABEL":"Status", 
   "MILEAGE_AMOUNT_LABEL": "Mileage Amount", 
-  "TOTAL_CLAIM_AMOUNT_LABEL":"Total Amount",
-  "REMARKS_LABEL": "Remarks",
+  "TOTAL_CLAIM_AMOUNT_LABEL":"Total Amount", 
   "REMARKS_PLACE_HOLDER": "Please fill the Remarks",
  "STAGE_LABEL":"Stage",
  "BANK_NAME_LABEL": "Bank Name",  
  "CUSTOMER_TITLE": "CUSTOMER",
- "PROJECT_TITLE": "PROJECT"
+ "PROJECT_TITLE": "PROJECT",
+ "SUBMIT_ACTION_BUTTON": "SUBMIT",
+ "EDIT_LABEL": "EDIT",
+ "REMARKS_LABEL": "Remarks",
+ "REJECT_BUTTON": "REJECT",
+ "ACCEPT_BUTTON": "ACCEPT"
 } 
