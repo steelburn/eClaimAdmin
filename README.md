@@ -15,3 +15,9 @@ npm install @ngx-translate/http-loader@latest --save
 #plugin to install for sha256 encryption
 npm install crypto-js --save
 npm install @types/crypto-js
+
+#plugin to install for charts
+npm install @types/chart.js
+npm i ng2-charts
+npm install chart.js --save
+npm install chart.piecelabel.js --save

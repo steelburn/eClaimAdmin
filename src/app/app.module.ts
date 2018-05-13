@@ -65,7 +65,8 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-
+import { Chart } from 'chart.js';
+import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
 
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
@@ -73,18 +74,18 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
+import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
 
 import { AddTollPage } from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 
-import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
-import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
-import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
-import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
-import{ClaimReportPage} from '../pages/claim-report/claim-report';
+import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
+import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist'
+import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
+import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
+import { ClaimReportPage } from '../pages/claim-report/claim-report';
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
@@ -99,7 +100,7 @@ import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
-
+import { DashboardPage } from '../pages/dashboard/dashboard';
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -164,12 +165,13 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 
     CustomerSetupPage,
 
-    ChangePasswordPage
+    ChangePasswordPage,
+    DashboardPage
   ],
 
   imports: [
     BrowserModule,
-    HttpModule, HttpClientModule,
+    HttpModule, HttpClientModule, ChartsModule,
     TranslateModule.forRoot
       ({
         loader: {
@@ -186,7 +188,11 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
-        { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' }
+        { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' },
+
+        { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
+        { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
+        { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -256,12 +262,13 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     UserclaimslistPage,
 
 
-    ClaimReportPage,   
+    ClaimReportPage,
     UploadPage,
 
     CustomerSetupPage,
 
-    ChangePasswordPage
+    ChangePasswordPage,
+    DashboardPage
 
 
   ],
@@ -277,7 +284,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     FilePath,
     FileTransfer,
     //FileUploadOptions,
-    FileTransferObject,ApiManagerProvider,ProfileManagerProvider
+    FileTransferObject, ApiManagerProvider, ProfileManagerProvider
   ]
 })
 export class AppModule { }
