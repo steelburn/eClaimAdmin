@@ -158,9 +158,10 @@ export class ModulesetupPage {
       ]
     }); alert.present();
   }
-  
+
   loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private modulesetupservice: ModuleSetup_Service, private modulepagesetupservice: ModulePageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       this.loading = this.loadingCtrl.create({
         content: 'Loading...',
@@ -238,46 +239,46 @@ export class ModulesetupPage {
       this.http.get(url, options)
         .map(res => res.json())
         .subscribe(
-        data => {
-          let res = data["resource"];
-          if (res.length == 0) {
-            console.log("No records Found");
-            if (this.Exist_Record == false) {
+          data => {
+            let res = data["resource"];
+            if (res.length == 0) {
+              console.log("No records Found");
+              if (this.Exist_Record == false) {
 
-              this.module_entry.NAME = this.NAME_ngModel_Add.trim();
-              this.module_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
-              this.module_entry.PAGE_GUID = this.PAGE_ngModel_Add[0];
-              this.module_entry.MODULE_GUID = UUID.UUID();
-              this.module_entry.CREATION_TS = new Date().toISOString();
-              this.module_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-              this.module_entry.UPDATE_TS = new Date().toISOString();
-              this.module_entry.UPDATE_USER_GUID = "";
+                this.module_entry.NAME = this.NAME_ngModel_Add.trim();
+                this.module_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
+                this.module_entry.PAGE_GUID = this.PAGE_ngModel_Add[0];
+                this.module_entry.MODULE_GUID = UUID.UUID();
+                this.module_entry.CREATION_TS = new Date().toISOString();
+                this.module_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+                this.module_entry.UPDATE_TS = new Date().toISOString();
+                this.module_entry.UPDATE_USER_GUID = "";
 
-              this.modulesetupservice.save(this.module_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    this.SaveMoulePage(this.module_entry.MODULE_GUID);
+                this.modulesetupservice.save(this.module_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+                      this.SaveModulePage(this.module_entry.MODULE_GUID);
 
-                    alert('Module Registered successfully');
-                    //location.reload();
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+                      alert('Module Registered successfully');
+                      //location.reload();
+                      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+              }
             }
-          }
-          else {
-            console.log("Records Found");
-            alert("This Module already Exist.")
-          }
-        },
-        err => {
-          this.Exist_Record = false;
-          console.log("ERROR!: ", err);
-        });
+            else {
+              console.log("Records Found");
+              alert("This Module already Exist.")
+            }
+          },
+          err => {
+            this.Exist_Record = false;
+            console.log("ERROR!: ", err);
+          });
     }
   }
 
-  SaveMoulePage(MODULE_GUID: any) {
+  SaveModulePage(MODULE_GUID: any) {
     for (var PAGE_GUID of this.PAGE_ngModel_Add) {
       this.modulepage_entry.ID = UUID.UUID();
       this.modulepage_entry.MODULE_GUID = MODULE_GUID;
@@ -295,7 +296,7 @@ export class ModulesetupPage {
         });
     }
   }
-  
+
   Update(MODULE_GUID: any) {
     if (this.Moduleform.valid) {
       if (this.module_entry.NAME == null) { this.module_entry.NAME = this.NAME_ngModel_Edit; }
@@ -315,42 +316,42 @@ export class ModulesetupPage {
         this.http.get(url)
           .map(res => res.json())
           .subscribe(
-          data => {
-            let res = data["resource"];
-            //console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_module_NAME'));
-            if (res.length == 0) {
-              console.log("No records Found");
-              this.module_entry.NAME = this.NAME_ngModel_Edit.trim();
+            data => {
+              let res = data["resource"];
+              //console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_module_NAME'));
+              if (res.length == 0) {
+                console.log("No records Found");
+                this.module_entry.NAME = this.NAME_ngModel_Edit.trim();
 
-              //**************Update service if it is new details*************************
-              this.modulesetupservice.update(this.module_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
+                //**************Update service if it is new details*************************
+                this.modulesetupservice.update(this.module_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
 
-                    //-------Delete Module Pages---------------- 
-                    this.DeleteModulePage(this.module_entry.MODULE_GUID);
+                      //-------Delete Module Pages---------------- 
+                      this.DeleteModulePage(this.module_entry.MODULE_GUID);
 
-                    //-------Update Module Pages----------------
-                    //this.UpdateMoulePage(this.module_entry.MODULE_GUID);
-                    this.UpdateMoulePageMultiple(this.module_entry.MODULE_GUID);
-                    //------------------------------------------
+                      //-------Update Module Pages----------------
+                      //this.UpdateModulePage(this.module_entry.MODULE_GUID);
+                      this.UpdateModulePageMultiple(this.module_entry.MODULE_GUID);
+                      //------------------------------------------
 
-                    // alert('Module updated successfully');
-                    // this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
-              //**************************************************************************
-            }
-            else {
-              console.log("Records Found");
-              alert("The Module is already Exist. ");
-            }
-          },
-          err => {
-            this.Exist_Record = false;
-            console.log("ERROR!: ", err);
+                      // alert('Module updated successfully');
+                      // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+                //**************************************************************************
+              }
+              else {
+                console.log("Records Found");
+                alert("The Module is already Exist. ");
+              }
+            },
+            err => {
+              this.Exist_Record = false;
+              console.log("ERROR!: ", err);
 
-          });
+            });
       }
       else {
         if (this.module_entry.NAME == null) { this.module_entry.NAME = localStorage.getItem('Prev_module_NAME'); }
@@ -366,8 +367,8 @@ export class ModulesetupPage {
               this.DeleteModulePage(this.module_entry.MODULE_GUID);
 
               //-------Update Module Pages----------------
-              //this.UpdateMoulePage(this.module_entry.MODULE_GUID);
-              this.UpdateMoulePageMultiple(this.module_entry.MODULE_GUID);
+              //this.UpdateModulePage(this.module_entry.MODULE_GUID);
+              this.UpdateModulePageMultiple(this.module_entry.MODULE_GUID);
               //------------------------------------------
 
               // alert('Module updated successfully');
@@ -388,7 +389,7 @@ export class ModulesetupPage {
       });
   }
 
-  UpdateMoulePage(MODULE_GUID: any) {
+  UpdateModulePage(MODULE_GUID: any) {
     //console.table(this.PAGE_ngModel_Edit);
     for (var PAGE_GUID of this.PAGE_ngModel_Edit) {
       this.modulepage_entry.ID = UUID.UUID();
@@ -410,7 +411,7 @@ export class ModulesetupPage {
     this.navCtrl.setRoot(this.navCtrl.getActive().component);
   }
 
-  UpdateMoulePageMultiple(MODULE_GUID: any) {
+  UpdateModulePageMultiple(MODULE_GUID: any) {
     //console.table(this.PAGE_ngModel_Edit);    
     for (var PAGE_GUID of this.PAGE_ngModel_Edit) {
       this.modulepage_entry.ID = UUID.UUID();

@@ -65,7 +65,8 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-
+import { Chart } from 'chart.js';
+import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
 
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
@@ -99,7 +100,7 @@ import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
-
+import { DashboardPage } from '../pages/dashboard/dashboard';
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -164,12 +165,13 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 
     CustomerSetupPage,
 
-    ChangePasswordPage
+    ChangePasswordPage,
+    DashboardPage
   ],
 
   imports: [
     BrowserModule,
-    HttpModule, HttpClientModule,
+    HttpModule, HttpClientModule,ChartsModule,
     TranslateModule.forRoot
       ({
         loader: {
@@ -261,7 +263,8 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 
     CustomerSetupPage,
 
-    ChangePasswordPage
+    ChangePasswordPage,
+    DashboardPage
 
 
   ],

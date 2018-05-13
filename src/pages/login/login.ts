@@ -15,7 +15,7 @@ import { SetupPage } from '../setup/setup';
 import { AdminsetupPage } from '../adminsetup/adminsetup';
 import { SetupguidePage } from '../setupguide/setupguide';
 
-
+import { DashboardPage } from '../dashboard/dashboard';
 @Component({
   selector: 'page-user',
   templateUrl: 'login.html'
@@ -28,10 +28,11 @@ export class LoginPage {
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   constructor(public navCtrl: NavController, public userData: UserData, public http: Http) {
-    localStorage.clear();
+    localStorage.clear(); 
   }
 
   onLogin(form: NgForm) {
+    // this.navCtrl.push(DashboardPage);
     this.submitted = true;
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
@@ -71,11 +72,12 @@ export class LoginPage {
                 this.navCtrl.push(SetupguidePage);
               }
               else{
-                this.navCtrl.push(SetupPage);
+                //this.navCtrl.push(SetupPage);
+                this.navCtrl.push(DashboardPage);
               }
               
               //navigate to app.component page
-              this.userData.login(this.login.username);
+              // this.userData.login(this.login.username);
             }
             else {
               localStorage.removeItem("g_USER_GUID");

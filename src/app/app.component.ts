@@ -50,9 +50,8 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 
-
+import { DashboardPage } from '../pages/dashboard/dashboard';
 export interface PageInterface {
-
   title: string;
   name: string;
   component: any;
@@ -67,10 +66,7 @@ export interface PageInterface {
   templateUrl: 'app.template.html'
 })
 export class ConferenceApp {
-
-  public setupPageClicked: boolean = false;
-  blnLogIn: boolean = false;
-
+  //public setupPageClicked: boolean = false;
   //public setupPageClick() {
   //  this.setupPageClicked = !this.setupPageClicked;
   //}
@@ -83,6 +79,7 @@ export class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
+    // { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, tabComponent: DashboardPage, index: 4, icon: 'apps' },
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
     { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 2, icon: 'settings' },
@@ -100,7 +97,12 @@ export class ConferenceApp {
     { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' }    
   ];
   // rootPage: any = LoginPage;
-  rootPage = 'LoginPage';
+
+
+    //public events: Events,   
+
+  rootPage = 'LoginPage';    
+
 
   constructor(
     public events: Events,
@@ -111,9 +113,8 @@ export class ConferenceApp {
     storage: Storage,
     statusbar: StatusBar,
     splashScreen: SplashScreen, public translate: TranslateService
+
   ) {
-    // if(localStorage.getItem("g_LogIn") == "true"){this.blnLogIn = true;}
-    // alert(localStorage.getItem("g_LogIn"));
 
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
@@ -132,9 +133,12 @@ export class ConferenceApp {
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn === true); 
     });
+    
     this.enableMenu(true);
-
     this.listenToLoginEvents();
+
+    this.userData.logout(); 
+    this.enableMenu(false);
   }
 
   openPage(page: PageInterface) {
