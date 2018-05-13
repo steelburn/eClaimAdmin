@@ -74,6 +74,41 @@
 
   </ion-menu>
 
+  <ion-menu id="loggedInMenu_User" [content]="content">
+    <ion-header>
+      <ion-toolbar color="primary500">
+        <ion-title>eClaim</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="outer-content">
+
+      <ion-list>
+        <ion-list-header>
+          Navigate
+        </ion-list-header>
+
+        <button ion-item menuClose *ngFor="let p of appPages_User" (click)="openPage(p)">
+          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+          {{p.title}}
+        </button>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          Account
+        </ion-list-header>
+        <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) ">
+          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+          {{p.title}}
+        </button>
+      </ion-list>
+
+
+    </ion-content>
+
+  </ion-menu>
+
   <!-- main navigation -->
   <ion-nav [root]="rootPage" #content swipeBackEnabled="false" main></ion-nav>
   <!-- <ion-nav [root]="rootPage"></ion-nav> -->
