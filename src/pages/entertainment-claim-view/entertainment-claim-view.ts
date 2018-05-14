@@ -20,7 +20,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 })
 export class EntertainmentClaimViewPage {
 
-  totalClaimAmount:number=0;
+  totalClaimAmount:number=0; 
   claimRequestData: any[];
   Remarks_NgModel: any;
   claimRequestGUID: any;

@@ -10,7 +10,6 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { BaseHttpService } from '../../services/base-http';
 
-
 import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-claim-view';
@@ -22,7 +21,6 @@ import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component
 import { PrintclaimPage } from '../../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../../pages/overtimeclaim/overtimeclaim';
-
 
 /**
  * Generated class for the UserclaimslistPage page.
@@ -119,7 +117,6 @@ this.userClaimhistorydetails=this.userClaimhistorydetails1;
     });
   };
 
-  
   claimRequestGUID: string; level: string;
 
   ClaimNavigation(claimRequestGUID: string, level:string, claimType:any, navType:number) {
@@ -151,7 +148,6 @@ debugger;
       cr_GUID: this.claimRequestGUID
     });
   }
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserclaimslistPage');

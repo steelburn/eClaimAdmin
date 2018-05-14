@@ -66,4 +66,203 @@
       display: none;
     }
   }
+
+
+//start
+
+
+  ion-fab[top1] {
+    top: 0 !important;
+  }
+
+
+
+
+.blackcontainer{
+    top: 0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background:black;
+    position: fixed;
+    opacity: 0.7;
+    
+}
+
+.popup{
+    width: 50%;
+    left:258px;
+    top: 60px;
+    position: fixed;
+        height: 500px;
+}
+
+
+.popup1{
+    width: 83%;
+    left: 78px;
+    top: 60px;
+    position: fixed;
+        height: 500px;
+}
+
+.popup2{
+    width: 83%;
+    left: 25px;
+    top: 38px;
+    position: fixed;
+    height: 480px;
+
+}
+
+.btn{
+
+    text-align: center;
+    margin: 10px 0px;
+}
+
+.btnR{
+    width: 33px !important;
+    height: 38px;
+    right: 16px;
+    font-size: 22px !important;
+    top: 15px;
+    position: absolute !important ;
+    background: #EF5350;
+    color: white;
+}
+
+
+.icHeaderText {
+    font-size: 15px !important;
+    
+}
+
+.icTitle {
+    border-bottom: 1px solid !important;
+    margin-bottom: 10px !important;
+    padding: 10px !important;
+}
+
+
+.cm{
+    height: 100%;
+}
+
+.tnUserRow {border-bottom: 2px solid #efefef;}
+
+
+
+
+
+//overwrite default css
+
+button[ion-fab] {
+    overflow: visible;
+    position: relative;
+    contain: layout;
+
+    ion-label {
+        position: absolute;
+        top: -8px;
+        right: 40px;
+
+        color: white;
+        background-color: rgba(0,0,0,0.7);
+        line-height: 24px;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+}
+
+.item-input ion-input, .item-input ion-textarea {
+    border-radius: 5px;
+    background: whitesmoke;
+    padding-left: 5pt 0 !important;
+}
+
+.item-input ion-input, .item-input ion-textarea.ng-dirty.ng-valid.ng-touched {
+    border: 0;
+}
+
+
+ion-datetime.datetime.datetime-md{
+    border-radius: 5px;
+    background: whitesmoke;
+    padding-left: 5pt 0 !important;
+}
+
+
+ion-datetime.datetime.datetime-md.ng-dirty.ng-valid.ng-touched {
+    border: 0;
+}
+
+ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
+    border: 0;
+}
+
+ion-datetime.datetime.datetime-ios{
+    border-radius: 5px;
+    background: whitesmoke;
+    padding-left: 5pt 0 !important;
+
+}
+
+ion-select.select.select-md{
+    border-radius: 5px;
+    background: whitesmoke;
+    padding-left: 5pt 0 !important;
+}
+
+ion-select.select.select-ios{
+    border-radius: 5px;
+    background: whitesmoke;
+    padding-left: 5pt 0 !important;
+}
+
+ion-select.select.select-ios.ng-dirty.ng-valid.ng-touched{
+    border: 0;
+}
+ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
+    border: 0;
+}
+
+
+.action-sheet-group {
+    overflow: auto !important; 
+}
+
+.til {
+    top: 36%;
+    font-size: 2.2em;
+    width: 100%;
+  }
+
+  .subtil{
+    font-size: 1.0em;
+    top: 52%;
+    width: 100%;
+  }
+
+.item.item-block .item-inner {
+    border-bottom: 0 !important;
+}
+
+.conta{
+    width: 45.5% !important;
+    display: inline-block !important;
+}
+
+
+
+//color scheme workout
+
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default, .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {
+    color: white !important;
+ }
+
+
+//end
+
+
 }

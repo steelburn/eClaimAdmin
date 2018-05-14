@@ -23,7 +23,7 @@ export class ProfileManagerProvider {
   
     UpdateProfileInfo(mainClaimReq: MainClaimRequestModel) {
       this.api.updateClaimRequest(mainClaimReq).subscribe(res => console.log(res.json()))
-    }
+    }    
   
     getMainClaimReqInfo(claimRef: ClaimWorkFlowHistoryModel, level: any, claimRequestGUID: any, isRemarksAccepted: any) {
       this.level = level;
