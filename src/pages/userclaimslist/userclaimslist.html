@@ -43,18 +43,23 @@
                         <th class="lgl1">Date</th>
                         <th class="lgl1">Status</th>
                         <th class="lgl1">Stage</th>
-                        <th class="lgl1 tblBrRight">Amount</th>
-                        <!-- <th class="lgl1 tblBrRight" style="width:80px">ACTION</th> -->
+                        <th class="lgl1">Amount</th>
+                        <th class="lgl1 tblBrRight">ACTION</th>
           
                     </tr>
           
                     <tr class="col7" *ngFor="let claimhistorydetail of userClaimhistorydetails; let i=index">
                         <td class="lgl1">{{i+1}}</td>
-                        <td class="lgl1" >{{claimhistorydetail.CLAIM_TYPE}}</td>
+                        <td class="lgl1" >{{claimhistorydetail.CLAIMTYPE}}</td>
                         <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                         <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
                         <td class="lgl1">{{claimhistorydetail.STAGE}}</td>
-                        <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT}}</td>
+                        <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+                        <td class="lgl1 fColor">
+                          <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)"><ion-icon name="md-eye"></ion-icon></button>
+                          <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,2)"><ion-icon name="md-create"></ion-icon></button>
+                          <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)"><ion-icon name="md-close"></ion-icon></button>
+                        </td>
                     </tr>
           
           

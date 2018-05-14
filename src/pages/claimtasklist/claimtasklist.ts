@@ -29,10 +29,13 @@ export class ClaimtasklistPage {
 
   //ClaimHistory_Model = new ClaimHistory_Model();
    claimTaskLists:any[];
-   claimTaskLists1:any[];
+   claimTaskLists1:any[]=[];
+   claimTaskListTotal: any[];
    searchboxValue: string;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?filter=(ASSIGNED_TO='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
+  //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
     this.BindData();
     }
@@ -43,8 +46,19 @@ BindData()
   .get(this.baseResourceUrl)
   .map(res => res.json())
   .subscribe(data => {
-    this.claimTaskLists= data["resource"];
-    this.claimTaskLists1=this.claimTaskLists;
+    this.claimTaskListTotal= data["resource"];
+
+    this.claimTaskListTotal.forEach(element => {
+      if(this.claimTaskLists1.length===0 || (this.claimTaskLists1.length>0 && this.claimTaskLists1.find(e=>e.CLAIM_REF_GUID==element.CLAIM_REF_GUID)===undefined))
+      {
+         this.claimTaskLists1.push(element);
+     }
+      else
+      {
+        this.claimTaskLists1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID).CLAIM_AMOUNT+=element.CLAIM_AMOUNT;
+      }
+    });
+    this.claimTaskLists=this.claimTaskLists1;
   });
 }
 
@@ -76,6 +90,7 @@ onSearchInput(ev: any) {
        }
        else
        {
+         
         this.claimTaskLists=this.claimTaskLists1;
        }
  }
