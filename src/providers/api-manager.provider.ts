@@ -37,7 +37,7 @@ export class ApiManagerProvider {
 
       sendEmail() {
         let name: string; let email: string
-        name = 'shabbeer'; email = 'shabbeer@zen.com.my'
+        name = 'shabbeer'; email = 'pratap@zen.com.my'
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));

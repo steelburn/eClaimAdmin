@@ -42,5 +42,6 @@
   "PASSWORD_LABEL": "Password  In Malay",
   "AMOUNT_LABEL": "Amount",
 
-  "PAY_BY_LABEL": "Pay By"
+  "PAY_BY_LABEL": "Pay By",
+  "DASHBOARD_HEADING": "Dashboard"
 }
