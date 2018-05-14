@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';     
 import { MainClaimRequestModel } from '../../models/main-claim-request.model';
-import { ImageUpload_model } from '../../models/ImageUpload_model';
+import { ImageUpload_model } from '../../models/image-upload.model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
 //import { TravelClaim_Service } from '../../services/travelclaim_service';
 import { Services } from '../Services';
@@ -67,6 +67,7 @@ export class TravelclaimPage {
   Customer_Lookup_ngModel: any;
   Customer_GUID: any; 
   Soc_GUID: any;
+  isFormSubmitted = false;
 
   //public socGUID : any;
   public AddTravelClicked: boolean = false;
@@ -76,10 +77,13 @@ export class TravelclaimPage {
   public AddToLookupClicked: boolean = false;
   currentItems: any;
   public MainClaimSaved: boolean = false;
-  claimFor: any;
+  claimFor: string = 'seg_customer';
   DestinationPlaceID: string;
   OriginPlaceID: string;
-  
+  CloudFilePath: string;
+  uploadFileName: string;
+  loading = false;
+
   VehicleId: any;
   VehicleRate: any;
   travelAmount: any;
@@ -129,21 +133,8 @@ export class TravelclaimPage {
       claim_amount: ['', Validators.required]
     });   
     if (this.isFormEdit)
-    this.GetDataforEdit();
-    // this.LoadProjects();
-    // this.LoadVehicles();
-    // this.LoadCustomers();
-    // this.readProfile();
-  }
-
-  //  ngOnInit(): void {
-  //    this.userGUID = localStorage.getItem('g_USER_GUID'); 
-  //    this.isFormEdit = this.navParams.get('isFormEdit');
-  //     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-  //    //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
-  //    if (this.isFormEdit)
-  //      this.GetDataforEdit();
-  //  }
+    this.GetDataforEdit();   
+  } 
   
    GetDataforEdit() {
     this.http
@@ -189,7 +180,6 @@ export class TravelclaimPage {
         console.log(this.claimRequestData[0].MILEAGE_GUID);
        console.table(this.vehicles);
         this.vehicles.forEach(element => {
-          //alert('test');
           if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
             this.Travel_Mode_ngModel = element.CATEGORY;
             console.log(element.CATEGORY);
@@ -271,6 +261,7 @@ export class TravelclaimPage {
         // console.log(DistKm)
         DistKm = DistKm.replace(',', '')
         this.Travel_Distance_ngModel = destination = DistKm.substring(0, DistKm.length - 2)
+        this.Travel_Distance_ngModel = this.numberPipe.transform(this.Travel_Distance_ngModel, '1.2-2');
         this.Travel_Mode_ngModel = this.vehicleCategory;
         if (!this.isPublicTransport)
           this.travelAmount = destination * this.VehicleRate, -2;
@@ -552,21 +543,133 @@ export class TravelclaimPage {
     this.allowanceGUID = allowance.ALLOWANCE_GUID;
   }
 
-  imageGUID: any;
-  onReceiveImageGUID(imageGUID: any) {
-    this.imageGUID = imageGUID;
+  // imageGUID: any;
+  // onReceiveImageGUID(imageGUID: any) {
+  //   this.imageGUID = imageGUID;
+  // }
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Travelform.get('avatar').setValue(file);
+      this.uploadFileName = file.name;
+      reader.onload = () => {
+        this.Travelform.get('avatar').setValue({
+          filename: file.name,
+          filetype: file.type,
+          value: reader.result.split(',')[1]
+        });
+      };
+    }
   }
 
+  imageGUID: any;
+  saveIm() {
+    let uploadImage = this.UploadImage();
+    uploadImage.then((resJson) => {
+      console.table(resJson)
+      let imageResult = this.SaveImageinDB();
+      imageResult.then((objImage: ImageUpload_model) => {
+       
+        //let result = this.submitAction(objImage.Image_Guid, formValues);
+        this.imageGUID = objImage.Image_Guid
+      })
+    })
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 1000);
+  }
+
+  SaveImageinDB() {
+    let objImage: ImageUpload_model = new ImageUpload_model();
+    objImage.Image_Guid = UUID.UUID();
+    objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+    objImage.CREATION_TS = new Date().toISOString();
+    objImage.Update_Ts = new Date().toISOString();
+    return new Promise((resolve, reject) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+        // let res = response.json();
+        // let imageGUID = res["resource"][0].Image_Guid;
+        resolve(objImage.toJson());
+      })
+    })
+  }
+
+  UploadImage() {   
+      this.CloudFilePath = 'eclaim/'   
+   
+    this.loading = true;
+    const queryHeaders = new Headers();
+    queryHeaders.append('filename', this.uploadFileName);
+    queryHeaders.append('Content-Type', 'multipart/form-data');
+    queryHeaders.append('fileKey', 'file');
+    queryHeaders.append('chunkedMode', 'false');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    const options = new RequestOptions({ headers: queryHeaders });
+    return new Promise((resolve, reject) => {
+      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Travelform.get('avatar').value, options)
+        .map((response) => {
+          return response;
+        }).subscribe((response) => {
+          resolve(response.json());
+        })
+    })
+  }
+
+  validateDate() {
+    let today = Date.parse(new Date().toISOString())
+    let start = Date.parse(this.Start_DT_ngModel)
+    let end = Date.parse(this.End_DT_ngModel)
+    if (start > end || today < start) {
+      alert('The Date Range is not valid.')
+      return false;
+    }
+    return true;
+  }
+
+
+  // submitAction(formValues: any) {
+  //   if (this.validateDate())
+  //   formValues.travel_date = formValues.start_DT
+  //   formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+  //   formValues.meal_allowance = this.allowanceGUID;
+  //   formValues.distance = this.Travel_Distance_ngModel;
+  //   formValues.vehicleType = this.VehicleId;
+  //   formValues.attachment_GUID = this.imageGUID;
+  //   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+  //   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+  //   this.MainClaimSaved = true;
+  // }
+
   submitAction(formValues: any) {
-    formValues.travel_date = formValues.start_DT
-    formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
-    formValues.meal_allowance = this.allowanceGUID;
-    formValues.distance = this.Travel_Distance_ngModel;
-    formValues.vehicleType = this.VehicleId;
-    formValues.attachment_GUID = this.imageGUID;
-    formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-    this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
-    this.MainClaimSaved = true;
+    let status: string;
+    if (this.validateDate()) {
+      if (!this.isFormSubmitted) {
+        this.isFormSubmitted = true;
+        formValues.uuid = this.claimRequestGUID = UUID.UUID();
+        formValues.travel_date = formValues.start_DT
+        formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+        formValues.meal_allowance = this.allowanceGUID;
+        formValues.distance = this.Travel_Distance_ngModel;
+        formValues.vehicleType = this.VehicleId;
+        formValues.attachment_GUID = this.imageGUID;
+        formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+
+        this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+        this.MainClaimSaved = true;
+      }
+      else {
+        this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+        .subscribe(data => {
+          this.claimRequestData = data["resource"][0];
+          //this.claimRequestData.STATUS = 'Pending';
+          //this.api.updateClaimRequest(this.claimRequestData)
+
+        })
+        this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+        this.MainClaimSaved = true;
+      }
+    }
   }
 
  

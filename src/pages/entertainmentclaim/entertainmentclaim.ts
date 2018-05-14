@@ -25,6 +25,8 @@ import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 //import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
+
 
 @IonicPage()
 @Component({
@@ -40,6 +42,8 @@ export class EntertainmentclaimPage {
   @ViewChild('fileInput') fileInput: ElementRef;
   travel_date: any;
   TenantGUID: any;
+  mainClaimReq: MainClaimRequestModel = new MainClaimRequestModel();
+
  
   storeProjects: any[]; 
   public projects: any[]; 
@@ -78,6 +82,7 @@ export class EntertainmentclaimPage {
   isCustomer: boolean = true;
   claimFor: any;
   ClaimRequestMainId: any;
+  
 
    /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
@@ -137,7 +142,7 @@ export class EntertainmentclaimPage {
       );
   }
 
-  constructor(public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, private api: Services, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+  constructor(public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, private api: Services, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.Entertainmentform = fb.group({
       avatar: null,
@@ -388,6 +393,39 @@ export class EntertainmentclaimPage {
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
   }
+
+//   submitAction(imageGUID: any, formValues: any) {
+//     //let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
+//     // let claimRequestDataModel: MainClaimRequestModel = new MainClaimRequestModel();
+// debugger;
+//     if (this.isFormEdit) {
+//       this.mainClaimReq.ATTACHMENT_ID = imageGUID;
+//       this.mainClaimReq.CLAIM_AMOUNT = formValues.claim_amount;
+//       this.mainClaimReq.MILEAGE_AMOUNT = formValues.claim_amount;
+//       this.mainClaimReq.TRAVEL_DATE = formValues.travel_date;
+//       this.mainClaimReq.DESCRIPTION = formValues.description;
+      
+//       //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+//       if (this.isCustomer) {
+//         this.mainClaimReq.CUSTOMER_GUID = formValues.soc_no;
+//         this.mainClaimReq.SOC_GUID = null;
+//       }
+//       else {
+//         this.mainClaimReq.SOC_GUID = formValues.soc_no;
+//         this.mainClaimReq.CUSTOMER_GUID = null;
+//       }
+//       this.apiMng.updateClaimRequest(this.claimRequestData[0]);
+//       alert('Claim updated successfully.')
+//     }
+//     else {
+//       formValues.claimTypeGUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
+//       formValues.meal_allowance = this.allowanceGUID;
+//       formValues.attachment_GUID = imageGUID;
+//       this.travelAmount = formValues.claim_amount;
+//       formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+//       this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+//     }
+//   }
 
   
 } 

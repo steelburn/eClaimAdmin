@@ -21,6 +21,7 @@ import { UserData } from '../providers/user-data';
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
+
 import { PeermissionPage } from '../pages/peermission/peermission';
 import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
@@ -29,9 +30,9 @@ import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
 
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
-import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist'
+import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist';
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
-import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
+import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist';
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
 
 import { UploadPage } from '../pages/upload/upload';
@@ -47,12 +48,14 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
 
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
-
 import { ChangePasswordPage } from '../pages/change-password/change-password';
-
 import { DashboardPage } from '../pages/dashboard/dashboard';
-export interface PageInterface {
 
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import 'rxjs/add/operator/map';
+import * as constants from '../app/config/constants';
+
+export interface PageInterface {
   title: string;
   name: string;
   component: any;
@@ -67,10 +70,9 @@ export interface PageInterface {
   templateUrl: 'app.template.html'
 })
 export class ConferenceApp {
-
-  public setupPageClicked: boolean = false;
-  blnLogIn: boolean = false;
-
+  baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+  public Menu_Array: any[] = [];
+  //public setupPageClicked: boolean = false;
   //public setupPageClick() {
   //  this.setupPageClicked = !this.setupPageClicked;
   //}
@@ -87,7 +89,11 @@ export class ConferenceApp {
     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
     { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 2, icon: 'settings' },
-    { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+    // { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+
+    { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+    { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 3, icon: 'checkbox-outline' },
+    { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
   ];
   loggedInPages: PageInterface[] = [
     // { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -97,16 +103,21 @@ export class ConferenceApp {
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' },    
-    { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' }    
+    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' },
+    { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' }
   ];
+
+  // appPages_User: PageInterface[] = [    
+  //   // { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, tabComponent: DashboardPage, index: 4, icon: 'apps' },
+  //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+  //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+  // ];
+
   // rootPage: any = LoginPage;
+  //public events: Events,   
 
-
-    //public events: Events,   
-
-  rootPage = 'LoginPage';    
-
+  rootPage = 'LoginPage';
+  appPages_User: PageInterface[];
 
   constructor(
     public events: Events,
@@ -114,10 +125,15 @@ export class ConferenceApp {
     public menu: MenuController,
     public platform: Platform,
     public confData: ConferenceData,
-    storage: Storage,
+    public storage: Storage,
     statusbar: StatusBar,
-    splashScreen: SplashScreen, public translate: TranslateService
-     ) {
+    splashScreen: SplashScreen, public translate: TranslateService, public http: Http
+  ) {
+    //debugger;
+    // this.appPages_User = [
+    //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+    //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+    // ];
 
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
@@ -134,16 +150,18 @@ export class ConferenceApp {
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      this.enableMenu(hasLoggedIn === true); 
+      this.enableMenu(hasLoggedIn === true);
     });
-    // this.enableMenu(true);
-    this.enableMenu(true);
+
+    //this.enableMenu(true);
     this.listenToLoginEvents();
 
-    this.userData.logout();this.enableMenu(false);
+    this.userData.logout();
+    this.enableMenu(false);
   }
 
   openPage(page: PageInterface) {
+    debugger;
     let params = {};
 
     // the nav component was found using @ViewChild(Nav)
@@ -162,7 +180,7 @@ export class ConferenceApp {
     } else {
       this.nav.setRoot(page.name, params).catch((err: any) => {
         console.log(`Didn't set nav root: ${err}`);
-      });
+      });      
     }
 
     if (page.logsOut === true) {
@@ -172,6 +190,7 @@ export class ConferenceApp {
   }
 
   listenToLoginEvents() {
+    //debugger;
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
     });
@@ -186,11 +205,142 @@ export class ConferenceApp {
   }
 
   enableMenu(loggedIn: boolean) {
-    this.menu.enable(loggedIn, 'loggedInMenu');
-    this.menu.enable(!loggedIn, 'loggedOutMenu');
+    debugger;
+    //Get all the roles and menus for that particular user.-------------------------------------------------------   
+    // let url: string; this.Menu_Array = []; let Role_Name: string = "";
+    // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // this.http
+    //   .get(url)
+    //   .map(res => res.json())
+    //   .subscribe(data => {
+    //     let res = data["resource"];
+    //     if (res.length > 0) {
+    //       for (var item in data["resource"]) {
+    //         if (data["resource"][item]["NAME"].toUpperCase() == "HOME") {
+    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' });
+    //         }
+    //         else if (data["resource"][item]["NAME"].toUpperCase() == "APPROVER TASK") {
+    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' });
+    //         }
+    //         else if (data["resource"][item]["NAME"].toUpperCase() == "CHANGE PASSWORD") {
+    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' });
+    //         }
+    //         else {
+    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' });
+    //         }            
+    //       }
+    //     }
+    //   });
+    // ---------------------------------------------------------------------------------------------------------------------------------   
+
+    // this.menu.enable(loggedIn, 'loggedInMenu');
+    // this.menu.enable(!loggedIn, 'loggedOutMenu');
+
+    if (localStorage.length > 0) {
+      let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
+      val.then((res) => {
+        if (localStorage.getItem("g_USER_GUID") == "sva") {
+          this.menu.enable(loggedIn, 'loggedInMenu');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+        //For Tenant Admin, Remove Admin Setup
+        else if (localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
+          this.appPages_User = [
+            { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+            { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
+
+            { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 3, icon: 'checkbox-outline' },
+            { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+          ];
+
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+        //For Team Member, Home, Change Password, Sign Out
+        else if (res.toString() == "Team Member") {
+          this.appPages_User = [
+            { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+
+            { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 3, icon: 'checkbox-outline' },
+          ];
+
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+
+        //For Team Member, Home, Change Password, Sign Out
+        else if (res.toString() == "Finance Executive" || res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
+          this.appPages_User = [
+            { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+
+            { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 3, icon: 'checkbox-outline' },
+            { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+          ];
+
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+        //For Team Lead and others
+        else {
+          this.appPages_User = [
+            { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+
+            { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 3, icon: 'checkbox-outline' },
+            // { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+          ];
+
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+      });
+      val.catch((err) => {
+        // This is never called
+        console.log(err);
+      });
+    }
+    else {
+      this.menu.enable(loggedIn, 'loggedInMenu');
+      this.menu.enable(!loggedIn, 'loggedOutMenu');
+    }
+
+
+
+
+
+    //For Super admin, All menu should display
+    // if (localStorage.length > 0) {
+    //   if (localStorage.getItem("g_USER_GUID") == "sva") {
+    //     this.menu.enable(loggedIn, 'loggedInMenu');
+    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
+    //   }
+    //   //For user, distinct menu should display
+    //   else if (localStorage.getItem("g_IS_TENANT_AMDIN") != "1") {
+    //     // this.appPages_User = [
+    //     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+    //     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+    //     // ];
+    //     this.appPages_User = this.Menu_Array;
+
+    //     this.menu.enable(loggedIn, 'loggedInMenu_User');
+    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
+    //   }
+    //   else {
+    //     this.menu.enable(loggedIn, 'loggedInMenu');
+    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
+    //   }
+    // }
+    // else {
+    //   this.menu.enable(loggedIn, 'loggedInMenu');
+    //   this.menu.enable(!loggedIn, 'loggedOutMenu');
+    // }
   }
 
   isActive(page: PageInterface) {
+    // debugger;    
     let childNav = this.nav.getActiveChildNav();
 
     // Tabs are a special case because they have their own navigation
@@ -220,5 +370,24 @@ export class ConferenceApp {
     this.translate.use('ms');
     this.translateToEnglishClicked = !this.translateToEnglishClicked;
     this.translateToMalayClicked = !this.translateToMalayClicked;
+  }
+
+  GetUser_Role(user_guid: string) {
+    debugger;
+    let TableURL = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + user_guid + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(TableURL)
+        .map(res => res.json())
+        .subscribe(data => {
+          let roles = data["resource"];
+          if (data["resource"].length > 0) {
+            resolve(roles[0]["ROLE_NAME"]);
+          }
+          else {
+            resolve("NA");
+          }
+        });
+    });
   }
 }

@@ -31,6 +31,8 @@ import { UserSetup_Service } from '../../services/usersetup_service';
 import { BaseHttpService } from '../../services/base-http';
 import { Services } from '../Services';
 
+import { UserRole_Model } from '../../models/user_role_model'
+
 import { UUID } from 'angular2-uuid';
 
 import { elementDef } from '@angular/core/src/view/element';
@@ -92,6 +94,7 @@ export class UserPage {
   UserCertification_Entry: UserCertification_Model = new UserCertification_Model();
   UserSpouse_Entry: UserSpouse_Model = new UserSpouse_Model();
   UserChildren_Entry: UserChildren_Model = new UserChildren_Model();
+  userrole_entry: UserRole_Model = new UserRole_Model();
 
   viewuser_entry: ViewUser_Model = new ViewUser_Model();
   viewdropdown_entry: View_Dropdown_Model = new View_Dropdown_Model();
@@ -340,15 +343,16 @@ export class UserPage {
           this.GetDesignation('main_designation', 'NAME');
           this.GetDepartment('main_department', 'NAME');
           this.BindBank('main_bank', 'NAME');
-          this.BindApprover1("view_get_tenant_admin");
+          this.BindApprover1("view_get_tenant_admin"); -
+            this.BindRole();
 
-          if(this.view_user_details[0]["DESIGNATION_GUID"]!=null){
+          if (this.view_user_details[0]["DESIGNATION_GUID"] != null) {
             this.User_Designation_Edit_ngModel = this.view_user_details[0]["DESIGNATION_GUID"];
           }
-          if(this.view_user_details[0]["DEPT_GUID"] != null){
+          if (this.view_user_details[0]["DEPT_GUID"] != null) {
             this.User_Department_Edit_ngModel = this.view_user_details[0]["DEPT_GUID"];
           }
-          
+
           this.User_JoinDate_Edit_ngModel = this.view_user_details[0]["JOIN_DATE"];
           this.User_ConfirmationDate_Edit_ngModel = this.view_user_details[0]["CONFIRMATION_DATE"];
           this.User_ResignationDate_Edit_ngModel = this.view_user_details[0]["RESIGNATION_DATE"];
@@ -357,10 +361,10 @@ export class UserPage {
           //this.EmployeeTypeAdjuster=  this.User_EmployeeType_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_TYPE"]; 
           this.User_EmployeeType_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_TYPE"];
 
-          if(this.view_user_details[0]["MANAGER_USER_GUID"]!=null){
+          if (this.view_user_details[0]["MANAGER_USER_GUID"] != null) {
             this.User_Approver1_Edit_ngModel = this.view_user_details[0]["MANAGER_USER_GUID"];
           }
-  
+
           // this.User_Approver2_Edit_ngModel = this.view_user_details[0]["APPROVER2"];
           this.User_Employment_Edit_ngModel = this.view_user_details[0]["EMPLOYEE_STATUS"];
 
@@ -391,10 +395,10 @@ export class UserPage {
           //------------------------PAYROLL CONTACT DETAILS-----------------------------
           this.User_EPF_NUMBER_Edit_ngModel = this.view_user_details[0]["PR_EPF_NUMBER"];
           this.User_INCOMETAX_NO_Edit_ngModel = this.view_user_details[0]["PR_INCOMETAX_NUMBER"];
-          
-          if(this.view_user_details[0]["BANK_GUID"]!=null){
+
+          if (this.view_user_details[0]["BANK_GUID"] != null) {
             this.User_BANK_NAME_Edit_ngModel = this.view_user_details[0]["BANK_GUID"];
-          }          
+          }
 
           this.User_ACCOUNT_NUMBER_Edit_ngModel = this.view_user_details[0]["PR_ACCOUNT_NUMBER"];
 
@@ -444,6 +448,21 @@ export class UserPage {
             this.Profile_Image_Display = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/" + data["resource"][0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY;
           }
         });
+
+    //------------------------Role-------------------------------
+    let CheckRole: any = [];
+    let User_Role_url = this.baseResourceUrl2_URL + "user_role?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+    this.http
+      .get(User_Role_url)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.roles = data.resource;        
+        for (var itemA in this.roles) {
+          CheckRole.push(this.roles[itemA]["ROLE_GUID"]);
+        }
+        this.ROLE_ngModel_Edit = CheckRole;        
+      });
   }
 
   public DeleteClick(USER_GUID: any) {
@@ -508,6 +527,9 @@ export class UserPage {
 
       //---------Bind Grid------------------------
       this.BindGrid("view_user_display_new");
+
+      //--------Bind Role--------------------------
+      this.BindRole();
 
       this.Userform = fb.group({
         // -------------------PERSONAL DETAILS--------------------
@@ -582,7 +604,10 @@ export class UserPage {
         EPF_NUMBER: [null],
         INCOMETAX_NO: [null],
         BANK_NAME: ['', Validators.required],
-        ACCOUNT_NUMBER: [null],
+        ACCOUNT_NUMBER: [null, Validators.required],
+
+        //-------------------ROLE DETAILS---------------------------
+        ROLE_NAME: [null],
       });
     }
     else {
@@ -889,15 +914,15 @@ export class UserPage {
       if (this.AddUserClicked == true) {
         TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')&' + this.Key_Param;
       }
-      else{
-        if(localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_IS_TENANT_AMDIN") == "1"){
+      else {
+        if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
           TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')&' + this.Key_Param;
         }
-        else{
+        else {
           TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')AND(USER_GUID!=' + this.view_user_details[0]["USER_GUID"] + ')&' + this.Key_Param;
-        }        
+        }
       }
-      
+
       this.http
         .get(TableURL_Approver)
         .map(res => res.json())
@@ -909,6 +934,17 @@ export class UserPage {
       // This is never called
       console.log(err);
     });
+  }
+
+  roles: any
+  BindRole() {
+    let roleUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_role' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http
+      .get(roleUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.roles = data["resource"];
+      });
   }
 
   User_Certification_ngModel: any;
@@ -1354,7 +1390,7 @@ export class UserPage {
     this.userinfo_entry.MARITAL_STATUS = this.User_Marital_ngModel;
     this.userinfo_entry.BRANCH = this.User_Branch_ngModel.trim();
     this.userinfo_entry.EMPLOYEE_TYPE = this.User_EmployeeType_ngModel.trim();
-    this.userinfo_entry.ATTACHMENT_ID = imageGUID;    
+    this.userinfo_entry.ATTACHMENT_ID = imageGUID;
     // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
     // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
     this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_ngModel.trim();
@@ -1569,8 +1605,8 @@ export class UserPage {
             let imageResult = this.SaveImageinDB(this.fileName2);
             imageResult.then((objImage: ImageUpload_model) => {
               let result = this.Save_User_Qualification(objImage.Image_Guid);
-              
-              
+
+
               //alert("User Contact inserted");
             })
           })
@@ -1614,7 +1650,6 @@ export class UserPage {
   }
 
   Save_User_Qualification(imageGUID: string) {
-    debugger;
     let userqualification_entry: UserQualification_Model = new UserQualification_Model();
     this.userqualification_entry.USER_QUALIFICATION_GUID = UUID.UUID();
     this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_ngModel;
@@ -1651,8 +1686,9 @@ export class UserPage {
             //this.Save_User_Certification();
             this.Save_User_Spouse();
             this.Save_User_Children();
+            this.Save_Role();
 
-            alert('User Inserted Successfully!!');
+            alert('User inserted successfully.');
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         });
@@ -1704,8 +1740,9 @@ export class UserPage {
             // this.Update_User_Certification();
             this.Update_User_Spouse();
             this.Update_User_Children();
+            this.Update_Role();
 
-            alert('User Updated Successfully!!');
+            alert('User updated successfully.');
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         });
@@ -2104,6 +2141,60 @@ export class UserPage {
     }
   }
 
+  Save_Role() {
+    for (var ROLE_GUID of this.ROLE_ngModel_Add) {
+      this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
+      this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+      this.userrole_entry.ROLE_GUID = ROLE_GUID;
+      this.userrole_entry.ACTIVATION_FLAG = "1";
+      this.userrole_entry.CREATION_TS = new Date().toISOString();
+      this.userrole_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.userrole_entry.UPDATE_TS = new Date().toISOString();
+      this.userrole_entry.UPDATE_USER_GUID = "";
+
+      this.userservice.save_user_role(this.userrole_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            // alert('Tenant User Registered successfully');
+            // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        });
+    }
+  }
+
+  Update_Role() {
+    //first Delete all the records------------------------------------------------------------    
+    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_role")
+      .subscribe(
+        (response) => {
+          if (response.status == 200) {            
+            //Insert Record again---------------------------------------------------------------------
+            for (var ROLE_GUID of this.ROLE_ngModel_Edit) {
+              this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
+              this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+              this.userrole_entry.ROLE_GUID = ROLE_GUID;
+              this.userrole_entry.ACTIVATION_FLAG = "1";
+              this.userrole_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+              this.userrole_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+              this.userrole_entry.UPDATE_TS = new Date().toISOString();
+              this.userrole_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+              this.userservice.save_user_role(this.userrole_entry)
+                .subscribe((response) => {
+                  if (response.status == 200) {
+                    // alert('Tenant User Registered successfully');
+                    // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  }
+                });
+            }
+            //-----------------------------------------------------------------------------------------
+          }
+        });
+  }
+
+  ROLE_ngModel_Add: any;
+  ROLE_ngModel_Edit: any;
+
   ClearControls() {
     this.User_Name_ngModel = "";
     this.User_Email_ngModel = "";
@@ -2229,6 +2320,9 @@ export class UserPage {
     this.User_BANK_NAME_Edit_ngModel = "";
 
     this.MaritalStatusMarried = false;
+
+    this.ROLE_ngModel_Add = "";
+    this.ROLE_ngModel_Edit = "";
   }
 
   lastImage: string = null;
