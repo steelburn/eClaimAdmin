@@ -41,7 +41,7 @@
                     <td class="lgl1">{{claimhistory.DEPARTMENT}}</td>
                     <td class="lgl1">{{claimhistory.MONTH}}</td>
                     <!-- <td class="lgl1">{{claimhistory.YEAR}}</td> -->
-                    <td class="lgl1">{{claimhistory.CLAIM_AMOUNT}}</td>
+                    <td class="lgl1">{{claimhistory.CLAIM_AMOUNT | number:'1.2-2'}}</td>
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="goToClaimHistoryDetail(claimhistory.CLAIM_REF_GUID,claimhistory.USER_GUID,claimhistory.MONTH)">
                             <ion-icon name="md-eye"></ion-icon>
