@@ -40,6 +40,8 @@ export class MiscellaneousClaimViewPage {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
+        if (element.ATTACHMENT_ID !== null)
+        element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
       });
     })

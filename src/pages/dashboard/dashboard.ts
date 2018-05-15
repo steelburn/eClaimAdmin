@@ -3,6 +3,7 @@ import { Component, NgModule, ElementRef, Inject, ViewChild } from '@angular/cor
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
+//import 'chartjs-plugin-deferred';
 import 'chart.piecelabel.js';
 import 'rxjs/add/operator/map';
 import * as constants from '../../config/constants';

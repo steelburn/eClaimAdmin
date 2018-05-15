@@ -60,7 +60,8 @@
 
               <ion-item *ngIf="ClaimMethodName === 'Meal Allowance'">
                 <ion-label color="primary" stacked>{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
-                <ion-select >
+                <ion-select placeholder="NA" [(ngModel)]="MA_SELECT">
+                    <ion-option value="NA">NA</ion-option>
                   <ion-option *ngFor="let allowance of allowanceList" (ionSelect)="onAllowanceSelect(allowance)">{{allowance.ALLOWANCE_NAME}} - {{allowance.ALLOWANCE_AMOUNT}}</ion-option>
                 </ion-select>
               </ion-item>
