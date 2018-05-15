@@ -70,6 +70,7 @@ export interface PageInterface {
   templateUrl: 'app.template.html'
 })
 export class ConferenceApp {
+  blnLogin: boolean = false;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   public Menu_Array: any[] = [];
   //public setupPageClicked: boolean = false;
@@ -134,7 +135,7 @@ export class ConferenceApp {
     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
     // ];
-
+    this.blnLogin = false;
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -158,10 +159,12 @@ export class ConferenceApp {
 
     this.userData.logout();
     this.enableMenu(false);
+
+    this.menu.enable(false, 'loggedInMenu');
   }
 
   openPage(page: PageInterface) {
-    debugger;
+    // debugger;    
     let params = {};
 
     // the nav component was found using @ViewChild(Nav)
@@ -180,17 +183,17 @@ export class ConferenceApp {
     } else {
       this.nav.setRoot(page.name, params).catch((err: any) => {
         console.log(`Didn't set nav root: ${err}`);
-      });      
+      });
     }
 
     if (page.logsOut === true) {
       // Give the menu time to close before changing to logged out
-      this.userData.logout();
+      this.userData.logout(); this.blnLogin = false;
     }
   }
 
   listenToLoginEvents() {
-    //debugger;
+    //debugger;    
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
     });
@@ -237,6 +240,7 @@ export class ConferenceApp {
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
 
     if (localStorage.length > 0) {
+      this.blnLogin = true;
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
         if (localStorage.getItem("g_USER_GUID") == "sva") {
@@ -290,7 +294,6 @@ export class ConferenceApp {
 
             { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 3, icon: 'checkbox-outline' },
-            // { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
@@ -303,8 +306,13 @@ export class ConferenceApp {
       });
     }
     else {
-      this.menu.enable(loggedIn, 'loggedInMenu');
-      this.menu.enable(!loggedIn, 'loggedOutMenu');
+      this.blnLogin = false;
+      // alert(this.blnLogin);
+      // alert(localStorage.length);
+      // if (this.blnLogin == true) {
+        // this.menu.enable(loggedIn, 'loggedInMenu');
+        // this.menu.enable(!loggedIn, 'loggedOutMenu');        
+      // }      
     }
 
 

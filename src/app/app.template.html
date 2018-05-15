@@ -1,8 +1,8 @@
 ﻿<ion-split-pane>
 
   <!-- logged out menu -->
-  <ion-menu id="loggedOutMenu" [content]="content" *ngIf="logsOut">
-
+  <ion-menu id="loggedOutMenu" [content]="content" *ngIf="blnLogin">
+    
     <ion-header>
       <ion-toolbar color="primary500">
         <ion-title>eClaim</ion-title>
@@ -38,7 +38,7 @@
   </ion-menu>
 
   <!-- logged in menu -->
-  <ion-menu id="loggedInMenu" [content]="content">
+  <ion-menu id="loggedInMenu" [content]="content" *ngIf="blnLogin">
 
     <ion-header>
       <ion-toolbar color="primary500">
@@ -50,7 +50,7 @@
 
       <ion-list>
         <ion-list-header>
-          Navigate
+          {{"NAVIGATE_LABEL" | translate}}
         </ion-list-header>
 
         <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
@@ -74,7 +74,7 @@
 
   </ion-menu>
 
-  <ion-menu id="loggedInMenu_User" [content]="content">
+  <ion-menu id="loggedInMenu_User" [content]="content" *ngIf="blnLogin">
     <ion-header>
       <ion-toolbar color="primary500">
         <ion-title>eClaim</ion-title>
@@ -85,7 +85,7 @@
 
       <ion-list>
         <ion-list-header>
-          Navigate
+          {{"NAVIGATE_LABEL" | translate}}
         </ion-list-header>
 
         <button ion-item menuClose *ngFor="let p of appPages_User" (click)="openPage(p)">
