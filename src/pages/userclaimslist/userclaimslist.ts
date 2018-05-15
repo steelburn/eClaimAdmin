@@ -56,9 +56,9 @@ export class UserclaimslistPage {
   //  this.userguid=navParams.get("userGuid");
   //  this.month=navParams.get("Month");
    //alert(this.userguid);
-    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(USER_GUID='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //console.log(this.baseResourceUrl);
+    console.log(this.baseResourceUrl);
    this.BindData();
     this.getuserDetails();
   }
@@ -84,9 +84,9 @@ BindData()
         let stage:number;
         let amount:number;
         let date:number;
-             console.log(item);
+            // console.log(item);
              if(item.CLAIM_TYPE!=null)
-             {claimtype=item.CLAIM_TYPE.toLowerCase().indexOf(val.toLowerCase())}
+             {claimtype=item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase())}
              if(item.TRAVEL_DATE!=null)
              {date=item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase())}
              if(item.STATUS!=null)
