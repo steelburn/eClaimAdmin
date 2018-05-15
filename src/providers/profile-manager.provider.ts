@@ -93,7 +93,7 @@ export class ProfileManagerProvider {
       })
     }
   
-    ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any) {
+    ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any) { 
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
       this.userGUID = localStorage.getItem('g_USER_GUID');
 
@@ -206,7 +206,8 @@ export class ProfileManagerProvider {
       // if (this.claimRequestGUID != undefined)
       //   claimReqMainRef.CLAIM_REQUEST_GUID = this.claimRequestGUID
       // else
-      claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
+      claimReqMainRef.CLAIM_REQUEST_GUID =this.formValues.uuid===undefined? UUID.UUID():this.formValues.uuid;
+      // claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
       claimReqMainRef.TENANT_GUID = this.TenantGUID;
       claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
       claimReqMainRef.MILEAGE_GUID = this.formValues.vehicleType;
@@ -238,9 +239,11 @@ export class ProfileManagerProvider {
       this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
         var postClaimMain = response.json();
         this.api.sendEmail();
+        localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
         // this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
         //this.MainClaimSaved = true;
-        alert('Claim Has Registered.')
+        this.formValues.uuid===undefined?alert('Your claim has submitted successfully.'):alert('Please click FAB icon to include additional details and submit your claim.')
+        // alert('Please click FAB icon to include additional details and submit your claim.')
       })
     }
 

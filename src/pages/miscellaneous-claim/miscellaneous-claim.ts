@@ -227,17 +227,18 @@ export class MiscellaneousClaimPage {
   saveIm(formValues: any) {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
-      console.table(resJson)
-      let imageResult = this.SaveImageinDB();
-      imageResult.then((objImage: ImageUpload_model) => {
+      this.submitAction(this.uploadFileName, formValues);
+      // console.table(resJson)
+      // let imageResult = this.SaveImageinDB();
+      // imageResult.then((objImage: ImageUpload_model) => {
        
-        // let result = this.submitAction(objImage.Image_Guid);
-        let result = this.submitAction(objImage.Image_Guid, formValues);
-        // result.then((res) => {
-        //   // console.log(res);
+      //   // let result = this.submitAction(objImage.Image_Guid);
+      //   let result = this.submitAction(objImage.Image_Guid, formValues);
+      //   // result.then((res) => {
+      //   //   // console.log(res);
          
-        // })
-      })
+      //   // })
+      // })
     })
     // setTimeout(() => {
     //   this.loading = false;

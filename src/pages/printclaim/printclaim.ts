@@ -160,36 +160,18 @@ export class PrintclaimPage {
   }
   //---------------------Language module end---------------------//
 
-  onSubmit() {
-    this.loading = true;
-    const queryHeaders = new Headers();
-    queryHeaders.append('filename', this.uploadFileName);
-    queryHeaders.append('Content-Type', 'multipart/form-data');
-    queryHeaders.append('fileKey', 'file');
-    queryHeaders.append('chunkedMode', 'false');
-    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-    const options = new RequestOptions({ headers: queryHeaders });
-    this.http.post('http://api.zen.com.my/api/v2/files/' + this.uploadFileName, this.Printform.get('avatar').value, options)
-      .map((response) => {
-        return response;
-      }).subscribe((response) => {
-        alert(response.status);
-      });
-    setTimeout(() => {
-      alert('done');
-      this.loading = false;
-    }, 1000);
-  }
+ 
 
   saveIm(formValues: any) {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
-      console.table(resJson)
-      let imageResult = this.SaveImageinDB();
-      imageResult.then((objImage: ImageUpload_model) => {
-        // console.table(objImage)
-        let result = this.submitAction(objImage.Image_Guid, formValues);
-      })
+      this.submitAction(this.uploadFileName, formValues);
+      // console.table(resJson)
+      // let imageResult = this.SaveImageinDB();
+      // imageResult.then((objImage: ImageUpload_model) => {
+      //   // console.table(objImage)
+      //   let result = this.submitAction(objImage.Image_Guid, formValues);
+      // })
     })
     // setTimeout(() => {
     //   this.loading = false;
