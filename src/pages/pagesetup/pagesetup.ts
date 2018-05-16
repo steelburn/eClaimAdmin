@@ -29,7 +29,7 @@ export class PagesetupPage {
   page_entry: PageSetup_Model = new PageSetup_Model();
   Pageform: FormGroup;
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_rolepage' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_rolepage' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   public pages: PageSetup_Model[] = [];
@@ -118,7 +118,7 @@ export class PagesetupPage {
   loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private pagesetupservice: PageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     if (localStorage.getItem("g_USER_GUID") == null) {
-      alert('Sorry !! Please Login.');
+      alert('Sorry, please login.');
       this.navCtrl.push(LoginPage);
     }
     else {
@@ -160,7 +160,7 @@ export class PagesetupPage {
       headers.append('Content-Type', 'application/json');
       let options = new RequestOptions({ headers: headers });
       let url: string;
-      url = this.baseResource_Url + "main_rolepage?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "main_rolepage?filter=NAME=" + this.NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http.get(url, options)
         .map(res => res.json())
         .subscribe(
@@ -182,7 +182,7 @@ export class PagesetupPage {
                 this.pagesetupservice.save(this.page_entry)
                   .subscribe((response) => {
                     if (response.status == 200) {
-                      alert('PageSetup Registered successfully.');
+                      alert('Pagesetup registered successfully.');
                       //location.reload();
                       this.navCtrl.setRoot(this.navCtrl.getActive().component);
                     }
@@ -191,7 +191,7 @@ export class PagesetupPage {
             }
             else {
               console.log("Records Found");
-              alert("The Cashcard is already Exist.");
+              alert("The pagesetup is already exist.");
               this.loading.dismissAll();
             }
           },
@@ -219,7 +219,7 @@ export class PagesetupPage {
       });
       this.loading.present();
       //--------------------------------------------------
-      if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_set_NAME')) {
+      if (this.NAME_ngModel_Edit.trim().toUpperCase() != localStorage.getItem('Prev_set_NAME').toUpperCase()) {
         let url: string;
         url = this.baseResource_Url + "main_rolepage?filter=(NAME=" + this.NAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         this.http.get(url)
@@ -227,7 +227,7 @@ export class PagesetupPage {
           .subscribe(
             data => {
               let res = data["resource"];
-              console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_set_NAME'));
+              // console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_set_NAME'));
               if (res.length == 0) {
                 console.log("No records Found");
                 this.page_entry.NAME = this.NAME_ngModel_Edit.trim();
@@ -236,7 +236,7 @@ export class PagesetupPage {
                 this.pagesetupservice.update(this.page_entry)
                   .subscribe((response) => {
                     if (response.status == 200) {
-                      alert('Page updated successfully');
+                      alert('Pagesetup updated successfully');
                       this.navCtrl.setRoot(this.navCtrl.getActive().component);
                     }
                   });
@@ -244,7 +244,7 @@ export class PagesetupPage {
               }
               else {
                 console.log("Records Found");
-                alert("The bank is already Exist.");
+                alert("The pagesetup is already Exist.");
                 this.loading.dismissAll();
               }
             },

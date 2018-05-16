@@ -6,6 +6,7 @@ import { SpeakerListPage } from '../home/home';
 import { SetupPage } from '../setup/setup';
 import { AdminsetupPage } from '../adminsetup/adminsetup';
 import { ApproverTaskListPage } from '../approver-task-list/approver-task-list';
+import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -14,7 +15,8 @@ export class TabsPage {
   tab1Root: any = SpeakerListPage;
   tab2Root: any = SetupPage;
   tab3Root: any = AdminsetupPage;
-  tab4Root: any = ApproverTaskListPage;
+  //tab4Root: any = ApproverTaskListPage;
+  tab4Root: any = ClaimapprovertasklistPage;
 
   mySelectedIndex: number;
 

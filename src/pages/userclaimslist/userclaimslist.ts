@@ -10,6 +10,22 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { BaseHttpService } from '../../services/base-http';
 
+import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view.component';
+import { EntertainmentClaimViewPage } from '../../pages/entertainment-claim-view/entertainment-claim-view';
+import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-claim-view';
+import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-view';
+import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
+import { MiscellaneousClaimViewPage } from '../../pages/miscellaneous-claim-view/miscellaneous-claim-view';
+
+
+import { EntertainmentclaimPage } from '../../pages/entertainmentclaim/entertainmentclaim';
+import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { PrintclaimPage } from '../../pages/printclaim/printclaim';
+import { GiftclaimPage } from '../../pages/giftclaim/giftclaim';
+import { OvertimeclaimPage } from '../../pages/overtimeclaim/overtimeclaim';
+import { MiscellaneousClaimPage } from '../../pages/miscellaneous-claim/miscellaneous-claim';
+
+
 /**
  * Generated class for the UserclaimslistPage page.
  *
@@ -40,9 +56,9 @@ export class UserclaimslistPage {
   //  this.userguid=navParams.get("userGuid");
   //  this.month=navParams.get("Month");
    //alert(this.userguid);
-    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(USER_GUID='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //console.log(this.baseResourceUrl);
+    console.log(this.baseResourceUrl);
    this.BindData();
     this.getuserDetails();
   }
@@ -68,9 +84,9 @@ BindData()
         let stage:number;
         let amount:number;
         let date:number;
-             console.log(item);
+            // console.log(item);
              if(item.CLAIM_TYPE!=null)
-             {claimtype=item.CLAIM_TYPE.toLowerCase().indexOf(val.toLowerCase())}
+             {claimtype=item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase())}
              if(item.TRAVEL_DATE!=null)
              {date=item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase())}
              if(item.STATUS!=null)
@@ -104,6 +120,38 @@ this.userClaimhistorydetails=this.userClaimhistorydetails1;
       //alert(this.userdetails);
     });
   };
+
+  claimRequestGUID: string; level: string;
+
+  ClaimNavigation(claimRequestGUID: string, level:string, claimType:any, navType:number) {
+    this.claimRequestGUID = claimRequestGUID;
+    this.level = level;
+debugger;
+    switch (claimType) {
+      case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': if (navType === 1) this.pushPage(GiftClaimViewPage); else this.editPage(GiftclaimPage); break;
+      case '37067b3d-1bf4-33a3-2b60-3ca40baf589a': if (navType === 1) this.pushPage(OvertimeClaimViewPage); else this.editPage(OvertimeclaimPage); break;
+      case '40dbaf56-98e4-77b9-df95-85ec232ff714': if (navType === 1) this.pushPage(MiscellaneousClaimViewPage); else this.editPage(MiscellaneousClaimPage); break;
+      case '58c59b56-289e-31a2-f708-138e81a9c823': if (navType === 1) this.pushPage(TravelClaimViewPage); else this.editPage(TravelclaimPage); break;
+      case 'd9567482-033a-6d92-3246-f33043155746': if (navType === 1) this.pushPage(PrintClaimViewPage); else this.editPage(PrintclaimPage); break;
+      case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': if (navType === 1) this.pushPage(EntertainmentClaimViewPage); else this.editPage(EntertainmentclaimPage); break;
+    }
+  }
+
+  pushPage(claimType:any) {
+    this.navCtrl.push(claimType, {
+      isApprover: false,
+      cr_GUID: this.claimRequestGUID,
+      level_no: this.level,
+      approver_GUID: localStorage.getItem('g_USER_GUID')
+    });
+  }
+
+  editPage(claimType:any) {
+    this.navCtrl.push(claimType, {
+      isFormEdit: 'true',
+      cr_GUID: this.claimRequestGUID
+    });
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserclaimslistPage');
