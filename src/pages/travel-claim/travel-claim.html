@@ -1,8 +1,9 @@
+
 <ion-header>
-  <ion-navbar color="primary500">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+  <ion-navbar color="primary500"> 
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>        
 
             <!-- <ion-fab top1 right>
               <button ion-fab mini class="btnClear">
@@ -16,7 +17,7 @@
      
     <ion-title>{{ 'TRAVEL_CLAIM_HEADING' | translate }}</ion-title>  
   </ion-navbar>
-</ion-header>
+ </ion-header>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
 <ion-content padding>
 
@@ -158,13 +159,29 @@
             <a (click)="showAddAccommodation()">
               <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>{{ "ADD_Accommodation_HEADING" | translate }} </a>
           </ion-item>     -->
-  </form>
+      </form>
 
-  <div class="blackcontainer" *ngIf="AddLookupClicked || AddToLookupClicked">
-  </div>
-  <div class="popup" padding *ngIf="AddLookupClicked || AddToLookupClicked">
-    <ion-card>
-      <ion-card-header class="icTitle headerColor-white ">
+      <div class="blackcontainer" *ngIf="AddLookupClicked || AddToLookupClicked">
+      </div>
+      <div class="popup" padding *ngIf="AddLookupClicked || AddToLookupClicked">
+        <ion-card>
+          <ion-card-header class="icTitle headerColor-white ">
+    
+            <div class="icHeaderText">Search Location</div>
+            <button class="btnR" (click)="CloseLookupClick()">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+          </ion-card-header>
+          <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>
+          <ion-list>
+            <ion-item-sliding *ngFor="let item of currentItems">
+              <button ion-item (click)="openItem(item)">
+                <ion-label> {{item.description}}</ion-label>
+              </button>
+            </ion-item-sliding>
+          </ion-list>
+        </ion-card>
+      </div>
 
       <div class="blackcontainer" *ngIf="ProjectLookupClicked">
         </div>
