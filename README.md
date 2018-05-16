@@ -1,3 +1,4 @@
+```
 #plugins to insatall
 npm install @ngx-translate/core @ngx-translate/http-loader
 
@@ -21,3 +22,4 @@ npm install @types/chart.js
 npm i ng2-charts
 npm install chart.js --save
 npm install chart.piecelabel.js --save
+```

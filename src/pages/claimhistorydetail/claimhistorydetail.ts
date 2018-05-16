@@ -39,7 +39,8 @@ export class ClaimhistorydetailPage {
    this.userguid=navParams.get("userGuid");
    this.month=navParams.get("Month");
    //alert(this.userguid);
-    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    //this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')AND(APPROVER='+localStorage.getItem("g_USER_GUID")+')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID='+this.userguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     //console.log(this.baseResourceUrl);
     this.BindData();
@@ -71,7 +72,7 @@ export class ClaimhistorydetailPage {
            this.claimhistorydetails = this.claimhistorydetails1.filter((item) => {
         let claimtype:number;
         let status:number;
-        let stage:number;
+        // let stage:number;
         let amount:number;
         let date:number;
              if(item.CLAIM_TYPE!=null)
@@ -80,15 +81,15 @@ export class ClaimhistorydetailPage {
              {date=item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase())}
              if(item.STATUS!=null)
              {status=item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase())}
-             if(item.STAGE!=null)
-             {stage=item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase())}
+            //  if(item.STAGE!=null)
+            //  {stage=item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase())}
              if(item.CLAIM_AMOUNT!=null)
              {amount=item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
              return (
                (claimtype > -1) 
              || (date > -1) 
              || (status > -1) 
-             || ( stage> -1)
+             //|| ( stage> -1)
              || (amount> -1) 
            );
            })

@@ -74,18 +74,18 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-import { ProfileSetupPage } from'../pages/profile-setup/profile-setup.component';
+import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
 
 import { AddTollPage } from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 
-import { ClaimhistorydetailPage } from'../pages/claimhistorydetail/claimhistorydetail';
-import{ClaimapprovertasklistPage} from '../pages/claimapprovertasklist/claimapprovertasklist'
-import{ClaimtasklistPage} from '../pages/claimtasklist/claimtasklist'
-import{UserclaimslistPage} from '../pages/userclaimslist/userclaimslist'
-import{ClaimReportPage} from '../pages/claim-report/claim-report';
+import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
+import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist'
+import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
+import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
+import { ClaimReportPage } from '../pages/claim-report/claim-report';
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
@@ -171,7 +171,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 
   imports: [
     BrowserModule,
-    HttpModule, HttpClientModule,ChartsModule,
+    HttpModule, HttpClientModule, ChartsModule,
     TranslateModule.forRoot
       ({
         loader: {
@@ -188,7 +188,11 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
-        { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' }
+        { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' },
+
+        { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
+        { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
+        { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -258,7 +262,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
     UserclaimslistPage,
 
 
-    ClaimReportPage,   
+    ClaimReportPage,
     UploadPage,
 
     CustomerSetupPage,
@@ -280,7 +284,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
     FilePath,
     FileTransfer,
     //FileUploadOptions,
-    FileTransferObject,ApiManagerProvider,ProfileManagerProvider
+    FileTransferObject, ApiManagerProvider, ProfileManagerProvider
   ]
 })
 export class AppModule { }

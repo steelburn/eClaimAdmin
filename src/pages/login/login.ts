@@ -16,6 +16,11 @@ import { AdminsetupPage } from '../adminsetup/adminsetup';
 import { SetupguidePage } from '../setupguide/setupguide';
 
 import { DashboardPage } from '../dashboard/dashboard';
+
+// import { SpeakerListPage } from '../home/home';
+// import { ApproverTaskListPage } from '../approver-task-list/approver-task-list';
+import { Storage } from '@ionic/storage';
+
 @Component({
   selector: 'page-user',
   templateUrl: 'login.html'
@@ -27,8 +32,8 @@ export class LoginPage {
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  constructor(public navCtrl: NavController, public userData: UserData, public http: Http) {
-    localStorage.clear(); 
+  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage) {
+    localStorage.clear(); //debugger;
   }
 
   onLogin(form: NgForm) {
@@ -67,6 +72,18 @@ export class LoginPage {
               localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
               localStorage.setItem("g_IS_TENANT_AMDIN", res[0]["IS_TENANT_ADMIN"]); 
               
+              // //Keep all the module to an array.-------------------------------------------
+              // let MenuDetails: any[] = [];
+              // this.storage.get('MenuDetails').then((val) => {                
+              //   MenuDetails.push(
+              //     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+              //     { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+              //   );
+              // });
+              // //MenuDetails.push(this.navParams.get('id'));
+              // this.storage.set('MenuDetails', MenuDetails);
+              // //------------------------------------------------------------------------------
+
               //Setup Guide for only Hq Users
               if(res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1"){
                 this.navCtrl.push(SetupguidePage);
@@ -77,7 +94,7 @@ export class LoginPage {
               }
               
               //navigate to app.component page
-              // this.userData.login(this.login.username);
+              this.userData.login(this.login.username);               
             }
             else {
               localStorage.removeItem("g_USER_GUID");
@@ -92,8 +109,11 @@ export class LoginPage {
               alert("Invalid login.")
               this.login.username = "";
               this.login.password = "";
-            }
+            }            
           });
+          // .catch((err) =>{ 
+          //   alert('Sorry.'); 
+          // });
       }
 
       // this.userData.login(this.login.username);

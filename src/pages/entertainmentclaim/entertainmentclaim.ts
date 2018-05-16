@@ -25,6 +25,10 @@ import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 //import { ClaimReqMain_Model } from '../../models/ClaimReqMain_Model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
+import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+
+
 
 @IonicPage()
 @Component({
@@ -40,6 +44,8 @@ export class EntertainmentclaimPage {
   @ViewChild('fileInput') fileInput: ElementRef;
   travel_date: any;
   TenantGUID: any;
+  mainClaimReq: MainClaimRequestModel = new MainClaimRequestModel();
+
  
   storeProjects: any[]; 
   public projects: any[]; 
@@ -64,6 +70,7 @@ export class EntertainmentclaimPage {
   Soc_GUID: any;
   Entertainment_Date_ngModel: any;
   Entertainment_Description_ngModel: any;
+  claimFor: string = 'seg_customer';
 
   public socGUID: any;
   public AddTravelClicked: boolean = false;
@@ -75,9 +82,9 @@ export class EntertainmentclaimPage {
   public MainClaimSaved: boolean = false;
   travelAmount: any;
   validDate = new Date().toISOString();
-  isCustomer: boolean = true;
-  claimFor: any;
+  isCustomer: boolean = true;  
   ClaimRequestMainId: any;
+  
 
    /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
@@ -137,8 +144,14 @@ export class EntertainmentclaimPage {
       );
   }
 
-  constructor(public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, private api: Services, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+  constructor(public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, private api: Services, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+    this.userGUID = localStorage.getItem('g_USER_GUID');
+    this.isFormEdit = this.navParams.get('isFormEdit');
+    this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
+    if (this.isFormEdit)
+    this.GetDataforEdit();
+
     this.Entertainmentform = fb.group({
       avatar: null,
       soc_no: '', 
@@ -146,6 +159,7 @@ export class EntertainmentclaimPage {
       description: ['', Validators.required],
       //vehicleType: ['', Validators.required],
       claim_amount: ['', Validators.required],
+      claimTypeGUID: '',
       attachment_GUID : ''     
     });
     this.LoadProjects();    
@@ -170,20 +184,20 @@ export class EntertainmentclaimPage {
   }
 
    //---------------------Language module start---------------------//
-   public translateToMalayClicked: boolean = false;
-   public translateToEnglishClicked: boolean = true;
+  //  public translateToMalayClicked: boolean = false;
+  //  public translateToEnglishClicked: boolean = true;
  
-   public translateToEnglish() {
-     this.translate.use('en');
-     this.translateToMalayClicked = !this.translateToMalayClicked;
-     this.translateToEnglishClicked = !this.translateToEnglishClicked;
-   }
+  //  public translateToEnglish() {
+  //    this.translate.use('en');
+  //    this.translateToMalayClicked = !this.translateToMalayClicked;
+  //    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+  //  }
  
-   public translateToMalay() {
-     this.translate.use('ms');
-     this.translateToEnglishClicked = !this.translateToEnglishClicked;
-     this.translateToMalayClicked = !this.translateToMalayClicked;
-   }
+  //  public translateToMalay() {
+  //    this.translate.use('ms');
+  //    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+  //    this.translateToMalayClicked = !this.translateToMalayClicked;
+  //  }
    //---------------------Language module end---------------------//
 
   onSubmit() {
@@ -278,14 +292,11 @@ export class EntertainmentclaimPage {
   }
 
   public ProjectLookup() {
-    this.ProjectLookupClicked = true;
-   
-    // this.projects = null;
+    this.ProjectLookupClicked = true;    
   }
 
   public CustomerLookup() {
-    this.CustomerLookupClicked = true;
-    // this.projects = null;
+    this.CustomerLookupClicked = true;    
   }
 
   searchProject(searchString: any) {
@@ -315,17 +326,18 @@ export class EntertainmentclaimPage {
    saveIm(formValues: any) {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
-      console.table(resJson)
-      let imageResult = this.SaveImageinDB();
-      imageResult.then((objImage: ImageUpload_model) => {
+      this.submitAction(this.uploadFileName, formValues);
+      // console.table(resJson)
+      // let imageResult = this.SaveImageinDB();
+      // imageResult.then((objImage: ImageUpload_model) => {
        
-        // let result = this.submitAction(objImage.Image_Guid);
-        let result = this.submitAction(objImage.Image_Guid, formValues);
-        // result.then((res) => {
-        //   // console.log(res);
+      //   // let result = this.submitAction(objImage.Image_Guid);
+      //   let result = this.submitAction(objImage.Image_Guid, formValues);
+      //   // result.then((res) => {
+      //   //   // console.log(res);
          
-        // })
-      })
+      //   // })
+      // })
     })
     // setTimeout(() => {
     //   this.loading = false;
@@ -372,22 +384,14 @@ export class EntertainmentclaimPage {
     this.Entertainmentform.get('avatar').setValue(null);
     console.log(this.fileInput);
     this.fileInput.nativeElement.value = '';
-  }
-
-  allowanceGUID: any;
-  onAllowanceSelect(allowance: any) {
-    this.allowanceGUID = allowance.ALLOWANCE_GUID;
-  }
+  }  
 
   submitAction(imageGUID: any,formValues: any) {
     //let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     formValues.claimTypeGUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
-    formValues.meal_allowance = this.allowanceGUID;
     formValues.attachment_GUID = imageGUID;   
     this.travelAmount = formValues.claim_amount;
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
-  }
-
-  
+  }  
 } 
