@@ -64,6 +64,7 @@ export class AddTollPage {
     claimReqRef.CLAIM_REQUEST_GUID = this.ClaimMainGUID;
     claimReqRef.CLAIM_METHOD_GUID = this.ClaimMethodGUID;
     claimReqRef.PAYMENT_TYPE_GUID = this.PayType === undefined ? '2a543cd5-0177-a1d0-5482-48b52ec2100f' : this.PayType;
+    // 2a543cd5-0177-a1d0-5482-48b52ec2100f
     claimReqRef.AMOUNT = this.Amount;
     claimReqRef.DESCRIPTION = this.Description;
     claimReqRef.CREATION_TS = new Date().toISOString();
@@ -72,7 +73,7 @@ export class AddTollPage {
 
     this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
       var postClaimRef = response.json();
-      alert('Your ' + this.ClaimMethodName + ' Details are Submitted successfully.')
+      alert('Your ' + this.ClaimMethodName + ' details are submitted successfully.')
       // console.log(
       //   postClaimRef["resource"][0].CLAIM_REQUEST_DETAIL_GUID);
 
@@ -151,7 +152,7 @@ export class AddTollPage {
   //     }
   //     );
   // }
-
+  isMA: any;
   save() {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {

@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
 
-    <div class="headerInfo">
+    <!-- <div class="headerInfo">
         <ion-fab top right>
             <button ion-fab mini class="btnClear">
                 <ion-icon name="settings"></ion-icon>
@@ -16,7 +16,7 @@
                 <button ion-fab color="primary" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>
             </ion-fab-list>
         </ion-fab>
-    </div>
+    </div> -->
     <ion-title>{{ 'ENTERTAINMENT_CLAIM_HEADING' | translate }}</ion-title>
 </ion-navbar>
 </ion-header>
@@ -67,32 +67,24 @@
                         <ion-label> {{ claim.DESCRIPTION }} </ion-label>
                     </ion-item>
             <img style="width: 50%" height="100px" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
-            <!-- <img style="width: 10%" height="80px" src="http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881"> -->
-            <!-- <ion-toggle [(ngModel)]="ToggleNgModel" (ionChange)="isAccepted($event)" checked="false"></ion-toggle>
-            <ion-label *ngIf="isRemarksAccepted">Accepted</ion-label>
-            <ion-label *ngIf="!isRemarksAccepted">Rejected</ion-label> -->
-            <!-- <ion-item>
-            <ion-label> {{ "REMARKS_LABEL" | translate }} </ion-label>
-            <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
-            <button ion-button outline item-start (click)="isAccepted('Accepted')">
-                {{ "ACCEPT_BUTTON" | translate }} </button>
-            <button ion-button outline item-start (click)="isAccepted('Rejected')">
-                {{ "REJECT_BUTTON" | translate }} </button>
-        </ion-item> -->
-        <ion-item>
-            <ion-toggle [(ngModel)]="ToggleNgModel" (ionChange)="isAccepted($event)" checked="false"></ion-toggle>
-            <ion-label *ngIf="isRemarksAccepted">Accepted</ion-label>
-            <ion-label *ngIf="!isRemarksAccepted">Rejected</ion-label>
-
-            <ion-label> {{ "REMARKS_LABEL" | translate }} </ion-label>
-            <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
-        </ion-item>
-        <ion-item>
+           
+    <ion-card *ngIf="isApprover">     
+        <ion-item>                
+                <ion-label> {{ "REMARKS_LABEL" | translate }} </ion-label>
+                <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
+                <button ion-button outline item-start (click)="isAccepted('Accepted')">
+                    {{ "ACCEPT_BUTTON" | translate }} </button>
+                <button ion-button outline item-start (click)="isAccepted('Rejected')">
+                    {{ "REJECT_BUTTON" | translate }} </button>
+            </ion-item>
+    </ion-card>
+        
+        <!-- <ion-item>
             <button ion-button outline item-start icon-left (click)="SubmitAction()">
                 <ion-icon name="eye"></ion-icon>
                 {{ "SUBMIT_ACTION_BUTTON" | translate }} </button>
-        </ion-item>
-        <ion-item>
+        </ion-item> -->
+        <ion-item *ngIf="!isApprover">
             <button ion-button outline item-end icon-left (click)="EditClaim()">
                 {{ "EDIT_LABEL" | translate }} </button>
         </ion-item>

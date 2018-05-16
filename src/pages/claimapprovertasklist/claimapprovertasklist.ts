@@ -20,7 +20,7 @@ import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-
 import { MedicalClaimViewPage } from '../../pages/medical-claim-view/medical-claim-view';
 import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
-
+import { MiscellaneousClaimViewPage } from '../../pages/miscellaneous-claim-view/miscellaneous-claim-view';
 
 /**
  * Generated class for the ClaimapprovertasklistPage page.
@@ -46,9 +46,10 @@ export class ClaimapprovertasklistPage {
   searchboxValue: string;
   checkboxDataList: Checkboxlist[]=[];
   loginUserGuid:string;
+  claimRequestGUID:any;
+  level:any;
 
-  claimRequestGUID: string;
- level: string;
+
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
@@ -56,7 +57,7 @@ export class ClaimapprovertasklistPage {
     this.claimrefguid = navParams.get("claimRefGuid");
     // alert(this.claimrefguid);
     if (this.claimrefguid != 'null') {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     }
     else {
@@ -116,33 +117,33 @@ export class ClaimapprovertasklistPage {
     }
   }
 
-  getCheckboxValue(event:Checkbox,claimRequestGuid:any){
-    // console.log(event);
-    // alert(event.id);
-    // alert(event.checked);
-    // alert(claimRequestGuid);
-  }
-
-  // getCheckboxValue(event: Checkbox, claimRequestGuid: any,level:number) {
+  // getCheckboxValue(event:Checkbox,claimRequestGuid:any){
+  //   // console.log(event);
   //   // alert(event.id);
   //   // alert(event.checked);
   //   // alert(claimRequestGuid);
-
-  //   let checkboxData: Checkboxlist = new Checkboxlist(event.checked,claimRequestGuid,level);
-  //   if (event.checked) {
-  //     this.checkboxDataList.push(checkboxData);
-  //   }
-  //   else {
-  //     let chkItem: Checkboxlist = this.checkboxDataList.find(item => item.ClaimRequestGuid == claimRequestGuid);
-  //     const index: number = this.checkboxDataList.indexOf(chkItem);
-  //     if (index !== -1) {
-  //       this.checkboxDataList.splice(index, 1);
-  //     }
-  //   }
-  //   // console.log(this.checkboxDataList);
-  //   // alert(this.checkboxDataList.length);
-  //   // alert(this.checkboxDataList.find(item => item.Chkid == event.id).Chkid + ","+this.checkboxDataList.find(item => item.Chkid == event.id).Checked+ ","+this.checkboxDataList.find(item => item.Chkid == event.id).claimRequestGuid);
   // }
+
+  getCheckboxValue(event: Checkbox, claimRequestGuid: any,level:number) {
+    // alert(event.id);
+    // alert(event.checked);
+    // alert(claimRequestGuid);
+
+    let checkboxData: Checkboxlist = new Checkboxlist(event.checked,claimRequestGuid,level);
+    if (event.checked) {
+      this.checkboxDataList.push(checkboxData);
+    }
+    else {
+      let chkItem: Checkboxlist = this.checkboxDataList.find(item => item.ClaimRequestGuid == claimRequestGuid);
+      const index: number = this.checkboxDataList.indexOf(chkItem);
+      if (index !== -1) {
+        this.checkboxDataList.splice(index, 1);
+      }
+    }
+    // console.log(this.checkboxDataList);
+    // alert(this.checkboxDataList.length);
+    // alert(this.checkboxDataList.find(item => item.Chkid == event.id).Chkid + ","+this.checkboxDataList.find(item => item.Chkid == event.id).Checked+ ","+this.checkboxDataList.find(item => item.Chkid == event.id).claimRequestGuid);
+  }
 
 approveClaims() {
     //console.table(this.claimrequestdetails);
@@ -154,7 +155,7 @@ if(this.checkboxDataList.length>0)
   this.checkboxDataList.forEach(element => {
     if(element.Checked)
     {
-      //debugger;
+      debugger;
       this.profileMngProvider.ProcessProfileMng(null, this.loginUserGuid, element.level, element.ClaimRequestGuid, true);
       count++;
       
@@ -165,16 +166,21 @@ if(this.checkboxDataList.length>0)
 //}
 if(count>0)
 {
-  alert("Claim(s) approved successfully.");
+  //alert("Claim(s) approved successfully.");
+}
+this.BindData();
+this.checkboxDataList=[];
+}
+else{alert("Please select the claim(s) which you want to approve.")
 }
 }
-else{alert("Please select the claim(s) which you want to approve.")}
-  }
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimapprovertasklistPage');
   }
 
-  viewClaim(claimRequestGUID: string, level: any, claimType: any) {
+viewClaim(claimRequestGUID: string, level: any, claimType: any) {
     this.claimRequestGUID = claimRequestGUID;
     this.level = level;
 
@@ -185,6 +191,7 @@ else{alert("Please select the claim(s) which you want to approve.")}
       case '58c59b56-289e-31a2-f708-138e81a9c823': this.pushPage(TravelClaimViewPage); break;
       case 'd9567482-033a-6d92-3246-f33043155746': this.pushPage(PrintClaimViewPage); break;
       case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': this.pushPage(EntertainmentClaimViewPage); break;
+      case '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86': this.pushPage(MiscellaneousClaimViewPage); break;
     }
   }
 
