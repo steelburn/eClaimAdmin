@@ -118,60 +118,60 @@ export class DashboardPage {
       return result;
   }
 }
-  ngOnInit() {
-    // register plugin
+  // ngOnInit() {
+  //   // register plugin
     
-    Chart.plugins.register({
+  //   Chart.plugins.register({
       
-      beforeDraw: function (chart:any) {
-        var data = chart.data.datasets[0].data;
-        var sum = data.reduce(function (a:any, b:any) {
-          //return a.toFixed(2) + b.toFixed(2);
-          // a=a.toFixed(2);
-          // b=b.toFixed(2)
-          var x = a + b;
-          var y = parseFloat(x.toFixed(2));
-          return y;
+  //     beforeDraw: function (chart:any) {
+  //       var data = chart.data.datasets[0].data;
+  //       var sum = data.reduce(function (a:any, b:any) {
+  //         //return a.toFixed(2) + b.toFixed(2);
+  //         // a=a.toFixed(2);
+  //         // b=b.toFixed(2)
+  //         var x = a + b;
+  //         var y = parseFloat(x.toFixed(2));
+  //         return y;
 
-          //return Math.round(a + b);
-          //   var x = a + b;
-          //  var y = Math.round(x * 100)/100;
-          //   var result= y.toFixed(2);
-          //   return result;
-        }, 0);
-        var width = chart.chart.width,
-          height = chart.chart.height,
-          ctx = chart.chart.ctx;
-        ctx.restore();
-        var fontSize = (height / 14).toFixed(2);
-        ctx.font = fontSize + "px Verdana";
-        ctx.textBaseline = "middle";
-        ctx.fillStyle = "blue";
-        if (sum != 0) {
+  //         //return Math.round(a + b);
+  //         //   var x = a + b;
+  //         //  var y = Math.round(x * 100)/100;
+  //         //   var result= y.toFixed(2);
+  //         //   return result;
+  //       }, 0);
+  //       var width = chart.chart.width,
+  //         height = chart.chart.height,
+  //         ctx = chart.chart.ctx;
+  //       ctx.restore();
+  //       var fontSize = (height / 14).toFixed(2);
+  //       ctx.font = fontSize + "px Verdana";
+  //       ctx.textBaseline = "middle";
+  //       ctx.fillStyle = "blue";
+  //       if (sum != 0) {
         
-          var text = sum,
-            textX = Math.round((width - ctx.measureText(text).width) / 2),
-            textY = height / 2;
-            // this.doughnutChartOptions =  {legend: {
-            //   display: true,
-            //   position: 'bottom'
-            // },}
-            // this.claimAmountOptions =  {legend: {
-            //   display: true,
-            //   position: 'bottom'
-            // },}
-        }
-        else {
-        text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
-          textY = height / 2;
-        }
-        ctx.fillText(text, textX, textY);
-        ctx.save();
-      }
+  //         var text = sum,
+  //           textX = Math.round((width - ctx.measureText(text).width) / 2),
+  //           textY = height / 2;
+  //           // this.doughnutChartOptions =  {legend: {
+  //           //   display: true,
+  //           //   position: 'bottom'
+  //           // },}
+  //           // this.claimAmountOptions =  {legend: {
+  //           //   display: true,
+  //           //   position: 'bottom'
+  //           // },}
+  //       }
+  //       else {
+  //       text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
+  //         textY = height / 2;
+  //       }
+  //       ctx.fillText(text, textX, textY);
+  //       ctx.save();
+  //     }
 
-    });
+  //   });
 
-  }
+  // }
   ionViewDidLoad() {
     console.log('ionViewDidLoad DashboardPage');
   }
