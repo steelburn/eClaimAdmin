@@ -71,6 +71,8 @@ export class ClaimapprovertasklistPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = data["resource"];
+        console.log(this.claimrequestdetails);
+        console.table(this.claimrequestdetails);
         this.claimrequestdetails1 = this.claimrequestdetails;
       });
     //console.table(this.claimrequestdetails);
@@ -197,6 +199,7 @@ viewClaim(claimRequestGUID: string, level: any, claimType: any) {
 
   pushPage(claimType: any) {
     this.navCtrl.push(claimType, {
+      isApprover: true,
       cr_GUID: this.claimRequestGUID,
       level_no: this.level,
       approver_GUID: localStorage.getItem('g_USER_GUID')

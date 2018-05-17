@@ -72,9 +72,9 @@
         <ion-item>                
                 <ion-label> {{ "REMARKS_LABEL" | translate }} </ion-label>
                 <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
-                <button ion-button outline item-start (click)="isAccepted('Accepted')">
+                <button ion-button outline item-start (click)="isAccepted('accepted')">
                     {{ "ACCEPT_BUTTON" | translate }} </button>
-                <button ion-button outline item-start (click)="isAccepted('Rejected')">
+                <button ion-button outline item-start (click)="isAccepted('rejected')">
                     {{ "REJECT_BUTTON" | translate }} </button>
             </ion-item>
     </ion-card>
