@@ -184,7 +184,8 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
         { component: SpeakerListPage, name: 'Home', segment: 'Home' },
-        { component: SetupPage, name: 'Setup', segment: 'Setup' },
+        { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
+        { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
