@@ -18,12 +18,13 @@ export class MiscellaneousClaimViewPage {
   ToggleNgModel: any;
   Remarks_NgModel: any;
   isRemarksAccepted: any;
+  isApprover: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams) {
+    this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
-    //  this.userGUID = localStorage.getItem('g_USER_GUID');
-    this.level = localStorage.getItem('level_no');
+    this.level = navParams.get('level_no');
     this.LoadMainClaim();
 
     // this.api.LoadMainClaim(this.claimRequestGUID).then((totalAmount: number) => {
@@ -31,10 +32,28 @@ export class MiscellaneousClaimViewPage {
     // })
   }
 
-  isAccepted(event: any) {
-    this.ToggleNgModel = event.checked;
-    this.isRemarksAccepted = event.checked;
+  // isAccepted(event: any) {
+  //   this.ToggleNgModel = event.checked;
+  //   this.isRemarksAccepted = event.checked;
+  // }
+
+  // isAccepted(val:string) {   
+  //   this.isRemarksAccepted = val==='Accepted'?true:false;
+  //   alert('Claim '+val)
+  // }
+
+  isAccepted(val: string) {
+    this.isRemarksAccepted = val === 'accepted' ? true : false;
+    if (!this.isRemarksAccepted) {
+          if (this.Remarks_NgModel === undefined) {
+            alert('Please input valid remarks');
+            return;
+          }
+        }
+        this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
+     
   }
+  
 
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
@@ -45,17 +64,17 @@ export class MiscellaneousClaimViewPage {
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
       });
     })
-}
+}  
 
-  SubmitAction() {
-    if (!this.ToggleNgModel) {
-      if (this.Remarks_NgModel === undefined) {
-        alert('Please input valid Remarks');
-        return;
-      }
-    }
-    this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
-  }
+  // SubmitAction() {
+  //   if (!this.isRemarksAccepted) {
+  //     if (this.Remarks_NgModel === undefined) {
+  //       alert('Please input valid Remarks');
+  //       return;
+  //     }
+  //   }
+  //   this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
+  // }
 
   EditClaim() {
     this.navCtrl.push(MiscellaneousClaimPage, {
