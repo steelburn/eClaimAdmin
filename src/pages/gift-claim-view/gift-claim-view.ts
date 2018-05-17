@@ -54,9 +54,21 @@ export class GiftClaimViewPage {
     })
 }
 
-isAccepted(val:string) {   
-  this.isRemarksAccepted = val==='Accepted'?true:false;
-  alert('Claim '+val)
+// isAccepted(val:string) {   
+//   this.isRemarksAccepted = val==='Accepted'?true:false;
+//   alert('Claim '+val)
+// }
+
+isAccepted(val: string) {
+  this.isRemarksAccepted = val === 'accepted' ? true : false;
+  if (!this.isRemarksAccepted) {
+        if (this.Remarks_NgModel === undefined) {
+          alert('Please input valid remarks');
+          return;
+        }
+      }
+      this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
+   
 }
 
   // isAccepted(event: any) {
@@ -64,15 +76,15 @@ isAccepted(val:string) {
   //   this.isRemarksAccepted = event.checked;
   // }
 
-  SubmitAction() {
-    if (!this.isRemarksAccepted) {
-      if (this.Remarks_NgModel === undefined) {
-        alert('Please input valid Remarks');
-        return;
-      }
-    }
-    this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
-  }
+  // SubmitAction() {
+  //   if (!this.isRemarksAccepted) {
+  //     if (this.Remarks_NgModel === undefined) {
+  //       alert('Please input valid Remarks');
+  //       return;
+  //     }
+  //   }
+  //   this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
+  // }
 
   EditClaim() {
     this.navCtrl.push(GiftclaimPage, {
