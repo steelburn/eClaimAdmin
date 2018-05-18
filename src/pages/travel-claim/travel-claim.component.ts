@@ -28,6 +28,8 @@ import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/ht
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { DecimalPipe } from '@angular/common';
+
+import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { DashboardPage } from '../dashboard/dashboard';
 
 @IonicPage()
@@ -748,16 +750,15 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
             }
 
-
             this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
               alert('Claim details are submitted successfully.')
-              this.navCtrl.setRoot(DashboardPage);
+              this.navCtrl.push(UserclaimslistPage);
             })
-
           })
         // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         // this.MainClaimSaved = true;
       }
     }
-  } 
+  }
+     
 }
