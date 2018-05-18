@@ -28,8 +28,9 @@ import { LoginPage } from '../login/login';
 export class ChangePasswordPage {
   ChangePasswordForm: FormGroup;
   usermain_entry: UserMain_Model = new UserMain_Model();
-
-  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private userservice: UserSetup_Service, private httpService: BaseHttpService) {
+  
+  loading: Loading;
+  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private userservice: UserSetup_Service, private httpService: BaseHttpService, private loadingCtrl: LoadingController) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry, please login.');
       this.navCtrl.push(LoginPage);
@@ -83,6 +84,12 @@ export class ChangePasswordPage {
       if (this.user_details[0]["PASSWORD"] == CryptoJS.SHA256(this.Current_Password_ngModel.trim()).toString(CryptoJS.enc.Hex)) {
         if (this.Current_Password_ngModel.trim().toUpperCase() != this.Confirm_Password_ngModel.trim().toUpperCase()) {
           if (this.New_Password_ngModel.trim().toUpperCase() == this.Confirm_Password_ngModel.trim().toUpperCase()) {            
+
+            this.loading = this.loadingCtrl.create({
+              content: 'Please wait...',
+            });
+            this.loading.present();
+
             this.usermain_entry.TENANT_GUID = this.user_details[0]["TENANT_GUID"];
             this.usermain_entry.USER_GUID = localStorage.getItem("g_USER_GUID");
             this.usermain_entry.STAFF_ID = this.user_details[0]["STAFF_ID"];
@@ -102,8 +109,7 @@ export class ChangePasswordPage {
             this.userservice.update_user_main(this.usermain_entry)
               .subscribe((response) => {
                 if (response.status == 200) {
-                  alert('Password sucessfully changed.');
-                  this.navCtrl.push(LoginPage);
+                  this.sendEmail();
                 }
               });
           }
@@ -119,5 +125,95 @@ export class ChangePasswordPage {
         alert('Current password is not correct.');
       }
     }
+  }
+  
+  emailUrl: string = 'http://api.zen.com.my/api/v2/zenmail?api_key=' + constants.DREAMFACTORY_API_KEY;
+  sendEmail() {
+    let name: string; let email: string
+    name = localStorage.getItem("g_FULLNAME"); email = this.user_details[0]["EMAIL"];
+    var queryHeaders = new Headers();
+    queryHeaders.append('Content-Type', 'application/json');
+    queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    let options = new RequestOptions({ headers: queryHeaders });
+    //let ename = 'Shabbeer Hussain';
+    // let startDate = '1-1-2018 11:12';
+    // let endDate = '1-1-2018 11:12';
+    // let CreatedDate = '1-1-2018 11:12';
+    // let level = '1';
+    // let assignedTo = 'Bala';
+    // let dept = 'Research';
+    // let claimType = 'Travel Claim';
+
+    let body = {
+      "template": "",
+      "template_id": 0,
+      "to": [
+        {
+          "name": name,
+          "email": email
+        }
+      ],
+      "cc": [
+        {
+          "name": name,
+          "email": email
+        }
+      ],
+      "bcc": [
+        {
+          "name": name,
+          "email": email
+        }
+      ],
+      "subject": "Password changed.",
+      "body_text": "",
+      "body_html": '<HTML>' + 
+      '<HEAD>' + 
+        '<META name=GENERATOR content="MSHTML 10.00.9200.17606">' +
+      '</HEAD>' +
+      
+      '<BODY>' +
+        '<DIV style="FONT-FAMILY: Century Gothic">' +
+          '<DIV style="MIN-WIDTH: 500px">' +
+            '<BR>' +
+            '<DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px">' +
+              '<IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png">' +
+            '</DIV>' +
+            '<DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c">' +
+              '<DIV style="TEXT-ALIGN: center; FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">' +
+                '<B>' +
+                  '<I>Change Password</I>' +
+                '</B>' +
+              '</DIV>' +
+            '</DIV>' +
+            '<BR>' +
+            '<DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">Dear <h4>' + name + '</h4>' +
+              '<BR>Your password has now been changed. From now on you will use your new password.' +
+              
+              
+            '</DIV>' +
+            '<BR>' +
+              '<DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">Thank you.</DIV>' +
+          '</DIV>' +
+        '</DIV>' +
+      '</BODY>' +
+      
+      '</HTML>', 
+      "from_name": "eClaim",
+      "from_email": "balasingh73@gmail.com",
+      "reply_to_name": "",
+      "reply_to_email": ""
+    };
+    this.http.post(this.emailUrl, body, options)
+      .map(res => res.json())
+      .subscribe(data => {        
+        // this.result= data["resource"];
+        // alert(JSON.stringify(data));
+        this.loading.dismissAll();
+        
+        alert('Password sucessfully changed.');
+        this.navCtrl.push(LoginPage);
+      });
   }
 }

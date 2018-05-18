@@ -49,6 +49,8 @@ export class ClaimapprovertasklistPage {
   claimRequestGUID:any;
   level:any;
 
+
+
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
    this.loginUserGuid=localStorage.getItem("g_USER_GUID");
@@ -69,6 +71,8 @@ export class ClaimapprovertasklistPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = data["resource"];
+        console.log(this.claimrequestdetails);
+        console.table(this.claimrequestdetails);
         this.claimrequestdetails1 = this.claimrequestdetails;
       });
     //console.table(this.claimrequestdetails);
@@ -115,33 +119,33 @@ export class ClaimapprovertasklistPage {
     }
   }
 
-  getCheckboxValue(event:Checkbox,claimRequestGuid:any){
-    // console.log(event);
-    // alert(event.id);
-    // alert(event.checked);
-    // alert(claimRequestGuid);
-  }
-
-  // getCheckboxValue(event: Checkbox, claimRequestGuid: any,level:number) {
+  // getCheckboxValue(event:Checkbox,claimRequestGuid:any){
+  //   // console.log(event);
   //   // alert(event.id);
   //   // alert(event.checked);
   //   // alert(claimRequestGuid);
-
-  //   let checkboxData: Checkboxlist = new Checkboxlist(event.checked,claimRequestGuid,level);
-  //   if (event.checked) {
-  //     this.checkboxDataList.push(checkboxData);
-  //   }
-  //   else {
-  //     let chkItem: Checkboxlist = this.checkboxDataList.find(item => item.ClaimRequestGuid == claimRequestGuid);
-  //     const index: number = this.checkboxDataList.indexOf(chkItem);
-  //     if (index !== -1) {
-  //       this.checkboxDataList.splice(index, 1);
-  //     }
-  //   }
-  //   // console.log(this.checkboxDataList);
-  //   // alert(this.checkboxDataList.length);
-  //   // alert(this.checkboxDataList.find(item => item.Chkid == event.id).Chkid + ","+this.checkboxDataList.find(item => item.Chkid == event.id).Checked+ ","+this.checkboxDataList.find(item => item.Chkid == event.id).claimRequestGuid);
   // }
+
+  getCheckboxValue(event: Checkbox, claimRequestGuid: any,level:number) {
+    // alert(event.id);
+    // alert(event.checked);
+    // alert(claimRequestGuid);
+
+    let checkboxData: Checkboxlist = new Checkboxlist(event.checked,claimRequestGuid,level);
+    if (event.checked) {
+      this.checkboxDataList.push(checkboxData);
+    }
+    else {
+      let chkItem: Checkboxlist = this.checkboxDataList.find(item => item.ClaimRequestGuid == claimRequestGuid);
+      const index: number = this.checkboxDataList.indexOf(chkItem);
+      if (index !== -1) {
+        this.checkboxDataList.splice(index, 1);
+      }
+    }
+    // console.log(this.checkboxDataList);
+    // alert(this.checkboxDataList.length);
+    // alert(this.checkboxDataList.find(item => item.Chkid == event.id).Chkid + ","+this.checkboxDataList.find(item => item.Chkid == event.id).Checked+ ","+this.checkboxDataList.find(item => item.Chkid == event.id).claimRequestGuid);
+  }
 
 approveClaims() {
     //console.table(this.claimrequestdetails);
@@ -164,7 +168,7 @@ if(this.checkboxDataList.length>0)
 //}
 if(count>0)
 {
-  alert("Claim(s) approved successfully.");
+  //alert("Claim(s) approved successfully.");
 }
 this.BindData();
 this.checkboxDataList=[];
@@ -195,6 +199,7 @@ viewClaim(claimRequestGUID: string, level: any, claimType: any) {
 
   pushPage(claimType: any) {
     this.navCtrl.push(claimType, {
+      isApprover: true,
       cr_GUID: this.claimRequestGUID,
       level_no: this.level,
       approver_GUID: localStorage.getItem('g_USER_GUID')

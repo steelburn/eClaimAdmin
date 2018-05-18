@@ -3,6 +3,7 @@ import { Component, NgModule, ElementRef, Inject, ViewChild } from '@angular/cor
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
+//import 'chartjs-plugin-deferred';
 import 'chart.piecelabel.js';
 import 'rxjs/add/operator/map';
 import * as constants from '../../config/constants';
@@ -66,30 +67,11 @@ export class DashboardPage {
       else{}
       this.years =this.years_data;
 
-      // // Unique years
-      //   function deduplicate(data:any) {
-      //     if (data.length > 0) {
-      //         var result : any[]=[];      
-      //         data.forEach(function (elem:any) {
-      //             if (result.indexOf(elem.YEAR) === -1) {
-      //                 result.push(elem.YEAR);
-      //             }
-      //         });      
-      //         return result;
-      //     }
-      // }
+ 
       var uniqueYears = this.deduplicate(this.years);
       //console.log(uniqueYears)
       this.years =uniqueYears;
-    // // Unique and Sort years
-    //   function sortUnique(arr:any) {
-    //     arr.sort();
-    //     var last_i;
-    //     for (var i=0;i<arr.length;i++)
-    //         if ((last_i = arr.lastIndexOf(arr[i])) !== i)
-    //             arr.splice(i+1, last_i-i);
-    //     return arr;
-    // }
+ 
     var SortuniqueYears = this.sortUnique(this.years);
     //console.log(SortuniqueYears)
     this.years =SortuniqueYears;     
@@ -125,18 +107,12 @@ export class DashboardPage {
       beforeDraw: function (chart:any) {
         var data = chart.data.datasets[0].data;
         var sum = data.reduce(function (a:any, b:any) {
-          //return a.toFixed(2) + b.toFixed(2);
-          // a=a.toFixed(2);
-          // b=b.toFixed(2)
+
           var x = a + b;
           var y = parseFloat(x.toFixed(2));
           return y;
 
-          //return Math.round(a + b);
-          //   var x = a + b;
-          //  var y = Math.round(x * 100)/100;
-          //   var result= y.toFixed(2);
-          //   return result;
+
         }, 0);
         var width = chart.chart.width,
           height = chart.chart.height,
@@ -151,14 +127,7 @@ export class DashboardPage {
           var text = sum,
             textX = Math.round((width - ctx.measureText(text).width) / 2),
             textY = height / 2;
-            // this.doughnutChartOptions =  {legend: {
-            //   display: true,
-            //   position: 'bottom'
-            // },}
-            // this.claimAmountOptions =  {legend: {
-            //   display: true,
-            //   position: 'bottom'
-            // },}
+    
         }
         else {
         text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
@@ -179,7 +148,7 @@ export class DashboardPage {
  public doughnutChartData: Array<number> = [];
 
  public doughnutChartType: string = 'doughnut';
- public doughnutChartColors: any[] = [{ backgroundColor: ["#b8436d", "#00d9f9", "#a4c73c"] }];
+ public doughnutChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red"] }];
 
  public chartClicked(e: any): void {
    console.log(e);
@@ -204,16 +173,11 @@ export class DashboardPage {
    },
    pieceLabel: {
      mode: 'value',
-     //fontColor:'blue',
+ 
      fontColor: ['green', 'white', 'red'],
      fontStyle: 'bold'
    },
-   //maintainAspectRatio : false,
-   // data: [
-   //   { 
-   //     radius: "90%", 
-   //     innerRadius: "75%"
-   //   }],
+ 
    tooltips: {
      enabled: true,
      callbacks: {
@@ -229,9 +193,8 @@ export class DashboardPage {
  // ClaimAmountChart
  public claimAmountLabels: Array<string> = ['Approved', 'Pending', 'Rejected'];
  public claimAmountData: Array<number> = [];
- // public claimAmountData: Array<number> = [700, 400, 300];
  public claimAmountChartType: string = 'doughnut';
- public claimAmountChartColors: any[] = [{ backgroundColor: ["#b8436d", "#00d9f9", "#a4c73c"] }];
+ public claimAmountChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red"] }];
  public claimAmountClicked(e: any): void {
    console.log(e);
  }
@@ -258,10 +221,7 @@ export class DashboardPage {
      fontStyle: 'bold',
      fontColor: ['green', 'white', 'red'],
    },
-   //     centerText: {
-   // data:200,
-   // display:false,
-   //     },
+
    tooltips: {
      enabled: true,
      callbacks: {
@@ -286,21 +246,13 @@ export class DashboardPage {
   this.GetDashboardInfo();
  }
  GetDashboardInfo() {
-  //alert(this.year_value)
-  // alert(this.Month_Change_ngModel)
-  // alert(this.Year_Change_ngModel)
+
    if (this.month_value != undefined) {
      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-     // this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
      console.log('hi '+this.baseResourceUrl)
-     //alert(this.baseResourceUrl)
+
    }
-   // else {      
-   //   this.CurrentMonthNumber= parseInt(this.month_value) + 1;
-   //   alert('hi2')console
-   //   this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.CurrentMonthNumber + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-   //   console.log(this.baseResourceUrl)
-   // }
+
 
    this.http
      .get(this.baseResourceUrl)
@@ -326,10 +278,7 @@ export class DashboardPage {
            var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
          }
          else { rejectedAmount = '0' }
-         //var approveAmount=(this.claimrequestdetails.ApprovedClaimAmount);parseFloat
-         // var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
-         // var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
-
+     
          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
        }
        else {

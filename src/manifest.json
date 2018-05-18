@@ -1,6 +1,6 @@
 {
-  "name": "Ionic Conference",
-  "short_name": "Ionic Conf",
+  "name": "eClaim Web App",
+  "short_name": "eclaim-desktop",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
