@@ -1,7 +1,8 @@
 {
   "LOGIN_TITLE": "Login",
 
-  "SUBMIT_BUTTON": "Submit",
+  "SUBMIT_BUTTON": "SUBMIT",
+  "NEXT_BUTTON": "NEXT",
   "GET_ORIGIN_BUTTON": "Get Origin",
   "GET_DESTINATION_BUTTON": "Get Destination",
   "GET_DISTANCE_BUTTON": "Get Distance",
@@ -164,7 +165,7 @@
   "CLAIM_APPLIED_DATE_LABEL":"Claim Applied Date",
   "STATUS_LABEL":"Status", 
   "MILEAGE_AMOUNT_LABEL": "Mileage Amount", 
-  "TOTAL_CLAIM_AMOUNT_LABEL":"Total Amount", 
+  "TOTAL_CLAIM_AMOUNT_LABEL":"Claim Amount", 
   "REMARKS_PLACE_HOLDER": "Please fill the Remarks",
  "STAGE_LABEL":"Stage",
  "BANK_NAME_LABEL": "Bank Name",  
