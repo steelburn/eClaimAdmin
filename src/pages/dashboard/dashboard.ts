@@ -108,9 +108,24 @@ export class DashboardPage {
         var data = chart.data.datasets[0].data;
         var sum = data.reduce(function (a:any, b:any) {
 
+          //return a.toFixed(2) + b.toFixed(2);
+          // a=a.toFixed(2);
+          // b=b.toFixed(2)
           var x = a + b;
           var y = parseFloat(x.toFixed(2));
           return y;
+
+          //return Math.round(a + b);
+          //   var x = a + b;
+          //  var y = Math.round(x * 100)/100;
+          //   var result= y.toFixed(2);
+          //   return result;
+
+
+          var x = a + b;
+          var y = parseFloat(x.toFixed(2));
+          return y;
+
 
 
         }, 0);
@@ -127,7 +142,18 @@ export class DashboardPage {
           var text = sum,
             textX = Math.round((width - ctx.measureText(text).width) / 2),
             textY = height / 2;
+
+            // this.doughnutChartOptions =  {legend: {
+            //   display: true,
+            //   position: 'bottom'
+            // },}
+            // this.claimAmountOptions =  {legend: {
+            //   display: true,
+            //   position: 'bottom'
+            // },}
+
     
+
         }
         else {
         text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
