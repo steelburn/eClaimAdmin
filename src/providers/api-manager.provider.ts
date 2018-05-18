@@ -107,6 +107,10 @@ export class ApiManagerProvider {
         return constants.DREAMFACTORY_TABLE_URL + '/' + table;
       }
 
+      deleteUrl(table: string,id:string) {
+        return constants.DREAMFACTORY_TABLE_URL + '/' + table+ '/' + id;
+      }
+
       postData(endpoint: string, body: any): Observable<any> {
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
@@ -129,6 +133,30 @@ export class ApiManagerProvider {
           });
       }
 
+      updateApiModel(endPoint: string, modelJSON:any) {
+        debugger;
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+        let options = new RequestOptions({ headers: queryHeaders });
+        return this.http.patch(this.postUrl(endPoint), modelJSON, options)
+          .map((response) => {
+            return response;
+          }); 
+      }
+
+      deleteApiModel(endPoint: string, args:string) {
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+        let options = new RequestOptions({ headers: queryHeaders });
+        console.log(this.deleteUrl(endPoint,args));
+        return this.http.delete(this.deleteUrl(endPoint,args), options)
+          .map((response) => {
+            return response;
+          }); 
+      }
+    
 
       getClaimRequestByClaimReqGUID(claimReqGUID: string, params?: URLSearchParams): Observable<MainClaimRequestModel[]> {
         var queryHeaders = new Headers();
@@ -202,4 +230,6 @@ export class ApiManagerProvider {
         });
         return items;
       }
+
+
 }

@@ -27,6 +27,8 @@ import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
 import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
+import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 
 
 @IonicPage()
@@ -63,7 +65,7 @@ export class PrintclaimPage {
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
-  claimRequestData: any[];
+  claimRequestData: any;
   ngOnInit(): void {
     this.userGUID = localStorage.getItem('g_USER_GUID');
 
@@ -113,7 +115,7 @@ export class PrintclaimPage {
 
 
 
-  constructor(public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+  constructor(private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
     this.Printform = fb.group({
       avatar: null,
       soc_no: '',
@@ -233,11 +235,41 @@ export class PrintclaimPage {
   }
 
   submitAction(imageGUID: any, formValues: any) {
+    if (this.isFormEdit) {
+      this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+        .subscribe(data => {
+          this.claimRequestData = data;
+          this.claimRequestData["resource"][0].ATTACHMENT_ID = imageGUID;
+          this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
+          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+          this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+          this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+  
+          //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+          // if (this.isCustomer) {
+          //   this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
+          //   this.claimRequestData["resource"][0].SOC_GUID = null;
+          // }
+          // else {
+          //   this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
+          //   this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
+          // }
+          //this.claimRequestData[0].STATUS = 'Pending';
+         // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
+         this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res =>
+          {
+            alert('Claim details are submitted successfully.')
+            this.navCtrl.push(UserclaimslistPage);
+         });
+        })
+    }
+    else {
     formValues.claimTypeGUID = 'd9567482-033a-6d92-3246-f33043155746';
     formValues.attachment_GUID = imageGUID;
     this.travelAmount = formValues.claim_amount;
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+    }
   }
 
 

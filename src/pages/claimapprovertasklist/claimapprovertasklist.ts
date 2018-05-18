@@ -56,9 +56,8 @@ export class ClaimapprovertasklistPage {
    this.loginUserGuid=localStorage.getItem("g_USER_GUID");
     this.claimrefguid = navParams.get("claimRefGuid");
     // alert(this.claimrefguid);
-    if (this.claimrefguid != 'null') {
+    if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
     }
     else {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -71,6 +70,9 @@ export class ClaimapprovertasklistPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = data["resource"];
+        // console.log(this.baseResourceUrl);
+        // console.log(this.claimrequestdetails);
+        // console.log(JSON.stringify(data));
         this.claimrequestdetails1 = this.claimrequestdetails;
       });
     //console.table(this.claimrequestdetails);

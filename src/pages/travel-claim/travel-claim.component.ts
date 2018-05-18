@@ -28,6 +28,8 @@ import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/ht
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { DecimalPipe } from '@angular/common';
+import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+
 
 @IonicPage()
 @Component({
@@ -96,7 +98,7 @@ export class TravelclaimPage {
    isPublicTransport: boolean = false;
    isFormEdit: boolean = false;
    claimRequestGUID: any;
-   claimRequestData: any[];
+   claimRequestData: any;
 
    constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api1: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
   {
@@ -660,14 +662,35 @@ export class TravelclaimPage {
       }
       else {
         this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
-        .subscribe(data => {
-          this.claimRequestData = data["resource"][0];
-          //this.claimRequestData.STATUS = 'Pending';
-          //this.api.updateClaimRequest(this.claimRequestData)
+          .subscribe(data => {
+            this.claimRequestData = data;
+            this.claimRequestData["resource"][0].STATUS = 'Pending';
 
-        })
-        this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
-        this.MainClaimSaved = true;
+            this.claimRequestData["resource"][0].MILEAGE_GUID = this.VehicleId;
+            this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.start_DT;
+            this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
+            this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
+            this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmount;
+            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.travelAmount;
+            this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
+            this.claimRequestData["resource"][0].FROM = formValues.origin;
+            this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
+            this.claimRequestData["resource"][0].DISTANCE_KM = this.Travel_Distance_ngModel;
+            this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+            this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
+            if (this.isCustomer) {
+              this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
+            }
+            else {
+              this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
+            }
+            this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
+              alert('Claim details are submitted successfully.')
+              this.navCtrl.push(UserclaimslistPage);
+            })
+          })
+        // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+        // this.MainClaimSaved = true;
       }
     }
   }
