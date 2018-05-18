@@ -109,8 +109,11 @@ export class LoginPage {
               alert("Invalid login.")
               this.login.username = "";
               this.login.password = "";
-            }
+            }            
           });
+          // .catch((err) =>{ 
+          //   alert('Sorry.'); 
+          // });
       }
 
       // this.userData.login(this.login.username);

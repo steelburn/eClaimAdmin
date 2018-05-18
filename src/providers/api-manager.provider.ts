@@ -35,6 +35,17 @@ export class ApiManagerProvider {
         return this.http.get(url, { headers: queryHeaders }).map(res => res.json())
       }
 
+      updateApiModel(endPoint: string, modelJSON: any) {
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+        let options = new RequestOptions({ headers: queryHeaders });
+        return this.http.patch(this.postUrl(endPoint), modelJSON, options)
+          .map((response) => {
+            return response;
+          }); 
+      }
+
       sendEmail() {
         let name: string; let email: string
         name = 'shabbeer'; email = 'pratap@zen.com.my'
@@ -87,6 +98,10 @@ export class ApiManagerProvider {
             // this.result= data["resource"];
             // alert(JSON.stringify(data));
           });
+      }
+
+      getImageUrl(imageName: string) {
+        return constants.IMAGE_URL + imageName + '?api_key=' + constants.DREAMFACTORY_API_KEY;
       }
 
       getUrl(table: string, args?: string) {

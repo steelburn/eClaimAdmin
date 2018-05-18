@@ -28,18 +28,21 @@ export class AddTollPage {
   @ViewChild('fileInput') fileInput: ElementRef;
 
   lastImage: string = null;
+  MA_SELECT: any;
   // loading: Loading;
   TenantGUID: any;
   paymentTypes: any; DetailsForm: FormGroup; ClaimMainGUID: any; 
   ClaimMethodGUID: any; ClaimMethodName: any;
   constructor(fb: FormBuilder, public api: ApiManagerProvider, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
+    this.LoadPayments();
+    this.LoadAllowanceDetails();
     this.DetailsForm = fb.group({
       avatar: null
     });
     
-    this.LoadPayments();
-    this.LoadAllowanceDetails();
+    // this.LoadPayments();
+    // this.LoadAllowanceDetails();
 
   }
 
@@ -57,13 +60,24 @@ export class AddTollPage {
       );
   }
 
-  SaveClaimDetails(imageGUID: string) {
+  SaveClaimDetails(isMA:boolean, imageGUID: string) {
+    if(isMA){
+      if(this.MA_SELECT==='NA' || this.MA_SELECT===undefined){
+        alert('Please select meal allowance.')
+        return;
+      }
+      if(this.Description===undefined){
+        alert('Please enter valid description.')
+        return;
+      }
+    }
     // alert(imageID)
     let claimReqRef: ClaimRequestDetailModel = new ClaimRequestDetailModel();
     claimReqRef.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
     claimReqRef.CLAIM_REQUEST_GUID = this.ClaimMainGUID;
     claimReqRef.CLAIM_METHOD_GUID = this.ClaimMethodGUID;
-    claimReqRef.PAYMENT_TYPE_GUID = this.PayType === undefined ? '2a543cd5-0177-a1d0-5482-48b52ec2100f' : this.PayType;
+    claimReqRef.PAYMENT_TYPE_GUID = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
+    // 2a543cd5-0177-a1d0-5482-48b52ec2100f
     claimReqRef.AMOUNT = this.Amount;
     claimReqRef.DESCRIPTION = this.Description;
     claimReqRef.CREATION_TS = new Date().toISOString();
@@ -72,7 +86,7 @@ export class AddTollPage {
 
     this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
       var postClaimRef = response.json();
-      alert('Your ' + this.ClaimMethodName + ' Details are Submitted successfully.')
+      alert('Your ' + this.ClaimMethodName + ' details are submitted successfully.')
       // console.log(
       //   postClaimRef["resource"][0].CLAIM_REQUEST_DETAIL_GUID);
 
@@ -90,41 +104,11 @@ export class AddTollPage {
     this.ClaimMethodGUID = this.navParams.get('ClaimMethod');
     this.ClaimMethodName = this.navParams.get('ClaimMethodName');
   }
-  Amount: any; PayType: any; Description: any;
-
-  // createForm() {
-  //     this.DetailsForm = this.fb.group({
-  //       avatar: null
-  //     });
-  //   }
-
-  // paymentTypes: any; ClaimMainGUID: any; ClaimMethodGUID: any;
-  // DetailsForm: FormGroup;
- 
+  Amount: any; PayType: any; Description: any; 
    loading = false;
    uploadFileName: string;
    DetailsType: string;
-   CloudFilePath: string;
-  // constructor(
-  //   private fb: FormBuilder,
-  //   public api: Services,
-  //   public travelservice: Services,
-  //   public http: Http, public navCtrl: NavController,
-  //   public navParams: NavParams, public viewCtrl: ViewController
-  // ) {
-
-  //   this.createForm();
-  //   this.LoadPayments();
-  // }
-  // createForm() {
-  //   this.DetailsForm = this.fb.group({
-  //     avatar: null
-  //   });
-  // }
-
-  // CloseAddTollPage() {
-  //   this.viewCtrl.dismiss();
-  // }
+   CloudFilePath: string;  
 
   onFileChange(event: any) {
     const reader = new FileReader();
@@ -141,17 +125,8 @@ export class AddTollPage {
       };
     }
   } 
-
-  // LoadPayments() {
-  //   this.http
-  //     .get(Services.getUrl('main_payment_type'))
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       this.paymentTypes = data["resource"];
-  //     }
-  //     );
-  // }
-
+  
+  isMA: any;
   save() {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
@@ -159,7 +134,7 @@ export class AddTollPage {
       let imageResult = this.SaveImageinDB();
       imageResult.then((objImage: ImageUpload_model) => {
         // console.table(objImage)
-        let result = this.SaveClaimDetails(objImage.Image_Guid);
+        let result = this.SaveClaimDetails(true, objImage.Image_Guid);
         // result.then((res) => {
         //   // console.log(res);
         // })

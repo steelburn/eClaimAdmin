@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="primary500">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -7,25 +7,22 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-<!-- <ion-item>
-  <button ion-button color="secondary" outline (click)="approveClaims()">{{ 'APPROVE_SELECTED_LABEL' | translate }}</button>
-  <button ion-button color="danger" outline>{{ 'REJECT_SELECTED_LABEL' | translate }}</button>
-</ion-item> -->
-<ion-card *ngFor="let item of claimrequestdetails">
-  <ion-item>
-    <!-- <ion-checkbox (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox> -->
-    <h2>{{ "NAME_LABEL" | translate }}      : {{item.FULLNAME}}</h2>
-    <h2 item-end>{{item.STATUS}}</h2>
-  </ion-item>
-  <ion-item>
-    <p>{{ "CLAIM_TYPE_LABEL" | translate }}       : {{item.CLAIMTYPE}}</p>
-    <p>{{ "CLAIM_DATE_LABEL" | translate }}: {{item.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</p>
-    <p>{{ "CLAIM_AMOUNT_LABEL" | translate }}{{ "CURRENCY_NAME_LABEL" | translate }}: {{item.CLAIM_AMOUNT | number:'1.2-2'}}</p>
-    <button ion-button item-end (click)='viewClaim(item.CLAIM_REQUEST_GUID, item.PROFILE_LEVEL, item.CLAIM_TYPE_GUID)'>
-      <ion-icon name="md-eye"></ion-icon>
-    </button>
-  </ion-item>
-</ion-card>
+
+  <ion-card *ngFor="let item of claimrequestdetails">
+    <ion-item>
+      <!-- <ion-checkbox (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox> -->
+      <h2>{{ "NAME_LABEL" | translate }} : {{item.FULLNAME}}</h2>
+      <h2 item-end>{{item.STATUS}}</h2>
+    </ion-item>
+    <ion-item>
+      <p>{{ "CLAIM_TYPE_LABEL" | translate }} : {{item.CLAIMTYPE}}</p>
+      <p>{{ "CLAIM_DATE_LABEL" | translate }}: {{item.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</p>
+      <p>{{ "CLAIM_AMOUNT_LABEL" | translate }}{{ "CURRENCY_NAME_LABEL" | translate }}: {{item.CLAIM_AMOUNT | number:'1.2-2'}}</p>
+      <button ion-button item-end (click)='viewClaim(item.CLAIM_REQUEST_GUID, item.PROFILE_LEVEL, item.CLAIM_TYPE_GUID)'>
+        <ion-icon name="md-eye"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-card>
 
 </ion-content>
 
