@@ -137,7 +137,7 @@
                         <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
                             <td class="lgl1">{{i+1}}</td>
                             <td class="lgl1">{{item.CLAIM_METHOD}}</td>
-                            <td class="lgl1">{{item.AMOUNT}}</td>
+                            <td class="lgl1">{{item.AMOUNT | number:1.2-2}}</td>
                             <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
                             <th class="lgl1">{{item.DESCRIPTION}}</th>
 
