@@ -61,9 +61,10 @@ export class MainClaimRequestModel {
       json.PROFILE_LEVEL,
       json.CREATION_TS,
       json.CREATION_USER_GUID,
-      json.ATTACHMENT_ID,
       json.UPDATE_TS,
-      json.UPDATE_USER_GUID
+      json.UPDATE_USER_GUID,
+      json.ATTACHMENT_ID
+
     );
   }
 

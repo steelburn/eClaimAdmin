@@ -21,6 +21,7 @@ import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
 import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { DashboardPage } from '../../pages/dashboard/dashboard';
 
 
 @IonicPage()
@@ -156,6 +157,7 @@ export class GiftclaimPage {
   // });
   this.LoadProjects();
   this.LoadCustomers();
+  //this.NavigateTravelClaim();
   //this.readProfile();
 }
 
@@ -383,6 +385,10 @@ clearFile() {
 allowanceGUID: any;
 onAllowanceSelect(allowance: any) {
   this.allowanceGUID = allowance.ALLOWANCE_GUID;
+}
+
+NavigateTravelClaim() {
+  this.navCtrl.setRoot(DashboardPage); 
 }
 
 submitAction(imageGUID: any,formValues: any) {
