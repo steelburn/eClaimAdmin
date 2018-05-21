@@ -435,8 +435,8 @@ submitAction(imageGUID: any,formValues: any) {
   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
 
   }
-}
+ }
   
 } 
 
-}
+
