@@ -168,7 +168,7 @@ export class ConferenceApp {
   }
 
   openPage(page: PageInterface) {
-    debugger;    
+    //debugger;    
     let params = {};
 
     // the nav component was found using @ViewChild(Nav)
@@ -394,7 +394,7 @@ export class ConferenceApp {
   }
 
   GetUser_Role(user_guid: string) {
-    debugger;
+    // debugger;
     let TableURL = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + user_guid + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     return new Promise((resolve, reject) => {
       this.http
