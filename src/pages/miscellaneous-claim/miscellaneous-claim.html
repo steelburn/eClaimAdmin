@@ -20,25 +20,25 @@
     
       <div [ngSwitch]="claimFor">
         <div *ngSwitchDefault>
-          <ion-item>
+          <!-- <ion-item>
             <button ion-button outline item-start icon-left (click)="CustomerLookup()">
               <ion-icon name="eye"></ion-icon>
               {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item>
+          </ion-item> -->
           <ion-item>
             <ion-label color="primary" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
+            <ion-input (click)="CustomerLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
           </ion-item>
         </div>
         <div *ngSwitchCase="'seg_project'">
-          <ion-item>
+          <!-- <ion-item>
             <button ion-button outline item-start icon-left (click)="ProjectLookup()">
               <ion-icon name="eye"></ion-icon>
               {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item>
+          </ion-item> -->
           <ion-item >
             <ion-label color="primary" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
+            <ion-input (click)="ProjectLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
               type="text"></ion-input>
           </ion-item>
           <ion-item>
