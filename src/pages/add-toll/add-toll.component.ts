@@ -134,7 +134,7 @@ export class AddTollPage {
       let imageResult = this.SaveImageinDB();
       imageResult.then((objImage: ImageUpload_model) => {
         // console.table(objImage)
-        let result = this.SaveClaimDetails(true, objImage.Image_Guid);
+        let result = this.SaveClaimDetails(false, objImage.Image_Guid);
         // result.then((res) => {
         //   // console.log(res);
         // })

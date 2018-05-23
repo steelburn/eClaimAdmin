@@ -19,7 +19,7 @@ export class MiscellaneousClaimPage {
   uploadFileName: string;
   @ViewChild('fileInput') fileInput: ElementRef;
   loading = false; MiscellaneousForm: FormGroup;
-  claimFor: any;
+  //claimFor: any;
   Customer_Lookup_ngModel: any;
   Project_Lookup_ngModel: any;
   Miscellaneous_Customer_ngModel: any;
@@ -46,6 +46,7 @@ export class MiscellaneousClaimPage {
   public profileLevel: any;
   public stage: any;
   public profileJSON: any;
+  claimFor: string = 'seg_customer';
 
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;

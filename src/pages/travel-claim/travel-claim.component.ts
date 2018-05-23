@@ -406,7 +406,7 @@ export class TravelclaimPage {
   }
 
   public AddToLookupClick() {
-    //this.AddLookupClicked = true;
+    this.AddLookupClicked = true;
     this.AddToLookupClicked = true;
     this.currentItems = null;
   }

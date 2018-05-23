@@ -35,11 +35,12 @@ export class GiftclaimPage {
     loading = false;
     CloudFilePath: string;
     @ViewChild('fileInput') fileInput: ElementRef;
-    customers: any;
+    customers: any[]; 
     storeProjects: any[];
     storeCustomers: any[];  
     public projects: any;     
     items: string[];  
+    claimFor: string = 'seg_customer';
   
     public Gift_SOC_No_ngModel: any;
     public Gift_ProjectName_ngModel: any;  
@@ -67,7 +68,7 @@ export class GiftclaimPage {
     public AddToLookupClicked: boolean = false;
     currentItems: any;
     public MainClaimSaved: boolean = false;   
-    claimFor: any;   
+    //claimFor: any;   
     VehicleId: any;
     travelAmount: any;
     validDate = new Date().toISOString();
@@ -128,10 +129,10 @@ export class GiftclaimPage {
     constructor(public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
     { 
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
-  this.translateToEnglish();
-  this.translate.setDefaultLang('en'); //Fallback language
-  platform.ready().then(() => {
-  });
+  // this.translateToEnglish();
+  // this.translate.setDefaultLang('en'); //Fallback language
+  // platform.ready().then(() => {
+  // });
 
   this.Giftform = fb.group({ 
     avatar: null,
@@ -190,22 +191,22 @@ GetCustomer(guid: any, name: any) {
   this.CloseCustomerLookup();
 }
 
- //---------------------Language module start---------------------//
- public translateToMalayClicked: boolean = false;
- public translateToEnglishClicked: boolean = true;
+//  //---------------------Language module start---------------------//
+//  public translateToMalayClicked: boolean = false;
+//  public translateToEnglishClicked: boolean = true;
 
- public translateToEnglish() {
-   this.translate.use('en');
-   this.translateToMalayClicked = !this.translateToMalayClicked;
-   this.translateToEnglishClicked = !this.translateToEnglishClicked;
- }
+//  public translateToEnglish() {
+//    this.translate.use('en');
+//    this.translateToMalayClicked = !this.translateToMalayClicked;
+//    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+//  }
 
- public translateToMalay() {
-   this.translate.use('ms');
-   this.translateToEnglishClicked = !this.translateToEnglishClicked;
-   this.translateToMalayClicked = !this.translateToMalayClicked;
- }
- //---------------------Language module end---------------------//
+//  public translateToMalay() {
+//    this.translate.use('ms');
+//    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+//    this.translateToMalayClicked = !this.translateToMalayClicked;
+//  }
+//  //---------------------Language module end---------------------//
 
  onSubmit() {
   this.loading = true;
@@ -375,6 +376,24 @@ searchCustomer(searchString: any) {
   // this.customers = this.filterCustomer({
   //   NAME: val
   // });
+}
+
+filterCustomer(params?: any) {
+  if (!params) {
+    return this.storeCustomers;
+  }
+
+  return this.customers.filter((item) => {
+    for (let key in params) {
+      let field = item[key];
+      if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+        return item;
+      } else if (field == params[key]) {
+        return item;
+      }
+    }
+    return null;
+  });
 }
 
 clearFile() {
