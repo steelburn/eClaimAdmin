@@ -22,6 +22,12 @@ import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
+import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+
+import { DashboardPage } from '../../pages/dashboard/dashboard';
+
+
 
 @IonicPage()
 @Component({
@@ -34,11 +40,12 @@ export class GiftclaimPage {
     loading = false;
     CloudFilePath: string;
     @ViewChild('fileInput') fileInput: ElementRef;
-    customers: any;
+    customers: any[]; 
     storeProjects: any[];
     storeCustomers: any[];  
     public projects: any;     
     items: string[];  
+    claimFor: string = 'seg_customer';
   
     public Gift_SOC_No_ngModel: any;
     public Gift_ProjectName_ngModel: any;  
@@ -66,7 +73,6 @@ export class GiftclaimPage {
     public AddToLookupClicked: boolean = false;
     currentItems: any;
     public MainClaimSaved: boolean = false;   
-    claimFor: any;   
     VehicleId: any;
     travelAmount: any;
     validDate = new Date().toISOString();
@@ -76,7 +82,7 @@ export class GiftclaimPage {
      /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
    claimRequestGUID: any;
-   claimRequestData: any[];
+   claimRequestData: any;
    ngOnInit(): void {
      this.userGUID = localStorage.getItem('g_USER_GUID');
  
@@ -124,13 +130,13 @@ export class GiftclaimPage {
       );
   }
 
-    constructor(public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
+    constructor(private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
     { 
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
-  this.translateToEnglish();
-  this.translate.setDefaultLang('en'); //Fallback language
-  platform.ready().then(() => {
-  });
+  // this.translateToEnglish();
+  // this.translate.setDefaultLang('en'); //Fallback language
+  // platform.ready().then(() => {
+  // });
 
   this.Giftform = fb.group({ 
     avatar: null,
@@ -156,6 +162,7 @@ export class GiftclaimPage {
   // });
   this.LoadProjects();
   this.LoadCustomers();
+  //this.NavigateTravelClaim();
   //this.readProfile();
 }
 
@@ -188,22 +195,22 @@ GetCustomer(guid: any, name: any) {
   this.CloseCustomerLookup();
 }
 
- //---------------------Language module start---------------------//
- public translateToMalayClicked: boolean = false;
- public translateToEnglishClicked: boolean = true;
+//  //---------------------Language module start---------------------//
+//  public translateToMalayClicked: boolean = false;
+//  public translateToEnglishClicked: boolean = true;
 
- public translateToEnglish() {
-   this.translate.use('en');
-   this.translateToMalayClicked = !this.translateToMalayClicked;
-   this.translateToEnglishClicked = !this.translateToEnglishClicked;
- }
+//  public translateToEnglish() {
+//    this.translate.use('en');
+//    this.translateToMalayClicked = !this.translateToMalayClicked;
+//    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+//  }
 
- public translateToMalay() {
-   this.translate.use('ms');
-   this.translateToEnglishClicked = !this.translateToEnglishClicked;
-   this.translateToMalayClicked = !this.translateToMalayClicked;
- }
- //---------------------Language module end---------------------//
+//  public translateToMalay() {
+//    this.translate.use('ms');
+//    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+//    this.translateToMalayClicked = !this.translateToMalayClicked;
+//  }
+//  //---------------------Language module end---------------------//
 
  onSubmit() {
   this.loading = true;
@@ -284,7 +291,7 @@ return new Promise((resolve, reject) => {
 
  claimForChanged() {
   // console.log(this.claimFor)
-  if (this.claimFor == 'seg_customer') this.isCustomer = true;
+  if (this.claimFor == 'customer') this.isCustomer = true;
   else this.isCustomer = false;
 }
 
@@ -375,6 +382,24 @@ searchCustomer(searchString: any) {
   // });
 }
 
+filterCustomer(params?: any) {
+  if (!params) {
+    return this.storeCustomers;
+  }
+
+  return this.customers.filter((item) => {
+    for (let key in params) {
+      let field = item[key];
+      if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+        return item;
+      } else if (field == params[key]) {
+        return item;
+      }
+    }
+    return null;
+  });
+}
+
 clearFile() {
   this.Giftform.get('avatar').setValue(null);
   this.fileInput.nativeElement.value = '';
@@ -385,13 +410,51 @@ onAllowanceSelect(allowance: any) {
   this.allowanceGUID = allowance.ALLOWANCE_GUID;
 }
 
+NavigateTravelClaim() {
+  this.navCtrl.setRoot(DashboardPage); 
+}
+
 submitAction(imageGUID: any,formValues: any) {
   // alert(JSON.parse(formValues) )     
+  if (this.isFormEdit) {
+    this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+      .subscribe(data => {
+        this.claimRequestData = data;
+        this.claimRequestData["resource"][0].ATTACHMENT_ID = imageGUID;
+        this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
+        this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+        this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+        this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+
+        //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+        if (this.isCustomer) {
+          this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID ;
+          this.claimRequestData["resource"][0].SOC_GUID = null;
+        }
+        else {
+          this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
+          this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
+        }
+        //this.claimRequestData[0].STATUS = 'Pending';
+       // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
+       this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
+        {
+          alert('Claim details are submitted successfully.')
+          this.navCtrl.push(UserclaimslistPage);
+       });
+      })
+  }
+  else {
   formValues.claimTypeGUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
   formValues.meal_allowance = this.allowanceGUID;
   formValues.attachment_GUID = imageGUID;       
   this.travelAmount = formValues.claim_amount;
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+
+  }
+ }
+  
 } 
-}
+
+

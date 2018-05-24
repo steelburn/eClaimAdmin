@@ -29,7 +29,6 @@ import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup
 import { QualificationsetupPage } from '../pages/qualificationsetup/qualificationsetup';
 import { SubsciptionsetupPage } from '../pages/subsciptionsetup/subsciptionsetup';
 import { SignupPage } from '../pages/signup/signup';
-import { SpeakerListPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TenantsetupPage } from '../pages/tenantsetup/tenantsetup';
 import { SetupPage } from '../pages/setup/setup';
@@ -121,7 +120,6 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
     StatesetupPage,
     SetupguidePage,
     SignupPage,
-    SpeakerListPage,
     SubmodulesetupPage,
     SetupPage,
     BanksetupPage,
@@ -183,13 +181,20 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
-        { component: SpeakerListPage, name: 'Home', segment: 'Home' },
+        { component: DashboardPage, name: 'Home', segment: 'Home' },
         { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
         { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
         { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' },
+
+        { component: TravelclaimPage, name: 'TravelclaimPage', segment: 'TravelclaimPage' },
+        { component: EntertainmentclaimPage, name: 'EntertainmentclaimPage', segment: 'EntertainmentclaimPage' },
+        { component: GiftclaimPage, name: 'GiftclaimPage', segment: 'GiftclaimPage' },
+        { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
+        { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
+        { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
 
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
@@ -237,7 +242,6 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
     SubsciptionsetupPage,
     TenantsetupPage,
     RolemodulesetupPage,
-    SpeakerListPage,
     TabsPage,
     ApproverTaskListPage,
     TravelClaimViewPage,
