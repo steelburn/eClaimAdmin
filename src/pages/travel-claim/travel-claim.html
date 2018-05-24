@@ -250,8 +250,8 @@
                                   <th class="lgl1">Amount</th>
                                   <th class="lgl1">Payment Mode</th>
                                   <th class="lgl1">Description</th>
-                                  <!-- <th class="lgl1 tblBrRight" style="width:80px">ACTION</th> -->
-                              </tr>
+                                  <th class="lgl1 tblBrRight">ACTION</th>
+                                </tr>
         
                               <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
                                   <!-- <td class="lgl1">{{i+1}}</td> -->
@@ -261,18 +261,18 @@
                                       </button>
                                   </td>
                                   <td class="lgl1">{{item.CLAIM_METHOD}}</td>
-                                  <td class="lgl1">{{item.AMOUNT}}</td>
+                                  <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
                                   <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
                                   <th class="lgl1">{{item.DESCRIPTION}}</th>
         
-                                  <!-- <td class="lgl1 fColor">
-                                              <button ion-button item-end (click)="EditClick(soc.TENANT_GUID)">
-                                                  <ion-icon name="md-create"></ion-icon>
-                                              </button>
-                                              <button ion-button item-end (click)="DeleteClick(soc.TENANT_GUID)">
-                                                <ion-icon name="md-close"></ion-icon>
-                                            </button>
-                                          </td> -->
+                                  <td class="lgl1 fColor">
+                                    <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
+                                        <ion-icon name="md-create"></ion-icon>
+                                    </button>
+                                    <button ion-button item-end (click)="DeleteDetail(item.CLAIM_REQUEST_DETAIL_GUID)">
+                                      <ion-icon name="md-close"></ion-icon>
+                                  </button>
+                                </td>
                               </tr>
         
                           </table>

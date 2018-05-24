@@ -1,77 +1,22 @@
-// Media of at most the maximum breakpoint width. No query for the largest breakpoint.
-// Makes the @content apply to the given breakpoint and narrower.
-@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
-  $max: breakpoint-max($name, $breakpoints);
-  @if $max {
-    @media (max-width: $max) {
-      @content;
-    }
-  } @else {
-    @content;
-  }
-}
+// http://ionicframework.com/docs/theming/
 
 
-// Name of the next breakpoint, or null for the last breakpoint.
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
 //
-//    >> breakpoint-next(sm)
-//    md
-//    >> breakpoint-next(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
-//    md
-//    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl))
-//    md
-@function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
-  $n: index($breakpoint-names, $name);
-  @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
-}
-
-
-// Maximum breakpoint width. Null for the largest (last) breakpoint.
-// The maximum value is calculated as the minimum of the next one less 0.1.
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
 //
-//    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
-//    767px
-@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
-  $next: breakpoint-next($name, $breakpoints);
-  @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
-}
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
 
 
-// Creates text alignment classes based on screen size
-// TODO this would be nice to add to the framework
-@each $breakpoint in map-keys($grid-breakpoints) {
-  $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
-  @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
-    // Provide text `[text-{bp}]` attributes for aligning text based on screen size
-    [text#{$infix}-center] {
-      text-align: center;
-    }
-
-    [text#{$infix}-left] {
-      text-align: left;
-    }
-
-    [text#{$infix}-right] {
-      text-align: right;
-    }
-
-    [hidden#{$infix}-up] {
-      display: none;
-    }
-  }
-
-  @include media-breakpoint-down($breakpoint, $grid-breakpoints) {
-    [hidden#{$infix}-down] {
-      display: none;
-    }
-  }
-
-
-//start
-
-
-  ion-fab[top1] {
+ion-fab[top1] {
     top: 0 !important;
   }
 
@@ -108,7 +53,7 @@
 
 .popup2{
     width: 83%;
-    left: 25px;
+    left: 21px;
     top: 38px;
     position: fixed;
     height: 480px;
@@ -126,7 +71,7 @@
     height: 38px;
     right: 16px;
     font-size: 22px !important;
-    top: 15px;
+    top: 17px;
     position: absolute !important ;
     background: #EF5350;
     color: white;
@@ -178,7 +123,7 @@ button[ion-fab] {
 .item-input ion-input, .item-input ion-textarea {
     border-radius: 5px;
     background: whitesmoke;
-    padding-left: 5pt 0 !important;
+    padding-left: 5pt;
 }
 
 .item-input ion-input, .item-input ion-textarea.ng-dirty.ng-valid.ng-touched {
@@ -189,7 +134,8 @@ button[ion-fab] {
 ion-datetime.datetime.datetime-md{
     border-radius: 5px;
     background: whitesmoke;
-    padding-left: 5pt 0 !important;
+    padding-left: 5pt;
+
 }
 
 
@@ -204,20 +150,19 @@ ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
 ion-datetime.datetime.datetime-ios{
     border-radius: 5px;
     background: whitesmoke;
-    padding-left: 5pt 0 !important;
-
+    padding-left: 5pt;
 }
 
 ion-select.select.select-md{
     border-radius: 5px;
     background: whitesmoke;
-    padding-left: 5pt 0 !important;
+    padding-left: 5pt;
 }
 
 ion-select.select.select-ios{
     border-radius: 5px;
     background: whitesmoke;
-    padding-left: 5pt 0 !important;
+    padding-left: 5pt;
 }
 
 ion-select.select.select-ios.ng-dirty.ng-valid.ng-touched{
@@ -227,7 +172,14 @@ ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
     border: 0;
 }
 
-
+.item-md.item-label-stacked [item-right], .item-md.item-label-floating [item-right], .item-md.item-label-stacked [item-end], .item-md.item-label-floating [item-end] {
+    margin-top: 29px;
+    margin-left: 5px;
+}
+.item-ios.item-label-stacked [item-right], .item-ios.item-label-floating [item-right], .item-ios.item-label-stacked [item-end], .item-ios.item-label-floating [item-end] {
+    margin-top: 30px;
+    margin-left: 5px;
+}
 .action-sheet-group {
     overflow: auto !important; 
 }
@@ -261,8 +213,7 @@ ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
     color: white !important;
  }
 
+// .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default, .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {
+//     color: black !important;
+// }
 
-//end
-
-
-}

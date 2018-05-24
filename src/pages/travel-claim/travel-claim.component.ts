@@ -28,6 +28,8 @@ import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/ht
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { DecimalPipe } from '@angular/common';
+
+import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { DashboardPage } from '../dashboard/dashboard';
 
 @IonicPage()
@@ -175,10 +177,12 @@ export class TravelclaimPage {
         this.Travel_From_ngModel = this.claimRequestData[0].FROM;
         this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
         this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
-        //this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+        this.travelAmount =this.travelAmount = this.numberPipe.transform(this.claimRequestData[0].CLAIM_AMOUNT, '1.2-2');
+        
+       // this.travelAmount = this.claimRequestData[0].CLAIM_AMOUNT
         //this.Travel_Amount_ngModel = this.claimRequestData[0].CLAIM_AMOUNT;
-        this.Travel_Amount_ngModel = '1015.00';
-        console.log(this.claimRequestData[0].CLAIM_AMOUNT);
+       // this.Travel_Amount_ngModel = '1015.00';
+        //console.log(this.claimRequestData[0].CLAIM_AMOUNT);
         //this.Travel_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
         this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
         this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
@@ -508,37 +512,51 @@ export class TravelclaimPage {
     });
   }
 
-  showAddToll() {
+  showAddToll(claimDetailGuid:string) {
+    this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
       // MainClaim: localStorage.getItem("g_CR_GUID"),
+     ClaimReqDetailGuid:claimDetailGuid,
       ClaimMethod: '03048acb-037a-11e8-a50c-00155de7e742',
       ClaimMethodName: 'Toll'
     });
   }
 
-  showAddParking() {
+  showAddParking(claimDetailGuid:string) {
+    this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
       // MainClaim: localStorage.getItem("g_CR_GUID"),
+      ClaimReqDetailGuid:claimDetailGuid,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742',
       ClaimMethodName: 'Parking'
     });
   }
 
-  showAddAccommodation() {
+  showAddAccommodation(claimDetailGuid:string) {
+    this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
       // MainClaim: localStorage.getItem("g_CR_GUID"),
+      ClaimReqDetailGuid:claimDetailGuid,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-ssh55de7e742',
       ClaimMethodName: 'Accommodation'
     });
   }
 
-  showMealAllowance() {
-    this.navCtrl.push(AddTollPage, {
-      // MainClaim: localStorage.getItem("g_CR_GUID"),
-      ClaimMethod: '0ebb7e5f-ssha-11e8-a50c-ssh55de7e742',
-      ClaimMethodName: 'Meal Allowance'
-    });
+
+
+  showMealAllowance(claimDetailGuid:string) {
+   this.CloseTollParkLookup();
+    this.api.getApiModel('claim_request_detail', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(CLAIM_METHOD_GUID=0ebb7e5f-ssha-11e8-a50c-ssh55de7e742)').subscribe(data => {
+      if (data['resource'].length != 1) { alert('data available'); return; }
+      this.navCtrl.push(AddTollPage, {
+        // MainClaim: localStorage.getItem("g_CR_GUID"),
+        ClaimReqDetailGuid:claimDetailGuid,
+        ClaimMethod: '0ebb7e5f-ssha-11e8-a50c-ssh55de7e742',
+        ClaimMethodName: 'Meal Allowance'
+      });
+    })
   }
+
 
   onVehicleSelect(vehicle: any) { 
     this.VehicleId = vehicle.MILEAGE_GUID;
@@ -748,16 +766,34 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
             }
 
-
             this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
               alert('Claim details are submitted successfully.')
-              this.navCtrl.setRoot(DashboardPage);
+              this.navCtrl.push(UserclaimslistPage);
             })
-
           })
         // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         // this.MainClaimSaved = true;
       }
     }
-  } 
+  }
+
+  EditDetail(claimDetailId:string,claimMethodGuid:string)
+  {
+if(claimMethodGuid==='03048acb-037a-11e8-a50c-00155de7e742')
+   {this.showAddToll(claimDetailId)  }
+  else if(claimMethodGuid==='0ebb7e5f-037a-11e8-a50c-00155de7e742')
+   {this.showAddParking(claimDetailId)  }
+  else if(claimMethodGuid==='0ebb7e5f-ssha-11e8-a50c-ssh55de7e742')
+   {this.showMealAllowance(claimDetailId)  }
+ else  if(claimMethodGuid==='0ebb7e5f-037a-11e8-a50c-ssh55de7e742')
+   {this.showAddAccommodation(claimDetailId)  }
+   
+  }
+  DeleteDetail(claimDetailId:string){
+    this.api.deleteApiModel('claim_request_detail',claimDetailId).subscribe(res =>{
+      this.tollParkAmount = 0;
+      this.LoadClaimDetails();
+       alert('Claim detail has been deleted successfully.')});
+  }
+     
 }
