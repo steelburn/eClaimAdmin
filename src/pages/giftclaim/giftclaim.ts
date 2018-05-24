@@ -22,6 +22,12 @@ import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
+import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+
+import { DashboardPage } from '../../pages/dashboard/dashboard';
+
+
 
 @IonicPage()
 @Component({
@@ -34,11 +40,12 @@ export class GiftclaimPage {
     loading = false;
     CloudFilePath: string;
     @ViewChild('fileInput') fileInput: ElementRef;
-    customers: any;
+    customers: any[]; 
     storeProjects: any[];
     storeCustomers: any[];  
     public projects: any;     
     items: string[];  
+    claimFor: string = 'seg_customer';
   
     public Gift_SOC_No_ngModel: any;
     public Gift_ProjectName_ngModel: any;  
@@ -66,7 +73,6 @@ export class GiftclaimPage {
     public AddToLookupClicked: boolean = false;
     currentItems: any;
     public MainClaimSaved: boolean = false;   
-    claimFor: any;   
     VehicleId: any;
     travelAmount: any;
     validDate = new Date().toISOString();
@@ -76,7 +82,7 @@ export class GiftclaimPage {
      /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
    claimRequestGUID: any;
-   claimRequestData: any[];
+   claimRequestData: any;
    ngOnInit(): void {
      this.userGUID = localStorage.getItem('g_USER_GUID');
  
@@ -124,13 +130,13 @@ export class GiftclaimPage {
       );
   }
 
-    constructor(public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
+    constructor(private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
     { 
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
-  this.translateToEnglish();
-  this.translate.setDefaultLang('en'); //Fallback language
-  platform.ready().then(() => {
-  });
+  // this.translateToEnglish();
+  // this.translate.setDefaultLang('en'); //Fallback language
+  // platform.ready().then(() => {
+  // });
 
   this.Giftform = fb.group({ 
     avatar: null,
@@ -156,6 +162,7 @@ export class GiftclaimPage {
   // });
   this.LoadProjects();
   this.LoadCustomers();
+  //this.NavigateTravelClaim();
   //this.readProfile();
 }
 
@@ -188,22 +195,22 @@ GetCustomer(guid: any, name: any) {
   this.CloseCustomerLookup();
 }
 
- //---------------------Language module start---------------------//
- public translateToMalayClicked: boolean = false;
- public translateToEnglishClicked: boolean = true;
+//  //---------------------Language module start---------------------//
+//  public translateToMalayClicked: boolean = false;
+//  public translateToEnglishClicked: boolean = true;
 
- public translateToEnglish() {
-   this.translate.use('en');
-   this.translateToMalayClicked = !this.translateToMalayClicked;
-   this.translateToEnglishClicked = !this.translateToEnglishClicked;
- }
+//  public translateToEnglish() {
+//    this.translate.use('en');
+//    this.translateToMalayClicked = !this.translateToMalayClicked;
+//    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+//  }
 
- public translateToMalay() {
-   this.translate.use('ms');
-   this.translateToEnglishClicked = !this.translateToEnglishClicked;
-   this.translateToMalayClicked = !this.translateToMalayClicked;
- }
- //---------------------Language module end---------------------//
+//  public translateToMalay() {
+//    this.translate.use('ms');
+//    this.translateToEnglishClicked = !this.translateToEnglishClicked;
+//    this.translateToMalayClicked = !this.translateToMalayClicked;
+//  }
+//  //---------------------Language module end---------------------//
 
  onSubmit() {
   this.loading = true;
@@ -229,16 +236,17 @@ GetCustomer(guid: any, name: any) {
 saveIm(formValues: any) {
   let uploadImage = this.UploadImage();
   uploadImage.then((resJson) => {
-    console.table(resJson)
-    let imageResult = this.SaveImageinDB();
-    imageResult.then((objImage: ImageUpload_model) => {
+    this.submitAction(this.uploadFileName, formValues);
+    // console.table(resJson)
+    // let imageResult = this.SaveImageinDB();
+    // imageResult.then((objImage: ImageUpload_model) => {
       // console.table(objImage)
-      let result = this.submitAction(objImage.Image_Guid, formValues);
+      // let result = this.submitAction(objImage.Image_Guid, formValues);
       // result.then((res) => {
       //   // console.log(res);
        
       // })
-    })
+    // })
   })
   // setTimeout(() => {
   //   this.loading = false;
@@ -283,7 +291,7 @@ return new Promise((resolve, reject) => {
 
  claimForChanged() {
   // console.log(this.claimFor)
-  if (this.claimFor == 'seg_customer') this.isCustomer = true;
+  if (this.claimFor == 'customer') this.isCustomer = true;
   else this.isCustomer = false;
 }
 
@@ -374,6 +382,24 @@ searchCustomer(searchString: any) {
   // });
 }
 
+filterCustomer(params?: any) {
+  if (!params) {
+    return this.storeCustomers;
+  }
+
+  return this.customers.filter((item) => {
+    for (let key in params) {
+      let field = item[key];
+      if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+        return item;
+      } else if (field == params[key]) {
+        return item;
+      }
+    }
+    return null;
+  });
+}
+
 clearFile() {
   this.Giftform.get('avatar').setValue(null);
   this.fileInput.nativeElement.value = '';
@@ -384,248 +410,51 @@ onAllowanceSelect(allowance: any) {
   this.allowanceGUID = allowance.ALLOWANCE_GUID;
 }
 
+NavigateTravelClaim() {
+  this.navCtrl.setRoot(DashboardPage); 
+}
+
 submitAction(imageGUID: any,formValues: any) {
   // alert(JSON.parse(formValues) )     
+  if (this.isFormEdit) {
+    this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+      .subscribe(data => {
+        this.claimRequestData = data;
+        this.claimRequestData["resource"][0].ATTACHMENT_ID = imageGUID;
+        this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
+        this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+        this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+        this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+
+        //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+        if (this.isCustomer) {
+          this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID ;
+          this.claimRequestData["resource"][0].SOC_GUID = null;
+        }
+        else {
+          this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
+          this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
+        }
+        //this.claimRequestData[0].STATUS = 'Pending';
+       // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
+       this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
+        {
+          alert('Claim details are submitted successfully.')
+          this.navCtrl.push(UserclaimslistPage);
+       });
+      })
+  }
+  else {
   formValues.claimTypeGUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
   formValues.meal_allowance = this.allowanceGUID;
   formValues.attachment_GUID = imageGUID;       
   this.travelAmount = formValues.claim_amount;
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
-}
+
+  }
+ }
+  
+} 
 
 
-  // save(imageGUID: string) {
-  //   let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
-  //   let userGUID = localStorage.getItem('g_USER_GUID');
-  //   let tenantGUID = localStorage.getItem('g_TENANT_GUID');
-  //   let month = new Date(this.Gift_Date_ngModel).getMonth() + 1;
-  //   let year = new Date(this.Gift_Date_ngModel).getFullYear();
-  //   let claimRefGUID;
-  //   let url = Services.getUrl('main_claim_ref', 'filter=(USER_GUID=' + userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')');
-  //   this.http
-  //     .get(url)
-  //     .map(res => res.json())
-  //     .subscribe(claimRefdata => {
-  //       if (claimRefdata["resource"][0] == null) {
-  //         let claimReqRef: ClaimRefMain_Model = new ClaimRefMain_Model();
-  //         claimReqRef.CLAIM_REF_GUID = UUID.UUID();
-  //         claimReqRef.USER_GUID = userGUID;
-  //         claimReqRef.TENANT_GUID = tenantGUID;
-  //         claimReqRef.REF_NO = userGUID + '/' + month + '/' + year;
-  //         claimReqRef.MONTH = month;
-  //         claimReqRef.YEAR = year;
-  //         claimReqRef.CREATION_TS = new Date().toISOString();
-  //         claimReqRef.UPDATE_TS = new Date().toISOString();
-
-  //         this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
-  //           var postClaimRef = response.json();
-  //           claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
-
-  //           // let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
-  //           claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
-  //           claimReqMainRef.TENANT_GUID = tenantGUID;
-  //           claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
-  //           claimReqMainRef.MILEAGE_GUID = this.VehicleId;
-  //           claimReqMainRef.CLAIM_TYPE_GUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
-  //           claimReqMainRef.TRAVEL_DATE = this.Gift_Date_ngModel;
-  //           // claimReqMainRef.START_TS = value.start_DT;
-  //           // claimReqMainRef.END_TS = value.end_DT;
-  //           claimReqMainRef.DESCRIPTION =this.Gift_Description_ngModel;
-  //           claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
-  //           claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
-  //           claimReqMainRef.PROFILE_JSON = this.profileJSON;
-  //           claimReqMainRef.STATUS = 'Pending';
-  //           claimReqMainRef.STAGE = this.stage;
-  //           claimReqMainRef.ATTACHMENT_ID = imageGUID;
-  //           // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel
-  //           claimReqMainRef.CLAIM_AMOUNT = this.Gift_Amount_ngModel;
-  //           claimReqMainRef.CREATION_TS = new Date().toISOString();
-  //           claimReqMainRef.UPDATE_TS = new Date().toISOString();
-  //           // claimReqMainRef.FROM = this.Travel_From_ngModel;
-  //           // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
-  //           // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
-  //          // claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
-  //          if(this.isCustomer){
-  //           claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
-  //         }
-  //         else{
-  //           claimReqMainRef.SOC_GUID = this.Soc_GUID;
-  //         }
-  //         // claimReqMainRef.CUSTOMER_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-  //         // claimReqMainRef.SOC_GUID = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-
-  //           // this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-  //           //   var postClaimMain = response.json();
-  //           //   this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
-  //           //   this.MainClaimSaved = true;
-  //           //   alert('Claim Has Registered.')
-  //           // })
-  //         })
-  //         return new Promise((resolve, reject) => {
-  //           this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
-             
-  //             let res = data.json();
-  //             console.log(res)
-  //             let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
-  //             resolve(ClaimRequestMainId);
-  //           })
-  //         });
-  //       }
-  //       else {
-  //         claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
-
-  //         let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
-  //         claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
-  //         claimReqMainRef.TENANT_GUID = tenantGUID;
-  //         claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
-  //         claimReqMainRef.MILEAGE_GUID = this.VehicleId;
-  //         claimReqMainRef.CLAIM_TYPE_GUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
-  //         claimReqMainRef.TRAVEL_DATE = this.Gift_Date_ngModel;
-  //         // claimReqMainRef.START_TS = value.start_DT;
-  //         // claimReqMainRef.END_TS = value.end_DT;
-  //         claimReqMainRef.DESCRIPTION = this.Gift_Description_ngModel;
-  //         claimReqMainRef.ASSIGNED_TO = this.assignedTo;         
-  //         claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
-  //         claimReqMainRef.PROFILE_JSON = this.profileJSON;
-  //         claimReqMainRef.STATUS = 'Pending';
-  //         claimReqMainRef.STAGE = this.stage;
-  //         claimReqMainRef.ATTACHMENT_ID = imageGUID;
-  //         // claimReqMainRef.MILEAGE_AMOUNT = this.Travel_Amount_ngModel;
-  //         claimReqMainRef.CLAIM_AMOUNT = this.Gift_Amount_ngModel;
-  //         claimReqMainRef.CREATION_TS = new Date().toISOString();
-  //         claimReqMainRef.UPDATE_TS = new Date().toISOString();
-  //         // claimReqMainRef.FROM = this.Travel_From_ngModel;
-  //         // claimReqMainRef.DESTINATION = this.Travel_Destination_ngModel;
-  //         // claimReqMainRef.DISTANCE_KM = this.Travel_Distance_ngModel;
-  //         //claimReqMainRef.SOC_GUID = this.Travel_SOC_No_ngModel;
-  //         if(this.isCustomer){
-  //           claimReqMainRef.CUSTOMER_GUID = this.Customer_GUID ;
-  //         }
-  //         else{
-  //           claimReqMainRef.SOC_GUID = this.Soc_GUID;
-  //         }
-  //         // this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
-  //         //   var postClaimMain = response.json();
-  //         //   this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;  
-
-  //         //   this.MainClaimSaved = true;
-  //         //   alert('Claim Has Registered.')
-  //         // })
-  //         return new Promise((resolve, reject) => {
-  //           this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((data) => {
-             
-  //             let res = data.json();
-  //             console.log(res)
-  //             let ClaimRequestMainId = res["resource"][0].CLAIM_REQUEST_GUID;
-  //             resolve(ClaimRequestMainId);
-  //           })
-  //         });
-  //       }
-
-  //     })
-  // } 
-
-  // emailUrl: string = 'http://api.zen.com.my/api/v2/emailnotificationtest?api_key=' + constants.DREAMFACTORY_API_KEY;
-  // sendEmail() {
-  //   let name: string; let email: string
-  //   name = 'shabbeer'; email = 'shabbeer@zen.com.my'
-  //   var queryHeaders = new Headers();
-  //   queryHeaders.append('Content-Type', 'application/json');
-  //   queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-  //   queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-  //   let options = new RequestOptions({ headers: queryHeaders });
-
-  //   let body = {
-  //     "template": "",
-  //     "template_id": 0,
-  //     "to": [
-  //       {
-  //         "name": name,
-  //         "email": email
-  //       }
-  //     ],
-  //     "cc": [
-  //       {
-  //         "name": name,
-  //         "email": email
-  //       }
-  //     ],
-  //     "bcc": [
-  //       {
-  //         "name": name,
-  //         "email": email
-  //       }
-  //     ],
-  //     "subject": "Test",
-  //     "body_text": "",
-  //     "body_html": '<HTML><HEAD> <META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD> <BODY> <DIV style="FONT-FAMILY: Century Gothic"> <DIV style="MIN-WIDTH: 500px"><BR> <DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV> <DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"> <DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR> <DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear [%Variable: @Employee%]<BR><BR>Your&nbsp;[%Variable: @LeaveType%] application has been forwarded to your superior for approval.  <H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Leave Details :</B><BR></H1> <TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto"> <TBODY> <TR> <TD style="TEXT-ALIGN: left">EMPLOYEE</TD> <TD style="PADDING-BOTTOM: 6px; PADDING-TOP: 6px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px">:</TD> <TD colSpan=2>[%Variable: @Employee%]</TD></TR> <TR> <TD>START DATE</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @StartDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">END DATE </TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @EndDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">APPLIED DATE</TD> <TD style="PADDING-BOTTOM: 6px; PADDING-TOP: 6px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px">:</TD> <TD colSpan=2>[%Variable: @AppliedDate%]</TD></TR> <TR> <TD style="TEXT-ALIGN: left">DAYS</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left">[%Variable: @NoOfDays%] </TD> <TD style="TEXT-ALIGN: left">[%Variable: @HalfDay%]</TD></TR></TR> <TR> <TD>LEAVE TYPE</TD> <TD>:</TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Variable: @LeaveType%]</TD></TR> <TR> <TD style="TEXT-ALIG: left">REASON</TD> <TD>: </TD> <TD style="TEXT-ALIGN: left" colSpan=2>[%Current Item:Reason%]</TD></TR></TBODY></TABLE><BR> <DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>',
-  //     "from_name": "Ajay DAV",
-  //     "from_email": "ajay1591ani@gmail.com",
-  //     "reply_to_name": "",
-  //     "reply_to_email": ""
-  //   };
-  //   this.http.post(this.emailUrl, body, options)
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       // this.result= data["resource"];
-  //       alert(JSON.stringify(data));
-  //     });
-  // }
-
-  // readProfile() {
-  //   return this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => {
-  //     this.profileJSON = JSON.stringify(data);
-  //     //levels: any[];
-  //      let levels: any[] = data.profile.levels.level
-  //     console.table(levels)
-  //     levels.forEach(element => {
-  //       if (element['-id'] == '1') {
-  //         this.profileLevel = '1';
-  //         if (element['approver']['-directManager'] === '1') {
-  //           this.http
-  //             .get(Services.getUrl('user_info', 'filter=USER_GUID=' + this.userGUID))
-  //             .map(res => res.json())
-  //             .subscribe(data => {
-  //               let userInfo: any[] = data["resource"]
-  //               userInfo.forEach(userElm => {
-  //                 this.assignedTo = userElm.MANAGER_USER_GUID
-  //                 this.http
-  //                   .get(Services.getUrl('user_info', 'filter=USER_GUID=' + userElm.MANAGER_USER_GUID))
-  //                   .map(res => res.json())
-  //                   .subscribe(data => {
-  //                     let userInfo: any[] = data["resource"]
-  //                     userInfo.forEach(approverElm => {
-  //                       this.stage = approverElm.DEPT_GUID
-  //                     });
-  //                   });
-  //               });
-  //               // console.log('Direct Manager Exists')
-  //             });
-  //           // console.log('Direct Manager ' + element['approver']['-directManager'])
-  //           let varf: any[]= element['conditions']['condition']
-  //           varf.forEach(condElement => {
-  //             if (condElement['-status'] === 'approved') {
-  //               console.log('Next Level ' + condElement['nextlevel']['#text'])
-  //             }
-  //             console.log('Status ' + condElement['-status'])
-  //           });
-  //         }
-  //         else {
-  //           this.assignedTo = element['approver']['#text']
-  //           this.http
-  //             .get(Services.getUrl('user_info', 'filter=USER_GUID=' + this.assignedTo))
-  //             .map(res => res.json())
-  //             .subscribe(data => {
-  //               let userInfo: any[] = data["resource"]
-  //               userInfo.forEach(approverElm => {
-  //                 this.stage = approverElm.DEPT_GUID
-  //               });
-  //             });
-              
-  //         }
-  //       }
-  //     });
-  //   });
-  // }
-}

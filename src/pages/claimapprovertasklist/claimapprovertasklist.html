@@ -1,10 +1,10 @@
 
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Superior Task List</ion-title>
+  <ion-navbar color="primary500">
+    <ion-title>Approver Task List</ion-title>
   </ion-navbar>
-  <ion-toolbar no-border-top>
+  <ion-toolbar no-border-top color="primary500">
     <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -48,7 +48,7 @@
                 <td class="lgl1" >{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                 <td class="lgl1">{{claimrequestdetail.STATUS}}</td>
                 <td class="lgl1">{{claimrequestdetail.STAGE}}</td>
-                <td class="lgl1">{{claimrequestdetail.CLAIM_AMOUNT}}</td>
+                <td class="lgl1">{{claimrequestdetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
                 <td class="lgl1 fColor">
                   <button ion-button item-end (click)='viewClaim(claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
               </td>

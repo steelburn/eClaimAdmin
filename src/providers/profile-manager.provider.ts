@@ -5,6 +5,9 @@ import { ClaimWorkFlowHistoryModel } from './../models/claim-work-flow-history.m
 import { MainClaimRequestModel } from './../models/main-claim-request.model';
 import { MainClaimReferanceModel } from './../models/main-claim-ref.model';
 import { UUID } from 'angular2-uuid';
+import { DashboardPage } from '../pages/dashboard/dashboard';
+import { NavController, App } from 'ionic-angular';
+
 
 @Injectable()
 
@@ -14,7 +17,9 @@ export class ProfileManagerProvider {
     userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; level: any;
     mainClaimReq: MainClaimRequestModel; claimRequestGUID: any; isRemarksAccepted: any;
   
-    constructor(public http: Http, public api: ApiManagerProvider) {
+    navCtrl:any;
+    constructor(public http: Http, public api: ApiManagerProvider, app : App) {
+      this.navCtrl = app.getActiveNav()
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
       this.userGUID = localStorage.getItem('g_USER_GUID');
     }
@@ -93,7 +98,7 @@ export class ProfileManagerProvider {
       })
     }
   
-    ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any) {
+    ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any) { 
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
       this.userGUID = localStorage.getItem('g_USER_GUID');
 
@@ -206,7 +211,8 @@ export class ProfileManagerProvider {
       // if (this.claimRequestGUID != undefined)
       //   claimReqMainRef.CLAIM_REQUEST_GUID = this.claimRequestGUID
       // else
-      claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
+      claimReqMainRef.CLAIM_REQUEST_GUID =this.formValues.uuid===undefined? UUID.UUID():this.formValues.uuid;
+      // claimReqMainRef.CLAIM_REQUEST_GUID = UUID.UUID();
       claimReqMainRef.TENANT_GUID = this.TenantGUID;
       claimReqMainRef.CLAIM_REF_GUID = claimRefGUID;
       claimReqMainRef.MILEAGE_GUID = this.formValues.vehicleType;
@@ -238,9 +244,18 @@ export class ProfileManagerProvider {
       this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
         var postClaimMain = response.json();
         this.api.sendEmail();
+        localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
         // this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
         //this.MainClaimSaved = true;
-        alert('Claim Has Registered.')
+        if (this.formValues.uuid === undefined) {
+          //this.api.presentToast('Claim has submitted successfully.')
+           alert('Claim has registered successfully.')
+          this.navCtrl.setRoot(DashboardPage);
+        }
+        else
+          alert('Please click FAB icon to include additional details and submit your claim.')
+        //this.formValues.uuid===undefined?alert('Your claim has submitted successfully.'):alert('Please click FAB icon to include additional details and submit your claim.')
+        // alert('Please click FAB icon to include additional details and submit your claim.')
       })
     }
 
