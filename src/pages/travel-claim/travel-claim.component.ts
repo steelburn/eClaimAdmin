@@ -601,16 +601,33 @@ export class TravelclaimPage {
   }
 
   imageGUID: any;
-  saveIm() {
+  // saveIm() {
+  //   let uploadImage = this.UploadImage();
+  //   uploadImage.then((resJson) => {
+  //     console.table(resJson)
+  //     let imageResult = this.SaveImageinDB();
+  //     imageResult.then((objImage: ImageUpload_model) => {
+       
+  //       //let result = this.submitAction(objImage.Image_Guid, formValues);
+  //       this.imageGUID = objImage.Image_Guid
+  //     })
+  //   })
+  //   // setTimeout(() => {
+  //   //   this.loading = false;
+  //   // }, 1000);
+  // }
+
+  saveIm(formvalues: any) {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
-      console.table(resJson)
-      let imageResult = this.SaveImageinDB();
-      imageResult.then((objImage: ImageUpload_model) => {
-       
-        //let result = this.submitAction(objImage.Image_Guid, formValues);
-        this.imageGUID = objImage.Image_Guid
-      })
+      //this.imageGUID(this.uploadFileName, formvalues)
+      // console.table(resJson)
+      // let imageResult = this.SaveImageinDB();
+      // imageResult.then((objImage: ImageUpload_model) => {      
+        
+        //  this.imageGUID = objImage.Image_Guid
+        this.imageGUID = this.uploadFileName, formvalues;
+      // })
     })
     // setTimeout(() => {
     //   this.loading = false;
