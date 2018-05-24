@@ -167,7 +167,7 @@ export class PrintclaimPage {
   }
 
   LoadProjects() {
-    this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       })
@@ -360,4 +360,4 @@ export class PrintclaimPage {
   } 
     }
   } 
-}
+//}
