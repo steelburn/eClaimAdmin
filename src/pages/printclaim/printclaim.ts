@@ -51,7 +51,7 @@ export class PrintclaimPage {
   Customer_GUID: any;
   Soc_GUID: any;
   ClaimRequestMain: any;
-  isCustomer: boolean = false;
+  isCustomer: boolean = true;
   Printform: FormGroup;
   travelAmount: any;
   validDate = new Date().toISOString();
