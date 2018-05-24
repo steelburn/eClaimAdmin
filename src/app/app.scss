@@ -102,6 +102,7 @@ ion-fab[top1] {
 
 //overwrite default css
 
+
 button[ion-fab] {
     overflow: visible;
     position: relative;
@@ -122,6 +123,12 @@ button[ion-fab] {
 
 .item-input ion-input, .item-input ion-textarea {
     border-radius: 5px;
+    background: rgb(242, 255, 227);
+    padding-left: 5pt;
+}
+
+.item-input ion-input.cocus.input{
+    border-radius: 5px;
     background: whitesmoke;
     padding-left: 5pt;
 }
@@ -133,7 +140,7 @@ button[ion-fab] {
 
 ion-datetime.datetime.datetime-md{
     border-radius: 5px;
-    background: whitesmoke;
+    background: rgb(242, 255, 227);
     padding-left: 5pt;
 
 }
@@ -149,19 +156,19 @@ ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
 
 ion-datetime.datetime.datetime-ios{
     border-radius: 5px;
-    background: whitesmoke;
+    background: rgb(242, 255, 227);
     padding-left: 5pt;
 }
 
 ion-select.select.select-md{
     border-radius: 5px;
-    background: whitesmoke;
+    background: rgb(242, 255, 227);
     padding-left: 5pt;
 }
 
 ion-select.select.select-ios{
     border-radius: 5px;
-    background: whitesmoke;
+    background: rgb(242, 255, 227);
     padding-left: 5pt;
 }
 
@@ -206,7 +213,21 @@ ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
 }
 
 
+.text-input::-moz-placeholder {
+    font-size: 14px;
+  }
+  
+  .text-input:-ms-input-placeholder {
+    font-size: 14px;
+  }
+  
+  .text-input::-webkit-input-placeholder {
+    font-size: 14px;
+  }
 
+  .label-md[stacked] {
+    font-size: 12px !important;
+  }
 //color scheme workout
 
 .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default, .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {
