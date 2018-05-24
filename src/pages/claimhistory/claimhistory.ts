@@ -40,9 +40,11 @@ import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 export class ClaimhistoryPage {
   searchboxValue: string;
   claimhistorys: any[];
-  claimhistorys1: any[];
+  claimhistorys1: any[]=[];
+  claimhistoryTotal: any[];
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+ // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER='+localStorage.getItem("g_USER_GUID") +')&api_key=' + constants.DREAMFACTORY_API_KEY;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
     this.BindData();
   }
@@ -52,7 +54,17 @@ export class ClaimhistoryPage {
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.claimhistorys1 = data["resource"];
+        this.claimhistoryTotal = data["resource"];
+       this.claimhistoryTotal.forEach(element => {
+          if(this.claimhistorys1.length===0 || (this.claimhistorys1.length>0 && this.claimhistorys1.find(e=>e.CLAIM_REF_GUID==element.CLAIM_REF_GUID)===undefined))
+          {
+             this.claimhistorys1.push(element);
+         }
+          else
+          {
+            this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID).CLAIM_AMOUNT+=element.CLAIM_AMOUNT;
+          }
+        });
         this.claimhistorys = this.claimhistorys1;
       });
   }
@@ -61,12 +73,27 @@ export class ClaimhistoryPage {
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
       this.claimhistorys = this.claimhistorys1.filter((item) => {
-        return ((item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) > -1)
-          || (item.DEPARTMENT.toString().toLowerCase().indexOf(val.toLowerCase()) > -1)
-          || (item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) > -1)
-            || (item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) > -1)
-          );
-      })
+        let fullname:number;
+        let dept:number;
+        let month:number;
+        let amount:number;
+
+        if(item.FULLNAME!=null)
+        {fullname=item.FULLNAME.toLowerCase().indexOf(val.toLowerCase())}
+        if(item.DEPARTMENT!=null)
+        {dept=item.DEPARTMENT.toString().toLowerCase().indexOf(val.toLowerCase())}
+        if(item.MONTH!=null)
+        {month=item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase())}
+        if(item.CLAIM_AMOUNT!=null)
+        {amount=item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase())}
+
+        return (
+          (fullname > -1) 
+        || (dept > -1) 
+        || (month > -1) 
+        || (amount> -1) 
+      );
+    });
     }
     else {
       this.claimhistorys = this.claimhistorys1

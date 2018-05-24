@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>claim-report</ion-title>
+    <ion-navbar color="primary500">
+        <ion-title>Claim Report</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -90,8 +90,8 @@
                     <td class="lgl1">{{claim.FROM}}</td>
                     <td class="lgl1">{{claim.TO}}</td>
                     <td class="lgl1">{{claim.DISTANCE_KM}}</td>
-                    <td class="lgl1">{{claim.MILEAGE_AMOUNT}}</td>
-                    <td class="lgl1">{{claim.CLAIM_AMOUNT}}</td>
+                    <td class="lgl1">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
+                    <td class="lgl1">{{claim.CLAIM_AMOUNT | number:'1.2-2'}}</td>
                 </tr>
 
 

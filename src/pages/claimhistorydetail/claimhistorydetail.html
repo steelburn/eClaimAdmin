@@ -44,7 +44,7 @@
               <th class="lgl1">CLAIM TYPE</th>
               <th class="lgl1">DATE</th>
               <th class="lgl1">STATUS</th>
-              <th class="lgl1">STAGE</th>
+              <!-- <th class="lgl1">STAGE</th> -->
               <th class="lgl1 tblBrRight">AMOUNT</th>
           </tr>
 
@@ -53,8 +53,8 @@
               <td class="lgl1" >{{claimhistorydetail.CLAIM_TYPE}}</td>
               <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
               <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
-              <td class="lgl1">{{claimhistorydetail.STAGE}}</td>
-              <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT}}</td>
+              <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
+              <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
           </tr>
 
 

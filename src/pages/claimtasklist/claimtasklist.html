@@ -6,10 +6,10 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Admin Task List</ion-title>
+  <ion-navbar color="primary500">
+    <ion-title>Finance Task List</ion-title>
   </ion-navbar>
-  <ion-toolbar no-border-top>
+  <ion-toolbar no-border-top color="primary500">
     <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -38,7 +38,7 @@
                       <td class="lgl1" >{{claimTaskList.DEPARTMENT}}</td>
                       <td class="lgl1" >{{claimTaskList.MONTH}}</td>
                        <!-- <td class="lgl1">{{claimhistory.YEAR}}</td> -->
-                      <td class="lgl1">{{claimTaskList.CLAIM_AMOUNT}}</td>
+                      <td class="lgl1">{{claimTaskList.CLAIM_AMOUNT | number:'1.2-2'}}</td>
                       <td class="lgl1 fColor">
                           <button ion-button item-end (click)="goToClaimApproverTaskList(claimTaskList.CLAIM_REF_GUID)"><ion-icon name="md-eye"></ion-icon></button>
                           <!-- <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button> -->

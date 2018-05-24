@@ -20,25 +20,25 @@
     
       <div [ngSwitch]="claimFor">
         <div *ngSwitchDefault>
-          <ion-item>
+          <!-- <ion-item>
             <button ion-button outline item-start icon-left (click)="CustomerLookup()">
               <ion-icon name="eye"></ion-icon>
               {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item>
+          </ion-item> -->
           <ion-item>
             <ion-label color="primary" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
+            <ion-input (click)="CustomerLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
           </ion-item>
         </div>
         <div *ngSwitchCase="'seg_project'">
-          <ion-item>
+          <!-- <ion-item>
             <button ion-button outline item-start icon-left (click)="ProjectLookup()">
               <ion-icon name="eye"></ion-icon>
               {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item>
+          </ion-item> -->
           <ion-item >
             <ion-label color="primary" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
+            <ion-input (click)="ProjectLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
               type="text"></ion-input>
           </ion-item>
           <ion-item>
@@ -77,7 +77,29 @@
               <button ion-button (click)='saveIm(MiscellaneousForm.value)' [disabled]="MiscellaneousForm.invalid || loading" >{{ 'SUBMIT'}}</button>
               </div>               
        
-          </form>   
+          </form>  
+          
+          <div class="blackcontainer" *ngIf="AddLookupClicked">
+          </div>
+          <div class="popup" padding *ngIf="AddLookupClicked">
+            <ion-card>
+              <ion-card-header class="icTitle headerColor-white ">
+        
+                <div class="icHeaderText">Search Location</div>
+                <button class="btnR" (click)="CloseLookupClick()">
+                  <ion-icon name="md-close"></ion-icon>
+                </button>
+              </ion-card-header>
+              <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>
+              <ion-list>
+                <ion-item-sliding *ngFor="let item of currentItems">
+                  <button ion-item (click)="openItem(item)">
+                    <ion-label> {{item.description}}</ion-label>
+                  </button>
+                </ion-item-sliding>
+              </ion-list>
+            </ion-card>
+          </div>
  
       
     <div class="blackcontainer" *ngIf="ProjectLookupClicked">
