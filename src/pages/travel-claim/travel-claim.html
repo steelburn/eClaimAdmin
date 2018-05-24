@@ -78,7 +78,7 @@
 
         <ion-item>
           <ion-label color="primary" stacked>{{ "TRAVEL_MODE_LABEL" | translate }}</ion-label>
-          <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType" placeholder="Select Travel Mode">
+          <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType" placeholder="Select Travel Type">
               <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
             <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="onVehicleSelect(vehicle)">{{vehicle.CATEGORY}}</ion-option>
           </ion-select>
@@ -86,7 +86,7 @@
         
         <ion-item>
           <ion-label color="primary" stacked>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
-          <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType" placeholder="Select Travel Type">
+          <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType" placeholder="Select Travel Mode">
               <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
             <ion-option  (ionSelect)="onTravelTypeSelect('Local')">Local</ion-option>
             <ion-option  (ionSelect)="onTravelTypeSelect('Outstation')">Outstation</ion-option>     

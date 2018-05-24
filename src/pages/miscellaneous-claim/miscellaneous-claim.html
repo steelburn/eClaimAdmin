@@ -77,7 +77,29 @@
               <button ion-button (click)='saveIm(MiscellaneousForm.value)' [disabled]="MiscellaneousForm.invalid || loading" >{{ 'SUBMIT'}}</button>
               </div>               
        
-          </form>   
+          </form>  
+          
+          <div class="blackcontainer" *ngIf="AddLookupClicked">
+          </div>
+          <div class="popup" padding *ngIf="AddLookupClicked">
+            <ion-card>
+              <ion-card-header class="icTitle headerColor-white ">
+        
+                <div class="icHeaderText">Search Location</div>
+                <button class="btnR" (click)="CloseLookupClick()">
+                  <ion-icon name="md-close"></ion-icon>
+                </button>
+              </ion-card-header>
+              <ion-searchbar (ionInput)="searchLocation($event)" placeholder="Enter Keywords"></ion-searchbar>
+              <ion-list>
+                <ion-item-sliding *ngFor="let item of currentItems">
+                  <button ion-item (click)="openItem(item)">
+                    <ion-label> {{item.description}}</ion-label>
+                  </button>
+                </ion-item-sliding>
+              </ion-list>
+            </ion-card>
+          </div>
  
       
     <div class="blackcontainer" *ngIf="ProjectLookupClicked">
