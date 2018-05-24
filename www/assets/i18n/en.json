@@ -142,6 +142,7 @@
   "GIFT_DATE_LABEL": "Gift Date", 
   "CLAIM_DATE_LABEL": "Miscellaneous Date",
   "CALENDAR_REF_LABEL": "Calendar Reference",
+  "TRAVEL_MODE_LABEL": "Travel Type",
   "TRAVEL_TYPE_LABEL": "Travel Mode",
   "ORIGIN_PLACE_LABEL": "Origin Place",
   "DESTINATION_PLACE_LABEL": "Destination Place",
