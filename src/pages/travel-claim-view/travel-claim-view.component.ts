@@ -35,35 +35,41 @@ export class TravelClaimViewPage {
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
     this.level = this.navParams.get('level_no');
-    this.translateToEnglish();
-    this.translate.setDefaultLang('en'); //Fallback language
-
-    // platform.ready().then(() => {
-    // }); 
-    // this.claimRequestGUID = this.navParams.get("cr_GUID");
-    // this.Approver_GUID = this.navParams.get("approver_GUID");
-    // this.userGUID = localStorage.getItem('g_USER_GUID');
-    // this.level = localStorage.getItem('level_no');
+    // this.translateToEnglish();
+    // this.translate.setDefaultLang('en'); //Fallback language  
 
     this.LoadMainClaim();
   }
 
-  isAccepted(val:string) {   
-    this.isRemarksAccepted = val==='Accepted'?true:false;
-    alert('Claim '+val)
-  }
-
-  SubmitAction() {
-
+  isAccepted(val: string) {
+    this.isRemarksAccepted = val === 'accepted' ? true : false;
     if (!this.isRemarksAccepted) {
-      if (this.Remarks_NgModel === undefined) {
-        alert('Please input valid Remarks');
-        return;
-      }
-
-    }
-    this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
+          if (this.Remarks_NgModel === undefined) {
+            alert('Please input valid remarks');
+            return;
+          }
+        }
+        this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
+      
+    // alert('Claim ' + val)
   }
+
+  // isAccepted(val:string) {   
+  //   this.isRemarksAccepted = val==='Accepted'?true:false;
+  //   alert('Claim '+val)
+  // }
+
+  // SubmitAction() {
+
+  //   if (!this.isRemarksAccepted) {
+  //     if (this.Remarks_NgModel === undefined) {
+  //       alert('Please input valid Remarks');
+  //       return;
+  //     }
+
+  //   }
+  //   this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
+  // }
 
   // isAccepted(event: any) {
   //   if (event.checked) {
@@ -159,9 +165,9 @@ export class TravelClaimViewPage {
   //   }
   // }
 
-  TollParkLookup() {
-    this.tollParkLookupClicked = true;
-  }
+  // TollParkLookup() {
+  //   this.tollParkLookupClicked = true;
+  // }
 
   LoadMainClaim() {
     this.LoadClaimDetails();
@@ -172,7 +178,8 @@ export class TravelClaimViewPage {
       .subscribe(data => {
         this.claimRequestData = data["resource"];
         this.claimRequestData.forEach(element => {
-          this.totalClaimAmount = element.MILEAGE_AMOUNT;
+          element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+          this.totalClaimAmount = element.MILEAGE_AMOUNT + element.Allowance;
           console.log(this.totalClaimAmount)
         }); 
         this.totalClaimAmount += this.tollParkAmount ;
@@ -188,6 +195,8 @@ export class TravelClaimViewPage {
         this.claimDetailsData = data["resource"];
 
     this.claimDetailsData.forEach(element => {
+      if (element.ATTACHMENT_ID !== null)
+          element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
       this.tollParkAmount += element.AMOUNT;
     });   
 
@@ -198,7 +207,6 @@ export class TravelClaimViewPage {
   EditClaim() {
     this.navCtrl.push(TravelclaimPage, {
       isFormEdit: 'true',
-      //cr_GUID: '2253e352-2c87-81fa-8cba-a4fddf0189f3'
       cr_GUID: this.claimRequestGUID
     });
   }
@@ -207,69 +215,37 @@ export class TravelClaimViewPage {
     this.tollParkLookupClicked = false;
   }
 
+  TollParkLookup() {
+    this.tollParkLookupClicked = true;
+    this.LoadClaimDetails();
+    this.tollParkAmount = 0;
+  }
+
+  displayImage: any
+  CloseDisplayImage() {
+    this.displayImage = false;
+  }
+
+  imageURL: string;
+  DisplayImage(val: any) {
+    this.displayImage = true;
+    this.imageURL = val;
+  }
+
   //---------------------Language module start---------------------//
-  public translateToMalayClicked: boolean = false;
-  public translateToEnglishClicked: boolean = true;
+  // public translateToMalayClicked: boolean = false;
+  // public translateToEnglishClicked: boolean = true;
 
-  public translateToEnglish() {
-    this.translate.use('en');
-    this.translateToMalayClicked = !this.translateToMalayClicked;
-    this.translateToEnglishClicked = !this.translateToEnglishClicked;
-  }
-
-  public translateToMalay() {
-    this.translate.use('ms');
-    this.translateToEnglishClicked = !this.translateToEnglishClicked;
-    this.translateToMalayClicked = !this.translateToMalayClicked;
-  }
-  //---------------------Language module end---------------------//
-
-  // profileJSON: any; profileLevel: any; assignedTo: any; stage: any; userGUID: any; level: any;
-  // readProfile() {
-  //   return this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => {
-  //     this.profileJSON = JSON.stringify(data);
-  //     // console.log(data)
-  //     let levels: any[] = data.profile.levels.level
-  //     levels.forEach(element => {
-  //       if (element['-id'] == this.level) {
-  //         this.profileLevel = this.level;
-  //         if (element['approver']['-directManager'] === '1') {
-
-  //           this.http
-  //             .get(Services.getUrl('user_info', 'filter=USER_GUID=' + this.userGUID))
-  //             .map(res => res.json())
-  //             .subscribe(data => {
-  //               let userInfo: any[] = data["resource"]
-  //               userInfo.forEach(userElm => {
-  //                 this.assignedTo = userElm.MANAGER_USER_GUID
-
-  //                 this.http
-  //                   .get(Services.getUrl('user_info', 'filter=USER_GUID=' + userElm.MANAGER_USER_GUID))
-  //                   .map(res => res.json())
-  //                   .subscribe(data => {
-  //                     let userInfo: any[] = data["resource"]
-  //                     userInfo.forEach(approverElm => {
-  //                       this.stage = approverElm.DEPT_GUID
-  //                     });
-  //                   });
-
-  //               });
-  //             });
-  //           // console.log('Direct Manager ' + element['approver']['-directManager'])
-  //           let varf:any[] =  element['conditions']['condition']
-  //           varf.forEach(condElement => {
-  //             if (condElement['-status'] === 'approved') {
-  //               console.log('Next Level ' + condElement['nextlevel']['#text'])
-  //             }
-  //             console.log('Status ' + condElement['-status'])
-  //           });
-  //         }
-          
-  //       }
-
-
-  //     });
-  //   });
+  // public translateToEnglish() {
+  //   this.translate.use('en');
+  //   this.translateToMalayClicked = !this.translateToMalayClicked;
+  //   this.translateToEnglishClicked = !this.translateToEnglishClicked;
   // }
+
+  // public translateToMalay() {
+  //   this.translate.use('ms');
+  //   this.translateToEnglishClicked = !this.translateToEnglishClicked;
+  //   this.translateToMalayClicked = !this.translateToMalayClicked;
+  // } 
 
 }

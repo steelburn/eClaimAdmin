@@ -17,13 +17,14 @@ import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-vie
 import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../../pages/miscellaneous-claim-view/miscellaneous-claim-view';
 
-
 import { EntertainmentclaimPage } from '../../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import { PrintclaimPage } from '../../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../../pages/overtimeclaim/overtimeclaim';
 import { MiscellaneousClaimPage } from '../../pages/miscellaneous-claim/miscellaneous-claim';
+
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
 
 /**
@@ -51,7 +52,7 @@ export class UserclaimslistPage {
   searchboxValue: string;
 
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
+  constructor( private api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
   //  this.claimrefguid=navParams.get("claimRefGuid");
   //  this.userguid=navParams.get("userGuid");
   //  this.month=navParams.get("Month");
@@ -131,6 +132,7 @@ this.userClaimhistorydetails=this.userClaimhistorydetails1;
       case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': if (navType === 1) this.pushPage(GiftClaimViewPage); else this.editPage(GiftclaimPage); break;
       case '37067b3d-1bf4-33a3-2b60-3ca40baf589a': if (navType === 1) this.pushPage(OvertimeClaimViewPage); else this.editPage(OvertimeclaimPage); break;
       case '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86': if (navType === 1) this.pushPage(MiscellaneousClaimViewPage); else this.editPage(MiscellaneousClaimPage); break;
+
       case '58c59b56-289e-31a2-f708-138e81a9c823': if (navType === 1) this.pushPage(TravelClaimViewPage); else this.editPage(TravelclaimPage); break;
       case 'd9567482-033a-6d92-3246-f33043155746': if (navType === 1) this.pushPage(PrintClaimViewPage); else this.editPage(PrintclaimPage); break;
       case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': if (navType === 1) this.pushPage(EntertainmentClaimViewPage); else this.editPage(EntertainmentclaimPage); break;
@@ -151,6 +153,12 @@ this.userClaimhistorydetails=this.userClaimhistorydetails1;
       isFormEdit: 'true',
       cr_GUID: this.claimRequestGUID
     });
+  }
+  DeleteClaimRequest(claimReqGuid:any,claimTypeGuid:any)
+  {
+    this.api.deleteApiModel('main_claim_request',claimReqGuid).subscribe(res =>{
+      this.BindData();
+       alert('Claim has been deleted successfully.')});
   }
 
   ionViewDidLoad() {
