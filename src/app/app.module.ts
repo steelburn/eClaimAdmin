@@ -189,6 +189,13 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
         { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' },
 
+        { component: TravelclaimPage, name: 'TravelclaimPage', segment: 'TravelclaimPage' },
+        { component: EntertainmentclaimPage, name: 'EntertainmentclaimPage', segment: 'EntertainmentclaimPage' },
+        { component: GiftclaimPage, name: 'GiftclaimPage', segment: 'GiftclaimPage' },
+        { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
+        { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
+        { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
+
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
         { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' }

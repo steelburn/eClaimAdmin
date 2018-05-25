@@ -15,6 +15,7 @@ import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
+import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { UserPage } from '../pages/user/user';
@@ -99,6 +100,14 @@ export class ConferenceApp {
     { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
     { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
   ];
+  claimPages: PageInterface[] = [
+    { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+    { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+    { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+    { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+    { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+    { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+  ];
   loggedInPages: PageInterface[] = [
     // { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
     { title: 'CHANGE PASSWORD', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
@@ -110,6 +119,7 @@ export class ConferenceApp {
     { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' },
     { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' }
   ];
+
 
   // appPages_User: PageInterface[] = [    
   //   // { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, tabComponent: DashboardPage, index: 4, icon: 'apps' },
@@ -259,6 +269,14 @@ export class ConferenceApp {
             { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
             { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
           ];
+          this.claimPages = [
+            { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+          ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
@@ -269,6 +287,14 @@ export class ConferenceApp {
             { title: 'DASHBOARD', name: 'TabsPage', component: TabsPage, tabComponent: DashboardPage, index: 0, icon: 'apps' },
             { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
             { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
+          ];
+          this.claimPages = [
+            { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
@@ -282,6 +308,14 @@ export class ConferenceApp {
             { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
             { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
             { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+          ];
+          this.claimPages = [
+            { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
           ];
 
           // this.Menu_Array = [];
@@ -300,6 +334,14 @@ export class ConferenceApp {
             { title: 'DASHBOARD', name: 'TabsPage', component: TabsPage, tabComponent: DashboardPage, index: 0, icon: 'apps' },
             { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
             { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
+          ];
+          this.claimPages = [
+            { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
           ];
 
           // this.Menu_Array = [];
@@ -322,8 +364,8 @@ export class ConferenceApp {
       // alert(this.blnLogin);
       // alert(localStorage.length);
       // if (this.blnLogin == true) {
-        // this.menu.enable(loggedIn, 'loggedInMenu');
-        // this.menu.enable(!loggedIn, 'loggedOutMenu');        
+      // this.menu.enable(loggedIn, 'loggedInMenu');
+      // this.menu.enable(!loggedIn, 'loggedOutMenu');        
       // }      
     }
 
