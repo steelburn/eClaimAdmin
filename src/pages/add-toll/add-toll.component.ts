@@ -62,7 +62,7 @@ export class AddTollPage {
       );
   }
 
-  SaveClaimDetails(isMA:boolean, imageGUID: string) {
+  SaveClaimDetails(formValues: any, isMA:boolean, imageGUID: any) {
     if(isMA){
       if(this.MA_SELECT==='NA' || this.MA_SELECT===undefined){
         alert('Please select meal allowance.')
@@ -171,50 +171,42 @@ export class AddTollPage {
   } 
   
   isMA: any;
-  save() {
+  // save() {
+  //   let uploadImage = this.UploadImage();
+  //   uploadImage.then((resJson) => {
+  //     console.table(resJson)
+  //     let imageResult = this.SaveImageinDB();
+  //     imageResult.then((objImage: ImageUpload_model) => {
+  //       // console.table(objImage)
+  //       let result = this.SaveClaimDetails(false, objImage.Image_Guid);
+  //       // result.then((res) => {
+  //       //   // console.log(res);
+  //       // })
+  //     })
+  //   })   
+  // }
+
+  save(formValues: any) {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
-      console.table(resJson)
-      let imageResult = this.SaveImageinDB();
-      imageResult.then((objImage: ImageUpload_model) => {
-        // console.table(objImage)
-        let result = this.SaveClaimDetails(false, objImage.Image_Guid);
-        // result.then((res) => {
-        //   // console.log(res);
-        // })
-      })
+      this.SaveClaimDetails(formValues, false, this.uploadFileName,);
+      // console.table(resJson)
+      // let imageResult = this.SaveImageinDB();
+      // imageResult.then((objImage: ImageUpload_model) => {
+      //   // console.table(objImage)
+      //   let result = this.SaveClaimDetails(false, objImage.Image_Guid);
+      //   // result.then((res) => {
+      //   //   // console.log(res);
+      //   // })
+      // })
     })   
   }
 
-  // ngOnInit(): void {
-  //   this.DetailsType = this.navParams.get('DetailsType');
-  //   this.ClaimMainGUID = this.navParams.get('MainClaim');
-  //   this.ClaimMethodGUID = this.navParams.get('ClaimMethod')
-  // }
+ 
   clearFile() {
     this.DetailsForm.get('avatar').setValue(null);
     this.fileInput.nativeElement.value = '';
-  }
-
-  // SaveClaimDetails(imageGUID: string) {
-  //   let claimReqRef: ClaimReqDetail_Model = new ClaimReqDetail_Model();
-  //   claimReqRef.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
-  //   claimReqRef.CLAIM_REQUEST_GUID = this.ClaimMainGUID;
-  //   claimReqRef.CLAIM_METHOD_GUID = this.ClaimMethodGUID;
-  //   claimReqRef.PAYMENT_TYPE_GUID = this.PayType;
-  //   claimReqRef.AMOUNT = this.Amount;
-  //   claimReqRef.DESCRIPTION = this.Description;
-  //   claimReqRef.CREATION_TS = new Date().toISOString();
-  //   claimReqRef.UPDATE_TS = new Date().toISOString();
-  //   claimReqRef.ATTACHMENT_ID = imageGUID;
-  //   return new Promise((resolve, reject) => {
-  //     this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((data) => {
-  //       let res = data.json();
-  //       let claimDetailsGuid = res["resource"][0].CLAIM_REQUEST_DETAIL_GUID;
-  //       resolve(claimDetailsGuid);
-  //     })
-  //   });
-  // }
+  } 
 
   SaveImageinDB() {
     let objImage: ImageUpload_model = new ImageUpload_model();
