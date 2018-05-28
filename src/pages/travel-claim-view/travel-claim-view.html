@@ -80,7 +80,7 @@
         <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
         <ion-label> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
-    <img style="width: 50%" height="100px" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
+    <img src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
 
     <ion-card *ngIf="isApprover">
             <ion-item>
