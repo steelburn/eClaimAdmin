@@ -190,7 +190,7 @@ export class DashboardPage {
    },
    title: {
      display: true,
-     text: 'Claim Count',
+     text: 'My Claim Count',
      fontSize: 20,
      fontColor: 'green'
    },
@@ -234,7 +234,7 @@ export class DashboardPage {
    },
    title: {
      display: true,
-     text: 'Claim Amount',
+     text: 'My Claim Amount',
      fontSize: 20,
      fontColor: 'green'
    },
