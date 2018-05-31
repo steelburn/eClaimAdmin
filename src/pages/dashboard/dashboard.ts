@@ -1,4 +1,4 @@
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Config } from 'ionic-angular';
 import { Component, NgModule, ElementRef, Inject, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
@@ -10,6 +10,8 @@ import * as constants from '../../config/constants';
 import { Http } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SetupPage } from '../setup/setup';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 /**
  * Generated class for the DashboardPage page.
  *
@@ -24,17 +26,18 @@ import { SetupPage } from '../setup/setup';
 })
 export class DashboardPage {
   baseResourceUrl: string;
-  baseResourceUrl_New:string;
-  claimrequestdetails :any;
-  Month_Change_ngModel :any;
-  Year_Change_ngModel:any;
-  month_value:any;
-  year_value:any;
-  CurrentMonthNumber:any;
+  baseResourceUrl_New: string;
+  claimrequestdetails: any;
+  Month_Change_ngModel: any;
+  Year_Change_ngModel: any;
+  month_value: any;
+  year_value: any;
+  CurrentMonthNumber: any;
   DashboardForm: FormGroup;
-  years:any; years_data:any;
+  years: any; years_data: any;
 
-  constructor(public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  constructor(public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http,  public config: Config,
+    public inAppBrowser: InAppBrowser) {
     this.DashboardForm = fb.group({
       'Month': [null, Validators.compose([Validators.required])],
       'Year': [null, Validators.compose([Validators.required])]
@@ -45,68 +48,67 @@ export class DashboardPage {
     this.Month_Change_ngModel = this.month_value + 1;
     this.year_value = current_date.getFullYear();
     this.Year_Change_ngModel = this.year_value;
-   
-// console.log(this.baseResourceUrl_New)
-    this.GetDashboardInfo();
-    
-    this.http
-    .get(this.baseResourceUrl_New)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.years_data = data["resource"];
-      console.log(this.years_data.length)
-      
-      if(this.years_data.length==0)
-      {
-        this.years=[this.year_value-1,this.year_value];
-        //this.Year_Change_ngModel = this.year_value;
-        //alert('No Records Found')
-        // this.navCtrl.push(SetupPage);
-        return;
-      }
-      else{}
-      this.years =this.years_data;
 
- 
-      var uniqueYears = this.deduplicate(this.years);
-      //console.log(uniqueYears)
-      this.years =uniqueYears;
- 
-    var SortuniqueYears = this.sortUnique(this.years);
-    //console.log(SortuniqueYears)
-    this.years =SortuniqueYears;     
-    });
-  
+    // console.log(this.baseResourceUrl_New)
+    this.GetDashboardInfo();
+
+    this.http
+      .get(this.baseResourceUrl_New)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.years_data = data["resource"];
+        console.log(this.years_data.length)
+
+        if (this.years_data.length == 0) {
+          this.years = [this.year_value - 1, this.year_value];
+          //this.Year_Change_ngModel = this.year_value;
+          //alert('No Records Found')
+          // this.navCtrl.push(SetupPage);
+          return;
+        }
+        else { }
+        this.years = this.years_data;
+
+
+        var uniqueYears = this.deduplicate(this.years);
+        //console.log(uniqueYears)
+        this.years = uniqueYears;
+
+        var SortuniqueYears = this.sortUnique(this.years);
+        //console.log(SortuniqueYears)
+        this.years = SortuniqueYears;
+      });
+
   }
- // Unique and Sort years
- sortUnique(arr:any) {
-  arr.sort();
-  var last_i;
-  for (var i=0;i<arr.length;i++)
+  // Unique and Sort years
+  sortUnique(arr: any) {
+    arr.sort();
+    var last_i;
+    for (var i = 0; i < arr.length; i++)
       if ((last_i = arr.lastIndexOf(arr[i])) !== i)
-          arr.splice(i+1, last_i-i);
-  return arr;
-}
- // Unique years
- deduplicate(data:any) {
-  if (data.length > 0) {
-      var result : any[]=[];      
-      data.forEach(function (elem:any) {
-          if (result.indexOf(elem.YEAR) === -1) {
-              result.push(elem.YEAR);
-          }
-      });      
-      return result;
+        arr.splice(i + 1, last_i - i);
+    return arr;
   }
-}
+  // Unique years
+  deduplicate(data: any) {
+    if (data.length > 0) {
+      var result: any[] = [];
+      data.forEach(function (elem: any) {
+        if (result.indexOf(elem.YEAR) === -1) {
+          result.push(elem.YEAR);
+        }
+      });
+      return result;
+    }
+  }
   ngOnInit() {
     // register plugin
-    
+
     Chart.plugins.register({
-      
-      beforeDraw: function (chart:any) {
+
+      beforeDraw: function (chart: any) {
         var data = chart.data.datasets[0].data;
-        var sum = data.reduce(function (a:any, b:any) {
+        var sum = data.reduce(function (a: any, b: any) {
 
           //return a.toFixed(2) + b.toFixed(2);
           // a=a.toFixed(2);
@@ -133,26 +135,26 @@ export class DashboardPage {
         ctx.textBaseline = "middle";
         ctx.fillStyle = "blue";
         if (sum != 0) {
-        
+
           var text = sum,
             textX = Math.round((width - ctx.measureText(text).width) / 2),
             textY = height / 2;
 
-            // this.doughnutChartOptions =  {legend: {
-            //   display: true,
-            //   position: 'bottom'
-            // },}
-            // this.claimAmountOptions =  {legend: {
-            //   display: true,
-            //   position: 'bottom'
-            // },}
+          // this.doughnutChartOptions =  {legend: {
+          //   display: true,
+          //   position: 'bottom'
+          // },}
+          // this.claimAmountOptions =  {legend: {
+          //   display: true,
+          //   position: 'bottom'
+          // },}
 
-    
+
 
         }
         else {
-        text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
-          textY = height / 2;
+          text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
+            textY = height / 2;
         }
         ctx.fillText(text, textX, textY);
         ctx.save();
@@ -188,14 +190,14 @@ export class DashboardPage {
    },
    title: {
      display: true,
-     text: 'Claim Count',
+     text: 'My Claim Count',
      fontSize: 20,
      fontColor: 'green'
    },
    pieceLabel: {
      mode: 'value',
- 
-     fontColor: ['green', 'white', 'red'],
+     overlap: true,
+     fontColor: ['green', 'blue', 'red'],
      fontStyle: 'bold'
    },
  
@@ -232,15 +234,16 @@ export class DashboardPage {
    },
    title: {
      display: true,
-     text: 'Claim Amount',
+     text: 'My Claim Amount',
      fontSize: 20,
      fontColor: 'green'
    },
    pieceLabel: {
      mode: 'value',
      //fontColor:'blue',
+     overlap: true,
      fontStyle: 'bold',
-     fontColor: ['green', 'white', 'red'],
+     fontColor: ['green', 'blue', 'red'],
    },
 
    tooltips: {
@@ -269,7 +272,7 @@ export class DashboardPage {
  GetDashboardInfo() {
 
    if (this.month_value != undefined) {
-     this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+     this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
      console.log('hi '+this.baseResourceUrl)
 
    }
@@ -306,18 +309,18 @@ export class DashboardPage {
          approve = 0; 
           pending = 0;
           rejected = 0;
-         this.doughnutChartData = [approve, pending, rejected];          
+          this.doughnutChartData = [approve, pending, rejected];
           pendingAmount = '0';
           rejectedAmount = '0';
           approveAmount = '0';
 
-         this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
+          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
 
-         this.doughnutChartLabels = data.label;
-         this.claimAmountLabels = data.label;
-         
-       }
-     });
- 
-    }
+          this.doughnutChartLabels = data.label;
+          this.claimAmountLabels = data.label;
+
+        }
+      });
+
+  }
 }

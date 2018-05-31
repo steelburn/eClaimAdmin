@@ -97,10 +97,8 @@ ion-fab[top1] {
 .tnUserRow {border-bottom: 2px solid #efefef;}
 
 
-
-
-
 //overwrite default css
+
 
 button[ion-fab] {
     overflow: visible;
@@ -122,6 +120,12 @@ button[ion-fab] {
 
 .item-input ion-input, .item-input ion-textarea {
     border-radius: 5px;
+    background: rgb(242, 255, 227);
+    padding-left: 5pt;
+}
+
+.item-input ion-input.cocus.input{
+    border-radius: 5px;
     background: whitesmoke;
     padding-left: 5pt;
 }
@@ -133,7 +137,7 @@ button[ion-fab] {
 
 ion-datetime.datetime.datetime-md{
     border-radius: 5px;
-    background: whitesmoke;
+    background: rgb(242, 255, 227);
     padding-left: 5pt;
 
 }
@@ -149,19 +153,19 @@ ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
 
 ion-datetime.datetime.datetime-ios{
     border-radius: 5px;
-    background: whitesmoke;
+    background: rgb(242, 255, 227);
     padding-left: 5pt;
 }
 
 ion-select.select.select-md{
     border-radius: 5px;
-    background: whitesmoke;
+    background: rgb(242, 255, 227);
     padding-left: 5pt;
 }
 
 ion-select.select.select-ios{
     border-radius: 5px;
-    background: whitesmoke;
+    background: rgb(242, 255, 227);
     padding-left: 5pt;
 }
 
@@ -205,7 +209,9 @@ ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
     display: inline-block !important;
 }
 
-
+  .label-md[stacked] {
+    font-size: 12px !important;
+  }
 
 //color scheme workout
 
