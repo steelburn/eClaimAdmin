@@ -97,9 +97,6 @@ ion-fab[top1] {
 .tnUserRow {border-bottom: 2px solid #efefef;}
 
 
-
-
-
 //overwrite default css
 
 
@@ -212,22 +209,10 @@ ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
     display: inline-block !important;
 }
 
-
-.text-input::-moz-placeholder {
-    font-size: 14px;
-  }
-  
-  .text-input:-ms-input-placeholder {
-    font-size: 14px;
-  }
-  
-  .text-input::-webkit-input-placeholder {
-    font-size: 14px;
-  }
-
   .label-md[stacked] {
     font-size: 12px !important;
   }
+
 //color scheme workout
 
 .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default, .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {
