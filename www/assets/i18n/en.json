@@ -142,8 +142,8 @@
   "GIFT_DATE_LABEL": "Gift Date", 
   "CLAIM_DATE_LABEL": "Miscellaneous Date",
   "CALENDAR_REF_LABEL": "Calendar Reference",
-  "TRAVEL_MODE_LABEL": "Travel Type",
-  "TRAVEL_TYPE_LABEL": "Travel Mode",
+  "TRAVEL_MODE_LABEL": "Travel Mode",
+  "TRAVEL_TYPE_LABEL": "Travel Type",
   "ORIGIN_PLACE_LABEL": "Origin Place",
   "DESTINATION_PLACE_LABEL": "Destination Place",
   "DESCRIPTION_LABEL": "Description",
@@ -178,5 +178,6 @@
  "REJECT_BUTTON": "REJECT",
  "ACCEPT_BUTTON": "ACCEPT",
  "MISCELLANEOUS_CLAIM_HEADING": "Miscellaneous",
- "DASHBOARD_HEADING": "Dashboard"
+ "DASHBOARD_HEADING": "Dashboard",
+ "TOTAL_AMOUNT_LABEL": "Total Amount"
 } 
