@@ -94,6 +94,7 @@ export class TravelclaimPage {
   isCustomer: boolean = true;
   claimDetailsData: any[];
   tollParkAmount: number = 0;
+  PublicTransValue: boolean = false;
 
    /********FORM EDIT VARIABLES***********/
    vehicleCategory: any;
@@ -127,6 +128,7 @@ export class TravelclaimPage {
       soc_no: '',
       distance: '', 
       travelType: '',
+      //PublicTransValidation: ['', Validators.required],
       travel_date: '',
       destination: ['', Validators.required],
       start_DT: ['', Validators.required],
@@ -245,10 +247,14 @@ export class TravelclaimPage {
                         this.Travel_Mode_ngModel = element.CATEGORY
                       }
                     });
-                    if(this.claimRequestData[0].TRAVEL_TYPE==='1')
+                    if(this.claimRequestData[0].TRAVEL_TYPE==='1'){
                       this.Travel_Type_ngModel = 'Outstation'
+                      this.isTravelLocal = false;
+                    }
+                    
                     else 
                     this.Travel_Type_ngModel = 'Local'
+                    this.isTravelLocal = true;
 
                   }
                   );
@@ -541,9 +547,11 @@ export class TravelclaimPage {
     this.vehicleCategory = vehicle.CATEGORY;
     let origin = this.Travel_From_ngModel;
     let destination = this.Travel_Destination_ngModel;
+    this.PublicTransValue = true;
     if (vehicle.CATEGORY === 'Public Transport') {
       this.isPublicTransport = true;
       this.travelAmount = '';
+      this.PublicTransValue = false;
     }
     else
       this.isPublicTransport = false;
@@ -559,6 +567,7 @@ export class TravelclaimPage {
 
   imageGUID: any;
   onReceiveImageGUID(imageGUID: any) {
+    this.PublicTransValue = true;
     this.imageGUID = imageGUID;
   }
   displayImage: any
@@ -584,6 +593,9 @@ export class TravelclaimPage {
         });
       };
     }
+    //this.disableButton = false;
+    this.PublicTransValue = true;
+
   }
 
  // imageGUID: any;
@@ -602,7 +614,7 @@ export class TravelclaimPage {
   //   //   this.loading = false;
   //   // }, 1000);
   // }
-
+  disableButton: any;
   saveIm(formvalues: any) {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
@@ -613,6 +625,10 @@ export class TravelclaimPage {
         
         //  this.imageGUID = objImage.Image_Guid
         this.imageGUID = this.uploadFileName, formvalues;
+        //this.disableButton = true;
+        this.PublicTransValue = false;
+
+       
       // })
     })
     // setTimeout(() => {
@@ -762,6 +778,8 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].DISTANCE_KM = this.Travel_Distance_ngModel;
             this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
             this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
+            this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
+
             if (this.isCustomer) {
               this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
             }
