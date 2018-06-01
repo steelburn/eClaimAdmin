@@ -20,22 +20,14 @@
     
       <div [ngSwitch]="claimFor">
         <div *ngSwitchDefault>
-          <!-- <ion-item>
-            <button ion-button outline item-start icon-left (click)="CustomerLookup()">
-              <ion-icon name="eye"></ion-icon>
-              {{ "CUSTOMER_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item> -->
+         
           <ion-item>
             <ion-label color="primary" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
             <ion-input (click)="CustomerLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
           </ion-item>
         </div>
         <div *ngSwitchCase="'seg_project'">
-          <!-- <ion-item>
-            <button ion-button outline item-start icon-left (click)="ProjectLookup()">
-              <ion-icon name="eye"></ion-icon>
-              {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button>
-          </ion-item> -->
+         
           <ion-item >
             <ion-label color="primary" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
             <ion-input (click)="ProjectLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
@@ -68,14 +60,23 @@
                   <ion-input type="text" formControlName="description" [(ngModel)]="Miscellaneous_Description_ngModel" ></ion-input>
                 </ion-item>
 
-              <ion-item>
+              <!-- <ion-item>
                 <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
                 <button ion-button type="button" (click)="clearFile()">clear file</button>
+              </ion-item> -->
+
+              <ion-item>
+                <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+                <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>               
               </ion-item>
-              
+
               <div class="btn">     
+                <button ion-button color="primary500" (click)='submitAction(MiscellaneousForm.value)' [disabled]="(MiscellaneousForm.valid && !ImageUploadValidation) || !MiscellaneousForm.valid" >{{ 'SUBMIT'}}</button>               
+             </div>
+              
+              <!-- <div class="btn">     
               <button ion-button (click)='saveIm(MiscellaneousForm.value)' [disabled]="MiscellaneousForm.invalid || loading" >{{ 'SUBMIT'}}</button>
-              </div>               
+              </div>                -->
        
           </form>  
           
@@ -144,9 +145,7 @@
           </ion-list>
         </ion-card>
       </div>
-      <!-- <image-comp  (change)="submitAction($event,MedicalForm.value)"></image-comp> -->
-
-      
+          
 
       <ion-fab bottom right>
           <button ion-fab  mini color="secondary400">

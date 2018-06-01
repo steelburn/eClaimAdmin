@@ -57,7 +57,7 @@ export class TravelClaimViewPage {
           this.claimRequestData.forEach(element => {
             if (element.ATTACHMENT_ID !== null)
               element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-            this.totalClaimAmount = element.MILEAGE_AMOUNT + element.Allowance;
+            this.totalClaimAmount = element.MILEAGE_AMOUNT;
           });
           this.totalClaimAmount += tollorParkAmount;
         })
