@@ -42,10 +42,12 @@
 			</ion-col>
 			
 		</ion-row>
-		<ion-row color="primary700" style="float:right; padding-right: 10px;"><a ion-item color="primary700" (click)="ForgotPasswordClick()">Forgot Password</a></ion-row>
+		<ion-row color="primary700" style="float:right; padding-right: 10px;"><a color="primary700" (click)="ForgotPasswordClick()">Forgot Password</a></ion-row>
 
 	</form>
 	<div class="blackcontainer" *ngIf="ForgotPasswordClicked">
+		</div>
+			<div class="popup3" padding *ngIf="ForgotPasswordClicked">
 		<ion-card>
 			<ion-card-header class="icTitle headerColor-white ">
 			  <div class="icHeaderText">Forgot Password</div>
