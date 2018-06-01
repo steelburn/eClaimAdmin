@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { NavController } from 'ionic-angular';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -32,8 +32,12 @@ export class LoginPage {
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage) {
+  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage, fb: FormBuilder) {
     localStorage.clear(); //debugger;
+
+    this.ForgotPasswordForm = fb.group({
+      Email_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+    });
   }
 
   onLogin(form: NgForm) {
@@ -123,5 +127,22 @@ export class LoginPage {
 
   onSignup() {
     this.navCtrl.push(SignupPage);
+  }
+  
+  ForgotPasswordForm: FormGroup;
+  ForgotPasswordClicked: boolean;
+
+  ForgotPasswordClick(){
+    this.ForgotPasswordClicked = true;
+  }
+
+  CloseForgotPasswordClick(){
+    if(this.ForgotPasswordClicked == true){
+      this.ForgotPasswordClicked = false;
+    }
+  }
+
+  SaveForgotPassword(){
+    // through Email, check exist, temporary password generate and update to database.
   }
 }
