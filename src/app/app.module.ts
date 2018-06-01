@@ -100,6 +100,8 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { DatePipe } from '@angular/common'
+
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -280,11 +282,11 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData, HttpClientModule, ApiManagerProvider,
-    UserData,
+    UserData, DatePipe,
     InAppBrowser,
     SplashScreen, StatusBar, Services,
 
-    Camera, ProfileManagerProvider,
+    Camera, ProfileManagerProvider, 
     File,
     FilePath,
     FileTransfer,

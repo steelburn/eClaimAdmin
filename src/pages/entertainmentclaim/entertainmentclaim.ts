@@ -95,48 +95,81 @@ export class EntertainmentclaimPage {
   claimRequestData:any;
  
 
+  // GetDataforEdit() {
+  //   this.http
+  //     .get(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
+  //     .map(res => res.json())
+  //     .subscribe(data => {
+  //       this.claimRequestData = data["resource"];
+  //       console.log(this.claimRequestData)
+  //       console.log(this.claimRequestGUID)
+  //      // console.log(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
+  //       if (this.claimRequestData[0].SOC_GUID === null) {
+  //         this.claimFor = 'customer'
+  //         this.storeCustomers.forEach(element => {
+  //           if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
+  //             this.Customer_Lookup_ngModel = element.NAME
+  //           }
+  //         });
+  //       }
+  //       else {
+  //         this.claimFor = 'project'
+  //         this.storeProjects.forEach(element => {
+  //           if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
+  //             this.Project_Lookup_ngModel = element.project_name
+  //             this.Entertainment_SOC_No_ngModel = element.soc
+  //           }
+  //         });
+  //       }
+  //       this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+  //       // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
+  //       this.Entertainment_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+  //       this.Entertainment_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+  //       // this.vehicles.forEach(element => {
+  //       //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
+  //       //     this.Travel_Mode_ngModel = element.CATEGORY
+  //       //   }
+  //       // });       
+  //     }
+  //     );
+  // }
+
   GetDataforEdit() {
-    this.http
-      .get(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-      .map(res => res.json())
+    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
-        this.claimRequestData = data["resource"];
-        console.log(this.claimRequestData)
-        console.log(this.claimRequestGUID)
-       // console.log(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-        if (this.claimRequestData[0].SOC_GUID === null) {
-          this.claimFor = 'customer'
-          this.storeCustomers.forEach(element => {
-            if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
-              this.Customer_Lookup_ngModel = element.NAME
-            }
+        this.storeCustomers = this.customers = data["resource"];
+        this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+          .subscribe(data => {
+            this.storeProjects = this.projects = data["resource"];
+
+            this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+              .subscribe(data => {
+                this.claimRequestData = data["resource"];
+                if (this.claimRequestData[0].SOC_GUID === null) {
+                  this.claimFor = 'seg_customer'
+                  if (this.storeCustomers != undefined)
+                    this.storeCustomers.forEach(element => {
+                      if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
+                        this.Customer_Lookup_ngModel = element.NAME
+                      }
+                    });
+                }
+                else {
+                  this.claimFor = 'seg_project'
+                  if (this.storeCustomers != undefined)
+                    this.storeProjects.forEach(element => {
+                      if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
+                        this.Project_Lookup_ngModel = element.project_name
+                        this.Entertainment_SOC_No_ngModel = element.soc
+                      }
+                    });
+                }
+                this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.Entertainment_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                this.Entertainment_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+              });
           });
-        }
-        else {
-          this.claimFor = 'project'
-          this.storeProjects.forEach(element => {
-            if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
-              this.Project_Lookup_ngModel = element.project_name
-              this.Entertainment_SOC_No_ngModel = element.soc
-            }
-          });
-        }
-        this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
-        // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Entertainment_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Entertainment_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
-        // this.vehicles.forEach(element => {
-        //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
-        //     this.Travel_Mode_ngModel = element.CATEGORY
-        //   }
-        // });
-        // console.table(this.claimRequestData)
-        // console.log(this.claimRequestData[0].SOC_GUID)
-        // console.log(this.claimRequestData[0].DESCRIPTION)
-        // console.log(this.Travel_Date_ngModel)
-        // console.log(this.claimRequestData[0].TRAVEL_DATE)
-      }
-      );
+      })
   }
 
 
@@ -146,23 +179,20 @@ export class EntertainmentclaimPage {
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     if (this.isFormEdit)
-    this.GetDataforEdit();
-
+      this.GetDataforEdit();
+    else {
+      this.LoadCustomers();
+      this.LoadProjects();
+    }
     this.Entertainmentform = fb.group({
       avatar: null,
       soc_no: '',
       travel_date: ['', Validators.required],
       description: ['', Validators.required],
-      //vehicleType: ['', Validators.required],
       claim_amount: ['', Validators.required],
-
       claimTypeGUID: '',
-      attachment_GUID : ''     
-
-    });
-    this.LoadProjects();
-    this.LoadCustomers();
-    //this.readProfile();
+      attachment_GUID : ''  
+    });   
   }
 
   onFileChange(event: any) {
@@ -440,5 +470,7 @@ export class EntertainmentclaimPage {
       this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }
   }
-
+  NavigateTravelClaim() {
+    this.navCtrl.setRoot(TravelclaimPage); 
+  } 
 } 

@@ -12,11 +12,9 @@ import { PrintingClaim_Model } from '../../models/printingclaim_model';
 //import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { PrintingClaim_Service } from '../../services/printingclaim_service';
 import { BaseHttpService } from '../../services/base-http';
-
+import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import { UUID } from 'angular2-uuid';
-
 import { Camera, CameraOptions } from '@ionic-native/camera';
-//import {Camera} from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
@@ -51,7 +49,7 @@ export class PrintclaimPage {
   Customer_GUID: any;
   Soc_GUID: any;
   ClaimRequestMain: any;
-  isCustomer: boolean = false;
+  isCustomer: boolean = true;
   Printform: FormGroup;
   travelAmount: any;
   validDate = new Date().toISOString();
@@ -92,59 +90,102 @@ export class PrintclaimPage {
     if (this.isFormEdit)
       this.GetDataforEdit();
   }
+  // GetDataforEdit() {
+  //   this.http
+  //     .get(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
+  //     .map(res => res.json())
+  //     .subscribe(data => {
+  //       this.claimRequestData = data["resource"];
+  //       console.log(this.claimRequestData)
+  //       // if (this.claimRequestData[0].SOC_GUID === null) {
+  //       //   this.claimFor = 'customer'
+  //       //   this.storeCustomers.forEach(element => {
+  //       //     if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
+  //       //       this.Customer_Lookup_ngModel = element.NAME
+  //       //     }
+  //       //   });
+  //       // }
+  //       // else {
+  //       //   this.claimFor = 'project'
+  //       //   this.storeProjects.forEach(element => {
+  //       //     if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
+  //       //       this.Project_Lookup_ngModel = element.project_name
+  //       //       this.Print_SOC_No_ngModel = element.soc
+  //       //     }
+  //       //   });
+  //       // }
+  //       // this.Print_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
+  //       this.Printing_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+  //       // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
+  //       this.Printing_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+  //       this.Printing_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+  //       // this.vehicles.forEach(element => {
+  //       //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
+  //       //     this.Travel_Mode_ngModel = element.CATEGORY
+  //       //   }
+  //       // });       
+  //     }
+  //     );
+  // }  
+
   GetDataforEdit() {
-    this.http
-      .get(Services.getUrl('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-      .map(res => res.json())
+    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
-        this.claimRequestData = data["resource"];
-        console.log(this.claimRequestData)
-        // if (this.claimRequestData[0].SOC_GUID === null) {
-        //   this.claimFor = 'customer'
-        //   this.storeCustomers.forEach(element => {
-        //     if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
-        //       this.Customer_Lookup_ngModel = element.NAME
-        //     }
-        //   });
-        // }
-        // else {
-        //   this.claimFor = 'project'
-        //   this.storeProjects.forEach(element => {
-        //     if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
-        //       this.Project_Lookup_ngModel = element.project_name
-        //       this.Print_SOC_No_ngModel = element.soc
-        //     }
-        //   });
-        // }
-        // this.Print_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
-        this.Printing_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
-        // this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Printing_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
-        this.Printing_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
-        // this.vehicles.forEach(element => {
-        //   if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
-        //     this.Travel_Mode_ngModel = element.CATEGORY
-        //   }
-        // });       
-      }
-      );
-  }  
+        this.storeCustomers = this.customers = data["resource"];
+        this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+          .subscribe(data => {
+            this.storeProjects = this.projects = data["resource"];
+
+            this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+              .subscribe(data => {
+                this.claimRequestData = data["resource"];
+                if (this.claimRequestData[0].SOC_GUID === null) {
+                  this.claimFor = 'seg_customer'
+                  if (this.storeCustomers != undefined)
+                    this.storeCustomers.forEach(element => {
+                      if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
+                        this.Customer_Lookup_ngModel = element.NAME
+                      }
+                    });
+                }
+                else {
+                  this.claimFor = 'seg_project'
+                  if (this.storeCustomers != undefined)
+                    this.storeProjects.forEach(element => {
+                      if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
+                        this.Project_Lookup_ngModel = element.project_name
+                        this.Print_SOC_No_ngModel = element.soc
+                      }
+                    });
+                }
+                this.Printing_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.Printing_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                this.Printing_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+              });
+          });
+      })
+  }
 
   constructor(private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
-      this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
+    this.userGUID = localStorage.getItem('g_USER_GUID');
+    this.isFormEdit = this.navParams.get('isFormEdit');
+    this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
+    this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
+    if (this.isFormEdit)
+    this.GetDataforEdit();
+  else {
+    this.LoadCustomers();
+    this.LoadProjects();
+  }
     this.Printform = fb.group({
       claimTypeGUID:'',
       avatar: null,
       soc_no: '',
       travel_date: ['', Validators.required],
       description: ['', Validators.required],
-      //vehicleType: ['', Validators.required],
       claim_amount: ['', Validators.required],
       attachment_GUID: ''
-    });
-    this.LoadProjects();
-    this.LoadCustomers();
-    //this.readProfile();   
+    });    
   }
 
   GetSocNo(item: any){
@@ -359,5 +400,8 @@ export class PrintclaimPage {
 
   } 
     }
+    NavigateTravelClaim() {
+      this.navCtrl.setRoot(TravelclaimPage); 
+    } 
   } 
 //}
