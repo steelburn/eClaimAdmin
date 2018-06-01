@@ -166,148 +166,147 @@ export class DashboardPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad DashboardPage');
   }
+ //  ClaimsInfoChart
+ public doughnutChartLabels: Array<string> = ['Approved', 'Pending', 'Rejected'];
+ public doughnutChartData: Array<number> = [];
 
+ public doughnutChartType: string = 'doughnut';
+ public doughnutChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red"] }];
+
+ public chartClicked(e: any): void {
+   console.log(e);
+ }
+ public chartHovered(e: any): void {
+   console.log(e);
+ }
+
+ doughnutChartOptions = {
+   // showInLegend : true,
+   responsive: true,
+   // centerText: true,
+   legend: {
+     display: true,
+     position: 'bottom'
+   },
+   title: {
+     display: true,
+     text: 'My Claim Count',
+     fontSize: 20,
+     fontColor: 'green'
+   },
+   pieceLabel: {
+     mode: 'value',
+     overlap: true,
+     fontColor: ['green', 'blue', 'red'],
+     fontStyle: 'bold'
+   },
  
+   tooltips: {
+     enabled: true,
+     callbacks: {
+       label: function (tooltipItem:any, data:any) {
+         var label = data.labels[tooltipItem.index];
+         var datasetLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+         return label + ' : ' + datasetLabel + ' ';
+       }
+     }
+   },
+ }
 
-  //  ClaimsInfoChart
-  public doughnutChartLabels: Array<string> = ['Approved', 'Pending', 'Rejected'];
-  public doughnutChartData: Array<number> = [];
+ // ClaimAmountChart
+ public claimAmountLabels: Array<string> = ['Approved', 'Pending', 'Rejected'];
+ public claimAmountData: Array<number> = [];
+ public claimAmountChartType: string = 'doughnut';
+ public claimAmountChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red"] }];
+ public claimAmountClicked(e: any): void {
+   console.log(e);
+ }
+ public claimAmountHovered(e: any): void {
+   console.log(e);
+ }
+ claimAmountOptions = {
+   // showInLegend : true,
+   responsive: true,
+   // centerText: true,
+   legend: {
+     display: true,
+     position: 'bottom'
+   },
+   title: {
+     display: true,
+     text: 'My Claim Amount',
+     fontSize: 20,
+     fontColor: 'green'
+   },
+   pieceLabel: {
+     mode: 'value',
+     //fontColor:'blue',
+     overlap: true,
+     fontStyle: 'bold',
+     fontColor: ['green', 'blue', 'red'],
+   },
 
-  public doughnutChartType: string = 'doughnut';
-  public doughnutChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red"] }];
+   tooltips: {
+     enabled: true,
+     callbacks: {
+       label: function (tooltipItem:any, data:any) {
+         var label = data.labels[tooltipItem.index];
+         var datasetLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+         return label + ' : ' + datasetLabel + ' ';
+       }
+     }
+   },
+ }
 
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
+ Month_Changed(value:any) {
+  //alert(value)
+   this.month_value = value;
+   this.GetDashboardInfo();
+ }
+ Year_Changed(value:any)
+ {
+   //alert(value)
+  this.year_value = value;
+  this.GetDashboardInfo();
+ }
+ GetDashboardInfo() {
 
-  doughnutChartOptions = {
-    // showInLegend : true,
-    responsive: true,
-    // centerText: true,
-    legend: {
-      display: true,
-      position: 'bottom'
-    },
-    title: {
-      display: true,
-      text: 'Claim Count',
-      fontSize: 20,
-      fontColor: 'green'
-    },
-    pieceLabel: {
-      mode: 'value',
+   if (this.month_value != undefined) {
+     this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+     console.log('hi '+this.baseResourceUrl)
 
-      fontColor: ['green', 'white', 'red'],
-      fontStyle: 'bold'
-    },
-
-    tooltips: {
-      enabled: true,
-      callbacks: {
-        label: function (tooltipItem: any, data: any) {
-          var label = data.labels[tooltipItem.index];
-          var datasetLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-          return label + ' : ' + datasetLabel + ' ';
-        }
-      }
-    },
-  }
-
-  // ClaimAmountChart
-  public claimAmountLabels: Array<string> = ['Approved', 'Pending', 'Rejected'];
-  public claimAmountData: Array<number> = [];
-  public claimAmountChartType: string = 'doughnut';
-  public claimAmountChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red"] }];
-  public claimAmountClicked(e: any): void {
-    console.log(e);
-  }
-  public claimAmountHovered(e: any): void {
-    console.log(e);
-  }
-  claimAmountOptions = {
-    // showInLegend : true,
-    responsive: true,
-    // centerText: true,
-    legend: {
-      display: true,
-      position: 'bottom'
-    },
-    title: {
-      display: true,
-      text: 'Claim Amount',
-      fontSize: 20,
-      fontColor: 'green'
-    },
-    pieceLabel: {
-      mode: 'value',
-      //fontColor:'blue',
-      fontStyle: 'bold',
-      fontColor: ['green', 'white', 'red'],
-    },
-
-    tooltips: {
-      enabled: true,
-      callbacks: {
-        label: function (tooltipItem: any, data: any) {
-          var label = data.labels[tooltipItem.index];
-          var datasetLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-          return label + ' : ' + datasetLabel + ' ';
-        }
-      }
-    },
-  }
-
-  Month_Changed(value: any) {
-    //alert(value)
-    this.month_value = value;
-    this.GetDashboardInfo();
-  }
-  Year_Changed(value: any) {
-    //alert(value)
-    this.year_value = value;
-    this.GetDashboardInfo();
-  }
-  GetDashboardInfo() {
-
-    if (this.month_value != undefined) {
-      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      console.log('hi ' + this.baseResourceUrl)
-
-    }
+   }
 
 
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.claimrequestdetails = data["resource"][0];
-        //console.table(this.claimrequestdetails)
-        if (data["resource"][0] != null) {
-          var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
-          var pending = parseInt(this.claimrequestdetails.PendingReqCount);
-          var rejected = parseInt(this.claimrequestdetails.RejectedReqCount);
-          this.doughnutChartData = [approve, pending, rejected];
+   this.http
+     .get(this.baseResourceUrl)
+     .map(res => res.json())
+     .subscribe(data => {
+       this.claimrequestdetails = data["resource"][0];
+       //console.table(this.claimrequestdetails)
+       if (data["resource"][0] != null) {
+         var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
+         var pending = parseInt(this.claimrequestdetails.PendingReqCount);
+         var rejected = parseInt(this.claimrequestdetails.RejectedReqCount);
+         this.doughnutChartData = [approve, pending, rejected];
 
-          if (this.claimrequestdetails.ApprovedClaimAmount !== null && this.claimrequestdetails.ApprovedClaimAmount !== undefined) {
-            var approveAmount = parseFloat(this.claimrequestdetails.ApprovedClaimAmount).toFixed(2);
-          }
-          else { approveAmount = '0' }
-          if (this.claimrequestdetails.PendingClaimAmount !== null && this.claimrequestdetails.PendingClaimAmount !== undefined) {
-            var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
-          }
-          else { pendingAmount = '0' }
-          if (this.claimrequestdetails.RejectedClaimAmount !== null && this.claimrequestdetails.RejectedClaimAmount !== undefined) {
-            var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
-          }
-          else { rejectedAmount = '0' }
-
-          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
-        }
-        else {
-          approve = 0;
+         if (this.claimrequestdetails.ApprovedClaimAmount !== null && this.claimrequestdetails.ApprovedClaimAmount !== undefined) {
+           var approveAmount = parseFloat(this.claimrequestdetails.ApprovedClaimAmount).toFixed(2);
+         }
+         else { approveAmount = '0' }
+         if (this.claimrequestdetails.PendingClaimAmount !== null && this.claimrequestdetails.PendingClaimAmount !== undefined) {
+           var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
+         }
+         else { pendingAmount = '0' }
+         if (this.claimrequestdetails.RejectedClaimAmount !== null && this.claimrequestdetails.RejectedClaimAmount !== undefined) {
+           var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
+         }
+         else { rejectedAmount = '0' }
+     
+         this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
+       }
+       else {
+         approve = 0; 
           pending = 0;
           rejected = 0;
           this.doughnutChartData = [approve, pending, rejected];
