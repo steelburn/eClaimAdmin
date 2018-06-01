@@ -7,6 +7,7 @@ import { MainClaimReferanceModel } from './../models/main-claim-ref.model';
 import { UUID } from 'angular2-uuid';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { NavController, App } from 'ionic-angular';
+import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist';
 
 
 @Injectable()
@@ -27,7 +28,14 @@ export class ProfileManagerProvider {
     profileLevel: any; assignedTo: any; stage: any;
   
     UpdateProfileInfo(mainClaimReq: MainClaimRequestModel) {
-      this.api.updateClaimRequest(mainClaimReq).subscribe(res => console.log(res.json()))
+      this.api.updateClaimRequest(mainClaimReq).subscribe(res => 
+        {
+          alert('Claim action submitted successfully.');
+          this.navCtrl.setRoot(ClaimapprovertasklistPage);
+      }
+      
+        // console.log(res.json())
+      )
     }    
   
     getMainClaimReqInfo(claimRef: ClaimWorkFlowHistoryModel, level: any, claimRequestGUID: any, isRemarksAccepted: any) {
@@ -55,34 +63,37 @@ export class ProfileManagerProvider {
     }
   
     GetDirectManagerByManagerGUID() {
+      return new Promise((resolve, reject) => {
       this.api.getApiModel('user_info', 'filter=USER_GUID=' + this.assignedTo).subscribe(res => {
         this.managerInfo = res["resource"]
         this.managerInfo.forEach(userElm => {
           this.stage = userElm.DEPT_GUID;
         })
-      })  
+      }) 
+      resolve(true);
+    }) 
     }
   
     GetDirectManager() {
+      return new Promise((resolve, reject) => {
       this.api.getApiModel('view_manager_details', 'filter=USER_GUID=' + this.userGUID).subscribe(res => {
         this.managerInfo = res["resource"]
         this.managerInfo.forEach(userElm => {
           // this.assignedTo = userElm.MANAGER_GUID;
           // this.stage = userElm.DEPT_GUID;
           this.assignedTo = userElm.MANAGER_GUID;
-          this.stage = userElm.MANAGER_DEPT_GUID;
-  
-        })
-  
+          this.stage = userElm.MANAGER_DEPT_GUID;  
+        })  
       })
-  
+      resolve(true);
+    })  
     }
   
     SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel) {
   
       this.api.postData('claim_work_flow_history', claimRef.toJson(true)).subscribe((response) => {
         var postClaimMain = response.json();
-        this.api.sendEmail();
+        //this.api.sendEmail();
   
         this.mainClaimReq.STAGE = this.stage;
         this.mainClaimReq.ASSIGNED_TO = this.assignedTo;
@@ -93,7 +104,10 @@ export class ProfileManagerProvider {
         else if (this.level === '0' || this.isRemarksAccepted === false)
         this.mainClaimReq.STATUS = 'Rejected';
         this.UpdateProfileInfo(this.mainClaimReq);
-        alert('Claim action submitted successfully.')
+        //alert('Claim action submitted successfully.')
+
+        // This is for Approval Send email to User and next approver
+        this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.CLAIM_REF_GUID, this.mainClaimReq.ASSIGNED_TO, this.mainClaimReq.CLAIM_TYPE_GUID, this.mainClaimReq.START_TS, this.mainClaimReq.END_TS, this.mainClaimReq.CREATION_TS, this.profileLevel);
   
       })
     }
@@ -243,7 +257,7 @@ export class ProfileManagerProvider {
       }
       this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
         var postClaimMain = response.json();
-        this.api.sendEmail();
+        this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString());
         localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
         // this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
         //this.MainClaimSaved = true;
