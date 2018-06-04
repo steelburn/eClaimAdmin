@@ -34,7 +34,8 @@
 
             <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'">
               <ion-label color="primary" fixed>{{ 'AMOUNT_LABEL' | translate  }}{{ 'CURRENCY_NAME_LABEL' | translate}}</ion-label>
-              <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Amount" type="number" placeholder="0.00"></ion-input>
+              <ion-input (change)='getCurrency($event.target.value)' [ngModelOptions]="{standalone: true}" 
+              [(ngModel)]="Amount" type="number" placeholder="0.00"></ion-input>
             </ion-item>
             <!-- [ngModelOptions]="{standalone: true}" -->
 
