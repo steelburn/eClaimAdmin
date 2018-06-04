@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { ClaimReqDetail_Model } from '../../models/ClaimReqDetail_Model';
 import { UUID } from 'angular2-uuid';
+import { DecimalPipe } from '@angular/common';
 import { Console } from '@angular/core/src/console';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Services } from '../Services';
@@ -22,7 +23,7 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 @IonicPage()
 @Component({
   selector: 'page-add-toll',
-  templateUrl: 'add-toll.html', providers: [Services]
+  templateUrl: 'add-toll.html', providers: [Services, DecimalPipe]
 })
 export class AddTollPage {
   @ViewChild('fileInput') fileInput: ElementRef;
@@ -37,7 +38,7 @@ export class AddTollPage {
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
 
-  constructor(fb: FormBuilder, public api: ApiManagerProvider, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(public numberPipe: DecimalPipe, fb: FormBuilder, public api: ApiManagerProvider, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.LoadPayments();
     this.LoadAllowanceDetails();
@@ -47,7 +48,10 @@ export class AddTollPage {
     
     // this.LoadPayments();
     // this.LoadAllowanceDetails();
+  }
 
+  getCurrency(amount: number) {
+    this.Amount = this.numberPipe.transform(amount, '1.2-2');
   }
 
   onAllowanceSelect(allowance: any) {
