@@ -95,6 +95,10 @@ export class TravelclaimPage {
   claimDetailsData: any[];
   tollParkAmount: number = 0;
   PublicTransValue: boolean = false;
+  chooseFile: boolean = false;
+  ImageUploadValidation:boolean=false;
+
+
 
    /********FORM EDIT VARIABLES***********/
    vehicleCategory: any;
@@ -548,7 +552,7 @@ export class TravelclaimPage {
     let origin = this.Travel_From_ngModel;
     let destination = this.Travel_Destination_ngModel;
     this.PublicTransValue = true;
-    if (vehicle.CATEGORY === 'Public Transport') {
+    if (vehicle.CATEGORY === 'Public transport') {
       this.isPublicTransport = true;
       this.travelAmount = '';
       this.PublicTransValue = false;
@@ -615,7 +619,7 @@ export class TravelclaimPage {
   //   // }, 1000);
   // }
   disableButton: any;
-  saveIm(formvalues: any) {
+  saveIm() {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
       //this.imageGUID(this.uploadFileName, formvalues)
@@ -624,9 +628,12 @@ export class TravelclaimPage {
       // imageResult.then((objImage: ImageUpload_model) => {      
         
         //  this.imageGUID = objImage.Image_Guid
-        this.imageGUID = this.uploadFileName, formvalues;
+        this.imageGUID = this.uploadFileName;
+        // , formvalues
         //this.disableButton = true;
         this.PublicTransValue = false;
+        this.ImageUploadValidation=true;
+
 
        
       // })
