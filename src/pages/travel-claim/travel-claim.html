@@ -97,7 +97,7 @@
 
         <ion-item>
             <ion-label color="danger" stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>   
-            <ion-input [disabled]="!isPublicTransport" [(ngModel)]="travelAmount" type="text" formControlName="claim_amount" 
+            <ion-input (change)='getCurrency($event.target.value)' [disabled]="!isPublicTransport" [(ngModel)]="travelAmountNgmodel" type="text" formControlName="claim_amount" 
             placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>           
           </ion-item>
 
@@ -106,9 +106,15 @@
               <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" 
               placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
             </ion-item>  
+
+            <ion-item *ngIf="isPublicTransport">
+              <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+              <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>
+              <!-- disableButton &&  -->
+            </ion-item>
             
             <div class="btn" *ngIf="!isFormSubmitted">
-              <button ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
+              <button ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="(Travelform.valid  && !PublicTransValue) || !Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
             </div>
             <div class="btn" *ngIf="isFormSubmitted">
                 <button ion-button outline item-end icon-left (click)="TollParkLookup()">
@@ -251,6 +257,19 @@
               </ion-card>
           </div>
 
+          <div class="popup2" padding *ngIf="displayImage">
+            <ion-card>
+                <ion-card-header class="icTitle headerColor-white ">
+                    <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
+                    <button class="btnR" (click)="CloseDisplayImage()">
+                        <ion-icon name="md-close"></ion-icon>
+                    </button>
+                </ion-card-header>
+                <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
+    
+            </ion-card>
+        </div>
+
           <!-- <div class="btn">
             <button ion-button color="danger" *ngIf="isPublicTransport" (change)="onReceiveImageGUID($event)">{{ "SUBMIT_BUTTON" | translate }}</button>
           </div>  -->
@@ -260,10 +279,10 @@
             <!-- <button ion-button color="danger" *ngIf="isPublicTransport" (change)="onReceiveImageGUID($event)">choose file</button> -->
             <!-- <input type="file"  *ngIf="isPublicTransport" (change)="onFileChange($event)" #fileInput>
           </ion-item> -->
-          <ion-item *ngIf="isPublicTransport">
+          <!-- <ion-item *ngIf="isPublicTransport">
             <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
             <button ion-button type="button"  (click)="saveIm()">{{ "upload file" }}</button>
-          </ion-item>
+          </ion-item> -->
           
           <ion-fab bottom right *ngIf="MainClaimSaved" >
             <button ion-fab  mini color="secondary400">
