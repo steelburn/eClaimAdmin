@@ -29,12 +29,12 @@ import { PaymenttypesetupPage } from '../pages/paymenttypesetup/paymenttypesetup
 import { QualificationsetupPage } from '../pages/qualificationsetup/qualificationsetup';
 import { SubsciptionsetupPage } from '../pages/subsciptionsetup/subsciptionsetup';
 import { SignupPage } from '../pages/signup/signup';
-//import { TabsPage } from '../pages/tabs/tabs';
+import { TabsPage } from '../pages/tabs/tabs';
 import { TenantsetupPage } from '../pages/tenantsetup/tenantsetup';
 import { SetupPage } from '../pages/setup/setup';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
-//import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
+import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
@@ -89,7 +89,7 @@ import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
-//import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
+import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-view';
 import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../pages/miscellaneous-claim-view/miscellaneous-claim-view';
@@ -108,7 +108,7 @@ import { DatePipe } from '@angular/common'
     AccountPage,
     LoginPage,
     PopoverPage,
-   // MedicalclaimPage,
+    MedicalclaimPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
@@ -139,14 +139,14 @@ import { DatePipe } from '@angular/common'
     QualificationsetupPage,
     SubsciptionsetupPage,
     TenantsetupPage,
-    //TabsPage,
+    TabsPage,
     UserPage,
     SocRegistrationPage,
     AdminsetupPage,
     ApproverTaskListPage,
     TravelClaimViewPage,
     EntertainmentClaimViewPage,
-   // MedicalClaimViewPage,
+    MedicalClaimViewPage,
     OvertimeClaimViewPage,
     PrintClaimViewPage,
     GiftClaimViewPage,
@@ -182,7 +182,7 @@ import { DatePipe } from '@angular/common'
       }),
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
-       // { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
+        { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
         { component: DashboardPage, name: 'Home', segment: 'Home' },
         { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
         { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
@@ -217,7 +217,7 @@ import { DatePipe } from '@angular/common'
     StatesetupPage,
     SetupPage,
     ModulesetupPage,
-    //MedicalclaimPage,
+    MedicalclaimPage,
     TravelclaimPage,
     PrintclaimPage,
     GiftclaimPage,
@@ -244,11 +244,11 @@ import { DatePipe } from '@angular/common'
     SubsciptionsetupPage,
     TenantsetupPage,
     RolemodulesetupPage,
-    //TabsPage,
+    TabsPage,
     ApproverTaskListPage,
     TravelClaimViewPage,
     EntertainmentClaimViewPage,
-   // MedicalClaimViewPage,
+    MedicalClaimViewPage,
     OvertimeClaimViewPage,
     PrintClaimViewPage,
     GiftClaimViewPage,

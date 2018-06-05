@@ -5,7 +5,7 @@ import { NavController } from 'ionic-angular';
 
 import { UserData } from '../../providers/user-data';
 
-//import { TabsPage } from '../tabs/tabs';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-user',
@@ -22,7 +22,7 @@ export class SignupPage {
 
     if (form.valid) {
       this.userData.signup(this.signup.username);
-      //this.navCtrl.push(TabsPage);
+      this.navCtrl.push(TabsPage);
     }
   }
 }

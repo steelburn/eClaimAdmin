@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import CryptoJS from 'crypto-js';
 
 import { UserData } from '../../providers/user-data';
-//import { TabsPage } from '../tabs/tabs';
+import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
 import * as constants from '../../app/config/constants';
 import { Conditional } from '@angular/compiler';
