@@ -88,12 +88,13 @@ export class TravelclaimPage {
   Travel_Type_ngModel: any;
   VehicleId: any;
   VehicleRate: any;
-  travelAmount: any;
+  travelAmount: number;
   validDate = new Date().toISOString();
   ClaimRequestMain: any;
   isCustomer: boolean = true;
   claimDetailsData: any[];
   tollParkAmount: number = 0;
+  travelAmountNgmodel: any;
   PublicTransValue: boolean = false;
   chooseFile: boolean = false;
   ImageUploadValidation:boolean=false;
@@ -131,6 +132,7 @@ export class TravelclaimPage {
       avatar: null,
       soc_no: '',
       distance: '', 
+      uuid: '',
       travelType: '',
       //PublicTransValidation: ['', Validators.required],
       travel_date: '',
@@ -200,6 +202,15 @@ export class TravelclaimPage {
   //     }
   //     );
   // } 
+  getCurrency(amount: number) {
+    this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
+  }
+
+  totalClaimAmount: number;
+  ionViewWillEnter() {
+    this.LoadClaimDetails();
+
+  }
 
   GetDataforEdit() {
     //TODO: Take data by Effective Date
@@ -319,6 +330,11 @@ export class TravelclaimPage {
             element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
           this.tollParkAmount += element.AMOUNT;
         });
+        if (this.isFormSubmitted) {
+          this.totalClaimAmount = this.travelAmount + this.tollParkAmount
+        }
+        else
+          this.totalClaimAmount = 0;
         resolve(this.tollParkAmount);
       })
     });
@@ -354,7 +370,7 @@ export class TravelclaimPage {
         this.Travel_Mode_ngModel = this.vehicleCategory;
         if (!this.isPublicTransport)
           this.travelAmount = destination * this.VehicleRate, -2;
-        this.travelAmount = this.numberPipe.transform(this.travelAmount, '1.2-2');
+        this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
         // this.Travel_Amount_ngModel 
       }
       else
@@ -554,7 +570,7 @@ export class TravelclaimPage {
     this.PublicTransValue = true;
     if (vehicle.CATEGORY === 'Public transport') {
       this.isPublicTransport = true;
-      this.travelAmount = '';
+      this.travelAmount = undefined;
       this.PublicTransValue = false;
     }
     else
@@ -569,11 +585,11 @@ export class TravelclaimPage {
     this.allowanceGUID = allowance.ALLOWANCE_GUID;
   }
 
-  imageGUID: any;
-  onReceiveImageGUID(imageGUID: any) {
-    this.PublicTransValue = true;
-    this.imageGUID = imageGUID;
-  }
+   imageGUID: any;
+  // onReceiveImageGUID(imageGUID: any) {
+  //   this.PublicTransValue = true;
+  //   this.imageGUID = imageGUID;
+  // }
   displayImage: any
   CloseDisplayImage() {
     this.displayImage = false;
@@ -598,7 +614,11 @@ export class TravelclaimPage {
       };
     }
     //this.disableButton = false;
-    this.PublicTransValue = true;
+    //this.PublicTransValue = true;
+    // this.PublicTransValue = false;
+
+    this.ImageUploadValidation=true;
+
 
   }
 
@@ -631,8 +651,10 @@ export class TravelclaimPage {
         this.imageGUID = this.uploadFileName;
         // , formvalues
         //this.disableButton = true;
-        this.PublicTransValue = false;
-        this.ImageUploadValidation=true;
+        //this.PublicTransValue = false;
+         this.PublicTransValue = true;
+
+        this.ImageUploadValidation=false;
 
 
        

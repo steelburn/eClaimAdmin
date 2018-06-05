@@ -346,6 +346,5 @@ export class MiscellaneousClaimPage {
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }
   }
- 
 
 }
