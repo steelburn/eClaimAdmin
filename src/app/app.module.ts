@@ -183,7 +183,8 @@ import { DatePipe } from '@angular/common'
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
-        { component: DashboardPage, name: 'Home', segment: 'Home' },
+        // { component: DashboardPage, name: 'Home', segment: 'Home' },
+        { component: DashboardPage, name: 'DashboardPage', segment: 'DashboardPage' },
         { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
         { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
