@@ -100,6 +100,8 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { DatePipe } from '@angular/common'
+
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -181,7 +183,8 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
-        { component: DashboardPage, name: 'Home', segment: 'Home' },
+        // { component: DashboardPage, name: 'Home', segment: 'Home' },
+        { component: DashboardPage, name: 'DashboardPage', segment: 'DashboardPage' },
         { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
         { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
@@ -280,11 +283,11 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData, HttpClientModule, ApiManagerProvider,
-    UserData,
+    UserData, DatePipe,
     InAppBrowser,
     SplashScreen, StatusBar, Services,
 
-    Camera, ProfileManagerProvider,
+    Camera, ProfileManagerProvider, 
     File,
     FilePath,
     FileTransfer,
