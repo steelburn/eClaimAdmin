@@ -289,19 +289,19 @@
               <ion-icon name="add"></ion-icon>
             </button>
             <ion-fab-list side="top">
-              <button ion-fab (click)="showAddToll()">
+              <button ion-fab *ngIf="!isPublicTransport" (click)="showAddToll(null)">
                 <ion-icon name="car"></ion-icon>
                 <ion-label>{{ "ADD_TOLL_LABEL" | translate }}</ion-label>
               </button>
-              <button ion-fab (click)="showAddParking()">
+              <button ion-fab *ngIf="!isPublicTransport" (click)="showAddParking(null)">
                 <ion-icon name="car"></ion-icon>
                 <ion-label>{{ "ADD_PARKING_LABEL" | translate }}</ion-label>
               </button>   
-              <button ion-fab (click)="showAddAccommodation()">
+              <button ion-fab (click)="showAddAccommodation(null)">
                 <ion-icon name="car"></ion-icon>
                 <ion-label>{{ "ADD_Accommodation_HEADING" | translate }}</ion-label>
               </button>  
-              <button ion-fab *ngIf="!isTravelLocal" (click)="showMealAllowance()">
+              <button ion-fab *ngIf="!isTravelLocal" (click)="showMealAllowance(null)">
                 <ion-icon name="car"></ion-icon>
                 <ion-label>{{ "ADD_MEAL_ALLOWANCE_HEADING" | translate }}</ion-label>
               </button>  </ion-fab-list>
