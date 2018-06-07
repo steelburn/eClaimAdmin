@@ -24,7 +24,7 @@
 
       <ion-list>
         <ion-list-header>
-          CLAIMS
+          Claims
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) ">
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
@@ -34,7 +34,7 @@
 
       <ion-list>
         <ion-list-header>
-          ACCOUNT
+          Account
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of loggedOutPages " (click)="openPage(p) ">
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
