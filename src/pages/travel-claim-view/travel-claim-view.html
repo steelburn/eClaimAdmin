@@ -1,188 +1,216 @@
 <ion-header>
-    <ion-navbar color="primary500">
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-
-        <!-- <div class="headerInfo">
-            <ion-fab top right>
-                <button ion-fab mini class="btnClear">
-                    <ion-icon name="settings"></ion-icon>
-                </button>
-                <ion-fab-list class="settingBtnFab" side="left">
-                    <button ion-fab color="primary" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>
-                </ion-fab-list>
-                <ion-fab-list class="settingBtnFab" side="bottom">
-                    <button ion-fab color="primary" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>
-                </ion-fab-list>
-            </ion-fab>
-        </div> -->
-        <ion-title>{{ 'TRAVEL_CLAIM_HEADING' | translate }}</ion-title>
-    </ion-navbar>
-</ion-header>
-
-
-
-<ion-content padding *ngFor="let claim of claimRequestData">
-    <ion-item>
-        <ion-label>Travel Claim View </ion-label>
-
-    </ion-item>
-    <ion-item>
-        <ion-label> {{ "CLAIM_APPLIED_DATE_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.CREATION_TS |date }} </ion-label>
-    </ion-item>
-    <ion-item>
-        <ion-label> {{ "TRAVEL_DATE_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.TRAVEL_DATE | date }} </ion-label>
-    </ion-item>
-   
-   <ion-item *ngIf="claim.CUSTOMER_NAME">
-        <ion-label> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.CUSTOMER_NAME }} </ion-label>
-    </ion-item> 
-    <ion-item *ngIf="claim.SOC">
-        <ion-label> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.PROJECT_NAME }} </ion-label>
-        <ion-label> {{ "SOC_NUMBER_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.SOC }} </ion-label>
-    </ion-item>    
-    <ion-item>
-        <ion-label> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.ORIGIN }} </ion-label>
-    </ion-item>
-    <ion-item>
-        <ion-label> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.DESTINATION }} </ion-label>
-    </ion-item>
-    <ion-item>
-        <ion-label> {{ "DISTANCE_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.DISTANCE_KM | number:'1.2-2'}} </ion-label>
-    </ion-item>
-    <ion-item>
-        <ion-label> {{ "MILEAGE_AMOUNT_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.MILEAGE_AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
-    </ion-item>
-    <ion-item>
-            <ion-label> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
-            <ion-label> {{ totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
-        </ion-item>
-    <ion-item>
-        <ion-label> {{ "STATUS_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.STATUS }} </ion-label>
-    </ion-item> 
-    <ion-item>
-        <ion-label> {{ "STAGE_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.STAGE }} </ion-label>
-    </ion-item>
-   
-    <ion-item>
-        <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
-        <ion-label> {{ claim.DESCRIPTION }} </ion-label>
-    </ion-item>
-    <img src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
-
-    <ion-card *ngIf="isApprover">
+        <ion-navbar color="primary500">
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+            <ion-title>{{ "TRAVEL_CLAIM_HEADING" | translate }}</ion-title>
+    
+        </ion-navbar>
+    </ion-header>
+    
+    <ion-content padding *ngFor="let claim of claimRequestData">
             <ion-item>
-                <ion-label> {{ "REMARKS_LABEL" | translate }} </ion-label>
-                <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
-                <button ion-button outline item-start (click)="isAccepted('accepted')">
-                    {{ "ACCEPT_BUTTON" | translate }} </button>
-                <button ion-button outline item-start (click)="isAccepted('rejected')">
-                    {{ "REJECT_BUTTON" | translate }} </button>
-            </ion-item>            
-        </ion-card>  
-    
-        <button ion-button outline item-end icon-left (click)="TollParkLookup()">
-            <ion-icon name="eye"></ion-icon>
-            {{ "CLAIM_DETAILS_BUTTON" | translate }} </button>
-  
-    <ion-item *ngIf="!isApprover">
-        <button ion-button outline item-end icon-left (click)="EditClaim()">
-            {{ "EDIT_LABEL" | translate }} </button>
-    </ion-item>
-    <div class="blackcontainer" *ngIf="tollParkLookupClicked"></div>
-    <div class="popup2" padding *ngIf="tollParkLookupClicked">
-        <ion-card>
-            <ion-card-header class="icTitle headerColor-white ">
-                <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
-                <button class="btnR" (click)="CloseTollParkLookup()">
-                    <ion-icon name="md-close"></ion-icon>
-                </button>
-            </ion-card-header>
-            <ion-list *ngFor="let item of claimDetailsData">
-                    <ion-item>
-                        <ion-label stacked>Receipt</ion-label>
-                        <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)">Receipt</button>
-                    </ion-item>
-    
-                    <ion-item>
-                        <ion-label stacked>Claim Method</ion-label>
-                        <ion-label>{{item.CLAIM_METHOD}}</ion-label>
-                    </ion-item>
-    
-                    <ion-item>
-                        <ion-label stacked>Amount</ion-label>
-                        <ion-label>{{item.AMOUNT}}</ion-label>
-                    </ion-item>
-    
-                    <ion-item>
-                        <ion-label stacked>Payment Mode</ion-label>
-                        <ion-label>{{item.PAYMENT_TYPE}}</ion-label>
-                    </ion-item>
-    
-                    <ion-item>
-                        <ion-label stacked>Description</ion-label>
-                        <ion-label>{{item.DESCRIPTION}}</ion-label>
-                    </ion-item>
-               
-                    <ion-item>
-                        <ion-label stacked> {{ "TOTAL_AMOUNT_LABEL" | translate }} </ion-label>
-                        <ion-label> {{ tollParkAmount }} </ion-label>
-                    </ion-item>
-    
-                </ion-list>
-            <!-- <ion-list>
-                <ion-item>
-                    <table class="Tabler" border='2'>
-                        <tr class="linedsg TColor">
-                            <th class="lgl1 tblBrLeft" style="width:40px">NO.</th>
-                            <th class="lgl1">Claim Method</th>
-                            <th class="lgl1">Amount</th>
-                            <th class="lgl1">Payment Mode</th>
-                            <th class="lgl1">Description</th>
-                           
-                        </tr>
-
-                        <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
-                                <td class="lgl1">
-                                        <button  (click)="DisplayImage(item.ATTACHMENT_ID)">
-                                        Receipt
-                                        </button>
-                                    </td>
-                            <td class="lgl1">{{i+1}}</td>
-                            <td class="lgl1">{{item.CLAIM_METHOD}}</td>
-                            <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
-                            <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
-                            <th class="lgl1">{{item.DESCRIPTION}}</th>                           
-                        </tr>
-
-                    </table>
-
+                    <ion-label>Travel Claim View </ion-label>
                 </ion-item>
-                <ion-item>
-                        <ion-label> {{ "TOTAL_AMOUNT_LABEL" | translate }} </ion-label>
-                        <ion-label> {{ tollParkAmount }} </ion-label>
-                    </ion-item>
-                
-            </ion-list> -->
-        </ion-card>
-    </div>
-
-    <div class="popup2" padding *ngIf="displayImage">
+        <ion-item>
+            <ion-label stacked> {{ "CLAIM_APPLIED_DATE_LABEL" | translate }} :
+                <h3>{{ claim.CREATION_TS |date }}</h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> {{ "TRAVEL_DATE_LABEL" | translate }} :
+                <h3>{{ claim.TRAVEL_DATE | date }} </h3>
+            </ion-label>
+    
+        </ion-item>
+    
+        <ion-item *ngIf="claim.CUSTOMER_NAME">
+            <ion-label stacked text-wrap> {{ "CUSTOMER_NAME_LABEL" | translate }}:
+                <h3 style="overflow-wrap: break-word; word-wrap: break-word;hyphens: auto;">
+                    {{ claim.CUSTOMER_NAME }} </h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item *ngIf="claim.SOC">
+            <ion-label stacked text-wrap> {{ "PROJECT_NAME_LABEL" | translate }} :
+                <h3>{{ claim.PROJECT_NAME }}</h3>
+            </ion-label>
+    
+            <ion-label stacked> {{ "SOC_NUMBER_LABEL" | translate }}:
+                <br/>
+                <h3>{{ claim.SOC }} </h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item>
+            <ion-label stacked text-wrap> {{ "ORIGIN_PLACE_LABEL" | translate }}:
+                <br/>
+                <h3>{{ claim.ORIGIN }}</h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item>
+            <ion-label stacked text-wrap> {{ "DESTINATION_PLACE_LABEL" | translate }}:
+                <br/>
+                <h3> {{ claim.DESTINATION }} </h3>
+            </ion-label>
+    
+        </ion-item>
+    
+        <ion-item>
+            <ion-label stacked> {{ "DISTANCE_LABEL" | translate }}:
+                <br/>
+                <h3>{{ claim.DISTANCE_KM | number:'1.2-2'}} </h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> {{ "MILEAGE_AMOUNT_LABEL" | translate }}:
+                <br/>
+                <h3>{{claim.MILEAGE_AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}} </h3>
+            </ion-label>
+    
+        </ion-item>
+    
+        <ion-item>
+            <ion-label stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }}:
+                <br/>
+                <h3> {{totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}}</h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> {{ "STATUS_LABEL" | translate }}:
+                <br/>
+                <h3>{{ claim.STATUS }}</h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> {{ "STAGE_LABEL" | translate }}:
+                <br/>
+                <h3>{{ claim.STAGE }}</h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> {{ "DESCRIPTION_LABEL" | translate }}:
+                <br/>
+                <h3> {{ claim.DESCRIPTION }}</h3>
+            </ion-label>
+    
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> Receipt:
+                <br/>
+                <h3>
+                    <img src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
+                </h3>
+            </ion-label>
+        </ion-item>
+    
+        <ion-item>
+            <button ion-button outline item-start icon-left (click)="TollParkLookup()">
+                <ion-icon name="eye"></ion-icon>
+                {{ "CLAIM_DETAILS_BUTTON" | translate }} </button>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> {{ "REMARKS_LABEL" | translate }} </ion-label>
+            <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
+        </ion-item>
+    
+    
+        <ion-item *ngIf="isApprover">
+            <button ion-button outline item-start (click)="isAccepted('accepted')">
+                {{ "ACCEPT_BUTTON" | translate }} </button>
+            <button ion-button outline item-start (click)="isAccepted('rejected')">
+                {{ "REJECT_BUTTON" | translate }} </button>
+    
+        </ion-item>
+    
+    
+        <ion-item *ngIf="!isApprover">
+            <button ion-button outline item-end icon-left (click)="EditClaim()">
+                {{ "EDIT_LABEL" | translate }} </button>
+        </ion-item>
+    
+        <div class="popup2" padding *ngIf="tollParkLookupClicked">
             <ion-card>
                 <ion-card-header class="icTitle headerColor-white ">
-                    <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
+    
+                    <div class="icHeaderText">Claim Details</div>
+                    <button class="btnR" (click)="CloseTollParkLookup()">
+                        <ion-icon name="md-close"></ion-icon>
+                    </button>
+                </ion-card-header>
+                <ion-list *ngFor="let item of claimDetailsData; let i=index ">
+                    <ion-item>
+                        <p>Claim Method: {{item.CLAIM_METHOD}}</p>
+                        <p>Payment Mode: {{item.PAYMENT_TYPE}}</p>
+                        <p>Description: {{item.DESCRIPTION}}</p>
+                        <p>Amount: {{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</p>
+                        <p>
+                            <button ion-button item-start (click)="DisplayImage(item.ATTACHMENT_ID)">
+                                Receipt
+                            </button>
+                      
+                            <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
+                                <ion-icon name="md-create"></ion-icon>
+                            </button>
+                            <button ion-button item-end (click)="DeleteDetail(item.CLAIM_REQUEST_DETAIL_GUID)">
+                                <ion-icon name="md-close"></ion-icon>
+                            </button>
+                        </p>
+                        <!-- <table class="Tabler" border='2'>
+                            <tr class="linedsg TColor">
+                                <th class="lgl1 tblBrLeft" style="width:40px">Receipt</th>
+                                <th class="lgl1">Claim Method</th>
+                                <th class="lgl1">Amount</th>
+                                <th class="lgl1">Payment Mode</th>
+                                <th class="lgl1">Description</th>
+                                <th class="lgl1 tblBrRight">ACTION</th>
+                            </tr>
+    
+                            <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
+                      
+                                <td class="lgl1">
+                                    <button (click)="DisplayImage(item.ATTACHMENT_ID)">
+                                        Receipt
+                                    </button>
+                                </td>
+                                <td class="lgl1">{{item.CLAIM_METHOD}}</td>
+                                <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+                                <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
+                                <th class="lgl1">{{item.DESCRIPTION}}</th>
+    
+                                <td class="lgl1 fColor">
+                                    <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
+                                        <ion-icon name="md-create"></ion-icon>
+                                    </button>
+                                    <button ion-button item-end (click)="DeleteDetail(item.CLAIM_REQUEST_DETAIL_GUID)">
+                                        <ion-icon name="md-close"></ion-icon>
+                                    </button>
+                                </td>
+                            </tr>
+    
+                        </table> -->
+    
+                    </ion-item>
+    
+    
+                </ion-list>
+                <ion-item>
+                    <ion-label> {{ "TOTAL_AMOUNT_LABEL" | translate }} </ion-label>
+                    <ion-label> {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+                </ion-item>
+            </ion-card>
+        </div>
+    
+        <div class="popup2" padding *ngIf="displayImage">
+            <ion-card>
+                <ion-card-header class="icTitle headerColor-white ">
+                    <div class="icHeaderText">Claim Details</div>
                     <button class="btnR" (click)="CloseDisplayImage()">
                         <ion-icon name="md-close"></ion-icon>
                     </button>
@@ -191,4 +219,5 @@
     
             </ion-card>
         </div>
-</ion-content>
+    
+    </ion-content>

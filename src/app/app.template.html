@@ -23,8 +23,9 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>
-          CLAIMS
+
+        <ion-list-header>         
+          {{"CLAIMS_LABEL" | translate}}
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) ">
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
@@ -33,8 +34,9 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>
-          ACCOUNT
+
+        <ion-list-header>         
+          {{"Account_LABEL" | translate}}
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of loggedOutPages " (click)="openPage(p) ">
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
@@ -70,8 +72,8 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>
-          CLAIMS
+        <ion-list-header>          
+          {{"CLAIMS_LABEL" | translate}}
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) ">
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
@@ -80,8 +82,8 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>
-          Account
+        <ion-list-header>        
+          {{"Account_LABEL" | translate}}
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) ">
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
@@ -116,7 +118,8 @@
 
       <ion-list>
         <ion-list-header>
-          CLAIMS
+          <!-- CLAIMS -->
+          {{"CLAIMS_LABEL" | translate}}
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) ">
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
@@ -125,8 +128,8 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>
-          Account
+        <ion-list-header>         
+          {{"Account_LABEL" | translate}}
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) ">
           <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>

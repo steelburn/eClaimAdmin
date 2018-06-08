@@ -34,7 +34,8 @@
 
             <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'">
               <ion-label color="primary" fixed>{{ 'AMOUNT_LABEL' | translate  }}{{ 'CURRENCY_NAME_LABEL' | translate}}</ion-label>
-              <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Amount" type="number" placeholder="0.00"></ion-input>
+              <ion-input (change)='getCurrency($event.target.value)' [ngModelOptions]="{standalone: true}" 
+              [(ngModel)]="Amount" type="number" placeholder="0.00"></ion-input>
             </ion-item>
             <!-- [ngModelOptions]="{standalone: true}" -->
 
@@ -44,18 +45,28 @@
             </ion-item>
             <!-- [ngModelOptions]="{standalone: true}" -->
 
-            <div class="form-group">          
+            <!-- <div class="form-group">          
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
-            </div>
+            </div> -->
+
+            <!-- this -->
+            <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'">
+              <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+              <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>             
+            </ion-item>
          
 
           <!-- <ion-item>
             <button (click)='save()' [disabled]="DetailsForm.invalid || loading" ion-button round style="width:100px;">{{ 'SUBMIT'  }}</button>
           </ion-item> -->
-          <div class="btn">
+          <div class="btn" *ngIf="ClaimMethodName != 'Meal Allowance'">
               <!-- *ngIf="ClaimMethodName === 'Meal Allowance'" -->
-              <button ion-button color="primary" (click)='save(true)' >{{ "SUBMIT_BUTTON" | translate }}</button>
+              <button ion-button color="primary" (click)='Save(false)'  [disabled]="!ImageUploadValidation">{{ "SUBMIT_BUTTON" | translate }}</button>
+            </div>
+
+            <div class="btn" *ngIf="ClaimMethodName === 'Meal Allowance'">
+              <button ion-button color="primary" (click)='Save(true)'>{{ "SUBMIT_BUTTON" | translate }}</button>
             </div>
         </ion-list>
             </form>  

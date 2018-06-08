@@ -42,34 +42,37 @@
 			</ion-col>
 			
 		</ion-row>
-		<ion-row color="primary700" style="float:right; padding-right: 10px;"><a color="primary700" (click)="ForgotPasswordClick()">Forgot Password</a></ion-row>
+		<ion-row color="primary700" style="float:right; padding-right: 10px;">
+			<a color="primary700" (click)="ForgotPasswordClick()">Forgot Password</a>
+		</ion-row>
 
 	</form>
+	
 	<div class="blackcontainer" *ngIf="ForgotPasswordClicked">
 		</div>
 			<div class="popup3" padding *ngIf="ForgotPasswordClicked">
 		<ion-card>
 			<ion-card-header class="icTitle headerColor-white ">
-			  <div class="icHeaderText">Forgot Password</div>
-			  <button class="btnR" (click)="CloseForgotPasswordClick()">
-				<ion-icon name="md-close"></ion-icon>
-			  </button>
+				<div class="icHeaderText">Forgot Password</div>
+				<button class="btnR" (click)="CloseForgotPasswordClick()">
+					<ion-icon name="md-close"></ion-icon>
+				</button>
 			</ion-card-header>
-	  
+
 			<ion-list>
-			  <form [formGroup]="ForgotPasswordForm">
-				<ion-item>
-				  <ion-label stacked>{{ 'Email' | translate }}</ion-label>
-				  <ion-input type="email" formControlName="Email_ID" [(ngModel)]="email_ngModel" required placeholder="{{'Please fill in the email'}}"></ion-input>
-				</ion-item>
-	  
-				<div class="btn">
-				  <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!ForgotPasswordForm.valid" (click)="SaveForgotPassword()">{{"SUBMIT" | translate}}</button>
-				</div>
-			  </form>
+				<form [formGroup]="ForgotPasswordForm">
+					<ion-item>
+						<ion-label stacked>{{ 'Email' | translate }}</ion-label>
+						<ion-input type="email" formControlName="Email_ID" [(ngModel)]="email_ngModel" required placeholder="{{'Please fill in the email'}}"></ion-input>
+					</ion-item>
+
+					<div class="btn">
+						<button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!ForgotPasswordForm.valid" (click)="SaveForgotPassword()">{{"SUBMIT" | translate}}</button>
+					</div>
+				</form>
 			</ion-list>
-	  
-		  </ion-card>
+
+		</ion-card>
 	</div>
 
 </ion-content>
