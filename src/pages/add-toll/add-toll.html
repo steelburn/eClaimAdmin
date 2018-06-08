@@ -50,7 +50,8 @@
               <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
             </div> -->
 
-            <ion-item>
+            <!-- this -->
+            <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>             
             </ion-item>
@@ -59,7 +60,7 @@
           <!-- <ion-item>
             <button (click)='save()' [disabled]="DetailsForm.invalid || loading" ion-button round style="width:100px;">{{ 'SUBMIT'  }}</button>
           </ion-item> -->
-          <div class="btn">
+          <div class="btn" *ngIf="ClaimMethodName != 'Meal Allowance'">
               <!-- *ngIf="ClaimMethodName === 'Meal Allowance'" -->
               <button ion-button color="primary" (click)='Save(false)'  [disabled]="!ImageUploadValidation">{{ "SUBMIT_BUTTON" | translate }}</button>
             </div>
