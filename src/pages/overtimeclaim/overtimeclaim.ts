@@ -110,6 +110,7 @@ export class OvertimeclaimPage {
     this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   }
 
+  imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
@@ -121,6 +122,12 @@ export class OvertimeclaimPage {
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
+
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                this.ImageUploadValidation = true;
+                this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
                   if (this.storeCustomers != undefined)
@@ -142,7 +149,7 @@ export class OvertimeclaimPage {
                 }
                 this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
                 this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
-                this.OT_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                // this.OT_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.OT_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               }
               );
