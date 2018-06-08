@@ -201,7 +201,9 @@ import { DatePipe } from '@angular/common'
 
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
-        { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' }
+        { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
+        { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' }
+        
       ]
     }),
     IonicStorageModule.forRoot()
