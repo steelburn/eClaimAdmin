@@ -179,5 +179,8 @@
  "ACCEPT_BUTTON": "Approve",
  "MISCELLANEOUS_CLAIM_HEADING": "Miscellaneous",
  "DASHBOARD_HEADING": "Dashboard",
- "TOTAL_AMOUNT_LABEL": "Total Amount"
+ "TOTAL_AMOUNT_LABEL": "Total Amount",
+ "NAVIGATE_LABEL": "Navigate",
+ "CLAIMS_LABEL": "Claims",
+ "Account_LABEL": "Account"
 } 
