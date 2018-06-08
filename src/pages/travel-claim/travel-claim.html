@@ -105,7 +105,14 @@
               <ion-label color="danger" stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
               <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" 
               placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
-            </ion-item>  
+            </ion-item>
+            
+            <ion-item>
+              <ion-label color="primary" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
+              <ion-label color="primary" > {{totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+            </ion-item>
+
+            <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
 
             <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>

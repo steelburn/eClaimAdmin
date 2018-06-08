@@ -99,10 +99,19 @@ export class EntertainmentclaimPage {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     if (this.isFormEdit)
       this.GetDataforEdit();
+      //this.modifiedImage();
     else {
       this.LoadCustomers();
       this.LoadProjects();
     }
+    // if (this.isFormEdit)
+    //   this.modifiedImage();
+    //   //this.modifiedImage();
+    // else {
+    //   this.LoadCustomers();
+    //   this.LoadProjects();
+    // }
+    //this.modifiedImage();
     this.Entertainmentform = fb.group({
       avatar: null,
       soc_no: '',
@@ -117,7 +126,8 @@ export class EntertainmentclaimPage {
   getCurrency(amount: number) {
     this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   }
-
+ 
+  imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
@@ -129,6 +139,20 @@ export class EntertainmentclaimPage {
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
+
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                this.ImageUploadValidation = true;
+                this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+
+                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                // this.editImage = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                //  this.ImageUploadValidation = true;
+
+                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                // this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                // this.ImageUploadValidation = true;
+
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
                   if (this.storeCustomers != undefined)
@@ -149,7 +173,7 @@ export class EntertainmentclaimPage {
                     });
                 }
                 this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
-                this.Entertainment_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                // this.Entertainment_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Entertainment_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
           });
@@ -254,6 +278,17 @@ export class EntertainmentclaimPage {
     // });
   } 
 
+  // editImage: any =null
+  // modifiedImage(){
+  //   this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+  //   .subscribe(data => {
+  //     this.claimRequestData = data["resource"];
+  //     if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+  //     this.editImage = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+  //   });
+  // }
+
+  //selectedImage: any =null
   onFileChange(event: any) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
