@@ -79,6 +79,12 @@ export class AddTollPage {
         return;
       }
     }
+    else {
+      if (this.Amount === undefined || this.Amount <= 0 || this.Amount === null || this.Amount === '') {
+        alert('Please enter valid Amount.')
+        return;
+      }
+    }
     if(this.ClaimDetailGuid===undefined || this.ClaimDetailGuid===null)
     {
     // alert(imageID)
@@ -177,7 +183,8 @@ export class AddTollPage {
     this.ClaimMethodGUID = this.navParams.get('ClaimMethod');
     this.ClaimMethodName = this.navParams.get('ClaimMethodName');
     this.ClaimDetailGuid = this.navParams.get('ClaimReqDetailGuid');
-    if(this.ClaimDetailGuid!==null&& this.ClaimDetailGuid!==undefined)
+    if(this.ClaimDetailGuid!==null  && this.ClaimDetailGuid!==undefined)
+    // && this.ClaimDetailGuid!==undefined
     {this.GetClaimDetailsByGuid();}
   }
 
@@ -225,7 +232,7 @@ export class AddTollPage {
     this.chooseFile = true;
   } 
   
-  isMA: any;
+  //isMA: any;
   // save() {
   //   let uploadImage = this.UploadImage();
   //   uploadImage.then((resJson) => {

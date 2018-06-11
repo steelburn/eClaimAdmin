@@ -135,7 +135,7 @@ export class LoginPage {
               localStorage.removeItem("g_ISHQ");
               localStorage.removeItem("g_IS_TENANT_ADMIN");
 
-              alert("Invalid login.")
+              alert("please enter valid login details.");
               this.login.username = "";
               this.login.password = "";
             }

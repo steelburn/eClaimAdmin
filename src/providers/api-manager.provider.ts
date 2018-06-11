@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
+import { ToastController ,AlertController} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import * as constants from '../config/constants';
 import { MainClaimRequestModel } from '../models/main-claim-request.model';
@@ -12,7 +13,7 @@ export class ApiManagerProvider {
     claimDetailsData :any[];
     result :any[];
 
-    constructor(public http: Http, public datepipe: DatePipe) { }
+    constructor(public http: Http, public toastCtrl: ToastController, public datepipe: DatePipe) { }
 
     LoadMainClaim(claimReqGUID:any) {
         let totalAmount: number;
@@ -252,7 +253,7 @@ export class ApiManagerProvider {
         //---------------------------------------------------------------
       }
       EmailNextApprover(CLAIM_REQUEST_GUID:string, CLAIM_REF_GUID: string, ASSIGNED_TO: string, CLAIM_TYPE_GUID: string, START_TS: string, END_TS: string, CREATION_TS: string, PROFILE_LEVEL: number) {
-        debugger;
+        //debugger;
         //email to applier as well as next approver    
         //let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_approver?filter=(CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + ') AND (PROFILE_LEVEL='+ PROFILE_LEVEL +')&api_key=' + constants.DREAMFACTORY_API_KEY;
         let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_approver?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -793,7 +794,6 @@ export class ApiManagerProvider {
           return items;
         });
         return items;
-      }
-
+      }    
 
 }

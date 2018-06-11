@@ -204,14 +204,17 @@ export class TravelclaimPage {
   // } 
   getCurrency(amount: number) {
     this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
+    this.totalClaimAmount = amount;
   }
 
   totalClaimAmount: number;
   ionViewWillEnter() {
+    if(!this.isFormEdit)
     this.LoadClaimDetails();
 
   }
 
+  imageURLEdit: any = null
   GetDataforEdit() {
     //TODO: Take data by Effective Date
     this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -227,6 +230,10 @@ export class TravelclaimPage {
                 this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
                   .subscribe(data => {
                     this.claimRequestData = data["resource"];
+
+                    if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                    this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+
                     if (this.claimRequestData[0].SOC_GUID === null) {
                       this.claimFor = 'seg_customer'
                       if (this.storeCustomers != undefined)
@@ -253,7 +260,8 @@ export class TravelclaimPage {
                     this.Travel_From_ngModel = this.claimRequestData[0].FROM;
                     this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
                     this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
-                    this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+                    this.travelAmountNgmodel = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+                    this.LoadClaimDetails();
                     this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
                     this.vehicles.forEach(element => {
                       if(this.claimRequestData[0].MILEAGE_GUID==='427b1ef9-6474-297c-acac-a430199ab882')
@@ -371,6 +379,7 @@ export class TravelclaimPage {
         if (!this.isPublicTransport)
           this.travelAmount = destination * this.VehicleRate, -2;
         this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
+        this.totalClaimAmount = this.travelAmount ;
         // this.Travel_Amount_ngModel 
       }
       else
@@ -550,7 +559,7 @@ export class TravelclaimPage {
   showMealAllowance(claimDetailGuid:string) {
    this.CloseTollParkLookup();
     this.api.getApiModel('claim_request_detail', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(CLAIM_METHOD_GUID=0ebb7e5f-ssha-11e8-a50c-ssh55de7e742)').subscribe(data => {
-      if (data['resource'].length != 1) { alert('data available'); return; }
+      //if (data['resource'].length != 1) { alert('data available'); return; }
       this.navCtrl.push(AddTollPage, {
         // MainClaim: localStorage.getItem("g_CR_GUID"),
         ClaimReqDetailGuid:claimDetailGuid,
@@ -786,7 +795,7 @@ export class TravelclaimPage {
         formValues.attachment_GUID = this.imageGUID;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
-        this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+        this.profileMng.save(formValues, this.travelAmountNgmodel, this.isCustomer)
         this.MainClaimSaved = true;
       }
       else {
@@ -799,8 +808,8 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.start_DT;
             this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
             this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
-            this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmount;
-            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.travelAmount;
+            this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmountNgmodel;
+            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.travelAmountNgmodel;
             this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
             this.claimRequestData["resource"][0].FROM = formValues.origin;
             this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
