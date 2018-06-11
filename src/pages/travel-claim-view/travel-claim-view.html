@@ -105,7 +105,7 @@
             <ion-label stacked> Receipt:
                 <br/>
                 <h3>
-                    <img src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
+                    <img  style="width: 25%" height="25%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
                 </h3>
             </ion-label>
         </ion-item>
@@ -115,7 +115,7 @@
                 <ion-icon name="eye"></ion-icon>
                 {{ "CLAIM_DETAILS_BUTTON" | translate }} </button>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="isApprover">
             <ion-label stacked> {{ "REMARKS_LABEL" | translate }} </ion-label>
             <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
         </ion-item>
@@ -155,12 +155,12 @@
                                 Receipt
                             </button>
                       
-                            <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
+                            <!-- <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
                                 <ion-icon name="md-create"></ion-icon>
                             </button>
                             <button ion-button item-end (click)="DeleteDetail(item.CLAIM_REQUEST_DETAIL_GUID)">
                                 <ion-icon name="md-close"></ion-icon>
-                            </button>
+                            </button> -->
                         </p>
                         <!-- <table class="Tabler" border='2'>
                             <tr class="linedsg TColor">
@@ -215,7 +215,7 @@
                         <ion-icon name="md-close"></ion-icon>
                     </button>
                 </ion-card-header>
-                <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
+                <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null">
     
             </ion-card>
         </div>

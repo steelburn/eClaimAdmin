@@ -386,7 +386,7 @@ submitAction(formValues: any) {
        // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
        this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
         {
-          alert('Claim details are submitted successfully.')
+          alert('Claim details updated successfully.')
           this.navCtrl.push(UserclaimslistPage);
        });
       })

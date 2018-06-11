@@ -178,7 +178,7 @@ export class OvertimeclaimPage {
       claim_amount: ['', Validators.required],
       attachment_GUID : '',  claimTypeGUID: '',
     });   
-  }
+  } 
 
   onFileChange(event: any) {
     const reader = new FileReader();
@@ -199,15 +199,15 @@ export class OvertimeclaimPage {
   }
  
    imageGUID: any;
-  saveIm(formValues: any) {
-    let uploadImage = this.UploadImage();
-    uploadImage.then((resJson) => {
-      // this.submitAction(this.uploadFileName, formValues);
-      this.imageGUID = this.uploadFileName;
-      this.chooseFile = false;
-      this.ImageUploadValidation=true;      
-    })    
-  }
+  // saveIm(formValues: any) {
+  //   let uploadImage = this.UploadImage();
+  //   uploadImage.then((resJson) => {
+  //     // this.submitAction(this.uploadFileName, formValues);
+  //     this.imageGUID = this.uploadFileName;
+  //     this.chooseFile = false;
+  //     this.ImageUploadValidation=true;      
+  //   })    
+  // }
 
   SaveImageinDB() {
     let objImage: ImageUpload_model = new ImageUpload_model();
@@ -380,7 +380,7 @@ export class OvertimeclaimPage {
           //this.claimRequestData[0].STATUS = 'Pending';
          // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
          this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res =>{
-            alert('Claim details are submitted successfully.')
+            alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
          });
         })

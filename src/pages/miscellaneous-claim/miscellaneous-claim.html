@@ -52,7 +52,7 @@
             <ion-item>
                 <ion-label color="primary" stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
                 <!-- <ion-label > {{travelAmount | number}} </ion-label> -->
-                <ion-input type="number" formControlName="claimAmount" [(ngModel)]="Miscellaneous_Amount_ngModel" ></ion-input>
+                <ion-input (change)='getCurrency($event.target.value)' type="number" formControlName="claimAmount" [(ngModel)]="Miscellaneous_Amount_ngModel" ></ion-input>
               </ion-item>
     
               <ion-item>
