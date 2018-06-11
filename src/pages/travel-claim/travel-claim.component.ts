@@ -204,14 +204,17 @@ export class TravelclaimPage {
   // } 
   getCurrency(amount: number) {
     this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
+    this.totalClaimAmount = amount;
   }
 
   totalClaimAmount: number;
   ionViewWillEnter() {
+    if(!this.isFormEdit)
     this.LoadClaimDetails();
 
   }
 
+  imageURLEdit: any = null
   GetDataforEdit() {
     //TODO: Take data by Effective Date
     this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -227,6 +230,10 @@ export class TravelclaimPage {
                 this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
                   .subscribe(data => {
                     this.claimRequestData = data["resource"];
+
+                    if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                    this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+
                     if (this.claimRequestData[0].SOC_GUID === null) {
                       this.claimFor = 'seg_customer'
                       if (this.storeCustomers != undefined)
@@ -372,6 +379,7 @@ export class TravelclaimPage {
         if (!this.isPublicTransport)
           this.travelAmount = destination * this.VehicleRate, -2;
         this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
+        this.totalClaimAmount = this.travelAmount ;
         // this.Travel_Amount_ngModel 
       }
       else

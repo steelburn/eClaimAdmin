@@ -105,7 +105,14 @@
               <ion-label color="danger" stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
               <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" 
               placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
-            </ion-item>  
+            </ion-item>
+            
+            <ion-item>
+              <ion-label color="primary" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
+              <ion-label color="primary" > {{totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+            </ion-item>
+
+            <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
 
             <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
@@ -202,11 +209,12 @@
               </ion-list>
             </ion-card>
           </div> 
-          
-          <div class="popup2" padding *ngIf="tollParkLookupClicked">
+          <div class="blackcontainer" *ngIf="tollParkLookupClicked">
+          </div>
+          <div class="popup1" padding *ngIf="tollParkLookupClicked">
               <ion-card>
                   <ion-card-header class="icTitle headerColor-white ">
-                      <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
+                      <div class="icHeaderText">Toll and Park Details</div>
                       <button class="btnR" (click)="CloseTollParkLookup()">
                           <ion-icon name="md-close"></ion-icon>
                       </button>
@@ -215,12 +223,12 @@
                       <ion-item>
                           <table class="Tabler" border='2'>
                               <tr class="linedsg TColor">
-                                  <th class="lgl1 tblBrLeft" style="width:40px">Receipt</th>
+                                  <th class="lgl1">Receipt</th>
                                   <th class="lgl1">Claim Method</th>
                                   <th class="lgl1">Amount</th>
                                   <th class="lgl1">Payment Mode</th>
                                   <th class="lgl1">Description</th>
-                                  <th class="lgl1 tblBrRight">ACTION</th>
+                                  <th class="lgl1">Action</th>
                                 </tr>
         
                               <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
@@ -233,7 +241,7 @@
                                   <td class="lgl1">{{item.CLAIM_METHOD}}</td>
                                   <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
                                   <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
-                                  <th class="lgl1">{{item.DESCRIPTION}}</th>
+                                  <td class="lgl1">{{item.DESCRIPTION}}</td>
         
                                   <td class="lgl1 fColor">
                                     <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
@@ -256,8 +264,9 @@
                   </ion-list>
               </ion-card>
           </div>
-
-          <div class="popup2" padding *ngIf="displayImage">
+          <div class="blackcontainer" *ngIf="displayImage">
+          </div>
+          <div class="popup1" padding *ngIf="displayImage">
             <ion-card>
                 <ion-card-header class="icTitle headerColor-white ">
                     <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
