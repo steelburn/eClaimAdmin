@@ -54,37 +54,8 @@ export class DashboardPage {
 
     // console.log(this.baseResourceUrl_New)
     this.GetDashboardInfo();
-  this.GetInfoForCards();
-    this.http
-      .get(this.baseResourceUrl_New)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.years_data = data["resource"];
-        console.log(this.years_data.length)
-
-        if (this.years_data.length == 0) {
-          this.years = [this.year_value - 1, this.year_value];
-          //this.Year_Change_ngModel = this.year_value;
-          //alert('No Records Found')
-          // this.navCtrl.push(SetupPage);
-          // this.Rejeted_Claim_Count; this.Rejected_Claim_Amount;
-          // this.Pending_Claim_Count; this.Pending_Claim_Amount;
-          // this.Approved_Claim_Count; this.Approved_Claim_Amount;
-          return;
-        }
-        else { }
-        this.years = this.years_data;
-
-
-        var uniqueYears = this.deduplicate(this.years);
-        //console.log(uniqueYears)
-        this.years = uniqueYears;
-
-        var SortuniqueYears = this.sortUnique(this.years);
-        //console.log(SortuniqueYears)
-        this.years = SortuniqueYears;
-      });
-     
+    this.GetInfoForCards();
+    this.GetData_Years();     
   }
   // Unique and Sort years
   sortUnique(arr: any) {
@@ -366,6 +337,35 @@ export class DashboardPage {
         this.Year_Card = data["resource"];
         // console.log('user '+this.baseResourceUrl_Card);
         // console.table(this.Year_Card);
+      });
+  }
+  GetData_Years()
+  {
+    this.http
+      .get(this.baseResourceUrl_New)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.years_data = data["resource"];
+        console.log(this.years_data.length)
+
+        if (this.years_data.length == 0) {
+          this.years = [this.year_value - 1, this.year_value];
+          //this.Year_Change_ngModel = this.year_value;
+          //alert('No Records Found')
+          // this.navCtrl.push(SetupPage);
+          // this.Rejeted_Claim_Count; this.Rejected_Claim_Amount;
+          // this.Pending_Claim_Count; this.Pending_Claim_Amount;
+          // this.Approved_Claim_Count; this.Approved_Claim_Amount;
+          return;
+        }
+        else { }
+        this.years = this.years_data;
+        var uniqueYears = this.deduplicate(this.years);
+        //console.log(uniqueYears)
+        this.years = uniqueYears;
+        var SortuniqueYears = this.sortUnique(this.years);
+        //console.log(SortuniqueYears)
+        this.years = SortuniqueYears;
       });
   }
   Rejected_Click(Rejected:any) {
