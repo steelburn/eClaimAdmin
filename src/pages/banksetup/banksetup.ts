@@ -120,14 +120,21 @@ export class BanksetupPage {
     }); alert.present();
   }
 
-  loading: Loading;
+  loading: Loading; button_Add_Disable:boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
   constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
     else {
-      if (localStorage.getItem("g_USER_GUID") != "sva") {
+      if (localStorage.getItem("g_USER_GUID") != "sva") {        
+        //Get the role for this page------------------------------
+        this.button_Add_Disable = true; this.button_Edit_Disable = true; this.button_Delete_Disable = true; this.button_View_Disable = true;
+        if(localStorage.getItem("g_KEY_ADD") == "1"){ this.button_Add_Disable = false; }
+        if(localStorage.getItem("g_KEY_EDIT") == "1"){ this.button_Edit_Disable = false; }
+        if(localStorage.getItem("g_KEY_DELETE") == "1"){ this.button_Delete_Disable = false; }
+        if(localStorage.getItem("g_KEY_VIEW") == "1"){ this.button_View_Disable = false; }
+
         //Clear localStorage value--------------------------------      
         this.ClearLocalStorage();
 
