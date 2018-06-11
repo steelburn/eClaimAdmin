@@ -70,6 +70,8 @@
                 <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>               
               </ion-item>
 
+              <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
+
               <div class="btn">     
                 <button ion-button color="primary500" (click)='submitAction(MiscellaneousForm.value)' [disabled]="(MiscellaneousForm.valid && !ImageUploadValidation) || !MiscellaneousForm.valid" >{{ 'SUBMIT'}}</button>               
              </div>

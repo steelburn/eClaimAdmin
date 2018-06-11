@@ -156,9 +156,28 @@ this.userClaimhistorydetails=this.userClaimhistorydetails1;
   }
   DeleteClaimRequest(claimReqGuid:any,claimTypeGuid:any)
   {
-    this.api.deleteApiModel('main_claim_request',claimReqGuid).subscribe(res =>{
-      this.BindData();
-       alert('Claim has been deleted successfully.')});
+       let alert1 = this.alertCtrl.create({
+        title: 'Confirm delete claim',
+        message: 'Are you sure you want to delete this claim?',
+        buttons: [
+            {
+                text: 'No',
+                handler: () => {
+                    return
+                }
+            },
+            {
+                text: 'Yes',
+                handler: () => {
+                  this.api.deleteApiModel('main_claim_request',claimReqGuid).subscribe(res =>{
+                    this.BindData();
+                    alert('Claim has been deleted successfully.')
+                  });
+                }
+            }
+        ]
+    })
+    alert1.present();
   }
 
   ionViewDidLoad() {

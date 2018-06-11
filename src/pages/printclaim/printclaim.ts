@@ -94,6 +94,7 @@ export class PrintclaimPage {
     this.Printing_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   }
 
+  imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
@@ -105,6 +106,12 @@ export class PrintclaimPage {
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
+
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                this.ImageUploadValidation = true;
+                this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+                
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
                   if (this.storeCustomers != undefined)
@@ -125,7 +132,7 @@ export class PrintclaimPage {
                     });
                 }
                 this.Printing_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
-                this.Printing_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                // this.Printing_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Printing_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
           });
