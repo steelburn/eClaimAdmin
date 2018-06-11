@@ -9,7 +9,7 @@
   <!-- <ion-navbar>
     <ion-title>dashboard</ion-title>
   </ion-navbar> -->
-  <ion-navbar color="primary500">
+  <ion-navbar color="primary500" hideBackButton="true">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -90,7 +90,7 @@
   </ion-row>
 </ion-grid>
 
-<ion-card *ngFor="let year of Year_Card" (click)="Rejected_Click()">
+<ion-card *ngFor="let year of Year_Card" (click)="Rejected_Click()"  class="round2">
   <ion-card-header style="background:red;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;" ><h2 style="color:white !important">Rejected</h2></ion-card-header>
   <ion-card-content text-center>
      
@@ -108,7 +108,7 @@
 </ion-card>
 
 
-<ion-card  *ngFor="let year of Year_Card" (click)="Pending_Click()">
+<ion-card  *ngFor="let year of Year_Card" (click)="Pending_Click()"  class="round2">
     <ion-card-header style="background:orange;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;" ><h2 style="color:white !important">Pending</h2></ion-card-header>
     <ion-card-content text-center>
        
@@ -125,7 +125,7 @@
 
   </ion-card>
 
-  <ion-card *ngFor="let year of Year_Card" (click)="Approved_Click()">
+  <ion-card *ngFor="let year of Year_Card" (click)="Approved_Click()"  class="round2">
       <ion-card-header style="background:lightgreen;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;" ><h2 style="color:white !important">Approved</h2></ion-card-header>
       <ion-card-content text-center>
          
