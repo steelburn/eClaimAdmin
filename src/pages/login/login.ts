@@ -95,11 +95,11 @@ export class LoginPage {
               //Setup Guide for only Hq Users
               if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
                 //this.navCtrl.push(SetupguidePage);
-                this.navCtrl.push(DashboardPage);
+                this.navCtrl.push(DashboardPage); 
               }
               else {
                 //this.navCtrl.push(SetupPage);
-                this.navCtrl.push(DashboardPage);
+                this.navCtrl.push(DashboardPage); 
               }
 
               //Get the role of that particular user----------------------------------------------
