@@ -1,4 +1,5 @@
 <ion-header>
+
         <ion-navbar color="primary500">
             <button ion-button menuToggle>
                 <ion-icon name="menu"></ion-icon>
@@ -162,44 +163,9 @@
                                 <ion-icon name="md-close"></ion-icon>
                             </button> -->
                         </p>
-                        <!-- <table class="Tabler" border='2'>
-                            <tr class="linedsg TColor">
-                                <th class="lgl1 tblBrLeft" style="width:40px">Receipt</th>
-                                <th class="lgl1">Claim Method</th>
-                                <th class="lgl1">Amount</th>
-                                <th class="lgl1">Payment Mode</th>
-                                <th class="lgl1">Description</th>
-                                <th class="lgl1 tblBrRight">ACTION</th>
-                            </tr>
-    
-                            <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
-                      
-                                <td class="lgl1">
-                                    <button (click)="DisplayImage(item.ATTACHMENT_ID)">
-                                        Receipt
-                                    </button>
-                                </td>
-                                <td class="lgl1">{{item.CLAIM_METHOD}}</td>
-                                <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
-                                <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
-                                <th class="lgl1">{{item.DESCRIPTION}}</th>
-    
-                                <td class="lgl1 fColor">
-                                    <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
-                                        <ion-icon name="md-create"></ion-icon>
-                                    </button>
-                                    <button ion-button item-end (click)="DeleteDetail(item.CLAIM_REQUEST_DETAIL_GUID)">
-                                        <ion-icon name="md-close"></ion-icon>
-                                    </button>
-                                </td>
-                            </tr>
-    
-                        </table> -->
-    
-                    </ion-item>
-    
-    
-                </ion-list>
+                      </ion-item>
+                  </ion-list>
+
                 <ion-item>
                     <ion-label> {{ "TOTAL_AMOUNT_LABEL" | translate }} </ion-label>
                     <ion-label> {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
@@ -221,3 +187,4 @@
         </div>
     
     </ion-content>
+

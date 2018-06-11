@@ -284,6 +284,14 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
      table-layout:fixed; 
 }
 
+.Tabler tr.col7 td {
+    padding: 10px;
+	text-align: center;
+	word-wrap: break-word;
+	border: none;
+	border-bottom: 1px solid gainsboro;
+}
+
     tr.colth {
         color: white;
     }
@@ -294,15 +302,7 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
         
     }
         
-    td.lgl1 {
-        
-        padding: 2px;
-        text-align: center;
-        word-wrap: break-word;
-        border: none;
-        border-bottom: 1px solid gainsboro;
-        white-space: normal !important;
-    }
+
 
         th.lgl2 {
         padding: 5px 5px;
@@ -312,12 +312,12 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
         
     td.lgl2 {
         font-size: 14px;
-        padding: 2px;
-        text-align: center;
-        word-wrap: break-word;
-        border: none;
-        border-bottom: 1px solid gainsboro;
-        white-space: normal !important;
+         padding: 2px;
+         text-align: center;
+       word-wrap: break-word;
+       border: none;
+         border-bottom: 1px solid gainsboro;
+         white-space: normal !important;
     }
 
     .tblBrLeft { border-radius: 5px 0 0 5px !important;}
