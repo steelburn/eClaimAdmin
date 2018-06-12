@@ -52,7 +52,9 @@ export class UserclaimslistPage {
   searchboxValue: string;
 
   
-  constructor( private alertCtrl: AlertController,private api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
+
+  constructor( private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
+
   //  this.claimrefguid=navParams.get("claimRefGuid");
   //  this.userguid=navParams.get("userGuid");
   //  this.month=navParams.get("Month");

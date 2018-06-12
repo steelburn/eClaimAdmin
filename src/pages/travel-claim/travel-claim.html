@@ -258,7 +258,7 @@
                       </ion-item>
                       <ion-item>
                           <ion-label> {{ "TOTAL_AMOUNT_LABEL" | translate }} </ion-label>
-                          <ion-label> {{ tollParkAmount }} </ion-label>
+                          <ion-label> {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
                       </ion-item>
         
                   </ion-list>

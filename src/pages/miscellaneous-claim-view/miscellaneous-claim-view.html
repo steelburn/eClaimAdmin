@@ -5,16 +5,10 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{ "MISCELLANEOUS_CLAIM_HEADING" | translate }}</ion-title>
-
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding *ngFor="let claim of claimRequestData">
-    <ion-item>
-        <ion-label>Miscellaneous Claim View </ion-label>
-    </ion-item>
+<ion-content padding *ngFor="let claim of claimRequestData">    
     <ion-item>
         <ion-label > {{ "CLAIM_APPLIED_DATE_LABEL" | translate }} : </ion-label>
         <ion-label> {{ claim.CREATION_TS |date }} </ion-label>
@@ -34,7 +28,9 @@
       <ion-label> {{ claim.SOC }} </ion-label>
   </ion-item>
     <ion-item>
-        <ion-label > {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} : </ion-label>
+
+        <ion-label > {{ "CLAIM_AMOUNT_LABEL" | translate }} </ion-label>      
+
         <ion-label> {{ this.totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2' }} </ion-label>
     </ion-item>
     <ion-item>
@@ -50,8 +46,10 @@
         <ion-label> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
     <ion-item>
-            <ion-label>Receipt ： </ion-label>
-        <img src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
+
+ <ion-label>Receipt ： </ion-label>
+        <img style="width: 25%" height="50%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">           
+       
     </ion-item>
 
  
