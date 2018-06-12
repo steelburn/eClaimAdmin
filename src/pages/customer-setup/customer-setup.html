@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary500">
     <ion-title>Customer Registration</ion-title>
   </ion-navbar>
 
@@ -34,9 +34,9 @@
 
         <tr class="col7" *ngFor="let customer of customers; let i=index">
           <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{customer.CUSTOMER_NAME}}</td>
-          <td class="lgl1">{{customer.CUSTOMER_LOCATION_NAME}}</td>
-          <td class="lgl1">{{customer.EMAIL}}</td>          
+          <td class="lgl1" text-wrap>{{customer.CUSTOMER_NAME}}</td>
+          <td class="lgl1" text-wrap>{{customer.CUSTOMER_LOCATION_NAME}}</td>
+          <td class="lgl1" text-wrap>{{customer.EMAIL}}</td>          
           <td class="lgl1">{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
           <td class="lgl1 fColor">
             <button ion-button item-end>
