@@ -22,10 +22,10 @@
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft">No.</th>
+          <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
           <th class="lgl1">{{ 'BANK_NAME_HEADING' | translate }}</th>
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-          <th class="lgl1 tblBrRight">{{ 'ACTION' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let bank of banks; let i=index" [hidden] = "button_View_Disable">

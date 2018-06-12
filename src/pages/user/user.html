@@ -3,8 +3,8 @@
     <ion-navbar color="primary500">
         <ion-title>{{ 'USER_REGISTRATION_HEADING' | translate }}</ion-title>
     </ion-navbar>
-    <ion-toolbar no-border-top>
-        <ion-searchbar color="primary" placeholder="Search"></ion-searchbar>
+    <ion-toolbar no-border-top  color="primary500">
+        <ion-searchbar placeholder="Search"></ion-searchbar>
     </ion-toolbar>
 </ion-header>
 
@@ -22,15 +22,15 @@
             <table class="Tabler">
                 <tr class="linedsg TColor">
 
-                    <th class="lgl1 tblBrLeft" style="width:60px">NO</th>
+                    <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
                     <th class="lgl1">{{ 'NAME' | translate }}</th>
-                    <th class="lgl1">{{ 'STAFF ID' | translate }}</th>
+                    <th class="lgl1">{{ 'Staff ID' | translate }}</th>
                     <th class="lgl1">{{ 'COMPANY' | translate }}</th>
                     <th class="lgl1">{{ 'DEPARTMENT' | translate }}</th>
                     <th class="lgl1">{{ 'DESIGNATION' | translate }}</th>
                     <th class="lgl1">{{ 'EMAIL' | translate }}</th>
                     <!-- <th class="lgl1">{{ 'LOGINID' | translate }}</th> -->
-                    <th class="lgl1">{{ 'JOINING DATE' | translate }}</th>
+                    <th class="lgl1">{{ 'Joining Date' | translate }}</th>
                     <th class="lgl1">{{ 'STATUS' | translate }}</th>
 
                     <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
@@ -39,13 +39,13 @@
                 <tr class="col7" *ngFor="let user of userview; let i=index">
 
                     <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{user.FULLNAME}}</td>
+                    <td class="lgl1" text-wrap>{{user.FULLNAME}}</td>
                     <!-- <td class="lgl1">{{user.PERSONAL_ID}}</td> -->
                     <td class="lgl1">{{user.STAFF_ID}}</td>
-                    <td class="lgl1">{{user.tenant_company_name}}, {{user.SITE_NAME}} </td>
-                    <td class="lgl1">{{user.department_name}}</td>
-                    <td class="lgl1">{{user.designation_name}}</td>
-                    <td class="lgl1">{{user.EMAIL}}</td>
+                    <td class="lgl1" text-wrap>{{user.tenant_company_name}} </td>
+                    <td class="lgl1" text-wrap>{{user.department_name}}</td>
+                    <td class="lgl1" text-wrap>{{user.designation_name}}</td>
+                    <td class="lgl1" text-wrap>{{user.EMAIL}}</td>
                     <td class="lgl1">{{user.JOIN_DATE | date:'dd/MM/yyyy'}}</td>
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
 
