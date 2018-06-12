@@ -339,7 +339,7 @@ export class MiscellaneousClaimPage {
           }
          this.api.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
           {
-            alert('Claim details are submitted successfully.')
+            alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
          });
         })

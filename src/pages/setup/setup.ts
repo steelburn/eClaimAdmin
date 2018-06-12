@@ -26,6 +26,7 @@ import { TenantCompanySiteSetup_Service } from '../../services/tenantcompanysite
 import { BaseHttpService } from '../../services/base-http';
 
 import { CustomerSetupPage } from '../customer-setup/customer-setup';
+import { SetupguidePage } from '../setupguide/setupguide';
 
 import { UUID } from 'angular2-uuid';
 
@@ -158,6 +159,10 @@ export class SetupPage {
     else {
       this.navCtrl.push(LoginPage);
     }
+  }
+
+  goToSetupGuide(){
+    this.navCtrl.push(SetupguidePage);
   }
 
   goToBanksetup() {

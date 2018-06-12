@@ -94,12 +94,33 @@ export class LoginPage {
 
               //Setup Guide for only Hq Users
               if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
-                this.navCtrl.push(SetupguidePage);
+                //this.navCtrl.push(SetupguidePage);
+                this.navCtrl.push(DashboardPage); 
               }
               else {
                 //this.navCtrl.push(SetupPage);
-                this.navCtrl.push(DashboardPage);
+                this.navCtrl.push(DashboardPage); 
               }
+
+              //Get the role of that particular user----------------------------------------------
+              let role_url: string = "";
+              role_url = this.baseResource_Url + "view_role_display?filter=(USER_GUID=" + res[0]["USER_GUID"] + ')and(ROLE_PRIORITY_LEVEL=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+              this.http
+                .get(role_url)
+                .map(res => res.json())
+                .subscribe(data => {
+                  let role_result = data["resource"];
+                  if (role_result.length > 0) {
+                    localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
+                    localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
+                    localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
+                    localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
+                  }
+                  else{
+                    localStorage.setItem("g_KEY_VIEW", "1");
+                  }
+                });
+              //----------------------------------------------------------------------------------
 
               //navigate to app.component page
               this.userData.login(this.login.username);
