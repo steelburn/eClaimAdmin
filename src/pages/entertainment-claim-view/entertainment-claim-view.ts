@@ -68,7 +68,7 @@ export class EntertainmentClaimViewPage {
         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
         console.log(this.totalClaimAmount);
-        console.log(element.MILEAGE_AMOUNT);
+        console.log(element.MILEAGE_AMOUNT); 
       });
     })
 }
