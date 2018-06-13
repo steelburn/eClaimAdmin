@@ -64,7 +64,7 @@ export class UserclaimslistPage {
     
     // this.onSearchInput();
     
-    this.BindData();
+    
     this.Rejected = navParams.get("Rejected");
     this.Pending = navParams.get("Pending");
     this.Approved = navParams.get("Approved");
@@ -74,6 +74,8 @@ export class UserclaimslistPage {
     {
       this.onSearchInput();
     }
+    else{this.BindData();}
+   
     this.getuserDetails();
   }
 
