@@ -15,7 +15,7 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddPaymenttypeClick()">
+    <button ion-fab mini (click)="AddPaymenttypeClick()" [disabled]="button_Add_Disable">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
@@ -31,16 +31,16 @@
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let paymenttype of paymenttypes; let i=index">
+        <tr class="col7" *ngFor="let paymenttype of paymenttypes; let i=index" [hidden]="button_View_Disable">
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{paymenttype.NAME}}</td>
           <td class="lgl1" style="display: none;">{{paymenttype.DESCRIPTION}}</td>
           <td class="lgl1" *ngIf="AdminLogin">{{paymenttype.TENANT_ACCOUNT_NAME}}</td>
           <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(paymenttype.PAYMENT_TYPE_GUID)">
+            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(paymenttype.PAYMENT_TYPE_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
-            <button ion-button item-end (click)="DeleteClick(paymenttype.PAYMENT_TYPE_GUID)">
+            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(paymenttype.PAYMENT_TYPE_GUID)">
               <ion-icon name="md-close"></ion-icon>
             </button>
           </td>

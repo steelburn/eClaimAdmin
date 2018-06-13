@@ -12,7 +12,7 @@
 <ion-content padding>
 
     <ion-fab top right edge>
-        <button ion-fab mini (click)="AddUserClick()">
+        <button ion-fab mini (click)="AddUserClick()" [disabled]="button_Add_Disable">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
@@ -36,7 +36,7 @@
                     <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of userview; let i=index">
+                <tr class="col7" *ngFor="let user of userview; let i=index" [hidden]="button_View_Disable">
 
                     <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1" text-wrap>{{user.FULLNAME}}</td>
@@ -53,10 +53,10 @@
 
 
                     <td class="lgl1 fColor">
-                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
+                        <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick_Personaldetails(user.USER_GUID)">
                             <ion-icon name="md-create"></ion-icon>
                         </button>
-                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
+                        <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(user.USER_GUID)">
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </td>
@@ -659,9 +659,9 @@
                     <ion-item>
                         <ion-label stacked>{{"Role"}}</ion-label>
                         <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Add" placeholder="{{'Please select role'}}" multiple="true">
-                          <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                            <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
-                      </ion-item>
+                    </ion-item>
 
                     <div class="btn">
                         <button ion-button icon-left [disabled]="!Userform.valid" (click)="Save()">
@@ -1143,9 +1143,9 @@
                     <ion-item>
                         <ion-label stacked>{{"Role"}}</ion-label>
                         <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}" multiple="true">
-                          <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                            <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
-                      </ion-item>
+                    </ion-item>
 
                     <div class="btn">
                         <button ion-button [disabled]="!Userform.valid" (click)="Update(view_user_details[0].USER_GUID)">{{"SUBMIT" | translate}}</button>
