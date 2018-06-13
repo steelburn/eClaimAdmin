@@ -1,5 +1,5 @@
-import { IonicPage, NavController, NavParams, Config } from 'ionic-angular';
-import { Component, NgModule, ElementRef, Inject, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,LoadingController,Loading, Config } from 'ionic-angular';
+import { Component, NgModule, ElementRef, Inject, ViewChild, OnChanges } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
@@ -35,12 +35,13 @@ export class DashboardPage {
   CurrentMonthNumber: any;
   DashboardForm: FormGroup;
   years: any; years_data: any;
-  Rejeted_Claim_Count = 0; Rejected_Claim_Amount = 0;
+  Rejected_Claim_Count = 0; Rejected_Claim_Amount = 0;
   Pending_Claim_Count = 0; Pending_Claim_Amount = 0;
   Approved_Claim_Count = 0; Approved_Claim_Amount = 0;
   baseResourceUrl_Card: any; Year_Card: any;
+  loading: Loading;
   constructor(public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
-    public inAppBrowser: InAppBrowser) {
+    public inAppBrowser: InAppBrowser, private loadingCtrl: LoadingController) {
     this.DashboardForm = fb.group({
       'Month': [null, Validators.compose([Validators.required])],
       'Year': [null, Validators.compose([Validators.required])]
@@ -78,31 +79,21 @@ export class DashboardPage {
       return result;
     }
   }
-  ngOnInit() {
-    // register plugin
-
-    Chart.plugins.register({
-
-      beforeDraw: function (chart: any) {
+  
+  ngOnInit() {     
+    // this.loading = this.loadingCtrl.create({
+    //   content: 'Loading...',
+    // });
+    // this.loading.present();  
+    // register plugin       
+    Chart.plugins.register({     
+      beforeDraw: function (chart: any) {     
         var data = chart.data.datasets[0].data;
         var sum = data.reduce(function (a: any, b: any) {
-
-          //return a.toFixed(2) + b.toFixed(2);
-          // a=a.toFixed(2);
-          // b=b.toFixed(2)
           var x = a + b;
           var y = parseFloat(x.toFixed(2));
           return y;
-
-          //return Math.round(a + b);
-          //   var x = a + b;
-          //  var y = Math.round(x * 100)/100;
-          //   var result= y.toFixed(2);
-          //   return result;
-
-
-
-        }, 0);
+          }, 0);
         var width = chart.chart.width,
           height = chart.chart.height,
           ctx = chart.chart.ctx;
@@ -111,36 +102,24 @@ export class DashboardPage {
         ctx.font = fontSize + "px Verdana";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "blue";
-        if (sum != 0) {
-
+         
+       if (sum != 0) {
           var text = sum,
             textX = Math.round((width - ctx.measureText(text).width) / 2),
             textY = height / 2;
-
-          // this.doughnutChartOptions =  {legend: {
-          //   display: true,
-          //   position: 'bottom'
-          // },}
-          // this.claimAmountOptions =  {legend: {
-          //   display: true,
-          //   position: 'bottom'
-          // },}
-
-
-
         }
         else {
           text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
             textY = height / 2;
         }
         ctx.fillText(text, textX, textY);
-        ctx.save();
-      }
-
+        ctx.save();             
+      }     
     });
-
+    // this.loading.dismissAll();
   }
   ionViewDidLoad() {
+    
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
@@ -281,7 +260,7 @@ export class DashboardPage {
           this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
 
           // For Display Data In Ion-cards
-          this.Rejeted_Claim_Count = this.claimrequestdetails.RejectedReqCount;
+          this.Rejected_Claim_Count = this.claimrequestdetails.RejectedReqCount;
           this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
           this.Approved_Claim_Count = this.claimrequestdetails.ApprovedReqCount;
 
@@ -315,7 +294,7 @@ export class DashboardPage {
 
 
           // For Display Data In Ion-cards
-          this.Rejeted_Claim_Count = 0;
+          this.Rejected_Claim_Count = 0;
           this.Pending_Claim_Count = 0;
           this.Approved_Claim_Count = 0;
 
@@ -340,22 +319,16 @@ export class DashboardPage {
       });
   }
   GetData_Years() {
-    this.http
+       this.http
       .get(this.baseResourceUrl_New)
       .map(res => res.json())
       .subscribe(data => {
         this.years_data = data["resource"];
         // console.log(this.years_data.length)
-
+       
         if (this.years_data.length == 0) {
           this.years = [this.year_value - 1, this.year_value];
-          //this.Year_Change_ngModel = this.year_value;
-          //alert('No Records Found')
-          // this.navCtrl.push(SetupPage);
-          // this.Rejeted_Claim_Count; this.Rejected_Claim_Amount;
-          // this.Pending_Claim_Count; this.Pending_Claim_Amount;
-          // this.Approved_Claim_Count; this.Approved_Claim_Amount;
-          return;
+             return;
         }
         else { }
         this.years = this.years_data;
@@ -366,6 +339,7 @@ export class DashboardPage {
         //console.log(SortuniqueYears)
         this.years = SortuniqueYears;
       });
+      
   }
   Rejected_Click(Rejected: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Rejected: "Rejected" });
