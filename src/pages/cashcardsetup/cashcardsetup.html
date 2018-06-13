@@ -13,7 +13,7 @@
 
 <ion-content padding>
     <ion-fab top right edge>
-        <button ion-fab mini (click)="AddCashClick()">
+        <button ion-fab mini (click)="AddCashClick()" [disabled]="button_Add_Disable">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
@@ -33,7 +33,7 @@
                     <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let cashcard of cashcards; let i=index">
+                <tr class="col7" *ngFor="let cashcard of cashcards; let i=index" [hidden] = "button_View_Disable">
                     <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{cashcard.CASHCARD_SNO}}</td>
                     <td class="lgl1">{{cashcard.ACCOUNT_ID}}</td>
@@ -42,10 +42,10 @@
                     <td class="lgl1" style="display: none;">{{cashcard.DESCRIPTION}}</td>
                     <td class="lgl1" *ngIf="AdminLogin">{{cashcard.TENANT_ACCOUNT_NAME}}</td>
                     <td class="lgl1 fColor">
-                        <button ion-button item-end (click)="EditClick(cashcard.CASHCARD_GUID)">
+                        <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(cashcard.CASHCARD_GUID)">
                             <ion-icon name="md-create"></ion-icon>
                         </button>
-                        <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)">
+                        <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(cashcard.CASHCARD_GUID)">
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </td>
