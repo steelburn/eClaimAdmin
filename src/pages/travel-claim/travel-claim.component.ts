@@ -129,6 +129,7 @@ export class TravelclaimPage {
     this.LoadVehicles();
   }
     this.Travelform = fb.group({
+      avatar1: null,
       avatar: null,
       soc_no: '',
       distance: '', 
@@ -233,6 +234,10 @@ export class TravelclaimPage {
 
                     if (this.claimRequestData[0].ATTACHMENT_ID !== null)
                     this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                    this.PublicTransValue = true;
+                    this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+                    this.totalClaimAmount = this.travelAmount =this.claimRequestData[0].MILEAGE_AMOUNT;
+
 
                     if (this.claimRequestData[0].SOC_GUID === null) {
                       this.claimFor = 'seg_customer'
@@ -260,7 +265,7 @@ export class TravelclaimPage {
                     this.Travel_From_ngModel = this.claimRequestData[0].FROM;
                     this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
                     this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
-                    this.travelAmountNgmodel = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+                    //this.travelAmountNgmodel = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
                     this.LoadClaimDetails();
                     this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
                     this.vehicles.forEach(element => {
@@ -330,6 +335,7 @@ export class TravelclaimPage {
   }
 
   LoadClaimDetails() {
+    this.tollParkAmount =0;
     return new Promise((resolve, reject) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
@@ -626,9 +632,29 @@ export class TravelclaimPage {
     //this.PublicTransValue = true;
     // this.PublicTransValue = false;
 
+    this.ImageUploadValidation=false;
+  }
+
+  fileName1: string;
+  ProfileImage: any;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+
+      const file = e.target.files[0];
+      this.Travelform.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.onFileChange(e);
     this.ImageUploadValidation=true;
-
-
   }
 
  // imageGUID: any;
@@ -662,6 +688,7 @@ export class TravelclaimPage {
         //this.disableButton = true;
         //this.PublicTransValue = false;
          this.PublicTransValue = true;
+         this.chooseFile = false;
 
         this.ImageUploadValidation=false;
 
@@ -826,7 +853,7 @@ export class TravelclaimPage {
             }
 
             this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
-              alert('Claim details are submitted successfully.')
+              alert('Claim details updated successfully.')
               this.navCtrl.push(UserclaimslistPage);
             })
           })

@@ -113,6 +113,7 @@ export class EntertainmentclaimPage {
     // }
     //this.modifiedImage();
     this.Entertainmentform = fb.group({
+      avatar1: null,
       avatar: null,
       soc_no: '',
       travel_date: ['', Validators.required],
@@ -288,8 +289,8 @@ export class EntertainmentclaimPage {
   //   });
   // }
 
-  //selectedImage: any =null
-  onFileChange(event: any) {
+  selectedImage: any =null
+  onFileChange(event: any, ) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -304,7 +305,31 @@ export class EntertainmentclaimPage {
       };
     }
     // this.ImageUploadValidation=true;
+    //this.chooseFile = true;
+    //this.imageGUID = imageGUID
+    //this.imageGUID ="E:/img4.jpg"; 
+    //this.ProfileImageDisplay();   
+  }
+
+  fileName1: string;
+  ProfileImage: any;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+
+      const file = e.target.files[0];
+      this.Entertainmentform.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
     this.chooseFile = true;
+    this.onFileChange(e);
   }
 
   imageGUID: any;
@@ -396,7 +421,7 @@ export class EntertainmentclaimPage {
          // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
          this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
           {
-            alert('Claim details are submitted successfully.')
+            alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
          });
         })

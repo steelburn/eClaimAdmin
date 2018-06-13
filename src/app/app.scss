@@ -219,6 +219,7 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     border-bottom: 1px solid !important;
     margin-bottom: 0px !important;
     padding: 10px !important;
+    background: #00A86B;
 }
 
 
@@ -354,9 +355,10 @@ ion-item.item.item-block.item-md.item-checkbox {
 
 .split-pane-md.split-pane-visible > .split-pane-side {
     min-width: 264px;
-    max-width: 22%;
+    max-width: 20%;
     border-right: 1px solid #dedede;
     border-left: 0;
+    font-size: xx-small !important;
 }
 
 

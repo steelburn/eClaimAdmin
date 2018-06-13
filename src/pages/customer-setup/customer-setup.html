@@ -34,9 +34,9 @@
 
         <tr class="col7" *ngFor="let customer of customers; let i=index" [hidden]="button_View_Disable">
           <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{customer.CUSTOMER_NAME}}</td>
-          <td class="lgl1">{{customer.CUSTOMER_LOCATION_NAME}}</td>
-          <td class="lgl1">{{customer.EMAIL}}</td>          
+          <td class="lgl1" text-wrap>{{customer.CUSTOMER_NAME}}</td>
+          <td class="lgl1" text-wrap>{{customer.CUSTOMER_LOCATION_NAME}}</td>
+          <td class="lgl1" text-wrap>{{customer.EMAIL}}</td>          
           <td class="lgl1">{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
           <td class="lgl1 fColor">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)">

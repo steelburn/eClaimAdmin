@@ -157,6 +157,7 @@ export class GiftclaimPage {
     } 
  
   this.Giftform = fb.group({ 
+    avatar1: null,
     avatar: null,
     soc_no: '',   
     travel_date:  ['', Validators.required],
@@ -193,7 +194,28 @@ onFileChange(event: any) {
       });
     };
   }
+  //this.chooseFile = true;
+}
+
+fileName1: string;
+ProfileImage: any;
+private ProfileImageDisplay(e: any, fileChoose: string): void {
+  let reader = new FileReader();
+  if (e.target.files && e.target.files[0]) {
+
+    const file = e.target.files[0];
+    this.Giftform.get(fileChoose).setValue(file);
+    if (fileChoose === 'avatar1')
+      this.fileName1 = file.name;
+
+    reader.onload = (event: any) => {
+      this.ProfileImage = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  }
+  this.imageGUID = this.uploadFileName;
   this.chooseFile = true;
+  this.onFileChange(e);
 }
 
 imageGUID: any;
@@ -386,7 +408,7 @@ submitAction(formValues: any) {
        // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
        this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
         {
-          alert('Claim details are submitted successfully.')
+          alert('Claim details updated successfully.')
           this.navCtrl.push(UserclaimslistPage);
        });
       })
