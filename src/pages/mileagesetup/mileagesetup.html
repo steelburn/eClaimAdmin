@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary500">
     <ion-title>{{ 'MILEAGE_SETUP_HEADING' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
@@ -14,7 +14,7 @@
 <ion-content padding>
 
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddMileageClick()">
+    <button ion-fab mini (click)="AddMileageClick()" [disabled]="button_Add_Disable">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
@@ -34,7 +34,7 @@
 
         </tr>
 
-        <tr class="col7" *ngFor="let mileage of mileages; let i=index">
+        <tr class="col7" *ngFor="let mileage of mileages; let i=index" [hidden] = "button_View_Disable">
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{mileage.CATEGORY}}</td>
           <td class="lgl1">{{mileage.RATE_PER_UNIT | number : '1.2-2'}}</td>
@@ -45,10 +45,10 @@
           </td>
           <td class="lgl1" *ngIf="AdminLogin">{{mileage.TENANT_ACCOUNT_NAME}}</td>
           <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(mileage.MILEAGE_GUID)">
+            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(mileage.MILEAGE_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
-            <button ion-button item-end (click)="DeleteClick(mileage.MILEAGE_GUID)">
+            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(mileage.MILEAGE_GUID)">
               <ion-icon name="md-close"></ion-icon>
             </button>
           </td>

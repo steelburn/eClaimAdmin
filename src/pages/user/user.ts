@@ -457,11 +457,11 @@ export class UserPage {
       .get(User_Role_url)
       .map(res => res.json())
       .subscribe(data => {
-        this.roles = data.resource;        
+        this.roles = data.resource;
         for (var itemA in this.roles) {
           CheckRole.push(this.roles[itemA]["ROLE_GUID"]);
         }
-        this.ROLE_ngModel_Edit = CheckRole;        
+        this.ROLE_ngModel_Edit = CheckRole;
       });
   }
 
@@ -495,7 +495,17 @@ export class UserPage {
     }); alert.present();
   }
 
+  button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: Transfer, public toastCtrl: ToastController, public platform: Platform, private fileTransfer_new: FileTransfer, private titlecasePipe: TitleCasePipe) {
+    this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      //Get the role for this page------------------------------        
+      if (localStorage.getItem("g_KEY_ADD") == "0") { this.button_Add_Disable = true; }
+      if (localStorage.getItem("g_KEY_EDIT") == "0") { this.button_Edit_Disable = true; }
+      if (localStorage.getItem("g_KEY_DELETE") == "0") { this.button_Delete_Disable = true; }
+      if (localStorage.getItem("g_KEY_VIEW") == "0") { this.button_View_Disable = true; }
+    }
+
     //this.ProfileImageGet();
     if (localStorage.getItem("g_USER_GUID") != null) {
       //---------Bind Designation-----------------      
@@ -2167,7 +2177,7 @@ export class UserPage {
     this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_role")
       .subscribe(
         (response) => {
-          if (response.status == 200) {            
+          if (response.status == 200) {
             //Insert Record again---------------------------------------------------------------------
             for (var ROLE_GUID of this.ROLE_ngModel_Edit) {
               this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
