@@ -38,7 +38,7 @@ export class DashboardPage {
   Rejeted_Claim_Count = 0; Rejected_Claim_Amount = 0;
   Pending_Claim_Count = 0; Pending_Claim_Amount = 0;
   Approved_Claim_Count = 0; Approved_Claim_Amount = 0;
-  baseResourceUrl_Card:any;Year_Card:any;
+  baseResourceUrl_Card: any; Year_Card: any;
   constructor(public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
     public inAppBrowser: InAppBrowser) {
     this.DashboardForm = fb.group({
@@ -55,7 +55,7 @@ export class DashboardPage {
     // console.log(this.baseResourceUrl_New)
     this.GetDashboardInfo();
     this.GetInfoForCards();
-    this.GetData_Years();     
+    this.GetData_Years();
   }
   // Unique and Sort years
   sortUnique(arr: any) {
@@ -251,14 +251,14 @@ export class DashboardPage {
 
     if (this.month_value != undefined) {
       this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      console.log('hi ' + this.baseResourceUrl)
+      // console.log('hi ' + this.baseResourceUrl)
     }
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = data["resource"][0];
-        console.table(this.claimrequestdetails)
+        // console.table(this.claimrequestdetails)
         if (data["resource"][0] != null) {
           var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
           var pending = parseInt(this.claimrequestdetails.PendingReqCount);
@@ -279,7 +279,7 @@ export class DashboardPage {
           else { rejectedAmount = '0' }
 
           this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
-         
+
           // For Display Data In Ion-cards
           this.Rejeted_Claim_Count = this.claimrequestdetails.RejectedReqCount;
           this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
@@ -297,7 +297,7 @@ export class DashboardPage {
             this.Approved_Claim_Amount = this.claimrequestdetails.ApprovedClaimAmount;
           else this.Approved_Claim_Amount = 0;
           //
-        
+
         }
         else {
           approve = 0;
@@ -314,21 +314,21 @@ export class DashboardPage {
           this.claimAmountLabels = data.label;
 
 
-           // For Display Data In Ion-cards
-           this.Rejeted_Claim_Count = 0;
-           this.Pending_Claim_Count = 0;
-           this.Approved_Claim_Count = 0;
+          // For Display Data In Ion-cards
+          this.Rejeted_Claim_Count = 0;
+          this.Pending_Claim_Count = 0;
+          this.Approved_Claim_Count = 0;
 
-           this.Rejected_Claim_Amount = 0;
-           this.Pending_Claim_Amount = 0;
-           this.Approved_Claim_Amount = 0;
-           //
+          this.Rejected_Claim_Amount = 0;
+          this.Pending_Claim_Amount = 0;
+          this.Approved_Claim_Amount = 0;
+          //
         }
       });
 
   }
 
-  GetInfoForCards(){
+  GetInfoForCards() {
     this.baseResourceUrl_Card = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboard_card?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(this.baseResourceUrl_Card)
@@ -339,14 +339,13 @@ export class DashboardPage {
         // console.table(this.Year_Card);
       });
   }
-  GetData_Years()
-  {
+  GetData_Years() {
     this.http
       .get(this.baseResourceUrl_New)
       .map(res => res.json())
       .subscribe(data => {
         this.years_data = data["resource"];
-        console.log(this.years_data.length)
+        // console.log(this.years_data.length)
 
         if (this.years_data.length == 0) {
           this.years = [this.year_value - 1, this.year_value];
@@ -368,13 +367,13 @@ export class DashboardPage {
         this.years = SortuniqueYears;
       });
   }
-  Rejected_Click(Rejected:any) {
+  Rejected_Click(Rejected: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Rejected: "Rejected" });
   }
-  Pending_Click(Pending:any) {
+  Pending_Click(Pending: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
   }
-  Approved_Click(Approved:any) {
+  Approved_Click(Approved: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
   }
 
