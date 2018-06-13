@@ -102,7 +102,7 @@ export class AddTollPage {
 
     this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
       var postClaimRef = response.json();
-      alert('Your ' + this.ClaimMethodName + ' details are submitted successfully.')
+      alert('Your ' + this.ClaimMethodName + ' details submitted successfully.')
       this.navCtrl.pop();
     })
   }
@@ -203,7 +203,8 @@ export class AddTollPage {
       }
       });
     }
-      this.Amount=this.claimDetailsData[0].AMOUNT;
+    this.Amount = this.numberPipe.transform(this.claimDetailsData[0].AMOUNT, '1.2-2');
+      //this.Amount=this.claimDetailsData[0].AMOUNT;
       this.Description=this.claimDetailsData[0].DESCRIPTION;
   });
 }

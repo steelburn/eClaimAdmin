@@ -6,7 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary500">
+
+  <ion-navbar  color="primary500">
     <ion-title>{{ 'DESIGNATION_SETUP_HEADING' | translate }}</ion-title>
   </ion-navbar>
 
@@ -25,18 +26,18 @@
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
+          <th class="lgl1 tblBrLeft" style="width:40px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'DESIGNATION_NAME' | translate }}</th>
-          <th class="lgl1" style="display: none;">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
-          <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:90px" style="text-align: justify;">{{ 'ACTION' | translate }}</th>
+ <!-- <th class="lgl1" style="display: none;">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
+          <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th> -->
+          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let designation of designations; let i=index" [hidden]="button_View_Disable">
           <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1" style="text-align: justify;">{{designation.NAME}}</td>
-          <td class="lgl1" style="display: none;">{{designation.DESCRIPTION}}</td>
-          <td class="lgl1" *ngIf="AdminLogin">{{designation.TENANT_ACCOUNT_NAME}}</td>
+          <td class="lgl1" text-center>{{designation.NAME}}</td>
+          <!-- <td class="lgl1" style="display: none;">{{designation.DESCRIPTION}}</td>
+          <td class="lgl1" *ngIf="AdminLogin">{{designation.TENANT_ACCOUNT_NAME}}</td> -->
           <td class="lgl1 fColor">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(designation.DESIGNATION_GUID)">
               <ion-icon name="md-create"></ion-icon>
