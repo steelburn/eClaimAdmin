@@ -3,54 +3,61 @@
 </ion-header>
 
 <ion-content style="background:#f8f9fa">
-	<div class="logo">
-		<img src="assets/img/Untitled-2.png" alt="Ionic Logo">
-	</div>
-	<p style="text-align:center !important;">
-		<b>Please enter your login credentials</b>
-	</p>
-	<form #loginForm="ngForm" novalidate>
-		<ion-list no-lines>
-			<ion-item style="background:#f8f9fa">
-				<!-- <ion-label floating color="primary">Username</ion-label> -->
-				<ion-label floating color="primary">{{ "USER_NAME_LABEL" | translate }}</ion-label>
-				<ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
-				 required>
-				</ion-input>
-			</ion-item>
-			<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
-				Username is required
-			</p>
+	<ion-card style="background:#f8f9fa;width: 405px;margin:0 auto">
 
-			<ion-item style="background:#f8f9fa">
-				<ion-label floating color="primary">Password</ion-label>
-				<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
-				</ion-input>
-			</ion-item>
-			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
-				Password is required
-			</p>
-		</ion-list>
+		<p style="text-align:center !important;">
 
-		<ion-row responsive-sm>
-		
-			<ion-col>
-				<button float-right color="primary500" ion-button (click)="onLogin(loginForm)" type="submit">Login</button>
-			</ion-col>
-			<ion-col>
-				<button color="primary500" ion-button (click)="onSignup()">Signup</button>
-			</ion-col>
-			
-		</ion-row>
-		<ion-row color="primary700" style="float:right; padding-right: 10px;">
-			<a color="primary700" (click)="ForgotPasswordClick()">Forgot Password</a>
-		</ion-row>
+			<img src="assets/img/Untitled-2.png" alt="Ionic Logo">
 
-	</form>
+			<b>Please enter your login credentials</b>
+		</p>
+		<form #loginForm="ngForm" novalidate>
+			<ion-list no-lines inset>
+				<ion-item style="background:#f8f9fa">
+
+					<ion-label color="primary">{{ "USER_NAME_LABEL" | translate }}</ion-label>
+					<ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
+					 required>
+					</ion-input>
+					<!-- <ion-icon name="person" item-end></ion-icon> -->
+				</ion-item>
+				<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
+					Username is required
+				</p>
+
+				<ion-item style="background:#f8f9fa">
+					<ion-label color="primary">Password</ion-label>
+					<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+						<!-- <ion-icon item-end name="key"></ion-icon> -->
+					</ion-input>
 	
+				</ion-item>
+				<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+					Password is required
+				</p>
+			</ion-list>
+
+			<ion-item  style="background:#f8f9fa">
+					<button color="primary500" ion-button (click)="onLogin(loginForm)" type="submit">Login</button>
+
+					<button color="primary500" ion-button (click)="onSignup()">Signup</button>
+	
+				</ion-item>
+				<ion-item>
+		
+					<p>
+						<a color="primary700" (click)="ForgotPasswordClick()">Forgot Your Password?</a>
+					</p>
+				</ion-item>
+
+
+		</form>
+	</ion-card>
+
+
 	<div class="blackcontainer" *ngIf="ForgotPasswordClicked">
-		</div>
-			<div class="popup3" padding *ngIf="ForgotPasswordClicked">
+	</div>
+	<div class="popup3" padding *ngIf="ForgotPasswordClicked">
 		<ion-card>
 			<ion-card-header class="icTitle headerColor-white ">
 				<div class="icHeaderText">Forgot Password</div>

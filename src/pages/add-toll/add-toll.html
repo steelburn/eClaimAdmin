@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar color="primary">
+    <ion-navbar color="primary500">
        
         <ion-title>
           <div *ngIf="ClaimMethodName == 'Parking'">{{ 'ADD_PARKING_HEADING' | translate }}</div>
@@ -16,7 +16,7 @@
       
             <ion-list>
               <ion-item *ngIf="ClaimMethodName != 'Accommodation' && ClaimMethodName != 'Meal Allowance'">
-                <ion-label color="primary">{{ 'PAY_BY_LABEL' | translate }}</ion-label>
+                <ion-label fixed>{{ 'PAY_BY_LABEL' | translate }}</ion-label>
                 <ion-select  [ngModelOptions]="{standalone: true}" [(ngModel)]="PayType" placeholder="Cash">
                     <!-- [ngModelOptions]="{standalone: true}" -->
                   <ion-option *ngFor="let item of paymentTypes" value={{item.PAYMENT_TYPE_GUID}} >{{ item.NAME}}</ion-option>
@@ -24,7 +24,7 @@
               </ion-item>
 
               <ion-item *ngIf="ClaimMethodName === 'Meal Allowance'">
-                <ion-label color="primary" stacked>{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
+                <ion-label fixed>{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
                 <ion-select [ngModelOptions]="{standalone: true}" placeholder="NA" [(ngModel)]="MA_SELECT">
                     <ion-option value="NA">NA</ion-option>
                   <ion-option *ngFor="let allowance of allowanceList" (ionSelect)="onAllowanceSelect(allowance)">{{allowance.ALLOWANCE_NAME}} - {{allowance.ALLOWANCE_AMOUNT}}</ion-option>
@@ -33,14 +33,14 @@
            
 
             <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'">
-              <ion-label color="primary" fixed>{{ 'AMOUNT_LABEL' | translate  }}{{ 'CURRENCY_NAME_LABEL' | translate}}</ion-label>
+              <ion-label fixed>{{ 'AMOUNT_LABEL' | translate  }}{{ 'CURRENCY_NAME_LABEL' | translate}}</ion-label>
               <ion-input (change)='getCurrency($event.target.value)' [ngModelOptions]="{standalone: true}" 
               [(ngModel)]="Amount" type="number" placeholder="0.00"></ion-input>
             </ion-item>
             <!-- [ngModelOptions]="{standalone: true}" -->
 
             <ion-item>
-              <ion-label color="primary" fixed>{{ 'DESCRIPTION_LABEL' | translate }}</ion-label>
+              <ion-label fixed>{{ 'DESCRIPTION_LABEL' | translate }}</ion-label>
               <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Description" placeholder="Add Description"></ion-input>
             </ion-item>
             <!-- [ngModelOptions]="{standalone: true}" -->

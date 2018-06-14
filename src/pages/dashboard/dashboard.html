@@ -10,108 +10,92 @@
     <ion-title>dashboard</ion-title>
   </ion-navbar> -->
   <ion-navbar color="primary500" hideBackButton="true">
-    <button ion-button menuToggle>
+    <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>{{ "DASHBOARD_HEADING" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-  <div>
+<ion-content padding style="background: #eeeeee;">
+  <ion-card style="background: white; border-radius: 5px;">
     <form [formGroup]="DashboardForm">
-        <ion-grid>
-            <ion-row>
-              <ion-col col-4>
+
       <ion-item>
-          <ion-label color="primary" text-right>Year </ion-label>
-          <ion-select  formControlName="Year" [(ngModel)]="Year_Change_ngModel" (ionChange)="Year_Changed(Year_Change_ngModel)">
-              <ion-option *ngFor="let year of years">{{year}}</ion-option>
-          </ion-select>
+        <ion-label color="primary" text-right>Filter :</ion-label>
+        <ion-label color="primary" >Year :
+          
+            <ion-select formControlName="Year" [(ngModel)]="Year_Change_ngModel" (ionChange)="Year_Changed(Year_Change_ngModel)">
+                <ion-option *ngFor="let year of years">{{year}}</ion-option>
+              </ion-select>
+        
+        </ion-label>
+      
+        <ion-label color="primary" >Month :
+            <ion-select formControlName="Month" [(ngModel)]="Month_Change_ngModel" (ionChange)="Month_Changed(Month_Change_ngModel)">
+                <!-- <ion-option value="0"  selected="true">Select</ion-option> -->
+                <ion-option value="1">January</ion-option>
+                <ion-option value="2">February</ion-option>
+                <ion-option value="3">March</ion-option>
+                <ion-option value="4">April</ion-option>
+                <ion-option value="5">May</ion-option>
+                <ion-option value="6">June</ion-option>
+                <ion-option value="7">July</ion-option>
+                <ion-option value="8">August</ion-option>
+                <ion-option value="9">September</ion-option>
+                <ion-option value="10">October</ion-option>
+                <ion-option value="11">November</ion-option>
+                <ion-option value="12">December</ion-option>
+              </ion-select>  
+        
+        
+        
+        </ion-label>
+
       </ion-item>
-              </ion-col>
-              <ion-col col-4>
-    <ion-item>
-        <ion-label color="primary" text-right>Month </ion-label>
-        <ion-select  formControlName="Month" [(ngModel)]="Month_Change_ngModel" (ionChange)="Month_Changed(Month_Change_ngModel)">
-            <!-- <ion-option value="0"  selected="true">Select</ion-option> -->
-            <ion-option value="1"  >January</ion-option>
-            <ion-option value="2"  >February</ion-option>
-            <ion-option value="3"  >March</ion-option>
-            <ion-option value="4"  >April</ion-option>
-            <ion-option value="5"  >May</ion-option>
-            <ion-option value="6"  >June</ion-option>
-            <ion-option value="7"  >July</ion-option>
-            <ion-option value="8"  >August</ion-option>
-            <ion-option value="9" >September</ion-option>
-            <ion-option value="10" >October</ion-option>
-            <ion-option value="11" >November</ion-option>
-            <ion-option value="12" >December</ion-option>
-        </ion-select>
-    </ion-item>
-  </ion-col>
-</ion-row>
-</ion-grid>
+
     </form>
-</div>
+  </ion-card>
 
-<!-- <div style="display: block;width:90%;height:45%">
-  
-  <canvas #mycanvas baseChart style="width:100%;height:100%" 
-  [data]="doughnutChartData" 
-  [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
-    [options]="doughnutChartOptions" [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-</div> -->
+  <ion-card class="round3">
+    <canvas #mycanvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" [options]="doughnutChartOptions"
+      [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+  </ion-card>
 
-<div style="width:1%;height:3%">
-</div>
-<!-- <div style="display: block;width:90%;height:45%">
-  <canvas #claimAmount baseChart style="width:100%;height:100%" [data]="claimAmountData" [labels]="claimAmountLabels" [chartType]="claimAmountChartType"
-    [options]="claimAmountOptions" [colors]="claimAmountChartColors" (chartHover)="claimAmountHovered($event)" (chartClick)="claimAmountClicked($event)"></canvas>
-</div> -->
-<ion-grid>
-  <ion-row>
-    <ion-col col-6>
-      <div style="display: block;width:100%;height:100%">
-        <!-- <ionic-canvas></ionic-canvas> style="width:100%;height:100%"-->
-        <canvas #mycanvas baseChart  
-        [data]="doughnutChartData" 
-        [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
-          [options]="doughnutChartOptions" [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-      </div>
-    </ion-col>
-    <ion-col col-6>
-      <div style="display: block;width:100%;height:100%">
-        <canvas #claimAmount baseChart  [data]="claimAmountData" [labels]="claimAmountLabels" [chartType]="claimAmountChartType"
-          [options]="claimAmountOptions" [colors]="claimAmountChartColors" (chartHover)="claimAmountHovered($event)" (chartClick)="claimAmountClicked($event)"></canvas>
-      </div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ion-card class="round3">
 
-<ion-card *ngFor="let year of Year_Card" (click)="Rejected_Click()"  class="round2">
-  <ion-card-header style="background:red;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;" ><h2 style="color:white !important">Rejected</h2></ion-card-header>
-  <ion-card-content text-center>
-     
-    <h1>RM {{Rejected_Claim_Amount}}</h1>
-    <h3># this month: {{Rejeted_Claim_Count}}</h3>
-
-    <hr>
-
-    <p color="graye">Amount YTD: RM {{year.RejectedClaimAmount_year}}</p>
-    <p color="graye"># YTD: {{year.RejectedClaimCount_year}}</p>
-
-  </ion-card-content>
+    <canvas #claimAmount baseChart [data]="claimAmountData" [labels]="claimAmountLabels" [chartType]="claimAmountChartType" [options]="claimAmountOptions"
+      [colors]="claimAmountChartColors" (chartHover)="claimAmountHovered($event)" (chartClick)="claimAmountClicked($event)"></canvas>
+  </ion-card>
 
 
-</ion-card>
-
-
-<ion-card  *ngFor="let year of Year_Card" (click)="Pending_Click()"  class="round2">
-    <ion-card-header style="background:orange;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;" ><h2 style="color:white !important">Pending</h2></ion-card-header>
+  <ion-card *ngFor="let year of Year_Card" (click)="Rejected_Click()" class="round2">
+    <ion-card-header style="background:red;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
+      <h2 style="color:white !important">Rejected</h2>
+    </ion-card-header>
     <ion-card-content text-center>
-       
+
+      <h1>RM {{Rejected_Claim_Amount}}</h1>
+      <h3># this month: {{Rejeted_Claim_Count}}</h3>
+
+      <hr>
+
+      <p color="graye">Amount YTD: RM {{year.RejectedClaimAmount_year}}</p>
+      <p color="graye"># YTD: {{year.RejectedClaimCount_year}}</p>
+
+    </ion-card-content>
+
+
+  </ion-card>
+
+
+  <ion-card *ngFor="let year of Year_Card" (click)="Pending_Click()" class="round2">
+    <ion-card-header style="background:orange;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
+      <h2 style="color:white !important">Pending</h2>
+    </ion-card-header>
+    <ion-card-content text-center>
+
       <h1>RM {{Pending_Claim_Amount}}</h1>
       <h3># this month: {{Pending_Claim_Count}}</h3>
 
@@ -125,22 +109,24 @@
 
   </ion-card>
 
-  <ion-card *ngFor="let year of Year_Card" (click)="Approved_Click()"  class="round2">
-      <ion-card-header style="background:lightgreen;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;" ><h2 style="color:white !important">Approved</h2></ion-card-header>
-      <ion-card-content text-center>
-         
-        <h1>RM {{Approved_Claim_Amount}}</h1>
-        <h3># this month: {{Approved_Claim_Count}}</h3>
+  <ion-card *ngFor="let year of Year_Card" (click)="Approved_Click()" class="round2">
+    <ion-card-header style="background:lightgreen;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
+      <h2 style="color:white !important">Approved</h2>
+    </ion-card-header>
+    <ion-card-content text-center>
 
-        <hr>
-  
-        <p color="graye">Amount YTD: RM {{year.ApprovedClaimAmount_year}}</p>
-        <p color="graye"># YTD: {{year.ApprovedClaimCount_year}}</p>
-  
-      </ion-card-content>
-  
-  
-    </ion-card>
-  
+      <h1>RM {{Approved_Claim_Amount}}</h1>
+      <h3># this month: {{Approved_Claim_Count}}</h3>
+
+      <hr>
+
+      <p color="graye">Amount YTD: RM {{year.ApprovedClaimAmount_year}}</p>
+      <p color="graye"># YTD: {{year.ApprovedClaimCount_year}}</p>
+
+    </ion-card-content>
+
+
+  </ion-card>
+
 
 </ion-content>

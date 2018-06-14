@@ -127,13 +127,13 @@ export class BanksetupPage {
       this.navCtrl.push(LoginPage);
     }
     else {
+      this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
       if (localStorage.getItem("g_USER_GUID") != "sva") {        
-        //Get the role for this page------------------------------
-        this.button_Add_Disable = true; this.button_Edit_Disable = true; this.button_Delete_Disable = true; this.button_View_Disable = true;
-        if(localStorage.getItem("g_KEY_ADD") == "1"){ this.button_Add_Disable = false; }
-        if(localStorage.getItem("g_KEY_EDIT") == "1"){ this.button_Edit_Disable = false; }
-        if(localStorage.getItem("g_KEY_DELETE") == "1"){ this.button_Delete_Disable = false; }
-        if(localStorage.getItem("g_KEY_VIEW") == "1"){ this.button_View_Disable = false; }
+        //Get the role for this page------------------------------        
+        if(localStorage.getItem("g_KEY_ADD") == "0"){ this.button_Add_Disable = true; }
+        if(localStorage.getItem("g_KEY_EDIT") == "0"){ this.button_Edit_Disable = true; }
+        if(localStorage.getItem("g_KEY_DELETE") == "0"){ this.button_Delete_Disable = true; }
+        if(localStorage.getItem("g_KEY_VIEW") == "0"){ this.button_View_Disable = true; }
 
         //Clear localStorage value--------------------------------      
         this.ClearLocalStorage();

@@ -123,18 +123,27 @@ export class StatesetupPage {
 
   public CloseStateClick() {
     if (this.AddStateClicked == true) {
-      this.AddStateClicked = false; 
+      this.AddStateClicked = false;
       this.Add_Form = true; this.Edit_Form = false;
     }
   }
 
-  loading: Loading;
+  loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private statesetupservice: StateSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
     else {
+      this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        //Get the role for this page------------------------------        
+        if (localStorage.getItem("g_KEY_ADD") == "0") { this.button_Add_Disable = true; }
+        if (localStorage.getItem("g_KEY_EDIT") == "0") { this.button_Edit_Disable = true; }
+        if (localStorage.getItem("g_KEY_DELETE") == "0") { this.button_Delete_Disable = true; }
+        if (localStorage.getItem("g_KEY_VIEW") == "0") { this.button_View_Disable = true; }
+      }
+
       //Clear localStorage value--------------------------------      
       this.ClearLocalStorage();
 
@@ -207,7 +216,7 @@ export class StatesetupPage {
       //--------------------------------------------------
       debugger;
       let strPrev_Value: string = "";
-      if(localStorage.getItem('Previ_state')!=null) { strPrev_Value = localStorage.getItem('Previ_state').toUpperCase();}
+      if (localStorage.getItem('Previ_state') != null) { strPrev_Value = localStorage.getItem('Previ_state').toUpperCase(); }
 
       if (this.STATE_NAME_ngModel_Add.trim().toUpperCase() != strPrev_Value) {
         let val = this.CheckDuplicate();

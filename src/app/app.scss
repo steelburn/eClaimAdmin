@@ -143,6 +143,16 @@ height: 480px;
     min-height: 80px;
   }
 
+  .round3 {
+    float: left;
+    width: calc(48.5% - 7px);
+    margin: 10px !important;
+    padding: 10pt 0;
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
+
 
 
   .icon {
@@ -219,6 +229,7 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     border-bottom: 1px solid !important;
     margin-bottom: 0px !important;
     padding: 10px !important;
+    background: #00A86B;
 }
 
 
@@ -354,9 +365,10 @@ ion-item.item.item-block.item-md.item-checkbox {
 
 .split-pane-md.split-pane-visible > .split-pane-side {
     min-width: 264px;
-    max-width: 22%;
+    max-width: 20%;
     border-right: 1px solid #dedede;
     border-left: 0;
+    font-size: xx-small !important;
 }
 
 

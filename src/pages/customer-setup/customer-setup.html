@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary500">
     <ion-title>Customer Registration</ion-title>
   </ion-navbar>
 
@@ -15,7 +15,7 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddCustomerClick()">
+    <button ion-fab mini (click)="AddCustomerClick()" [disabled]="button_Add_Disable">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
@@ -32,18 +32,18 @@
           <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let customer of customers; let i=index">
+        <tr class="col7" *ngFor="let customer of customers; let i=index" [hidden]="button_View_Disable">
           <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{customer.CUSTOMER_NAME}}</td>
-          <td class="lgl1">{{customer.CUSTOMER_LOCATION_NAME}}</td>
-          <td class="lgl1">{{customer.EMAIL}}</td>          
+          <td class="lgl1" text-wrap>{{customer.CUSTOMER_NAME}}</td>
+          <td class="lgl1" text-wrap>{{customer.CUSTOMER_LOCATION_NAME}}</td>
+          <td class="lgl1" text-wrap>{{customer.EMAIL}}</td>          
           <td class="lgl1">{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
           <td class="lgl1 fColor">
-            <button ion-button item-end>
-              <ion-icon (click)="EditClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)" name="md-create"></ion-icon>
+            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)">
+              <ion-icon name="md-create"></ion-icon>
             </button>
-            <button ion-button item-end>
-              <ion-icon name="md-close" (click)="DeleteClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)"></ion-icon>
+            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)">
+              <ion-icon name="md-close"></ion-icon>
             </button>
           </td>
         </tr>
