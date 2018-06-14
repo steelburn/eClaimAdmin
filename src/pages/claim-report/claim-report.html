@@ -60,11 +60,11 @@
         <ion-item>
             <table class="Tabler ">
                 <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-                    <th class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">DATE</th>
-                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim">START TIME</th>
-                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim">END TIME</th>
-                    <th class="lgl1">SOC#</th>
+                    <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+                    <th class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">Date</th>
+                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim">Start Time</th>
+                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim">End Time</th>
+                    <th class="lgl1">SOC Number</th>
                     <!-- <th class="lgl1">Location as per SOC</th> -->
                     <th class="lgl1">Customer</th>
                     <!-- <th class="lgl1">Remarks(Location- if is not at customer location)</th> -->
@@ -81,7 +81,7 @@
                     <th class="lgl1" *ngIf="travelClaimType">Meal</th>
                     <th class="lgl1" *ngIf="travelClaimType">Hotel</th>
                     <!-- <th class="lgl1">Outstation Allowance</th>  -->
-                    <th class="lgl1">Total(RM)</th>
+                    <th class="lgl1 tblBrRight">Total Amount(RM)</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let claim of claimsList; let i=index">
