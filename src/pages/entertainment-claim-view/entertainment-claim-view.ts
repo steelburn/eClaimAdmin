@@ -26,15 +26,12 @@ export class EntertainmentClaimViewPage {
   ToggleNgModel: any;
   Approver_GUID: any;
   isApprover: any;
-
   //isRemarksAccepted: boolean =false;
   isRemarksAccepted: any;
-
   level: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
-    // this.translateToEnglish();
-    // this.translate.setDefaultLang('en'); //Fallback language
+  
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
@@ -66,9 +63,7 @@ export class EntertainmentClaimViewPage {
       this.claimRequestData.forEach(element => {
         if (element.ATTACHMENT_ID !== null)
         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-        this.totalClaimAmount = element.MILEAGE_AMOUNT;
-        console.log(this.totalClaimAmount);
-        console.log(element.MILEAGE_AMOUNT); 
+        this.totalClaimAmount = element.MILEAGE_AMOUNT;       
       });
     })
 }
@@ -89,21 +84,4 @@ EditClaim() {
     cr_GUID: this.claimRequestGUID
   });
 }
-  //---------------------Language module start---------------------//
-  // public translateToMalayClicked: boolean = false;
-  // public translateToEnglishClicked: boolean = true;
-
-  // public translateToEnglish() {
-  //   this.translate.use('en');
-  //   this.translateToMalayClicked = !this.translateToMalayClicked;
-  //   this.translateToEnglishClicked = !this.translateToEnglishClicked;
-  // }
-
-  // public translateToMalay() {
-  //   this.translate.use('ms');
-  //   this.translateToEnglishClicked = !this.translateToEnglishClicked;
-  //   this.translateToMalayClicked = !this.translateToMalayClicked;
-  // }
-  //---------------------Language module end---------------------// 
-
 }

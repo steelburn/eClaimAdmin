@@ -31,22 +31,14 @@ export class PrintClaimViewPage {
   level: any;
   isRemarksAccepted: boolean =false;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
-    // this.translateToEnglish();
-    // this.translate.setDefaultLang('en'); //Fallback language
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {   
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
-    this.level = navParams.get('level_no');
-   
+    this.level = navParams.get('level_no');  
 
     this.LoadMainClaim();
-  }
-
-  // isAccepted(val:string) {   
-  //   this.isRemarksAccepted = val==='Accepted'?true:false;
-  //   alert('Claim '+val)
-  // }
+  } 
 
   isAccepted(val: string) {
     this.isRemarksAccepted = val === 'accepted' ? true : false;
@@ -56,8 +48,7 @@ export class PrintClaimViewPage {
             return;
           }
         }
-        this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
-     
+        this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);     
   }
 
   LoadMainClaim() {
@@ -71,37 +62,11 @@ export class PrintClaimViewPage {
     })
 }
 
-// SubmitAction() {
-//   if (!this.isRemarksAccepted) {
-//     if (this.Remarks_NgModel === undefined) {
-//       alert('Please input valid Remarks');
-//       return;
-//     }
-//   }
-//   this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
-// }
-
 EditClaim() {
   this.navCtrl.push(PrintclaimPage, {
     isFormEdit: 'true',
     cr_GUID: this.claimRequestGUID
   });
-}
-   //---------------------Language module start---------------------//
-  //  public translateToMalayClicked: boolean = false;
-  //  public translateToEnglishClicked: boolean = true;
- 
-  //  public translateToEnglish() {
-  //    this.translate.use('en');
-  //    this.translateToMalayClicked = !this.translateToMalayClicked;
-  //    this.translateToEnglishClicked = !this.translateToEnglishClicked;
-  //  }
- 
-  //  public translateToMalay() {
-  //    this.translate.use('ms');
-  //    this.translateToEnglishClicked = !this.translateToEnglishClicked;
-  //    this.translateToMalayClicked = !this.translateToMalayClicked;
-  //  }
-   //---------------------Language module end---------------------// 
+} 
 
 }
