@@ -43,6 +43,7 @@ export class AddTollPage {
     this.LoadPayments();
     this.LoadAllowanceDetails();
     this.DetailsForm = fb.group({
+      avatar1: null,
       avatar: null
     });
     
@@ -177,6 +178,8 @@ export class AddTollPage {
       this.allowanceList = res['resource'];
     })
   }
+
+  isFormEdit:boolean=false;
   ngOnInit(): void {
     // this.ClaimMainGUID = this.navParams.get('MainClaim');
     this.ClaimMainGUID = localStorage.getItem("g_CR_GUID");
@@ -185,9 +188,10 @@ export class AddTollPage {
     this.ClaimDetailGuid = this.navParams.get('ClaimReqDetailGuid');
     if(this.ClaimDetailGuid!==null  && this.ClaimDetailGuid!==undefined)
     // && this.ClaimDetailGuid!==undefined
-    {this.GetClaimDetailsByGuid();}
+    {this.GetClaimDetailsByGuid();this.isFormEdit=true}
   }
 
+  imageURLEdit: any =null;
   GetClaimDetailsByGuid()
   {
     this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_DETAIL_GUID=' + this.ClaimDetailGuid).subscribe(res => {
@@ -204,7 +208,9 @@ export class AddTollPage {
       });
     }
     this.Amount = this.numberPipe.transform(this.claimDetailsData[0].AMOUNT, '1.2-2');
-      //this.Amount=this.claimDetailsData[0].AMOUNT;
+    this.imageURLEdit = this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID);
+    this.ImageUploadValidation=false;
+    //this.chooseFile = false;
       this.Description=this.claimDetailsData[0].DESCRIPTION;
   });
 }
@@ -233,41 +239,56 @@ export class AddTollPage {
     this.chooseFile = true;
   } 
   
-  //isMA: any;
-  // save() {
-  //   let uploadImage = this.UploadImage();
-  //   uploadImage.then((resJson) => {
-  //     console.table(resJson)
-  //     let imageResult = this.SaveImageinDB();
-  //     imageResult.then((objImage: ImageUpload_model) => {
-  //       // console.table(objImage)
-  //       let result = this.SaveClaimDetails(false, objImage.Image_Guid);
-  //       // result.then((res) => {
-  //       //   // console.log(res);
-  //       // })
-  //     })
-  //   })   
-  // }
+  fileName1: string;
+  ProfileImage: any; 
+  newImage:boolean=true;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+
+      const file = e.target.files[0];
+      this.DetailsForm.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.newImage=false
+    this.onFileChange(e);
+  }
 
   imageGUID: any;
   saveIm() {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
-      //this.SaveClaimDetails(formValues, false, this.uploadFileName);
+     
       this.imageGUID = this.uploadFileName;
       this.chooseFile = false;
-      this.ImageUploadValidation=true;
-      // console.table(resJson)
-      // let imageResult = this.SaveImageinDB();
-      // imageResult.then((objImage: ImageUpload_model) => {
-      //   // console.table(objImage)
-      //   let result = this.SaveClaimDetails(false, objImage.Image_Guid);
-      //   // result.then((res) => {
-      //   //   // console.log(res);
-      //   // })
-      // })
+       this.ImageUploadValidation=true;
+      //this.ImageUploadValidation=false;      
     })   
   }
+
+  // saveIm(imageGUID: any) {
+  //   let uploadImage = this.UploadImage();
+  //   uploadImage.then((resJson) => {
+     
+  //     this.imageGUID = this.uploadFileName;
+  //     this.chooseFile = false;
+  //     // this.ImageUploadValidation=true;
+  //     this.ImageUploadValidation=false;
+
+  //     if(imageGUID==='capture' && this.isFormEdit) {this.imageURLEdit=null;
+  //       this.ImageUploadValidation = false;}
+  //     else{
+  //     this.imageGUID = imageGUID; this.ImageUploadValidation = true;}     
+  //   })   
+  // }
 
  
   clearFile() {
