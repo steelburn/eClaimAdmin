@@ -45,7 +45,7 @@ ion-fab[top1] {
 
 .popup1{
     width: 83%;
-    left: 78px;
+    left: 86px;
     top: 60px;
     position: fixed;
         height: 500px;
@@ -109,6 +109,9 @@ height: 480px;
 .Subtitle {
     text-align: center;
     font-size: 0.8vw;
+    background: gray;
+    color: white;
+    padding-top: 14px !important; 
   }
   
   .container{
@@ -162,7 +165,7 @@ height: 480px;
     
     
 .popscroll{
-    width: 96%;
+    width: 97.5%;
     top: 60px;
     position: fixed;
     height: calc(100% - 89px);
