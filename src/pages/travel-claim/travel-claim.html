@@ -23,8 +23,8 @@
         <div *ngSwitchDefault ngSelected="selected">
          
           <ion-item>
-            <ion-label color="primary"> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input class="cocus" [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" 
+            <!-- <ion-label color="primary"> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label> -->
+            <ion-input placeholder="Customer Name" class="cocus" [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" 
             type="text" [disabled]="true"></ion-input>
           </ion-item>
         </div>
