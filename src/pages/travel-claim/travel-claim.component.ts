@@ -260,7 +260,7 @@ export class TravelclaimPage {
                     }
                     this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
                     this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
-                    this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
+                    //this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
 
                     this.Travel_From_ngModel = this.claimRequestData[0].FROM;
                     this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
@@ -587,7 +587,7 @@ export class TravelclaimPage {
     this.PublicTransValue = true;
     if (vehicle.CATEGORY === 'Public transport') {
       this.isPublicTransport = true;
-      this.travelAmount = undefined;
+      //this.travelAmount = undefined;
       this.PublicTransValue = false;
     }
     else
