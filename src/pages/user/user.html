@@ -3,8 +3,8 @@
     <ion-navbar color="primary500">
         <ion-title>{{ 'USER_REGISTRATION_HEADING' | translate }}</ion-title>
     </ion-navbar>
-    <ion-toolbar no-border-top>
-        <ion-searchbar color="primary" placeholder="Search"></ion-searchbar>
+    <ion-toolbar no-border-top  color="primary500">
+        <ion-searchbar placeholder="Search"></ion-searchbar>
     </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
 <ion-content padding>
 
     <ion-fab top right edge>
-        <button ion-fab mini (click)="AddUserClick()">
+        <button ion-fab mini (click)="AddUserClick()" [disabled]="button_Add_Disable">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
@@ -22,30 +22,30 @@
             <table class="Tabler">
                 <tr class="linedsg TColor">
 
-                    <th class="lgl1 tblBrLeft" style="width:60px">NO</th>
+                    <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
                     <th class="lgl1">{{ 'NAME' | translate }}</th>
-                    <th class="lgl1">{{ 'STAFF ID' | translate }}</th>
+                    <th class="lgl1">{{ 'Staff ID' | translate }}</th>
                     <th class="lgl1">{{ 'COMPANY' | translate }}</th>
                     <th class="lgl1">{{ 'DEPARTMENT' | translate }}</th>
                     <th class="lgl1">{{ 'DESIGNATION' | translate }}</th>
                     <th class="lgl1">{{ 'EMAIL' | translate }}</th>
                     <!-- <th class="lgl1">{{ 'LOGINID' | translate }}</th> -->
-                    <th class="lgl1">{{ 'JOINING DATE' | translate }}</th>
+                    <th class="lgl1">{{ 'Joining Date' | translate }}</th>
                     <th class="lgl1">{{ 'STATUS' | translate }}</th>
 
                     <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of userview; let i=index">
+                <tr class="col7" *ngFor="let user of userview; let i=index" [hidden]="button_View_Disable">
 
                     <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{user.FULLNAME}}</td>
+                    <td class="lgl1" text-wrap>{{user.FULLNAME}}</td>
                     <!-- <td class="lgl1">{{user.PERSONAL_ID}}</td> -->
                     <td class="lgl1">{{user.STAFF_ID}}</td>
-                    <td class="lgl1">{{user.tenant_company_name}}, {{user.SITE_NAME}} </td>
-                    <td class="lgl1">{{user.department_name}}</td>
-                    <td class="lgl1">{{user.designation_name}}</td>
-                    <td class="lgl1">{{user.EMAIL}}</td>
+                    <td class="lgl1" text-wrap>{{user.tenant_company_name}} </td>
+                    <td class="lgl1" text-wrap>{{user.department_name}}</td>
+                    <td class="lgl1" text-wrap>{{user.designation_name}}</td>
+                    <td class="lgl1" text-wrap>{{user.EMAIL}}</td>
                     <td class="lgl1">{{user.JOIN_DATE | date:'dd/MM/yyyy'}}</td>
                     <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
 
@@ -53,10 +53,10 @@
 
 
                     <td class="lgl1 fColor">
-                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
+                        <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick_Personaldetails(user.USER_GUID)">
                             <ion-icon name="md-create"></ion-icon>
                         </button>
-                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
+                        <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(user.USER_GUID)">
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </td>
@@ -659,9 +659,9 @@
                     <ion-item>
                         <ion-label stacked>{{"Role"}}</ion-label>
                         <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Add" placeholder="{{'Please select role'}}" multiple="true">
-                          <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                            <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
-                      </ion-item>
+                    </ion-item>
 
                     <div class="btn">
                         <button ion-button icon-left [disabled]="!Userform.valid" (click)="Save()">
@@ -1143,9 +1143,9 @@
                     <ion-item>
                         <ion-label stacked>{{"Role"}}</ion-label>
                         <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}" multiple="true">
-                          <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                            <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
-                      </ion-item>
+                    </ion-item>
 
                     <div class="btn">
                         <button ion-button [disabled]="!Userform.valid" (click)="Update(view_user_details[0].USER_GUID)">{{"SUBMIT" | translate}}</button>

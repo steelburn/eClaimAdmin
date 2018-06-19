@@ -274,7 +274,8 @@ export class RolesetupPage {
       this.role_entry.CREATION_TS = this.role_details.CREATION_TS
       this.role_entry.CREATION_USER_GUID = this.role_details.CREATION_USER_GUID;
       this.role_entry.UPDATE_TS = this.role_details.UPDATE_TS;
-
+      
+      //this.role_entry.TENANT_GUID = UUID.UUID();
       this.role_entry.ROLE_GUID = ROLE_GUID;
       this.role_entry.UPDATE_TS = new Date().toISOString();
       this.role_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");

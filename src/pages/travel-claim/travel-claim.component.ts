@@ -129,6 +129,7 @@ export class TravelclaimPage {
     this.LoadVehicles();
   }
     this.Travelform = fb.group({
+      avatar1: null,
       avatar: null,
       soc_no: '',
       distance: '', 
@@ -204,14 +205,17 @@ export class TravelclaimPage {
   // } 
   getCurrency(amount: number) {
     this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
+    this.totalClaimAmount = amount;
   }
 
   totalClaimAmount: number;
   ionViewWillEnter() {
+    if(!this.isFormEdit)
     this.LoadClaimDetails();
 
   }
 
+  imageURLEdit: any = null
   GetDataforEdit() {
     //TODO: Take data by Effective Date
     this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -227,6 +231,14 @@ export class TravelclaimPage {
                 this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
                   .subscribe(data => {
                     this.claimRequestData = data["resource"];
+
+                    if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                    this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                    this.PublicTransValue = true;
+                    this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+                    this.totalClaimAmount = this.travelAmount =this.claimRequestData[0].MILEAGE_AMOUNT;
+
+
                     if (this.claimRequestData[0].SOC_GUID === null) {
                       this.claimFor = 'seg_customer'
                       if (this.storeCustomers != undefined)
@@ -248,12 +260,12 @@ export class TravelclaimPage {
                     }
                     this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
                     this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
-                    this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
+                    //this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
 
                     this.Travel_From_ngModel = this.claimRequestData[0].FROM;
                     this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
                     this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
-                    this.travelAmountNgmodel = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+                    //this.travelAmountNgmodel = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
                     this.LoadClaimDetails();
                     this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
                     this.vehicles.forEach(element => {
@@ -323,6 +335,7 @@ export class TravelclaimPage {
   }
 
   LoadClaimDetails() {
+    this.tollParkAmount =0;
     return new Promise((resolve, reject) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
@@ -332,6 +345,7 @@ export class TravelclaimPage {
           this.tollParkAmount += element.AMOUNT;
         });
         if (this.isFormSubmitted) {
+          this.tollParkAmount=  this.tollParkAmount===undefined?0:this.tollParkAmount;
           this.totalClaimAmount = this.travelAmount + this.tollParkAmount
         }
         else
@@ -372,7 +386,9 @@ export class TravelclaimPage {
         if (!this.isPublicTransport)
           this.travelAmount = destination * this.VehicleRate, -2;
         this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
-        // this.Travel_Amount_ngModel 
+        this.travelAmount=  this.travelAmount===undefined?0:this.travelAmount;
+        this.tollParkAmount=  this.tollParkAmount===undefined?0:this.tollParkAmount;
+        this.totalClaimAmount = this.travelAmount + this.tollParkAmount ;
       }
       else
         alert('Please select Valid Origin & Destination Places');
@@ -571,7 +587,7 @@ export class TravelclaimPage {
     this.PublicTransValue = true;
     if (vehicle.CATEGORY === 'Public transport') {
       this.isPublicTransport = true;
-      this.travelAmount = undefined;
+      //this.travelAmount = undefined;
       this.PublicTransValue = false;
     }
     else
@@ -618,9 +634,31 @@ export class TravelclaimPage {
     //this.PublicTransValue = true;
     // this.PublicTransValue = false;
 
+    this.ImageUploadValidation=false;
+  }
+
+  fileName1: string;
+  ProfileImage: any;
+  newImage:boolean=true;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+
+      const file = e.target.files[0];
+      this.Travelform.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.newImage=false;
+    this.onFileChange(e);
     this.ImageUploadValidation=true;
-
-
   }
 
  // imageGUID: any;
@@ -654,6 +692,7 @@ export class TravelclaimPage {
         //this.disableButton = true;
         //this.PublicTransValue = false;
          this.PublicTransValue = true;
+         this.chooseFile = false;
 
         this.ImageUploadValidation=false;
 
@@ -818,7 +857,7 @@ export class TravelclaimPage {
             }
 
             this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
-              alert('Claim details are submitted successfully.')
+              alert('Claim details updated successfully.')
               this.navCtrl.push(UserclaimslistPage);
             })
           })

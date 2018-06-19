@@ -302,7 +302,7 @@
     <!-- add TUser start-->
     <div class="blackcontainer" *ngIf="AddTUserClicked">
     </div>
-    <div class="popup" padding *ngIf="AddTUserClicked">
+    <div class="popup1" padding *ngIf="AddTUserClicked">
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
@@ -326,8 +326,8 @@
                             <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
                             <!-- <th class="lgl1">Tenant GUID</th> -->
                             <th class="lgl1">User Login ID</th>
-                            <th class="lgl1">Password</th>
-                            <th class="lgl1">Email</th>
+                            <!-- <th class="lgl1">Password</th> -->
+                            <!-- <th class="lgl1">Email</th> -->
                             <th class="lgl1">User Role</th>
                             <th class="lgl1 tblBrRight" style="width:90px">Action</th>
 
@@ -337,8 +337,8 @@
                             <td class="lgl1">{{i+1}}</td>
                             <!-- <td class="lgl1">{{tenantuser.TENANT_GUID}}</td> -->
                             <td class="lgl1">{{tenantuser.LOGIN_ID}}</td>
-                            <td class="lgl1">{{tenantuser.PASSWORD}}</td>
-                            <td class="lgl1">{{tenantuser.EMAIL}}</td>
+                            <!-- <td class="lgl1">{{tenantuser.PASSWORD}}</td> -->
+                            <!-- <td class="lgl1">{{tenantuser.EMAIL}}</td> -->
                             <td class="lgl1">{{tenantuser.ROLENAME}}</td>
                             <td class="lgl1 fColor">
                                 <button ion-button item-end (click)="EditUserClick(tenantuser.USER_GUID)">
@@ -378,19 +378,20 @@
             </ion-card-header>
             <ion-list class="scroll">
                 <form [formGroup]="TenantUSerform">
-                    <ion-item>
+                    <ion-item style="display: none">
                         <ion-label stacked>User Login ID</ion-label>
                         <ion-input type="text" formControlName="TULOGINID" [(ngModel)]="User_Loginid_ngModel_Add" placeholder="{{'Please fill in the user login ID'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item>
+                    <ion-item style="display: none;">
                         <ion-label stacked>Password</ion-label>
                         <ion-input type="password" formControlName="TUPASSWORD" [(ngModel)]="User_Password_ngModel_Add" placeholder="{{'Please fill in the login password'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label stacked>Email</ion-label>
-                        <ion-input type="text" formControlName="TUEMAIL" [(ngModel)]="User_Email_ngModel_Add" placeholder="{{'Please fill in the email of the user'}}"></ion-input>
+                        <ion-input type="text" formControlName="TUEMAIL" [(ngModel)]="User_Email_ngModel_Add" placeholder="{{'Please fill in the email of the user'}}"
+                            (change)='onChange($event)'></ion-input>
 
                     </ion-item>
 

@@ -71,6 +71,7 @@ export class MiscellaneousClaimPage {
       this.LoadProjects();
     }
     this.MiscellaneousForm = fb.group({
+      avatar1: null,
       avatar: null,
       travel_date: ['', Validators.required],
       claimAmount: ['', Validators.required],
@@ -82,6 +83,7 @@ export class MiscellaneousClaimPage {
     this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   }
 
+  imageURLEdit: any = null
   GetDataforEdit() {
     this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
@@ -93,6 +95,12 @@ export class MiscellaneousClaimPage {
             this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
+
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                this.ImageUploadValidation = true;
+                //this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
                   if (this.storeCustomers != undefined)
@@ -113,7 +121,8 @@ export class MiscellaneousClaimPage {
                     });
                 }
                 this.Miscellaneous_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
-                this.Miscellaneous_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+                // this.Miscellaneous_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Miscellaneous_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
           });
@@ -135,14 +144,13 @@ export class MiscellaneousClaimPage {
     }
   }
   public ProjectLookup() {
-    this.ProjectLookupClicked = true;
-    // this.projects = null;
+    this.ProjectLookupClicked = true;   
   }
 
   public CustomerLookup() {
-    this.CustomerLookupClicked = true;
-    // this.projects = null;
+    this.CustomerLookupClicked = true;    
   }
+
   GetSocNo(item: any) {
     this.Miscellaneous_SOC_No_ngModel = item.soc;
     this.Project_Lookup_ngModel = item.project_name;
@@ -157,26 +165,18 @@ export class MiscellaneousClaimPage {
   }
 
   LoadProjects() {
-    this.http
-      .get(Services.getUrl('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID))
-      .map(res => res.json())
+    this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
-      this.storeProjects=  this.projects = data["resource"];
-        console.table(this.projects)
-       console.table(this.storeProjects);
+        this.storeProjects = this.projects = data["resource"];
       });
   }
 
   LoadCustomers() {
-    this.http
-      .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
-      .map(res => res.json())
+    this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
-        // console.table(this.projects)
-      });
+      })
   }
-
   
   searchProject(searchString: any) {
     let val = searchString.target.value;
@@ -250,8 +250,32 @@ export class MiscellaneousClaimPage {
         });
       };
     }
-    this.chooseFile = true;
+    // this.chooseFile = true;
 
+  }
+
+  fileName1: string;
+  ProfileImage: any;
+  newImage:boolean=true;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+
+      const file = e.target.files[0];
+      this.MiscellaneousForm.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.ImageUploadValidation = false;
+    this.newImage=false;
+    this.onFileChange(e);
   }
 
   imageGUID: any;
@@ -332,7 +356,7 @@ export class MiscellaneousClaimPage {
           }
          this.api.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
           {
-            alert('Claim details are submitted successfully.')
+            alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
          });
         })

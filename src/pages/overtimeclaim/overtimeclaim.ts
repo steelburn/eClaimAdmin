@@ -6,7 +6,6 @@ import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { OvertimeClaim_Model } from '../../models/overtimeclaim_model';
-//import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import { View_SOC_Model } from '../../models/view_soc_model';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
@@ -14,7 +13,6 @@ import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-//import {Camera} from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
@@ -41,10 +39,10 @@ export class OvertimeclaimPage {
    CloudFilePath: string;
    @ViewChild('fileInput') fileInput: ElementRef;
   vehicles: any;
-  customers: any;
+  customers: any[];
   storeProjects: any[];
   storeCustomers: any[];  
-  public projects: any;
+  public projects: any[];
   Travelform: FormGroup;
 
   items: string[];  
@@ -95,21 +93,13 @@ export class OvertimeclaimPage {
    /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
    claimRequestGUID: any;
-   claimRequestData: any;
-
-  //  ngOnInit(): void {
-  //    this.userGUID = localStorage.getItem('g_USER_GUID'); 
-  //    this.isFormEdit = this.navParams.get('isFormEdit');
-  //     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-  //    //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
-  //    if (this.isFormEdit)
-  //      this.GetDataforEdit();
-  //  }
+   claimRequestData: any; 
 
   getCurrency(amount: number) {
     this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   }
 
+  imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
@@ -121,6 +111,12 @@ export class OvertimeclaimPage {
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
+
+                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                // this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                // this.ImageUploadValidation = true;
+                // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
                   if (this.storeCustomers != undefined)
@@ -142,7 +138,8 @@ export class OvertimeclaimPage {
                 }
                 this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
                 this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
-                this.OT_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                this.OT_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+                // this.OT_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.OT_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               }
               );
@@ -171,72 +168,71 @@ export class OvertimeclaimPage {
       claim_amount: ['', Validators.required],
       attachment_GUID : '',  claimTypeGUID: '',
     });   
-  }
+  } 
 
-  onFileChange(event: any) {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.OTform.get('avatar').setValue(file);
-      this.uploadFileName = file.name;
-      reader.onload = () => {
-        this.OTform.get('avatar').setValue({
-          filename: file.name,
-          filetype: file.type,
-          value: reader.result.split(',')[1]
-        });
-      };
-    }
-    this.chooseFile = true;
-
-  }
+  // onFileChange(event: any) {
+  //   const reader = new FileReader();
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     this.OTform.get('avatar').setValue(file);
+  //     this.uploadFileName = file.name;
+  //     reader.onload = () => {
+  //       this.OTform.get('avatar').setValue({
+  //         filename: file.name,
+  //         filetype: file.type,
+  //         value: reader.result.split(',')[1]
+  //       });
+  //     };
+  //   }
+  //   this.chooseFile = true;
+  // }
  
    imageGUID: any;
-  saveIm(formValues: any) {
-    let uploadImage = this.UploadImage();
-    uploadImage.then((resJson) => {
-      // this.submitAction(this.uploadFileName, formValues);
-      this.imageGUID = this.uploadFileName;
-      this.chooseFile = false;
-      this.ImageUploadValidation=true;      
-    })    
-  }
+  // saveIm(formValues: any) {
+  //   let uploadImage = this.UploadImage();
+  //   uploadImage.then((resJson) => {
+  //     // this.submitAction(this.uploadFileName, formValues);
+  //     this.imageGUID = this.uploadFileName;
+  //     this.chooseFile = false;
+  //     this.ImageUploadValidation=true;      
+  //   })    
+  // }
 
-  SaveImageinDB() {
-    let objImage: ImageUpload_model = new ImageUpload_model();
-    objImage.Image_Guid = UUID.UUID();
-    objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-    objImage.CREATION_TS = new Date().toISOString();
-    objImage.Update_Ts = new Date().toISOString();
-    return new Promise((resolve, reject) => {
-      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
-        // let res = response.json();
-        // let imageGUID = res["resource"][0].Image_Guid;
-        resolve(objImage.toJson());
-      })
-    })
-  }
+  // SaveImageinDB() {
+  //   let objImage: ImageUpload_model = new ImageUpload_model();
+  //   objImage.Image_Guid = UUID.UUID();
+  //   objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+  //   objImage.CREATION_TS = new Date().toISOString();
+  //   objImage.Update_Ts = new Date().toISOString();
+  //   return new Promise((resolve, reject) => {
+  //     this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+  //       // let res = response.json();
+  //       // let imageGUID = res["resource"][0].Image_Guid;
+  //       resolve(objImage.toJson());
+  //     })
+  //   })
+  // }
 
-  UploadImage() {   
-    this.CloudFilePath = 'eclaim/'   
+//   UploadImage() {   
+//     this.CloudFilePath = 'eclaim/'   
  
-  this.loading = true;
-  const queryHeaders = new Headers();
-  queryHeaders.append('filename', this.uploadFileName);
-  queryHeaders.append('Content-Type', 'multipart/form-data');
-  queryHeaders.append('fileKey', 'file');
-  queryHeaders.append('chunkedMode', 'false');
-  queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-  const options = new RequestOptions({ headers: queryHeaders });
-  return new Promise((resolve, reject) => {
-    this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.OTform.get('avatar').value, options)
-      .map((response) => {
-        return response;
-      }).subscribe((response) => {
-        resolve(response.json());
-      })
-  })
-}
+//   this.loading = true;
+//   const queryHeaders = new Headers();
+//   queryHeaders.append('filename', this.uploadFileName);
+//   queryHeaders.append('Content-Type', 'multipart/form-data');
+//   queryHeaders.append('fileKey', 'file');
+//   queryHeaders.append('chunkedMode', 'false');
+//   queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+//   const options = new RequestOptions({ headers: queryHeaders });
+//   return new Promise((resolve, reject) => {
+//     this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.OTform.get('avatar').value, options)
+//       .map((response) => {
+//         return response;
+//       }).subscribe((response) => {
+//         resolve(response.json());
+//       })
+//   })
+// }
 
   GetSocNo(item: any){
     this.OT_SOC_No_ngModel = item.soc;
@@ -258,25 +254,18 @@ export class OvertimeclaimPage {
   }
 
   LoadProjects() {
-    this.http
-      .get(Services.getUrl('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID))
-      .map(res => res.json())
+    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
-      this.storeProjects=  this.projects = data["resource"];
-        console.table(this.projects)
+        this.storeProjects = this.projects = data["resource"];
       });
   }
 
   LoadCustomers() {
-    this.http
-      .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
-      .map(res => res.json())
+    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
-        // console.table(this.projects)
-      }
-      );
-  }
+      })
+  }  
 
   public CloseTravelClick() {
     this.AddToLookupClicked = false;
@@ -307,14 +296,11 @@ export class OvertimeclaimPage {
   }
 
   public ProjectLookup() {
-    this.ProjectLookupClicked = true;
-   
-    // this.projects = null;
+    this.ProjectLookupClicked = true;   
   }
 
   public CustomerLookup() {
-    this.CustomerLookupClicked = true;
-    // this.projects = null;
+    this.CustomerLookupClicked = true;   
   }
 
   searchProject(searchString: any) {
@@ -323,10 +309,28 @@ export class OvertimeclaimPage {
       this.projects = this.storeProjects;
       return;
     }
-  //  this.projects=  this.filterProjects({
-  //   project_name: val
-  //   });
+   this.projects=  this.filterProjects({
+    project_name: val
+    });
   } 
+
+  filterProjects(params?: any) {
+    if (!params) {
+      return this.storeProjects;
+    }
+
+    return this.projects.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
 
   searchCustomer(searchString: any) {
     let val = searchString.target.value;
@@ -334,15 +338,33 @@ export class OvertimeclaimPage {
       this.customers = this.storeCustomers;
       return;
     }
-    // this.customers = this.filterCustomer({
-    //   NAME: val
-    // });
+    this.customers = this.filterCustomer({
+      NAME: val
+    });
   } 
 
-  clearFile() {
-    this.OTform.get('avatar').setValue(null);
-    this.fileInput.nativeElement.value = '';
-  }
+  filterCustomer(params?: any) {
+    if (!params) {
+      return this.storeCustomers;
+    }
+
+    return this.customers.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }  
+
+  // clearFile() {
+  //   this.OTform.get('avatar').setValue(null);
+  //   this.fileInput.nativeElement.value = '';
+  // }
 
   allowanceGUID: any;
   onAllowanceSelect(allowance: any) {
@@ -373,7 +395,7 @@ export class OvertimeclaimPage {
           //this.claimRequestData[0].STATUS = 'Pending';
          // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
          this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res =>{
-            alert('Claim details are submitted successfully.')
+            alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
          });
         })

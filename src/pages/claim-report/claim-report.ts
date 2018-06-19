@@ -28,6 +28,9 @@ export class ClaimReportPage {
   employeeList: any[]; 
   claimTypeList: any[]; 
   totalClaimAmount:number=0;
+  travelClaimType:boolean=false;
+  overTimeClaim:boolean=false;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
   
@@ -38,6 +41,7 @@ export class ClaimReportPage {
 
   BindData()
   {
+    this.totalClaimAmount=0;
     this.http
     .get(this.baseResourceUrl)
     .map(res => res.json())
@@ -45,7 +49,7 @@ export class ClaimReportPage {
       this.claimsList= data["resource"];
    this.claimsList.forEach(element => {
      //alert(element.CLAIM_AMOUNT);
-    this.totalClaimAmount =this.totalClaimAmount+ element.CLAIM_AMOUNT
+    this.totalClaimAmount =this.totalClaimAmount+ element.Total
    });
    //alert(this.totalClaimAmount);
     });
@@ -107,9 +111,17 @@ let year=new Date().getFullYear();
 this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(STAGE_GUID='+dept +')AND(USER_GUID='+emp +')AND(MONTH='+month +')AND(CLAIM_TYPE_GUID='+claimType +')AND(YEAR='+year +')&api_key=' + constants.DREAMFACTORY_API_KEY;
  //this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?api_key=' + constants.DREAMFACTORY_API_KEY;
 
-this.BindData();
+    this.BindData();
+    if (claimType == "58c59b56-289e-31a2-f708-138e81a9c823")
+      this.travelClaimType = true;
+    else
+      this.travelClaimType = false;
 
-console.log(this.baseResourceUrl);
+      if (claimType == "37067b3d-1bf4-33a3-2b60-3ca40baf589a")
+      this.overTimeClaim = true;
+    else
+      this.overTimeClaim = false;
+//console.log(this.baseResourceUrl);
   }
 
   ionViewDidLoad() {

@@ -5,14 +5,14 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary500">
     <ion-title>{{ 'SOC_REGISTRATION_HEADING' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddSocClick()">
+    <button ion-fab mini (click)="AddSocClick()" [disabled]="button_Add_Disable">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
@@ -30,7 +30,7 @@
           <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let soc of socs; let i=index">
+        <tr class="col7" *ngFor="let soc of socs; let i=index" [hidden]="button_View_Disable">
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{soc.soc}}</td>
           <td class="lgl1">{{soc.project_name}}</td>
@@ -43,11 +43,11 @@
             <button ion-button item-end (click)="DeleteClick(soc.TENANT_GUID)">
               <ion-icon name="md-close"></ion-icon>
             </button> -->
-            <button ion-button item-end>
-              <ion-icon (click)="EditClick(soc.SOC_GUID)" name="md-create"></ion-icon>
+            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(soc.SOC_GUID)">
+              <ion-icon name="md-create"></ion-icon>
             </button>
-            <button ion-button item-end>
-              <ion-icon name="md-close" (click)="DeleteClick(soc.SOC_GUID)"></ion-icon>
+            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(soc.SOC_GUID)">
+              <ion-icon name="md-close"></ion-icon>
             </button>
           </td>
         </tr>
@@ -154,7 +154,8 @@
 
           <ion-item>
             <ion-label stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input [(ngModel)]="CUSTOMER_NAME_ngModel_Add" type="text" formControlName="customer_name" placeholder=" {{ 'CUSTOMER_NAME_PLACE_HOLDER' | translate }} " [readonly]="Readonly()"></ion-input>
+            <ion-input [(ngModel)]="CUSTOMER_NAME_ngModel_Add" type="text" formControlName="customer_name" placeholder=" {{ 'CUSTOMER_NAME_PLACE_HOLDER' | translate }} "
+              [readonly]="Readonly()"></ion-input>
             <button ion-button outline item-end icon-left (click)="CustomerLookup()">
               <ion-icon name="eye"></ion-icon>
               {{ "CUSTOMER LOOKUP" | translate }} </button>

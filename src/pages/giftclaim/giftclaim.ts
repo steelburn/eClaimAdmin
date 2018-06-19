@@ -40,7 +40,7 @@ export class GiftclaimPage {
     customers: any[]; 
     storeProjects: any[];
     storeCustomers: any[];  
-    public projects: any;     
+    public projects: any[];     
     items: string[];  
     claimFor: string = 'seg_customer';
   
@@ -83,20 +83,7 @@ export class GiftclaimPage {
    claimRequestGUID: any;
    claimRequestData: any;
 
-  //  ngOnInit(): void {
-  //    this.userGUID = localStorage.getItem('g_USER_GUID');
- 
-  //    this.isFormEdit = this.navParams.get('isFormEdit');
-  //     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-  //    //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
-  //    if (this.isFormEdit)
-  //      this.GetDataforEdit();
-  //  } 
-
-  getCurrency(amount: number) {
-    this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
-  }
-
+  imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
@@ -108,6 +95,13 @@ export class GiftclaimPage {
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
+
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                this.ImageUploadValidation = true;
+                // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+                this.Gift_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
                   if (this.storeCustomers != undefined)
@@ -128,12 +122,16 @@ export class GiftclaimPage {
                     });
                 }
                 this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
-                this.Gift_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                // this.Gift_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Gift_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
           });
       })
 
+  }
+
+  getCurrency(amount: number) {
+    this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   }
 
     constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
@@ -150,6 +148,7 @@ export class GiftclaimPage {
     } 
  
   this.Giftform = fb.group({ 
+    avatar1: null,
     avatar: null,
     soc_no: '',   
     travel_date:  ['', Validators.required],
@@ -186,7 +185,31 @@ onFileChange(event: any) {
       });
     };
   }
+  //this.chooseFile = true;
+}
+
+fileName1: string;
+ProfileImage: any;
+newImage:boolean=true;
+private ProfileImageDisplay(e: any, fileChoose: string): void {
+  let reader = new FileReader();
+  if (e.target.files && e.target.files[0]) {
+
+    const file = e.target.files[0];
+    this.Giftform.get(fileChoose).setValue(file);
+    if (fileChoose === 'avatar1')
+      this.fileName1 = file.name;
+
+    reader.onload = (event: any) => {
+      this.ProfileImage = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  }
+  this.imageGUID = this.uploadFileName;
   this.chooseFile = true;
+  this.newImage=false;
+  this.onFileChange(e);
+  this.ImageUploadValidation = false;
 }
 
 imageGUID: any;
@@ -242,24 +265,38 @@ return new Promise((resolve, reject) => {
 }
 
 LoadProjects() {
-  this.http
-    .get(Services.getUrl('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID))
-    .map(res => res.json())
+  this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
     .subscribe(data => {
-    this.storeProjects=  this.projects = data["resource"];
-      console.table(this.projects)
+      this.storeProjects = this.projects = data["resource"];
     });
 }
 
 LoadCustomers() {
-  this.http
-    .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
-    .map(res => res.json())
+  this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
     .subscribe(data => {
       this.storeCustomers = this.customers = data["resource"];
-      // console.table(this.projects)
-    });
+    })
 }
+
+// LoadProjects() {
+//   this.http
+//     .get(Services.getUrl('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID))
+//     .map(res => res.json())
+//     .subscribe(data => {
+//     this.storeProjects=  this.projects = data["resource"];
+//       console.table(this.projects)
+//     });
+// }
+
+// LoadCustomers() {
+//   this.http
+//     .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
+//     .map(res => res.json())
+//     .subscribe(data => {
+//       this.storeCustomers = this.customers = data["resource"];
+//       // console.table(this.projects)
+//     });
+// }
 
 public CloseTravelClick() {
   this.AddToLookupClicked = false;
@@ -290,14 +327,11 @@ public AddToLookupClick() {
 }
 
 public ProjectLookup() {
-  this.ProjectLookupClicked = true;
- 
-  // this.projects = null;
+  this.ProjectLookupClicked = true; 
 }
 
 public CustomerLookup() {
-  this.CustomerLookupClicked = true;
-  // this.projects = null;
+  this.CustomerLookupClicked = true; 
 }
 
 searchProject(searchString: any) {
@@ -306,9 +340,27 @@ searchProject(searchString: any) {
     this.projects = this.storeProjects;
     return;
   }
-//  this.projects=  this.filterProjects({
-//   project_name: val
-//   });
+ this.projects=  this.filterProjects({
+  project_name: val
+  });
+}
+
+filterProjects(params?: any) {
+  if (!params) {
+    return this.storeProjects;
+  }
+
+  return this.projects.filter((item) => {
+    for (let key in params) {
+      let field = item[key];
+      if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+        return item;
+      } else if (field == params[key]) {
+        return item;
+      }
+    }
+    return null;
+  });
 }
 
 searchCustomer(searchString: any) {
@@ -317,9 +369,9 @@ searchCustomer(searchString: any) {
     this.customers = this.storeCustomers;
     return;
   }
-  // this.customers = this.filterCustomer({
-  //   NAME: val
-  // });
+  this.customers = this.filterCustomer({
+    NAME: val
+  });
 }
 
 filterCustomer(params?: any) {
@@ -365,8 +417,7 @@ submitAction(formValues: any) {
         this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
         this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
         this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
-
-        //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+        
         if (this.isCustomer) {
           this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID ;
           this.claimRequestData["resource"][0].SOC_GUID = null;
@@ -379,7 +430,7 @@ submitAction(formValues: any) {
        // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
        this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
         {
-          alert('Claim details are submitted successfully.')
+          alert('Claim details updated successfully.')
           this.navCtrl.push(UserclaimslistPage);
        });
       })

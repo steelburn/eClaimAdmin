@@ -8,6 +8,8 @@ import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
+import CryptoJS from 'crypto-js';
+import { GlobalFunction } from '../../shared/GlobalFunction';
 
 import { TenantMainSetup_Model } from '../../models/tenantmainsetup_model';
 import { TenantMainSetup_Service } from '../../services/tenantmainsetup_service';
@@ -129,10 +131,13 @@ export class TenantsetupPage {
   Add_Form: boolean = false; Edit_Form: boolean = false;
   Add_User_Form: boolean = false; Edit_User_Form: boolean = false;
 
+  onChange() {
+    this.User_Loginid_ngModel_Add = this.User_Email_ngModel_Add
+  }
+
   public AddTenantClick() {
     this.AddTenantClicked = true; this.Add_Form = true; this.Edit_Form = false;
     this.ClearControls();
-
   }
 
   public AddTUserClick(TENANT_GUID: any, TENANT_COMPANY_GUID: any, TENANT_COMPANY_SITE_GUID: any) {
@@ -168,11 +173,18 @@ export class TenantsetupPage {
     this.AddTUserClicked = false;
   }
 
+  Global_Function: GlobalFunction = new GlobalFunction(this.alertCtrl);
   public AddTTUserClick() {
     this.ClearUserControls();
     this.AddTTUserClicked = true;
     this.Add_User_Form = true; this.Edit_User_Form = false;
-    alert(this.tenantusers.EMAIL);
+    //alert(this.tenantusers.EMAIL);
+
+    //Generate Password Encrypt-----------------
+    var strPassword = this.Global_Function.Random();
+    this.User_Password_ngModel_Add = CryptoJS.SHA256(strPassword).toString(CryptoJS.enc.Hex);
+
+    alert(strPassword);
   }
 
   public CloseTTUserClick() {
@@ -229,11 +241,13 @@ export class TenantsetupPage {
       .map(res => res.json())
       .subscribe(
         data => {
-          this.tenant_user_details = data["resource"]; 
-          this.User_Loginid_ngModel_Add = this.tenant_user_details[0]["LOGIN_ID"];
-          this.User_Password_ngModel_Add = this.tenant_user_details[0]["PASSWORD"];
-          this.User_Email_ngModel_Add = this.tenant_user_details[0]["EMAIL"];
-          this.User_Role_ngModel_Add = this.tenant_user_details[0]["ROLE_GUID"];
+          this.tenant_user_details = data["resource"];
+          if (this.tenant_user_details.length > 0) {
+            this.User_Loginid_ngModel_Add = this.tenant_user_details[0]["LOGIN_ID"];
+            this.User_Password_ngModel_Add = this.tenant_user_details[0]["PASSWORD"];
+            this.User_Email_ngModel_Add = this.tenant_user_details[0]["EMAIL"];
+            this.User_Role_ngModel_Add = this.tenant_user_details[0]["ROLE_GUID"];
+          }
         });
   }
 
@@ -268,7 +282,7 @@ export class TenantsetupPage {
     }); alert.present();
   }
 
-  public DeleteUserClick(USER_GUID: any){
+  public DeleteUserClick(USER_GUID: any) {
     alert('In Progress....');
   }
 
