@@ -23,8 +23,8 @@
         <div *ngSwitchDefault ngSelected="selected">
          
           <ion-item>
-            <ion-label color="primary" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input class="cocus" [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" 
+            <!-- <ion-label color="primary"> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label> -->
+            <ion-input placeholder="Customer Name" class="cocus" [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" 
             type="text" [disabled]="true"></ion-input>
           </ion-item>
         </div>
@@ -32,12 +32,12 @@
          
           <ion-item >
             <ion-label color="primary" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-            <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel"             
+            <ion-input (click)="ProjectLookup()" class="cocus" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel"             
               type="text" [disabled]="true"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label color="primary" stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
-            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
+            <ion-input [ngModelOptions]="{standalone: true}" class="cocus"  [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
               type="text" disabled="true"></ion-input>
           </ion-item>
         </div>
@@ -77,20 +77,20 @@
 
         <ion-item>
           <ion-label color="danger" stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
-          <ion-input [disabled]="true" (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" 
+          <ion-input class="cocus"  [disabled]="true" (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" 
           placeholder=" {{ 'ORIGIN_PLACE_PLACE_HOLDER' | translate }} "></ion-input>
     
         </ion-item>
 
         <ion-item>
           <ion-label color="danger" stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
-          <ion-input [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" 
+          <ion-input class="cocus"  [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" 
           formControlName="destination" placeholder=" {{ 'DESTINATION_PLACE_PLACE_HOLDER' | translate }} "></ion-input>    
         </ion-item>       
     
         <ion-item>      
           <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>
-          <ion-input [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" 
+          <ion-input class="cocus"  [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" 
           placeholder=" {{ 'DISTANCE_PLACE_HOLDER' | translate }} "></ion-input>
         </ion-item>
 

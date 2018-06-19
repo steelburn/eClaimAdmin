@@ -1,5 +1,5 @@
-import { IonicPage, NavController, NavParams, Config } from 'ionic-angular';
-import { Component, NgModule, ElementRef, Inject, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,LoadingController,Loading, Config } from 'ionic-angular';
+import { Component, NgModule, ElementRef, Inject, ViewChild, OnChanges } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
@@ -35,12 +35,13 @@ export class DashboardPage {
   CurrentMonthNumber: any;
   DashboardForm: FormGroup;
   years: any; years_data: any;
-  Rejeted_Claim_Count = 0; Rejected_Claim_Amount = 0;
+  Rejected_Claim_Count = 0; Rejected_Claim_Amount = 0;
   Pending_Claim_Count = 0; Pending_Claim_Amount = 0;
   Approved_Claim_Count = 0; Approved_Claim_Amount = 0;
-  baseResourceUrl_Card:any;Year_Card:any;
+  baseResourceUrl_Card: any; Year_Card: any;
+  loading: Loading;
   constructor(public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
-    public inAppBrowser: InAppBrowser) {
+    public inAppBrowser: InAppBrowser, private loadingCtrl: LoadingController) {
     this.DashboardForm = fb.group({
       'Month': [null, Validators.compose([Validators.required])],
       'Year': [null, Validators.compose([Validators.required])]
@@ -55,7 +56,7 @@ export class DashboardPage {
     // console.log(this.baseResourceUrl_New)
     this.GetDashboardInfo();
     this.GetInfoForCards();
-    this.GetData_Years();     
+    this.GetData_Years();
   }
   // Unique and Sort years
   sortUnique(arr: any) {
@@ -78,31 +79,21 @@ export class DashboardPage {
       return result;
     }
   }
-  ngOnInit() {
-    // register plugin
-
-    Chart.plugins.register({
-
-      beforeDraw: function (chart: any) {
+  
+  ngOnInit() {     
+    // this.loading = this.loadingCtrl.create({
+    //   content: 'Loading...',
+    // });
+    // this.loading.present();  
+    // register plugin       
+    Chart.plugins.register({     
+      beforeDraw: function (chart: any) {     
         var data = chart.data.datasets[0].data;
         var sum = data.reduce(function (a: any, b: any) {
-
-          //return a.toFixed(2) + b.toFixed(2);
-          // a=a.toFixed(2);
-          // b=b.toFixed(2)
           var x = a + b;
           var y = parseFloat(x.toFixed(2));
           return y;
-
-          //return Math.round(a + b);
-          //   var x = a + b;
-          //  var y = Math.round(x * 100)/100;
-          //   var result= y.toFixed(2);
-          //   return result;
-
-
-
-        }, 0);
+          }, 0);
         var width = chart.chart.width,
           height = chart.chart.height,
           ctx = chart.chart.ctx;
@@ -111,36 +102,24 @@ export class DashboardPage {
         ctx.font = fontSize + "px Verdana";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "blue";
-        if (sum != 0) {
-
+         
+       if (sum != 0) {
           var text = sum,
             textX = Math.round((width - ctx.measureText(text).width) / 2),
             textY = height / 2;
-
-          // this.doughnutChartOptions =  {legend: {
-          //   display: true,
-          //   position: 'bottom'
-          // },}
-          // this.claimAmountOptions =  {legend: {
-          //   display: true,
-          //   position: 'bottom'
-          // },}
-
-
-
         }
         else {
           text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
             textY = height / 2;
         }
         ctx.fillText(text, textX, textY);
-        ctx.save();
-      }
-
+        ctx.save();             
+      }     
     });
-
+    // this.loading.dismissAll();
   }
   ionViewDidLoad() {
+    
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
@@ -167,7 +146,7 @@ export class DashboardPage {
     },
     title: {
       display: true,
-      text: 'My Claim Count',
+    //  text: 'My Claim Count',
       fontSize: 20,
       fontColor: 'green'
     },
@@ -211,7 +190,7 @@ export class DashboardPage {
     },
     title: {
       display: true,
-      text: 'My Claim Amount',
+     // text: 'My Claim Amount',
       fontSize: 20,
       fontColor: 'green'
     },
@@ -251,14 +230,14 @@ export class DashboardPage {
 
     if (this.month_value != undefined) {
       this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      console.log('hi ' + this.baseResourceUrl)
+      // console.log('hi ' + this.baseResourceUrl)
     }
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = data["resource"][0];
-        console.table(this.claimrequestdetails)
+        // console.table(this.claimrequestdetails)
         if (data["resource"][0] != null) {
           var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
           var pending = parseInt(this.claimrequestdetails.PendingReqCount);
@@ -279,9 +258,9 @@ export class DashboardPage {
           else { rejectedAmount = '0' }
 
           this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
-         
+
           // For Display Data In Ion-cards
-          this.Rejeted_Claim_Count = this.claimrequestdetails.RejectedReqCount;
+          this.Rejected_Claim_Count = this.claimrequestdetails.RejectedReqCount;
           this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
           this.Approved_Claim_Count = this.claimrequestdetails.ApprovedReqCount;
 
@@ -297,7 +276,7 @@ export class DashboardPage {
             this.Approved_Claim_Amount = this.claimrequestdetails.ApprovedClaimAmount;
           else this.Approved_Claim_Amount = 0;
           //
-        
+
         }
         else {
           approve = 0;
@@ -314,21 +293,21 @@ export class DashboardPage {
           this.claimAmountLabels = data.label;
 
 
-           // For Display Data In Ion-cards
-           this.Rejeted_Claim_Count = 0;
-           this.Pending_Claim_Count = 0;
-           this.Approved_Claim_Count = 0;
+          // For Display Data In Ion-cards
+          this.Rejected_Claim_Count = 0;
+          this.Pending_Claim_Count = 0;
+          this.Approved_Claim_Count = 0;
 
-           this.Rejected_Claim_Amount = 0;
-           this.Pending_Claim_Amount = 0;
-           this.Approved_Claim_Amount = 0;
-           //
+          this.Rejected_Claim_Amount = 0;
+          this.Pending_Claim_Amount = 0;
+          this.Approved_Claim_Amount = 0;
+          //
         }
       });
 
   }
 
-  GetInfoForCards(){
+  GetInfoForCards() {
     this.baseResourceUrl_Card = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboard_card?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(this.baseResourceUrl_Card)
@@ -339,24 +318,17 @@ export class DashboardPage {
         // console.table(this.Year_Card);
       });
   }
-  GetData_Years()
-  {
-    this.http
+  GetData_Years() {
+       this.http
       .get(this.baseResourceUrl_New)
       .map(res => res.json())
       .subscribe(data => {
         this.years_data = data["resource"];
-        console.log(this.years_data.length)
-
+        // console.log(this.years_data.length)
+       
         if (this.years_data.length == 0) {
           this.years = [this.year_value - 1, this.year_value];
-          //this.Year_Change_ngModel = this.year_value;
-          //alert('No Records Found')
-          // this.navCtrl.push(SetupPage);
-          // this.Rejeted_Claim_Count; this.Rejected_Claim_Amount;
-          // this.Pending_Claim_Count; this.Pending_Claim_Amount;
-          // this.Approved_Claim_Count; this.Approved_Claim_Amount;
-          return;
+             return;
         }
         else { }
         this.years = this.years_data;
@@ -367,14 +339,15 @@ export class DashboardPage {
         //console.log(SortuniqueYears)
         this.years = SortuniqueYears;
       });
+      
   }
-  Rejected_Click(Rejected:any) {
+  Rejected_Click(Rejected: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Rejected: "Rejected" });
   }
-  Pending_Click(Pending:any) {
+  Pending_Click(Pending: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
   }
-  Approved_Click(Approved:any) {
+  Approved_Click(Approved: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
   }
 

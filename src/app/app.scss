@@ -45,7 +45,7 @@ ion-fab[top1] {
 
 .popup1{
     width: 83%;
-    left: 78px;
+    left: 86px;
     top: 60px;
     position: fixed;
         height: 500px;
@@ -108,7 +108,10 @@ height: 480px;
 
 .Subtitle {
     text-align: center;
-    font-size: 0.8vw;
+    font-size: 0.869vw;
+    background: gray;
+    color: white;
+    padding-top: 14px !important; 
   }
   
   .container{
@@ -119,7 +122,7 @@ height: 480px;
 
   .iconf {
     font-size: 3.5vw;
-    color: #009688;
+
 
        transition: width 2s;
   }
@@ -143,6 +146,16 @@ height: 480px;
     min-height: 80px;
   }
 
+  .round3 {
+    float: left;
+    width: calc(48.5% - 7px);
+    margin: 10px !important;
+    padding: 10pt 0;
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
+
 
 
   .icon {
@@ -152,7 +165,7 @@ height: 480px;
     
     
 .popscroll{
-    width: 96%;
+    width: 97.5%;
     top: 60px;
     position: fixed;
     height: calc(100% - 89px);
@@ -219,6 +232,7 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     border-bottom: 1px solid !important;
     margin-bottom: 0px !important;
     padding: 10px !important;
+    background: #00A86B;
 }
 
 
@@ -354,9 +368,10 @@ ion-item.item.item-block.item-md.item-checkbox {
 
 .split-pane-md.split-pane-visible > .split-pane-side {
     min-width: 264px;
-    max-width: 22%;
+    max-width: 20%;
     border-right: 1px solid #dedede;
     border-left: 0;
+    font-size: xx-small !important;
 }
 
 
@@ -373,7 +388,7 @@ page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched{
 }
 
 button.item.item-block.item-md{
-    font-size: 1.45rem;
+    font-size: 1.3rem;
 
 }
 
@@ -481,8 +496,6 @@ button[ion-fab] {
 }
 
 .item-input ion-input, .item-input ion-textarea {
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
     padding-left: 5pt;
 }
 
