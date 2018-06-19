@@ -2,56 +2,68 @@
 
 </ion-header>
 
-<ion-content style="background:#f8f9fa">
-	<ion-card style="background:#f8f9fa;width: 405px;margin:0 auto">
+<ion-content>
+	<ion-card style="width: 605px;margin:45pt auto;border-radius: 5px;">
 
-		<p style="text-align:center !important;">
+		<ion-card-content>
+				<!-- <img style="max-width:116px;max-height:42pt;"src="assets/img/Untitled-4.png"/> 
+				 -->
+			<h1 style="margin-left:10pt;">Sign In</h1>
+			<p></p>
+			<p></p>
+			<h2 style="margin-left:10pt;">Continute to eClaim</h2>
+			<br/>
+			<form #loginForm="ngForm" novalidate>
+				<ion-list no-lines>
+					<ion-item>
 
-			<img src="assets/img/Untitled-2.png" alt="Ionic Logo">
+						<ion-label floating color="primary">{{ "USER_NAME_LABEL" | translate }}</ion-label>
+						<ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
+						 required>
+						</ion-input>
+						<!-- <ion-icon name="person" item-end></ion-icon> -->
+					</ion-item>
+					<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
+						Username is required
+					</p>
 
-			<b>Please enter your login credentials</b>
-		</p>
-		<form #loginForm="ngForm" novalidate>
-			<ion-list no-lines inset>
-				<ion-item style="background:#f8f9fa">
+					<ion-item>
+						<ion-label floating color="primary">Enter Your Password</ion-label>
+						<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+							<!-- <ion-icon item-end name="key"></ion-icon> -->
+						</ion-input>
 
-					<ion-label color="primary">{{ "USER_NAME_LABEL" | translate }}</ion-label>
-					<ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
-					 required>
-					</ion-input>
-					<!-- <ion-icon name="person" item-end></ion-icon> -->
-				</ion-item>
-				<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
-					Username is required
-				</p>
+					</ion-item>
+					<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+						Password is required
+					</p>
+				</ion-list>
 
-				<ion-item style="background:#f8f9fa">
-					<ion-label color="primary">Password</ion-label>
-					<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
-						<!-- <ion-icon item-end name="key"></ion-icon> -->
-					</ion-input>
-	
-				</ion-item>
-				<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
-					Password is required
-				</p>
-			</ion-list>
+				<ion-item class="btn">
+					<button color="primary500" ion-button block (click)="onLogin(loginForm)" type="submit">Login</button>
 
-			<ion-item  style="background:#f8f9fa">
-					<button color="primary500" ion-button (click)="onLogin(loginForm)" type="submit">Login</button>
 
-					<button color="primary500" ion-button (click)="onSignup()">Signup</button>
-	
+
 				</ion-item>
 				<ion-item>
-		
+
 					<p>
-						<a color="primary700" (click)="ForgotPasswordClick()">Forgot Your Password?</a>
+
+						<a color="primary500" (click)="ForgotPasswordClick()">Forgot Your Password?</a>
+
 					</p>
+
+					<p>
+
+							<a color="primary500" (click)="onSignup()">Create account</a>
+	
+						</p>
+
 				</ion-item>
 
 
-		</form>
+			</form>
+		</ion-card-content>
 	</ion-card>
 
 

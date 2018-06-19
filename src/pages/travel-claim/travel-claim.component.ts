@@ -260,7 +260,7 @@ export class TravelclaimPage {
                     }
                     this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
                     this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
-                    this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
+                    //this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
 
                     this.Travel_From_ngModel = this.claimRequestData[0].FROM;
                     this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
@@ -345,6 +345,7 @@ export class TravelclaimPage {
           this.tollParkAmount += element.AMOUNT;
         });
         if (this.isFormSubmitted) {
+          this.tollParkAmount=  this.tollParkAmount===undefined?0:this.tollParkAmount;
           this.totalClaimAmount = this.travelAmount + this.tollParkAmount
         }
         else
@@ -385,8 +386,9 @@ export class TravelclaimPage {
         if (!this.isPublicTransport)
           this.travelAmount = destination * this.VehicleRate, -2;
         this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
-        this.totalClaimAmount = this.travelAmount ;
-        // this.Travel_Amount_ngModel 
+        this.travelAmount=  this.travelAmount===undefined?0:this.travelAmount;
+        this.tollParkAmount=  this.tollParkAmount===undefined?0:this.tollParkAmount;
+        this.totalClaimAmount = this.travelAmount + this.tollParkAmount ;
       }
       else
         alert('Please select Valid Origin & Destination Places');
@@ -585,7 +587,7 @@ export class TravelclaimPage {
     this.PublicTransValue = true;
     if (vehicle.CATEGORY === 'Public transport') {
       this.isPublicTransport = true;
-      this.travelAmount = undefined;
+      //this.travelAmount = undefined;
       this.PublicTransValue = false;
     }
     else
@@ -637,6 +639,7 @@ export class TravelclaimPage {
 
   fileName1: string;
   ProfileImage: any;
+  newImage:boolean=true;
   private ProfileImageDisplay(e: any, fileChoose: string): void {
     let reader = new FileReader();
     if (e.target.files && e.target.files[0]) {
@@ -653,6 +656,7 @@ export class TravelclaimPage {
     }
     this.imageGUID = this.uploadFileName;
     this.chooseFile = true;
+    this.newImage=false;
     this.onFileChange(e);
     this.ImageUploadValidation=true;
   }

@@ -23,8 +23,8 @@
         <div *ngSwitchDefault ngSelected="selected">
          
           <ion-item>
-            <ion-label color="primary" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input class="cocus" [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" 
+            <!-- <ion-label color="primary"> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label> -->
+            <ion-input placeholder="Customer Name" class="cocus" [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" 
             type="text" [disabled]="true"></ion-input>
           </ion-item>
         </div>
@@ -32,12 +32,12 @@
          
           <ion-item >
             <ion-label color="primary" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-            <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel"             
+            <ion-input (click)="ProjectLookup()" class="cocus" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel"             
               type="text" [disabled]="true"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label color="primary" stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
-            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
+            <ion-input [ngModelOptions]="{standalone: true}" class="cocus"  [(ngModel)]="Travel_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
               type="text" disabled="true"></ion-input>
           </ion-item>
         </div>
@@ -77,20 +77,20 @@
 
         <ion-item>
           <ion-label color="danger" stacked> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
-          <ion-input [disabled]="true" (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" 
+          <ion-input class="cocus"  [disabled]="true" (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" 
           placeholder=" {{ 'ORIGIN_PLACE_PLACE_HOLDER' | translate }} "></ion-input>
     
         </ion-item>
 
         <ion-item>
           <ion-label color="danger" stacked> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
-          <ion-input [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" 
+          <ion-input class="cocus"  [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" 
           formControlName="destination" placeholder=" {{ 'DESTINATION_PLACE_PLACE_HOLDER' | translate }} "></ion-input>    
         </ion-item>       
     
         <ion-item>      
           <ion-label stacked> {{ "DISTANCE_LABEL" | translate }} </ion-label>
-          <ion-input [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" 
+          <ion-input class="cocus"  [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance" 
           placeholder=" {{ 'DISTANCE_PLACE_HOLDER' | translate }} "></ion-input>
         </ion-item>
 
@@ -112,17 +112,17 @@
               <ion-label color="primary" > {{totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
             </ion-item>
 
+            <ion-item  *ngIf="newImage">
             <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
-
+            </ion-item>
             <!-- <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>             
             </ion-item> -->
 
-            <ion-item class="text">
-      
+            <ion-item *ngIf="isPublicTransport">      
               <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
-              <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button>
+              <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
               <!-- <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
               <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
           </ion-item>
@@ -131,7 +131,7 @@
             <img src="{{ProfileImage}}" style="width: 20%">
         </ion-item>
 
-        <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>
+        <button *ngIf="isPublicTransport" ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>
             
             <div class="btn" *ngIf="!isFormSubmitted">
               <button ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="(Travelform.valid  && !PublicTransValue) || !Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
