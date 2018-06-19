@@ -209,7 +209,8 @@ export class AddTollPage {
     }
     this.Amount = this.numberPipe.transform(this.claimDetailsData[0].AMOUNT, '1.2-2');
     this.imageURLEdit = this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID);
-    this.ImageUploadValidation=false;
+    //this.ImageUploadValidation=false;
+    this.ImageUploadValidation=true;
     //this.chooseFile = false;
       this.Description=this.claimDetailsData[0].DESCRIPTION;
   });
