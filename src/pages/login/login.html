@@ -8,13 +8,10 @@
 		<ion-card-content>
 				<!-- <img style="max-width:116px;max-height:42pt;"src="assets/img/Untitled-4.png"/> 
 				 -->
-			<h1 style="margin-left:10pt;">Sign In</h1>
-			<p></p>
-			<p></p>
-			<h2 style="margin-left:10pt;">Continute to eClaim</h2>
+			<h1 style="margin-left:10pt;text-align: center;">Sign In to eClaim</h1>
 			<br/>
 			<form #loginForm="ngForm" novalidate>
-				<ion-list no-lines>
+				<ion-list>
 					<ion-item>
 
 						<ion-label floating color="primary">{{ "USER_NAME_LABEL" | translate }}</ion-label>
@@ -39,27 +36,24 @@
 					</p>
 				</ion-list>
 
-				<ion-item class="btn">
+				<div class="btn">
 					<button color="primary500" ion-button block (click)="onLogin(loginForm)" type="submit">Login</button>
 
 
 
-				</ion-item>
-				<ion-item>
+				</div>
+				<div>
 
 					<p>
 
 						<a color="primary500" (click)="ForgotPasswordClick()">Forgot Your Password?</a>
 
-					</p>
 
-					<p>
-
-							<a color="primary500" (click)="onSignup()">Create account</a>
+							<a color="primary500" style="float:right;" (click)="onSignup()">Create account</a>
 	
 						</p>
 
-				</ion-item>
+					</div>
 
 
 			</form>
