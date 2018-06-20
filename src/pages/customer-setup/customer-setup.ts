@@ -230,6 +230,39 @@ export class CustomerSetupPage {
     }
   }
 
+  stores: any[];
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.customers = this.stores;
+      return;
+    }
+    this.customers = this.filter({
+      CUSTOMER_NAME: val,
+      CUSTOMER_LOCATION_NAME: val,
+      EMAIL: val,
+      CONTACT_PERSON_MOBILE_NO: val
+    });
+  }
+
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+
   DisplayGrid() {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
@@ -249,7 +282,7 @@ export class CustomerSetupPage {
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.customers = data.resource;
+        this.customers = this.stores = data.resource;
 
         this.loading.dismissAll();
       });

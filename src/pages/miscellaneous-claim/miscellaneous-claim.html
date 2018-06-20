@@ -22,19 +22,19 @@
         <div *ngSwitchDefault>
          
           <ion-item>
-            <ion-label color="primary" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
+            <ion-label color="primary500" floating> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
             <ion-input (click)="CustomerLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
           </ion-item>
         </div>
         <div *ngSwitchCase="'seg_project'">
          
           <ion-item >
-            <ion-label color="primary" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
+            <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
             <ion-input (click)="ProjectLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
               type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label color="primary" stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
+            <ion-label floating>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
             <ion-input [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Miscellaneous_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
               type="text" disabled="true"></ion-input>
           </ion-item>
@@ -44,35 +44,37 @@
 
   <form [formGroup]="MiscellaneousForm">         
    
-            <ion-item>
-              <ion-label color="primary" stacked>{{ "CLAIM_DATE_LABEL" | translate  }}</ion-label>        
+            <ion-item style="width: 49%;display:inline-block;"> 
+              <ion-label color="primary500" floating>{{ "CLAIM_DATE_LABEL" | translate  }}</ion-label>        
               <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Miscellaneous_Date_ngModel" formControlName="travel_date" max={{validDate}} ></ion-datetime>
             </ion-item>               
            
-            <ion-item>
-                <ion-label color="primary" stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+            <ion-item style="width: 50%;display:inline-block;">
+                <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
                 <!-- <ion-label > {{travelAmount | number}} </ion-label> -->
                 <ion-input (change)='getCurrency($event.target.value)' type="number" formControlName="claimAmount" [(ngModel)]="Miscellaneous_Amount_ngModel" ></ion-input>
               </ion-item>
     
               <ion-item>
-                  <ion-label color="primary" stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
+                  <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
                   <ion-input type="text" formControlName="description" [(ngModel)]="Miscellaneous_Description_ngModel" ></ion-input>
                 </ion-item>            
 
               <ion-item class="text">      
+                <ion-label>Attachment :</ion-label>
                 <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>               
+                <button ion-button item-end color="primary500"   (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button> 
             </ion-item>
           
-            <ion-item>
+            <div>
               <img src="{{ProfileImage}}" style="width: 20%">
-          </ion-item>
+            </div>
           
-              <ion-item  *ngIf="newImage">
+              <div  *ngIf="newImage">
               <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
-              </ion-item>
+              </div>
 
-              <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>   
+        
 
               <div class="btn">     
                 <button ion-button color="primary500" (click)='submitAction(MiscellaneousForm.value)' [disabled]="(MiscellaneousForm.valid && !ImageUploadValidation) || !MiscellaneousForm.valid" >{{ 'SUBMIT'}}</button>               

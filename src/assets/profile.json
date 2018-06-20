@@ -72,29 +72,6 @@
               }
             ]
           }
-        },
-        {
-          "-id": "4",
-          "approver": {
-            "-keytype": "userGUID",
-            "#text": "ba1f8461-5912-368f-3317-4fc2fe4e03a5"
-          },
-          "conditions": {
-            "condition": [
-              {
-                "-status": "rejected",
-                "nextlevel": {
-                  "-final": "false"
-                }
-              },
-              {
-                "-status": "approved",
-                "nextlevel": {
-                  "-final": "true"
-                }
-              }
-            ]
-          }
         }
       ]
     }

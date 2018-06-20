@@ -23,7 +23,7 @@
         <div *ngSwitchDefault ngSelected="selected">
          
           <ion-item>
-           <ion-label floating color="primary"> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label> 
+           <ion-label floating color="primary500"> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label> 
             <ion-input [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" 
             type="text" [disabled]="true"></ion-input>
           </ion-item>
@@ -31,7 +31,7 @@
         <div *ngSwitchCase="'seg_project'">
          
           <ion-item >
-            <ion-label floating color="primary"> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
+            <ion-label floating color="primary500"> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
             <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel"             
               type="text" [disabled]="true"></ion-input>
           </ion-item>
@@ -46,20 +46,20 @@
         <form [formGroup]="Travelform">       
     
         <ion-item style="width: 49%;display:inline-block;">
-          <ion-label floating color="primary" >{{ "START_DT_LABEL" | translate }}</ion-label>
+          <ion-label floating color="primary500" >{{ "START_DT_LABEL" | translate }}</ion-label>
           <ion-datetime  minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="start_DT" [(ngModel)]="Start_DT_ngModel"  
           displayFormat="DD/MM/YYYY HH:mm" ></ion-datetime>
         </ion-item>       
         
     
         <ion-item style="width: 50%;display:inline-block;">
-          <ion-label floating color="primary" >{{ "END_DT_LABEL" | translate }}</ion-label>
+          <ion-label floating color="primary500" >{{ "END_DT_LABEL" | translate }}</ion-label>
           <ion-datetime  minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT" 
           [(ngModel)]="End_DT_ngModel"></ion-datetime>
         </ion-item>
 
         <ion-item style="width: 49%;display:inline-block;">
-          <ion-label floating color="primary">{{ "TRAVEL_MODE_LABEL" | translate }}</ion-label>
+          <ion-label floating color="primary500">{{ "TRAVEL_MODE_LABEL" | translate }}</ion-label>
           <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType">
               <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
             <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="onVehicleSelect(vehicle)">{{vehicle.CATEGORY}}</ion-option>
@@ -67,7 +67,7 @@
         </ion-item>  
         
         <ion-item style="width: 50%;display:inline-block;">
-          <ion-label floating color="primary">{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
+          <ion-label floating color="primary500">{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
           <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType">
               <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
             <ion-option  (ionSelect)="onTravelTypeSelect('Local')">Local</ion-option>
@@ -76,36 +76,38 @@
         </ion-item>      
 
         <ion-item>
-          <ion-label floating color="primary"> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
+          <ion-label floating color="primary500"> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
           <ion-input  [disabled]="true" (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin" ></ion-input>
     
         </ion-item>
 
         <ion-item>
-          <ion-label floating color="primary"> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
+          <ion-label floating color="primary500"> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
           <ion-input  [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" 
           formControlName="destination" ></ion-input>    
         </ion-item>       
     
-        <ion-item>      
+        <ion-item style="width: 49%;display:inline-block;">      
           <ion-label floating> {{ "DISTANCE_LABEL" | translate }} </ion-label>
           <ion-input  [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance"></ion-input>
         </ion-item>
 
 
-        <ion-item>
+        <ion-item style="width: 50%;display:inline-block;">
             <ion-label floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>   
             <ion-input (change)='getCurrency($event.target.value)' [disabled]="!isPublicTransport" [(ngModel)]="travelAmountNgmodel" type="text" formControlName="claim_amount" ></ion-input>           
           </ion-item>
 
           <ion-item>
-              <ion-label floating color="primary"> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
+              <ion-label floating color="primary500"> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
               <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel" ></ion-input>
             </ion-item>
             
             <ion-item>
-              <ion-label color="primary" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
+
+              <ion-label color="primary" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} {{ "TOTAL_CLAIM_AMOUNT_NOTE" | translate }}</ion-label>
               <ion-label color="primary" > {{totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+
             </ion-item>
 
             <div *ngIf="newImage">
@@ -224,7 +226,7 @@
           <div class="popup1" padding *ngIf="tollParkLookupClicked">
               <ion-card>
                   <ion-card-header class="icTitle headerColor-white ">
-                      <div class="icHeaderText">Toll and Park Details</div>
+                      <div class="icHeaderText">Toll, Park and Accommodation Details</div>
                       <button class="btnR" (click)="CloseTollParkLookup()">
                           <ion-icon name="md-close"></ion-icon>
                       </button>
@@ -233,26 +235,34 @@
                       <ion-item>
                           <table class="Tabler" border='2'>
                               <tr class="linedsg TColor">
-                                  <th class="lgl1">Receipt</th>
+         
                                   <th class="lgl1">Claim Method</th>
-                                  <th class="lgl1">Amount</th>
+            
                                   <th class="lgl1">Payment Mode</th>
                                   <th class="lgl1">Description</th>
+                                  <th class="lgl1">Receipt</th>
+                                  <th class="lgl1">Amount(RM)</th>
                                   <th class="lgl1">Action</th>
                                 </tr>
         
                               <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
                                   <!-- <td class="lgl1">{{i+1}}</td> -->
-                                  <td class="lgl1">
-                                      <button  (click)="DisplayImage(item.ATTACHMENT_ID)">
-                                      Receipt
-                                      </button>
-                                  </td>
+                          
                                   <td class="lgl1">{{item.CLAIM_METHOD}}</td>
-                                  <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
+
+                                  <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
+                                  <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+
+                        
+
                                   <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
                                   <td class="lgl1">{{item.DESCRIPTION}}</td>
-        
+                                  <td class="lgl1">
+                                    <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)">
+                                    Receipt
+                                    </button>
+                                </td>
+                                <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
                                   <td class="lgl1 fColor">
                                     <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
                                         <ion-icon name="md-create"></ion-icon>
@@ -262,15 +272,15 @@
                                   </button>
                                 </td>
                               </tr>
-        
+                              <tr class="col7">
+                                
+                                <td class="lgl11"  colspan="6"> {{ "TOTAL_AMOUNT_LABEL" | translate }}(RM)  : {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+                               
+                        </tr>
                           </table>
         
                       </ion-item>
-                      <ion-item>
-                          <ion-label> {{ "TOTAL_AMOUNT_LABEL" | translate }} </ion-label>
-                          <ion-label> {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
-                      </ion-item>
-        
+              
                   </ion-list>
               </ion-card>
           </div>
