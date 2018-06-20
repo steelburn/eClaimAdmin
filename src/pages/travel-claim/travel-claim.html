@@ -108,7 +108,7 @@
             </ion-item>
             
             <ion-item>
-              <ion-label color="primary" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
+              <ion-label color="primary" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} {{ "TOTAL_CLAIM_AMOUNT_NOTE" | translate }}</ion-label>
               <ion-label color="primary" > {{totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
             </ion-item>
 
@@ -252,7 +252,8 @@
                                       </button>
                                   </td>
                                   <td class="lgl1">{{item.CLAIM_METHOD}}</td>
-                                  <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
+                                  <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
+                                  <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
                                   <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
                                   <td class="lgl1">{{item.DESCRIPTION}}</td>
         
