@@ -120,7 +120,7 @@ export class BanksetupPage {
     }); alert.present();
   }
 
-  loading: Loading; button_Add_Disable:boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
+  loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
   constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
@@ -128,12 +128,12 @@ export class BanksetupPage {
     }
     else {
       this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
-      if (localStorage.getItem("g_USER_GUID") != "sva") {        
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
         //Get the role for this page------------------------------        
-        if(localStorage.getItem("g_KEY_ADD") == "0"){ this.button_Add_Disable = true; }
-        if(localStorage.getItem("g_KEY_EDIT") == "0"){ this.button_Edit_Disable = true; }
-        if(localStorage.getItem("g_KEY_DELETE") == "0"){ this.button_Delete_Disable = true; }
-        if(localStorage.getItem("g_KEY_VIEW") == "0"){ this.button_View_Disable = true; }
+        if (localStorage.getItem("g_KEY_ADD") == "0") { this.button_Add_Disable = true; }
+        if (localStorage.getItem("g_KEY_EDIT") == "0") { this.button_Edit_Disable = true; }
+        if (localStorage.getItem("g_KEY_DELETE") == "0") { this.button_Delete_Disable = true; }
+        if (localStorage.getItem("g_KEY_VIEW") == "0") { this.button_View_Disable = true; }
 
         //Clear localStorage value--------------------------------      
         this.ClearLocalStorage();
@@ -349,7 +349,7 @@ export class BanksetupPage {
           this.RemoveStorageValues();
           //------------------------------------------------------------------
 
-          this.navCtrl.setRoot(this.navCtrl.getActive().component);          
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
         }
       });
   }
@@ -378,7 +378,11 @@ export class BanksetupPage {
     this.NAME_ngModel_Add = "";
     this.Tenant_Add_ngModel = "";
   }
+
+  ExportToExcel() {
+    // var blob = new Blob([document.getElementById('exportable').innerHTML], {
+    //   type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+    // });
+    // saveAs(blob, "Report.xls");
+  }
 }
-
-
-
