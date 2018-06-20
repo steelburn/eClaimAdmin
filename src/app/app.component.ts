@@ -136,6 +136,7 @@ export class ConferenceApp {
 
   rootPage = 'LoginPage';
   appPages_User: PageInterface[];
+  USER_NAME_LABEL: any;
 
   constructor(
     public events: Events,
@@ -152,7 +153,7 @@ export class ConferenceApp {
     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
     // ];
-    this.blnLogin = false;
+    this.blnLogin = false; 
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -225,7 +226,7 @@ export class ConferenceApp {
   }
 
   enableMenu(loggedIn: boolean) {
-    // debugger;
+    debugger;
     //Get all the roles and menus for that particular user.-------------------------------------------------------   
     // let url: string; this.Menu_Array = []; let Role_Name: string = "";
     // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -257,7 +258,7 @@ export class ConferenceApp {
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
 
     if (localStorage.length > 0) {
-      this.blnLogin = true;
+      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
         if (localStorage.getItem("g_USER_GUID") == "sva") {
@@ -381,7 +382,7 @@ export class ConferenceApp {
       val.catch((err) => {
         // This is never called
         console.log(err);
-      });
+      });      
     }
     else {
       this.blnLogin = false;
@@ -426,7 +427,7 @@ export class ConferenceApp {
   }
 
   isActive(page: PageInterface) {
-    // debugger;    
+    debugger;    
     let childNav = this.nav.getActiveChildNav();
 
     // Tabs are a special case because they have their own navigation
