@@ -50,7 +50,7 @@ export class LoginPage {
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
       if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-        localStorage.setItem("g_USER_GUID", "sva");
+        localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
 
         //navigate to app.component page
         this.userData.login(this.login.username);

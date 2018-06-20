@@ -18,7 +18,7 @@
     </button>
   </ion-fab>
 
-
+  <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
   <ion-list>
     <ion-item>
       <table class="Tabler">
