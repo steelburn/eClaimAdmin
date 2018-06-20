@@ -17,53 +17,60 @@
 
     <ion-item>
 
-        <ion-label>Department :</ion-label>
-        <ion-select interface="popover" (ionChange)="BindEmployeesbyDepartment($event)" #ddlDept>
-                <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
-        </ion-select>
-    </ion-item>
-    <ion-item>
-        <ion-label>User Name :</ion-label>
-        <ion-select interface="popover" #ddlEmployee>
-                <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
-    </ion-select>
-    </ion-item>
+        <ion-label>Department :
+                <ion-select interface="popover" (ionChange)="BindEmployeesbyDepartment($event)" #ddlDept>
+                        <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
+                    </ion-select>
+        </ion-label>
+ 
 
-    <ion-item>
-    <ion-label>Claim Month :</ion-label>
-    <ion-select interface="popover" #ddlmonth>
-        <ion-option value="1">Jan</ion-option>
-        <ion-option value="2">Feb</ion-option>
-        <ion-option value="3">Mar</ion-option>
-        <ion-option value="4">Apr</ion-option>
-        <ion-option value="5">May</ion-option>
-        <ion-option value="6">Jun</ion-option>
-        <ion-option value="7">Jul</ion-option>
-        <ion-option value="8">Aug</ion-option>
-        <ion-option value="9">Sep</ion-option>
-        <ion-option value="10">Oct</ion-option>
-        <ion-option value="11">Nov</ion-option>
-        <ion-option value="12">Dec</ion-option>
-    </ion-select>
-</ion-item>
-    <ion-item>
-    <ion-label>Claim Type:</ion-label>
-    <ion-select interface="popover" #ddlClaimTypes>
-            <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
-</ion-select>
-</ion-item>
-   <ion-item>
-        <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value)">Search</button>
-      </ion-item>
+        <ion-label>User Name :
 
+                <ion-select interface="popover" #ddlEmployee>
+                        <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
+                    </ion-select>
+        </ion-label>
+     
+</ion-item>
+<ion-item>
+        <ion-label>
+            
+            Claim Month :
+            <ion-select interface="popover" #ddlmonth>
+                    <ion-option value="1">Jan</ion-option>
+                    <ion-option value="2">Feb</ion-option>
+                    <ion-option value="3">Mar</ion-option>
+                    <ion-option value="4">Apr</ion-option>
+                    <ion-option value="5">May</ion-option>
+                    <ion-option value="6">Jun</ion-option>
+                    <ion-option value="7">Jul</ion-option>
+                    <ion-option value="8">Aug</ion-option>
+                    <ion-option value="9">Sep</ion-option>
+                    <ion-option value="10">Oct</ion-option>
+                    <ion-option value="11">Nov</ion-option>
+                    <ion-option value="12">Dec</ion-option>
+                </ion-select>
+        </ion-label>
+      
+
+        <ion-label>Claim Type:
+                <ion-select interface="popover" #ddlClaimTypes>
+                        <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
+                    </ion-select>
+        </ion-label>
+     
+
+    
+    </ion-item>
+    <ion-item>    <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value)">Search</button></ion-item>
     <ion-list>
         <ion-item>
             <table class="Tabler ">
                 <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+                    <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
                     <th class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">Date</th>
-                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim">Start Time</th>
-                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim">End Time</th>
+                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim"  style="width:85px">Start Time</th>
+                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim"  style="width:85px">End Time</th>
                     <th class="lgl1">SOC Number</th>
                     <!-- <th class="lgl1">Location as per SOC</th> -->
                     <th class="lgl1">Customer</th>
@@ -71,28 +78,28 @@
                     <!-- <th class="lgl1">Recommended Post Code</th> -->
                     <th class="lgl1" *ngIf="travelClaimType">From</th>
                     <th class="lgl1" *ngIf="travelClaimType">To</th>
-                    <th class="lgl1" *ngIf="travelClaimType">Distance (KM)</th>
+                    <th class="lgl1" *ngIf="travelClaimType" style="width:55px">Distance</th>
                     <!-- <th class="lgl1">Distance(Outstn/Oths)KM</th> -->
                     <!-- <th class="lgl1">Type</th> -->
-                    <th class="lgl1" *ngIf="travelClaimType">Mileage(RM)</th>
-                    <th class="lgl1" *ngIf="travelClaimType">Parking</th>
+                    <th class="lgl1" *ngIf="travelClaimType" style="width:60px">Mileage</th>
+                    <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Parking</th>
                     <!-- <th class="lgl1">Parking (Without GST)</th> -->
-                    <th class="lgl1" *ngIf="travelClaimType">Toll</th>
-                    <th class="lgl1" *ngIf="travelClaimType">Meal</th>
-                    <th class="lgl1" *ngIf="travelClaimType">Hotel</th>
+                    <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Toll</th>
+                    <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Meal</th>
+                    <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Hotel</th>
                     <!-- <th class="lgl1">Outstation Allowance</th>  -->
-                    <th class="lgl1 tblBrRight">Total Amount(RM)</th>
+                    <th class="lgl1 tblBrRight"  style="width:110px">Total Amount</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let claim of claimsList; let i=index">
                     <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">{{claim.TRAVEL_DATE | date:'M/d/y'}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType || overTimeClaim">{{claim.START_TS | date:'M/d/y HH:mm'}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType || overTimeClaim">{{claim.END_TS | date:'M/d/y HH:mm'}}</td>
+                    <td class="lgl1" *ngIf="travelClaimType || overTimeClaim" text-wrap>{{claim.START_TS | date:'M/d/y HH:mm'}}</td>
+                    <td class="lgl1" *ngIf="travelClaimType || overTimeClaim" text-wrap>{{claim.END_TS | date:'M/d/y HH:mm'}}</td>
                     <td class="lgl1">{{claim.SOC_NO}}</td>
-                    <td class="lgl1">{{claim.CUSTOMER_NAME}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType">{{claim.from}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType">{{claim.to}}</td>
+                    <td class="lgl1"  text-wrap>{{claim.CUSTOMER_NAME}}</td>
+                    <td class="lgl1" *ngIf="travelClaimType" text-wrap>{{claim.from}}</td>
+                    <td class="lgl1" *ngIf="travelClaimType" text-wrap>{{claim.to}}</td>
                     <td class="lgl1" *ngIf="travelClaimType">{{claim.DISTANCE_KM}}</td>
                     <td class="lgl1" *ngIf="travelClaimType">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
                     <td class="lgl1" *ngIf="travelClaimType">{{claim.ParkingAmount | number:'1.2-2'}}</td>
@@ -106,10 +113,10 @@
             </table>
         </ion-item>
     </ion-list>
-    <ion-item>
+    <ion-item text-right color="primary">
 
-        <ion-label>Total :</ion-label>
-        <ion-label item-end>{{totalClaimAmount}} (RM)</ion-label>
+       Total Amount(RM) : {{totalClaimAmount}}
+     
     </ion-item>
 
 </ion-content>

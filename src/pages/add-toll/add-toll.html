@@ -51,10 +51,28 @@
             </div> -->
 
             <!-- this -->
-            <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'">
+            <!-- <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>             
-            </ion-item>
+            </ion-item> -->
+
+            <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'"> 
+                <!-- <img style="width: 50%" height="100%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">      -->
+              <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
+              <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
+              <!-- <button ion-button type="button"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
+              <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
+          </ion-item>
+          <ion-item  *ngIf="newImage  && ClaimMethodName != 'Meal Allowance'">
+          <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">    
+        </ion-item>
+
+          <ion-item  >
+            <img src="{{ProfileImage}}" style="width: 20%">
+        </ion-item>
+
+        <!-- <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
+        <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>
          
 
           <!-- <ion-item>

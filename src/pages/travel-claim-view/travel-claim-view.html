@@ -80,36 +80,37 @@
         <ion-label> {{ "DESCRIPTION_LABEL" | translate }} ： </ion-label>
         <ion-label> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
-   
-        <ion-label>Receipt ： </ion-label> 
-        <img style="width: 50%" height="50%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
 
     <ion-item>
+        <ion-label>Receipt ： </ion-label>
+        <img style="width: 50%" height="50%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
+    </ion-item> 
+    <div>
         <button ion-button outline item-start icon-left (click)="TollParkLookup()">
             <ion-icon name="eye"></ion-icon>
             {{ "CLAIM_DETAILS_BUTTON" | translate }} </button>
 
-    </ion-item>
+        </div>
     <ion-item *ngIf="isApprover">
         <ion-label> {{ "REMARKS_LABEL" | translate }} :</ion-label>
         <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
 
     </ion-item>
 
-    <ion-item *ngIf="isApprover">
+    <div class="btn" *ngIf="isApprover">
 
         <button ion-button outline item-start (click)="isAccepted('accepted')">
             {{ "ACCEPT_BUTTON" | translate }} </button>
         <button ion-button outline item-start (click)="isAccepted('rejected')">
             {{ "REJECT_BUTTON" | translate }} </button>
-    </ion-item>
+        </div>
 
 
 
-    <ion-item *ngIf="!isApprover">
+    <div *ngIf="!isApprover">
         <button ion-button outline item-start icon-left (click)="EditClaim()">
             {{ "EDIT_LABEL" | translate }} </button>
-    </ion-item>
+        </div>
     <div class="blackcontainer" *ngIf="tollParkLookupClicked"></div>
     <div class="popup1" padding *ngIf="tollParkLookupClicked">
         <ion-card>
@@ -126,32 +127,38 @@
                     <ion-item>
                         <table class="Tabler" border='2'>
                             <tr class="linedsg TColor">
-                                    <th class="lgl1" style="width:40px"></th>
-                                <!-- <th class="lgl1">No.</th> -->
+                                
+                           
                                 <th class="lgl1">Claim Method</th>
-                                <th class="lgl1">Amount</th>
+                                
                                 <th class="lgl1">Payment Mode</th>
                                 <th class="lgl1">Description</th>
-
+                                <th class="lgl1" >Receipt</th>
+                                <th class="lgl1">Amount(RM)</th>
                             </tr>
                             <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
-                                <td class="lgl1">
-                                    <button (click)="DisplayImage(item.ATTACHMENT_ID)">
-                                        Receipt
-                                    </button>
-                                </td>
-                                <!-- <td class="lgl1">{{i+1}}</td> -->
+                           
+                 
                                 <td class="lgl1">{{item.CLAIM_METHOD}}</td>
-                                <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
+                      
                                 <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
                                 <td class="lgl1">{{item.DESCRIPTION}}</td>
+                                <td class="lgl1">
+                                        <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)">
+                                            Receipt
+                                        </button>
+                                    </td>
+                                <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
+                            </tr>
+
+                            <tr class="col7">
+                                
+                                    <td class="lgl11"  colspan="5"> {{ "TOTAL_AMOUNT_LABEL" | translate }}(RM)  : {{tollParkAmount}}</td>
+                                   
                             </tr>
                         </table>
                     </ion-item>
-                    <ion-item>
-                        <ion-label> {{ "TOTAL_AMOUNT_LABEL" | translate }} </ion-label>
-                        <ion-label> {{ tollParkAmount }} </ion-label>
-                    </ion-item>
+                  
 
                 </ion-list>
             </ion-card-content>
@@ -161,7 +168,7 @@
     <div class="popup1" padding *ngIf="displayImage">
         <ion-card>
             <ion-card-header class="icTitle headerColor-white ">
-                <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
+                <div class="icHeaderText">Receipt</div>
                 <button class="btnR" (click)="CloseDisplayImage()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>

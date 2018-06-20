@@ -45,7 +45,7 @@ ion-fab[top1] {
 
 .popup1{
     width: 83%;
-    left: 78px;
+    left: 86px;
     top: 60px;
     position: fixed;
         height: 500px;
@@ -108,7 +108,10 @@ height: 480px;
 
 .Subtitle {
     text-align: center;
-    font-size: 0.8vw;
+    font-size: 0.869vw;
+    background: gray;
+    color: white;
+    padding-top: 14px !important; 
   }
   
   .container{
@@ -119,7 +122,7 @@ height: 480px;
 
   .iconf {
     font-size: 3.5vw;
-    color: #009688;
+
 
        transition: width 2s;
   }
@@ -162,7 +165,7 @@ height: 480px;
     
     
 .popscroll{
-    width: 96%;
+    width: 97.5%;
     top: 60px;
     position: fixed;
     height: calc(100% - 89px);
@@ -303,6 +306,8 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
 	border-bottom: 1px solid gainsboro;
 }
 
+
+
     tr.colth {
         color: white;
     }
@@ -329,6 +334,14 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
        border: none;
          border-bottom: 1px solid gainsboro;
          white-space: normal !important;
+    }
+
+    .Tabler tr.col7 td.lgl11 {
+
+        padding: 16px;
+        text-align: right;
+        word-wrap: break-word;
+        border-bottom:none;
     }
 
     .tblBrLeft { border-radius: 5px 0 0 5px !important;}
@@ -385,7 +398,7 @@ page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched{
 }
 
 button.item.item-block.item-md{
-    font-size: 1.45rem;
+    font-size: 1.3rem;
 
 }
 
@@ -483,7 +496,6 @@ button[ion-fab] {
         position: absolute;
         top: -8px;
         right: 40px;
-
         color: white;
         background-color: rgba(0,0,0,0.7);
         line-height: 24px;
@@ -492,63 +504,51 @@ button[ion-fab] {
     }
 }
 
-.item-input ion-input, .item-input ion-textarea {
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-}
-
-.item-input ion-input.cocus.input{
-    border-radius: 5px;
-    background: whitesmoke;
-    padding-left: 5pt;
-}
-
-.item-input ion-input, .item-input ion-textarea.ng-dirty.ng-valid.ng-touched {
-    border: 0;
-}
+// .item-input ion-input, .item-input ion-textarea {
+//     border-radius:5pt;
+//     padding-left: 5pt;
+// }
 
 
-ion-datetime.datetime.datetime-md{
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-
-}
+// .item-label-stacked .input-wrapper, .item-label-floating .input-wrapper {
+//     border-bottom: 1pt solid gainsboro;
+// }
 
 
-ion-datetime.datetime.datetime-md.ng-dirty.ng-valid.ng-touched {
-    border: 0;
-}
+// .item-input ion-input.cocus.input{
+//     border-radius: 5px;
+//     background: whitesmoke;
+//     padding-left: 5pt;
+// }
 
-ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
-    border: 0;
-}
+.card-md .item-md.item-block .item-inner {
+    border-bottom: 1pt solid gainsboro;
+  }
 
-ion-datetime.datetime.datetime-ios{
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-}
+// .item-input ion-input, .item-input ion-textarea.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
 
-ion-select.select.select-md{
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-}
 
-ion-select.select.select-ios{
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-}
 
-ion-select.select.select-ios.ng-dirty.ng-valid.ng-touched{
-    border: 0;
-}
-ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
-    border: 0;
-}
+
+// ion-datetime.datetime.datetime-md.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
+
+// ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
+
+
+
+
+// ion-select.select.select-ios.ng-dirty.ng-valid.ng-touched{
+//     border: 0;
+// }
+// ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
+//     border: 0;
+// }
 
 .item-md.item-label-stacked [item-right], .item-md.item-label-floating [item-right], .item-md.item-label-stacked [item-end], .item-md.item-label-floating [item-end] {
     margin-top: 29px;
@@ -574,9 +574,7 @@ ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
     width: 100%;
   }
 
-.item.item-block .item-inner {
-    border-bottom: 0 !important;
-}
+
 
 .conta{
     width: 45.5% !important;
