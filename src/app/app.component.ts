@@ -468,7 +468,7 @@ export class ConferenceApp {
         .subscribe(data => {
           let roles = data["resource"];
           if (data["resource"].length > 0) {
-            resolve(roles[0]["ROLE_NAME"]);
+            resolve(roles[0]["ROLE_NAME"]); localStorage.setItem("g_ROLE_NAME",roles[0]["ROLE_NAME"]);
           }
           else {
             resolve("NA");

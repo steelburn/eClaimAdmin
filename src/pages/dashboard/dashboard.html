@@ -24,36 +24,38 @@
       <ion-item text-center style="background:gray;color: white;" >
         Filter 
       </ion-item>
-      <ion-item>
+      <ion-item style="width: 50%;display: inline-block;"> 
   
-        <ion-label color="primary" >Year :
+        <ion-label color="primary"  >Year :
           
-            <ion-select formControlName="Year" [(ngModel)]="Year_Change_ngModel" (ionChange)="Year_Changed(Year_Change_ngModel)">
-                <ion-option *ngFor="let year of years">{{year}}</ion-option>
-              </ion-select>
-        
+           
         </ion-label>
-      
-        <ion-label color="primary" >Month :
-            <ion-select formControlName="Month" [(ngModel)]="Month_Change_ngModel" (ionChange)="Month_Changed(Month_Change_ngModel)">
-                <!-- <ion-option value="0"  selected="true">Select</ion-option> -->
-                <ion-option value="1">January</ion-option>
-                <ion-option value="2">February</ion-option>
-                <ion-option value="3">March</ion-option>
-                <ion-option value="4">April</ion-option>
-                <ion-option value="5">May</ion-option>
-                <ion-option value="6">June</ion-option>
-                <ion-option value="7">July</ion-option>
-                <ion-option value="8">August</ion-option>
-                <ion-option value="9">September</ion-option>
-                <ion-option value="10">October</ion-option>
-                <ion-option value="11">November</ion-option>
-                <ion-option value="12">December</ion-option>
-              </ion-select>  
-        
+        <ion-select formControlName="Year" [(ngModel)]="Year_Change_ngModel" (ionChange)="Year_Changed(Year_Change_ngModel)">
+            <ion-option *ngFor="let year of years">{{year}}</ion-option>
+          </ion-select>
+    </ion-item>
+    <ion-item  style="width: 49%;display:inline-block;">
+        <ion-label color="primary"  >Month :
+            
         
         
         </ion-label>
+        <ion-select formControlName="Month" [(ngModel)]="Month_Change_ngModel" (ionChange)="Month_Changed(Month_Change_ngModel)">
+            <!-- <ion-option value="0"  selected="true">Select</ion-option> -->
+            <ion-option value="1">January</ion-option>
+            <ion-option value="2">February</ion-option>
+            <ion-option value="3">March</ion-option>
+            <ion-option value="4">April</ion-option>
+            <ion-option value="5">May</ion-option>
+            <ion-option value="6">June</ion-option>
+            <ion-option value="7">July</ion-option>
+            <ion-option value="8">August</ion-option>
+            <ion-option value="9">September</ion-option>
+            <ion-option value="10">October</ion-option>
+            <ion-option value="11">November</ion-option>
+            <ion-option value="12">December</ion-option>
+          </ion-select>  
+    
 
       </ion-item>
 
