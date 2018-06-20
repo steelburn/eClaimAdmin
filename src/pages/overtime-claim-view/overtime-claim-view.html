@@ -57,21 +57,23 @@
         <ion-label> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>    
     
-    <ion-card *ngIf="isApprover"> 
+   
     <ion-item>   
-            <ion-label> {{ "REMARKS_LABEL" | translate }} </ion-label>
+            <ion-label> {{ "REMARKS_LABEL" | translate }} : </ion-label>
             <ion-input type="text" [(ngModel)]="Remarks_NgModel" placeholder=" {{ 'REMARKS_PLACE_HOLDER' | translate }} "></ion-input>
-          
+        </ion-item>
+
+        <div  class="btn" *ngIf="isApprover"> 
                    <button ion-button outline item-start (click)="isAccepted('accepted')">
                 {{ "ACCEPT_BUTTON" | translate }} </button>
             <button ion-button outline item-start (click)="isAccepted('rejected')">
                 {{ "REJECT_BUTTON" | translate }} </button>
-            </ion-item>
-      </ion-card>   
+        
+            </div>   
    
-    <ion-item *ngIf="!isApprover">
+    <div *ngIf="!isApprover">
         <button ion-button outline item-start icon-left (click)="EditClaim()">
             {{ "EDIT_LABEL" | translate }} </button>
-    </ion-item>
+        </div>
 
 </ion-content>
