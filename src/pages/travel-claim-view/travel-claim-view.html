@@ -83,8 +83,9 @@
 
     <ion-item>
         <ion-label>Receipt ： </ion-label>
-        <img style="width: 50%" height="50%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
+     
     </ion-item> 
+    <img style="width: 50%" height="50%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
     <div>
         <button ion-button outline item-end icon-left (click)="TollParkLookup()">
             <ion-icon name="eye"></ion-icon>
@@ -111,6 +112,7 @@
         <button ion-button outline item-start icon-left (click)="EditClaim()">
             {{ "EDIT_LABEL" | translate }} </button>
         </div>
+        
     <div class="blackcontainer" *ngIf="tollParkLookupClicked"></div>
     <div class="popup1" padding *ngIf="tollParkLookupClicked">
         <ion-card>
