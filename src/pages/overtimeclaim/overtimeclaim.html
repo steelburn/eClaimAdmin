@@ -22,14 +22,14 @@
         <div *ngSwitchDefault>
           
           <ion-item>
-            <ion-label color="primary500" stacked> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
+            <ion-label color="primary500" floating> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
             <ion-input (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
   
           </ion-item>
         </div>
         <div *ngSwitchCase="'seg_project'">
           <ion-item>
-            <ion-label color="primary500" stacked> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
+            <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
             <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
               type="text"></ion-input>
             <!-- <button color="primary500" ion-button outline item-start icon-left (click)="ProjectLookup()">
@@ -37,7 +37,7 @@
               {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button> -->
           </ion-item>
           <ion-item>
-            <ion-label color="primary500" stacked>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
+            <ion-label floating>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
             <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="OT_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
               type="text" disabled="true" ></ion-input>
           </ion-item>
@@ -46,28 +46,28 @@
 
     <form [formGroup]="OTform">    
 
-    <ion-item>
-      <ion-label color="primary500" stacked>{{ "START_DT_LABEL" | translate }}</ion-label>
+    <ion-item style="width: 50%;display:inline-block;">
+      <ion-label color="primary500" floating>{{ "START_DT_LABEL" | translate }}</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm:ss" 
-      [(ngModel)]="Start_DT_ngModel" formControlName="start_DT"  placeholder="{{ 'START_DATETIME_PLACE_HOLDER' | translate }}"></ion-datetime>
+      [(ngModel)]="Start_DT_ngModel" formControlName="start_DT"  ></ion-datetime>
     </ion-item>
     <!-- max={{validDate}} -->
 
-    <ion-item>
-      <ion-label color="primary500" stacked>{{ "END_DT_LABEL" | translate }}</ion-label>
+    <ion-item style="width: 49%;display:inline-block;">
+      <ion-label color="primary500" floating>{{ "END_DT_LABEL" | translate }}</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm:ss" 
-      [(ngModel)]="End_DT_ngModel" formControlName="end_DT"   placeholder="{{ 'END_DATETIME_PLACE_HOLDER' | translate }}"></ion-datetime>
+      [(ngModel)]="End_DT_ngModel" formControlName="end_DT"  ></ion-datetime>
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary500" stacked> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-input (change)='getCurrency($event.target.value)' type="number" formControlName="claim_amount" 
-      [(ngModel)]="OT_Amount_ngModel" placeholder=" {{ 'CLAIM_AMOUNT_PLACE_HOLDER' | translate }} "></ion-input>
+      [(ngModel)]="OT_Amount_ngModel"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary500" stacked> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
-      <ion-input type="text" formControlName="description" [(ngModel)]="OT_Description_ngModel" placeholder=" {{ 'DESCRIPTION_PLACE_HOLDER' | translate }} "></ion-input>
+      <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
+      <ion-input type="text" formControlName="description" [(ngModel)]="OT_Description_ngModel" ></ion-input>
     </ion-item>
 
     <div class="btn">     
@@ -140,7 +140,7 @@
     </ion-card>
   </div>
 
-  <ion-fab bottom right>
+  <!-- <ion-fab bottom right>
       <button ion-fab  mini color="secondary400">
         <ion-icon name="add"></ion-icon>
       </button>
@@ -155,6 +155,6 @@
         </button>
     
       </ion-fab-list>
-    </ion-fab>
+    </ion-fab> -->
 </ion-content>
 
