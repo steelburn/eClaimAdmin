@@ -15,7 +15,7 @@
     <form [formGroup]="DetailsForm" >
       
             <ion-list>
-              <ion-item *ngIf="ClaimMethodName != 'Accommodation' && ClaimMethodName != 'Meal Allowance'">
+              <ion-item *ngIf="ClaimMethodName != 'Accommodation' && ClaimMethodName != 'Meal Allowance'" style="width: 50%;display:inline-block;">
                 <ion-label fixed>{{ 'PAY_BY_LABEL' | translate }}</ion-label>
                 <ion-select  [ngModelOptions]="{standalone: true}" [(ngModel)]="PayType" placeholder="Cash">
                     <!-- [ngModelOptions]="{standalone: true}" -->
@@ -23,7 +23,7 @@
                 </ion-select>
               </ion-item>
 
-              <ion-item *ngIf="ClaimMethodName === 'Meal Allowance'">
+              <ion-item *ngIf="ClaimMethodName === 'Meal Allowance'" style="width: 50%;display:inline-block;">
                 <ion-label fixed>{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
                 <ion-select [ngModelOptions]="{standalone: true}" placeholder="NA" [(ngModel)]="MA_SELECT">
                     <ion-option value="NA">NA</ion-option>
@@ -32,7 +32,7 @@
               </ion-item>
            
 
-            <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'">
+            <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'" style="width: 49%;display:inline-block;">
               <ion-label fixed>{{ 'AMOUNT_LABEL' | translate  }}{{ 'CURRENCY_NAME_LABEL' | translate}}</ion-label>
               <ion-input (change)='getCurrency($event.target.value)' [ngModelOptions]="{standalone: true}" 
               [(ngModel)]="Amount" type="number" placeholder="0.00"></ion-input>
@@ -57,22 +57,26 @@
             </ion-item> -->
 
             <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'"> 
+
+                <ion-label>Attachment :</ion-label> 
                 <!-- <img style="width: 50%" height="100%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">      -->
               <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
+              <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button item-end color="primary500"  (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>
+            
               <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
               <!-- <button ion-button type="button"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
               <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
           </ion-item>
-          <ion-item  *ngIf="newImage  && ClaimMethodName != 'Meal Allowance'">
+          <div *ngIf="newImage  && ClaimMethodName != 'Meal Allowance'">
           <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">    
-        </ion-item>
+          </div>
 
-          <ion-item  >
+          <div >
             <img src="{{ProfileImage}}" style="width: 20%">
-        </ion-item>
+          </div>
 
         <!-- <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
-        <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>
+
          
 
           <!-- <ion-item>
