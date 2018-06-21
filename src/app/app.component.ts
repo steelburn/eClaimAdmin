@@ -226,7 +226,7 @@ export class ConferenceApp {
   }
 
   enableMenu(loggedIn: boolean) {
-    debugger;
+    // debugger;
     //Get all the roles and menus for that particular user.-------------------------------------------------------   
     // let url: string; this.Menu_Array = []; let Role_Name: string = "";
     // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -427,7 +427,7 @@ export class ConferenceApp {
   }
 
   isActive(page: PageInterface) {
-    debugger;    
+    // debugger;    
     let childNav = this.nav.getActiveChildNav();
 
     // Tabs are a special case because they have their own navigation
