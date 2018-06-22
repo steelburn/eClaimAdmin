@@ -18,7 +18,7 @@
     </ion-item>
 
     <ion-item>
-        <ion-label> {{ "TRAVEL_DATE_LABEL" | translate }} : </ion-label>
+        <ion-label> {{ "CLAIM_DATE_LABEL" | translate }} : </ion-label>
         <ion-label> {{ claim.TRAVEL_DATE | date }} </ion-label>
     </ion-item>
    
@@ -71,9 +71,13 @@
         
             </div>   
    
-    <div *ngIf="!isApprover">
+
+    <ion-item *ngIf="!isApprover && level===1">
+
+   
+
         <button ion-button outline item-start icon-left (click)="EditClaim()">
             {{ "EDIT_LABEL" | translate }} </button>
-        </div>
+        </ion-item>
 
 </ion-content>
