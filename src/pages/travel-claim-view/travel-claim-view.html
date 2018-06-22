@@ -44,16 +44,20 @@
     <ion-item *ngIf="claim.SOC">
         <ion-label> {{ "PROJECT_NAME_LABEL" | translate }} : </ion-label>
         <ion-label> {{ claim.PROJECT_NAME }} </ion-label>
+       
+    </ion-item>
+
+    <ion-item *ngIf="claim.SOC">
         <ion-label> {{ "SOC_NUMBER_LABEL" | translate }} :</ion-label>
         <ion-label> {{ claim.SOC }} </ion-label>
     </ion-item>
     <ion-item>
         <ion-label> {{ "ORIGIN_PLACE_LABEL" | translate }} : </ion-label>
-        <ion-label> {{ claim.ORIGIN }} </ion-label>
+        <ion-label  text-wrap> {{ claim.ORIGIN }} </ion-label>
     </ion-item>
     <ion-item>
         <ion-label> {{ "DESTINATION_PLACE_LABEL" | translate }} ：</ion-label>
-        <ion-label> {{ claim.DESTINATION }} </ion-label>
+        <ion-label  text-wrap> {{ claim.DESTINATION }} </ion-label>
     </ion-item>
     <ion-item>
         <ion-label> {{ "DISTANCE_LABEL" | translate }} ：</ion-label>

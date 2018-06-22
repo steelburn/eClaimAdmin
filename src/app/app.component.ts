@@ -136,6 +136,7 @@ export class ConferenceApp {
 
   rootPage = 'LoginPage';
   appPages_User: PageInterface[];
+  USER_NAME_LABEL: any;
 
   constructor(
     public events: Events,
@@ -152,7 +153,7 @@ export class ConferenceApp {
     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
     // ];
-    this.blnLogin = false;
+    this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -257,7 +258,7 @@ export class ConferenceApp {
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
 
     if (localStorage.length > 0) {
-      this.blnLogin = true;
+      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
         if (localStorage.getItem("g_USER_GUID") == "sva") {
@@ -381,7 +382,7 @@ export class ConferenceApp {
       val.catch((err) => {
         // This is never called
         console.log(err);
-      });
+      });      
     }
     else {
       this.blnLogin = false;
@@ -468,7 +469,7 @@ export class ConferenceApp {
         .subscribe(data => {
           let roles = data["resource"];
           if (data["resource"].length > 0) {
-            resolve(roles[0]["ROLE_NAME"]); localStorage.setItem("g_ROLE_NAME",roles[0]["ROLE_NAME"]);
+            resolve(roles[0]["ROLE_NAME"]); //localStorage.setItem("g_ROLE_NAME",roles[0]["ROLE_NAME"]);
           }
           else {
             resolve("NA");

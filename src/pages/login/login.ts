@@ -50,7 +50,7 @@ export class LoginPage {
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
       if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-        localStorage.setItem("g_USER_GUID", "sva");
+        localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
 
         //navigate to app.component page
         this.userData.login(this.login.username);
@@ -111,6 +111,7 @@ export class LoginPage {
                 .subscribe(data => {
                   let role_result = data["resource"];
                   if (role_result.length > 0) {
+                    localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
                     localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
                     localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
                     localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
@@ -118,6 +119,7 @@ export class LoginPage {
                   }
                   else{
                     localStorage.setItem("g_KEY_VIEW", "1");
+                    localStorage.removeItem("g_ROLE_NAME");
                   }
                 });
               //----------------------------------------------------------------------------------
