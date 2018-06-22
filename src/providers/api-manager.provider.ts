@@ -426,10 +426,13 @@ export class ApiManagerProvider {
   //       //let dept = email_details[0]["APPROVER1_DEPT_NAME"];
   //       let dept: string = "";
 
+
+    
   //       let startDate: string = ""; let endDate: string = ""; let CreatedDate: string = "";
   //       startDate = email_details[0]["START_DATE"];
   //       endDate = email_details[0]["END_DATE"];
   //       CreatedDate = email_details[0]["APPLIED_DATE"];
+
 
   //       var queryHeaders = new Headers();
   //       queryHeaders.append('Content-Type', 'application/json');
