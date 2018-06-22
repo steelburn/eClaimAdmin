@@ -387,6 +387,38 @@ export class SocRegistrationPage {
     }
   }
 
+  stores: any[]; 
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.socs = this.stores;      
+      return;
+    }
+    this.socs = this.filter({
+      soc: val,
+      project_name: val,
+      customer_name: val      
+    });
+  }
+
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+    
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+
   DisplayGrid() {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
@@ -406,7 +438,7 @@ export class SocRegistrationPage {
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.socs = data.resource;
+        this.socs = this.stores = data.resource;
 
         this.loading.dismissAll();
       });

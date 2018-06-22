@@ -24,10 +24,12 @@
   <ion-item *ngIf="claim.SOC">
       <ion-label > {{ "PROJECT_NAME_LABEL" | translate }} : </ion-label>
       <ion-label> {{ claim.PROJECT_NAME }} </ion-label>
-      <ion-label > {{ "SOC_NUMBER_LABEL" | translate }} : </ion-label>
-      <ion-label> {{ claim.SOC }} </ion-label>
+     
   </ion-item>
-
+<ion-item *ngIf="claim.SOC">
+    <ion-label > {{ "SOC_NUMBER_LABEL" | translate }} : </ion-label>
+    <ion-label> {{ claim.SOC }} </ion-label>
+</ion-item>
     <ion-item>
         <ion-label > {{ "CLAIM_AMOUNT_LABEL" | translate }} </ion-label> 
         <ion-label> {{ this.totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2' }} </ion-label>
