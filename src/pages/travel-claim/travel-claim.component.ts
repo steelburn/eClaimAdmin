@@ -154,6 +154,7 @@ export class TravelclaimPage {
   }   
   
   getCurrency(amount: number) {
+   amount =Number(amount);
     this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
     this.travelAmount = amount;
     this.totalClaimAmount = amount;
@@ -161,7 +162,7 @@ export class TravelclaimPage {
 
   totalClaimAmount: number;
   ionViewWillEnter() {
-    if(!this.isFormEdit)
+    //if(!this.isFormEdit)
     this.LoadClaimDetails();
 
   }
@@ -294,6 +295,7 @@ export class TravelclaimPage {
           if (element.ATTACHMENT_ID !== null)
             element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
           this.tollParkAmount += element.AMOUNT;
+          
         });
         if (this.isFormSubmitted) {
           this.tollParkAmount=  this.tollParkAmount===undefined?0:this.tollParkAmount;
@@ -314,6 +316,9 @@ export class TravelclaimPage {
   // }
 
   GetDistance() {
+    if (this.tollParkAmount > 0) {
+      alert('You have added toll/parking/accommodation details to previous path. Please review the details.')
+    }
     let url = 'http://api.zen.com.my/api/v2/google/distancematrix/json?destinations=place_id:' + this.DestinationPlaceID + '&origins=place_id:' + this.OriginPlaceID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     // let destination;
     // let DistKm: string = this.api.GetGoogleDistance(url);
@@ -548,7 +553,10 @@ export class TravelclaimPage {
     this.PublicTransValue = true;
     if (vehicle.CATEGORY === 'Public transport') {
       this.isPublicTransport = true;
+      if(this.isFormEdit)
+      this.PublicTransValue = true;
       //this.travelAmount = undefined;
+      else
       this.PublicTransValue = false;
     }
     else

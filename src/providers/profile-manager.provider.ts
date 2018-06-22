@@ -26,21 +26,34 @@ export class ProfileManagerProvider {
     }
   
     profileLevel: any; assignedTo: any; stage: any;
+
+    checkMultipleLength:number;
+    checkCount:number;
+
   
     UpdateProfileInfo(mainClaimReq: MainClaimRequestModel) {
+      //debugger;
       this.api.updateClaimRequest(mainClaimReq).subscribe(res => 
         {
+          this.checkCount++;
+          //  if(this.checkMultipleLength===1)
+          //  {
           if(mainClaimReq.STATUS==='Rejected')
           alert('Claim has been '+mainClaimReq.STATUS +'.')
           else
           alert('Claim has been Approved.')
          // alert('Claim has been '+mainClaimReq.STATUS+'.');
           this.navCtrl.setRoot(ClaimapprovertasklistPage);
+          // }
+        });
       }
-      
-        // console.log(res.json())
-      )
-    }    
+
+      UpdateProfileInfoForMultiple(mainClaimReq: MainClaimRequestModel) {
+        //debugger;
+        this.api.updateClaimRequest(mainClaimReq).subscribe(res => 
+          {    });
+        }
+        
   
     getMainClaimReqInfo(claimRef: ClaimWorkFlowHistoryModel, level: any, claimRequestGUID: any, isRemarksAccepted: any) {
       this.level = level;
@@ -124,7 +137,7 @@ export class ProfileManagerProvider {
         if (this.level === '-1')
           this.mainClaimReq.STATUS = 'Paid';
         else  if (this.level === '3')
-          this.mainClaimReq.STATUS = 'Accepted';
+          this.mainClaimReq.STATUS = 'Approved';
         else if (this.level === '0' || this.isRemarksAccepted === false) {
         // this.mainClaimReq.UPDATE_TS =  new Date().toISOString();
         // if (this.level === '-1')
@@ -135,7 +148,10 @@ export class ProfileManagerProvider {
           this.mainClaimReq.STAGE = null;
           this.mainClaimReq.ASSIGNED_TO = null;
         }
+        if(this.checkMultipleLength===1)
         this.UpdateProfileInfo(this.mainClaimReq);
+        else
+        this.UpdateProfileInfoForMultiple(this.mainClaimReq);
         //alert('Claim action submitted successfully.')
 
         // This is for Approval Send email to User and next approver
@@ -144,7 +160,9 @@ export class ProfileManagerProvider {
      
     }
   
-    ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any) { 
+    ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any, checkBoxLength:number) { 
+      //debugger
+      this.checkMultipleLength=checkBoxLength;
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
       this.userGUID = localStorage.getItem('g_USER_GUID');
 

@@ -251,7 +251,7 @@
                                   <td class="lgl1">{{item.CLAIM_METHOD}}</td>
 
                                   <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
-                                  <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+                                  <!-- <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td> -->
 
                         
 
@@ -262,7 +262,8 @@
                                     Receipt
                                     </button>
                                 </td>
-                                <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
+                                <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
+                                <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
                                   <td class="lgl1 fColor">
                                     <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
                                         <ion-icon name="md-create"></ion-icon>

@@ -90,11 +90,20 @@
 
     </div>
 
+   
+    <ion-item *ngIf="!isApprover && level===1">
 
-    <div *ngIf="!isApprover" && level===1">
+   
+
+            <button ion-button outline item-start icon-left (click)="EditClaim()">
+                {{ "EDIT_LABEL" | translate }} </button>
+           </ion-item>
+    
+
+    <!-- <div *ngIf="!isApprover" && level===1">      
 
         <button ion-button outline item-start icon-left (click)="EditClaim()">
             {{ "EDIT_LABEL" | translate }} </button>
-        </div>
+        </div> -->
 
 </ion-content>

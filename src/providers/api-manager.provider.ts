@@ -712,7 +712,7 @@ export class ApiManagerProvider {
       }
 
       updateApiModel(endPoint: string, modelJSON:any) {
-      
+        debugger;
         var queryHeaders = new Headers();
         queryHeaders.append('Content-Type', 'application/json');
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
