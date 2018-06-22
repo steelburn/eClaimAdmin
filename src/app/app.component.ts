@@ -114,6 +114,7 @@ export class ConferenceApp {
   ];
   loggedInPages: PageInterface[] = [
     // { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
+    { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
     { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
     // { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
     { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
@@ -327,7 +328,7 @@ export class ConferenceApp {
             { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
             { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
             { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-            { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' }
+            { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' },            
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -358,7 +359,7 @@ export class ConferenceApp {
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
             { title: 'My Claim List', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },            
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
