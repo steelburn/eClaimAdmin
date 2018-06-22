@@ -359,7 +359,18 @@ export class OvertimeclaimPage {
       }
       return null;
     });
-  }  
+  } 
+  
+  validateDate() {
+    let today = Date.parse(new Date().toISOString())
+    let start = Date.parse(this.Start_DT_ngModel)
+    let end = Date.parse(this.End_DT_ngModel)
+    if (start > end || today < start) {
+      alert('The date range is not valid.')
+      return false;
+    }
+    return true;
+  }
 
   // clearFile() {
   //   this.OTform.get('avatar').setValue(null);
@@ -372,6 +383,7 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
+    if (this.validateDate()){
     if (this.isFormEdit) {
       this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
         .subscribe(data => {
@@ -398,10 +410,9 @@ export class OvertimeclaimPage {
             alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
          });
-        })
-    }
-    else {
-   
+        })   
+  }
+    else {   
     formValues.claimTypeGUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
     formValues.travel_date = formValues.start_DT;
     formValues.attachment_GUID =  this.imageGUID;
@@ -409,6 +420,7 @@ export class OvertimeclaimPage {
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }
+  }
   }
 
   NavigateTravelClaim() {
