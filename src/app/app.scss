@@ -45,7 +45,7 @@ ion-fab[top1] {
 
 .popup1{
     width: 83%;
-    left: 86px;
+    left: 80px;
     top: 60px;
     position: fixed;
         height: 500px;
@@ -454,6 +454,16 @@ button.item.item-block.item-md{
     }    
 
 //overwrite default css
+
+.popover-md .popover-content {
+    width: auto;
+}
+
+
+.popover-ios .popover-content {
+    width: auto;
+}
+
 .text-input-md {
     margin: 11px 8px;
 }
