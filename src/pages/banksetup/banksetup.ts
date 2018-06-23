@@ -16,6 +16,8 @@ import { UUID } from 'angular2-uuid';
 import { GlobalFunction } from '../../shared/GlobalFunction';
 import { LoginPage } from '../login/login';
 
+import { ExcelService } from '../../providers/excel.service';
+
 /**
  * Generated class for the BanksetupPage page.
  *
@@ -25,7 +27,7 @@ import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-banksetup',
-  templateUrl: 'banksetup.html', providers: [BankSetup_Service, BaseHttpService, GlobalFunction, TitleCasePipe]
+  templateUrl: 'banksetup.html', providers: [BankSetup_Service, BaseHttpService, GlobalFunction, TitleCasePipe, ExcelService]
 })
 export class BanksetupPage {
   NAME: any;
@@ -37,7 +39,7 @@ export class BanksetupPage {
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
-  public banks: BankSetup_Model[] = [];
+  public banks: BankSetup_Model[] = []; public BankDetails: any;
 
   public AddBanksClicked: boolean = false;
   public bank_details: any;
@@ -121,7 +123,7 @@ export class BanksetupPage {
   }
 
   loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
-  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+  constructor(private excelService: ExcelService, private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
@@ -161,6 +163,7 @@ export class BanksetupPage {
         alert('Sorry!! You are not authorized.');
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
+      this.excelService = excelService;
     }
   }
 
@@ -217,7 +220,7 @@ export class BanksetupPage {
       .get(view_url)
       .map(res => res.json())
       .subscribe(data => {
-        this.banks = data.resource;
+        this.banks = this.BankDetails = data.resource;
 
         this.loading.dismissAll();
       });
@@ -379,10 +382,7 @@ export class BanksetupPage {
     this.Tenant_Add_ngModel = "";
   }
 
-  ExportToExcel() {
-    // var blob = new Blob([document.getElementById('exportable').innerHTML], {
-    //   type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-    // });
-    // saveAs(blob, "Report.xls");
+  ExportToExcel(evt: any) {
+    this.excelService.exportAsExcelFile(this.banks,'Data');
   }
 }
