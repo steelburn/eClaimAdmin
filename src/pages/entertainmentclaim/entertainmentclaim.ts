@@ -63,7 +63,7 @@ export class EntertainmentclaimPage {
   Soc_GUID: any;
   Entertainment_Date_ngModel: any;
   Entertainment_Description_ngModel: any;
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
 
   public socGUID: any;
   public AddTravelClicked: boolean = false;
@@ -110,6 +110,12 @@ export class EntertainmentclaimPage {
   }
 
   getCurrency(amount: number) {
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM99999.')
+      this.Entertainment_Amount_ngModel = null
+    }
+    else
     this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   }
  
