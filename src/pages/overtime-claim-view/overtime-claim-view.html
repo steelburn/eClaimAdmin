@@ -23,13 +23,13 @@
     </ion-item>
    
    <ion-item *ngIf="claim.CUSTOMER_NAME">
-        <ion-label> {{ "CUSTOMER_NAME_LABEL" | translate }} : </ion-label>
-        <ion-label> {{ claim.CUSTOMER_NAME }} </ion-label>
+        <ion-label >{{ "CUSTOMER_NAME_LABEL" | translate }} : </ion-label>
+        <ion-label text-wrap> {{ claim.CUSTOMER_NAME }} </ion-label>
     </ion-item> 
 
     <ion-item *ngIf="claim.SOC">
         <ion-label> {{ "PROJECT_NAME_LABEL" | translate }} ： </ion-label>
-        <ion-label> {{ claim.PROJECT_NAME }} </ion-label>
+        <ion-label text-wrap> {{ claim.PROJECT_NAME }} </ion-label>
     
     </ion-item>     
 
