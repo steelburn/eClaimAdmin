@@ -24,6 +24,7 @@ npm install chart.js --save
 npm install chart.piecelabel.js --save
 
 #plugin to install for export to excel
-npm install file-saver --save
 npm install xlsx --save
+npm install file-saver --save
+
 ```
