@@ -42,7 +42,7 @@ export class GiftclaimPage {
     storeCustomers: any[];  
     public projects: any[];     
     items: string[];  
-    claimFor: string = 'seg_customer';
+    claimFor: string = 'seg_project';
   
     public Gift_SOC_No_ngModel: any;
     public Gift_ProjectName_ngModel: any;  
@@ -260,7 +260,7 @@ return new Promise((resolve, reject) => {
 
  claimForChanged() {
   // console.log(this.claimFor)
-  if (this.claimFor == 'customer') this.isCustomer = true;
+  if (this.claimFor == 'seg_customer') this.isCustomer = true;
   else this.isCustomer = false;
 }
 

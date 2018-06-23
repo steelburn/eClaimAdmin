@@ -66,7 +66,7 @@ export class OvertimeclaimPage {
   Customer_GUID: any;
   Soc_GUID: any;
   TenantGUID: any;
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
 
   userGUID: any;
   public socGUID : any;

@@ -9,12 +9,12 @@
 
 
 <ion-content padding>
-    <ion-segment [(ngModel)]="claimFor" color="primary500">
-        <ion-segment-button value="seg_customer" (click)="claimForChanged()">
-          {{"CUSTOMER_TITLE" | translate }}
-        </ion-segment-button>
+    <ion-segment [(ngModel)]="claimFor" color="primary500">      
         <ion-segment-button value="seg_project" (click)="claimForChanged()">
           {{"PROJECT_TITLE" | translate }}
+        </ion-segment-button>
+        <ion-segment-button value="seg_customer" (click)="claimForChanged()">
+          {{"CUSTOMER_TITLE" | translate }}
         </ion-segment-button>
       </ion-segment>
     

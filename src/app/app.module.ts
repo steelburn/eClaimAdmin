@@ -85,6 +85,8 @@ import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claima
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
+import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
+
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
@@ -162,6 +164,7 @@ import { DatePipe } from '@angular/common'
     ClaimtasklistPage,
     UserclaimslistPage,
     ClaimReportPage,
+    MonthlyClaimReportPage,
 
     CustomerSetupPage,
 
@@ -203,7 +206,8 @@ import { DatePipe } from '@angular/common'
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
         { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
         { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
-        { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' }
+        { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
+        { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' }
      
       ]
     }),
@@ -274,6 +278,7 @@ import { DatePipe } from '@angular/common'
 
 
     ClaimReportPage,
+    MonthlyClaimReportPage,
     UploadPage,
 
     CustomerSetupPage,
