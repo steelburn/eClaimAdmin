@@ -52,6 +52,15 @@ export class ClaimReportPage {
 
   BindData() {
     this.totalClaimAmount = 0;
+    this.totalDistanceLocal=0;
+    this.totalDistanceOutstation = 0;
+    this.totalPublicTransportAmount=0;
+    this.totalMileageAmount = 0;
+    this.totalParkingAmount=0;
+    this.totalTollAmount = 0;
+    this.totalAccAmount=0;
+    this.totalMealAmount=0;
+    
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
