@@ -80,9 +80,10 @@
 
         <ion-item class="text" style="width: 49%;display:inline-block;">
           <ion-label stacked>{{ 'MARITAL_STATUS' | translate }}</ion-label>
-          <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}">
+          <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}" (ionChange)="DisplayFamily_Edit()">
             <ion-option [value]="0">Single</ion-option>
             <ion-option [value]="1">Married</ion-option>
+            <ion-option [value]="2">Divorced</ion-option>
           </ion-select>
         </ion-item>
 
@@ -196,9 +197,7 @@
         <!-- <ion-item>
               <input type="file" id="avatar2" (change)="onFileChange($event, 'avatar2')" #fileInput>
               <button ion-button type="button" (click)="clearFile()">clear file</button>
-
           </ion-item> -->
-
 
         <div class="eClaimSubTitle2">
           <b>{{'PROFESSIONAL_CERTIFICATIONS' | translate}}</b>
