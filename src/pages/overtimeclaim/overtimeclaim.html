@@ -107,7 +107,7 @@
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
-      <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder='{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+      <ion-searchbar color="primary500" [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder='{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
       <ion-list>
         <ion-item-sliding *ngFor="let item of projects">
           <button ion-item (click)="GetSocNo(item)">

@@ -114,7 +114,7 @@
   </div>
   <div class="popup1" padding *ngIf="ProjectLookupClicked">
     <ion-card>
-      <ion-card-header class="icTitle">
+      <ion-card-header class="icTitle  headerColor-white">
         <div color="light">{{ "PROJECT_NAME_LABEL" | translate }}</div>
         <button class="btnR" (click)="CloseProjectLookup()">
           <ion-icon name="md-close"></ion-icon>
@@ -122,9 +122,9 @@
       </ion-card-header>
       <ion-searchbar [(ngModel)]="Miscellaneous_ProjectName_ngModel" (ionInput)="searchProject($event)"></ion-searchbar>
 
-      <ion-list>
+      <ion-list class="scroll">
         <ion-item-sliding *ngFor="let item of projects">
-          <button ion-item (click)="GetSocNo(item)">
+          <button ion-item (click)="GetSocNo(item)" >
             <ion-label>{{item.project_name}}
               <>{{item.soc}}</ion-label>
           </button>
@@ -139,7 +139,7 @@
   </div>
   <div class="popup" padding *ngIf="CustomerLookupClicked">
     <ion-card>
-      <ion-card-header class="icTitle">
+      <ion-card-header class="icTitle  headerColor-white">
         <div>{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
         <button class="btnR" (click)="CloseCustomerLookup()">
           <ion-icon name="md-close"></ion-icon>
