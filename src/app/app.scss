@@ -92,11 +92,6 @@ height: 480px;
     
 }
 
-.icTitle {
-    border-bottom: 1px solid !important;
-    margin-bottom: 10px !important;
-    padding: 10px !important;
-}
 
 
 .cm{
@@ -215,6 +210,11 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     color: #fff !important;
     position: absolute !important ;
 }
+.headerColor-white {
+    background: #ffffff !important;
+    border-color: #e8e8e8 !important;
+    color: #a5a3a3 !important;
+}
 
 
 .icHeaderText {
@@ -222,9 +222,11 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     
 }
 
+
+
 .icTitle {
     border-bottom: 1px solid !important;
-    margin-bottom: 10px !important;
+
     padding: 10px !important;
 }
 
@@ -235,14 +237,14 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     background: #00A86B;
 }
 
-
-
-
-.headerColor-white {
-    background: #ffffff !important;
-    border-color: #e8e8e8 !important;
-    color: #a5a3a3 !important;
+.cm{
+    height: 100%;
 }
+.settingBtnFab {margin-left: 50px !important;margin-right: 50px !important;}
+
+.tnUserRow {border-bottom: 2px solid #efefef;}
+
+
 
 
 .eClaimSubTitle {
