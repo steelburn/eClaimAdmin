@@ -79,7 +79,7 @@ export class TravelclaimPage {
   public AddToLookupClicked: boolean = false;
   currentItems: any;
   public MainClaimSaved: boolean = false;
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
   DestinationPlaceID: string;
   OriginPlaceID: string;
   CloudFilePath: string;
