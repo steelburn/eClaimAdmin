@@ -805,7 +805,7 @@ export class TravelclaimPage {
         formValues.attachment_GUID = this.imageGUID;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
-        this.profileMng.save(formValues, this.travelAmountNgmodel, this.isCustomer)
+        this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         this.MainClaimSaved = true;
       }
       else {
@@ -818,8 +818,8 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.start_DT;
             this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
             this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
-            this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmountNgmodel;
-            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.travelAmountNgmodel;
+            this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmount;
+            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.totalClaimAmount;
             this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
             this.claimRequestData["resource"][0].FROM = formValues.origin;
             this.claimRequestData["resource"][0].DESTINATION = formValues.destination;

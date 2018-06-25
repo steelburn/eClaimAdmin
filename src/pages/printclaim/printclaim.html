@@ -9,12 +9,12 @@
 
 
 <ion-content padding>
-    <ion-segment color="primary500" [(ngModel)]="claimFor">
-        <ion-segment-button value="seg_customer" (click)="claimForChanged()">
-          {{"CUSTOMER_TITLE" | translate }}
-        </ion-segment-button>
+    <ion-segment color="primary500" [(ngModel)]="claimFor">        
         <ion-segment-button value="seg_project" (click)="claimForChanged()">
           {{"PROJECT_TITLE" | translate }}
+        </ion-segment-button>
+        <ion-segment-button value="seg_customer" (click)="claimForChanged()">
+          {{"CUSTOMER_TITLE" | translate }}
         </ion-segment-button>
       </ion-segment>
 
@@ -51,7 +51,7 @@
     <ion-item style="width: 49%;display:inline-block;">
       <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <!-- <ion-label> {{travelAmount | number}} </ion-label> -->
-      <ion-input type="number" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Printing_Amount_ngModel"></ion-input>
+      <ion-input type="text" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Printing_Amount_ngModel"></ion-input>
     </ion-item>
 
     <ion-item>
