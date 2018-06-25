@@ -498,7 +498,7 @@ export class ConferenceApp {
 
   isActive(page: PageInterface) {
     // debugger;    
-    let childNav = this.nav.getActiveChildNav();
+    let childNav = this.nav.getActiveChildNavs()[0];
 
     // Tabs are a special case because they have their own navigation
     if (childNav) {

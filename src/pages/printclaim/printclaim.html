@@ -9,39 +9,39 @@
 
 
 <ion-content padding>
-  <ion-segment color="primary500" [(ngModel)]="claimFor">
-    <ion-segment-button value="seg_project" (click)="claimForChanged()">
-      {{"PROJECT_TITLE" | translate }}
-    </ion-segment-button>
-    <ion-segment-button value="seg_customer" (click)="claimForChanged()">
-      {{"CUSTOMER_TITLE" | translate }}
-    </ion-segment-button>
 
-  </ion-segment>
+    <ion-segment color="primary500" [(ngModel)]="claimFor">        
+        <ion-segment-button value="seg_project" (click)="claimForChanged()">
+          {{"PROJECT_TITLE" | translate }}
+        </ion-segment-button>
+        <ion-segment-button value="seg_customer" (click)="claimForChanged()">
+          {{"CUSTOMER_TITLE" | translate }}
+        </ion-segment-button>
+      </ion-segment>
 
-  <div [ngSwitch]="claimFor">
-    <div *ngSwitchDefault>
+    <div [ngSwitch]="claimFor">
+        <div *ngSwitchDefault  ngSelected="selected">
+         
+          <ion-item>
+            <ion-label color="primary500" floating> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
+            <ion-input (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text" [disabled]="true"></ion-input>
+          </ion-item>
+        </div>
+        <div *ngSwitchCase="'seg_project'">
+           
+          <ion-item>
+            <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
+            <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [disabled]="true"
+              type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
+            <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Print_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
+              type="text" disabled="true"></ion-input>
+          </ion-item>
+        </div>
+      </div>
 
-      <ion-item>
-        <ion-label color="primary500" floating> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-        <ion-input (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"
-          [disabled]="true"></ion-input>
-      </ion-item>
-    </div>
-    <div *ngSwitchCase="'seg_project'">
-
-      <ion-item>
-        <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-        <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [disabled]="true"
-          type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
-        <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Print_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
-          type="text" disabled="true"></ion-input>
-      </ion-item>
-    </div>
-  </div>
 
   <form [formGroup]="Printform">
 
@@ -53,7 +53,7 @@
     <ion-item style="width: 49%;display:inline-block;">
       <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <!-- <ion-label> {{travelAmount | number}} </ion-label> -->
-      <ion-input type="number" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Printing_Amount_ngModel"></ion-input>
+      <ion-input type="text" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Printing_Amount_ngModel"></ion-input>
     </ion-item>
 
     <ion-item>
