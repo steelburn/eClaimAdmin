@@ -50,7 +50,7 @@ export class MiscellaneousClaimPage {
   public profileLevel: any;
   public stage: any;
   public profileJSON: any;
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
 

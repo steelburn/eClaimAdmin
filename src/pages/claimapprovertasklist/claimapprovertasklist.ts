@@ -72,7 +72,7 @@ export class ClaimapprovertasklistPage {
 
         this.claimrequestdetails1 = this.claimrequestdetails;
       });
-    //console.table(this.claimrequestdetails);
+   
   }
 
   onSearchInput(ev: any) {

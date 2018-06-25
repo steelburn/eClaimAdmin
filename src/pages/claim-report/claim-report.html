@@ -83,7 +83,7 @@
                         <th class="lgl1" *ngIf="travelClaimType">To</th>
                         <th class="lgl1" *ngIf="travelClaimType" style="width:55px">Distance</th>
                         <!-- <th class="lgl1">Distance(Outstn/Oths)KM</th> -->
-                        <!-- <th class="lgl1">Type</th> -->
+                        <th class="lgl1">Status</th>
                         <th class="lgl1" *ngIf="travelClaimType" style="width:60px">Mileage</th>
                         <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Parking</th>
                         <!-- <th class="lgl1">Parking (Without GST)</th> -->
@@ -104,6 +104,7 @@
                         <td class="lgl1" *ngIf="travelClaimType" text-wrap>{{claim.from}}</td>
                         <td class="lgl1" *ngIf="travelClaimType" text-wrap>{{claim.to}}</td>
                         <td class="lgl1" *ngIf="travelClaimType">{{claim.DISTANCE_KM}}</td>
+                        <td class="lgl1">{{claim.STATUS}}</td>
                         <td class="lgl1" *ngIf="travelClaimType">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
                         <td class="lgl1" *ngIf="travelClaimType">{{claim.ParkingAmount | number:'1.2-2'}}</td>
                         <td class="lgl1" *ngIf="travelClaimType">{{claim.TollAmount | number:'1.2-2'}}</td>
@@ -113,9 +114,9 @@
                     </tr>
     
                     <tr class="col7" >
-                        <td colspan="14" class="lgl11" *ngIf="travelClaimType" style="color:#50C878;"> Total Amount(RM) : {{totalClaimAmount}}</td>
-                        <td colspan="5" class="lgl11" style="color:#50C878;" *ngIf="!travelClaimType && !overTimeClaim"> Total Amount(RM) : {{totalClaimAmount}}</td>
-                        <td colspan="6" class="lgl11"  *ngIf="overTimeClaim" style="color:#50C878;" > Total Amount(RM) : {{totalClaimAmount}}</td>
+                        <td colspan="15" class="lgl11" *ngIf="travelClaimType" style="color:#50C878;"> Total Amount(RM) : {{totalClaimAmount}}</td>
+                        <td colspan="6" class="lgl11" style="color:#50C878;" *ngIf="!travelClaimType && !overTimeClaim"> Total Amount(RM) : {{totalClaimAmount}}</td>
+                        <td colspan="7" class="lgl11"  *ngIf="overTimeClaim" style="color:#50C878;" > Total Amount(RM) : {{totalClaimAmount}}</td>
                     </tr>
                 </table>
             </ion-item>
@@ -198,6 +199,7 @@
                   KM</td>
                 <td align="center" valign="middle" bgcolor="#4F81BD">Distance(Outstn) <br />
                   KM</td>
+                  <td align="center" valign="middle" bgcolor="#4F81BD">Status</td>
                 <td align="center" valign="middle" bgcolor="#4F81BD">Type</td>
                 <td align="center" valign="middle" bgcolor="#4F81BD">Mileage (RM)</td>
                 <td align="center" valign="middle" bgcolor="#4F81BD">Parking</td>
@@ -238,6 +240,7 @@
                 <td align="center" bgcolor="#FFFFFF" *ngIf="claim.TRAVEL_TYPE!='0'">0.00</td>
                 <td align="center" bgcolor="#FFFFFF" *ngIf="claim.TRAVEL_TYPE=='1'">{{claim.DISTANCE_KM}}</td>
                 <td align="center" bgcolor="#FFFFFF" *ngIf="claim.TRAVEL_TYPE!='1'">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.STATUS}}</td>
                 <td align="center" bgcolor="#FFFFFF">{{claim.CATEGORY}}</td>
                 <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY!='Public transport'">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
                 <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY=='Public transport'">0.00</td>
@@ -260,6 +263,7 @@
                 <td align="center" bgcolor="#FFFF99">&nbsp;</td>
                 <td align="center" bgcolor="#FFFF99">{{totalDistanceLocal | number:'1.2-2'}}</td>
                 <td align="center" bgcolor="#FFFF99">{{totalDistanceOutstation | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">&nbsp;</td>
                 <td align="center" bgcolor="#FFFF99">&nbsp;</td>
                 <td align="center" bgcolor="#FFFF99">{{totalMileageAmount | number:'1.2-2'}}</td>
                 <td align="center" bgcolor="#FFFF99">{{totalParkingAmount | number:'1.2-2'}}</td>
@@ -485,16 +489,16 @@
               </tr>
               <tr>
                 <td bgcolor="#FFFFFF">&nbsp;</td>
-                <td bgcolor="#ffffff" style="border-top:1px solid #000000;">Rajaputra Balasingh</td>
+                <td bgcolor="#ffffff" style="border-top:1px solid #000000;">{{ddlEmployee.text}}</td>
                 <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
                 <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
                 <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">Team Leader</td>
                 <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
                 <td bgcolor="#FFFFFF">&nbsp;</td>
-                <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">Head of Department</td>
+                <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">Finance Executive</td>
                 <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
                 <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
-                <td align="left" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">Finance Manager</td>
+                <td align="left" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">Finance Admin</td>
                 <td align="center" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
                 <td align="center" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
                 <td align="center" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
@@ -504,16 +508,16 @@
               </tr>
               <tr>
                 <td bgcolor="#FFFFFF">&nbsp;</td>
-                <td bgcolor="#ffffff">R&amp;D</td>
+                <td bgcolor="#ffffff">{{ddlDept.text}}</td>
                 <td bgcolor="#FFFFFF">&nbsp;</td>
                 <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
-                <td bgcolor="#FFFFFF">Name:</td>
+                <td bgcolor="#FFFFFF">Lai Foong Foong </td>
                 <td bgcolor="#FFFFFF">&nbsp;</td>
                 <td bgcolor="#FFFFFF">&nbsp;</td>
                 <td bgcolor="#FFFFFF">Name:</td>
                 <td bgcolor="#FFFFFF">&nbsp;</td>
                 <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
-                <td align="left" bgcolor="#FFFFFF">Shewon Lee</td>
+                <td align="left" bgcolor="#FFFFFF">Candise Chong Lee Ping</td>
                 <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
                 <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
                 <td align="center" bgcolor="#FFFFFF">&nbsp;</td>

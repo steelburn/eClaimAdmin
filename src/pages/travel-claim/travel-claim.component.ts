@@ -79,7 +79,7 @@ export class TravelclaimPage {
   public AddToLookupClicked: boolean = false;
   currentItems: any;
   public MainClaimSaved: boolean = false;
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
   DestinationPlaceID: string;
   OriginPlaceID: string;
   CloudFilePath: string;
@@ -108,12 +108,12 @@ export class TravelclaimPage {
    claimRequestGUID: any;
    claimRequestData: any;
 
-   ngOnInit() {
-    if (this.isFormEdit)
-      {this.GetDataforEdit();
-    this.isFormSubmitted = true;
-    this.MainClaimSaved=true;}
-  }
+  //  ngOnInit() {
+  //   if (this.isFormEdit)
+  //     {this.GetDataforEdit();
+  //   this.isFormSubmitted = true;
+  //   this.MainClaimSaved=true;}
+  // }
 
    constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api1: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
   {
@@ -121,8 +121,12 @@ export class TravelclaimPage {
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID');
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
-    if (this.isFormEdit)
-    this.GetDataforEdit();
+    // if (this.isFormEdit)
+    // this.GetDataforEdit();
+    if (this.isFormEdit) {
+      this.GetDataforEdit();
+      this.MainClaimSaved = true;
+    }
   else {
     this.LoadCustomers();
     this.LoadProjects();
@@ -149,15 +153,20 @@ export class TravelclaimPage {
       //travel_amount: ['', Validators.required],
       claim_amount: ['', Validators.required]
     });   
-    if (this.isFormEdit)
-    this.GetDataforEdit();   
+   
   }   
   
   getCurrency(amount: number) {
    amount =Number(amount);
+   if (amount > 99999) {
+    alert('Amount should not exceed RM99999.')
+    this.travelAmountNgmodel = null
+  }
+  else{ 
     this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
     this.travelAmount = amount;
     this.totalClaimAmount = amount;
+  }
   }
 
   totalClaimAmount: number;
@@ -169,6 +178,7 @@ export class TravelclaimPage {
 
   imageURLEdit: any = null
   GetDataforEdit() {
+    this.isFormSubmitted = true;
     //TODO: Take data by Effective Date
     this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {

@@ -1,0 +1,113 @@
+<!--
+  Generated template for the MonthlyClaimReportPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar color="primary500">
+        <ion-title>Monthly Claim Report</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-item style="width: 50%;display:inline-block;">
+
+        <ion-label>Department :</ion-label>
+        <ion-select interface="popover" multiple="true" (ionChange)="BindEmployeesbyDepartment(ddlDept.value)" #ddlDept>
+            <ion-option [value]="All" [selected]="deptAll">All</ion-option>
+            <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item style="width: 49%;display:inline-block;"> 
+        <ion-label>User Name :</ion-label>
+        <ion-select interface="popover" multiple="true" (ionChange)="EmpChange(ddlEmployee.value)" #ddlEmployee>
+            <ion-option [value]="All" [selected]="empAll">All</ion-option>
+            <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item style="width: 50%;display:inline-block;">
+        <ion-label>Year:</ion-label>
+        <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
+            <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item style="width: 49%;display:inline-block;">
+        <ion-label>Claim Month :</ion-label>
+        <ion-select interface="popover" multiple="true" (ionChange)="MonthChange(ddlmonth.value)" #ddlmonth>
+            <ion-option [value]="All" [selected]="monthAll">All</ion-option>
+            <ion-option value="Jan">Jan</ion-option>
+            <ion-option value="Feb">Feb</ion-option>
+            <ion-option value="Mar">Mar</ion-option>
+            <ion-option value="Apr">Apr</ion-option>
+            <ion-option value="May">May</ion-option>
+            <ion-option value="Jun">Jun</ion-option>
+            <ion-option value="Jul">Jul</ion-option>
+            <ion-option value="Aug">Aug</ion-option>
+            <ion-option value="Sep">Sep</ion-option>
+            <ion-option value="Oct">Oct</ion-option>
+            <ion-option value="Nov">Nov</ion-option>
+            <ion-option value="Dec">Dec</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item style="width: 50%;display:inline-block;">
+        <ion-label>Claim Type:</ion-label>
+        <ion-select interface="popover" multiple="true" (ionChange)="ClaimChange(ddlClaimTypes.value)" #ddlClaimTypes>
+            <ion-option [value]="All" [selected]="claimAll">All</ion-option>
+            <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item style="width: 49%;display:inline-block;">
+        <ion-label>Status:</ion-label>
+        <ion-select interface="popover" #ddlStatus>
+            <ion-option [value]="Paid" [selected]="true">Paid</ion-option>
+            <ion-option [value]="Pending">Pending</ion-option>
+            <ion-option [value]="Approved">Approved</ion-option>
+            <ion-option [value]="Rejected">Rejected</ion-option>
+            
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
+        <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
+    </ion-item>
+
+    <ion-list id="printSectionId">
+        <ion-item>
+            <table class="Tabler ">
+                <tr class="linedsg TColor">
+                    <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+                    <th class="lgl1">Employee</th>
+                    <th class="lgl1">Department</th>
+                    <th class="lgl1">Month</th>
+                    <th class="lgl1">Claim Type</th>
+                    <th class="lgl1">Status</th>
+                    <th class="lgl1 tblBrRight">Total Amount(RM)</th>
+
+                </tr>
+
+                <tr class="col7" *ngFor="let item of claimList; let i=index">
+                    <td class="lgl1">{{i+1}}</td>
+                    <td class="lgl1">{{item.FULLNAME}}</td>
+                    <td class="lgl1">{{item.DEPT}}</td>
+                    <td class="lgl1">{{item.MONTH}}</td>
+                    <td class="lgl1">{{item.CLAIM_TYPE}}</td>
+                    <td class="lgl1">{{item.STATUS}}</td>
+                    <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
+                </tr>
+
+                <tr class="col7" >
+                    <td colspan="7" class="lgl11" style="color:#50C878;">  Total Amount(RM) : {{grandTotal | number:'1.2-2'}}</td>
+                </tr>
+
+            </table>
+        </ion-item>
+        <!-- <ion-item style="color:#50C878;"> Total Amount(RM) : {{grandTotal | number:'1.2-2'}}</ion-item>  -->
+
+    </ion-list>
+</ion-content>
