@@ -10,9 +10,9 @@
 <ion-content padding>
 
   <ion-segment color="primary500" [(ngModel)]="claimFor">
-      <ion-segment-button value="seg_project" (click)="claimForChanged()">
-          {{"PROJECT_TITLE" | translate }}
-        </ion-segment-button>
+    <ion-segment-button value="seg_project" (click)="claimForChanged()">
+      {{"PROJECT_TITLE" | translate }}
+    </ion-segment-button>
     <ion-segment-button value="seg_customer" (click)="claimForChanged()">
       {{"CUSTOMER_TITLE" | translate }}
     </ion-segment-button>
@@ -187,17 +187,18 @@
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
-      <ion-card-content>
-        <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder='{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+
+      <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder='{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+      <ion-scroll style="height:66vh;" scrollY="true">
         <ion-list>
-          <ion-item-sliding *ngFor="let item of projects">
+          <div *ngFor="let item of projects">
             <button ion-item (click)="GetSocNo(item)">
               <ion-label>{{item.project_name}}
                 <>{{item.soc}}</ion-label>
             </button>
-          </ion-item-sliding>
+          </div>
         </ion-list>
-      </ion-card-content>
+      </ion-scroll>
     </ion-card>
   </div>
 
@@ -210,99 +211,102 @@
         <button class="btnR" (click)="CloseCustomerLookup()">
           <ion-icon name="md-close"></ion-icon>
         </button>
-     
 
-              </ion-card-header>
-              <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder='{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
-              <ion-list>
-                <ion-item-sliding *ngFor="let item of customers">
-                  <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
-                    <ion-label>{{item.NAME}}</ion-label>
-                  </button>
-                </ion-item-sliding>
-              </ion-list>
-            </ion-card>
-          </div> 
-          <div class="blackcontainer" *ngIf="tollParkLookupClicked">
+
+      </ion-card-header>
+      <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder='{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+
+      <ion-scroll style="height:66vh;" scrollY="true">
+        <ion-list>
+          <div *ngFor="let item of customers">
+            <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
+              <ion-label>{{item.NAME}}</ion-label>
+            </button>
           </div>
-          <div class="popup1" padding *ngIf="tollParkLookupClicked">
-              <ion-card>
-                  <ion-card-header class="icTitle headerColor-white ">
-                      <div class="icHeaderText">Toll, Park and Accommodation Details</div>
-                      <button class="btnR" (click)="CloseTollParkLookup()">
-                          <ion-icon name="md-close"></ion-icon>
-                      </button>
-                  </ion-card-header>
-                  <ion-list>
-                      <ion-item>
-                          <table class="Tabler" border='2'>
-                              <tr class="linedsg TColor">
-         
-                                  <th class="lgl1">Claim Method</th>
-            
-                                  <th class="lgl1">Payment Mode</th>
-                                  <th class="lgl1">Description</th>
-                                  <th class="lgl1">Receipt</th>
-                                  <th class="lgl1">Amount(RM)</th>
-                                  <th class="lgl1">Action</th>
-                                </tr>
-        
-                              <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
-                                  <!-- <td class="lgl1">{{i+1}}</td> -->
-                          
-                                  <td class="lgl1">{{item.CLAIM_METHOD}}</td>
+        </ion-list>
+      </ion-scroll>
+    </ion-card>
+  </div>
+  <div class="blackcontainer" *ngIf="tollParkLookupClicked">
+  </div>
+  <div class="popup1" padding *ngIf="tollParkLookupClicked">
+    <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+        <div class="icHeaderText">Toll, Park and Accommodation Details</div>
+        <button class="btnR" (click)="CloseTollParkLookup()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-card-header>
+      <ion-list>
+        <ion-item>
+          <table class="Tabler" border='2'>
+            <tr class="linedsg TColor">
 
-                                  <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
-                                  <!-- <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td> -->
+              <th class="lgl1">Claim Method</th>
 
-                        
+              <th class="lgl1">Payment Mode</th>
+              <th class="lgl1">Description</th>
+              <th class="lgl1">Receipt</th>
+              <th class="lgl1">Amount(RM)</th>
+              <th class="lgl1">Action</th>
+            </tr>
 
-                                  <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
-                                  <td class="lgl1">{{item.DESCRIPTION}}</td>
-                                  <td class="lgl1">
-                                    <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)">
-                                    Receipt
-                                    </button>
-                                </td>
-                                <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
-                                <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
-                                  <td class="lgl1 fColor">
-                                    <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
-                                        <ion-icon name="md-create"></ion-icon>
-                                    </button>
-                                    <button ion-button item-end (click)="DeleteDetail(item.CLAIM_REQUEST_DETAIL_GUID)">
-                                      <ion-icon name="md-close"></ion-icon>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr class="col7">
-                                
-                                <td class="lgl11"  colspan="6"> {{ "TOTAL_AMOUNT_LABEL" | translate }}(RM)  : {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
-                               
-                        </tr>
-                          </table>
-        
-                      </ion-item>
-              
-                  </ion-list>
-              </ion-card>
-          </div>
-          <div class="blackcontainer" *ngIf="displayImage">
-          </div>
-          <div class="popup1" padding *ngIf="displayImage">
-            <ion-card>
-                <ion-card-header class="icTitle headerColor-white ">
-                    <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
-                    <button class="btnR" (click)="CloseDisplayImage()">
-                        <ion-icon name="md-close"></ion-icon>
-                    </button>
-                </ion-card-header>
-                <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
-    
-            </ion-card>
-        </div>
+            <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
+              <!-- <td class="lgl1">{{i+1}}</td> -->
 
-          <!-- <div class="btn">
+              <td class="lgl1">{{item.CLAIM_METHOD}}</td>
+
+              <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
+              <!-- <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td> -->
+
+
+
+              <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
+              <td class="lgl1">{{item.DESCRIPTION}}</td>
+              <td class="lgl1">
+                <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)">
+                  Receipt
+                </button>
+              </td>
+              <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
+              <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+              <td class="lgl1 fColor">
+                <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
+                  <ion-icon name="md-create"></ion-icon>
+                </button>
+                <button ion-button item-end (click)="DeleteDetail(item.CLAIM_REQUEST_DETAIL_GUID)">
+                  <ion-icon name="md-close"></ion-icon>
+                </button>
+              </td>
+            </tr>
+            <tr class="col7">
+
+              <td class="lgl11" colspan="6"> {{ "TOTAL_AMOUNT_LABEL" | translate }}(RM) : {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+
+            </tr>
+          </table>
+
+        </ion-item>
+
+      </ion-list>
+    </ion-card>
+  </div>
+  <div class="blackcontainer" *ngIf="displayImage">
+  </div>
+  <div class="popup1" padding *ngIf="displayImage">
+    <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+        <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
+        <button class="btnR" (click)="CloseDisplayImage()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-card-header>
+      <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
+
+    </ion-card>
+  </div>
+
+  <!-- <div class="btn">
 
               </td>
             </tr>

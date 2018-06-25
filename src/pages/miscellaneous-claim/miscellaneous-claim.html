@@ -121,15 +121,16 @@
         </button>
       </ion-card-header>
       <ion-searchbar [(ngModel)]="Miscellaneous_ProjectName_ngModel" (ionInput)="searchProject($event)"></ion-searchbar>
-
-      <ion-list class="scroll">
-        <ion-item-sliding *ngFor="let item of projects">
-          <button ion-item (click)="GetSocNo(item)" >
+      <ion-scroll style="height:66vh;" scrollY="true">
+      <ion-list>
+        <div *ngFor="let item of projects">
+          <button ion-item (click)="GetSocNo(item)">
             <ion-label>{{item.project_name}}
               <>{{item.soc}}</ion-label>
           </button>
-        </ion-item-sliding>
+        </div>
       </ion-list>
+      </ion-scroll>
 
 
     </ion-card>
@@ -146,13 +147,15 @@
         </button>
       </ion-card-header>
       <ion-searchbar [(ngModel)]="Miscellaneous_Customer_ngModel" (ionInput)="searchCustomer($event)"></ion-searchbar>
-      <ion-list>
-        <ion-item-sliding *ngFor="let item of customers">
-          <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
-            <ion-label>{{item.NAME}}</ion-label>
-          </button>
-        </ion-item-sliding>
-      </ion-list>
+      <ion-scroll style="height:66vh;" scrollY="true">
+        <ion-list>
+          <div *ngFor="let item of customers">
+            <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
+              <ion-label>{{item.NAME}}</ion-label>
+            </button>
+          </div>
+        </ion-list>
+      </ion-scroll>
     </ion-card>
   </div>
 
