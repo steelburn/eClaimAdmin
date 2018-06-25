@@ -49,7 +49,7 @@ export class PrintclaimPage {
   Printform: FormGroup;
   travelAmount: any;
   validDate = new Date().toISOString();
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
   public Print_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;
   Project_Lookup_ngModel: any;

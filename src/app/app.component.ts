@@ -336,7 +336,7 @@ export class ConferenceApp {
             { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
             { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' },            
-            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'paper' },            
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },            
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -395,9 +395,9 @@ export class ConferenceApp {
             { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
             { title: 'Approver Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
             { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
-            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box' },
             { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' },            
-            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'paper' },            
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },            
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
