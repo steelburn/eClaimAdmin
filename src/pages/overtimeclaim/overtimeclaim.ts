@@ -86,7 +86,7 @@ export class OvertimeclaimPage {
   travelAmount: any;
   validDate = new Date().toISOString();
   ClaimRequestMain: any;
-  isCustomer: boolean = true;
+  isCustomer: boolean = false;
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
 
@@ -95,10 +95,21 @@ export class OvertimeclaimPage {
    claimRequestGUID: any;
    claimRequestData: any; 
 
-  getCurrency(amount: number) {
-    this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
-  }
+   claimAmount: number = 0;
+   getCurrency(amount: number) {
+     amount = Number(amount);
+     if (amount > 99999) {
+       alert('Amount should not exceed RM 9,9999.00.')
+       this.OT_Amount_ngModel = null
+       this.claimAmount = 0;
+     }
+     else {
+       this.claimAmount = amount;
+       this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+     }
+   } 
 
+ 
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -138,6 +149,7 @@ export class OvertimeclaimPage {
                 }
                 this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
                 this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.OT_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.OT_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.OT_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
@@ -389,8 +401,8 @@ export class OvertimeclaimPage {
         .subscribe(data => {
           this.claimRequestData = data;
           this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
-          this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
-          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+          this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
@@ -416,7 +428,7 @@ export class OvertimeclaimPage {
     formValues.claimTypeGUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
     formValues.travel_date = formValues.start_DT;
     formValues.attachment_GUID =  this.imageGUID;
-    this.travelAmount = formValues.claim_amount;
+    this.travelAmount = this.claimAmount;
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }

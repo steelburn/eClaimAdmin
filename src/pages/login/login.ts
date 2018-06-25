@@ -63,23 +63,23 @@ export class LoginPage {
       else {
         //-------------------Get the Authentication from AD Server and Compare with Email of eClaim DB.--------------
         
-        this.adserverservice.User_Authentication(this.usermain_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Authenticate');
-            }
-            else{
-              alert("Unsuccess");
-            }
-          });
+        // this.adserverservice.User_Authentication(this.usermain_entry)
+        //   .subscribe((response) => {
+        //     if (response.status == 200) {
+        //       alert('Authenticate');
+        //     }
+        //     else{
+        //       alert("Unsuccess");
+        //     }
+        //   });
 
-        // let Adurl: string = constants.AD_URL + '/user/bijay';
-        // this.http
-        //   .get(Adurl)
-        //   .map(res => res.json())
-        //   .subscribe(dn => {
-        //     let res = dn; console.log(dn);
-        // });
+        let Adurl: string = constants.AD_URL + '/user/bijay';
+        this.http
+          .get(Adurl)
+          .map(res => res.json())
+          .subscribe(data => {
+            let res = data.dn; console.log(data.dn);
+        });
 
         //---------------------------------------------------------------------------------------------------------
           

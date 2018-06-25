@@ -74,7 +74,7 @@ export class GiftclaimPage {
     travelAmount: any;
     validDate = new Date().toISOString();
     ClaimRequestMain: any;
-    isCustomer: boolean = true;
+    isCustomer: boolean = false;
     ImageUploadValidation:boolean=false;
     chooseFile: boolean = false;
 
@@ -99,6 +99,7 @@ export class GiftclaimPage {
                 if (this.claimRequestData[0].ATTACHMENT_ID !== null)
                 this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
                 this.Gift_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
 
@@ -130,8 +131,18 @@ export class GiftclaimPage {
 
   }
 
+  claimAmount: number = 0;
   getCurrency(amount: number) {
-    this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM 9,9999.00.')
+      this.Gift_Amount_ngModel = null
+      this.claimAmount = 0;
+    }
+    else {
+      this.claimAmount = amount;
+      this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    }
   }
 
     constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
@@ -413,8 +424,8 @@ submitAction(formValues: any) {
       .subscribe(data => {
         this.claimRequestData = data;
         this.claimRequestData["resource"][0].ATTACHMENT_ID =  this.imageGUID;
-        this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
-        this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+        this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+        this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
         this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
         this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
         
@@ -439,7 +450,7 @@ submitAction(formValues: any) {
   formValues.claimTypeGUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
   formValues.meal_allowance = this.allowanceGUID;
   formValues.attachment_GUID =  this.imageGUID;       
-  this.travelAmount = formValues.claim_amount;
+  this.travelAmount = this.claimAmount;
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
   }
