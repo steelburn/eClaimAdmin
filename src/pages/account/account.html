@@ -8,10 +8,11 @@
 </ion-header>
 
 <ion-content class="outer-content">
-  <div padding-top text-center *ngIf="username">
-    <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar">
-    <h2>{{username}}</h2>
-
+  <div padding-top *ngIf="username">
+    <div text-center>
+      <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar">
+      <h2>{{username}}</h2>
+    </div>
     <!-- <ion-list inset>
       <button ion-item (click)="updatePicture()">Update Picture</button>
       <button ion-item (click)="changeUsername()">Change Username</button>
@@ -80,7 +81,8 @@
 
         <ion-item class="text" style="width: 49%;display:inline-block;">
           <ion-label stacked>{{ 'MARITAL_STATUS' | translate }}</ion-label>
-          <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}" (ionChange)="DisplayFamily_Edit()">
+          <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}"
+            (ionChange)="DisplayFamily_Edit()">
             <ion-option [value]="0">Single</ion-option>
             <ion-option [value]="1">Married</ion-option>
             <ion-option [value]="2">Divorced</ion-option>
@@ -430,7 +432,7 @@
           <ion-label stacked>{{'CONTACT_NUMBER' | translate}}</ion-label>
           <ion-input type="number" formControlName="EMG_CONTACT_NO1" [(ngModel)]="User_EMG_CONTACT_NO1_Edit_ngModel" placeholder="{{'Please fill the Contact No'}}"></ion-input>
         </ion-item>
-        
+
         <ion-item class="text" style="width: 49%;display:inline-block;">
           <ion-label stacked>{{'CONTACT_NUMBER' | translate}}</ion-label>
           <ion-input type="number" formControlName="EMG_CONTACT_NO2" [(ngModel)]="User_EMG_CONTACT_NO2_Edit_ngModel" placeholder="{{'Please fill the Contact Number'}}"></ion-input>
@@ -456,7 +458,7 @@
         <ion-item class="text" style="width: 49%;display:inline-block;">
           <ion-label stacked>{{'INCOME_TAX_NUMBER' | translate}}</ion-label>
           <ion-input type="text" formControlName="INCOMETAX_NO" [(ngModel)]="User_INCOMETAX_NO_Edit_ngModel" placeholder="{{'Please fill the Income Tax No'}}"></ion-input>
-        </ion-item>        
+        </ion-item>
 
         <ion-item class="text" style="width: 49%;display:inline-block;">
           <ion-label stacked>{{'ACCOUNT_NUMBER' | translate}}</ion-label>
@@ -464,7 +466,7 @@
         </ion-item>
 
         <div class="eClaimSubTitle2">
-          <b>{{'ROLE DETAILS' | translate}}</b>
+          <b>{{'Role Details' | translate}}</b>
         </div>
 
         <ion-item style="display:inline-block;">
