@@ -170,7 +170,7 @@ export class ProfileManagerProvider {
       claimHistoryRef.CLAIM_WFH_GUID = UUID.UUID();
       claimHistoryRef.CLAIM_REQUEST_GUID = claimRequestGUID;
       claimHistoryRef.REMARKS = remarks;
-      claimHistoryRef.STATUS = isRemarksAccepted ? 'Accepted' : 'Rejected';
+      claimHistoryRef.STATUS = isRemarksAccepted ? 'Approved' : 'Rejected';
       claimHistoryRef.USER_GUID = approverGUID;
       claimHistoryRef.CREATION_TS = new Date().toISOString();
       claimHistoryRef.UPDATE_TS = new Date().toISOString();
@@ -285,16 +285,18 @@ export class ProfileManagerProvider {
       claimReqMainRef.ASSIGNED_TO = this.assignedTo;
       claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
       claimReqMainRef.PROFILE_JSON = this.profileJSON;
-      claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Drafting';
+      claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
       claimReqMainRef.STAGE = this.stage;
       claimReqMainRef.ATTACHMENT_ID = this.formValues.attachment_GUID;
       claimReqMainRef.TRAVEL_TYPE = this.formValues.travelType === 'Outstation' ? '1' : '0';
 
       if (this.isCustomer) {
         claimReqMainRef.CUSTOMER_GUID = this.formValues.soc_no;
+        claimReqMainRef.SOC_GUID =null;
       }
       else {
         claimReqMainRef.SOC_GUID = this.formValues.soc_no;
+        claimReqMainRef.CUSTOMER_GUID =null;
       }
       this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
         var postClaimMain = response.json();

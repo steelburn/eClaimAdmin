@@ -51,11 +51,12 @@ export class AddTollPage {
     // this.LoadAllowanceDetails();
   }
 
-  claimAmount: number = 0;
+  claimAmount: number;
   getCurrency(amount: number) {
+    //amount=amount.split(",").join("");
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 9,9999.00.')
+      alert('Amount should not exceed RM 99,999.00.')
       this.Amount = null
       this.claimAmount = 0;
     }
@@ -71,6 +72,8 @@ export class AddTollPage {
 
   onAllowanceSelect(allowance: any) {
     this.Amount = allowance.ALLOWANCE_AMOUNT;
+    this.claimAmount = allowance.ALLOWANCE_AMOUNT;
+
   }
   CloseAddTollPage() {
     this.viewCtrl.dismiss();
@@ -95,7 +98,7 @@ export class AddTollPage {
       }
     }
     else {
-      if (this.Amount === undefined || this.Amount <= 0 || this.Amount === null || this.Amount === '') {
+      if (this.claimAmount === undefined || this.claimAmount <= 0 || this.claimAmount === null) {
         alert('Please enter valid Amount.')
         return;
       }
@@ -109,7 +112,7 @@ export class AddTollPage {
     claimReqRef.CLAIM_METHOD_GUID = this.ClaimMethodGUID;
     claimReqRef.PAYMENT_TYPE_GUID = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
     // 2a543cd5-0177-a1d0-5482-48b52ec2100f
-    claimReqRef.AMOUNT = this.Amount;
+    claimReqRef.AMOUNT = this.claimAmount+'';
     claimReqRef.DESCRIPTION = this.Description;
     claimReqRef.CREATION_TS = new Date().toISOString();
     claimReqRef.UPDATE_TS = new Date().toISOString();
@@ -127,7 +130,7 @@ export class AddTollPage {
         .subscribe(data => {
           this.claimDetailsData = data;
           this.claimDetailsData["resource"][0].PAYMENT_TYPE_GUID = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
-          this.claimDetailsData["resource"][0].AMOUNT = this.Amount;
+          this.claimDetailsData["resource"][0].AMOUNT = this.claimAmount;
           this.claimDetailsData["resource"][0].DESCRIPTION = this.Description;
           this.claimDetailsData["resource"][0].UPDATE_TS = new Date().toISOString();
           this.claimDetailsData["resource"][0].ATTACHMENT_ID = (this.imageGUID!==undefined || this.imageGUID!==null)?this.imageGUID:this.claimDetailsData["resource"][0].ATTACHMENT_ID;
@@ -222,6 +225,7 @@ export class AddTollPage {
       });
     }
     this.Amount = this.numberPipe.transform(this.claimDetailsData[0].AMOUNT, '1.2-2');
+    this.claimAmount = this.claimDetailsData[0].AMOUNT;
     this.imageURLEdit = this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID);
     //this.ImageUploadValidation=false;
     this.ImageUploadValidation=true;
