@@ -43,7 +43,8 @@ export class DashboardPage {
   RejectedClaimCount_year: any;PendingClaimCount_year: any;ApprovedClaimCount_year: any;
   PaidClaimCount_year:any;
   PaidReqCount:any;
-  PendingClaimAmount_year: any; RejectedClaimAmount_year: any;ApprovedClaimAmount_year: any;PaidClaimAmount:any;
+  PendingClaimAmount_year: any; RejectedClaimAmount_year: any;ApprovedClaimAmount_year: any;
+  PaidClaimAmount:any;
   PaidClaimAmount_year:any;
   loading: Loading;
   constructor(public numberPipe: DecimalPipe,public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
@@ -215,7 +216,7 @@ export class DashboardPage {
   public doughnutChartData: Array<number> = [];
 
   public doughnutChartType: string = 'doughnut';
-  public doughnutChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red","blue"] }];
+  public doughnutChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red","rgb(90, 165, 90)"] }];
 
   public chartClicked(e: any): void {
     console.log(e);
@@ -254,7 +255,7 @@ export class DashboardPage {
         label: function (tooltipItem: any, data: any) {
           var label = data.labels[tooltipItem.index];
           var datasetLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-          return label + ' : ' + datasetLabel.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ';
+          return label + ' : ' + datasetLabel.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ';
         }
       }
     },
@@ -264,7 +265,7 @@ export class DashboardPage {
   public claimAmountLabels: Array<string> = ['Approved', 'Pending', 'Rejected','Paid'];
   public claimAmountData: Array<number> = [];
   public claimAmountChartType: string = 'doughnut';
-  public claimAmountChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red","blue"] }];
+  public claimAmountChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red","rgb(90, 165, 90)"] }];
   public claimAmountClicked(e: any): void {
     console.log(e);
   }
@@ -457,12 +458,14 @@ export class DashboardPage {
           approve = 0;
           pending = 0;
           rejected = 0;
-          this.doughnutChartData = [approve, pending, rejected];
+          paid = 0;
+          this.doughnutChartData = [approve, pending, rejected,paid];
           pendingAmount = '0.00';
           rejectedAmount = '0.00';
           approveAmount = '0.00';
+          PaidClaimAmount='0.00';
 
-          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
+          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
 
           this.doughnutChartLabels = data.label;
           this.claimAmountLabels = data.label;
