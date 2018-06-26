@@ -34,6 +34,8 @@ import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claima
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist';
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
+import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
+
 
 import { UploadPage } from '../pages/upload/upload';
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
@@ -99,8 +101,8 @@ export class ConferenceApp {
     // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
     // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
     { title: 'My Claim List', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-    { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-    { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+    { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+    { title: 'Finance Task ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
     { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
     // { title: 'IMPORT DATA', name: 'ImportExcelDataPage', component: ImportExcelDataPage, icon: 'ios-list-box-outline' }, 
        
@@ -115,6 +117,7 @@ export class ConferenceApp {
   ];
   loggedInPages: PageInterface[] = [
     // { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
+    { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
     { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
     // { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
     { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
@@ -137,6 +140,7 @@ export class ConferenceApp {
 
   rootPage = 'LoginPage';
   appPages_User: PageInterface[];
+  USER_NAME_LABEL: any;
 
   constructor(
     public events: Events,
@@ -153,7 +157,7 @@ export class ConferenceApp {
     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
     // ];
-    this.blnLogin = false;
+    this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -195,8 +199,8 @@ export class ConferenceApp {
     // If we are already on tabs just change the selected tab
     // don't setRoot again, this maintains the history stack of the
     // tabs even if changing them from the menu
-    if (this.nav.getActiveChildNav() && page.index != undefined) {
-      this.nav.getActiveChildNav().select(page.index);
+    if (this.nav.getActiveChildNavs().length && page.index != undefined) {
+      this.nav.getActiveChildNavs()[0].select(page.index);
       // Set the root of the nav with params if it's a tab index
     } else {
       this.nav.setRoot(page.name, params).catch((err: any) => {
@@ -258,7 +262,7 @@ export class ConferenceApp {
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
 
     if (localStorage.length > 0) {
-      this.blnLogin = true;
+      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
         if (localStorage.getItem("g_USER_GUID") == "sva") {
@@ -299,9 +303,9 @@ export class ConferenceApp {
             // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
             
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-            { title: 'My Claim List', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -316,19 +320,86 @@ export class ConferenceApp {
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
+
+
+
+
+
+
+
+
+
+
+        else if (res.toString() == "Finance Executive" ) {
+          this.appPages_User = [
+            { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            // { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Finance Task ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' },            
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },            
+          ];
+          this.claimPages = [
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+          ];
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //For Team Member, Home, Change Password, Sign Out
-        else if (res.toString() == "Finance Executive" || res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
+        else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
           this.appPages_User = [
             // { title: 'DASHBOARD', name: 'TabsPage', component: TabsPage, tabComponent: DashboardPage, index: 0, icon: 'apps' },
             // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
             // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
-            
+            // -- Dashboard
+            // -- My Claims
+            // -- My Claim History
+            // -- Approver Tasks
+            // -- Approval History
+            // -- Finance Tasks
+            // -- Finance History
+            // -- Claim Reports
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-            { title: 'My Claim List', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
             { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
-            { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-            { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' }
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box' },
+            { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' },            
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },            
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -357,11 +428,14 @@ export class ConferenceApp {
             // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
             
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-            { title: 'My Claim List', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+           
             // { title: 'IMPORT DATA', name: 'ImportExcelDataPage', component: ImportExcelDataPage, icon: 'ios-list-box-outline' }, 
-                   
+              
+
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },            
+
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -385,7 +459,7 @@ export class ConferenceApp {
       val.catch((err) => {
         // This is never called
         console.log(err);
-      });
+      });      
     }
     else {
       this.blnLogin = false;
@@ -431,7 +505,7 @@ export class ConferenceApp {
 
   isActive(page: PageInterface) {
     // debugger;    
-    let childNav = this.nav.getActiveChildNav();
+    let childNav = this.nav.getActiveChildNavs()[0];
 
     // Tabs are a special case because they have their own navigation
     if (childNav) {
@@ -472,7 +546,7 @@ export class ConferenceApp {
         .subscribe(data => {
           let roles = data["resource"];
           if (data["resource"].length > 0) {
-            resolve(roles[0]["ROLE_NAME"]);
+            resolve(roles[0]["ROLE_NAME"]); //localStorage.setItem("g_ROLE_NAME",roles[0]["ROLE_NAME"]);
           }
           else {
             resolve("NA");

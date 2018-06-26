@@ -104,7 +104,7 @@ export class UserPage {
 
   BaseTableURL: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
-  banks: any; qualifications: any; tenants: any; countries: any; states: any; userview: any;
+  banks: any; qualifications: any; tenants: any; countries: any; states: any; userview: any [];
   varTenant_Guid: string;
 
   //baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_info' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -723,6 +723,42 @@ export class UserPage {
     console.log('ionViewDidLoad UserPage');
   }
 
+  storeUsers: any[]; 
+  searchUser(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.userview = this.storeUsers;      
+      return;
+    }
+    this.userview = this.filterUser({
+      FULLNAME: val,
+      STAFF_ID: val,
+      tenant_company_name: val,
+      department_name: val,
+      designation_name: val,
+      EMAIL: val,
+      EMPLOYEE_STATUS: val
+    });
+  }
+
+  filterUser(params?: any) {
+    if (!params) {
+      return this.storeUsers;
+    }
+    
+    return this.storeUsers.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+  
   BindGrid(ViewName: string) {
     this.loading = this.loadingCtrl.create({
       //content: 'Loading...',
@@ -743,7 +779,7 @@ export class UserPage {
       .get(TableURL_User)
       .map(res => res.json())
       .subscribe(data => {
-        this.userview = data["resource"];
+        this.userview = data["resource"]; this.storeUsers = data["resource"];
         this.loading.dismissAll();
       });
   }

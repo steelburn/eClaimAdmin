@@ -146,6 +146,7 @@ export class DashboardPage {
           ctx.font = fontSize + "px Verdana";
           ctx.textBaseline = "middle";
           ctx.fillStyle = "blue";
+          ctx.fontStyle= "bold";
 
           if (sum != 0) {
             // var text = sum,
@@ -180,6 +181,8 @@ export class DashboardPage {
           ctx.font = fontSize + "px Verdana";
           ctx.textBaseline = "middle";
           ctx.fillStyle = "blue";
+          ctx.fontStyle= "bold";
+
 
           if (sum != 0) {
             // var text = sum,
@@ -237,7 +240,7 @@ export class DashboardPage {
       mode: 'value',
       overlap: true,
       fontColor: ['green', 'blue', 'white'],
-      fontStyle: 'bold'
+     // fontStyle: 'bold'
     },
 
     tooltips: {
@@ -288,7 +291,7 @@ export class DashboardPage {
         return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       },
       overlap: true,
-      fontStyle: 'bold',
+     //s fontStyle: 'bold',
       fontColor: ['green', 'blue', 'white'],
     },
 

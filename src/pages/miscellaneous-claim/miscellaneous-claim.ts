@@ -37,7 +37,7 @@ export class MiscellaneousClaimPage {
   Miscellaneous_Amount_ngModel: any;
   travelAmount: any;
   validDate = new Date().toISOString();
-  isCustomer: boolean = true;
+  isCustomer: boolean = false;
   Customer_GUID: any;
   Soc_GUID: any;
   ClaimRequestMain: any;
@@ -50,7 +50,7 @@ export class MiscellaneousClaimPage {
   public profileLevel: any;
   public stage: any;
   public profileJSON: any;
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
 
@@ -77,11 +77,25 @@ export class MiscellaneousClaimPage {
       claimAmount: ['', Validators.required],
       description: ['', Validators.required], claimTypeGUID:'', attachment_GUID:''
     });   
-  }  
-
-  getCurrency(amount: number) {
-    this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   }
+  
+  claimAmount: number = 0;
+  getCurrency(amount: number) {
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM 9,9999.00.')
+      this.Miscellaneous_Amount_ngModel = null
+      this.claimAmount = 0;
+    }
+    else {
+      this.claimAmount = amount;
+      this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    }
+  } 
+
+  // getCurrency(amount: number) {
+  //   this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+  // }
 
   imageURLEdit: any = null
   GetDataforEdit() {
@@ -121,6 +135,7 @@ export class MiscellaneousClaimPage {
                     });
                 }
                 this.Miscellaneous_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.Miscellaneous_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Miscellaneous_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
@@ -341,8 +356,8 @@ export class MiscellaneousClaimPage {
         .subscribe(data => {
           this.claimRequestData = data;
           this.claimRequestData["resource"][0].ATTACHMENT_ID =  this.imageGUID;
-          this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claimAmount;
-          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claimAmount;
+          this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+          this.claimRequestData["resource"][0].MILEAGE_AMOUNT =this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
   
@@ -366,7 +381,7 @@ export class MiscellaneousClaimPage {
     formValues.claimTypeGUID = '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86';
     formValues.attachment_GUID =  this.imageGUID;
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-    this.travelAmount = formValues.claimAmount;
+    this.travelAmount = this.claimAmount;
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }
   }

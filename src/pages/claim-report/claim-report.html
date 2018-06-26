@@ -6,117 +6,528 @@
 -->
 <ion-header>
 
-    <ion-navbar color="primary500">
-        <ion-title>Claim Report</ion-title>
-    </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-    <ion-item>
-
-        <ion-label>Department :
-                <ion-select interface="popover" (ionChange)="BindEmployeesbyDepartment($event)" #ddlDept>
-                        <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
+        <ion-navbar color="primary500">
+            <ion-title>Claim Report</ion-title>
+        </ion-navbar>
+    
+    </ion-header>
+    
+    
+    <ion-content padding>
+    
+        <ion-item style="width: 49%;display:inline-block;">
+    
+            <ion-label>Department :   </ion-label>
+                    <ion-select interface="popover" (ionChange)="BindEmployeesbyDepartment($event)" #ddlDept>
+                            <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
+                        </ion-select>
+         
+     </ion-item>
+     <ion-item style="width: 50%;display:inline-block;">
+    
+            <ion-label>User Name :     </ion-label>
+    
+                    <ion-select interface="popover" #ddlEmployee>
+                            <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
+                        </ion-select>
+       
+         
+    </ion-item>
+    <ion-item style="width: 49%;display:inline-block;">
+            <ion-label>
+                
+                Claim Month :   </ion-label>
+          
+                <ion-select interface="popover" #ddlmonth>
+                        <ion-option value="1">Jan</ion-option>
+                        <ion-option value="2">Feb</ion-option>
+                        <ion-option value="3">Mar</ion-option>
+                        <ion-option value="4">Apr</ion-option>
+                        <ion-option value="5">May</ion-option>
+                        <ion-option value="6">Jun</ion-option>
+                        <ion-option value="7">Jul</ion-option>
+                        <ion-option value="8">Aug</ion-option>
+                        <ion-option value="9">Sep</ion-option>
+                        <ion-option value="10">Oct</ion-option>
+                        <ion-option value="11">Nov</ion-option>
+                        <ion-option value="12">Dec</ion-option>
                     </ion-select>
-        </ion-label>
- 
-
-        <ion-label>User Name :
-
-                <ion-select interface="popover" #ddlEmployee>
-                        <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
-                    </ion-select>
-        </ion-label>
-     
-</ion-item>
-<ion-item>
-        <ion-label>
-            
-            Claim Month :
-            <ion-select interface="popover" #ddlmonth>
-                    <ion-option value="1">Jan</ion-option>
-                    <ion-option value="2">Feb</ion-option>
-                    <ion-option value="3">Mar</ion-option>
-                    <ion-option value="4">Apr</ion-option>
-                    <ion-option value="5">May</ion-option>
-                    <ion-option value="6">Jun</ion-option>
-                    <ion-option value="7">Jul</ion-option>
-                    <ion-option value="8">Aug</ion-option>
-                    <ion-option value="9">Sep</ion-option>
-                    <ion-option value="10">Oct</ion-option>
-                    <ion-option value="11">Nov</ion-option>
-                    <ion-option value="12">Dec</ion-option>
-                </ion-select>
-        </ion-label>
-      
-
-        <ion-label>Claim Type:
-                <ion-select interface="popover" #ddlClaimTypes>
-                        <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
-                    </ion-select>
-        </ion-label>
-     
+         </ion-item>
+         
+         <ion-item style="width: 50%;display:inline-block;">
+            <ion-label>Claim Type:     </ion-label>
+                    <ion-select interface="popover" #ddlClaimTypes>
+                            <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
+                        </ion-select>
+       
+         
+    
+        
+        </ion-item>
+        <ion-item>    <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value)">Search</button>
+          <button ion-button item-end (click)="printToCart('printSectionId')">Print</button></ion-item>
+        <ion-list>
+            <ion-item>
+                <table class="Tabler ">
+                    <tr class="linedsg TColor">
+                        <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
+                        <th class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">Date</th>
+                        <th class="lgl1" *ngIf="travelClaimType || overTimeClaim"  style="width:85px">Start Time</th>
+                        <th class="lgl1" *ngIf="travelClaimType || overTimeClaim"  style="width:85px">End Time</th>
+                        <th class="lgl1">SOC Number</th>
+                        <!-- <th class="lgl1">Location as per SOC</th> -->
+                        <th class="lgl1">Customer</th>
+                        <!-- <th class="lgl1">Remarks(Location- if is not at customer location)</th> -->
+                        <!-- <th class="lgl1">Recommended Post Code</th> -->
+                        <th class="lgl1" *ngIf="travelClaimType">From</th>
+                        <th class="lgl1" *ngIf="travelClaimType">To</th>
+                        <th class="lgl1" *ngIf="travelClaimType" style="width:55px">Distance</th>
+                        <!-- <th class="lgl1">Distance(Outstn/Oths)KM</th> -->
+                        <th class="lgl1">Status</th>
+                        <th class="lgl1" *ngIf="travelClaimType" style="width:60px">Mileage</th>
+                        <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Parking</th>
+                        <!-- <th class="lgl1">Parking (Without GST)</th> -->
+                        <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Toll</th>
+                        <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Meal</th>
+                        <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Hotel</th>
+                        <!-- <th class="lgl1">Outstation Allowance</th>  -->
+                        <th class="lgl1 tblBrRight"  style="width:130px">Total Amount(RM)</th>
+                    </tr>
+    
+                    <tr class="col7" *ngFor="let claim of claimsList; let i=index">
+                        <td class="lgl1">{{i+1}}</td>
+                        <td class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">{{claim.TRAVEL_DATE | date:'M/d/y'}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType || overTimeClaim" text-wrap>{{claim.START_TS | date:'M/d/y HH:mm'}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType || overTimeClaim" text-wrap>{{claim.END_TS | date:'M/d/y HH:mm'}}</td>
+                        <td class="lgl1">{{claim.SOC_NO}}</td>
+                        <td class="lgl1"  text-wrap>{{claim.CUSTOMER_NAME}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType" text-wrap>{{claim.from}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType" text-wrap>{{claim.to}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType">{{claim.DISTANCE_KM}}</td>
+                        <td class="lgl1">{{claim.STATUS}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType">{{claim.ParkingAmount | number:'1.2-2'}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType">{{claim.TollAmount | number:'1.2-2'}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType">{{claim.MealAmount | number:'1.2-2'}}</td>
+                        <td class="lgl1" *ngIf="travelClaimType">{{claim.AccAmount | number:'1.2-2'}}</td>
+                        <td class="lgl1">{{claim.Total | number:'1.2-2'}}</td>
+                    </tr>
+    
+                    <tr class="col7" >
+                        <td colspan="15" class="lgl11" *ngIf="travelClaimType" style="color:#50C878;"> Total Amount(RM) : {{totalClaimAmount}}</td>
+                        <td colspan="6" class="lgl11" style="color:#50C878;" *ngIf="!travelClaimType && !overTimeClaim"> Total Amount(RM) : {{totalClaimAmount}}</td>
+                        <td colspan="7" class="lgl11"  *ngIf="overTimeClaim" style="color:#50C878;" > Total Amount(RM) : {{totalClaimAmount}}</td>
+                    </tr>
+                </table>
+            </ion-item>
+        </ion-list>
+        <!-- <ion-item text-right color="primary">
+    
+           Total Amount(RM) : {{totalClaimAmount}}
+         
+        </ion-item> -->
+    
+    </ion-content>
 
     
-    </ion-item>
-    <ion-item>    <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value)">Search</button></ion-item>
-    <ion-list>
-        <ion-item>
-            <table class="Tabler ">
-                <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
-                    <th class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">Date</th>
-                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim"  style="width:85px">Start Time</th>
-                    <th class="lgl1" *ngIf="travelClaimType || overTimeClaim"  style="width:85px">End Time</th>
-                    <th class="lgl1">SOC Number</th>
-                    <!-- <th class="lgl1">Location as per SOC</th> -->
-                    <th class="lgl1">Customer</th>
-                    <!-- <th class="lgl1">Remarks(Location- if is not at customer location)</th> -->
-                    <!-- <th class="lgl1">Recommended Post Code</th> -->
-                    <th class="lgl1" *ngIf="travelClaimType">From</th>
-                    <th class="lgl1" *ngIf="travelClaimType">To</th>
-                    <th class="lgl1" *ngIf="travelClaimType" style="width:55px">Distance</th>
-                    <!-- <th class="lgl1">Distance(Outstn/Oths)KM</th> -->
-                    <!-- <th class="lgl1">Type</th> -->
-                    <th class="lgl1" *ngIf="travelClaimType" style="width:60px">Mileage</th>
-                    <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Parking</th>
-                    <!-- <th class="lgl1">Parking (Without GST)</th> -->
-                    <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Toll</th>
-                    <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Meal</th>
-                    <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Hotel</th>
-                    <!-- <th class="lgl1">Outstation Allowance</th>  -->
-                    <th class="lgl1 tblBrRight"  style="width:110px">Total Amount</th>
+
+<body id="printSectionId" hidden>
+        <table width="100%" border="0">
+          <tr>
+            <td width="59%" align="left" valign="top"><table width="60%" border="0" cellpadding="1" cellspacing="1" bgcolor="#000000">
+              <tr>
+                <td align="center" bgcolor="#FFFFFF"><strong>Company</strong></td>
+                <td align="center" bgcolor="#FFFFFF"><strong>Zen Computer Systems Sdn Bhd </strong></td>
+              </tr>
+              <tr>
+                <td align="center" bgcolor="#FFFFFF"><strong>Dept</strong></td>
+                <td align="center" bgcolor="#FFFFFF"><strong>{{ddlDept.text}}</strong></td>
+              </tr>
+              <tr>
+                <td align="center" bgcolor="#FFFFFF"><strong>Name</strong></td>
+                <td align="center" bgcolor="#FFFFFF"><strong>{{ddlEmployee.text}}</strong></td>
+              </tr>
+              <tr>
+                <td align="center" bgcolor="#FFFFFF"><strong>Claim Month </strong></td>
+                <td align="center" bgcolor="#FFFFFF"><strong>{{ddlmonth.text}}'{{todayDate.getFullYear()}}</strong></td>
+              </tr>
+              <tr>
+                <td align="center" bgcolor="#FFFFFF"><strong>Date</strong></td>
+                <td align="center" bgcolor="#CCCCCC"><strong>{{todayDate | date:'M/d/y'}}</strong></td>
+              </tr>
+            </table></td>
+            <td width="41%" align="right" valign="top"><table width="60%" border="0">
+                <tr>
+                  <td align="center"><img src="../../assets/img/logo.jpg" width="167" height="69" /></td>
                 </tr>
-
-                <tr class="col7" *ngFor="let claim of claimsList; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">{{claim.TRAVEL_DATE | date:'M/d/y'}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType || overTimeClaim" text-wrap>{{claim.START_TS | date:'M/d/y HH:mm'}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType || overTimeClaim" text-wrap>{{claim.END_TS | date:'M/d/y HH:mm'}}</td>
-                    <td class="lgl1">{{claim.SOC_NO}}</td>
-                    <td class="lgl1"  text-wrap>{{claim.CUSTOMER_NAME}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType" text-wrap>{{claim.from}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType" text-wrap>{{claim.to}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType">{{claim.DISTANCE_KM}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType">{{claim.ParkingAmount | number:'1.2-2'}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType">{{claim.TollAmount | number:'1.2-2'}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType">{{claim.MealAmount | number:'1.2-2'}}</td>
-                    <td class="lgl1" *ngIf="travelClaimType">{{claim.AccAmount | number:'1.2-2'}}</td>
-                    <td class="lgl1">{{claim.Total | number:'1.2-2'}}</td>
+                <tr>
+                  <td align="center"><strong>ZEN GROUP OF COMPANIES</strong> </td>
                 </tr>
-
-
-            </table>
-        </ion-item>
-    </ion-list>
-    <ion-item text-right color="primary">
-
-       Total Amount(RM) : {{totalClaimAmount}}
-     
-    </ion-item>
-
-</ion-content>
+                <tr>
+                  <td align="center">4808-1-28, CBD Perdana 2</td>
+                </tr>
+                <tr>
+                  <td align="center">Persiaran Flora, Cyber 12</td>
+                </tr>
+                <tr>
+                  <td align="center">63000 Cyberjaya, Selangor Darul Ehsan</td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center"><h2>Monthly Travelling Claim Form</h2></td>
+          </tr>
+          <tr>
+            <td colspan="2" style="color:#FF0000;">Valid for : &nbsp;&nbsp;{{ddlmonth.text}}'{{todayDate.getFullYear()}} Only</td>
+          </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#000000">
+              <tr>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Date</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">SOC#</td>
+                <!-- <td align="center" valign="middle" bgcolor="#4F81BD">Location as per SOC</td> -->
+                <td align="center" valign="middle" bgcolor="#4F81BD">Customer</td>
+                <!-- <td align="center" valign="middle" bgcolor="#4F81BD">Remarks<br /> -->
+                  <!-- (Location-If is not at customer's office)</td> -->
+                <!-- <td align="center" valign="middle" bgcolor="#4F81BD">Recommended<br />Postcode</td> -->
+                <td align="center" valign="middle" bgcolor="#4F81BD">From</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">To</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Distance<br />
+                  KM</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Distance(Outstn) <br />
+                  KM</td>
+                  <td align="center" valign="middle" bgcolor="#4F81BD">Status</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Type</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Mileage (RM)</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Parking</td>
+                <!-- <td align="center" valign="middle" bgcolor="#4F81BD">Parking<br />(Without GST) </td> -->
+                <td align="center" valign="middle" bgcolor="#4F81BD">TnGO</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Public Transport </td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Hotel</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Outstn Allowance</td>
+                <td align="center" valign="middle" bgcolor="#4F81BD">Total (RM)</td>
+              </tr>
+              <!-- <tr>
+                 <td colspan="2" align="center" bgcolor="#D8D8D8">DO NOT DELETE THIS ROW</td> 
+                <td align="center" bgcolor="#D8D8D8"></td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8"><select name="select2"></select></td>
+                <td align="center" bgcolor="#D8D8D8"><select name="select3"></select></td>
+                <td align="center" bgcolor="#D8D8D8"><select name="select4"></select></td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8"><select name="select5"></select></td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">0.00</td>
+              </tr> -->
+              <tr *ngFor="let claim of claimsList; let i=index">
+                <td align="center" bgcolor="#FFFFFF">{{claim.TRAVEL_DATE | date:'M/d/y'}}</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.SOC_NO}}</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.CUSTOMER_NAME}}</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.from}}</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.to}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.TRAVEL_TYPE=='0'">{{claim.DISTANCE_KM}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.TRAVEL_TYPE!='0'">0.00</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.TRAVEL_TYPE=='1'">{{claim.DISTANCE_KM}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.TRAVEL_TYPE!='1'">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.STATUS}}</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.CATEGORY}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY!='Public transport'">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY=='Public transport'">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.ParkingAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.TollAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY=='Public transport'">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY!='Public transport'">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.AccAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFFFF">{{claim.MealAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">{{claim.Total | number:'1.2-2'}}</td>
+              </tr>
+              <tr>
+                <td align="center" bgcolor="#FFFF99">TOTAL</td>
+                <!-- <td bgcolor="#FFFFFF">&nbsp;</td> -->
+                <!-- <td bgcolor="#FFFFFF">&nbsp;</td> -->
+                <!-- <td valign="top" bgcolor="#FFFFFF">&nbsp;</td> -->
+                <td align="center" bgcolor="#FFFF99">&nbsp;</td>
+                <td align="center" bgcolor="#FFFF99">&nbsp;</td>
+                <td align="center" bgcolor="#FFFF99">&nbsp;</td>
+                <td align="center" bgcolor="#FFFF99">&nbsp;</td>
+                <td align="center" bgcolor="#FFFF99">{{totalDistanceLocal | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">{{totalDistanceOutstation | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">&nbsp;</td>
+                <td align="center" bgcolor="#FFFF99">&nbsp;</td>
+                <td align="center" bgcolor="#FFFF99">{{totalMileageAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">{{totalParkingAmount | number:'1.2-2'}}</td>
+                <!-- <td align="center" bgcolor="#FFFFFF">0.00</td> -->
+                <td align="center" bgcolor="#FFFF99">{{totalTollAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">{{totalPublicTransportAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">{{totalAccAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">{{totalMealAmount | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFF99">{{totalClaimAmount | number:'1.2-2'}}</td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+          <!-- <tr>
+            <td colspan="2"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#000000">
+              <tr>
+                <td colspan="19" align="center" valign="middle" bgcolor="#4F81BD">Summary Expenses for Individual Project (Update column 'B' SOC only)</td>
+                </tr>
+              <tr>
+                <td align="right" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="right" bgcolor="#D8D8D8">NA</td>
+                <td align="center" bgcolor="#D8D8D8"><select name="select15">
+                  </select>        </td>
+                <td align="center" bgcolor="#D8D8D8">customer</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8"><select name="select15">
+                </select></td>
+                <td align="center" bgcolor="#D8D8D8">0.00</td>
+                <td align="center" bgcolor="#D8D8D8">0.00</td>
+                <td align="center" bgcolor="#D8D8D8">0.00</td>
+                <td align="center" bgcolor="#D8D8D8">0.00</td>
+                <td align="center" bgcolor="#D8D8D8">23.00</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">&nbsp;</td>
+                <td align="center" bgcolor="#D8D8D8">23.00</td>
+              </tr>
+              
+        
+              <tr>
+                <td colspan="2" bgcolor="#FFFFFF"><strong>DO NOT DELETE THIS ROW</strong></td>
+                <td bgcolor="#FFFFFF"><select name="select16">
+                </select></td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF"><select name="select17">
+                </select></td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">0.00</td>
+              </tr>
+              <tr>
+                <td colspan="8" bgcolor="#FFFFFF">TOTAL</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">23.00</td>
+                <td align="center" bgcolor="#FFFFFF">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">0.00</td>
+                <td align="center" bgcolor="#FFFFFF">23.00</td>
+              </tr>
+            </table></td>
+          </tr> -->
+          <tr>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2"><table width="100%" border="0" cellpadding="1" cellspacing="1">
+              
+             
+              <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff">Submitted By:</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">Checked By:</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">Verified By:</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">Approved By:</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td colspan="2" align="center" bgcolor="#FFFF99"><strong>Accounts Code </strong></td>
+                <td align="center" bgcolor="#FFFF99"><strong>RM</strong></td>
+              </tr>
+              <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td colspan="2" align="center" bgcolor="#FFFFFF"><strong>Mileage, Parking &amp; Toll </strong></td>
+                <td align="center" bgcolor="#FFFFFF"><strong>{{totalMileageAmount + totalParkingAmount + totalTollAmount | number:'1.2-2'}} </strong></td>
+              </tr>
+              <!-- <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td colspan="2" align="center" bgcolor="#FFFFFF"><strong>Parking GST 6% </strong></td>
+                <td align="center" bgcolor="#FFFFFF"><strong>0.00</strong></td>
+              </tr> -->
+              <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td colspan="2" align="center" bgcolor="#FFFFFF"><strong>Public Transports</strong> </td>
+                <td align="center" bgcolor="#FFFFFF"><strong>{{totalPublicTransportAmount | number:'1.2-2'}}</strong></td>
+              </tr>
+              <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td colspan="2" align="center" bgcolor="#FFFFFF"><strong> Accomodation</strong> </td>
+                <td align="center" bgcolor="#FFFFFF"><strong>{{totalAccAmount | number:'1.2-2'}}</strong></td>
+              </tr>
+              <!-- <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td colspan="2" align="center" bgcolor="#FFFFFF"><strong>Outstation GST </strong></td>
+                <td align="center" bgcolor="#FFFFFF"><strong>0.00</strong></td>
+              </tr> -->
+              <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td colspan="2" align="center" bgcolor="#FFFFFF"><strong>Outstation Allowances  </strong></td>
+                <td align="center" bgcolor="#FFFFFF"><strong>{{totalMealAmount | number:'1.2-2'}}</strong></td>
+              </tr>
+              <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff" style="border-top:1px solid #000000;">{{ddlEmployee.text}}</td>
+                <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">Team Leader</td>
+                <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">Finance Executive</td>
+                <td bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="left" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">Finance Admin</td>
+                <td align="center" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF" style="border-top:1px solid #000000;">&nbsp;</td>
+                <td align="left" bgcolor="#FFFFFF" style="color:#FF0000;"></td>
+                <td colspan="2" align="center" bgcolor="#FFFFFF" style="color:#FF0000;"><strong> </strong></td>
+                <td align="center" >&nbsp;</td>
+              </tr>
+              <tr>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#ffffff">{{ddlDept.text}}</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">Lai Foong Foong </td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">Name:</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="left" bgcolor="#FFFFFF">Candise Chong Lee Ping</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                <td colspan="2" align="center" bgcolor="#FFFF99"><strong>Total Pay </strong></td>
+                <td align="center" bgcolor="#FFFF99"><strong>{{totalClaimAmount | number:'1.2-2'}}</strong></td>
+              </tr>
+              
+            </table></td>
+          </tr>
+        </table>
+        </body>
+        
