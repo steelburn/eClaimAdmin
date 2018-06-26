@@ -66,7 +66,6 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { Chart } from 'chart.js';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
-
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -101,7 +100,7 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DatePipe } from '@angular/common'
-
+import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -166,7 +165,7 @@ import { DatePipe } from '@angular/common'
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage
+    DashboardPage, ImportExcelDataPage 
   ],
 
   imports: [
@@ -184,6 +183,7 @@ import { DatePipe } from '@angular/common'
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
         // { component: DashboardPage, name: 'Home', segment: 'Home' },
+        { component: ImportExcelDataPage, name: 'ImportExcelDataPage', segment: 'ImportExcelDataPage' },
         { component: DashboardPage, name: 'DashboardPage', segment: 'DashboardPage' },
         { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
         { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
@@ -279,7 +279,7 @@ import { DatePipe } from '@angular/common'
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage
+    DashboardPage, ImportExcelDataPage 
 
 
   ],

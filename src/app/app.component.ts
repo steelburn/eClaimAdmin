@@ -54,7 +54,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
-
+import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
 export interface PageInterface {
   title: string;
   name: string;
@@ -102,7 +102,8 @@ export class ConferenceApp {
     { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
     { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
     { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-    
+    // { title: 'IMPORT DATA', name: 'ImportExcelDataPage', component: ImportExcelDataPage, icon: 'ios-list-box-outline' }, 
+       
   ];
   claimPages: PageInterface[] = [
     { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -276,6 +277,7 @@ export class ConferenceApp {
             { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
             { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
             { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+         
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -358,6 +360,8 @@ export class ConferenceApp {
             { title: 'My Claim List', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
             { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            // { title: 'IMPORT DATA', name: 'ImportExcelDataPage', component: ImportExcelDataPage, icon: 'ios-list-box-outline' }, 
+                   
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },

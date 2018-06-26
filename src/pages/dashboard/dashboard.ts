@@ -327,7 +327,7 @@ export class DashboardPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = data["resource"][0];
-        console.table(this.claimrequestdetails)
+        // console.table(this.claimrequestdetails)
         if (data["resource"][0] != null) {
 
           var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
@@ -361,7 +361,7 @@ export class DashboardPage {
 
           this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
 
-          console.log(this.claimAmountData)
+          // console.log(this.claimAmountData)
           // For Display Data In Ion-cards
           this.Rejected_Claim_Count = this.claimrequestdetails.RejectedReqCount;
           this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
