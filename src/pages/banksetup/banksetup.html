@@ -7,14 +7,19 @@
 <ion-header>
   <ion-navbar color="primary500">
     <ion-title>{{ 'BANK_SETUP_HEADING' | translate }}</ion-title>
-  </ion-navbar>
+  </ion-navbar>  
 </ion-header>
 
 <ion-content padding>
+  <ion-fab top left edge>
+    <button ion-fab mini (click)="ExportToExcel($event)">
+      <ion-icon name="download"></ion-icon>
+    </button>
+  </ion-fab>
+  
   <ion-fab top right edge>
     <button ion-fab mini (click)="AddBanksClick()" [disabled]="button_Add_Disable">
-      <ion-icon name="add">
-      </ion-icon>
+      <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
 
@@ -61,6 +66,7 @@
         </button>
 
       </ion-card-header>
+
       <ion-list>
         <form [formGroup]="Bankform">
           <ion-item *ngIf="AdminLogin">

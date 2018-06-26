@@ -45,11 +45,11 @@ export class PrintclaimPage {
   Customer_GUID: any;
   Soc_GUID: any;
   ClaimRequestMain: any;
-  isCustomer: boolean = true;
+  isCustomer: boolean = false;
   Printform: FormGroup;
   travelAmount: any;
   validDate = new Date().toISOString();
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
   public Print_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;
   Project_Lookup_ngModel: any;
@@ -80,9 +80,19 @@ export class PrintclaimPage {
   claimRequestGUID: any;
   claimRequestData: any; 
 
+  claimAmount: number = 0;
   getCurrency(amount: number) {
-    this.Printing_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
-  }
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM 9,9999.00.')
+      this.Printing_Amount_ngModel = null
+      this.claimAmount = 0;
+    }
+    else {
+      this.claimAmount = amount;
+      this.Printing_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    }
+  } 
 
   imageURLEdit: any = null
   GetDataforEdit() {
@@ -100,6 +110,7 @@ export class PrintclaimPage {
                 if (this.claimRequestData[0].ATTACHMENT_ID !== null)
                 this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT
                 this.Printing_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
                 
@@ -354,18 +365,20 @@ export class PrintclaimPage {
         .subscribe(data => {
           this.claimRequestData = data;
           this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
-          this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
-          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+          this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
   
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;
           if (this.isCustomer) {
-            this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
+            // this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
+            this.claimRequestData["resource"][0].CUSTOMER_GUID =this.Customer_GUID;
             this.claimRequestData["resource"][0].SOC_GUID = null;
           }
           else {
-            this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
+            // this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
+            this.claimRequestData["resource"][0].SOC_GUID =  this.Soc_GUID;
             this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
           }
           //this.claimRequestData[0].STATUS = 'Pending';
@@ -380,7 +393,7 @@ export class PrintclaimPage {
     else {
     formValues.claimTypeGUID = 'd9567482-033a-6d92-3246-f33043155746';
     formValues.attachment_GUID = this.imageGUID;
-    this.travelAmount = formValues.claim_amount;
+    this.travelAmount = this.claimAmount;
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
 

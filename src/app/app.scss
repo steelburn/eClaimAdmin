@@ -45,7 +45,7 @@ ion-fab[top1] {
 
 .popup1{
     width: 83%;
-    left: 86px;
+    left: 85px;
     top: 60px;
     position: fixed;
         height: 500px;
@@ -92,11 +92,6 @@ height: 480px;
     
 }
 
-.icTitle {
-    border-bottom: 1px solid !important;
-    margin-bottom: 10px !important;
-    padding: 10px !important;
-}
 
 
 .cm{
@@ -138,9 +133,9 @@ height: 480px;
 
   .round2 {
     float: left;
-    width: calc(32% - 7px);
+    width: 23% ;
     margin: 10px !important;
-    padding: 10pt 0;
+
     cursor: pointer;
     border-radius: 5px;
     min-height: 80px;
@@ -150,7 +145,7 @@ height: 480px;
     float: left;
     width: calc(48.5% - 7px);
     margin: 10px !important;
-    padding: 10pt 0;
+ 
     cursor: pointer;
     border-radius: 5px;
     min-height: 80px;
@@ -215,6 +210,11 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     color: #fff !important;
     position: absolute !important ;
 }
+.headerColor-white {
+    background: #ffffff !important;
+    border-color: #e8e8e8 !important;
+    color: #a5a3a3 !important;
+}
 
 
 .icHeaderText {
@@ -222,9 +222,11 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     
 }
 
+
+
 .icTitle {
     border-bottom: 1px solid !important;
-    margin-bottom: 10px !important;
+
     padding: 10px !important;
 }
 
@@ -235,14 +237,14 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     background: #00A86B;
 }
 
-
-
-
-.headerColor-white {
-    background: #ffffff !important;
-    border-color: #e8e8e8 !important;
-    color: #a5a3a3 !important;
+.cm{
+    height: 100%;
 }
+.settingBtnFab {margin-left: 50px !important;margin-right: 50px !important;}
+
+.tnUserRow {border-bottom: 2px solid #efefef;}
+
+
 
 
 .eClaimSubTitle {
@@ -306,6 +308,8 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
 	border-bottom: 1px solid gainsboro;
 }
 
+
+
     tr.colth {
         color: white;
     }
@@ -332,6 +336,14 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
        border: none;
          border-bottom: 1px solid gainsboro;
          white-space: normal !important;
+    }
+
+    .Tabler tr.col7 td.lgl11 {
+
+        padding: 16px;
+        text-align: right;
+        word-wrap: break-word;
+        border-bottom:none;
     }
 
     .tblBrLeft { border-radius: 5px 0 0 5px !important;}
@@ -444,6 +456,16 @@ button.item.item-block.item-md{
     }    
 
 //overwrite default css
+
+.popover-md .popover-content {
+    width: auto;
+}
+
+
+.popover-ios .popover-content {
+    width: auto;
+}
+
 .text-input-md {
     margin: 11px 8px;
 }
@@ -486,7 +508,6 @@ button[ion-fab] {
         position: absolute;
         top: -8px;
         right: 40px;
-
         color: white;
         background-color: rgba(0,0,0,0.7);
         line-height: 24px;
@@ -495,61 +516,51 @@ button[ion-fab] {
     }
 }
 
-.item-input ion-input, .item-input ion-textarea {
-    padding-left: 5pt;
-}
-
-.item-input ion-input.cocus.input{
-    border-radius: 5px;
-    background: whitesmoke;
-    padding-left: 5pt;
-}
-
-.item-input ion-input, .item-input ion-textarea.ng-dirty.ng-valid.ng-touched {
-    border: 0;
-}
+// .item-input ion-input, .item-input ion-textarea {
+//     border-radius:5pt;
+//     padding-left: 5pt;
+// }
 
 
-ion-datetime.datetime.datetime-md{
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-
-}
+// .item-label-stacked .input-wrapper, .item-label-floating .input-wrapper {
+//     border-bottom: 1pt solid gainsboro;
+// }
 
 
-ion-datetime.datetime.datetime-md.ng-dirty.ng-valid.ng-touched {
-    border: 0;
-}
+// .item-input ion-input.cocus.input{
+//     border-radius: 5px;
+//     background: whitesmoke;
+//     padding-left: 5pt;
+// }
 
-ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
-    border: 0;
-}
+.card-md .item-md.item-block .item-inner {
+    border-bottom: 1pt solid gainsboro;
+  }
 
-ion-datetime.datetime.datetime-ios{
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-}
+// .item-input ion-input, .item-input ion-textarea.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
 
-ion-select.select.select-md{
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-}
 
-ion-select.select.select-ios{
-    border-radius: 5px;
-    background: rgb(242, 255, 227);
-    padding-left: 5pt;
-}
 
-ion-select.select.select-ios.ng-dirty.ng-valid.ng-touched{
-    border: 0;
-}
-ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
-    border: 0;
-}
+
+// ion-datetime.datetime.datetime-md.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
+
+// ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
+
+
+
+
+// ion-select.select.select-ios.ng-dirty.ng-valid.ng-touched{
+//     border: 0;
+// }
+// ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
+//     border: 0;
+// }
 
 .item-md.item-label-stacked [item-right], .item-md.item-label-floating [item-right], .item-md.item-label-stacked [item-end], .item-md.item-label-floating [item-end] {
     margin-top: 29px;
@@ -575,9 +586,7 @@ ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
     width: 100%;
   }
 
-.item.item-block .item-inner {
-    border-bottom: 0 !important;
-}
+
 
 .conta{
     width: 45.5% !important;
