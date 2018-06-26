@@ -113,7 +113,7 @@
 
 
   </ion-card>
-  <!-- *ngFor="let year of Year_Card" -->
+  
   <ion-card  (click)="Approved_Click()" class="round2">
     <ion-card-header style="background:green;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
       <h2 style="color:white !important">Approved</h2>
@@ -133,5 +133,23 @@
 
   </ion-card>
 
+  <ion-card  class="round2">
+    <ion-card-header style="background:rgb(90, 165, 90);margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
+      <h2 style="color:white !important">Paid</h2>
+    </ion-card-header>
+    <ion-card-content text-center>
+
+      <h1>RM 23344</h1>
+      <h3># this month: VVVVVVV</h3>
+
+      <hr>
+
+      <p color="graye">Amount YTD: RM 234</p>
+      <p color="graye"># YTD:345678</p>
+
+    </ion-card-content>
+
+
+  </ion-card>
 
 </ion-content>
