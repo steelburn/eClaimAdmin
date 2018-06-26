@@ -25,9 +25,11 @@ import { UserSetup_Service } from '../../services/usersetup_service';
 import { Storage } from '@ionic/storage';
 import { BaseHttpService } from '../../services/base-http';
 
+import { AdServer_Service } from '../../services/adserver_services';
+
 @Component({
   selector: 'page-user',
-  templateUrl: 'login.html', providers: [UserSetup_Service, BaseHttpService]
+  templateUrl: 'login.html', providers: [UserSetup_Service, BaseHttpService, AdServer_Service]
 })
 export class LoginPage {
   login: { username?: string, password?: string } = {};
@@ -36,7 +38,7 @@ export class LoginPage {
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage, fb: FormBuilder, private userservice: UserSetup_Service) {
+  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage, fb: FormBuilder, private userservice: UserSetup_Service, private adserverservice: AdServer_Service) {
     localStorage.clear(); //debugger;
 
     this.ForgotPasswordForm = fb.group({
@@ -59,8 +61,32 @@ export class LoginPage {
         this.navCtrl.push(SetupguidePage);
       }
       else {
-        let url: string;
+        //-------------------Get the Authentication from AD Server and Compare with Email of eClaim DB.--------------
+        
+        // this.adserverservice.User_Authentication(this.usermain_entry)
+        //   .subscribe((response) => {
+        //     if (response.status == 200) {
+        //       alert('Authenticate');
+        //     }
+        //     else{
+        //       alert("Unsuccess");
+        //     }
+        //   });
 
+        let Adurl: string = constants.AD_URL + '/user/bijay';
+        this.http
+          .get(Adurl)
+          .map(res => res.json())
+          .subscribe(data => {
+            let res = data.dn; console.log(data.dn);
+        });
+
+        //---------------------------------------------------------------------------------------------------------
+          
+
+
+
+        let url: string;
         //CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex)
         url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         //url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -95,11 +121,11 @@ export class LoginPage {
               //Setup Guide for only Hq Users
               if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
                 //this.navCtrl.push(SetupguidePage);
-                this.navCtrl.push(DashboardPage); 
+                this.navCtrl.push(DashboardPage);
               }
               else {
                 //this.navCtrl.push(SetupPage);
-                this.navCtrl.push(DashboardPage); 
+                this.navCtrl.push(DashboardPage);
               }
 
               //Get the role of that particular user----------------------------------------------
@@ -117,7 +143,7 @@ export class LoginPage {
                     localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
                     localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
                   }
-                  else{
+                  else {
                     localStorage.setItem("g_KEY_VIEW", "1");
                     localStorage.removeItem("g_ROLE_NAME");
                   }
@@ -187,14 +213,14 @@ export class LoginPage {
           let strPasswordHex: string = CryptoJS.SHA256(strPassword).toString(CryptoJS.enc.Hex);
 
           //Update to database------------------------          
-          
+
           this.usermain_entry.TENANT_GUID = res[0]["TENANT_GUID"]
           this.usermain_entry.USER_GUID = res[0]["USER_GUID"];
           this.usermain_entry.STAFF_ID = res[0]["STAFF_ID"];
 
           this.usermain_entry.LOGIN_ID = this.email_ngModel;
           this.usermain_entry.PASSWORD = strPasswordHex;
-          this.usermain_entry.EMAIL = this.email_ngModel ;
+          this.usermain_entry.EMAIL = this.email_ngModel;
 
           this.usermain_entry.ACTIVATION_FLAG = res[0]["ACTIVATION_FLAG"];
           this.usermain_entry.CREATION_TS = res[0]["CREATION_TS"];
@@ -204,13 +230,13 @@ export class LoginPage {
           this.usermain_entry.IS_TENANT_ADMIN = res[0]["IS_TENANT_ADMIN"];
 
           this.userservice.update_user_main(this.usermain_entry)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              //Send Mail---------------------------
-              debugger;
-              this.sendEmail(res[0]["FULLNAME"], this.email_ngModel, strPassword);
-            }
-          });
+            .subscribe((response) => {
+              if (response.status == 200) {
+                //Send Mail---------------------------
+                debugger;
+                this.sendEmail(res[0]["FULLNAME"], this.email_ngModel, strPassword);
+              }
+            });
         }
         else {
           alert('Invalid Email Id.');
@@ -224,7 +250,7 @@ export class LoginPage {
   }
 
   emailUrl: string = 'http://api.zen.com.my/api/v2/zenmail?api_key=' + constants.DREAMFACTORY_API_KEY;
-  sendEmail(strName:string, strEmail: string, strPassword: string) {
+  sendEmail(strName: string, strEmail: string, strPassword: string) {
     let name: string; let email: string
     name = strName; email = strEmail;
     var queryHeaders = new Headers();
@@ -244,38 +270,38 @@ export class LoginPage {
       ],
       "subject": "Forgot Password.",
       "body_text": "",
-      "body_html": '<HTML>' + 
-      '<HEAD>' + 
+      "body_html": '<HTML>' +
+        '<HEAD>' +
         '<META name=GENERATOR content="MSHTML 10.00.9200.17606">' +
-      '</HEAD>' +
-      
-      '<BODY>' +
-        '<DIV style="FONT-FAMILY: Century Gothic">' +
-          '<DIV style="MIN-WIDTH: 500px">' +
-            '<BR>' +
-            '<DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px">' +
-              '<IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png">' +
-            '</DIV>' +
-            '<DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c">' +
-              '<DIV style="TEXT-ALIGN: center; FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">' +
-                '<B>' +
-                  '<I>Forgot Password</I>' +
-                '</B>' +
-              '</DIV>' +
-            '</DIV>' +
-            '<BR>' +
-            '<DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">Dear <h4>' + name + '</h4>' +
-              '<BR>Your temporary password is ' + strPassword + '. From now on you will use your new password.' +
+        '</HEAD>' +
 
-              
-            '</DIV>' +
-            '<BR>' +
-              '<DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">Thank you.</DIV>' +
-          '</DIV>' +
+        '<BODY>' +
+        '<DIV style="FONT-FAMILY: Century Gothic">' +
+        '<DIV style="MIN-WIDTH: 500px">' +
+        '<BR>' +
+        '<DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px">' +
+        '<IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png">' +
         '</DIV>' +
-      '</BODY>' +
-      
-      '</HTML>', 
+        '<DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c">' +
+        '<DIV style="TEXT-ALIGN: center; FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">' +
+        '<B>' +
+        '<I>Forgot Password</I>' +
+        '</B>' +
+        '</DIV>' +
+        '</DIV>' +
+        '<BR>' +
+        '<DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">Dear <h4>' + name + '</h4>' +
+        '<BR>Your temporary password is ' + strPassword + '. From now on you will use your new password.' +
+
+
+        '</DIV>' +
+        '<BR>' +
+        '<DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">Thank you.</DIV>' +
+        '</DIV>' +
+        '</DIV>' +
+        '</BODY>' +
+
+        '</HTML>',
       "from_name": "eClaim",
       "from_email": "balasingh73@gmail.com",
       "reply_to_name": "",
@@ -284,7 +310,7 @@ export class LoginPage {
     this.http.post(this.emailUrl, body, options)
       .map(res => res.json())
       .subscribe(data => {
-        
+
         alert('Password has sent to your eMail Id.');
         this.navCtrl.push(LoginPage);
       });

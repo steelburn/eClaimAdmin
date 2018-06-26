@@ -6,14 +6,13 @@
     <ion-title>{{ 'GIFT_CLAIM_HEADING' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-
-  <ion-segment [(ngModel)]="claimFor" color="primary500">
-    <ion-segment-button value="seg_customer" (click)="claimForChanged()">
-      {{"CUSTOMER_TITLE" | translate }}
-    </ion-segment-button>
+<ion-content padding>  
+  <ion-segment [(ngModel)]="claimFor" color="primary500">        
     <ion-segment-button value="seg_project" (click)="claimForChanged()">
       {{"PROJECT_TITLE" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="seg_customer" (click)="claimForChanged()">
+      {{"CUSTOMER_TITLE" | translate }}
     </ion-segment-button>
   </ion-segment>
 
@@ -51,7 +50,7 @@
 
     <ion-item  style="width: 49%;display:inline-block;">
       <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
-      <ion-input type="number" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Gift_Amount_ngModel" ></ion-input>
+      <ion-input type="text" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Gift_Amount_ngModel" ></ion-input>
     </ion-item>
 
     <ion-item>
@@ -110,7 +109,7 @@
 
   <div class="blackcontainer" *ngIf="ProjectLookupClicked">
   </div>
-  <div class="popup" padding *ngIf="ProjectLookupClicked">
+  <div class="popup1" padding *ngIf="ProjectLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">{{ "PROJECT_NAME_LABEL" | translate }}</div>
@@ -119,14 +118,16 @@
         </button>
       </ion-card-header>
       <ion-searchbar [(ngModel)]="Travel_ProjectName_ngModel" (ionInput)="searchProject($event)" placeholder='{{ "PROJECT_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+      <ion-scroll style="height:66vh;" scrollY="true">
       <ion-list>
-        <ion-item-sliding *ngFor="let item of projects">
+        <div *ngFor="let item of projects">
           <button ion-item (click)="GetSocNo(item)">
             <ion-label>{{item.project_name}}
               <>{{item.soc}}</ion-label>
           </button>
-        </ion-item-sliding>
+        </div>
       </ion-list>
+      </ion-scroll>
     </ion-card>
   </div>
 
@@ -141,13 +142,15 @@
         </button>
       </ion-card-header>
       <ion-searchbar [(ngModel)]="Travel_Customer_ngModel" (ionInput)="searchCustomer($event)" placeholder='{{ "CUSTOMER_NAME_PLACE_HOLDER" | translate }}'></ion-searchbar>
+      <ion-scroll style="height:66vh;" scrollY="true">
       <ion-list>
-        <ion-item-sliding *ngFor="let item of customers">
+        <div *ngFor="let item of customers">
           <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
             <ion-label>{{item.NAME}}</ion-label>
           </button>
-        </ion-item-sliding>
+        </div>
       </ion-list>
+      </ion-scroll>
     </ion-card>
   </div>
 

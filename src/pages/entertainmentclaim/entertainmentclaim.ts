@@ -63,7 +63,7 @@ export class EntertainmentclaimPage {
   Soc_GUID: any;
   Entertainment_Date_ngModel: any;
   Entertainment_Description_ngModel: any;
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
 
   public socGUID: any;
   public AddTravelClicked: boolean = false;
@@ -75,7 +75,7 @@ export class EntertainmentclaimPage {
   public MainClaimSaved: boolean = false;
   travelAmount: any;
   validDate = new Date().toISOString();
-  isCustomer: boolean = true;  
+  isCustomer: boolean = false;  
   ClaimRequestMainId: any;
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
@@ -109,9 +109,29 @@ export class EntertainmentclaimPage {
     });   
   }
 
+  claimAmount: number = 0;
   getCurrency(amount: number) {
-    this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM 9,9999.00.')
+      this.Entertainment_Amount_ngModel = null
+      this.claimAmount = 0;
+    }
+    else {
+      this.claimAmount = amount;
+      this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    }
   }
+
+  // getCurrency(amount: number) {
+  //   amount = Number(amount);
+  //   if (amount > 99999) {
+  //     alert('Amount should not exceed RM99999.')
+  //     this.Entertainment_Amount_ngModel = null
+  //   }
+  //   else
+  //   this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+  // }
  
   imageURLEdit: any = null
   GetDataforEdit() {
@@ -129,7 +149,8 @@ export class EntertainmentclaimPage {
                 if (this.claimRequestData[0].ATTACHMENT_ID !== null)
                 this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
-                this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
+             this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)               
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
@@ -374,8 +395,8 @@ export class EntertainmentclaimPage {
         .subscribe(data => {
           this.claimRequestData = data;
           this.claimRequestData["resource"][0].ATTACHMENT_ID =  this.imageGUID ;
-          this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
-          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+          this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;
@@ -399,7 +420,7 @@ export class EntertainmentclaimPage {
     else {
       formValues.claimTypeGUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
       formValues.attachment_GUID =  this.imageGUID ;
-      this.travelAmount = formValues.claim_amount;
+      this.travelAmount = this.claimAmount;
       formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
       this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }

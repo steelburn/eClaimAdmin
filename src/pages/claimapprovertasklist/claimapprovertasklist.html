@@ -1,61 +1,62 @@
 
 <ion-header>
 
-  <ion-navbar color="primary500">
-    <ion-title>Approver Task List</ion-title>
-  </ion-navbar>
-  <ion-toolbar no-border-top color="primary500">
-    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
-<ion-item> 
-        <!-- <ion-searchbar type="text" #filter (keyup)="0" placeholder="{{'SEARCH_FULLNAME' | translate}}"></ion-searchbar> -->
-       <button ion-button item-end (click)="approveClaims()">Approve</button>
-      </ion-item> 
+    <ion-navbar color="primary500">
+      <ion-title>Approver Task List</ion-title>
+    </ion-navbar>
+    <ion-toolbar no-border-top color="primary500">
+      <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
   
-
-  <ion-list>
-    <ion-item>
-        <table class="Tabler ">
-            <tr class="linedsg TColor">
-                <th class="tblBrLeft" style="width:60px">
-                  <ion-item>
-                    <ion-checkbox item-end (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox>
-                  </ion-item>
-                </th> 
-                <th style="width:60px">No.</th>
-                <th>Name</th>
-                <th>Claim Type</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Stage</th>
-                <th>Amount(RM)</th>
-                <th class="tblBrRight"  style="width:90px">Action</th>
+  <ion-content padding>
+      <ion-item>
+          <!-- <ion-searchbar type="text" #filter (keyup)="0" placeholder="{{'SEARCH_FULLNAME' | translate}}"></ion-searchbar> -->
+          <button ion-button item-end (click)="approveClaims()">Approve</button>
+        </ion-item>
+    
   
-            </tr>
-  
-            <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails; let i=index">
-                <td class="lgl1">
-                  <ion-item>
-                    <ion-checkbox item-end [checked]="selectAll" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID,claimrequestdetail.PROFILE_LEVEL)"> </ion-checkbox>
-                  </ion-item>
+    <ion-list>
+      <ion-item>
+          <table class="Tabler ">
+              <tr class="linedsg TColor">
+                  <th class="tblBrLeft" style="width:60px">
+                    <ion-item>
+                      <ion-checkbox item-end (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox>
+                    </ion-item>
+                  </th> 
+                  <th style="width:60px">No.</th>
+                  <th>Name</th>
+                  <th>Claim Type</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Stage</th>
+                  <th>Amount</th>
+                  <th class="tblBrRight" style="width:90px">Action</th>
+    
+              </tr>
+    
+              <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails; let i=index">
+                  <td class="lgl1">
+                    <ion-item>
+                      <ion-checkbox item-end [checked]="selectAll" [disabled]="claimrequestdetail.STATUS=='Paid'" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID,claimrequestdetail.PROFILE_LEVEL,claimrequestdetail.STATUS)"> </ion-checkbox>
+                    </ion-item>
+                  </td>
+                  <td class="lgl1">{{i+1}}</td>
+                  <td class="lgl1" >{{claimrequestdetail.FULLNAME}}</td>
+                  <td class="lgl1" >{{claimrequestdetail.CLAIMTYPE}}</td>
+                  <td class="lgl1" >{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
+                  <td class="lgl1">{{claimrequestdetail.STATUS}}</td>
+                  <td class="lgl1">{{claimrequestdetail.STAGE}}</td>
+                  <td class="lgl1">{{claimrequestdetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+                  <td class="lgl1 fColor">
+                    <button ion-button item-end (click)='viewClaim(claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
                 </td>
-                <td class="lgl1">{{i+1}}</td>
-                <td class="lgl1" >{{claimrequestdetail.FULLNAME}}</td>
-                <td class="lgl1" >{{claimrequestdetail.CLAIMTYPE}}</td>
-                <td class="lgl1" >{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
-                <td class="lgl1">{{claimrequestdetail.STATUS}}</td>
-                <td class="lgl1">{{claimrequestdetail.STAGE}}</td>
-                <td class="lgl1">{{claimrequestdetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
-                <td class="lgl1 fColor">
-                  <button ion-button item-end (click)='viewClaim(claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
-              </td>
-            </tr>   
+              </tr>   
+    
+    
+          </table>
+      </ion-item>
+    </ion-list>
+  </ion-content>
   
-  
-        </table>
-    </ion-item>
-  </ion-list>
-</ion-content>

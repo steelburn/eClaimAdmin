@@ -66,7 +66,6 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { Chart } from 'chart.js';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
-
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -85,6 +84,8 @@ import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claima
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
+import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
+
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
@@ -101,7 +102,7 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DatePipe } from '@angular/common'
-
+import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -162,11 +163,12 @@ import { DatePipe } from '@angular/common'
     ClaimtasklistPage,
     UserclaimslistPage,
     ClaimReportPage,
+    MonthlyClaimReportPage,
 
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage
+    DashboardPage, ImportExcelDataPage 
   ],
 
   imports: [
@@ -184,6 +186,7 @@ import { DatePipe } from '@angular/common'
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
         // { component: DashboardPage, name: 'Home', segment: 'Home' },
+        { component: ImportExcelDataPage, name: 'ImportExcelDataPage', segment: 'ImportExcelDataPage' },
         { component: DashboardPage, name: 'DashboardPage', segment: 'DashboardPage' },
         { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
         { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
@@ -203,7 +206,8 @@ import { DatePipe } from '@angular/common'
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
         { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
         { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
-        { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' }
+        { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
+        { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' }
      
       ]
     }),
@@ -274,12 +278,13 @@ import { DatePipe } from '@angular/common'
 
 
     ClaimReportPage,
+    MonthlyClaimReportPage,
     UploadPage,
 
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage
+    DashboardPage, ImportExcelDataPage 
 
 
   ],

@@ -51,9 +51,23 @@ export class AddTollPage {
     // this.LoadAllowanceDetails();
   }
 
+  claimAmount: number = 0;
   getCurrency(amount: number) {
-    this.Amount = this.numberPipe.transform(amount, '1.2-2');
-  }
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM 9,9999.00.')
+      this.Amount = null
+      this.claimAmount = 0;
+    }
+    else {
+      this.claimAmount = amount;
+      this.Amount = this.numberPipe.transform(amount, '1.2-2');
+    }
+  } 
+
+  // getCurrency(amount: number) {
+  //   this.Amount = this.numberPipe.transform(amount, '1.2-2');
+  // }
 
   onAllowanceSelect(allowance: any) {
     this.Amount = allowance.ALLOWANCE_AMOUNT;
