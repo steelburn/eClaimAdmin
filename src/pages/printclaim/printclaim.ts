@@ -372,11 +372,13 @@ export class PrintclaimPage {
   
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;
           if (this.isCustomer) {
-            this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
+            // this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
+            this.claimRequestData["resource"][0].CUSTOMER_GUID =this.Customer_GUID;
             this.claimRequestData["resource"][0].SOC_GUID = null;
           }
           else {
-            this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
+            // this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
+            this.claimRequestData["resource"][0].SOC_GUID =  this.Soc_GUID;
             this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
           }
           //this.claimRequestData[0].STATUS = 'Pending';
