@@ -113,7 +113,7 @@ export class EntertainmentclaimPage {
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 9,9999.00.')
+      alert('Amount should not exceed RM 99,999.00.')
       this.Entertainment_Amount_ngModel = null
       this.claimAmount = 0;
     }
@@ -155,6 +155,7 @@ export class EntertainmentclaimPage {
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
@@ -164,6 +165,7 @@ export class EntertainmentclaimPage {
                 }
                 else {
                   this.claimFor = 'seg_project'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeProjects.forEach(element => {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
