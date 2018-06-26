@@ -206,6 +206,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
         { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
         { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
+        { component: ClaimhistorydetailPage, name: 'ClaimhistorydetailPage', segment: 'ClaimhistorydetailPage' },
         { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
         { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' }
      

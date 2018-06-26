@@ -56,7 +56,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
-import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
+
 export interface PageInterface {
   title: string;
   name: string;
@@ -101,11 +101,10 @@ export class ConferenceApp {
     // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
     // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
     { title: 'My Claim List', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-    { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-    { title: 'Finance Task ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+    { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+    { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
     { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-    // { title: 'IMPORT DATA', name: 'ImportExcelDataPage', component: ImportExcelDataPage, icon: 'ios-list-box-outline' }, 
-       
+    
   ];
   claimPages: PageInterface[] = [
     { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -276,12 +275,11 @@ export class ConferenceApp {
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
             { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
             // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
-            { title: 'My Claim List', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
             { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
             { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
             { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-         
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -304,8 +302,8 @@ export class ConferenceApp {
             
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Approver Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -320,22 +318,12 @@ export class ConferenceApp {
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
-
-
-
-
-
-
-
-
-
-
         else if (res.toString() == "Finance Executive" ) {
           this.appPages_User = [
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             // { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Finance Task ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+            { title: 'Finance Tasks', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
             { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' },            
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },            
@@ -351,32 +339,6 @@ export class ConferenceApp {
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //For Team Member, Home, Change Password, Sign Out
         else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
@@ -394,9 +356,9 @@ export class ConferenceApp {
             // -- Claim Reports
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task List', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Approver Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-            { title: 'Finance Task List', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'Finance Tasks', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box' },
             { title: 'Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'paper' },            
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },            
@@ -428,14 +390,9 @@ export class ConferenceApp {
             // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
             
             { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-           
-            // { title: 'IMPORT DATA', name: 'ImportExcelDataPage', component: ImportExcelDataPage, icon: 'ios-list-box-outline' }, 
-              
-
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Claim History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },            
-
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },            
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
