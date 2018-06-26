@@ -127,10 +127,14 @@
     <ion-item style="width: 50%;display:inline-block;">
       <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <!-- <ion-label > {{travelAmount | number}} </ion-label> -->
+      <!-- <ion-item>
       <ion-input (change)='getCurrency($event.target.value)' type="number" formControlName="claimAmount" [(ngModel)]="Miscellaneous_Amount_ngModel"></ion-input>
-    </ion-item>
+    </ion-item> -->
 
-    <ion-item>
+
+<!-- start -->
+
+    <!-- <ion-item>
       <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
       <ion-input type="text" formControlName="description" [(ngModel)]="Miscellaneous_Description_ngModel"></ion-input>
     </ion-item>
@@ -153,7 +157,11 @@
 
     <div class="btn">
       <button ion-button color="primary500" (click)='submitAction(MiscellaneousForm.value)' [disabled]="(MiscellaneousForm.valid && !ImageUploadValidation) || !MiscellaneousForm.valid">{{ 'SUBMIT'}}</button>
-    </div>
+    </div> -->
+
+
+<!-- end -->
+
 
     <!-- <div class="btn">     
 
