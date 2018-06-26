@@ -7,53 +7,64 @@
 <ion-header>
 
   <ion-navbar color="primary500">
-    <ion-title>Claim History Details</ion-title>
+    <ion-title *ngIf="FinanceLogin">Finance Task History Details</ion-title>
+    <ion-title *ngIf="!FinanceLogin">Approver Task History</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top color="primary500">
-    <ion-searchbar [(ngModel)]="searchboxValue" (ionChange)="onSearchInput($event)" ></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
 
-  <ion-item *ngFor="let userdetail of userdetails">
-    <ion-label>Name : {{userdetail.FULLNAME}}</ion-label>
-    <ion-label>Department : {{userdetail.DEPARTMENT}}</ion-label>
+  <ion-item *ngIf="FinanceLogin">
+    <ion-item *ngFor="let userdetail of userdetails">
+      <ion-label>Name : {{userdetail.FULLNAME}}</ion-label>
+      <ion-label>Department : {{userdetail.DEPARTMENT}}</ion-label>
+    </ion-item>
+
+    <ion-item *ngFor="let userdetail of userdetails">
+      <ion-label>Designation : {{userdetail.DESIGNATION}} </ion-label>
+      <ion-label>Month : {{this.month}}</ion-label>
+
+    </ion-item>
+
   </ion-item>
 
-  <ion-item *ngFor="let userdetail of userdetails">
-    <ion-label>Designation : {{userdetail.DESIGNATION}} </ion-label>
-    <ion-label>Month : {{this.month}}</ion-label>
-
-  </ion-item>
-
-
-<ion-list>
-  <ion-item>
+  <ion-list>
+    <ion-item>
       <table class="Tabler ">
-          <tr class="linedsg TColor">
-              <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
-              <th class="lgl1">Claim Type</th>
-              <th class="lgl1">Date</th>
-              <th class="lgl1">Status</th>
-              <!-- <th class="lgl1">STAGE</th> -->
-              <th class="lgl1 tblBrRight" style="width:110px">Amount(RM)</th>
-          </tr>
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1" *ngIf="!FinanceLogin">Name</th>
+          <th class="lgl1" *ngIf="!FinanceLogin">Department</th>
+          <th class="lgl1" *ngIf="!FinanceLogin">Month</th>
 
-          <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails; let i=index">
-              <td class="lgl1">{{i+1}}</td>
-              <td class="lgl1" >{{claimhistorydetail.CLAIM_TYPE}}</td>
-              <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
-              <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
-              <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
-              <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
-          </tr>
+          <th class="lgl1">Claim Type</th>
+          <th class="lgl1">Date</th>
+          <th class="lgl1">Status</th>
+          <!-- <th class="lgl1">STAGE</th> -->
+          <th class="lgl1 tblBrRight" style="width:110px">Amount(RM)</th>
+        </tr>
+
+        <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails; let i=index">
+          <td class="lgl1">{{i+1}}</td>
+          <td class="lgl1" *ngIf="!FinanceLogin">{{claimhistorydetail.FULLNAME}}</td>
+          <td class="lgl1" *ngIf="!FinanceLogin">{{claimhistorydetail.DEPARTMENT}}</td>
+          <td class="lgl1" *ngIf="!FinanceLogin">{{claimhistorydetail.MONTH}}</td>
+
+          <td class="lgl1">{{claimhistorydetail.CLAIM_TYPE}}</td>
+          <td class="lgl1">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
+          <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
+          <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
+          <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+        </tr>
 
 
       </table>
-  </ion-item>
-</ion-list>
+    </ion-item>
+  </ion-list>
 
 
 </ion-content>

@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar color="primary500">
-        <ion-title>Claim History</ion-title>
+        <ion-title>Finance Task History</ion-title>
     </ion-navbar>
     <ion-toolbar no-border-top color="primary500">
         <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
@@ -28,7 +28,7 @@
                     </th>
                     <th class="lgl1">Month
                     </th>
-                    <th class="lgl1">Status</th>
+                    <!-- <th class="lgl1">Status</th> -->
                     <th class="lgl1">Total Amount(RM)</th>
                     <th class="lgl1 tblBrRight" style="width:80px">Action</th>
 
@@ -40,7 +40,7 @@
                     <td class="lgl1 tblBrLeft">{{claimhistory.FULLNAME}}</td>
                     <td class="lgl1">{{claimhistory.DEPARTMENT}}</td>
                     <td class="lgl1">{{claimhistory.MONTH}}</td>
-                    <td class="lgl1">{{claimhistory.REQ_STATUS}}</td>
+                    <!-- <td class="lgl1">{{claimhistory.REQ_STATUS}}</td> -->
                     <td class="lgl1">{{claimhistory.CLAIM_AMOUNT | number:'1.2-2'}}</td>
                     <td class="lgl1 fColor">
                         <button ion-button item-end (click)="goToClaimHistoryDetail(claimhistory.CLAIM_REF_GUID,claimhistory.USER_GUID,claimhistory.MONTH)">
