@@ -15,7 +15,7 @@ import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claima
 export class ProfileManagerProvider {
     managerInfo :any[];
     levels: any[];
-    userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; level: any;    
+    userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; previousStage: string; level: any;    
     mainClaimReq: MainClaimRequestModel; claimRequestGUID: any; isRemarksAccepted: any;
   
     navCtrl:any;
@@ -64,6 +64,7 @@ export class ProfileManagerProvider {
       this.api.getClaimRequestByClaimReqGUID(this.claimRequestGUID).subscribe(data => {
         claimRef.ASSIGNED_TO = this.previousAssignedTo = data[0].ASSIGNED_TO;
         claimRef.PROFILE_LEVEL = this.previousLevel = data[0].PROFILE_LEVEL;
+        this.previousStage = data[0].STAGE;
         // data[0].STAGE = this.stage;
         // data[0].ASSIGNED_TO = this.assignedTo;
         // data[0].PROFILE_LEVEL = this.level;
@@ -134,20 +135,31 @@ export class ProfileManagerProvider {
         this.mainClaimReq.ASSIGNED_TO = this.assignedTo;
         this.mainClaimReq.PROFILE_LEVEL = this.level;
         this.mainClaimReq.UPDATE_TS = new Date().toISOString();
-        if (this.level === '-1')
-          this.mainClaimReq.STATUS = 'Paid';
-        else  if (this.level === '3')
-          this.mainClaimReq.STATUS = 'Approved';
-        else if (this.level === '0' || this.isRemarksAccepted === false) {
-        // this.mainClaimReq.UPDATE_TS =  new Date().toISOString();
         // if (this.level === '-1')
-        // this.mainClaimReq.STATUS = 'Approved';
-        // else if (this.level === '0' || this.isRemarksAccepted === false){
-          this.mainClaimReq.STATUS = 'Rejected';
-          this.mainClaimReq.PROFILE_LEVEL = 0;
-          this.mainClaimReq.STAGE = null;
-          this.mainClaimReq.ASSIGNED_TO = null;
+        //   this.mainClaimReq.STATUS = 'Paid';
+        if (this.level === '-1') {
+          this.mainClaimReq.STATUS = 'Paid';
+          this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+          this.mainClaimReq.STAGE = this.previousStage;
         }
+        // else  if (this.level === '3')
+        //   this.mainClaimReq.STATUS = 'Approved';
+        // else if (this.level === '0' || this.isRemarksAccepted === false) {
+       
+        //   this.mainClaimReq.STATUS = 'Rejected';
+        //   this.mainClaimReq.PROFILE_LEVEL = 0;
+        //   this.mainClaimReq.STAGE = null;
+        //   this.mainClaimReq.ASSIGNED_TO = null;
+        // }
+         if (this.level === '3')
+        this.mainClaimReq.STATUS = 'Approved';
+       if (this.level === '0' || this.isRemarksAccepted === false) {
+          this.mainClaimReq.STATUS = 'Rejected';
+          this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+          this.mainClaimReq.STAGE = this.previousStage;
+        this.mainClaimReq.PROFILE_LEVEL = 0;
+    
+      }
         if(this.checkMultipleLength===1)
         this.UpdateProfileInfo(this.mainClaimReq);
         else
