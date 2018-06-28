@@ -201,6 +201,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
         { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
         { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
         { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
+        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },        
 
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
