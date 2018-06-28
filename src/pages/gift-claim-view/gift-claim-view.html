@@ -56,11 +56,32 @@
         <ion-label> {{ "DESCRIPTION_LABEL" | translate }} : </ion-label>
         <ion-label> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
-    <ion-item>
-        <ion-label>Receipt ： </ion-label>
-     
-    </ion-item>
-        <img style="width: 25%" height="25%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null">
+
+    <!-- <ion-item>
+        <ion-label>Receipt ： </ion-label>     
+    </ion-item>    
+        <img style="width: 25%" height="25%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null"> -->
+
+        <ion-item>
+            <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" *ngIf="claim.ATTACHMENT_ID!==null">
+                    View Receipt
+                </button>
+            </ion-item>
+        
+                  
+            <div class="blackcontainer" *ngIf="displayImage">
+                </div>
+                <div class="popup2" padding *ngIf="displayImage">
+                    <ion-card>
+                        <ion-card-header class="icTitle headerColor-white ">
+                            <div class="icHeaderText">Claim Details</div>
+                            <button class="btnR" (click)="CloseDisplayImage()">
+                                <ion-icon name="md-close"></ion-icon>
+                            </button>
+                        </ion-card-header>
+                        <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
+                    </ion-card>
+                </div>
    
 
     <ion-item  *ngIf="isApprover">  

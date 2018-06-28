@@ -458,7 +458,17 @@ submitAction(formValues: any) {
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
   }
- }  
+ }
+ 
+ displayImage: any
+ CloseDisplayImage()  {
+   this.displayImage = false;
+ }
+ imageURL: string;
+ DisplayImage(val: any) {
+   this.displayImage = true;
+   this.imageURL = val;
+ }
 } 
 
 
