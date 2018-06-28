@@ -594,5 +594,9 @@ export class DashboardPage {
   Approved_Click(Approved: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
   }
+  Paid_Click()
+  {
+    this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Paid" });
+  }
 
 }
