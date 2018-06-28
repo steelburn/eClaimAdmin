@@ -101,7 +101,7 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { DatePipe } from '@angular/common'
+import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
 @NgModule({
   declarations: [
@@ -292,7 +292,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData, HttpClientModule, ApiManagerProvider,
-    UserData, DatePipe,
+    UserData, DatePipe, DecimalPipe,
     InAppBrowser,
     SplashScreen, StatusBar, Services,
 
