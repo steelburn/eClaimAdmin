@@ -216,7 +216,7 @@ export class DashboardPage {
   public doughnutChartData: Array<number> = [];
 
   public doughnutChartType: string = 'doughnut';
-  public doughnutChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red","rgb(90, 165, 90)"] }];
+  public doughnutChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "red","rgb(90, 165, 90)"] }];
 
   public chartClicked(e: any): void {
     console.log(e);
@@ -241,13 +241,13 @@ export class DashboardPage {
       fontSize: 20,
       fontColor: 'green'
     },
-    pieceLabel: {
-      mode: 'value',
-      overlap: true,
-      fontColor: ['green', 'blue', 'yellow','black'],
-     // fontStyle: 'bold'
-    //  indexLabelPlacement: "outside", 
-    },
+    // pieceLabel: {
+    //   mode: 'value',
+    //   overlap: true,
+    //   fontColor: ['white', 'blue', 'yellow','black'],
+    //  // fontStyle: 'bold'
+    // //  indexLabelPlacement: "outside", 
+    // },
 
     tooltips: {
       enabled: true,
@@ -265,7 +265,7 @@ export class DashboardPage {
   public claimAmountLabels: Array<string> = ['Approved', 'Pending', 'Rejected','Paid'];
   public claimAmountData: Array<number> = [];
   public claimAmountChartType: string = 'doughnut';
-  public claimAmountChartColors: any[] = [{ backgroundColor: ["#8BC34A", "orange", "red","rgb(90, 165, 90)"] }];
+  public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "red","rgb(90, 165, 90)"] }];
   public claimAmountClicked(e: any): void {
     console.log(e);
   }
@@ -288,20 +288,20 @@ export class DashboardPage {
       fontSize: 20,
       fontColor: 'green'
     },
-    pieceLabel: {
-      // mode: 'value',
-      //fontColor:'blue',
-      render: function (args:any) {
-        const label = args.label,
-          value = args.value;
-        //console.log(label + ': ' + value)
-        return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      },
-      overlap: true,
-     //s fontStyle: 'bold',
-      fontColor: ['green', 'blue', 'yellow','black'],
-      // indexLabelPlacement: "outside", 
-    },
+    // pieceLabel: {
+    //   // mode: 'value',
+    //   //fontColor:'blue',
+    //   render: function (args:any) {
+    //     const label = args.label,
+    //       value = args.value;
+    //     //console.log(label + ': ' + value)
+    //     return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //   },
+    //   overlap: true,
+    //  //s fontStyle: 'bold',
+    //   fontColor: ['white', 'blue', 'yellow','black'],
+    //   // indexLabelPlacement: "outside", 
+    // },
 
     tooltips: {
       enabled: true,
@@ -593,6 +593,10 @@ export class DashboardPage {
   }
   Approved_Click(Approved: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
+  }
+  Paid_Click()
+  {
+    this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Paid" });
   }
 
 }

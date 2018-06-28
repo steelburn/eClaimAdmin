@@ -9,7 +9,7 @@
   <!-- <ion-navbar>
     <ion-title>dashboard</ion-title>
   </ion-navbar> -->
-  <ion-navbar color="primary500" hideBackButton="true">
+  <ion-navbar color="primary200" hideBackButton="true">
     <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button> -->
@@ -115,7 +115,7 @@
   </ion-card>
   
   <ion-card  (click)="Approved_Click()" class="round2">
-    <ion-card-header style="background:green;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
+    <ion-card-header style="background:#008000;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
       <h2 style="color:white !important">Approved</h2>
     </ion-card-header>
     <ion-card-content text-center>
@@ -133,7 +133,7 @@
 
   </ion-card>
 
-  <ion-card  class="round2">
+  <ion-card  class="round2" (click)="Paid_Click()">
     <ion-card-header style="background:rgb(90, 165, 90);margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
       <h2 style="color:white !important">Paid</h2>
     </ion-card-header>

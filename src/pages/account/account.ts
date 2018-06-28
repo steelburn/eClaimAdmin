@@ -43,7 +43,7 @@ declare var cordova: any;
   templateUrl: 'account.html', providers: [UserSetup_Service, BaseHttpService, FileTransfer, Transfer, TitleCasePipe]
 })
 export class AccountPage {
-  username: string;
+  username: string; username_display: string;
   Userform: FormGroup;
 
   //--------------PERSONAL_DETAILS-----------------------
@@ -142,32 +142,32 @@ export class AccountPage {
         avatar2: null,
         avatar3: null,
 
-        NAME: [null, Validators.required],
-        EMAIL: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+        NAME: [null],
+        EMAIL: [null],
         LOGIN_ID: [null],
         PASSWORD: [null],
-        CONTACT_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        CONTACT_NO: [null],
         COMPANY_CONTACT_NO: [null],
         MARITAL_STATUS: ['', Validators.required],
         PERSONAL_ID_TYPE: [null],
         PERSONAL_ID: [null],
         DOB: [null],
-        GENDER: [null, Validators.required],
+        GENDER: [null],
 
         // -------------------EMPLOYMENT DETAILS--------------------
-        DESIGNATION_GUID: [null, Validators.required],
-        TENANT_COMPANY_GUID: [null, Validators.required],
-        DEPT_GUID: [null, Validators.required],
-        JOIN_DATE: [null, Validators.required],
+        DESIGNATION_GUID: [null],
+        TENANT_COMPANY_GUID: [null],
+        DEPT_GUID: [null],
+        JOIN_DATE: [null],
         CONFIRMATION_DATE: [null],
         RESIGNATION_DATE: [],
-        BRANCH: [null, Validators.required],
-        EMPLOYEE_TYPE: [null, Validators.required],
-        APPROVER1: [null, Validators.required],
-        EMPLOYEE_STATUS: [null, Validators.required],
+        BRANCH: [null],
+        EMPLOYEE_TYPE: [null],
+        APPROVER1: [null],
+        EMPLOYEE_STATUS: [null],
 
         // -------------------EDUCATIONAL QUALIFICATION--------------------
-        HIGHEST_QUALIFICATION: [null, Validators.required],
+        HIGHEST_QUALIFICATION: [null],
         UNIVERSITY: [null],
         MAJOR: [null],
         EDU_YEAR: [null],
@@ -213,6 +213,8 @@ export class AccountPage {
         //-------------------ROLE DETAILS---------------------------
         ROLE_NAME: [null],
       });
+
+      this.username_display = localStorage.getItem("g_FULLNAME");
     }
     else {
       this.nav.push(LoginPage);
@@ -439,8 +441,8 @@ export class AccountPage {
       .map(res => res.json())
       .subscribe(
         data => {
-          if (data["resource"].length <= 0) {
-            this.Profile_Image_Display = "assets/img/noPreview.png";
+          if (data["resource"].length <= 0) {            
+            this.Profile_Image_Display = "assets/img/profile_no_preview.png";
           }
           else {
             this.Profile_Image_Display = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/" + data["resource"][0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY;
@@ -468,6 +470,7 @@ export class AccountPage {
   tenants: any;
 
   GetTenant_GUID(Tenant_company_guid: string) {
+    // debugger;
     let TableURL = this.BaseTableURL + "tenant_company" + '?filter=(TENANT_COMPANY_GUID=' + Tenant_company_guid + ')&' + this.Key_Param;
     return new Promise((resolve, reject) => {
       this.http
@@ -902,10 +905,399 @@ export class AccountPage {
     this.MaritalStatusMarried = false;
 
     this.ROLE_ngModel_Edit = "";
+  }  
+  
+  EditProfileClicked: boolean = false; isReadonly: boolean = false; isDisabled: boolean = true; 
+
+  Readonly() {    
+    this.isReadonly = true;
+    return this.isReadonly;
+  }  
+
+  EditProfile(){    
+    this.EditProfileClicked = true; 
+  }
+  
+  usermain_entry: UserMain_Model = new UserMain_Model();
+  userinfo_entry: UserInfo_Model = new UserInfo_Model();
+  useraddress_entry: UserAddress_Model = new UserAddress_Model();
+  usercompany_entry: UserCompany_Model = new UserCompany_Model();
+  usercontact_entry: UserContact_Model = new UserContact_Model();
+  userqualification_entry: UserQualification_Model = new UserQualification_Model();
+  UserCertification_Entry: UserCertification_Model = new UserCertification_Model();
+  UserSpouse_Entry: UserSpouse_Model = new UserSpouse_Model();
+  UserChildren_Entry: UserChildren_Model = new UserChildren_Model();
+  userrole_entry: UserRole_Model = new UserRole_Model();
+
+  Update(USER_GUID: any) {
+    // alert('Development in progress.');
+    if (this.Userform) {
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+      });
+      this.loading.present();
+      this.Update_User_Main(USER_GUID);
+      this.loading.dismissAll();
+    }
+  }
+  
+  Update_User_Main(USER_GUID: any) {
+    // debugger;
+    ///Bind the Tenant Guid through Tenant company Guid.----------------------
+    let val = this.GetTenant_GUID(this.User_Company_Edit_ngModel.trim());
+    val.then((res) => {
+      this.usermain_entry.TENANT_GUID = res.toString();
+      this.usermain_entry.USER_GUID = USER_GUID;
+      this.usermain_entry.STAFF_ID = this.User_StaffID_Edit_ngModel.trim();
+      this.usermain_entry.LOGIN_ID = this.User_Email_Edit_ngModel.trim();
+      this.usermain_entry.PASSWORD = this.User_Password_Edit_ngModel.trim();
+      this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel.trim();
+      this.usermain_entry.ACTIVATION_FLAG = 1;
+
+      this.usermain_entry.CREATION_TS = this.view_user_details[0]["CREATION_TS"];
+      this.usermain_entry.CREATION_USER_GUID = this.view_user_details[0]["CREATION_USER_GUID"];
+
+      this.usermain_entry.UPDATE_TS = new Date().toISOString();
+      this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+      this.userservice.update_user_main(this.usermain_entry)
+        .subscribe((response) => {
+          if (response.status == 200) {
+            //alert('1');
+            this.Update_User_Info();
+          }
+        });
+    });
+    val.catch((err) => {
+      // This is never called
+      console.log(err);
+    });
   }
 
-  Update(USER_GUID: any){
-    alert('Development in progress.');
+  Update_User_Info() {
+    // debugger;
+    this.userinfo_entry.USER_INFO_GUID = this.USER_INFO_GUID_FOR_UPDATE;
+    this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    this.userinfo_entry.FULLNAME = this.titlecasePipe.transform(this.User_Name_Edit_ngModel.trim());    
+    this.userinfo_entry.MANAGER_USER_GUID = this.User_Approver1_Edit_ngModel.trim();
+    this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_Edit_ngModel.trim();
+    this.userinfo_entry.PERSONAL_ID = this.User_ICNo_Edit_ngModel.trim();
+    this.userinfo_entry.DOB = this.User_DOB_Edit_ngModel.trim();
+    this.userinfo_entry.GENDER = this.User_Gender_Edit_ngModel;
+    this.userinfo_entry.JOIN_DATE = this.User_JoinDate_Edit_ngModel.trim();
+    this.userinfo_entry.MARITAL_STATUS = this.User_Marital_Edit_ngModel;
+    this.userinfo_entry.BRANCH = this.User_Branch_Edit_ngModel.trim();
+    this.userinfo_entry.EMPLOYEE_TYPE = this.User_EmployeeType_Edit_ngModel;
+    this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_Edit_ngModel;
+    this.userinfo_entry.DEPT_GUID = this.User_Department_Edit_ngModel;
+    this.userinfo_entry.DESIGNATION_GUID = this.User_Designation_Edit_ngModel;
+    this.userinfo_entry.RESIGNATION_DATE = this.User_ResignationDate_Edit_ngModel;
+    this.userinfo_entry.TENANT_COMPANY_GUID = this.User_Company_Edit_ngModel;
+    this.userinfo_entry.CONFIRMATION_DATE = this.User_ConfirmationDate_Edit_ngModel;
+    this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.User_Branch_Edit_ngModel;
+
+    this.userinfo_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+    this.userinfo_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+    this.userinfo_entry.UPDATE_TS = new Date().toISOString();
+    this.userinfo_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+    this.userinfo_entry.EMG_CONTACT_NAME_1 = this.titlecasePipe.transform(this.User_EMG_CONTACT_NAME1_Edit_ngModel);
+    this.userinfo_entry.EMG_RELATIONSHIP_1 = this.titlecasePipe.transform(this.User_EMG_RELATIONSHIP_Edit_ngModel);
+    this.userinfo_entry.EMG_CONTACT_NUMBER_1 = this.User_EMG_CONTACT_NO1_Edit_ngModel;
+    this.userinfo_entry.EMG_CONTACT_NAME_2 = this.titlecasePipe.transform(this.User_EMG_CONTACT_NAME2_Edit_ngModel);
+    this.userinfo_entry.EMG_RELATIONSHIP_2 = this.titlecasePipe.transform(this.User_EMG_RELATIONSHIP2_Edit_ngModel);
+    this.userinfo_entry.EMG_CONTACT_NUMBER_2 = this.User_EMG_CONTACT_NO2_Edit_ngModel;
+    this.userinfo_entry.PR_EPF_NUMBER = this.User_EPF_NUMBER_Edit_ngModel;
+    this.userinfo_entry.PR_INCOMETAX_NUMBER = this.User_INCOMETAX_NO_Edit_ngModel;
+    this.userinfo_entry.BANK_GUID = this.User_BANK_NAME_Edit_ngModel;
+    this.userinfo_entry.PR_ACCOUNT_NUMBER = this.User_ACCOUNT_NUMBER_Edit_ngModel;
+    
+    //Added by bijay on 27/06/2018
+    this.userinfo_entry.ATTACHMENT_ID = this.view_user_details[0]["ATTACHMENT_ID"];
+
+    this.userservice.update_user_info(this.userinfo_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          this.Update_User_Address();
+        }
+      });
+  }
+
+  Update_User_Address() {
+    // debugger;
+    this.useraddress_entry.USER_ADDRESS_GUID = this.USER_GUID_FOR_ADDRESS;
+    this.useraddress_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    
+    this.useraddress_entry.USER_ADDRESS1 = this.titlecasePipe.transform(this.User_Address1_Edit_ngModel);
+    this.useraddress_entry.USER_ADDRESS2 = this.titlecasePipe.transform(this.User_Address2_Edit_ngModel);
+    this.useraddress_entry.USER_ADDRESS3 = this.titlecasePipe.transform(this.User_Address3_Edit_ngModel);
+
+    this.useraddress_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+    this.useraddress_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+
+    this.useraddress_entry.UPDATE_TS = new Date().toISOString();
+    this.useraddress_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+    this.useraddress_entry.POST_CODE = this.User_PostCode_Edit_ngModel;
+    this.useraddress_entry.COUNTRY_GUID = this.User_Country_Edit_ngModel;
+    this.useraddress_entry.STATE_GUID = this.User_State_Edit_ngModel;
+    //alert(this.User_Address3_Edit_ngModel);
+
+    this.userservice.update_user_address(this.useraddress_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          this.Update_User_Company();
+        }
+      });
+  }
+
+  Update_User_Company() {
+    // debugger;
+    this.usercompany_entry.USER_COMPANY_GUID = this.USER_GUID_FOR_COMPANY_CONTACT;
+    this.usercompany_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    this.usercompany_entry.TENANT_COMPANY_SITE_GUID = this.User_Branch_Edit_ngModel;
+    this.usercompany_entry.COMPANY_CONTACT_NO = this.User_CompanyNo_Edit_ngModel;
+
+    this.usercompany_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+    this.usercompany_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+
+    this.usercompany_entry.UPDATE_TS = new Date().toISOString();
+    this.usercompany_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+    this.userservice.update_user_company(this.usercompany_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          this.Update_User_Contact();
+        }
+      });
+  }
+
+  Update_User_Contact() {
+    // debugger;
+    this.usercontact_entry.CONTACT_NO = this.User_PersonalNo_Edit_ngModel;
+    this.usercontact_entry.CONTACT_INFO_GUID = this.USER_GUID_FOR_CONTACT;
+    this.usercontact_entry.USER_GUID = this.usermain_entry.USER_GUID;
+
+    this.usercontact_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+    this.usercontact_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+
+    this.usercontact_entry.UPDATE_TS = new Date().toISOString();
+    this.usercontact_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+    this.userservice.update_user_contact(this.usercontact_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          // let uploadImage = this.UploadImage('avatar2', this.fileName2);
+          // uploadImage.then((resJson) => {            
+          //   let imageResult = this.SaveImageinDB(this.fileName2);
+          //   imageResult.then((objImage: ImageUpload_model) => {
+          //     let result = this.Update_User_Qualification(objImage.Image_Guid);
+
+              // if (this.view_user_details[0]["QUALIFICATION_GUID"] != "") {
+              //   let result = this.Update_User_Qualification(objImage.Image_Guid);
+              // }
+              // else {
+              //   let result = this.Save_User_Qualification(objImage.Image_Guid);
+              // }
+            // })
+          // })
+          this.Update_User_Qualification();
+        }
+      });
+  }
+
+  Update_User_Qualification() {
+    // debugger;
+    this.userqualification_entry.USER_QUALIFICATION_GUID = this.USER_QUALIFICATION_GUID_FOR_UPDATE;
+    this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_Edit_ngModel;    
+    this.userqualification_entry.USER_GUID = this.usermain_entry.USER_GUID;
+
+    this.userqualification_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+    this.userqualification_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+    this.userqualification_entry.UPDATE_TS = new Date().toISOString();
+    this.userqualification_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+    this.userqualification_entry.HIGHEST_QUALIFICATION = this.User_HighestQualification_Edit_ngModel;
+    this.userqualification_entry.MAJOR = this.User_Major_Edit_ngModel;
+    this.userqualification_entry.UNIVERSITY = this.User_University_Edit_ngModel;
+    this.userqualification_entry.YEAR = this.User_EduYear_Edit_ngModel;
+    // this.userqualification_entry.ATTACHMENT = imageGUID;
+    this.userqualification_entry.ATTACHMENT = "";
+
+    this.userservice.update_user_qualification(this.userqualification_entry)
+      .subscribe(
+        (response) => {
+          if (response.status == 200) {
+            // let uploadImage = this.UploadImage('avatar3', this.fileName3);
+            // uploadImage.then((resJson) => {
+            //   console.table(resJson)
+            //   let imageResult = this.SaveImageinDB(this.fileName3);
+            //   imageResult.then((objImage: ImageUpload_model) => {
+            //     let result = this.Update_User_Certification(objImage.Image_Guid);
+            //   })
+            // })
+
+            this.Update_User_Certification();
+            this.Update_User_Spouse();
+            this.Update_User_Children();
+            this.Update_Role();
+
+            alert('User updated successfully.');
+            this.nav.setRoot(this.nav.getActive().component);
+          }
+        });
+
+    // return new Promise((resolve, reject) => {
+    //   this.api.postData('user_qualification', userqualification_entry.toJson(true)).subscribe((data) => {
+
+    //     let res = data.json();
+    //     console.log(res)
+    //     let ClaimRequestMainIdType2 = res["resource"][0].USER_QUALIFICATION_GUID;
+    //     resolve(ClaimRequestMainIdType2);
+    //   })
+    // });
+  }
+
+  Update_User_Certification() {
+    // debugger;
+    //first Delete all the records------------------------------------------------------------    
+    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_certification")
+      .subscribe(
+        (response) => {
+          if (response.status == 200) {
+
+            //Insert Record again---------------------------------------------------------------------
+            for (var item in this.ProfessionalCertification) {
+              this.UserCertification_Entry.certificate_guid = this.ProfessionalCertification[item]["CERTIFICATE_GUID"];
+              this.UserCertification_Entry.name = this.ProfessionalCertification[item]["NAME"];
+              this.UserCertification_Entry.grade = this.ProfessionalCertification[item]["GRADE"];
+              this.UserCertification_Entry.passing_year = this.ProfessionalCertification[item]["YEAR"];
+              this.UserCertification_Entry.user_guid = this.usermain_entry.USER_GUID;
+              this.UserCertification_Entry.attachment = "";
+
+              this.UserCertification_Entry.creation_ts = this.usermain_entry.CREATION_TS;
+              this.UserCertification_Entry.creation_user_guid = this.usermain_entry.CREATION_USER_GUID;
+
+              this.UserCertification_Entry.update_ts = new Date().toISOString();
+              this.UserCertification_Entry.update_user_guid = localStorage.getItem("g_USER_GUID");
+
+              this.userservice.save_user_certification(this.UserCertification_Entry)
+                .subscribe(
+                  (response) => {
+                    if (response.status == 200) {
+
+                      // alert('User Inserted Successfully!!');
+                      // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+            }
+            //-----------------------------------------------------------------------------------------
+          }
+        });
+  }
+
+  Update_User_Spouse() {
+    // debugger;
+    //first Delete all the records------------------------------------------------------------    
+    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_spouse")
+      .subscribe(
+        (response) => {
+          if (response.status == 200) {
+
+            //---------Insert record-----------------------------
+            for (var item in this.FamilyDetails) {
+              this.UserSpouse_Entry.SPOUSE_GUID = this.FamilyDetails[item]["SPOUSE_GUID"];
+              this.UserSpouse_Entry.NAME = this.FamilyDetails[item]["NAME"];
+              this.UserSpouse_Entry.ICNO = this.FamilyDetails[item]["ICNO"];
+
+              this.UserSpouse_Entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+              this.UserSpouse_Entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+              this.UserSpouse_Entry.UPDATE_TS = new Date().toISOString();
+              this.UserSpouse_Entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+              this.UserSpouse_Entry.USER_GUID = this.usermain_entry.USER_GUID;
+              this.userservice.save_user_spouse(this.UserSpouse_Entry)
+                .subscribe(
+                  (response) => {
+                    if (response.status == 200) {
+
+                      // alert('User Inserted Successfully!!');
+                      // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+            }
+            //----------------------------------------------------------
+
+          }
+        });
+  }
+
+  Update_User_Children() {
+    // debugger;
+    //first Delete all the records------------------------------------------------------------    
+    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_children")
+      .subscribe(
+        (response) => {
+          if (response.status == 200) {
+
+            //---------Insert record----------------------------------------------------------
+            for (var item in this.ChildrenDetails) {
+              this.UserChildren_Entry.CHILD_GUID = this.ChildrenDetails[item]["CHILD_GUID"];
+              this.UserChildren_Entry.NAME = this.ChildrenDetails[item]["NAME"];
+              this.UserChildren_Entry.ICNO = this.ChildrenDetails[item]["ICNO"];
+              this.UserChildren_Entry.GENDER = this.ChildrenDetails[item]["GENDER"];
+              this.UserChildren_Entry.SPOUSE = this.ChildrenDetails[item]["SPOUSE"];
+
+              this.UserChildren_Entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+              this.UserChildren_Entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+              this.UserChildren_Entry.UPDATE_TS = new Date().toISOString();
+              this.UserChildren_Entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+              this.UserChildren_Entry.USER_GUID = this.usermain_entry.USER_GUID;
+              this.userservice.save_user_children(this.UserChildren_Entry)
+                .subscribe(
+                  (response) => {
+                    if (response.status == 200) {
+                      // alert('User Inserted Successfully!!');
+                      // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    }
+                  });
+            }
+            //-----------------------------------------------------------------------------------------
+
+          }
+        });
+  }
+
+  Update_Role() {
+    // debugger;
+    //first Delete all the records------------------------------------------------------------    
+    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_role")
+      .subscribe(
+        (response) => {
+          if (response.status == 200) {
+            //Insert Record again---------------------------------------------------------------------
+            for (var ROLE_GUID of this.ROLE_ngModel_Edit) {
+              this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
+              this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+              this.userrole_entry.ROLE_GUID = ROLE_GUID;
+              this.userrole_entry.ACTIVATION_FLAG = "1";
+              this.userrole_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+              this.userrole_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+              this.userrole_entry.UPDATE_TS = new Date().toISOString();
+              this.userrole_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+              this.userservice.save_user_role(this.userrole_entry)
+                .subscribe((response) => {
+                  if (response.status == 200) {
+                    // alert('Tenant User Registered successfully');
+                    // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  }
+                });
+            }
+            //-----------------------------------------------------------------------------------------
+          }
+        });
   }
 
 }
