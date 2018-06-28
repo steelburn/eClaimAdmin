@@ -117,18 +117,21 @@
             </ion-item> -->
 
     <ion-item *ngIf="isPublicTransport">
-      <ion-label color="primary">Receipt: </ion-label>
+      <ion-label class="text">Attachment: </ion-label>
       <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
+      <!-- <button ion-button type="primary" (click)="saveIm()" [disabled]="!chooseFile">Upload image</button> -->
       <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
       <!-- <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
       <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
-    </ion-item>
+    </ion-item>   
 
     <div>
       <img src="{{ProfileImage}}" style="width: 20%">
     </div>
 
-    <button *ngIf="isPublicTransport" ion-button type="primary" (click)="saveIm()" [disabled]="!chooseFile">upload image</button>
+    <ion-item *ngIf="isPublicTransport">
+      <button ion-button type="primary" (click)="saveIm()" [disabled]="!chooseFile">Upload image</button>
+      </ion-item>   
 
     <div class="btn" *ngIf="!isFormSubmitted">
       <button ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="(Travelform.valid  && !PublicTransValue) || !Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
@@ -232,7 +235,7 @@
   <div class="popup1" padding *ngIf="tollParkLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
-        <div class="icHeaderText">Toll, Park and Accommodation Details</div>
+        <div class="icHeaderText">Toll, Parking and Accommodation Details</div>
         <button class="btnR" (click)="CloseTollParkLookup()">
           <ion-icon name="md-close"></ion-icon>
         </button>
@@ -281,7 +284,7 @@
             </tr>
             <tr class="col7">
 
-              <td class="lgl11" colspan="6"> {{ "TOTAL_AMOUNT_LABEL" | translate }}(RM) : {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+              <td class="lgl11" colspan="6"> {{ "TOTAL_AMOUNT_LABEL" | translate }} : {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
 
             </tr>
           </table>
@@ -358,7 +361,7 @@
     </button>
     <ion-fab-list side="top">
       <button ion-fab *ngIf="!isPublicTransport" (click)="showAddToll(null)">
-        <ion-icon name="car"></ion-icon>
+        <ion-icon name="easel"></ion-icon>
         <ion-label>{{ "ADD_TOLL_LABEL" | translate }}</ion-label>
       </button>
       <button ion-fab *ngIf="!isPublicTransport" (click)="showAddParking(null)">
@@ -366,11 +369,11 @@
         <ion-label>{{ "ADD_PARKING_LABEL" | translate }}</ion-label>
       </button>
       <button ion-fab (click)="showAddAccommodation(null)">
-        <ion-icon name="car"></ion-icon>
+        <ion-icon name="home"></ion-icon>
         <ion-label>{{ "ADD_Accommodation_HEADING" | translate }}</ion-label>
       </button>
       <button ion-fab *ngIf="!isTravelLocal" (click)="showMealAllowance(null)">
-        <ion-icon name="car"></ion-icon>
+        <ion-icon name="cash"></ion-icon>
         <ion-label>{{ "ADD_MEAL_ALLOWANCE_HEADING" | translate }}</ion-label>
       </button>
     </ion-fab-list>

@@ -203,6 +203,7 @@ export class TravelclaimPage {
 
                     if (this.claimRequestData[0].SOC_GUID === null) {
                       this.claimFor = 'seg_customer'
+                      this.isCustomer = true;
                       if (this.storeCustomers != undefined)
                         this.storeCustomers.forEach(element => {
                           if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
@@ -212,6 +213,7 @@ export class TravelclaimPage {
                     }
                     else {
                       this.claimFor = 'seg_project'
+                      this.isCustomer = false;
                       if (this.storeCustomers != undefined)
                         this.storeProjects.forEach(element => {
                           if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
@@ -805,7 +807,7 @@ export class TravelclaimPage {
         formValues.attachment_GUID = this.imageGUID;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
 
-        this.profileMng.save(formValues, this.travelAmountNgmodel, this.isCustomer)
+        this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         this.MainClaimSaved = true;
       }
       else {
@@ -818,8 +820,8 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.start_DT;
             this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
             this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
-            this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmountNgmodel;
-            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.travelAmountNgmodel;
+            this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmount;
+            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.totalClaimAmount;
             this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
             this.claimRequestData["resource"][0].FROM = formValues.origin;
             this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
@@ -830,10 +832,12 @@ export class TravelclaimPage {
 
             if (this.isCustomer) {
               this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
+              this.claimRequestData["resource"][0].SOC_GUID = null;
             }
             else {
               this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
-            }
+              this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
+             }
 
             this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
               alert('Claim details updated successfully.')

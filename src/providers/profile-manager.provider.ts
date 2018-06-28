@@ -15,7 +15,7 @@ import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claima
 export class ProfileManagerProvider {
     managerInfo :any[];
     levels: any[];
-    userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; level: any;    
+    userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; previousStage: string; level: any;    
     mainClaimReq: MainClaimRequestModel; claimRequestGUID: any; isRemarksAccepted: any;
   
     navCtrl:any;
@@ -64,6 +64,7 @@ export class ProfileManagerProvider {
       this.api.getClaimRequestByClaimReqGUID(this.claimRequestGUID).subscribe(data => {
         claimRef.ASSIGNED_TO = this.previousAssignedTo = data[0].ASSIGNED_TO;
         claimRef.PROFILE_LEVEL = this.previousLevel = data[0].PROFILE_LEVEL;
+        this.previousStage = data[0].STAGE;
         // data[0].STAGE = this.stage;
         // data[0].ASSIGNED_TO = this.assignedTo;
         // data[0].PROFILE_LEVEL = this.level;
@@ -134,20 +135,31 @@ export class ProfileManagerProvider {
         this.mainClaimReq.ASSIGNED_TO = this.assignedTo;
         this.mainClaimReq.PROFILE_LEVEL = this.level;
         this.mainClaimReq.UPDATE_TS = new Date().toISOString();
-        if (this.level === '-1')
-          this.mainClaimReq.STATUS = 'Paid';
-        else  if (this.level === '3')
-          this.mainClaimReq.STATUS = 'Approved';
-        else if (this.level === '0' || this.isRemarksAccepted === false) {
-        // this.mainClaimReq.UPDATE_TS =  new Date().toISOString();
         // if (this.level === '-1')
-        // this.mainClaimReq.STATUS = 'Approved';
-        // else if (this.level === '0' || this.isRemarksAccepted === false){
-          this.mainClaimReq.STATUS = 'Rejected';
-          this.mainClaimReq.PROFILE_LEVEL = 0;
-          this.mainClaimReq.STAGE = null;
-          this.mainClaimReq.ASSIGNED_TO = null;
+        //   this.mainClaimReq.STATUS = 'Paid';
+        if (this.level === '-1') {
+          this.mainClaimReq.STATUS = 'Paid';
+          this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+          this.mainClaimReq.STAGE = this.previousStage;
         }
+        // else  if (this.level === '3')
+        //   this.mainClaimReq.STATUS = 'Approved';
+        // else if (this.level === '0' || this.isRemarksAccepted === false) {
+       
+        //   this.mainClaimReq.STATUS = 'Rejected';
+        //   this.mainClaimReq.PROFILE_LEVEL = 0;
+        //   this.mainClaimReq.STAGE = null;
+        //   this.mainClaimReq.ASSIGNED_TO = null;
+        // }
+         if (this.level === '3')
+        this.mainClaimReq.STATUS = 'Approved';
+       if (this.level === '0' || this.isRemarksAccepted === false) {
+          this.mainClaimReq.STATUS = 'Rejected';
+          this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+          this.mainClaimReq.STAGE = this.previousStage;
+        this.mainClaimReq.PROFILE_LEVEL = 0;
+    
+      }
         if(this.checkMultipleLength===1)
         this.UpdateProfileInfo(this.mainClaimReq);
         else
@@ -170,7 +182,7 @@ export class ProfileManagerProvider {
       claimHistoryRef.CLAIM_WFH_GUID = UUID.UUID();
       claimHistoryRef.CLAIM_REQUEST_GUID = claimRequestGUID;
       claimHistoryRef.REMARKS = remarks;
-      claimHistoryRef.STATUS = isRemarksAccepted ? 'Accepted' : 'Rejected';
+      claimHistoryRef.STATUS = isRemarksAccepted ? 'Approved' : 'Rejected';
       claimHistoryRef.USER_GUID = approverGUID;
       claimHistoryRef.CREATION_TS = new Date().toISOString();
       claimHistoryRef.UPDATE_TS = new Date().toISOString();
@@ -285,16 +297,18 @@ export class ProfileManagerProvider {
       claimReqMainRef.ASSIGNED_TO = this.assignedTo;
       claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
       claimReqMainRef.PROFILE_JSON = this.profileJSON;
-      claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Drafting';
+      claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
       claimReqMainRef.STAGE = this.stage;
       claimReqMainRef.ATTACHMENT_ID = this.formValues.attachment_GUID;
       claimReqMainRef.TRAVEL_TYPE = this.formValues.travelType === 'Outstation' ? '1' : '0';
 
       if (this.isCustomer) {
         claimReqMainRef.CUSTOMER_GUID = this.formValues.soc_no;
+        claimReqMainRef.SOC_GUID =null;
       }
       else {
         claimReqMainRef.SOC_GUID = this.formValues.soc_no;
+        claimReqMainRef.CUSTOMER_GUID =null;
       }
       this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
         var postClaimMain = response.json();

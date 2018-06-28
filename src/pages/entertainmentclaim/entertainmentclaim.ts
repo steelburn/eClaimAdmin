@@ -75,7 +75,7 @@ export class EntertainmentclaimPage {
   public MainClaimSaved: boolean = false;
   travelAmount: any;
   validDate = new Date().toISOString();
-  isCustomer: boolean = true;  
+  isCustomer: boolean = false;  
   ClaimRequestMainId: any;
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
@@ -109,15 +109,29 @@ export class EntertainmentclaimPage {
     });   
   }
 
+  claimAmount: number = 0;
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM99999.')
+      alert('Amount should not exceed RM 99,999.00.')
       this.Entertainment_Amount_ngModel = null
+      this.claimAmount = 0;
     }
-    else
-    this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    else {
+      this.claimAmount = amount;
+      this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    }
   }
+
+  // getCurrency(amount: number) {
+  //   amount = Number(amount);
+  //   if (amount > 99999) {
+  //     alert('Amount should not exceed RM99999.')
+  //     this.Entertainment_Amount_ngModel = null
+  //   }
+  //   else
+  //   this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+  // }
  
   imageURLEdit: any = null
   GetDataforEdit() {
@@ -135,11 +149,13 @@ export class EntertainmentclaimPage {
                 if (this.claimRequestData[0].ATTACHMENT_ID !== null)
                 this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
-                this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
+             this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)               
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
@@ -149,6 +165,7 @@ export class EntertainmentclaimPage {
                 }
                 else {
                   this.claimFor = 'seg_project'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeProjects.forEach(element => {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
@@ -380,8 +397,8 @@ export class EntertainmentclaimPage {
         .subscribe(data => {
           this.claimRequestData = data;
           this.claimRequestData["resource"][0].ATTACHMENT_ID =  this.imageGUID ;
-          this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
-          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+          this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;
@@ -405,7 +422,7 @@ export class EntertainmentclaimPage {
     else {
       formValues.claimTypeGUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
       formValues.attachment_GUID =  this.imageGUID ;
-      this.travelAmount = formValues.claim_amount;
+      this.travelAmount = this.claimAmount;
       formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
       this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }
