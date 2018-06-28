@@ -241,13 +241,13 @@ export class DashboardPage {
       fontSize: 20,
       fontColor: 'green'
     },
-    pieceLabel: {
-      mode: 'value',
-      overlap: true,
-      fontColor: ['white', 'blue', 'yellow','black'],
-     // fontStyle: 'bold'
-    //  indexLabelPlacement: "outside", 
-    },
+    // pieceLabel: {
+    //   mode: 'value',
+    //   overlap: true,
+    //   fontColor: ['white', 'blue', 'yellow','black'],
+    //  // fontStyle: 'bold'
+    // //  indexLabelPlacement: "outside", 
+    // },
 
     tooltips: {
       enabled: true,
@@ -288,20 +288,20 @@ export class DashboardPage {
       fontSize: 20,
       fontColor: 'green'
     },
-    pieceLabel: {
-      // mode: 'value',
-      //fontColor:'blue',
-      render: function (args:any) {
-        const label = args.label,
-          value = args.value;
-        //console.log(label + ': ' + value)
-        return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      },
-      overlap: true,
-     //s fontStyle: 'bold',
-      fontColor: ['white', 'blue', 'yellow','black'],
-      // indexLabelPlacement: "outside", 
-    },
+    // pieceLabel: {
+    //   // mode: 'value',
+    //   //fontColor:'blue',
+    //   render: function (args:any) {
+    //     const label = args.label,
+    //       value = args.value;
+    //     //console.log(label + ': ' + value)
+    //     return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //   },
+    //   overlap: true,
+    //  //s fontStyle: 'bold',
+    //   fontColor: ['white', 'blue', 'yellow','black'],
+    //   // indexLabelPlacement: "outside", 
+    // },
 
     tooltips: {
       enabled: true,
