@@ -50,7 +50,7 @@ export class UserclaimslistPage {
   baseResourceUrl: string;
   baseResourceUrl1: string;
   searchboxValue: string;
-  Pending: any; Rejected: any; Approved: any;
+  Pending: any; Rejected: any; Approved: any;Paid: any;
   
   constructor(private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
@@ -68,8 +68,9 @@ export class UserclaimslistPage {
     this.Rejected = navParams.get("Rejected");
     this.Pending = navParams.get("Pending");
     this.Approved = navParams.get("Approved");
+    this.Paid = navParams.get("Paid");
 
-    this.searchboxValue=this.Rejected || this.Pending || this.Approved;
+    this.searchboxValue=this.Rejected || this.Pending || this.Approved|| this.Paid;
     if(this.searchboxValue!=undefined)
     {
       this.onSearchInput();
