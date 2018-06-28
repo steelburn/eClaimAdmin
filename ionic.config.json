@@ -4,12 +4,6 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  },
-  "proxies": [
-    {
-      "path": "/api",
-      "proxyUrl": "http://zen-authenticate.southeastasia.cloudapp.azure.com:3000/"
-    }
-  ] 
+  }
 }
 
