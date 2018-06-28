@@ -113,6 +113,7 @@ export class ConferenceApp {
     { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
     { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
     { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+    { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
   ];
   loggedInPages: PageInterface[] = [
     // { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -382,6 +383,29 @@ export class ConferenceApp {
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
+
+        //For Manage Customer
+        else if (res.toString() == "Manage Customer") {
+          this.appPages_User = [
+            { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },            
+          ];
+          this.claimPages = [
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+            { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+          ];
+
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+
         //For Team Lead and others
         else {
           this.appPages_User = [
@@ -494,7 +518,7 @@ export class ConferenceApp {
   }
 
   GetUser_Role(user_guid: string) {
-    // debugger;
+    debugger;
     let TableURL = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + user_guid + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     return new Promise((resolve, reject) => {
       this.http
