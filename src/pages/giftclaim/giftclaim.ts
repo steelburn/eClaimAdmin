@@ -125,6 +125,8 @@ export class GiftclaimPage {
                     });
                 }
                 this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                // this.Gift_Date_ngModel = new Date(this.claimRequestData.TRAVEL_DATE).toISOString();
+                // this.Gift_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
                 // this.Gift_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Gift_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
@@ -235,20 +237,20 @@ saveIm() {
   })  
 }
 
-SaveImageinDB() {
-  let objImage: ImageUpload_model = new ImageUpload_model();
-  objImage.Image_Guid = UUID.UUID();
-  objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-  objImage.CREATION_TS = new Date().toISOString();
-  objImage.Update_Ts = new Date().toISOString();
-  return new Promise((resolve, reject) => {
-    this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
-      // let res = response.json();
-      // let imageGUID = res["resource"][0].Image_Guid;
-      resolve(objImage.toJson());
-    })
-  })
-}
+// SaveImageinDB() {
+//   let objImage: ImageUpload_model = new ImageUpload_model();
+//   objImage.Image_Guid = UUID.UUID();
+//   objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+//   objImage.CREATION_TS = new Date().toISOString();
+//   objImage.Update_Ts = new Date().toISOString();
+//   return new Promise((resolve, reject) => {
+//     this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+//       // let res = response.json();
+//       // let imageGUID = res["resource"][0].Image_Guid;
+//       resolve(objImage.toJson());
+//     })
+//   })
+// }
 
 UploadImage() {   
   this.CloudFilePath = 'eclaim/'   
@@ -456,7 +458,17 @@ submitAction(formValues: any) {
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
   }
- }  
+ }
+ 
+ displayImage: any
+ CloseDisplayImage()  {
+   this.displayImage = false;
+ }
+ imageURL: string;
+ DisplayImage(val: any) {
+   this.displayImage = true;
+   this.imageURL = val;
+ }
 } 
 
 
