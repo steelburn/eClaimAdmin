@@ -41,11 +41,19 @@ export class ClaimhistoryPage {
   searchboxValue: string;
   claimhistorys: any[];
   claimhistorys1: any[]=[];
-  claimhistoryTotal: any[];
+ // claimhistoryTotal: any[];
 
  // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER='+localStorage.getItem("g_USER_GUID") +')&api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string ;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
+    let loginUserRole=localStorage.getItem("g_ROLE_NAME");
+    if(loginUserRole==="Finance Admin")
+    {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID='+localStorage.getItem("g_USER_GUID") +')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;   }
+    else
+    {
+      this.baseResourceUrl =constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID='+localStorage.getItem("g_USER_GUID") +')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;      }
     this.BindData();
   }
 
@@ -54,17 +62,28 @@ export class ClaimhistoryPage {
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.claimhistoryTotal = data["resource"];
-       this.claimhistoryTotal.forEach(element => {
-          if(this.claimhistorys1.length===0 || (this.claimhistorys1.length>0 && this.claimhistorys1.find(e=>e.CLAIM_REF_GUID==element.CLAIM_REF_GUID)===undefined))
-          {
-             this.claimhistorys1.push(element);
-         }
-          else
-          {
-            this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID).CLAIM_AMOUNT+=element.CLAIM_AMOUNT;
-          }
-        });
+        this.claimhistorys = this.claimhistorys1 = data["resource"];
+      //  this.claimhistoryTotal.forEach(element => {
+      //     if(this.claimhistorys1.length===0 || (this.claimhistorys1.length>0 && this.claimhistorys1.find(e=>e.CLAIM_REF_GUID==element.CLAIM_REF_GUID)===undefined))
+      //     {
+      //        this.claimhistorys1.push(element);
+      //    }
+      //     else
+      //     {
+      //     var claimObj=  this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID);
+      //        if(element.STATUS.toString()==="Approved")
+      //        {
+      //         if(claimObj.STATUS.toString()===element.STATUS.toString())
+      //         {
+
+      //         }
+      //        }
+      //        else
+      //        {}
+
+      //       this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID && e.STATUS==="Rejected").CLAIM_AMOUNT_REJ+=element.CLAIM_AMOUNT_REJ;
+      //     }
+      //   });
         this.claimhistorys = this.claimhistorys1;
       });
   }
