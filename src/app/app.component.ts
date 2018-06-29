@@ -296,11 +296,11 @@ export class ConferenceApp {
           this.blnSetup_loggedInMenu_User = false;
           
           this.appPages_User = [
-
-
-
-            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-
+            
+            
+           
+          
+          
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -312,15 +312,14 @@ export class ConferenceApp {
           ];
 
           this.reportPages = [
-            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+          
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
           ];
 
-          // this.setupsPages = [
-          //   { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
-          //   { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
-          //   { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
-          // ];
+          
+          this.setupsPages = [
+          //  { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' }
+          ]
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
@@ -362,11 +361,9 @@ export class ConferenceApp {
         //For Team Member, Home, Change Password, Sign Out
         else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
           this.appPages_User = [
-
-            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-
-
-
+          
+           
+          
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -378,9 +375,9 @@ export class ConferenceApp {
           ];
 
           this.reportPages = [
-            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
-            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
-            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+          
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },            
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' } ,
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
           ];
 

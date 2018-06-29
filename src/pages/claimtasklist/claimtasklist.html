@@ -21,7 +21,7 @@
 
       <ion-list>
           <ion-item>
-              <table class="Tabler ">
+              <table class="Tabler list">
                   <tr class="linedsg TColor">
                       <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
                       <th class="lgl1">Employee</th>
@@ -34,7 +34,7 @@
                   </tr>
       
                   <tr class="col7" *ngFor="let claimTaskList of claimTaskLists; let i=index">
-                      <td class="lgl1">{{i+1}}</td>
+                      <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
                       <td class="lgl1" >{{claimTaskList.FULLNAME}}</td>
                       <td class="lgl1" >{{claimTaskList.DEPARTMENT}}</td>
                       <td class="lgl1" >{{claimTaskList.MONTH}}</td>
