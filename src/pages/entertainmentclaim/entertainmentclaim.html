@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary500">
+  <ion-navbar color="primary200">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -74,16 +74,32 @@
       <img src="{{ProfileImage}}" style="width: 20%">
     </div>
 
-    <div *ngIf="newImage">
+    <!-- <div *ngIf="newImage">
       <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
-    </div>
+    </div> -->
 
-
+    <ion-item>
+      <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
+          View Receipt
+          </button>
+        </ion-item>
 
     <div class="btn">
       <button ion-button color="primary500" (click)='submitAction(Entertainmentform.value)' [disabled]="(Entertainmentform.valid && !ImageUploadValidation) || !Entertainmentform.valid">{{ 'SUBMIT'}}</button>
     </div>
   </form>
+
+  <div class="popup2" padding *ngIf="displayImage">
+    <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+        <div class="icHeaderText">Claim Details</div>
+        <button class="btnR" (click)="CloseDisplayImage()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-card-header>
+      <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
+    </ion-card>
+  </div>
 
   <div class="blackcontainer" *ngIf="ProjectLookupClicked">
   </div>
@@ -132,7 +148,7 @@
     </ion-card>
   </div>
 
-  <ion-fab bottom right>
+  <!-- <ion-fab bottom right>
     <button ion-fab mini color="secondary400">
       <ion-icon name="add"></ion-icon>
     </button>
@@ -147,6 +163,6 @@
       </button>
 
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab> -->
 
 </ion-content>

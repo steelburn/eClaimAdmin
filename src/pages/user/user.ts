@@ -1753,7 +1753,7 @@ export class UserPage {
   Update_User_Qualification(imageGUID: string) {
     let userqualification_entry: UserQualification_Model = new UserQualification_Model();
     this.userqualification_entry.USER_QUALIFICATION_GUID = this.USER_QUALIFICATION_GUID_FOR_UPDATE;
-    this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_ngModel;
+    this.userqualification_entry.QUALIFICATION_GUID = this.User_HighestQualification_Edit_ngModel;
     //this.userqualification_entry.QUALIFICATION_GUID = "";
     this.userqualification_entry.USER_GUID = this.usermain_entry.USER_GUID;
 

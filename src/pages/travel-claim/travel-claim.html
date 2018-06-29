@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary500">
+  <ion-navbar color="primary200">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -108,9 +108,15 @@
       <ion-label color="primary500"> {{totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
     </ion-item>
 
-    <div *ngIf="newImage">
+    <!-- <div *ngIf="newImage">
       <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
-    </div>
+    </div> -->
+
+    <ion-item *ngIf="imageURLEdit!==null">
+      <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" >
+     View Receipt
+    </button>  
+  </ion-item>
     <!-- <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>             
@@ -160,7 +166,7 @@
 
   <div class="blackcontainer" *ngIf="AddLookupClicked || AddToLookupClicked">
   </div>
-  <div class="popup" padding *ngIf="AddLookupClicked || AddToLookupClicked">
+  <div class="popup1" padding *ngIf="AddLookupClicked || AddToLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
@@ -207,7 +213,7 @@
 
   <div class="blackcontainer" *ngIf="CustomerLookupClicked">
   </div>
-  <div class="popup" padding *ngIf="CustomerLookupClicked">
+  <div class="popup1" padding *ngIf="CustomerLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>

@@ -1,10 +1,10 @@
 
 <ion-header>
 
-    <ion-navbar color="primary500">
-      <ion-title>Approver Task List</ion-title>
+    <ion-navbar color="primary200">
+      <ion-title>Approver Task</ion-title>
     </ion-navbar>
-    <ion-toolbar no-border-top color="primary500">
+    <ion-toolbar no-border-top color="primary200">
       <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
     </ion-toolbar>
   </ion-header>
@@ -12,7 +12,7 @@
   <ion-content padding>
       <ion-item>
           <!-- <ion-searchbar type="text" #filter (keyup)="0" placeholder="{{'SEARCH_FULLNAME' | translate}}"></ion-searchbar> -->
-          <button ion-button item-end (click)="approveClaims()">Approve</button>
+          <button ion-button item-end (click)="approveClaims()">{{buttonText}}</button>
         </ion-item>
     
   

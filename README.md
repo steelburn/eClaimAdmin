@@ -27,4 +27,7 @@ npm install chart.piecelabel.js --save
 npm install xlsx --save
 npm install file-saver --save
 
+#plugin to install for proxy server
+npm install -g corsproxy
+
 ```

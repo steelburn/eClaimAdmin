@@ -10,6 +10,8 @@ import * as constants from '../../app/config/constants';
 import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
 import { ResourceLoader } from '@angular/compiler';
 
+import { ExcelService } from '../../providers/excel.service';
+
 
 /**
  * Generated class for the MonthlyClaimReportPage page.
@@ -21,7 +23,7 @@ import { ResourceLoader } from '@angular/compiler';
 @IonicPage()
 @Component({
   selector: 'page-monthly-claim-report',
-  templateUrl: 'monthly-claim-report.html',
+  templateUrl: 'monthly-claim-report.html', providers: [ExcelService]
 })
 export class MonthlyClaimReportPage {
   //ClaimHistory_Model = new ClaimHistory_Model();
@@ -39,20 +41,21 @@ export class MonthlyClaimReportPage {
   empAll: boolean = true;
   claimAll: boolean = true;
   monthAll: boolean = true;
-  grandTotal: number=0;
+  grandTotal: number = 0;
   currentYear: number = new Date().getFullYear();
   prevYear: number = new Date().getFullYear();
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?filter=(ASSIGNED_TO='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_monthly_claim_report?filter=(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
     this.BindDepartment();
     this.BindEmployeesbyDepartment("All");
     this.BindClaimTypes();
     this.BindYears();
-    this.BindData("Paid");
+    this.BindData();
     
+    this.excelService = excelService;
   }
 
   BindDepartment() {
@@ -76,7 +79,7 @@ export class MonthlyClaimReportPage {
         .map(res => res.json())
         .subscribe(data => {
           this.employeeList1 = data["resource"];
-          this.employeeList=this.employeeList1;
+          this.employeeList = this.employeeList1;
         });
       if (deptAr[0] !== "All" || deptAr.length > 1) {
         for (let i = 0; i < dept.length; i++) {
@@ -98,12 +101,14 @@ export class MonthlyClaimReportPage {
     if (empAr[0] !== "All" || emp.length > 0)
       this.empAll = false;
   }
+
   MonthChange(month: any) {
     debugger;
     let monthAr = month.toString().split(",");
     if (monthAr[0] !== "All" || month.length > 0)
       this.monthAll = false;
   }
+
   ClaimChange(claim: any) {
     let claimAr = claim.toString().split(",");
     if (claimAr[0] === "All" || claim.length === 0)
@@ -124,8 +129,9 @@ export class MonthlyClaimReportPage {
       this.yearsList.push(i);
     }
   }
-
-  BindData(status:string) {
+  
+  ExcelData: any[] = [];
+  BindData() {
     this.grandTotal = 0;
     this.http
       .get(this.baseResourceUrl)
@@ -133,11 +139,16 @@ export class MonthlyClaimReportPage {
       .subscribe(data => {
         this.claimListTotal = data["resource"];
         this.claimList = this.claimListTotal;
-        if(status!==null && this.claimList.length !== 0)
-        {this.claimList = this.claimList.filter(s => s.STATUS.toString() === status.toString());}
+
+        for (var item in data["resource"]) {
+          this.ExcelData.push({ Employee: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPT"], Month: data["resource"][item]["MONTH"], ClaimType : data["resource"][item]["CLAIM_TYPE"], Status: data["resource"][item]["STATUS"], TotalAmount: data["resource"][item]["AMOUNT"] });
+        }
+
+        // if(status!==null && this.claimList.length !== 0)
+        // {this.claimList = this.claimList.filter(s => s.STATUS.toString() === status.toString());}
         if (this.claimList.length !== 0) {
           this.claimList.forEach(element => {
-           this.grandTotal= this.grandTotal + element.AMOUNT;
+            this.grandTotal = this.grandTotal + element.AMOUNT;
           });
         }
         else
@@ -148,11 +159,10 @@ export class MonthlyClaimReportPage {
   SearchClaimsData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
     this.grandTotal = 0;
     if (this.prevYear !== ddlYear) {
-      this.BindData(null);
+      this.BindData();
       this.prevYear = ddlYear;
     }
-    else
-    {this.claimList=this.claimListTotal;}
+    else { this.claimList = this.claimListTotal; }
     // debugger
 
     //alert(ddlDept);
@@ -162,7 +172,7 @@ export class MonthlyClaimReportPage {
     let empArry: any[] = ddlEmployee.toString().split(",");
     let monthArry: any[] = ddlmonth.toString().split(",");
     let claimsArry: any[] = ddlClaimTypes.toString().split(",");
-    //let statusArry: any[] = ddlStatus.toString().split(",");
+    let statusArry: any[] = ddlStatus.toString().split(",");
     //this.BindData();
     //this.claimList = [];
     if (deptArry[0] !== "All") {
@@ -205,11 +215,21 @@ export class MonthlyClaimReportPage {
       this.claimList = this.claimList1;
     }
     //this.claimList=this.claimList.filter(s => s.STATUS.toString() === ddlStatus.toString());
-    
+    if (statusArry[0] !== "All") {
+      for (let i = 0; i < statusArry.length; i++) {
+        if (i === 0)
+          this.claimList1 = this.claimList.filter(s => s.STATUS.toString() === statusArry[i].toString());
+        else
+          this.claimList1 = this.claimList1.concat(this.claimList.filter(s => s.STATUS.toString() === statusArry[i].toString()));
+
+      }
+      this.claimList = this.claimList1;
+    }
+
     if (this.claimList.length !== 0) {
-      this.claimList = this.claimList.filter(s => s.STATUS.toString() === ddlStatus.toString());
+      // this.claimList = this.claimList.filter(s => s.STATUS.toString() === ddlStatus.toString());
       this.claimList.forEach(element => {
-       this.grandTotal= this.grandTotal + element.AMOUNT;
+        this.grandTotal = this.grandTotal + element.AMOUNT;
       });
     }
     else
@@ -230,6 +250,11 @@ export class MonthlyClaimReportPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad MonthlyClaimReportPage');
+  }
+
+  ExportToExcel(evt: any) {
+    // this.excelService.exportAsExcelFile(this.claimListTotal,'Data');
+    this.excelService.exportAsExcelFile(this.ExcelData,'Data');
   }
 
 }

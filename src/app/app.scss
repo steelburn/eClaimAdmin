@@ -133,7 +133,7 @@ height: 480px;
 
   .round2 {
     float: left;
-    width: 23% ;
+    width: calc(25% - 20px) ;
     margin: 10px !important;
 
     cursor: pointer;
@@ -143,7 +143,7 @@ height: 480px;
 
   .round3 {
     float: left;
-    width: calc(48.5% - 7px);
+    width: calc(50% - 20px);
     margin: 10px !important;
  
     cursor: pointer;
@@ -302,7 +302,7 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
 
 .Tabler tr.col7 td {
     padding: 10px;
-	text-align: center;
+	text-align: left;
 	word-wrap: break-word;
 	border: none;
 	border-bottom: 1px solid gainsboro;
@@ -317,7 +317,7 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     th.lgl1 {
         padding: 10px 5px;
         border: none;
-        
+        text-align: left;
     }
         
 
@@ -386,6 +386,9 @@ ion-item.item.item-block.item-md.item-checkbox {
     font-size: xx-small !important;
 }
 
+.clear{
+    clear: both;
+}
 
 .UPContent{
     width:100%;
@@ -433,28 +436,7 @@ button.item.item-block.item-md{
   }
 
 
-      // Todo: remove when this issue https://github.com/ionic-team/ionic/issues/11212 is fixed
-      @media(max-width: 700px) {
-        .round1 {
-          width: calc(100% - 20px);
-          min-height: 100px;
-        }
-    
-    
-        .Subtitle {
-          text-align: center;
-          font-size: 3.5vw;
-        }
-    
-    
-        .iconf {
-          font-size: 10vw;
-          color  :#009688,
-
-  
-        }
-    }    
-
+ 
 //overwrite default css
 
 .popover-md .popover-content {
@@ -476,7 +458,7 @@ button.item.item-block.item-md{
 }
 
 ion-toggle.toggle.toggle-md{
-    padding-left: 95px !important;
+    padding-left: 0px !important;
     padding-right: 0px !important;
 }
 
@@ -485,12 +467,12 @@ ion-toggle.toggle.toggle-md.tog{
     padding-right: 0px !important;
 }
 ion-toggle.toggle.toggle-md.yui{
-    padding-left: 40px !important;
+    padding-left: 0px !important;
     padding-right: 0px !important;
 }
 
 ion-toggle.toggle.toggle-md.stog{
-    padding-left: 53px !important;
+    padding-left: 0px !important;
     padding-right: 0px !important;
 }
 
@@ -607,3 +589,109 @@ button[ion-fab] {
 //     color: black !important;
 // }
 
+//responsive min size
+$ip5-phone: 320px;
+$tablet7: 600px;
+
+
+
+ @media (min-width: 320px)  and (max-width: 767px)  {
+
+    table.list th {
+        display: none;
+     }
+
+        table.list tr {
+            display: block;
+            border: 1px solid #999999;
+           border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+
+           table.list tr td {
+                display: block;
+             text-align: left !important;
+                 border: none;
+             }
+
+
+     
+                table.list tr.col7 td.getHeader::before {
+
+                    content: attr(reshead)" : ";
+                    font-weight: bold;
+                    display: inline !important;
+                    margin-top: 5px;
+                }
+
+                .round1 {
+                    width: calc(100% - 20px);
+                    min-height: 100px;
+                  }
+              
+              
+                  .Subtitle {
+                    text-align: center;
+                    font-size: 3.5vw;
+                  }
+              
+              
+                  .iconf {
+                    font-size: 10vw;
+                    color  :#009688,
+          
+            
+                  }
+                
+
+   
+
+    .Tabler tr.col7 td {
+        padding: 4px;
+    }
+
+
+ }
+
+
+
+//responsive specific for chart
+
+@media (max-width: 466px){
+    .round3{
+        display: none;
+    }
+
+    
+  .round2 {
+    width: calc(100% - 20px) ;
+  }
+
+  .hid{
+      display: none;
+  }
+}
+
+@media (min-width: 450px) and (max-width: 1138px){
+    .round3{
+        width: calc(100% - 20px);
+    }
+    .hide{
+        width: calc(100% - 20px);
+    }
+  .round2 {
+
+    width: calc(50% - 20px) ;
+
+
+
+  }
+}
+
+
+//responsive in between size- tablet / smaller laptop screen 
+
+@media (min-width: 600px) and (max-width: 1280px) {
+
+}

@@ -26,6 +26,8 @@ import { MiscellaneousClaimPage } from '../../pages/miscellaneous-claim/miscella
 
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
+import { ExcelService } from '../../providers/excel.service';
+
 
 /**
  * Generated class for the UserclaimslistPage page.
@@ -37,7 +39,7 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 @IonicPage()
 @Component({
   selector: 'page-userclaimslist',
-  templateUrl: 'userclaimslist.html', providers: [BaseHttpService]
+  templateUrl: 'userclaimslist.html', providers: [BaseHttpService, ExcelService]
 })
 export class UserclaimslistPage {
   userClaimhistorydetails: any[];
@@ -50,9 +52,9 @@ export class UserclaimslistPage {
   baseResourceUrl: string;
   baseResourceUrl1: string;
   searchboxValue: string;
-  Pending: any; Rejected: any; Approved: any;
-  
-  constructor(private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
+  Pending: any; Rejected: any; Approved: any; Paid: any;
+
+  constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
     //  this.claimrefguid=navParams.get("claimRefGuid");
     //  this.userguid=navParams.get("userGuid");
@@ -61,24 +63,27 @@ export class UserclaimslistPage {
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     console.log(this.baseResourceUrl);
-    
+
     // this.onSearchInput();
-    
-    
+
+
     this.Rejected = navParams.get("Rejected");
     this.Pending = navParams.get("Pending");
     this.Approved = navParams.get("Approved");
+    this.Paid = navParams.get("Paid");
 
-    this.searchboxValue=this.Rejected || this.Pending || this.Approved;
-    if(this.searchboxValue!=undefined)
-    {
+    this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid;
+    if (this.searchboxValue != undefined) {
       this.onSearchInput();
     }
-    else{this.BindData();}
-   
+    else { this.BindData(); }
+
     this.getuserDetails();
+
+    this.excelService = excelService;
   }
 
+  ExcelData: any[] = [];
   BindData() {
     this.http
       .get(this.baseResourceUrl)
@@ -86,6 +91,10 @@ export class UserclaimslistPage {
       .subscribe(data => {
         this.userClaimhistorydetails = data["resource"];
         this.userClaimhistorydetails1 = this.userClaimhistorydetails;
+
+        for (var item in data["resource"]) {
+          this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
+        }
       });
 
   }
@@ -93,44 +102,44 @@ export class UserclaimslistPage {
   onSearchInput() {
     // alert('hi')    
     // this.searchboxValue='hi';
-    
-   // debugger;
-    
+
+    // debugger;
+
     let val = this.searchboxValue;
     // alert(this.searchboxValue)
-    if (val && val.trim() != '') {   
+    if (val && val.trim() != '') {
 
       // Lakshman June-13,2018
       this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.userClaimhistorydetails1 = data["resource"];
-        //this.userClaimhistorydetails1 = this.userClaimhistorydetails;
+        .get(this.baseResourceUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.userClaimhistorydetails1 = data["resource"];
+          //this.userClaimhistorydetails1 = this.userClaimhistorydetails;
 
-        this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
-          let claimtype: number;
-          let status: number;
-          let stage: number;
-          let amount: number;
-          let date: number;
-          // console.log(item);
-          if (item.CLAIM_TYPE != null) { claimtype = item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase()) }
-          if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
-          if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
-          if (item.STAGE != null) { stage = item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase()) }
-          if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
-          return (
-            (claimtype > -1)
-            || (date > -1)
-            || (status > -1)
-            || (stage > -1)
-            || (amount > -1)
-          );
-        })
-      });
-       // Lakshman June-13,2018
-       
+          this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
+            let claimtype: number;
+            let status: number;
+            let stage: number;
+            let amount: number;
+            let date: number;
+            // console.log(item);
+            if (item.CLAIM_TYPE != null) { claimtype = item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.STAGE != null) { stage = item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+            return (
+              (claimtype > -1)
+              || (date > -1)
+              || (status > -1)
+              || (stage > -1)
+              || (amount > -1)
+            );
+          })
+        });
+      // Lakshman June-13,2018
+
       // this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
       //   let claimtype: number;
       //   let status: number;
@@ -200,6 +209,7 @@ export class UserclaimslistPage {
       cr_GUID: this.claimRequestGUID
     });
   }
+
   DeleteClaimRequest(claimReqGuid: any, claimTypeGuid: any) {
     let alert1 = this.alertCtrl.create({
       title: 'Confirm delete claim',
@@ -229,4 +239,8 @@ export class UserclaimslistPage {
     console.log('ionViewDidLoad UserclaimslistPage');
   }
 
+  ExportToExcel(evt: any) {
+    // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
+    this.excelService.exportAsExcelFile(this.ExcelData, 'Data');    
+  }
 }

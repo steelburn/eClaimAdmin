@@ -165,7 +165,7 @@ export class EntertainmentclaimPage {
                 }
                 else {
                   this.claimFor = 'seg_project'
-                  this.isCustomer = true;
+                  this.isCustomer = false;
                   if (this.storeCustomers != undefined)
                     this.storeProjects.forEach(element => {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
@@ -430,4 +430,14 @@ export class EntertainmentclaimPage {
   NavigateTravelClaim() {
     this.navCtrl.setRoot(TravelclaimPage); 
   } 
+
+  displayImage: any
+CloseDisplayImage()  {
+  this.displayImage = false;
+}
+imageURL: string;
+DisplayImage(val: any) {
+  this.displayImage = true;
+  this.imageURL = val;
+}
 } 

@@ -6,15 +6,14 @@
 	<ion-card style="width: 605px;margin:45pt auto;border-radius: 5px;">
 
 		<ion-card-content>
-				<!-- <img style="max-width:116px;max-height:42pt;"src="assets/img/Untitled-4.png"/> 
-				 -->
+		
 			<h1 style="margin-left:10pt;">Sign In to eClaim</h1>
 			<br/>
 
 			<p style="margin-left:10pt;">
 				<b>Please enter your login credentials</b>
-			  </p>
-			  <br/>
+			</p>
+			<br/>
 			<form #loginForm="ngForm" novalidate>
 				<ion-list>
 					<ion-item>
@@ -42,10 +41,8 @@
 				</ion-list>
 
 				<div class="btn">
-					<button color="primary500" ion-button block (click)="onLogin(loginForm)" type="submit">Login</button>
-
-
-
+					<!-- <button color="primary500" ion-button block (click)="onLogin(loginForm)" type="submit">Login</button> -->
+					<button color="primary500" ion-button block (click)="AuthenticateUserFromAdServer(loginForm)" type="submit">Login</button>
 				</div>
 				<div>
 
@@ -54,11 +51,11 @@
 						<a color="primary500" (click)="ForgotPasswordClick()">Forgot Your Password?</a>
 
 
-							<a color="primary500" style="float:right;" (click)="onSignup()">Create account</a>
-	
-						</p>
+						<a color="primary500" style="float:right;" (click)="onSignup()">Create account</a>
 
-					</div>
+					</p>
+
+				</div>
 
 
 			</form>

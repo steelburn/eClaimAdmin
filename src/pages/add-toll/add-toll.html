@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar color="primary500">
+    <ion-navbar color="primary200">
        
         <ion-title>
           <div *ngIf="ClaimMethodName == 'Parking'">{{ 'ADD_PARKING_HEADING' | translate }}</div>
@@ -27,7 +27,7 @@
                 <ion-label floating color="primary500">{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
                 <ion-select [ngModelOptions]="{standalone: true}" [(ngModel)]="MA_SELECT">
                     <ion-option value="NA">NA</ion-option>
-                  <ion-option *ngFor="let allowance of allowanceList" (ionSelect)="onAllowanceSelect(allowance)">{{allowance.ALLOWANCE_NAME}} - {{allowance.ALLOWANCE_AMOUNT}}</ion-option>
+                  <ion-option *ngFor="let allowance of allowanceList" (ionSelect)="onAllowanceSelect(allowance)">{{allowance.ALLOWANCE_NAME}} - {{allowance.ALLOWANCE_AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</ion-option>
                 </ion-select>
               </ion-item>
            
@@ -35,7 +35,7 @@
             <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'" style="width: 49%;display:inline-block;">
               <ion-label floating color="primary500">{{ 'AMOUNT_LABEL' | translate  }}{{ 'CURRENCY_NAME_LABEL' | translate}}</ion-label>
               <ion-input (change)='getCurrency($event.target.value)' [ngModelOptions]="{standalone: true}" 
-              [(ngModel)]="Amount" type="text" placeholder="0.00"></ion-input>
+              [(ngModel)]="Amount" type="text"></ion-input>
             </ion-item>
             <!-- [ngModelOptions]="{standalone: true}" -->
 
