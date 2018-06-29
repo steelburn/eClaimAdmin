@@ -302,7 +302,7 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
 
 .Tabler tr.col7 td {
     padding: 10px;
-	text-align: center;
+	text-align: left;
 	word-wrap: break-word;
 	border: none;
 	border-bottom: 1px solid gainsboro;
@@ -317,7 +317,7 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     th.lgl1 {
         padding: 10px 5px;
         border: none;
-        
+        text-align: left;
     }
         
 
@@ -476,7 +476,7 @@ button.item.item-block.item-md{
 }
 
 ion-toggle.toggle.toggle-md{
-    padding-left: 95px !important;
+    padding-left: 0px !important;
     padding-right: 0px !important;
 }
 
@@ -485,12 +485,12 @@ ion-toggle.toggle.toggle-md.tog{
     padding-right: 0px !important;
 }
 ion-toggle.toggle.toggle-md.yui{
-    padding-left: 40px !important;
+    padding-left: 0px !important;
     padding-right: 0px !important;
 }
 
 ion-toggle.toggle.toggle-md.stog{
-    padding-left: 53px !important;
+    padding-left: 0px !important;
     padding-right: 0px !important;
 }
 
