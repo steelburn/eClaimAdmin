@@ -22,7 +22,7 @@
             <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
         </ion-select>
     </ion-item>
-    <ion-item style="width: 49%;display:inline-block;"> 
+    <ion-item style="width: 49%;display:inline-block;">
         <ion-label>User Name :</ion-label>
         <ion-select interface="popover" multiple="true" (ionChange)="EmpChange(ddlEmployee.value)" #ddlEmployee>
             <ion-option [value]="All" [selected]="empAll">All</ion-option>
@@ -63,12 +63,13 @@
     </ion-item>
     <ion-item style="width: 49%;display:inline-block;">
         <ion-label>Status:</ion-label>
-        <ion-select interface="popover" #ddlStatus>
-            <ion-option [value]="Paid" [selected]="true">Paid</ion-option>
+        <ion-select interface="popover" multiple="true" #ddlStatus>
+            <ion-option [value]="All" [selected]="true">All</ion-option>
+            <ion-option [value]="Paid">Paid</ion-option>
             <ion-option [value]="Pending">Pending</ion-option>
             <ion-option [value]="Approved">Approved</ion-option>
             <ion-option [value]="Rejected">Rejected</ion-option>
-            
+
         </ion-select>
     </ion-item>
 
@@ -84,9 +85,9 @@
                     <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
                     <th class="lgl1">Employee</th>
                     <th class="lgl1">Department</th>
-                    <th class="lgl1">Month</th>
+                    <th class="lgl1" style="width:60px">Month</th>
                     <th class="lgl1">Claim Type</th>
-                    <th class="lgl1">Status</th>
+                    <th class="lgl1"  style="width:90px">Status</th>
                     <th class="lgl1 tblBrRight" style="width:130px">Total Amount(RM)</th>
 
                 </tr>
@@ -101,7 +102,7 @@
                     <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
                 </tr>
 
-                <tr class="col7" >
+                <tr class="col7">
                     <td colspan="7" class="lgl11" style="color:#50C878;">  Total Amount(RM) : {{grandTotal | number:'1.2-2'}}</td>
                 </tr>
 

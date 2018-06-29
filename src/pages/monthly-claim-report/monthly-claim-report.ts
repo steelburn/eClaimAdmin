@@ -51,7 +51,7 @@ export class MonthlyClaimReportPage {
     this.BindEmployeesbyDepartment("All");
     this.BindClaimTypes();
     this.BindYears();
-    this.BindData("Paid");
+    this.BindData();
     
   }
 
@@ -125,7 +125,7 @@ export class MonthlyClaimReportPage {
     }
   }
 
-  BindData(status:string) {
+  BindData() {
     this.grandTotal = 0;
     this.http
       .get(this.baseResourceUrl)
@@ -133,8 +133,8 @@ export class MonthlyClaimReportPage {
       .subscribe(data => {
         this.claimListTotal = data["resource"];
         this.claimList = this.claimListTotal;
-        if(status!==null && this.claimList.length !== 0)
-        {this.claimList = this.claimList.filter(s => s.STATUS.toString() === status.toString());}
+        // if(status!==null && this.claimList.length !== 0)
+        // {this.claimList = this.claimList.filter(s => s.STATUS.toString() === status.toString());}
         if (this.claimList.length !== 0) {
           this.claimList.forEach(element => {
            this.grandTotal= this.grandTotal + element.AMOUNT;
@@ -148,7 +148,7 @@ export class MonthlyClaimReportPage {
   SearchClaimsData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
     this.grandTotal = 0;
     if (this.prevYear !== ddlYear) {
-      this.BindData(null);
+      this.BindData();
       this.prevYear = ddlYear;
     }
     else
@@ -162,7 +162,7 @@ export class MonthlyClaimReportPage {
     let empArry: any[] = ddlEmployee.toString().split(",");
     let monthArry: any[] = ddlmonth.toString().split(",");
     let claimsArry: any[] = ddlClaimTypes.toString().split(",");
-    //let statusArry: any[] = ddlStatus.toString().split(",");
+    let statusArry: any[] = ddlStatus.toString().split(",");
     //this.BindData();
     //this.claimList = [];
     if (deptArry[0] !== "All") {
@@ -205,9 +205,19 @@ export class MonthlyClaimReportPage {
       this.claimList = this.claimList1;
     }
     //this.claimList=this.claimList.filter(s => s.STATUS.toString() === ddlStatus.toString());
-    
+    if (statusArry[0] !== "All") {
+      for (let i = 0; i < statusArry.length; i++) {
+        if (i === 0)
+          this.claimList1 = this.claimList.filter(s => s.STATUS.toString() === statusArry[i].toString());
+        else
+          this.claimList1 = this.claimList1.concat(this.claimList.filter(s => s.STATUS.toString() === statusArry[i].toString()));
+
+      }
+      this.claimList = this.claimList1;
+    }
+
     if (this.claimList.length !== 0) {
-      this.claimList = this.claimList.filter(s => s.STATUS.toString() === ddlStatus.toString());
+     // this.claimList = this.claimList.filter(s => s.STATUS.toString() === ddlStatus.toString());
       this.claimList.forEach(element => {
        this.grandTotal= this.grandTotal + element.AMOUNT;
       });

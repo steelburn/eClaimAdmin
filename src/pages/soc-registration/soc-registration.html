@@ -33,7 +33,7 @@
         <tr class="col7" *ngFor="let soc of socs; let i=index" [hidden]="button_View_Disable">
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{soc.soc}}</td>
-          <td class="lgl1">{{soc.project_name}}</td>
+          <td class="lgl1" text-wrap>{{soc.project_name}}</td>
           <td class="lgl1">{{soc.customer_name}}</td>
           <td class="lgl1" *ngIf="AdminLogin">{{soc.TENANT_ACCOUNT_NAME}}</td>
           <td class="lgl1 fColor">

@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content padding *ngFor="let claim of claimRequestData">  
+        <ion-item>
+                <ion-label>Gift Claim View </ion-label>
+            </ion-item>
     <ion-item>
         <ion-label> {{ "CLAIM_APPLIED_DATE_LABEL" | translate }} : </ion-label>
         <ion-label> {{ claim.CREATION_TS |date }} </ion-label>
