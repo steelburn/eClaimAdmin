@@ -595,36 +595,28 @@ $tablet7: 600px;
 
 
 
- @media (min-width: 320px)  and (max-width: 812px)  {
+ @media (min-width: 320px)  and (max-width: 767px)  {
 
-    // table.list tr.header {
-    //     display: none;
-    // }
+    table.list th {
+        display: none;
+     }
 
-        // table.list tr.row {
-        //     display: block;
-        //      border: 1px solid #999999;
-        //     border-radius: 5px;
-        //     padding: 10px;
-        //     margin-bottom: 5px;
-        // }
+        table.list tr {
+            display: block;
+            border: 1px solid #999999;
+           border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
 
-        //    table.list tr.row td {
-        //         display: block;
-        //         text-align: left !important;
-        //         border: none;
-        //     }
-
-
-                // table.list tr.row td:before {
-
-                //     content: attr(data-th)" : ";
-                //     font-weight: bold;
-                //     display: inline !important;
-                //     margin-top: 5px;
-                // }
+           table.list tr td {
+                display: block;
+             text-align: left !important;
+                 border: none;
+             }
 
 
+     
                 table.list tr.col7 td.getHeader::before {
 
                     content: attr(reshead)" : ";
@@ -662,8 +654,39 @@ $tablet7: 600px;
 
  }
 
-@media (min-width:  600px) {
-  
+
+
+//responsive specific for chart
+
+@media (max-width: 466px){
+    .round3{
+        display: none;
+    }
+
+    
+  .round2 {
+    width: calc(100% - 20px) ;
+  }
+
+  .hid{
+      display: none;
+  }
+}
+
+@media (min-width: 450px) and (max-width: 1138px){
+    .round3{
+        width: calc(100% - 20px);
+    }
+    .hide{
+        width: calc(100% - 20px);
+    }
+  .round2 {
+
+    width: calc(50% - 20px) ;
+
+
+
+  }
 }
 
 
