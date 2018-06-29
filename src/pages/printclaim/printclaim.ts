@@ -404,5 +404,15 @@ export class PrintclaimPage {
     NavigateTravelClaim() {
       this.navCtrl.setRoot(TravelclaimPage); 
     } 
+
+    displayImage: any
+    CloseDisplayImage()  {
+      this.displayImage = false;
+    }
+    imageURL: string;
+    DisplayImage(val: any) {
+      this.displayImage = true;
+      this.imageURL = val;
+    }
   } 
 //}

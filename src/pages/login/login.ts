@@ -42,7 +42,7 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage, fb: FormBuilder, private userservice: UserSetup_Service, private adserverservice: AdServer_Service) {
     localStorage.clear(); //debugger;
-    
+
     // this.login.username: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])]
 
     this.ForgotPasswordForm = fb.group({
@@ -306,7 +306,6 @@ export class LoginPage {
     this.stringToSplit = this.login.username;
     this.tempUserSplit1 = this.stringToSplit.split("@")[0]
     this.tempUserSplit2 = this.stringToSplit.split("@")[1];
-    console.log(this.tempUserSplit1 + ', ' + this.tempUserSplit2);
 
     if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
       this.GetUserFromAdServer(form, this.tempUserSplit1.trim());
@@ -315,7 +314,8 @@ export class LoginPage {
       // user of username@zen.com.my ---> redirect auth to AD
       if (this.tempUserSplit2.trim() == "zen.com.my") {
         // let Adurl: string = '/api' + '/user/' + this.login.username + '/authenticate';
-        let Adurl: string = '/api' + '/user/' + this.tempUserSplit1.trim() + '/authenticate';
+        // let Adurl: string = '/api' + '/user/' + this.tempUserSplit1.trim() + '/authenticate';
+        let Adurl: string = constants.AD_URL + '/user/' + this.tempUserSplit1.trim() + '/authenticate';
         var headers = new Headers();
         headers.append("Accept", 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -396,113 +396,119 @@ export class LoginPage {
 
 
     }
-
-
-
-
-
   }
 
   GetUserFromAdServer(form: NgForm, username: string) {
-    // let Adurl: string = '/api' + '/user/' + this.login.username;
-    let Adurl: string = '/api' + '/user/' + username;
-    var queryHeaders = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
+      localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
 
-    queryHeaders.append('Access-Control-Allow-Origin', '*');
-    queryHeaders.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-    queryHeaders.append('Accept', 'application/json');
-    queryHeaders.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: queryHeaders });
+      //navigate to app.component page
+      this.userData.login(this.login.username);
+      this.navCtrl.push(SetupguidePage);
+    }
+    else {
+      // let Adurl: string = '/api' + '/user/' + this.login.username;
+      // let Adurl: string = '/api' + '/user/' + username;
+      let Adurl: string = constants.AD_URL + '/user/' + username;
+       
+      var queryHeaders = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    this.http
-      .get(Adurl)
-      .map(res => res.json())
-      .subscribe(data => {
-        //let res = data.dn; 
-        let res = data;
+      queryHeaders.append('Access-Control-Allow-Origin', '*');
+      queryHeaders.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+      queryHeaders.append('Accept', 'application/json');
+      queryHeaders.append('Content-Type', 'application/json');
+      let options = new RequestOptions({ headers: queryHeaders });
 
-        this.submitted = true;
-        if (form.valid) {
-          //-----------Check if the login as super vendor-----------------------
-          if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-            localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
+      this.http
+        .get(Adurl)
+        .map(res => res.json())
+        .subscribe(data => {
+          //let res = data.dn; 
+          let res = data;
 
-            //navigate to app.component page
-            this.userData.login(this.login.username);
-            this.navCtrl.push(SetupguidePage);
-          }
-          else {
-            this.userData.login(this.login.username);
-            // console.log(data.userPrincipalName);
+          this.submitted = true;
+          if (form.valid) {
+            //-----------Check if the login as super vendor-----------------------
+            if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
+              localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
 
-            let url: string;
-            url = this.baseResource_Url + "vw_login?filter=(EMAIL=" + data.userPrincipalName + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+              //navigate to app.component page
+              this.userData.login(this.login.username);
+              this.navCtrl.push(SetupguidePage);
+            }
+            else {
+              this.userData.login(this.login.username);
+              // console.log(data.userPrincipalName);
 
-            this.http
-              .get(url)
-              .map(res => res.json())
-              .subscribe(data => {
-                let res = data["resource"];
-                if (res.length > 0) {
-                  localStorage.setItem("g_USER_GUID", res[0]["USER_GUID"]);
-                  localStorage.setItem("g_TENANT_GUID", res[0]["TENANT_GUID"]);
-                  localStorage.setItem("g_EMAIL", res[0]["EMAIL"]);
-                  localStorage.setItem("g_FULLNAME", res[0]["FULLNAME"]);
-                  localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
-                  localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
-                  localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
-                  localStorage.setItem("g_IS_TENANT_AMDIN", res[0]["IS_TENANT_ADMIN"]);
+              let url: string;
+              url = this.baseResource_Url + "vw_login?filter=(EMAIL=" + data.userPrincipalName + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
-                  //Setup Guide for only Hq Users
-                  if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
-                    this.navCtrl.push(DashboardPage);
+              this.http
+                .get(url)
+                .map(res => res.json())
+                .subscribe(data => {
+                  let res = data["resource"];
+                  if (res.length > 0) {
+                    localStorage.setItem("g_USER_GUID", res[0]["USER_GUID"]);
+                    localStorage.setItem("g_TENANT_GUID", res[0]["TENANT_GUID"]);
+                    localStorage.setItem("g_EMAIL", res[0]["EMAIL"]);
+                    localStorage.setItem("g_FULLNAME", res[0]["FULLNAME"]);
+                    localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
+                    localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
+                    localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
+                    localStorage.setItem("g_IS_TENANT_AMDIN", res[0]["IS_TENANT_ADMIN"]);
+
+                    //Setup Guide for only Hq Users
+                    if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
+                      this.navCtrl.push(DashboardPage);
+                    }
+                    else {
+                      this.navCtrl.push(DashboardPage);
+                    }
+
+                    //Get the role of that particular user----------------------------------------------
+                    let role_url: string = "";
+                    role_url = this.baseResource_Url + "view_role_display?filter=(USER_GUID=" + res[0]["USER_GUID"] + ')and(ROLE_PRIORITY_LEVEL=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+                    this.http
+                      .get(role_url)
+                      .map(res => res.json())
+                      .subscribe(data => {
+                        let role_result = data["resource"];
+                        if (role_result.length > 0) {
+                          localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
+                          localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
+                          localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
+                          localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
+                          localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
+                        }
+                        else {
+                          localStorage.setItem("g_KEY_VIEW", "1");
+                          localStorage.removeItem("g_ROLE_NAME");
+                        }
+                      });
+                    //----------------------------------------------------------------------------------
+
+                    //navigate to app.component page
+                    this.userData.login(this.login.username);
                   }
                   else {
-                    this.navCtrl.push(DashboardPage);
+                    localStorage.removeItem("g_USER_GUID");
+                    localStorage.removeItem("g_TENANT_GUID");
+                    localStorage.removeItem("g_EMAIL");
+                    localStorage.removeItem("g_FULLNAME");
+                    localStorage.removeItem("g_TENANT_COMPANY_GUID");
+                    localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
+                    localStorage.removeItem("g_ISHQ");
+                    localStorage.removeItem("g_IS_TENANT_ADMIN");
+
+                    alert("please enter valid login details.");
+                    this.login.username = "";
+                    this.login.password = "";
                   }
-
-                  //Get the role of that particular user----------------------------------------------
-                  let role_url: string = "";
-                  role_url = this.baseResource_Url + "view_role_display?filter=(USER_GUID=" + res[0]["USER_GUID"] + ')and(ROLE_PRIORITY_LEVEL=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
-                  this.http
-                    .get(role_url)
-                    .map(res => res.json())
-                    .subscribe(data => {
-                      let role_result = data["resource"];
-                      if (role_result.length > 0) {
-                        localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
-                        localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
-                        localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
-                        localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
-                        localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
-                      }
-                      else {
-                        localStorage.setItem("g_KEY_VIEW", "1");
-                        localStorage.removeItem("g_ROLE_NAME");
-                      }
-                    });
-                  //----------------------------------------------------------------------------------
-
-                  //navigate to app.component page
-                  this.userData.login(this.login.username);
-                }
-                else {
-                  localStorage.removeItem("g_USER_GUID");
-                  localStorage.removeItem("g_TENANT_GUID");
-                  localStorage.removeItem("g_EMAIL");
-                  localStorage.removeItem("g_FULLNAME");
-                  localStorage.removeItem("g_TENANT_COMPANY_GUID");
-                  localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
-                  localStorage.removeItem("g_ISHQ");
-                  localStorage.removeItem("g_IS_TENANT_ADMIN");
-
-                  alert("please enter valid login details.");
-                  this.login.username = "";
-                  this.login.password = "";
-                }
-              });
+                });
+            }
           }
-        }
-      });
+        });
+    }
   }
 }
