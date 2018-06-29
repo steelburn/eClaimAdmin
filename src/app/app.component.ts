@@ -289,7 +289,7 @@ export class ConferenceApp {
         }
 
         //For Team Member, Home, Change Password, Sign Out
-        else if (res.toString() == "Team Member") { 
+        else if (res.toString() == "Team Member") {          
           this.blnDashboard_loggedInMenu_User = true;          
           this.blnClaims_loggedInMenu_User = true;
           this.blnReport_loggedInMenu_User = true;          
@@ -351,7 +351,7 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
           ];
 
           this.setupsPages = [
@@ -366,7 +366,6 @@ export class ConferenceApp {
 
         //For Team Member, Home, Change Password, Sign Out
         else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
-
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -388,10 +387,10 @@ export class ConferenceApp {
           ];
 
           this.reportPages = [
-            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' } ,
-            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' }            
-          
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
@@ -477,10 +476,8 @@ export class ConferenceApp {
           ];
 
           this.reportPages = [
-
-            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' }
-           
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
