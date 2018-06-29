@@ -38,7 +38,7 @@ export class ClaimtasklistPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
     if(this.loginUserRole==="Finance Admin")
  {
-  this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL!=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+  this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
  }
  else
  {
