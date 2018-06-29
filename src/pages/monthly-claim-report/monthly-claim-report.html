@@ -78,6 +78,12 @@
         <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
     </ion-item>
 
+    <ion-fab top right edge>
+        <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
+            <ion-icon name="download"></ion-icon>
+        </button>
+    </ion-fab>
+
     <ion-list id="printSectionId">
         <ion-item>
             <table class="Tabler ">
@@ -87,7 +93,7 @@
                     <th class="lgl1">Department</th>
                     <th class="lgl1" style="width:60px">Month</th>
                     <th class="lgl1">Claim Type</th>
-                    <th class="lgl1"  style="width:90px">Status</th>
+                    <th class="lgl1" style="width:90px">Status</th>
                     <th class="lgl1 tblBrRight" style="width:130px">Total Amount(RM)</th>
 
                 </tr>
