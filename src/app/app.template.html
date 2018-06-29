@@ -177,7 +177,7 @@
     </ion-header>
 
     <ion-content class="outer-content">
-        <ion-list>
+        <ion-list *ngIf = "blnDashboard_loggedInMenu_User">
             <ion-list-header>
                 Dashboard
                  </ion-list-header>
@@ -187,7 +187,8 @@
               {{p.title}}
             </button>
           </ion-list> 
-      <ion-list>
+
+      <ion-list *ngIf = "blnTasks_loggedInMenu_User">
         <ion-list-header>
          Tasks
         </ion-list-header>
@@ -198,7 +199,7 @@
         </button>
       </ion-list>
 
-      <ion-list>
+      <ion-list *ngIf = "blnClaims_loggedInMenu_User">
         <ion-list-header>
       
           {{"CLAIMS_LABEL" | translate}}
@@ -209,7 +210,7 @@
         </button>
       </ion-list>
 
-      <ion-list>
+      <ion-list *ngIf = "blnReport_loggedInMenu_User">
 
         <ion-list-header>
          Reports
@@ -220,8 +221,7 @@
         </button>
       </ion-list>
 
-      <ion-list>
-
+      <ion-list *ngIf = "blnSetup_loggedInMenu_User">
           <ion-list-header>
            Setup
           </ion-list-header>
@@ -232,7 +232,7 @@
         </ion-list>
 
 
-      <ion-list>
+      <ion-list *ngIf = "blnAccount_loggedInMenu_User">
         <ion-list-header>
           {{"Account_LABEL" | translate}}
         </ion-list-header>
