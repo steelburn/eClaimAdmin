@@ -17,6 +17,11 @@
 
 
 <ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
+      <ion-icon name="download"></ion-icon>
+    </button>
+  </ion-fab>
 
   <ion-item *ngIf="FinanceLogin">
     <ion-item *ngFor="let userdetail of userdetails">
