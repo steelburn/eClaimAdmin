@@ -33,13 +33,13 @@ export class ClaimhistorydetailPage {
   baseResourceUrl1: string;
   searchboxValue: string;
   FinanceLogin: boolean = false;
-
+  loginUserRole:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
     this.claimrefguid = navParams.get("claimRefGuid");
     this.userguid = navParams.get("userGuid");
     this.month = navParams.get("Month");
-   let loginUserRole=localStorage.getItem("g_ROLE_NAME");
+   this.loginUserRole=localStorage.getItem("g_ROLE_NAME");
     //alert(this.userguid);
     //this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     //console.log(this.baseResourceUrl);
@@ -50,7 +50,7 @@ export class ClaimhistorydetailPage {
 
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       this.FinanceLogin = true;
-      if(loginUserRole==="Finance Admin")
+      if(this.loginUserRole==="Finance Admin")
       {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;      }
       else
@@ -83,6 +83,13 @@ export class ClaimhistorydetailPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimhistorydetails = data["resource"];
+        if(this.claimhistorydetails.length!=0 && this.loginUserRole==="Finance Admin")
+        {
+          this.claimhistorydetails.forEach(element => {
+            if(element.STATUS.toString()==="Approved" && element.PROFILE_LEVEL.toString()==="3")
+            {element.STATUS="Paid";}
+          });
+        }
         this.claimhistorydetails1 = this.claimhistorydetails;
       });
   }
