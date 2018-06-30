@@ -49,7 +49,7 @@ import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneo
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
-import { PeermissionPage } from '../pages/peermission/peermission';
+import { PermissionPage } from '../pages/Permission/Permission';
 import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
@@ -115,7 +115,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
     OvertimeclaimPage,
     EntertainmentclaimPage,
     MiscellaneousClaimPage,
-    PeermissionPage,
+    PermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
     CountrysetupPage,
@@ -239,7 +239,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
     CompanysetupPage,
     ClaimtypePage,
     CashcardsetupPage,
-    PeermissionPage,
+    PermissionPage,
     DesignationsetupPage,
     DepartmentsetupPage,
     MileagesetupPage,

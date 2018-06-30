@@ -769,7 +769,7 @@ export class UserPage {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       TableURL_User = this.BaseTableURL + ViewName + '?' + this.Key_Param;
     }
-    else if (localStorage.getItem("g_ISHQ") == "1" && localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
+    else if (localStorage.getItem("g_ISHQ") == "1" && localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
       TableURL_User = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + this.Key_Param;
     }
     else {
@@ -961,7 +961,7 @@ export class UserPage {
         TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')&' + this.Key_Param;
       }
       else {
-        if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
+        if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
           TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')&' + this.Key_Param;
         }
         else {
