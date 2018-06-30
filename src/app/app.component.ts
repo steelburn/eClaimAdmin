@@ -22,7 +22,7 @@ import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 
-import { PeermissionPage } from '../pages/peermission/peermission';
+import { PermissionPage } from '../pages/Permission/permission';
 import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
@@ -251,7 +251,7 @@ export class ConferenceApp {
 
     // this.menu.enable(loggedIn, 'loggedInMenu');
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
-
+    
     // debugger;
     if (localStorage.length > 0) {
       this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
@@ -273,7 +273,7 @@ export class ConferenceApp {
         }
 
         //For Tenant Admin, Remove Admin Setup
-        else if (localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
+        else if (localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
           this.appPages_User = [
             { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
             { title: 'Finance Task ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
@@ -300,6 +300,12 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
+
+          this.setupsPages = [
+            // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+            { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
+            { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
+          ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
@@ -618,7 +624,7 @@ export class ConferenceApp {
     //     this.menu.enable(!loggedIn, 'loggedOutMenu');
     //   }
     //   //For user, distinct menu should display
-    //   else if (localStorage.getItem("g_IS_TENANT_AMDIN") != "1") {
+    //   else if (localStorage.getItem("g_IS_TENANT_ADMIN") != "1") {
     //     // this.appPages_User = [
     //     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     //     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },

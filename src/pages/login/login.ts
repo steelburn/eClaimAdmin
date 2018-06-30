@@ -83,7 +83,7 @@ export class LoginPage {
               localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
               localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
               localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
-              localStorage.setItem("g_IS_TENANT_AMDIN", res[0]["IS_TENANT_ADMIN"]);
+              localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
 
               // //Keep all the module to an array.-------------------------------------------
               // let MenuDetails: any[] = [];
@@ -304,7 +304,7 @@ export class LoginPage {
   tempUserSplit2: string = "";
   loading: Loading;
 
-  AuthenticateUserFromAdServer(form: NgForm) {
+  AuthenticateUserFromAdServer(form: NgForm) {    
     localStorage.removeItem("Ad_Authenticaton");
 
     this.stringToSplit = this.login.username;
@@ -410,7 +410,7 @@ export class LoginPage {
     }
   }
 
-  GetUserFromAdServer(form: NgForm, username: string) {
+  GetUserFromAdServer(form: NgForm, username: string) {    
     if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
       localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
 
@@ -471,7 +471,7 @@ export class LoginPage {
                     localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
                     localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
                     localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
-                    localStorage.setItem("g_IS_TENANT_AMDIN", res[0]["IS_TENANT_ADMIN"]);
+                    localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
 
                     //Setup Guide for only Hq Users
                     if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
