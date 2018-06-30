@@ -292,7 +292,19 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     height: 100%;
 }
 
+.fuha{
+    width: calc(50% - 2pt);
+    display: inline-block;
 
+
+
+}
+
+.fuha1{
+    width: calc(100% - 2pt);
+    display: inline-block;
+
+}
 .Tabler {
     width: 100%;
     padding-top: 35px;
@@ -638,7 +650,7 @@ $tablet7: 600px;
 @media (min-width: 600px) and (max-width: 1280px) {
 
     .round1 {
-        width: calc(100% - 20px);
+        width: calc(25% - 20px);
         min-height: 100px;
       }
   
@@ -688,10 +700,18 @@ $tablet7: 600px;
                     display: inline !important;
                     margin-top: 5px;
                 }
+
+            
 }
 
 
 @media (max-width: 599px){
+
+    .fuha{
+        width: calc(100% - 2pt);
+        display: inline-block;
+    
+    }
     .round1 {
         width: calc(100% - 20px);
         min-height: 100px;
