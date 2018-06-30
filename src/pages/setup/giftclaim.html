@@ -43,30 +43,23 @@
 
   <form [formGroup]="Giftform">
 
-    <ion-item  class="fuha">
+    <ion-item  style="width: 50%;display:inline-block;">
       <ion-label color="primary500" floating>{{ "GIFT_DATE_LABEL" | translate }}</ion-label>
       <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Gift_Date_ngModel" formControlName="travel_date" max={{validDate}}></ion-datetime>
     </ion-item>
 
-    <ion-item class="fuha">
+    <ion-item  style="width: 49%;display:inline-block;">
       <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-input type="text" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Gift_Amount_ngModel" ></ion-input>
     </ion-item>
 
-    <ion-item class="fuha1">
+    <ion-item>
       <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
       <ion-input type="text" formControlName="description" [(ngModel)]="Gift_Description_ngModel"></ion-input>
     </ion-item>    
 
-    <ion-item class="text fuha1">      
+    <ion-item class="text">      
       <ion-label>Attachment :</ion-label>
-      
-  
-  </ion-item>
-
-  
-  <ion-item class="text fuha1">      
-    
       <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>  
       
   <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>  
@@ -81,11 +74,11 @@
     <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
   </div> -->
 
-  <div>
+  <ion-item>
     <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
         View Receipt
         </button>
-      </div>
+      </ion-item>
 
  
     <div class="btn">     

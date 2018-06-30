@@ -8,6 +8,9 @@
 
 
   <ion-navbar color="primary200">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
     <ion-title>My Claim History</ion-title>
 
   </ion-navbar>
@@ -25,14 +28,19 @@
     </button>
   </ion-fab>
 
-  <ion-item *ngFor="let userdetail of userdetails">
-    <ion-label>Name: {{userdetail.FULLNAME}}</ion-label>
-    <ion-label>Department: {{userdetail.DEPARTMENT}}</ion-label>
+  <ion-item *ngFor="let userdetail of userdetails" class="fuha">
+    <ion-label text-wrap>Name: {{userdetail.FULLNAME}}</ion-label>
+
   </ion-item>
 
-  <ion-item *ngFor="let userdetail of userdetails">
-    <ion-label>Designation: {{userdetail.DESIGNATION}}</ion-label>
-    <ion-label></ion-label>
+  <ion-item *ngFor="let userdetail of userdetails" class="fuha">
+
+      <ion-label  text-wrap>Department: {{userdetail.DEPARTMENT}}</ion-label>
+    </ion-item>
+
+  <ion-item *ngFor="let userdetail of userdetails" class="fuha1">
+    <ion-label  text-wrap>Designation: {{userdetail.DESIGNATION}}</ion-label>
+
   </ion-item>
 
 
