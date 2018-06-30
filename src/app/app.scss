@@ -589,70 +589,6 @@ button[ion-fab] {
 //     color: black !important;
 // }
 
-//responsive min size
-$ip5-phone: 320px;
-$tablet7: 600px;
-
-
-
- @media (min-width: 320px)  and (max-width: 767px)  {
-
-    table.list th {
-        display: none;
-     }
-
-        table.list tr {
-            display: block;
-            border: 1px solid #999999;
-           border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 5px;
-        }
-
-           table.list tr td {
-                display: block;
-             text-align: left !important;
-                 border: none;
-             }
-
-
-     
-                table.list tr.col7 td.getHeader::before {
-
-                    content: attr(reshead)" : ";
-                    font-weight: bold;
-                    display: inline !important;
-                    margin-top: 5px;
-                }
-
-                .round1 {
-                    width: calc(100% - 20px);
-                    min-height: 100px;
-                  }
-              
-              
-                  .Subtitle {
-                    text-align: center;
-                    font-size: 3.5vw;
-                  }
-              
-              
-                  .iconf {
-                    font-size: 10vw;
-                    color  :#009688,
-          
-            
-                  }
-                
-
-   
-
-    .Tabler tr.col7 td {
-        padding: 4px;
-    }
-
-
- }
 
 
 
@@ -671,6 +607,7 @@ $tablet7: 600px;
   .hid{
       display: none;
   }
+
 }
 
 @media (min-width: 450px) and (max-width: 1138px){
@@ -684,14 +621,128 @@ $tablet7: 600px;
 
     width: calc(50% - 20px) ;
 
-
-
   }
+
 }
+
+//responsive min size
+$ip5-phone: 320px;
+$tablet7: 600px;
+
+
+
 
 
 //responsive in between size- tablet / smaller laptop screen 
 
 @media (min-width: 600px) and (max-width: 1280px) {
 
+    .round1 {
+        width: calc(100% - 20px);
+        min-height: 100px;
+      }
+  
+  
+      .Subtitle {
+        text-align: center;
+        font-size: 3.5vw;
+      }
+  
+  
+      .iconf {
+        font-size: 10vw;
+        color  :#009688,
+
+
+      }
+    
+    .Tabler tr.col7 td {
+        padding: 4px;
+    }
+
+
+    table.list th {
+        display: none;
+     }
+    
+        table.list tr {
+            display: block;
+            border: 1px solid #999999;
+           border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+    
+           table.list tr td {
+                display: block;
+             text-align: left !important;
+                 border: none;
+             }
+    
+    
+     
+                table.list tr.col7 td.getHeader::before {
+    
+                    content: attr(reshead)" : ";
+                    font-weight: bold;
+                    display: inline !important;
+                    margin-top: 5px;
+                }
+}
+
+
+@media (max-width: 599px){
+    .round1 {
+        width: calc(100% - 20px);
+        min-height: 100px;
+      }
+  
+  
+      .Subtitle {
+        text-align: center;
+        font-size: 3.5vw;
+      }
+  
+  
+      .iconf {
+        font-size: 10vw;
+        color  :#009688,
+
+
+      }
+    
+    .Tabler tr.col7 td {
+        padding: 4px;
+    }
+
+  
+    table.list th {
+        display: none;
+     }
+    
+        table.list tr {
+            display: block;
+            border: 1px solid #999999;
+           border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+    
+           table.list tr td {
+                display: block;
+             text-align: left !important;
+                 border: none;
+             }
+    
+    
+     
+                table.list tr.col7 td.getHeader::before {
+    
+                    content: attr(reshead)" : ";
+                    font-weight: bold;
+                    display: inline !important;
+                    margin-top: 5px;
+                }
+
+              
 }
