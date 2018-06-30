@@ -262,9 +262,16 @@ export class ConferenceApp {
             { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
           ];
 
+          this.setupsPages = [
+            // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+            { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
+            { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
+          ];
+
           this.menu.enable(loggedIn, 'loggedInMenu');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
+
         //For Tenant Admin, Remove Admin Setup
         else if (localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
           this.appPages_User = [
@@ -283,6 +290,13 @@ export class ConferenceApp {
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
@@ -328,6 +342,13 @@ export class ConferenceApp {
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
@@ -378,6 +399,14 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
@@ -428,6 +457,13 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
@@ -463,13 +499,20 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
         //For Team Lead
         else if (res.toString() == "Team Lead") {
-
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -503,6 +546,13 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
@@ -533,6 +583,13 @@ export class ConferenceApp {
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
