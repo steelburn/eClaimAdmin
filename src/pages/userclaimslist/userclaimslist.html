@@ -38,7 +38,7 @@
 
   <ion-list>
     <ion-item>
-      <table class="Tabler ">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
 
@@ -53,13 +53,13 @@
         </tr>
 
         <tr class="col7" *ngFor="let claimhistorydetail of userClaimhistorydetails; let i=index">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{claimhistorydetail.CLAIMTYPE}}</td>
-          <td class="lgl1">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
-          <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
-          <td class="lgl1">{{claimhistorydetail.STAGE}}</td>
-          <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIMTYPE}}</td>
+          <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
+          <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
+          <td class="lgl1 getHeader" reshead="Stage">{{claimhistorydetail.STAGE}}</td>
+          <td class="lgl1 getHeader" reshead="Amount">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)">
               <ion-icon name="md-eye"></ion-icon>
             </button>

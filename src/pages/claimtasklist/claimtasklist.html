@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar color="primary200">
+        <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </button>
     <ion-title>Finance Task List</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top color="primary200">
@@ -41,7 +44,7 @@
                       <td class="lgl1 getHeader" reshead="Status">{{claimTaskList.REF_STATUS}}</td>
                        <!-- <td class="lgl1">{{claimhistory.YEAR}}</td> -->
                       <td class="lgl1 getHeader" reshead="Total">{{claimTaskList.CLAIM_AMOUNT | number:'1.2-2'}}</td>
-                      <td class="lgl1 getHeader fColor">
+                      <td class="lgl1 getHeader fColor" reshead="Action">
                           <button ion-button item-end (click)="goToClaimApproverTaskList(claimTaskList.CLAIM_REF_GUID)"><ion-icon name="md-eye"></ion-icon></button>
                           <!-- <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button> -->
                       </td>
