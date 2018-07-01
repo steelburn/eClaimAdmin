@@ -42,12 +42,17 @@
 
     <ion-item>
         <ion-label> {{ "STATUS_LABEL" | translate }} : </ion-label>
-        <ion-label> {{ claim.STATUS }} </ion-label>
+        <ion-label> {{ claim.STATUS }} at {{approverDesignation}}</ion-label>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="claim.PROFILE_LEVEL!=1">
         <ion-label> {{ "STAGE_LABEL" | translate }}  : </ion-label>
         <ion-label> {{ claim.STAGE }} </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="claim.PROFILE_LEVEL===1">
+        <ion-label stacked> {{ "STAGE_LABEL" | translate }}: </ion-label>           
+        <ion-label>Superior</ion-label>
     </ion-item>
 
     <ion-item>
