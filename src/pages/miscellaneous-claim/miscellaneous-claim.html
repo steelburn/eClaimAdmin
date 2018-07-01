@@ -22,17 +22,17 @@
       <div [ngSwitch]="claimFor">
         <div *ngSwitchDefault>
          
-          <ion-item>
+          <ion-item  text-wrap>
             <ion-label color="primary500" floating> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input (click)="CustomerLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
+            <ion-textarea (click)="CustomerLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-textarea>
           </ion-item>
         </div>
         <div *ngSwitchCase="'seg_project'">
          
-          <ion-item >
+          <ion-item text-wrap>
             <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-            <ion-input (click)="ProjectLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
-              type="text"></ion-input>
+            <ion-textarea (click)="ProjectLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
+              type="text"></ion-textarea>
           </ion-item>
           <ion-item>
             <ion-label floating>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
@@ -45,12 +45,12 @@
 
   <form [formGroup]="MiscellaneousForm">         
    
-            <ion-item style="width: 49%;display:inline-block;"> 
+            <ion-item class="fuha"> 
               <ion-label color="primary500" floating>{{ "CLAIM_DATE_LABEL" | translate  }}</ion-label>        
               <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Miscellaneous_Date_ngModel" formControlName="travel_date" max={{validDate}} ></ion-datetime>
             </ion-item>               
            
-            <ion-item style="width: 50%;display:inline-block;">
+            <ion-item class="fuha">
                 <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
                 <!-- <ion-label > {{travelAmount | number}} </ion-label> -->
                 <ion-input (change)='getCurrency($event.target.value)' type="text" formControlName="claimAmount" [(ngModel)]="Miscellaneous_Amount_ngModel" ></ion-input>
@@ -75,11 +75,11 @@
               <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
               </div> -->
 
-              <ion-item>
+              <div>
                 <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
                     View Receipt
                     </button>
-                  </ion-item>
+                  </div>
 
               <div class="btn">     
                 <button ion-button color="primary500" (click)='submitAction(MiscellaneousForm.value)' [disabled]="(MiscellaneousForm.valid && !ImageUploadValidation) || !MiscellaneousForm.valid" >{{ 'SUBMIT'}}</button>               
@@ -89,11 +89,11 @@
 
   <div class="blackcontainer" *ngIf="displayImage">
   </div>
-  <div class="popup2" padding *ngIf="displayImage">
+  <div class="popup1" padding *ngIf="displayImage">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
-        <div class="icHeaderText">Claim Details</div>
+        <div class="icHeaderText">Receipt</div>
         <button class="btnR" (click)="CloseDisplayImage()">
           <ion-icon name="md-close"></ion-icon>
         </button>
@@ -104,7 +104,7 @@
 
   <div class="blackcontainer" *ngIf="AddLookupClicked">
   </div>
-  <div class="popup" padding *ngIf="AddLookupClicked">
+  <div class="popup1" padding *ngIf="AddLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
@@ -153,7 +153,7 @@
 
   <div class="blackcontainer" *ngIf="CustomerLookupClicked">
   </div>
-  <div class="popup" padding *ngIf="CustomerLookupClicked">
+  <div class="popup1" padding *ngIf="CustomerLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle  headerColor-white">
         <div>{{ "CUSTOMER_NAME_LABEL" | translate }}</div>

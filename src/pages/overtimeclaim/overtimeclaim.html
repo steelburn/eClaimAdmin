@@ -21,17 +21,17 @@
       <div [ngSwitch]="claimFor">
         <div *ngSwitchDefault>
           
-          <ion-item>
+          <ion-item  text-wrap>
             <ion-label color="primary500" floating> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-            <ion-input (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
+            <ion-textarea (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-textarea>
   
           </ion-item>
         </div>
         <div *ngSwitchCase="'seg_project'">
-          <ion-item>
+          <ion-item  text-wrap>
             <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-            <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
-              type="text"></ion-input>
+            <ion-textarea (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
+              type="text"></ion-textarea>
             <!-- <button color="primary500" ion-button outline item-start icon-left (click)="ProjectLookup()">
               <ion-icon name="eye"></ion-icon>
               {{ "PROJECT_LOOKUP_BUTTON" | translate }} </button> -->
@@ -46,14 +46,14 @@
 
     <form [formGroup]="OTform">    
 
-    <ion-item style="width: 50%;display:inline-block;">
+    <ion-item  class="fuha">
       <ion-label color="primary500" floating>{{ "START_DT_LABEL" | translate }}</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm" 
       [(ngModel)]="Start_DT_ngModel" formControlName="start_DT"  ></ion-datetime>
     </ion-item>
     <!-- max={{validDate}} -->
 
-    <ion-item style="width: 49%;display:inline-block;">
+    <ion-item  class="fuha">
       <ion-label color="primary500" floating>{{ "END_DT_LABEL" | translate }}</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm" 
       [(ngModel)]="End_DT_ngModel" formControlName="end_DT"  ></ion-datetime>
@@ -123,7 +123,7 @@
 
   <div class="blackcontainer" *ngIf="CustomerLookupClicked">
   </div>
-  <div class="popup" padding *ngIf="CustomerLookupClicked">
+  <div class="popup1" padding *ngIf="CustomerLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>

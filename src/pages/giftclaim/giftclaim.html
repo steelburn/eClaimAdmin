@@ -19,18 +19,18 @@
   <div [ngSwitch]="claimFor">
     <div *ngSwitchDefault>
      
-      <ion-item>
+      <ion-item text-wrap>
         <ion-label  color="primary500" floating> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-        <ion-input (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
+        <ion-textarea (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-textarea>
       </ion-item>
 
     </div>
     <div *ngSwitchCase="'seg_project'">
       
-      <ion-item>
+      <ion-item text-wrap>
         <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-        <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" 
-          type="text"></ion-input>
+        <ion-textarea (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" 
+          type="text"></ion-textarea>
       </ion-item>
 
       <ion-item>
@@ -61,17 +61,14 @@
     <ion-item class="text fuha1">      
       <ion-label>Attachment :</ion-label>
       
-  
-  </ion-item>
-
-  
-  <ion-item class="text fuha1">      
-    
       <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>  
       
   <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>  
   
   </ion-item>
+
+  
+  
 
   <div>
     <img src="{{ProfileImage}}" style="width: 20%">
@@ -112,7 +109,7 @@
 
   <div class="blackcontainer" *ngIf="AddLookupClicked">
   </div>
-  <div class="popup" padding *ngIf="AddLookupClicked">
+  <div class="popup1" padding *ngIf="AddLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
@@ -158,7 +155,7 @@
 
   <div class="blackcontainer" *ngIf="CustomerLookupClicked">
   </div>
-  <div class="popup" padding *ngIf="CustomerLookupClicked">
+  <div class="popup1" padding *ngIf="CustomerLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
