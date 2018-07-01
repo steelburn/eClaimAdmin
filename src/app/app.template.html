@@ -5,19 +5,47 @@
 
     <ion-header>
       <ion-toolbar color="primary200">
-        <ion-title>eClaim</ion-title>
+          <div style="height:140px;margin-top:-15pt;color:white;" text-center>
+              <h3 style="padding-top:15pt;">Welcome to eClaim</h3>
+              <div style="width: 30%;float: left;margin-left: 5pt;"> 
+                  <img class="imgw" src="../assets/img/profile_no_preview.png" alt="avatar">
+      
+              </div>
+                
+              <div style="width: 60%;float: left;color: white;"> 
+                  <h6 text-center text-wrap >Ahmad Firdaus bin Abdul Rahman</h6>
+                </div>
+             
+          
+        
+            </div> 
+  
+        <!-- <ion-title>eClaim</ion-title> -->
         <!-- <div style="color: aliceblue; font-size: small;">{{ USER_NAME_LABEL }}</div> -->
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="outer-content">
 
-   <ion-list>
+        <ion-list>
+    
             <ion-list-header>
-          {{"NAVIGATE_LABEL" | translate}}
+              Dashboard
+               </ion-list-header>
+
+            <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+              <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+              {{p.title}}
+            </button>
+          </ion-list>
+    
+
+   <ion-list>
+        <ion-list-header>
+          Tasks
         </ion-list-header> 
 
-        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+        <button ion-item menuClose *ngFor="let p of taskPages" (click)="openPage(p)">
           <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
           {{p.title}}
         </button>
@@ -33,6 +61,28 @@
           {{p.title}}
         </button>
       </ion-list>
+
+      <ion-list>
+
+        <ion-list-header>
+         Reports
+        </ion-list-header>
+        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) ">
+          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+          {{p.title}}
+        </button>
+      </ion-list>
+
+      <ion-list>
+
+          <ion-list-header>
+           Setup
+          </ion-list-header>
+          <button ion-item menuClose *ngFor="let p of setupsPages" (click)="openPage(p) ">
+            <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+            {{p.title}}
+          </button>
+        </ion-list>
 
       <ion-list>
 
@@ -55,32 +105,47 @@
 
     <ion-header>
       <ion-toolbar color="primary200">
-        <ion-title>eClaim</ion-title>
+        <!-- <ion-title>eClaim</ion-title> -->
+        <div style="height:140px;margin-top:-15pt;color:white;" text-center>
+            <h3 style="padding-top:15pt;">Welcome to eClaim</h3>
+            <div style="width: 30%;float: left;margin-left: 5pt;"> 
+                <img class="imgw" src="../assets/img/profile_no_preview.png" alt="avatar">
+            </div>
+              
+            <div style="width: 60%;float: left;color: white;"> 
+                <h6 text-center text-wrap >Ahmad Firdaus bin Abdul Rahman</h6>
+              </div>
+           
+        
+      
+          </div> 
 
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="outer-content">
+        <ion-list>
+            <ion-list-header>
+                Dashboard
+                 </ion-list-header>
+
+            <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+              <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+              {{p.title}}
+            </button>
+          </ion-list> 
 
       <ion-list>
          <ion-list-header>
-          {{"NAVIGATE_LABEL" | translate}}
+         Tasks
         </ion-list-header> 
 
-        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+        <button ion-item menuClose *ngFor="let p of taskPages" (click)="openPage(p)">
           <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
 
-      <ion-list>
-    
-
-        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
-          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
-          {{p.title}}
-        </button>
-      </ion-list>
 
       <ion-list>
         <ion-list-header>
@@ -91,6 +156,30 @@
           {{p.title}}
         </button>
       </ion-list>
+
+      <ion-list>
+
+        <ion-list-header>
+         Reports
+        </ion-list-header>
+        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) ">
+          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+          {{p.title}}
+        </button>
+      </ion-list>
+      
+      <ion-list>
+
+          <ion-list-header>
+           Setup
+          </ion-list-header>
+          <button ion-item menuClose *ngFor="let p of setupsPages" (click)="openPage(p) ">
+            <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+            {{p.title}}
+          </button>
+        </ion-list>
+
+
 
       <ion-list>
         <ion-list-header>
@@ -110,16 +199,40 @@
   <ion-menu id="loggedInMenu_User" [content]="content" *ngIf="blnLogin">
     <ion-header>
       <ion-toolbar color="primary200">
-        <ion-title>eClaim</ion-title>
+          <div style="height:140px;margin-top:-15pt;color:white;" text-center>
+              <h3 style="padding-top:15pt;">Welcome to eClaim</h3>
+              <div style="width: 30%;float: left;margin-left: 5pt;"> 
+                  <img class="imgw" src="../assets/img/profile_no_preview.png" alt="avatar">
+              </div>
+                
+              <div style="width: 60%;float: left;color: white;"> 
+                  <h6 text-center text-wrap >Ahmad Firdaus bin Abdul Rahman</h6>
+                </div>
+             
+          
+        
+            </div> 
+  
+        <!-- <ion-title>eClaim</ion-title> -->
         <!-- <div style="color: aliceblue; font-size: small;">{{ USER_NAME_LABEL }}</div> -->
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="outer-content">
+        <ion-list *ngIf = "blnDashboard_loggedInMenu_User">
+            <ion-list-header>
+                Dashboard
+                 </ion-list-header>
 
-      <ion-list>
+            <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+              <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+              {{p.title}}
+            </button>
+          </ion-list> 
+
+      <ion-list *ngIf = "blnTasks_loggedInMenu_User">
         <ion-list-header>
-          {{"NAVIGATE_LABEL" | translate}}
+         Tasks
         </ion-list-header>
 
         <button ion-item menuClose *ngFor="let p of appPages_User" (click)="openPage(p)">
@@ -128,7 +241,7 @@
         </button>
       </ion-list>
 
-      <ion-list>
+      <ion-list *ngIf = "blnClaims_loggedInMenu_User">
         <ion-list-header>
       
           {{"CLAIMS_LABEL" | translate}}
@@ -139,7 +252,29 @@
         </button>
       </ion-list>
 
-      <ion-list>
+      <ion-list *ngIf = "blnReport_loggedInMenu_User">
+
+        <ion-list-header>
+         Reports
+        </ion-list-header>
+        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) ">
+          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+          {{p.title}}
+        </button>
+      </ion-list>
+
+      <ion-list *ngIf = "blnSetup_loggedInMenu_User">
+          <ion-list-header>
+           Setup
+          </ion-list-header>
+          <button ion-item menuClose *ngFor="let p of setupsPages " (click)="openPage(p) ">
+            <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+            {{p.title}}
+          </button>
+        </ion-list>
+
+
+      <ion-list *ngIf = "blnAccount_loggedInMenu_User">
         <ion-list-header>
           {{"Account_LABEL" | translate}}
         </ion-list-header>

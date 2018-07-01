@@ -16,6 +16,8 @@ import { ClaimhistorydetailPage } from '../claimhistorydetail/claimhistorydetail
 import { ResourceLoader } from '@angular/compiler';
 import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 
+import { ExcelService } from '../../providers/excel.service';
+
 // import { Observable } from 'rxjs/Observable';
 // import { Subject }    from 'rxjs/Subject';
 // import { of }         from 'rxjs/observable/of';
@@ -35,56 +37,63 @@ import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 @IonicPage()
 @Component({
   selector: 'page-claimhistory',
-  templateUrl: 'claimhistory.html', providers: [BaseHttpService]
+  templateUrl: 'claimhistory.html', providers: [BaseHttpService, ExcelService]
 })
 export class ClaimhistoryPage {
   searchboxValue: string;
   claimhistorys: any[];
-  claimhistorys1: any[]=[];
- // claimhistoryTotal: any[];
+  claimhistorys1: any[] = [];
+  // claimhistoryTotal: any[];
 
- // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  baseResourceUrl: string ;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
-    let loginUserRole=localStorage.getItem("g_ROLE_NAME");
-    if(loginUserRole==="Finance Admin")
-    {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID='+localStorage.getItem("g_USER_GUID") +')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;   }
-    else
-    {
-      this.baseResourceUrl =constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID='+localStorage.getItem("g_USER_GUID") +')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;      }
+  // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string;
+
+  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
+    let loginUserRole = localStorage.getItem("g_ROLE_NAME");
+    if (loginUserRole === "Finance Admin") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
     this.BindData();
-  }
 
+    this.excelService = excelService;
+  }
+  
+  ExcelData: any[] = [];
   BindData() {
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
         this.claimhistorys = this.claimhistorys1 = data["resource"];
-      //  this.claimhistoryTotal.forEach(element => {
-      //     if(this.claimhistorys1.length===0 || (this.claimhistorys1.length>0 && this.claimhistorys1.find(e=>e.CLAIM_REF_GUID==element.CLAIM_REF_GUID)===undefined))
-      //     {
-      //        this.claimhistorys1.push(element);
-      //    }
-      //     else
-      //     {
-      //     var claimObj=  this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID);
-      //        if(element.STATUS.toString()==="Approved")
-      //        {
-      //         if(claimObj.STATUS.toString()===element.STATUS.toString())
-      //         {
+        //  this.claimhistoryTotal.forEach(element => {
+        //     if(this.claimhistorys1.length===0 || (this.claimhistorys1.length>0 && this.claimhistorys1.find(e=>e.CLAIM_REF_GUID==element.CLAIM_REF_GUID)===undefined))
+        //     {
+        //        this.claimhistorys1.push(element);
+        //    }
+        //     else
+        //     {
+        //     var claimObj=  this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID);
+        //        if(element.STATUS.toString()==="Approved")
+        //        {
+        //         if(claimObj.STATUS.toString()===element.STATUS.toString())
+        //         {
 
-      //         }
-      //        }
-      //        else
-      //        {}
+        //         }
+        //        }
+        //        else
+        //        {}
 
-      //       this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID && e.STATUS==="Rejected").CLAIM_AMOUNT_REJ+=element.CLAIM_AMOUNT_REJ;
-      //     }
-      //   });
+        //       this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID && e.STATUS==="Rejected").CLAIM_AMOUNT_REJ+=element.CLAIM_AMOUNT_REJ;
+        //     }
+        //   });
         this.claimhistorys = this.claimhistorys1;
+
+        for (var item in data["resource"]) {
+          this.ExcelData.push({ Employee: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPT"], Month: data["resource"][item]["MONTH"], ApprovedAmt : data["resource"][item]["APPROVEDAMOUNT"], RejectedAmount: data["resource"][item]["REJECTEDAMOUNT"] });
+        }
       });
   }
 
@@ -92,27 +101,23 @@ export class ClaimhistoryPage {
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
       this.claimhistorys = this.claimhistorys1.filter((item) => {
-        let fullname:number;
-        let dept:number;
-        let month:number;
-        let amount:number;
+        let fullname: number;
+        let dept: number;
+        let month: number;
+        let amount: number;
 
-        if(item.FULLNAME!=null)
-        {fullname=item.FULLNAME.toLowerCase().indexOf(val.toLowerCase())}
-        if(item.DEPARTMENT!=null)
-        {dept=item.DEPARTMENT.toString().toLowerCase().indexOf(val.toLowerCase())}
-        if(item.MONTH!=null)
-        {month=item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase())}
-        if(item.CLAIM_AMOUNT!=null)
-        {amount=item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase())}
+        if (item.FULLNAME != null) { fullname = item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.DEPARTMENT != null) { dept = item.DEPARTMENT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.MONTH != null) { month = item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
 
         return (
-          (fullname > -1) 
-        || (dept > -1) 
-        || (month > -1) 
-        || (amount> -1) 
-      );
-    });
+          (fullname > -1)
+          || (dept > -1)
+          || (month > -1)
+          || (amount > -1)
+        );
+      });
     }
     else {
       this.claimhistorys = this.claimhistorys1
@@ -179,6 +184,11 @@ export class ClaimhistoryPage {
   //   alert(JSON.stringify(data));
   // });
 
-  // }    
+  // }   
+
+  ExportToExcel(evt: any) {
+    // this.excelService.exportAsExcelFile(this.claimhistorys, 'Data');
+    this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
+  }
 
 }
