@@ -86,6 +86,9 @@ export class ProfileManagerProvider {
         this.managerInfo = res["resource"]
         this.managerInfo.forEach(userElm => {
           this.stage = userElm.DEPT_GUID;
+          if (this.isRequester) {
+            this.proceedNext();
+          }
         })
       }) 
       resolve(true);
@@ -93,14 +96,16 @@ export class ProfileManagerProvider {
     }
   
     GetDirectManager() {
+      this.userGUID = localStorage.getItem('g_USER_GUID');
+
       return new Promise((resolve, reject) => {
       this.api.getApiModel('view_manager_details', 'filter=USER_GUID=' + this.userGUID).subscribe(res => {
         this.managerInfo = res["resource"]
-        this.managerInfo.forEach(userElm => {
-          // this.assignedTo = userElm.MANAGER_GUID;
-          // this.stage = userElm.DEPT_GUID;
+        this.managerInfo.forEach(userElm => {          
           this.assignedTo = userElm.MANAGER_GUID;
           this.stage = userElm.MANAGER_DEPT_GUID;  
+          localStorage.setItem('edit_superior',this.assignedTo)
+          localStorage.setItem('edit_stage',this.stage)
           if(this.isRequester){
             this.proceedNext();
           }
@@ -301,6 +306,8 @@ export class ProfileManagerProvider {
       claimReqMainRef.STAGE = this.stage;
       claimReqMainRef.ATTACHMENT_ID = this.formValues.attachment_GUID;
       claimReqMainRef.TRAVEL_TYPE = this.formValues.travelType === 'Outstation' ? '1' : '0';
+      claimReqMainRef.claim_method_guid = this.formValues.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.formValues.PayType;
+
 
       if (this.isCustomer) {
         claimReqMainRef.CUSTOMER_GUID = this.formValues.soc_no;
@@ -318,7 +325,7 @@ export class ProfileManagerProvider {
         //this.MainClaimSaved = true;
         if (this.formValues.uuid === undefined) {
           //this.api.presentToast('Claim has submitted successfully.')
-           alert('Claim has registered successfully.')
+           alert('Claim has submitted successfully.')
           this.navCtrl.setRoot(DashboardPage);
         }
         else
@@ -346,35 +353,44 @@ export class ProfileManagerProvider {
 
     formValues: any; claimAmount: any; isCustomer: any; profileJSON: any; isRequester:boolean=false;
     save(formValues: any, amount: any, isCustomer: any) {
+      this.isRequester = true;
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
       this.userGUID = localStorage.getItem('g_USER_GUID');
 
       this.formValues = formValues;
       this.claimAmount = amount;
       this.isCustomer = isCustomer;
-      let month = new Date(formValues.travel_date).getMonth() + 1;
-      let year = new Date(formValues.travel_date).getFullYear();
+      this.initiateLevels('1');
+
+      // let month = new Date(formValues.travel_date).getMonth() + 1;
+      // let year = new Date(formValues.travel_date).getFullYear();
   
       // this.api.getClaimRequestByClaimReqGUID('3d1a5bd4-7263-1203-dfd1-efbbf1621372').subscribe(data => {
-        this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => { 
-        let stringProfileJSON = this.profileJSON =  JSON.stringify(data); 
-        // let stringProfileJSON = this.profileJSON= data[0].PROFILE_JSON
-        let profileJSON = JSON.parse(stringProfileJSON);
-        let levels = profileJSON.profile.levels.level;
-        this.getInfoLevels(levels, '1');
-  
-  
-        this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
-          .subscribe(claimRefdata => {
-            if (claimRefdata["resource"][0] == null) {
-              this.saveClaimRef(month, year);
-            }
-            else {
-              let claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
-              this.SaveClaim(claimRefGUID);
-            }
-          })
-  
-      })
-    }  
+       
+    } 
+    
+   // month: any; year: any
+    initiateLevels(levelNo:string){
+
+    this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => { 
+      let stringProfileJSON = this.profileJSON =  JSON.stringify(data); 
+      // let stringProfileJSON = this.profileJSON= data[0].PROFILE_JSON
+      let profileJSON = JSON.parse(stringProfileJSON);
+      let levels = profileJSON.profile.levels.level;
+      this.getInfoLevels(levels, levelNo);
+
+
+      // this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')')
+      //   .subscribe(claimRefdata => {
+      //     if (claimRefdata["resource"][0] == null) {
+      //       this.saveClaimRef(this.month, this.year);
+      //     }
+      //     else {
+      //       let claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+      //       this.SaveClaim(claimRefGUID);
+      //     }
+      //   })
+
+    })
+  }
   }

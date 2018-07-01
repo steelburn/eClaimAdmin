@@ -113,7 +113,7 @@
         <div *ngFor="let item of projects">
           <button ion-item (click)="GetSocNo(item)">
             <ion-label>{{item.project_name}}
-              <>{{item.soc}}</ion-label>
+              [{{item.soc}}]</ion-label> 
           </button>
         </div>
       </ion-list>
