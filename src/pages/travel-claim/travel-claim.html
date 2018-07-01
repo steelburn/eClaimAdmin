@@ -22,18 +22,18 @@
   <div [ngSwitch]="claimFor">
     <div *ngSwitchDefault ngSelected="selected">
 
-      <ion-item>
+      <ion-item text-wrap>
         <ion-label floating color="primary500"> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-        <ion-input [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" type="text"
-          [disabled]="true"></ion-input>
+        <ion-textarea [ngModelOptions]="{standalone: true}" (click)="CustomerLookup()" [(ngModel)]="Customer_Lookup_ngModel" type="text"
+          [disabled]="true"></ion-textarea>
       </ion-item>
     </div>
     <div *ngSwitchCase="'seg_project'">
 
-      <ion-item>
+      <ion-item text-wrap>
         <ion-label floating color="primary500"> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-        <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" type="text"
-          [disabled]="true"></ion-input>
+        <ion-textarea (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" type="text"
+          [disabled]="true"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label floating>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
@@ -45,20 +45,33 @@
 
   <form [formGroup]="Travelform">
 
-    <ion-item style="width: 49%;display:inline-block;">
+    <ion-item class="fuha">
       <ion-label floating color="primary500">{{ "START_DT_LABEL" | translate }}</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="start_DT" [(ngModel)]="Start_DT_ngModel"
         displayFormat="DD/MM/YYYY HH:mm"></ion-datetime>
     </ion-item>
 
 
-    <ion-item style="width: 50%;display:inline-block;">
+    <ion-item class="fuha">
       <ion-label floating color="primary500">{{ "END_DT_LABEL" | translate }}</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT"
         [(ngModel)]="End_DT_ngModel"></ion-datetime>
     </ion-item>
 
-    <ion-item style="width: 49%;display:inline-block;">
+
+    <ion-item style="width: 50%;display:inline-block;">
+      <ion-label floating color="primary500">{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
+      <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType">
+       
+        <ion-option (ionSelect)="onTravelTypeSelect('Local')">Local</ion-option>
+        <ion-option (ionSelect)="onTravelTypeSelect('Outstation')">Outstation</ion-option>
+      </ion-select>
+    </ion-item>
+
+  
+
+    <ion-item class="fuha">
+
       <ion-label floating color="primary500">{{ "TRAVEL_MODE_LABEL" | translate }}</ion-label>
       <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType">
         <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
@@ -66,33 +79,34 @@
       </ion-select>
     </ion-item>
 
-    <ion-item style="width: 50%;display:inline-block;">
-      <ion-label floating color="primary500">{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
-      <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType">
-        <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
-        <ion-option (ionSelect)="onTravelTypeSelect('Local')">Local</ion-option>
-        <ion-option (ionSelect)="onTravelTypeSelect('Outstation')">Outstation</ion-option>
+
+    <ion-item *ngIf="isPublicTransport">
+      <ion-label fixed>{{ 'PAY_BY_LABEL' | translate }}</ion-label>
+      <ion-select [(ngModel)]="PayType" placeholder="Cash" formControlName="PayType" >
+        <ion-option *ngFor="let item of paymentTypes" value={{item.PAYMENT_TYPE_GUID}}>{{ item.NAME}}</ion-option>
       </ion-select>
     </ion-item>
 
-    <ion-item>
+   
+
+    <ion-item text-wrap>
       <ion-label floating color="primary500"> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
-      <ion-input [disabled]="true" (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin"></ion-input>
+      <ion-textarea [disabled]="true" (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin"></ion-textarea>
 
     </ion-item>
 
-    <ion-item>
+    <ion-item text-wrap>
       <ion-label floating color="primary500"> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
-      <ion-input [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination"></ion-input>
+      <ion-textarea [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination"></ion-textarea>
     </ion-item>
 
-    <ion-item style="width: 49%;display:inline-block;">
+    <ion-item class="fuha">
       <ion-label floating> {{ "DISTANCE_LABEL" | translate }} </ion-label>
       <ion-input [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance"></ion-input>
     </ion-item>
 
 
-    <ion-item style="width: 50%;display:inline-block;">
+    <ion-item class="fuha">
       <ion-label floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-input (change)='getCurrency($event.target.value)' [disabled]="!isPublicTransport" [(ngModel)]="travelAmountNgmodel"
         type="text" formControlName="claim_amount"></ion-input>
@@ -112,11 +126,11 @@
       <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
     </div> -->
 
-    <ion-item *ngIf="imageURLEdit!==null">
+    <div *ngIf="imageURLEdit!==null">
       <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" >
      View Receipt
     </button>  
-  </ion-item>
+  </div>
     <!-- <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>             
@@ -203,7 +217,7 @@
           <div *ngFor="let item of projects">
             <button ion-item (click)="GetSocNo(item)">
               <ion-label>{{item.project_name}}
-                <>{{item.soc}}</ion-label>
+                [{{item.soc}}]</ion-label> 
             </button>
           </div>
         </ion-list>

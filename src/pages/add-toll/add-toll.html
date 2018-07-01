@@ -15,7 +15,7 @@
     <form [formGroup]="DetailsForm" >
       
             <ion-list>
-              <ion-item *ngIf="ClaimMethodName != 'Accommodation' && ClaimMethodName != 'Meal Allowance'" style="width: 50%;display:inline-block;">
+              <ion-item *ngIf="ClaimMethodName != 'Accommodation' && ClaimMethodName != 'Meal Allowance'"  class="fuha">
                 <ion-label floating color="primary500">{{ 'PAY_BY_LABEL' | translate }}</ion-label>
                 <ion-select  [ngModelOptions]="{standalone: true}" [(ngModel)]="PayType" >
                     <!-- [ngModelOptions]="{standalone: true}" -->
@@ -23,7 +23,7 @@
                 </ion-select>
               </ion-item>
 
-              <ion-item *ngIf="ClaimMethodName === 'Meal Allowance'" style="width: 50%;display:inline-block;">
+              <ion-item *ngIf="ClaimMethodName === 'Meal Allowance'"  class="fuha">
                 <ion-label floating color="primary500">{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
                 <ion-select [ngModelOptions]="{standalone: true}" [(ngModel)]="MA_SELECT">
                     <ion-option value="NA">NA</ion-option>
@@ -32,7 +32,7 @@
               </ion-item>
            
 
-            <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'" style="width: 49%;display:inline-block;">
+            <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'" class="fuha">
               <ion-label floating color="primary500">{{ 'AMOUNT_LABEL' | translate  }}{{ 'CURRENCY_NAME_LABEL' | translate}}</ion-label>
               <ion-input (change)='getCurrency($event.target.value)' [ngModelOptions]="{standalone: true}" 
               [(ngModel)]="Amount" type="text"></ion-input>

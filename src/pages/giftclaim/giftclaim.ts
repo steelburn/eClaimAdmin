@@ -25,6 +25,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import moment from 'moment'; 
 
 @IonicPage()
 @Component({
@@ -124,7 +125,8 @@ export class GiftclaimPage {
                       }
                     });
                 }
-                this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                // this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.Gift_Date_ngModel = moment(this.claimRequestData[0].TRAVEL_DATE).format('YYYY-MM-DD'); 
                 // this.Gift_Date_ngModel = new Date(this.claimRequestData.TRAVEL_DATE).toISOString();
                 // this.Gift_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
                 // this.Gift_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
@@ -155,8 +157,11 @@ export class GiftclaimPage {
       this.isFormEdit = this.navParams.get('isFormEdit');
       this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
-      if (this.isFormEdit)
-      this.GetDataforEdit();
+      if (this.isFormEdit){       
+        this.profileMng.initiateLevels('1');
+        this.GetDataforEdit();
+      }
+     
     else {
       this.LoadCustomers();
       this.LoadProjects();
@@ -432,6 +437,12 @@ submitAction(formValues: any) {
         this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
         this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
         this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+        if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+          this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+          this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+          this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+          this.claimRequestData["resource"][0].STATUS = 'Pending'
+        }
         
         if (this.isCustomer) {
           this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID ;
@@ -452,7 +463,6 @@ submitAction(formValues: any) {
   }
   else {
   formValues.claimTypeGUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
-  formValues.meal_allowance = this.allowanceGUID;
   formValues.attachment_GUID =  this.imageGUID;       
   this.travelAmount = this.claimAmount;
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;

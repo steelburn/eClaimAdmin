@@ -184,5 +184,7 @@
  "CLAIMS_LABEL": "Claims",
  "Account_LABEL": "Account",
  "APPROVER_NAME": "Approver Name",
+ "START_DATE_LABEL": "Start Date Time",
+ "END_DATE_LABEL": "End Date Time",
  "TOTAL_CLAIM_AMOUNT_NOTE": "(Includes toll, parking, accommodation and meal-allowance)"
 } 
