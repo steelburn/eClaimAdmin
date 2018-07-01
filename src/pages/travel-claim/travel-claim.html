@@ -58,7 +58,20 @@
         [(ngModel)]="End_DT_ngModel"></ion-datetime>
     </ion-item>
 
+
+    <ion-item style="width: 50%;display:inline-block;">
+      <ion-label floating color="primary500">{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
+      <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType">
+       
+        <ion-option (ionSelect)="onTravelTypeSelect('Local')">Local</ion-option>
+        <ion-option (ionSelect)="onTravelTypeSelect('Outstation')">Outstation</ion-option>
+      </ion-select>
+    </ion-item>
+
+  
+
     <ion-item class="fuha">
+
       <ion-label floating color="primary500">{{ "TRAVEL_MODE_LABEL" | translate }}</ion-label>
       <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType">
         <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
@@ -66,14 +79,15 @@
       </ion-select>
     </ion-item>
 
-    <ion-item class="fuha">
-      <ion-label floating color="primary500">{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
-      <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType">
-        <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
-        <ion-option (ionSelect)="onTravelTypeSelect('Local')">Local</ion-option>
-        <ion-option (ionSelect)="onTravelTypeSelect('Outstation')">Outstation</ion-option>
+
+    <ion-item *ngIf="isPublicTransport">
+      <ion-label fixed>{{ 'PAY_BY_LABEL' | translate }}</ion-label>
+      <ion-select [(ngModel)]="PayType" placeholder="Cash" formControlName="PayType" >
+        <ion-option *ngFor="let item of paymentTypes" value={{item.PAYMENT_TYPE_GUID}}>{{ item.NAME}}</ion-option>
       </ion-select>
     </ion-item>
+
+   
 
     <ion-item text-wrap>
       <ion-label floating color="primary500"> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
@@ -203,7 +217,7 @@
           <div *ngFor="let item of projects">
             <button ion-item (click)="GetSocNo(item)">
               <ion-label>{{item.project_name}}
-                <>{{item.soc}}</ion-label>
+                [{{item.soc}}]</ion-label> 
             </button>
           </div>
         </ion-list>

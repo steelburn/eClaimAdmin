@@ -25,6 +25,7 @@ import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import moment from 'moment'; 
 
 @IonicPage()
 @Component({
@@ -149,8 +150,10 @@ export class OvertimeclaimPage {
                       }
                     });
                 }
-                this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
-                this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
+                // this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
+                // this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
+                this.Start_DT_ngModel = moment(this.claimRequestData[0].START_TS).format('YYYY-MM-DDTHH:mm'); 
+                this.End_DT_ngModel =  moment(this.claimRequestData[0].END_TS).format('YYYY-MM-DDTHH:mm'); 
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.OT_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.OT_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
@@ -165,8 +168,11 @@ export class OvertimeclaimPage {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');   
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-    if (this.isFormEdit)
+    if (this.isFormEdit){
+      this.profileMng.initiateLevels('1');
       this.GetDataforEdit();
+    }
+     
     else {
       this.LoadCustomers();
       this.LoadProjects();
@@ -409,6 +415,12 @@ export class OvertimeclaimPage {
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
           this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
+          if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+              this.claimRequestData["resource"][0].STATUS = 'Pending'
+            }
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
