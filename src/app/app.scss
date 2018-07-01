@@ -22,6 +22,11 @@ ion-fab[top1] {
 
 
 
+  .imgw{
+    max-width: 70px;
+border-radius: 50%;
+
+}
 
 .blackcontainer{
     top: 0;
@@ -33,7 +38,13 @@ ion-fab[top1] {
     opacity: 0.7;
     
 }
-
+.popup0{
+    width: 100%;
+    left: 0px;
+    top: 60px;
+    position: fixed;
+        height: 500px;
+}
 .popup{
     width: 50%;
     left:258px;
@@ -133,7 +144,7 @@ height: 480px;
 
   .round2 {
     float: left;
-    width: 23% ;
+    width: calc(25% - 20px) ;
     margin: 10px !important;
 
     cursor: pointer;
@@ -143,7 +154,7 @@ height: 480px;
 
   .round3 {
     float: left;
-    width: calc(48.5% - 7px);
+    width: calc(50% - 20px);
     margin: 10px !important;
  
     cursor: pointer;
@@ -291,8 +302,24 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
 .cm{
     height: 100%;
 }
+.nofu{
+    width: 605px;
+    margin:45pt auto;
+    border-radius: 5px;
+}
+.fuha{
+    width: calc(50% - 2pt);
+    display: inline-block;
 
 
+
+}
+
+.fuha1{
+    width: calc(100% - 2pt);
+    display: inline-block;
+
+}
 .Tabler {
     width: 100%;
     padding-top: 35px;
@@ -386,6 +413,9 @@ ion-item.item.item-block.item-md.item-checkbox {
     font-size: xx-small !important;
 }
 
+.clear{
+    clear: both;
+}
 
 .UPContent{
     width:100%;
@@ -433,28 +463,7 @@ button.item.item-block.item-md{
   }
 
 
-      // Todo: remove when this issue https://github.com/ionic-team/ionic/issues/11212 is fixed
-      @media(max-width: 700px) {
-        .round1 {
-          width: calc(100% - 20px);
-          min-height: 100px;
-        }
-    
-    
-        .Subtitle {
-          text-align: center;
-          font-size: 3.5vw;
-        }
-    
-    
-        .iconf {
-          font-size: 10vw;
-          color  :#009688,
-
-  
-        }
-    }    
-
+ 
 //overwrite default css
 
 .popover-md .popover-content {
@@ -607,3 +616,199 @@ button[ion-fab] {
 //     color: black !important;
 // }
 
+
+
+
+//responsive specific for chart
+
+@media (max-width: 466px){
+
+    .nofu{
+        width: 300px;
+    }
+
+    .round3{
+        display: none;
+    }
+
+    
+  .round2 {
+    width: calc(100% - 20px) ;
+  }
+
+  .hid{
+      display: none;
+  }
+
+}
+
+@media (min-width: 450px) and (max-width: 1138px){
+    .round3{
+        width: calc(100% - 20px);
+    }
+    .hide{
+        width: calc(100% - 20px);
+    }
+  .round2 {
+
+    width: calc(50% - 20px) ;
+
+  }
+
+}
+
+//responsive min size
+$ip5-phone: 320px;
+$tablet7: 600px;
+
+//specific for login card
+
+@media (min-width: 467px) and (max-width:610px) {
+    .nofu{
+        width:430px;
+    }
+}
+
+//responsive in between size- tablet / smaller laptop screen 
+
+@media (min-width: 600px) and (max-width: 1280px) {
+    .popup1{
+        width: 97%;
+        left: 10px;
+        top: 60px;
+        position: fixed;
+            height: 500px;
+    }
+
+    .round1 {
+        width: calc(25% - 20px);
+        min-height: 100px;
+      }
+  
+  
+      .Subtitle {
+        text-align: center;
+        font-size: 3.5vw;
+      }
+  
+  
+      .iconf {
+        font-size: 10vw;
+        color  :#009688,
+
+
+      }
+    
+    .Tabler tr.col7 td {
+        padding: 4px;
+    }
+
+
+    table.list th {
+        display: none;
+     }
+    
+        table.list tr {
+            display: block;
+            border: 1px solid #999999;
+           border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+    
+           table.list tr td {
+                display: block;
+             text-align: left !important;
+                 border: none;
+             }
+    
+    
+     
+                table.list tr.col7 td.getHeader::before {
+    
+                    content: attr(reshead)" : ";
+                    font-weight: bold;
+                    display: inline !important;
+                    margin-top: 5px;
+                }
+
+            
+}
+
+
+@media (max-width: 599px){
+    .popup1{
+        width: 94%;
+        left: 0px;
+        top: 60px;
+        position: fixed;
+            height: 500px;
+    }
+
+    .popup0{
+        width: 100%;
+        left: 0px;
+        top: 60px;
+        position: fixed;
+            height: 500px;
+    }
+
+    .fuha{
+        width: calc(100% - 2pt);
+        display: inline-block;
+    
+    }
+    .round1 {
+        width: calc(100% - 20px);
+        min-height: 100px;
+      }
+  
+  
+      .Subtitle {
+        text-align: center;
+        font-size: 3.5vw;
+      }
+  
+  
+      .iconf {
+        font-size: 10vw;
+        color  :#009688,
+
+
+      }
+    
+    .Tabler tr.col7 td {
+        padding: 4px;
+    }
+
+  
+    table.list th {
+        display: none;
+     }
+    
+        table.list tr {
+            display: block;
+            border: 1px solid #999999;
+           border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+    
+           table.list tr td {
+                display: block;
+             text-align: left !important;
+                 border: none;
+             }
+    
+    
+     
+                table.list tr.col7 td.getHeader::before {
+    
+                    content: attr(reshead)" : ";
+                    font-weight: bold;
+                    display: inline !important;
+                    margin-top: 5px;
+                }
+
+              
+}

@@ -9,17 +9,17 @@
   <!-- <ion-navbar>
     <ion-title>dashboard</ion-title>
   </ion-navbar> -->
-  <ion-navbar color="primary200" hideBackButton="true">
-    <!-- <button ion-button menuToggle>
+  <ion-navbar color="primary200">
+     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button> -->
+    </button> 
     <ion-title>{{ "DASHBOARD_HEADING" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding style="background: #eeeeee;">
-  <ion-card style="background: white; border-radius: 5px;">
+  <ion-card class="hid" style="background: white; border-radius: 5px;" >
     <form [formGroup]="DashboardForm">
       <ion-item text-center style="background:gray;color: white;" >
         Filter 
@@ -74,6 +74,7 @@
       [colors]="claimAmountChartColors" (chartHover)="claimAmountHovered($event)" (chartClick)="claimAmountClicked($event)"></canvas>
   </ion-card>
 
+  <div class="clear"></div>
 
   <ion-card (click)="Rejected_Click()" class="round2">
     <ion-card-header style="background:red;margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">

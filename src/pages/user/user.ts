@@ -104,7 +104,7 @@ export class UserPage {
 
   BaseTableURL: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
-  banks: any; qualifications: any; tenants: any; countries: any; states: any; userview: any [];
+  banks: any; qualifications: any; tenants: any; countries: any; states: any; userview: any[];
   varTenant_Guid: string;
 
   //baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/user_info' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -723,11 +723,11 @@ export class UserPage {
     console.log('ionViewDidLoad UserPage');
   }
 
-  storeUsers: any[]; 
+  storeUsers: any[];
   searchUser(searchString: any) {
     let val = searchString.target.value;
     if (!val || !val.trim()) {
-      this.userview = this.storeUsers;      
+      this.userview = this.storeUsers;
       return;
     }
     this.userview = this.filterUser({
@@ -745,7 +745,7 @@ export class UserPage {
     if (!params) {
       return this.storeUsers;
     }
-    
+
     return this.storeUsers.filter((item) => {
       for (let key in params) {
         let field = item[key];
@@ -758,7 +758,7 @@ export class UserPage {
       return null;
     });
   }
-  
+
   BindGrid(ViewName: string) {
     this.loading = this.loadingCtrl.create({
       //content: 'Loading...',
@@ -769,7 +769,7 @@ export class UserPage {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       TableURL_User = this.BaseTableURL + ViewName + '?' + this.Key_Param;
     }
-    else if (localStorage.getItem("g_ISHQ") == "1" && localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
+    else if (localStorage.getItem("g_ISHQ") == "1" && localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
       TableURL_User = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + this.Key_Param;
     }
     else {
@@ -961,7 +961,7 @@ export class UserPage {
         TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')&' + this.Key_Param;
       }
       else {
-        if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
+        if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
           TableURL_Approver = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + res.toString() + ')&' + this.Key_Param;
         }
         else {
@@ -1393,7 +1393,9 @@ export class UserPage {
       this.usermain_entry.STAFF_ID = this.User_StaffID_Edit_ngModel.trim();
       //this.usermain_entry.LOGIN_ID = this.User_LoginId_Edit_ngModel.trim();
       this.usermain_entry.LOGIN_ID = this.User_Email_Edit_ngModel.trim();
-      this.usermain_entry.PASSWORD = this.User_Password_Edit_ngModel.trim();
+      if (this.User_Password_Edit_ngModel != undefined) {
+        this.usermain_entry.PASSWORD = this.User_Password_Edit_ngModel.trim();
+      }
       this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel.trim();
       this.usermain_entry.ACTIVATION_FLAG = 1;
 

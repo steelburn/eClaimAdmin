@@ -9,7 +9,8 @@
 
 <ion-content padding *ngFor="let claim of claimRequestData">
     <ion-item>
-        <ion-label>Entertainment Claim View </ion-label>
+
+        <ion-label><b>Entertainment Claim View</b> </ion-label>
     </ion-item>
 
     <ion-item>
@@ -95,7 +96,7 @@
             <div class="popup2" padding *ngIf="displayImage">
                 <ion-card>
                     <ion-card-header class="icTitle headerColor-white ">
-                        <div class="icHeaderText">Claim Details</div>
+                        <div class="icHeaderText">Receipt</div>
                         <button class="btnR" (click)="CloseDisplayImage()">
                             <ion-icon name="md-close"></ion-icon>
                         </button>
