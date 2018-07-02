@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-    <ion-navbar color="primary500">
+    <ion-navbar color="primary200">
         <ion-title>Tenant Setup</ion-title>
     </ion-navbar>
 
@@ -30,8 +30,8 @@
         <ion-item>
             <table class="Tabler">
                 <tr class="linedsg TColor">
-
-                    <th class="lgl1 tblBrLeft">Tenant Account Name</th>
+                    <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+                    <th class="lgl1">Tenant Account Name</th>
                     <th class="lgl1">Tenant Company Name</th>
                     <th class="lgl1">Effective Date</th>
                     <th class="lgl1">Active Flag</th>
@@ -39,7 +39,7 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-
+                    <td class="lgl1">{{i+1}}</td>
                     <td class="lgl1">{{tenant.TENANT_ACCOUNT_NAME}}</td>
                     <td class="lgl1">{{tenant.NAME}}</td>
                     <td class="lgl1">23 - 4- 2222</td>

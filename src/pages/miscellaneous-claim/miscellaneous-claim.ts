@@ -12,6 +12,7 @@ import { ImageUpload_model } from '../../models/image-upload.model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import moment from 'moment'; 
 
 
 @IonicPage()
@@ -64,8 +65,11 @@ export class MiscellaneousClaimPage {
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
-    if (this.isFormEdit)
+    if (this.isFormEdit){
+      this.profileMng.initiateLevels('1');
       this.GetDataforEdit();
+    }
+     
     else {
       this.LoadCustomers();
       this.LoadProjects();
@@ -117,6 +121,7 @@ export class MiscellaneousClaimPage {
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
@@ -126,6 +131,7 @@ export class MiscellaneousClaimPage {
                 }
                 else {
                   this.claimFor = 'seg_project'
+                  this.isCustomer = false;
                   if (this.storeCustomers != undefined)
                     this.storeProjects.forEach(element => {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
@@ -134,7 +140,8 @@ export class MiscellaneousClaimPage {
                       }
                     });
                 }
-                this.Miscellaneous_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                // this.Miscellaneous_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.Miscellaneous_Date_ngModel = moment(this.claimRequestData[0].TRAVEL_DATE).format('YYYY-MM-DD'); 
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.Miscellaneous_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
@@ -360,6 +367,12 @@ export class MiscellaneousClaimPage {
           this.claimRequestData["resource"][0].MILEAGE_AMOUNT =this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+          if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+            this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+            this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+            this.claimRequestData["resource"][0].STATUS = 'Pending'
+          }
   
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;

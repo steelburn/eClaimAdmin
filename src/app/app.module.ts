@@ -49,7 +49,7 @@ import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneo
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
-import { PeermissionPage } from '../pages/peermission/peermission';
+import { PermissionPage } from '../pages/Permission/Permission';
 import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
@@ -101,7 +101,7 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { DatePipe } from '@angular/common'
+import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
 @NgModule({
   declarations: [
@@ -115,7 +115,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
     OvertimeclaimPage,
     EntertainmentclaimPage,
     MiscellaneousClaimPage,
-    PeermissionPage,
+    PermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
     CountrysetupPage,
@@ -201,11 +201,13 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
         { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
         { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
         { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
+        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },        
 
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
         { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
         { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
+        { component: ClaimhistorydetailPage, name: 'ClaimhistorydetailPage', segment: 'ClaimhistorydetailPage' },
         { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
         { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' }
      
@@ -237,7 +239,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
     CompanysetupPage,
     ClaimtypePage,
     CashcardsetupPage,
-    PeermissionPage,
+    PermissionPage,
     DesignationsetupPage,
     DepartmentsetupPage,
     MileagesetupPage,
@@ -291,7 +293,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData, HttpClientModule, ApiManagerProvider,
-    UserData, DatePipe,
+    UserData, DatePipe, DecimalPipe,
     InAppBrowser,
     SplashScreen, StatusBar, Services,
 

@@ -29,6 +29,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { DecimalPipe } from '@angular/common';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { DashboardPage } from '../dashboard/dashboard';
+import moment from 'moment'; 
 
 @IonicPage()
 @Component({
@@ -91,7 +92,7 @@ export class TravelclaimPage {
   travelAmount: number;
   validDate = new Date().toISOString();
   ClaimRequestMain: any;
-  isCustomer: boolean = true;
+  isCustomer: boolean = false;
   claimDetailsData: any[];
   tollParkAmount: number = 0;
   travelAmountNgmodel: any;
@@ -124,6 +125,7 @@ export class TravelclaimPage {
     // if (this.isFormEdit)
     // this.GetDataforEdit();
     if (this.isFormEdit) {
+      this.profileMng.initiateLevels('1');
       this.GetDataforEdit();
       this.MainClaimSaved = true;
     }
@@ -131,10 +133,12 @@ export class TravelclaimPage {
     this.LoadCustomers();
     this.LoadProjects();
     this.LoadVehicles();
+    this.LoadPayments();
   }
     this.Travelform = fb.group({
       avatar1: null,
       avatar: null,
+      PayType: '',
       soc_no: '',
       distance: '', 
       uuid: '',
@@ -177,80 +181,167 @@ export class TravelclaimPage {
   }
 
   imageURLEdit: any = null
+  // GetDataforEdit() {
+  //   this.isFormSubmitted = true;
+  //   //TODO: Take data by Effective Date
+  //   this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID)
+  //     .subscribe(data => {
+  //       this.vehicles = data["resource"];
+  //       this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+  //         .subscribe(data => {
+  //           this.storeCustomers = this.customers = data["resource"];
+  //           this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+  //             .subscribe(data => {
+  //               this.storeProjects = this.projects = data["resource"];
+
+  //               this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+  //                 .subscribe(data => {
+  //                   this.claimRequestData = data["resource"];
+
+  //                   if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+  //                   this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+  //                   this.PublicTransValue = true;
+  //                   this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+  //                   this.totalClaimAmount = this.travelAmount =this.claimRequestData[0].MILEAGE_AMOUNT;
+
+
+  //                   if (this.claimRequestData[0].SOC_GUID === null) {
+  //                     this.claimFor = 'seg_customer'
+  //                     this.isCustomer = true;
+  //                     if (this.storeCustomers != undefined)
+  //                       this.storeCustomers.forEach(element => {
+  //                         if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
+  //                           this.Customer_Lookup_ngModel = element.NAME
+  //                         }
+  //                       });
+  //                   }
+  //                   else {
+  //                     this.claimFor = 'seg_project'
+  //                     this.isCustomer = false;
+  //                     if (this.storeCustomers != undefined)
+  //                       this.storeProjects.forEach(element => {
+  //                         if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
+  //                           this.Project_Lookup_ngModel = element.project_name
+  //                           this.Travel_SOC_No_ngModel = element.soc
+  //                         }
+  //                       });
+  //                   }
+  //                   this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
+  //                   this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
+  //                   //this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
+
+  //                   this.Travel_From_ngModel = this.claimRequestData[0].FROM;
+  //                   this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
+  //                   this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
+  //                   //this.travelAmountNgmodel = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+  //                   this.LoadClaimDetails();
+  //                   this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
+  //                   this.vehicles.forEach(element => {
+  //                     if(this.claimRequestData[0].MILEAGE_GUID==='427b1ef9-6474-297c-acac-a430199ab882')
+  //                     this.isPublicTransport=true;
+  //                     if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
+  //                       this.Travel_Mode_ngModel = element.CATEGORY
+  //                     }
+  //                   });
+  //                   if(this.claimRequestData[0].TRAVEL_TYPE==='1'){
+  //                     this.Travel_Type_ngModel = 'Outstation'
+  //                     this.isTravelLocal = false;
+  //                   }
+                    
+  //                   else 
+  //                   this.Travel_Type_ngModel = 'Local'
+  //                   this.isTravelLocal = true;
+
+  //                 }
+  //                 );
+  //             });
+  //         })
+  //     })
+
+  // }
+
   GetDataforEdit() {
     this.isFormSubmitted = true;
     //TODO: Take data by Effective Date
-    this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID)
-      .subscribe(data => {
-        this.vehicles = data["resource"];
-        this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
-          .subscribe(data => {
-            this.storeCustomers = this.customers = data["resource"];
-            this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
-              .subscribe(data => {
-                this.storeProjects = this.projects = data["resource"];
+    this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
+      this.vehicles = data["resource"];
+      this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
+        this.storeCustomers = this.customers = data["resource"];
+        this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
+          this.storeProjects = this.projects = data["resource"];
+          this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(data => {
+            this.claimRequestData = data["resource"];
+            this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
+              this.paymentTypes = data["resource"];
+              if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+              this.PublicTransValue = true;
+              this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+              this.totalClaimAmount = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
 
-                this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
-                  .subscribe(data => {
-                    this.claimRequestData = data["resource"];
-
-                    if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                    this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
-                    this.PublicTransValue = true;
-                    this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
-                    this.totalClaimAmount = this.travelAmount =this.claimRequestData[0].MILEAGE_AMOUNT;
-
-
-                    if (this.claimRequestData[0].SOC_GUID === null) {
-                      this.claimFor = 'seg_customer'
-                      if (this.storeCustomers != undefined)
-                        this.storeCustomers.forEach(element => {
-                          if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
-                            this.Customer_Lookup_ngModel = element.NAME
-                          }
-                        });
+              if (this.claimRequestData[0].SOC_GUID === null) {
+                this.claimFor = 'seg_customer'
+                this.isCustomer = true;
+                if (this.storeCustomers != undefined)
+                  this.storeCustomers.forEach(element => {
+                    if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
+                      this.Customer_Lookup_ngModel = element.NAME
                     }
-                    else {
-                      this.claimFor = 'seg_project'
-                      if (this.storeCustomers != undefined)
-                        this.storeProjects.forEach(element => {
-                          if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
-                            this.Project_Lookup_ngModel = element.project_name
-                            this.Travel_SOC_No_ngModel = element.soc
-                          }
-                        });
+                  });
+              }
+              else {
+                this.claimFor = 'seg_project'
+                this.isCustomer = false;
+                if (this.storeCustomers != undefined)
+                  this.storeProjects.forEach(element => {
+                    if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
+                      this.Project_Lookup_ngModel = element.project_name
+                      this.Travel_SOC_No_ngModel = element.soc
                     }
-                    this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
-                    this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
-                    //this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
+                  });
+              }
+              // this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
+              // this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
+              this.Start_DT_ngModel = moment(this.claimRequestData[0].START_TS).format('YYYY-MM-DDTHH:mm'); 
+              this.End_DT_ngModel =  moment(this.claimRequestData[0].END_TS).format('YYYY-MM-DDTHH:mm'); 
 
-                    this.Travel_From_ngModel = this.claimRequestData[0].FROM;
-                    this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
-                    this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
-                    //this.travelAmountNgmodel = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT
-                    this.LoadClaimDetails();
-                    this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
-                    this.vehicles.forEach(element => {
-                      if(this.claimRequestData[0].MILEAGE_GUID==='427b1ef9-6474-297c-acac-a430199ab882')
-                      this.isPublicTransport=true;
-                      if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
-                        this.Travel_Mode_ngModel = element.CATEGORY
-                      }
-                    });
-                    if(this.claimRequestData[0].TRAVEL_TYPE==='1'){
-                      this.Travel_Type_ngModel = 'Outstation'
-                      this.isTravelLocal = false;
-                    }
-                    
-                    else 
-                    this.Travel_Type_ngModel = 'Local'
-                    this.isTravelLocal = true;
+              // this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
 
-                  }
-                  );
+              this.Travel_From_ngModel = this.claimRequestData[0].FROM;
+              this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
+              this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
+              this.LoadClaimDetails();
+              this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
+
+              this.paymentTypes.forEach(element => {
+                if (this.claimRequestData[0].claim_method_guid === element.PAYMENT_TYPE_GUID) {
+                  this.PayType = element.PAYMENT_TYPE_GUID;
+                }
               });
-          })
+
+              this.vehicles.forEach(element => {
+                if (this.claimRequestData[0].MILEAGE_GUID === '427b1ef9-6474-297c-acac-a430199ab882')
+                  this.isPublicTransport = true;
+                if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
+                  {
+                    this.Travel_Mode_ngModel = element.CATEGORY
+                    // this.onVehicleSelect(element)
+                  }
+                }
+              });
+              if (this.claimRequestData[0].TRAVEL_TYPE === '1') {
+                this.Travel_Type_ngModel = 'Outstation';
+                this.isTravelLocal = false;
+              }
+              else {
+                this.Travel_Type_ngModel = 'Local'
+                this.isTravelLocal = true;
+              }
+            });
+          });
+        });
       })
+    })
 
   }
  
@@ -273,6 +364,14 @@ export class TravelclaimPage {
     // console.log(this.claimFor)
     if (this.claimFor == 'seg_customer') this.isCustomer = true;
     else this.isCustomer = false;
+  }
+  paymentTypes: any[]; PayType: any
+  LoadPayments() {
+    this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID)
+      .subscribe(data => {
+        this.paymentTypes = data["resource"];
+      }
+      );
   }
 
   LoadProjects() {
@@ -804,6 +903,8 @@ export class TravelclaimPage {
         formValues.vehicleType = this.VehicleId;
         formValues.attachment_GUID = this.imageGUID;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+        formValues.PayType = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
+
 
         this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         this.MainClaimSaved = true;
@@ -827,13 +928,22 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
             this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
             this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
+            this.claimRequestData["resource"][0].claim_method_guid = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
+            if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+              this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+              this.claimRequestData["resource"][0].STATUS = 'Pending'
+            }
 
             if (this.isCustomer) {
               this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
+              this.claimRequestData["resource"][0].SOC_GUID = null;
             }
             else {
               this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
-            }
+              this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
+             }
 
             this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
               alert('Claim details updated successfully.')

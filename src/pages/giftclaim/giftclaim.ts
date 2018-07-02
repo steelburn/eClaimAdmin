@@ -25,6 +25,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import moment from 'moment'; 
 
 @IonicPage()
 @Component({
@@ -105,6 +106,7 @@ export class GiftclaimPage {
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
@@ -114,6 +116,7 @@ export class GiftclaimPage {
                 }
                 else {
                   this.claimFor = 'seg_project'
+                  this.isCustomer = false;
                   if (this.storeCustomers != undefined)
                     this.storeProjects.forEach(element => {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
@@ -122,7 +125,10 @@ export class GiftclaimPage {
                       }
                     });
                 }
-                this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                // this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.Gift_Date_ngModel = moment(this.claimRequestData[0].TRAVEL_DATE).format('YYYY-MM-DD'); 
+                // this.Gift_Date_ngModel = new Date(this.claimRequestData.TRAVEL_DATE).toISOString();
+                // this.Gift_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
                 // this.Gift_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Gift_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
@@ -151,8 +157,11 @@ export class GiftclaimPage {
       this.isFormEdit = this.navParams.get('isFormEdit');
       this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
-      if (this.isFormEdit)
-      this.GetDataforEdit();
+      if (this.isFormEdit){       
+        this.profileMng.initiateLevels('1');
+        this.GetDataforEdit();
+      }
+     
     else {
       this.LoadCustomers();
       this.LoadProjects();
@@ -233,20 +242,20 @@ saveIm() {
   })  
 }
 
-SaveImageinDB() {
-  let objImage: ImageUpload_model = new ImageUpload_model();
-  objImage.Image_Guid = UUID.UUID();
-  objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-  objImage.CREATION_TS = new Date().toISOString();
-  objImage.Update_Ts = new Date().toISOString();
-  return new Promise((resolve, reject) => {
-    this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
-      // let res = response.json();
-      // let imageGUID = res["resource"][0].Image_Guid;
-      resolve(objImage.toJson());
-    })
-  })
-}
+// SaveImageinDB() {
+//   let objImage: ImageUpload_model = new ImageUpload_model();
+//   objImage.Image_Guid = UUID.UUID();
+//   objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+//   objImage.CREATION_TS = new Date().toISOString();
+//   objImage.Update_Ts = new Date().toISOString();
+//   return new Promise((resolve, reject) => {
+//     this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+//       // let res = response.json();
+//       // let imageGUID = res["resource"][0].Image_Guid;
+//       resolve(objImage.toJson());
+//     })
+//   })
+// }
 
 UploadImage() {   
   this.CloudFilePath = 'eclaim/'   
@@ -428,6 +437,12 @@ submitAction(formValues: any) {
         this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
         this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
         this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+        if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+          this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+          this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+          this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+          this.claimRequestData["resource"][0].STATUS = 'Pending'
+        }
         
         if (this.isCustomer) {
           this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID ;
@@ -448,13 +463,22 @@ submitAction(formValues: any) {
   }
   else {
   formValues.claimTypeGUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
-  formValues.meal_allowance = this.allowanceGUID;
   formValues.attachment_GUID =  this.imageGUID;       
   this.travelAmount = this.claimAmount;
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
   }
- }  
+ }
+ 
+ displayImage: any
+ CloseDisplayImage()  {
+   this.displayImage = false;
+ }
+ imageURL: string;
+ DisplayImage(val: any) {
+   this.displayImage = true;
+   this.imageURL = val;
+ }
 } 
 
 

@@ -57,5 +57,15 @@ export class MiscellaneousClaimViewPage {
       cr_GUID: this.claimRequestGUID
     });
   }
+
+  displayImage: any
+  CloseDisplayImage()  {
+    this.displayImage = false;
+  }
+  imageURL: string;
+  DisplayImage(val: any) {
+    this.displayImage = true;
+    this.imageURL = val;
+  }
  
 }

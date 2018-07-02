@@ -23,6 +23,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -91,8 +92,11 @@ export class EntertainmentclaimPage {
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
-    if (this.isFormEdit)
-      this.GetDataforEdit();      
+    if (this.isFormEdit){
+      this.profileMng.initiateLevels('1');
+      this.GetDataforEdit(); 
+    }
+          
     else {
       this.LoadCustomers();
       this.LoadProjects();
@@ -113,7 +117,7 @@ export class EntertainmentclaimPage {
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 9,9999.00.')
+      alert('Amount should not exceed RM 99,999.00.')
       this.Entertainment_Amount_ngModel = null
       this.claimAmount = 0;
     }
@@ -155,6 +159,7 @@ export class EntertainmentclaimPage {
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
@@ -164,6 +169,7 @@ export class EntertainmentclaimPage {
                 }
                 else {
                   this.claimFor = 'seg_project'
+                  this.isCustomer = false;
                   if (this.storeCustomers != undefined)
                     this.storeProjects.forEach(element => {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
@@ -172,7 +178,8 @@ export class EntertainmentclaimPage {
                       }
                     });
                 }
-                this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                // this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.Entertainment_Date_ngModel = moment(this.claimRequestData[0].TRAVEL_DATE).format('YYYY-MM-DD'); 
                 // this.Entertainment_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Entertainment_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
@@ -399,7 +406,12 @@ export class EntertainmentclaimPage {
           this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
-          //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+          if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+              this.claimRequestData["resource"][0].STATUS = 'Pending'
+            }
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID =this.Customer_GUID;
             this.claimRequestData["resource"][0].SOC_GUID = null;
@@ -428,4 +440,14 @@ export class EntertainmentclaimPage {
   NavigateTravelClaim() {
     this.navCtrl.setRoot(TravelclaimPage); 
   } 
+
+  displayImage: any
+CloseDisplayImage()  {
+  this.displayImage = false;
+}
+imageURL: string;
+DisplayImage(val: any) {
+  this.displayImage = true;
+  this.imageURL = val;
+}
 } 
