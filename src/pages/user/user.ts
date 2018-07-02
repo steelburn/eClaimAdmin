@@ -775,6 +775,7 @@ export class UserPage {
     else {
       TableURL_User = this.BaseTableURL + ViewName + '?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&' + this.Key_Param;
     }
+    console.log(TableURL_User);
     this.http
       .get(TableURL_User)
       .map(res => res.json())
