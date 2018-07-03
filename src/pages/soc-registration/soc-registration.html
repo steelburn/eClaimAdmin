@@ -22,7 +22,7 @@
 
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'SOC_NUMBER' | translate }}</th>
@@ -33,12 +33,12 @@
         </tr>
 
         <tr class="col7" *ngFor="let soc of socs; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{soc.soc}}</td>
-          <td class="lgl1" text-wrap>{{soc.project_name}}</td>
-          <td class="lgl1">{{soc.customer_name}}</td>
-          <td class="lgl1" *ngIf="AdminLogin">{{soc.TENANT_ACCOUNT_NAME}}</td>
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="Soc Number">{{soc.soc}}</td>
+          <td class="lgl1 getHeader" reshead="Project Name" text-wrap>{{soc.project_name}}</td>
+          <td class="lgl1 getHeader"reshead="Customer Name" text-wrap>{{soc.customer_name}}</td>
+          <td class="lgl1 getHeader" *ngIf="AdminLogin" reshead="Tenant">{{soc.TENANT_ACCOUNT_NAME}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
             <!-- <button ion-button item-end (click)="EditClick(soc.TENANT_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
