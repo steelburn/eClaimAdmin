@@ -154,14 +154,14 @@ export class CustomerSetupPage {
         if (localStorage.getItem("g_USER_GUID") != "sva") {
           this.Customerform = fb.group({
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            location_name: [null],
+            registration_no: [null],
             address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             address2: [null],
             address3: [null],
             contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_no1: [null],
             contact_no2: [null],
             email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
             division: [null],
@@ -170,19 +170,18 @@ export class CustomerSetupPage {
         else {
           this.Customerform = fb.group({
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            location_name: [null],
+            registration_no: [null],
             address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             address2: [null],
             address3: [null],
             contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_no1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_no1: [null],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-            //division: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],            
             division: [null],
-            TENANT_NAME: [null, Validators.required],
+            TENANT_NAME: [null],
           });
         }
 
@@ -420,18 +419,23 @@ export class CustomerSetupPage {
 
   SetCommonEntityForCustomerLocationAddUpdate() {
     this.customer_location_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
-    this.customer_location_entry.NAME = this.titlecasePipe.transform(this.LOCATION_NAME_ngModel_Add.trim());
+    if(this.LOCATION_NAME_ngModel_Add == undefined || this.LOCATION_NAME_ngModel_Add == ""){
+      this.LOCATION_NAME_ngModel_Add = "NA";
+    }
+    else{
+      this.customer_location_entry.NAME = this.titlecasePipe.transform(this.LOCATION_NAME_ngModel_Add.trim());
+    }
     this.customer_location_entry.DESCRIPTION = "NA";
-    this.customer_location_entry.REGISTRATION_NO = this.REGISTRATION_NO_ngModel_Add.trim();
+    this.customer_location_entry.REGISTRATION_NO = this.REGISTRATION_NO_ngModel_Add;
     this.customer_location_entry.ADDRESS1 = this.titlecasePipe.transform(this.ADDRESS1_ngModel_Add.trim());
-    this.customer_location_entry.ADDRESS2 = this.titlecasePipe.transform(this.ADDRESS2_ngModel_Add.trim());
-    this.customer_location_entry.ADDRESS3 = this.titlecasePipe.transform(this.ADDRESS3_ngModel_Add.trim());
+    this.customer_location_entry.ADDRESS2 = this.titlecasePipe.transform(this.ADDRESS2_ngModel_Add);
+    this.customer_location_entry.ADDRESS3 = this.titlecasePipe.transform(this.ADDRESS3_ngModel_Add);
     this.customer_location_entry.CONTACT_PERSON = this.titlecasePipe.transform(this.CONTACT_PERSON_ngModel_Add.trim());
     this.customer_location_entry.CONTACT_PERSON_MOBILE_NO = this.CONTACT_PERSON_MOBILE_NO_ngModel_Add.trim();
-    this.customer_location_entry.CONTACT_NO1 = this.CONTACT_NO1_ngModel_Add.trim();
-    this.customer_location_entry.CONTACT_NO2 = this.CONTACT_NO2_ngModel_Add.trim();
+    this.customer_location_entry.CONTACT_NO1 = this.CONTACT_NO1_ngModel_Add;
+    this.customer_location_entry.CONTACT_NO2 = this.CONTACT_NO2_ngModel_Add;
     this.customer_location_entry.EMAIL = this.EMAIL_ngModel_Add.trim().toLowerCase();
-    this.customer_location_entry.DIVISION = this.titlecasePipe.transform(this.DIVISION_ngModel_Add.trim());
+    this.customer_location_entry.DIVISION = this.titlecasePipe.transform(this.DIVISION_ngModel_Add);
 
     this.customer_location_entry.CREATION_TS = this.customer_entry.CREATION_TS;
     this.customer_location_entry.CREATION_USER_GUID = this.customer_entry.CREATION_USER_GUID;
