@@ -103,6 +103,8 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
+// import { Ng2PaginationModule } from 'ng2-pagination';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -168,12 +170,12 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage, ImportExcelDataPage 
+    DashboardPage, ImportExcelDataPage
   ],
 
   imports: [
     BrowserModule,
-    HttpModule, HttpClientModule, ChartsModule,
+    HttpModule, HttpClientModule, ChartsModule,NgxPaginationModule,
     TranslateModule.forRoot
       ({
         loader: {
