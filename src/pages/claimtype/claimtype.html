@@ -22,19 +22,18 @@
 
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'CLAIM_NAME' | translate }}</th>
-          <th class="lgl1" style="display: none;">{{ 'CLAIM_DESCRIPTION' | translate }}</th>
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let claimtype of claimtypes; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{claimtype.NAME}}</td>
-          <td class="lgl1" style="display: none;">{{claimtype.DESCRIPTION}}</td>
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader"  reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader"  reshead="Name">{{claimtype.NAME}}</td>
+   
+          <td class="lgl1 getHeader fColor"  reshead="Action">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(claimtype.CLAIM_TYPE_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
@@ -65,10 +64,7 @@
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of claim'}}"></ion-input>
           </ion-item>
 
-          <ion-item style="display: none;">
-            <ion-label stacked>{{ 'CLAIM_DESCRIPTION' | translate }}</ion-label>
-            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
-          </ion-item>
+
 
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Claimtypeform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
