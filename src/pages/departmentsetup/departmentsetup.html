@@ -22,21 +22,20 @@
   
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</th>
-          <th class="lgl1" style="display: none;">{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</th>
+    
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let department of departments; let i=index" [hidden] = "button_View_Disable">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{department.NAME}}</td>
-          <td class="lgl1" style="display: none;">{{department.DESCRIPTION}}</td>
-          <td class="lgl1" *ngIf="AdminLogin">{{department.TENANT_ACCOUNT_NAME}}</td>
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader"reshead="Department Name">{{department.NAME}}</td>
+          <td class="lgl1 getHeader" *ngIf="AdminLogin" reshead="Tenant Name">{{department.TENANT_ACCOUNT_NAME}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(department.DEPARTMENT_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>

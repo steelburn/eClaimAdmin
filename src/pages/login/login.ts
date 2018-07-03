@@ -56,7 +56,7 @@ export class LoginPage {
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
       if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-        localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
+        localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
 
         //navigate to app.component page
         this.userData.login(this.login.username);
@@ -84,6 +84,13 @@ export class LoginPage {
               localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
               localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
               localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
+
+              if(res[0]["IMAGE_URL"] == null || res[0]["IMAGE_URL"] == ''){
+                localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+              }
+              else{                
+                localStorage.setItem("g_IMAGE_URL",constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/" + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
+              }
 
               // //Keep all the module to an array.-------------------------------------------
               // let MenuDetails: any[] = [];
@@ -142,6 +149,7 @@ export class LoginPage {
               localStorage.removeItem("g_ISHQ");
               localStorage.removeItem("g_IS_TENANT_ADMIN");
               localStorage.removeItem("Ad_Authenticaton");
+              localStorage.removeItem("g_IMAGE_URL");
 
               alert("please enter valid login details.");
               this.login.username = "";
@@ -352,6 +360,7 @@ export class LoginPage {
               localStorage.removeItem("g_ISHQ");
               localStorage.removeItem("g_IS_TENANT_ADMIN");              
               localStorage.removeItem("Ad_Authenticaton");
+              localStorage.removeItem("g_IMAGE_URL");
 
               alert("please enter valid login details.");
               this.login.username = "";
@@ -412,7 +421,7 @@ export class LoginPage {
 
   GetUserFromAdServer(form: NgForm, username: string) {    
     if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-      localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
+      localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
 
       //navigate to app.component page
       this.userData.login(this.login.username);
@@ -443,7 +452,7 @@ export class LoginPage {
           if (form.valid) {
             //-----------Check if the login as super vendor-----------------------
             if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-              localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
+              localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
 
               //navigate to app.component page
               this.userData.login(this.login.username);
@@ -472,6 +481,13 @@ export class LoginPage {
                     localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
                     localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
                     localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
+                    
+                    if(res[0]["IMAGE_URL"] == null || res[0]["IMAGE_URL"] == ''){
+                      localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+                    }
+                    else{
+                      localStorage.setItem("g_IMAGE_URL",constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/" + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
+                    }
 
                     //Setup Guide for only Hq Users
                     if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
@@ -517,6 +533,7 @@ export class LoginPage {
                     localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
                     localStorage.removeItem("g_ISHQ");
                     localStorage.removeItem("g_IS_TENANT_ADMIN");
+                    localStorage.removeItem("g_IMAGE_URL");
 
                     alert("please enter valid login details.");
                     this.login.username = "";

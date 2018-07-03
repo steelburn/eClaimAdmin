@@ -189,10 +189,41 @@ export class StatesetupPage {
       .get(this.baseResourceUrl_view)
       .map(res => res.json())
       .subscribe(data => {
-        this.states = data.resource;
+        this.states = this.stores = data.resource;
 
         this.loading.dismissAll();
       });
+  }
+
+  stores: any[];
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.states = this.stores;
+      return;
+    }
+    this.states = this.filter({
+      STATE_NAME: val,
+      COUNTRY_NAME: val
+    });
+  }
+
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
   }
 
   Save() {
