@@ -309,6 +309,7 @@ export class PrintclaimPage {
     //this.chooseFile = true;
   }
 
+  uniqueName: any;
   fileName1: string;
   ProfileImage: any;
   newImage:boolean=true;
@@ -338,7 +339,7 @@ export class PrintclaimPage {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
       //this.submitAction(this.uploadFileName, formValues);
-      this.imageGUID = this.uploadFileName;
+      this.imageGUID = this.uniqueName;
       this.chooseFile = false;
       this.ImageUploadValidation=true;      
     })    
@@ -346,8 +347,8 @@ export class PrintclaimPage {
 
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-
     this.loading = true;
+    this.uniqueName = new Date().toISOString()+this.uploadFileName ;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');
