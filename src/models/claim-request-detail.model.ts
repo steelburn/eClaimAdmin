@@ -1,0 +1,58 @@
+export class ClaimRequestDetailModel {
+  constructor(
+    public CLAIM_REQUEST_DETAIL_GUID: string = null,
+    public CLAIM_REQUEST_GUID: string = null,
+    public CLAIM_METHOD_GUID: string = null,
+    public AMOUNT: string = null,
+
+    public DESCRIPTION: string = null,
+    public PAYMENT_TYPE_GUID: string = null,
+
+    public ATTACHMENT_ID: string = null,
+    public CREATION_TS: string = null,
+    public CREATION_USER_GUID: string = null,
+    public UPDATE_TS: string = null,
+    public UPDATE_USER_GUID: string = null,
+    public GST: string = null
+  ) { }
+
+  static fromJson(json: any) {
+    if (!json) return;
+    return new ClaimRequestDetailModel(
+      json.CLAIM_REQUEST_DETAIL_GUID,
+      json.CLAIM_REQUEST_GUID,
+      json.CLAIM_METHOD_GUID,
+      json.AMOUNT,
+
+      json.DESCRIPTION,
+      json.PAYMENT_TYPE_GUID,
+
+      json.ATTACHMENT_ID,
+      json.CREATION_TS,
+      json.CREATION_USER_GUID,
+      json.UPDATE_TS,
+      json.UPDATE_USER_GUID,
+      json.GST
+    );
+  }
+
+  toJson(stringify?: boolean): any {
+    var doc = {
+      CLAIM_REQUEST_DETAIL_GUID: this.CLAIM_REQUEST_DETAIL_GUID,
+      CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
+      CLAIM_METHOD_GUID: this.CLAIM_METHOD_GUID,
+      AMOUNT: this.AMOUNT,
+
+      DESCRIPTION: this.DESCRIPTION,
+      PAYMENT_TYPE_GUID: this.PAYMENT_TYPE_GUID,
+
+      ATTACHMENT_ID: this.ATTACHMENT_ID,
+      CREATION_TS: this.CREATION_TS,
+      CREATION_USER_GUID: this.CREATION_USER_GUID,
+      UPDATE_TS: this.UPDATE_TS,
+      UPDATE_USER_GUID: this.UPDATE_USER_GUID,
+      GST: this.GST
+    };
+    return stringify ? JSON.stringify({ resource: [doc] }) : doc;
+  }
+}

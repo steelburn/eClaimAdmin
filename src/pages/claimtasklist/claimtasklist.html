@@ -1,0 +1,57 @@
+<!--
+  Generated template for the ClaimtasklistPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary200">
+        <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </button>
+    <ion-title>Finance Task List</ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+
+
+
+      <ion-list>
+          <ion-item>
+              <table class="Tabler list">
+                  <tr class="linedsg TColor">
+                      <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+                      <th class="lgl1">Employee</th>
+                      <th class="lgl1">Department</th>
+                      <th class="lgl1">Month</th>
+                      <th class="lgl1">Status</th>
+                      <th class="lgl1">Total</th>
+                      <th class="lgl1 tblBrRight" style="width:80px">Action</th>
+      
+                  </tr>
+      
+                  <tr class="col7" *ngFor="let claimTaskList of claimTaskLists; let i=index">
+                      <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+                      <td class="lgl1 getHeader"  reshead="Employee" >{{claimTaskList.FULLNAME}}</td>
+                      <td class="lgl1 getHeader"  reshead="Department" >{{claimTaskList.DEPARTMENT}}</td>
+                      <td class="lgl1 getHeader" reshead="Month">{{claimTaskList.MONTH}}</td>
+                      <td class="lgl1 getHeader" reshead="Status">{{claimTaskList.REF_STATUS}}</td>
+                       <!-- <td class="lgl1">{{claimhistory.YEAR}}</td> -->
+                      <td class="lgl1 getHeader" reshead="Total">{{claimTaskList.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+                      <td class="lgl1 getHeader fColor" reshead="Action">
+                          <button ion-button item-end (click)="goToClaimApproverTaskList(claimTaskList.CLAIM_REF_GUID)"><ion-icon name="md-eye"></ion-icon></button>
+                          <!-- <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button> -->
+                      </td>
+                  </tr>
+      
+      
+              </table>
+          </ion-item>
+      </ion-list>
+</ion-content>

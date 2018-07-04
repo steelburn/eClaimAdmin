@@ -1,0 +1,78 @@
+    {
+      "profile": {
+        "levels": {
+          "level": [
+            {
+              "-id": "1",
+              "approver": {
+                "-directManager": "1"
+              },
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": {
+                      "-final": "false"
+                    }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": {
+                      "-final": "false",
+                      "#text": "2"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "-id": "2",
+              "approver": {
+                "-keytype": "userGUID",
+                "#text": "a9653bdf-e42b-b4bd-2bb1-9224cd06646e"
+              },
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": {
+                      "-final": "false"
+                    }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": {
+                      "-final": "false",
+                      "#text": "3"
+                    }
+                  }
+                ]
+              }
+            },           
+            {
+              "-id": "3",
+              "approver": {
+                "-keytype": "userGUID",
+                "#text": "2b93fc11-23d5-db42-dd9f-bb9499071156"
+              },
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": {
+                      "-final": "false"
+                    }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": {
+                      "-final": "true"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }

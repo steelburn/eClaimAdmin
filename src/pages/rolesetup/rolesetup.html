@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>ROLE SETUP</ion-title>
+  <ion-navbar color="primary200">
+    <ion-title>Role Setup</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,18 +15,24 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddRoleClick()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="AddRoleClick()">
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-fab>
 
   <ion-list>
     <ion-item>
       <table class="Tabler">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:60px">NO.</th>
-          <th class="lgl1">NAME</th>
-          <th class="lgl1">DESCRIPTION</th>
-          <th class="lgl1">ACTIVE FLAG</th>
-          <th class="lgl1 tblBrRight" style="width:90px">ACTION</th>
+          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1">Name</th>
+          <th class="lgl1">Description</th>
+          <th class="lgl1">Add</th>
+          <th class="lgl1">Edit</th>
+          <th class="lgl1">Delete</th>
+          <th class="lgl1">View</th>
+          <th class="lgl1">Active Flag</th>          
+          <th class="lgl1 tblBrRight" style="width:90px">Action</th>
 
         </tr>
 
@@ -34,15 +40,37 @@
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{role.NAME}}</td>
           <td class="lgl1">{{role.DESCRIPTION}}</td>
+          
           <td class="lgl1">
-            <ion-toggle class="tog" *ngIf="role.ACTIVATION_FLAG==1" checked=true></ion-toggle>
-            <ion-toggle class="tog" *ngIf="role.ACTIVATION_FLAG==0" checked=false></ion-toggle>
+            <ion-toggle class="yui" *ngIf="role.KEY_ADD==1" checked=true></ion-toggle>
+            <ion-toggle class="yui" *ngIf="role.KEY_ADD==0" checked=false></ion-toggle>
+          </td>
+          <td class="lgl1">
+            <ion-toggle class="yui" *ngIf="role.KEY_EDIT==1" checked=true></ion-toggle>
+            <ion-toggle class="yui" *ngIf="role.KEY_EDIT==0" checked=false></ion-toggle>
+          </td>
+          <td class="lgl1">
+            <ion-toggle class="yui" *ngIf="role.KEY_DELETE==1" checked=true></ion-toggle>
+            <ion-toggle class="yui" *ngIf="role.KEY_DELETE==0" checked=false></ion-toggle>
+          </td>
+          <td class="lgl1">
+            <ion-toggle class="yui" *ngIf="role.KEY_VIEW==1" checked=true></ion-toggle>
+            <ion-toggle class="yui" *ngIf="role.KEY_VIEW==0" checked=false></ion-toggle>
+          </td>
+          
+          <td class="lgl1">
+            <ion-toggle class="yui" *ngIf="role.ACTIVATION_FLAG==1" checked=true></ion-toggle>
+            <ion-toggle class="yui" *ngIf="role.ACTIVATION_FLAG==0" checked=false></ion-toggle>
           </td>
 
 
           <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(role.ROLE_GUID)"><ion-icon name="md-create"></ion-icon></button>
-            <button ion-button item-end (click)="DeleteClick(role.ROLE_GUID)"><ion-icon name="md-close"></ion-icon></button>
+            <button ion-button item-end (click)="EditClick(role.ROLE_GUID)">
+              <ion-icon name="md-create"></ion-icon>
+            </button>
+            <button ion-button item-end (click)="DeleteClick(role.ROLE_GUID)">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
           </td>
         </tr>
 
@@ -55,35 +83,61 @@
   <!-- add Roleform start-->
   <div class="blackcontainer" *ngIf="AddRoleClicked">
   </div>
-  <div class="popup" padding *ngIf="AddRoleClicked">
+  <div class="popup1" padding *ngIf="AddRoleClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
         <div class="icHeaderText">REGISTER NEW ROLE</div>
         <button class="btnR" (click)="CloseRoleClick()">
-          <ion-icon name="md-close"></ion-icon> 
+          <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
       <ion-list>
         <form [formGroup]="Roleform">
-          <ion-item>
-            <ion-label stacked>{{"NAME"}}</ion-label>
+          <ion-item >
+            <ion-label stacked>{{"Name"}}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the role'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{"Description"}}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
+          </ion-item>
+                    
+          <ion-item>
+            <ion-label stacked>{{"Add"}}</ion-label>
+            <ion-toggle formControlName="ADD_PERMISSON" [(ngModel)]="ADD_ngModel_Add"></ion-toggle>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
-            <!-- <ion-input type="text" formControlName="ACTIVATION_FLAG" [(ngModel)]="role_entry.ACTIVATION_FLAG"></ion-input> -->
+            <ion-label stacked>{{"Edit"}}</ion-label>
+            <ion-toggle formControlName="EDIT_PERMISSON" [(ngModel)]="EDIT_ngModel_Add"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"Delete"}}</ion-label>
+            <ion-toggle formControlName="DELETE_PERMISSON" [(ngModel)]="DELETE_ngModel_Add"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"View"}}</ion-label>
+            <ion-toggle formControlName="VIEW_PERMISSON" [(ngModel)]="VIEW_ngModel_Add"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"Active Flag"}}</ion-label>
             <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="ACTIVATION_FLAG_ngModel_Add"></ion-toggle>
           </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"Priority Level"}}</ion-label>
+            <ion-input type="text" formControlName="PRIORITYLEVEL" [(ngModel)]="PRIORITYLEVEL_ngModel_Add" placeholder="{{'Please fill in the priority level'}}"></ion-input>
+          </ion-item>
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+          </div>
         </form>
       </ion-list>
     </ion-card>
@@ -91,7 +145,7 @@
   </div>
   <!-- add Role form end-->
 
-  <!-- edit claimtype form start-->
+  <!-- edit Role form start-->
   <div class="blackcontainer" *ngIf="EditRoleClicked">
   </div>
   <div class="popup" padding *ngIf="EditRoleClicked">
@@ -99,7 +153,7 @@
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">UPDATE ROLE</div>
         <button class="btnR" (click)="CloseRoleClick()">
-          <ion-icon name="md-close"></ion-icon> 
+          <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
 
@@ -107,28 +161,55 @@
         <form [formGroup]="Roleform">
           <ion-item>
 
-            <ion-label stacked>{{"NAME"}}</ion-label>
+            <ion-label stacked>{{"Name"}}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" [value]="NAME_ngModel" placeholder="{{'Please fill in the name in the role'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{"Description"}}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit" [value]="DESCRIPTION_ngModel"
               placeholder="{{'Please fill in the role'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"ACTIVE FLAG"}}</ion-label>
-            <!-- <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="mileage_entry.ACTIVATION_FLAG"></ion-toggle>  -->
+            <ion-label stacked >{{"Add"}}</ion-label>
+            <ion-toggle formControlName="ADD_PERMISSON" [(ngModel)]="ADD_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked >{{"Edit"}}</ion-label>
+            <ion-toggle formControlName="EDIT_PERMISSON" [(ngModel)]="EDIT_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"Delete"}}</ion-label>
+            <ion-toggle formControlName="DELETE_PERMISSON" [(ngModel)]="DELETE_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked >{{"View"}}</ion-label>
+            <ion-toggle formControlName="VIEW_PERMISSON" [(ngModel)]="VIEW_ngModel_Edit"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked >{{"Active Flag"}}</ion-label>
+
             <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="ACTIVATION_FLAG_ngModel_Edit"></ion-toggle>
           </ion-item>
 
+          <ion-item>
+            <ion-label stacked>{{"Priority Level"}}</ion-label>
+            <ion-input type="text" formControlName="PRIORITYLEVEL" [(ngModel)]="PRIORITYLEVEL_ngModel_Edit" [value]="PRIORITYLEVEL_ngModel"
+              placeholder="{{'Please fill in the priority level'}}"></ion-input>
+          </ion-item>
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="Update(role_details.ROLE_GUID)">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Update(role_details.ROLE_GUID)">{{"SUBMIT" | translate}}</button>
           </div>
         </form>
       </ion-list>
     </ion-card>
   </div>
+  <!-- edit Role form end-->
 
 </ion-content>

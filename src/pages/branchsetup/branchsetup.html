@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>BRANCH SETUP</ion-title>
+  <ion-navbar color="primary200">
+    <ion-title>Tenant Site Setup</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,17 +15,55 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddBranchsClick()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="AddBranchsClick()">
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-fab>
 
-  <ion-list>
+  <!-- <ion-list>
     <ion-list-header>
       BRANCH NAME
     </ion-list-header>
     <ion-item *ngFor="let branch of branchs">
-      <!-- MALAYSIA -->{{branch.NAME}}
+      {{branch.NAME}}
       <button ion-button item-end (click)="EditClick(branch.BRANCH_GUID)"><ion-icon name="md-create"></ion-icon></button>
       <button ion-button item-end (click)="DeleteClick(branch.BRANCH_GUID)"><ion-icon name="md-close"></ion-icon></button>
+    </ion-item>
+  </ion-list> -->
+
+
+  <ion-list>
+    <ion-item>
+      <table class="Tabler list">
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1">Company Name</th>
+          <th class="lgl1">Branch Name</th>
+          <th class="lgl1">Head Quarter</th>
+          <th class="lgl1 tblBrRight" style="width:90px">Action</th>
+        </tr>
+
+        <tr class="col7" *ngFor="let branch of branchs; let i=index">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="Company Name">{{branch.NAME}}</td>
+          <td class="lgl1 getHeader"reshead="Branch Name">{{branch.SITE_NAME}}</td>
+          <td class="lgl1 getHeader" reshead="Action">
+            <ion-toggle class="tog" *ngIf="branch.ISHQ==1" checked=true></ion-toggle>
+            <ion-toggle class="tog" *ngIf="branch.ISHQ==0" checked=false></ion-toggle>
+          </td>
+
+          <td class="lgl1 getHeader fColor">
+            <button ion-button item-end (click)="EditClick(branch.TENANT_COMPANY_GUID, branch.TENANT_COMPANY_SITE_GUID, branch.NAME, branch.SITE_NAME)">
+              <ion-icon name="md-create"></ion-icon>
+            </button>
+            <button ion-button item-end (click)="DeleteClick(branch.TENANT_COMPANY_GUID, branch.TENANT_COMPANY_SITE_GUID)">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+          </td>
+        </tr>
+
+
+      </table>
     </ion-item>
   </ion-list>
 
@@ -39,19 +77,31 @@
 
         <div class="icHeaderText">REGISTER NEW BRANCH</div>
         <button class="btnR" (click)="CloseBranchsClick()">
-          <ion-icon name="md-close"></ion-icon> 
+          <ion-icon name="md-close"></ion-icon>
         </button>
 
       </ion-card-header>
       <ion-list>
         <form [formGroup]="Branchform">
+
           <ion-item>
-            <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" 
-            placeholder="{{'Please fill in the branch name'}}"></ion-input>
+            <ion-label stacked>{{"Company Name"}}</ion-label>
+            <ion-input type="text" formControlName="COMPANYNAME" [(ngModel)]="COMPANYNAME_ngModel_Add" placeholder="{{'Please fill in the company name'}}"></ion-input>
           </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"Branch Name"}}</ion-label>
+            <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Add" placeholder="{{'Please fill in the branch name'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"Is It HQ"}}</ion-label>
+            <ion-toggle formControlName="ISHQ_FLAG" [(ngModel)]="ISHQ_FLAG_ngModel_Add"></ion-toggle>
+          </ion-item>
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button></div>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+          </div>
         </form>
       </ion-list>
     </ion-card>
@@ -69,19 +119,24 @@
 
         <div class="icHeaderText">UPDATE BRANCH</div>
         <button class="btnR" (click)="CloseBranchsClick()">
-          <ion-icon name="md-close"></ion-icon> 
+          <ion-icon name="md-close"></ion-icon>
         </button>
 
       </ion-card-header>
       <ion-list>
         <form [formGroup]="Branchform">
           <ion-item>
-            <ion-label stacked>{{"BRANCH NAME"}}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" 
-            placeholder="{{'Please fill in the branch name'}}"></ion-input>
+            <ion-label stacked>{{"Company Name"}}</ion-label>
+            <ion-input type="text" formControlName="COMPANYNAME" [(ngModel)]="COMPANYNAME_ngModel_Edit" placeholder="{{'Please fill in the company name'}}"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"Branch Name"}}</ion-label>
+            <ion-input type="text" formControlName="BRANCHNAME" [(ngModel)]="BRANCHNAME_ngModel_Edit" placeholder="{{'Please fill in the branch name'}}"></ion-input>
           </ion-item>
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="!Update(branch_details.BRANCH_GUID)">{{"SUBMIT" | translate}}</button></div>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Branchform.valid" (click)="!Update(companysite_details[0], companysite_details[1])">{{"SUBMIT" | translate}}</button>
+          </div>
         </form>
       </ion-list>
     </ion-card>

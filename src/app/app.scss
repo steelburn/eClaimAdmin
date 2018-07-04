@@ -1,69 +1,829 @@
-// Media of at most the maximum breakpoint width. No query for the largest breakpoint.
-// Makes the @content apply to the given breakpoint and narrower.
-@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
-  $max: breakpoint-max($name, $breakpoints);
-  @if $max {
-    @media (max-width: $max) {
-      @content;
-    }
-  } @else {
-    @content;
-  }
-}
+// http://ionicframework.com/docs/theming/
 
 
-// Name of the next breakpoint, or null for the last breakpoint.
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
 //
-//    >> breakpoint-next(sm)
-//    md
-//    >> breakpoint-next(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
-//    md
-//    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl))
-//    md
-@function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
-  $n: index($breakpoint-names, $name);
-  @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
-}
-
-
-// Maximum breakpoint width. Null for the largest (last) breakpoint.
-// The maximum value is calculated as the minimum of the next one less 0.1.
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
 //
-//    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
-//    767px
-@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
-  $next: breakpoint-next($name, $breakpoints);
-  @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+
+ion-fab[top1] {
+    top: 0 !important;
+  }
+
+
+
+  .imgw{
+    max-width: 70px;
+border-radius: 50%;
+
+}
+
+.blackcontainer{
+    top: 0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background:black;
+    position: fixed;
+    opacity: 0.7;
+    
+}
+.popup0{
+    width: 100%;
+    left: 0px;
+    top: 60px;
+    position: fixed;
+        height: 500px;
+}
+.popup{
+    width: 50%;
+    left:258px;
+    top: 60px;
+    position: fixed;
+        height: 500px;
 }
 
 
-// Creates text alignment classes based on screen size
-// TODO this would be nice to add to the framework
-@each $breakpoint in map-keys($grid-breakpoints) {
-  $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+.popup1{
+    width: 83%;
+    left: 85px;
+    top: 60px;
+    position: fixed;
+        height: 500px;
+}
 
-  @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
-    // Provide text `[text-{bp}]` attributes for aligning text based on screen size
-    [text#{$infix}-center] {
-      text-align: center;
-    }
+.popup2{
+    width: 83%;
+    left: 21px;
+    top: 38px;
+    position: fixed;
+    height: 480px;
 
-    [text#{$infix}-left] {
-      text-align: left;
-    }
+}
 
-    [text#{$infix}-right] {
-      text-align: right;
-    }
 
-    [hidden#{$infix}-up] {
-      display: none;
-    }
+.popup3{
+    width: 83%;
+left: 125px;
+top: 38px;
+position: fixed;
+height: 480px;
+}
+
+
+.popup4{
+    width: 83%;
+    left: 85px;
+    top: 96px;
+    position: fixed;
+        height: 500px;
+}
+
+.btn{
+
+    text-align: center;
+    margin: 10px 0px;
+}
+
+.btnR{
+    width: 33px !important;
+    height: 38px;
+    right: 16px;
+    font-size: 22px !important;
+    top: 17px;
+    position: absolute !important ;
+    background: #EF5350;
+    color: white;
+}
+
+
+.icHeaderText {
+    font-size: 15px !important;
+    
+}
+
+
+
+.cm{
+    height: 100%;
+}
+
+.tnUserRow {border-bottom: 2px solid #efefef;}
+
+
+.Subtitle {
+    text-align: center;
+    font-size: 0.869vw;
+    background: gray;
+    color: white;
+    padding-top: 14px !important; 
+  }
+  
+  .container{
+    width: calc(50% - 23px);
+    display: inline-block;
   }
 
-  @include media-breakpoint-down($breakpoint, $grid-breakpoints) {
-    [hidden#{$infix}-down] {
-      display: none;
-    }
+
+  .iconf {
+    font-size: 3.5vw;
+
+
+       transition: width 2s;
   }
+  
+  .round1 {
+    float: left;
+    width: calc(15% - 7px);
+    margin: 10px !important;
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
+
+  .round2 {
+    float: left;
+    width: calc(25% - 20px) ;
+    margin: 10px !important;
+
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
+
+  .round3 {
+    float: left;
+    width: calc(50% - 20px);
+    margin: 10px !important;
+ 
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
+
+
+
+  .icon {
+    text-align: center;
+  }
+
+    
+    
+.popscroll{
+    width: 97.5%;
+    top: 60px;
+    position: fixed;
+    height: calc(100% - 89px);
+    overflow-y: auto;
+}
+
+/**  STYLE 11 */
+
+.popscroll::-webkit-scrollbar {
+    width: 10px;
+    background-color: none;
+}
+
+.popscroll::-webkit-scrollbar-track {
+border-radius: 10px ;
+background: rgba(0,0,0,0.1);
+border: none;
+}
+
+.popscroll::-webkit-scrollbar-thumb {
+border-radius: 10px;
+background: #89937A;
+border: 1px solid #aaa;
+}
+
+.popscroll::-webkit-scrollbar-thumb:hover {
+background: #fff;
+}
+
+.popscroll::-webkit-scrollbar-thumb:active {
+background: linear-gradient(left, #22ADD4, #1E98BA);
+}
+
+.btn{
+
+    text-align: center;
+    margin: 10px 0px;
+}
+
+.btnR{
+    width: 33px !important;
+    height: 37px !important;
+    right: 16px !important;
+    font-size: 22px !important;
+    top: 16px !important;
+    background: #ff6b6b !important;
+    color: #fff !important;
+    position: absolute !important ;
+}
+.headerColor-white {
+    background: #ffffff !important;
+    border-color: #e8e8e8 !important;
+    color: #a5a3a3 !important;
+}
+
+
+.icHeaderText {
+    font-size: 15px !important;
+    
+}
+
+
+
+.icTitle {
+    border-bottom: 1px solid !important;
+
+    padding: 10px !important;
+}
+
+.icTitle2 {
+    border-bottom: 1px solid !important;
+    margin-bottom: 0px !important;
+    padding: 10px !important;
+    background: #00A86B;
+}
+
+.cm{
+    height: 100%;
+}
+.settingBtnFab {margin-left: 50px !important;margin-right: 50px !important;}
+
+.tnUserRow {border-bottom: 2px solid #efefef;}
+
+
+
+
+.eClaimSubTitle {
+    color: black;
+    font-size: 16px;
+    padding: 10px 0px;
+    width: 100%;
+    font-weight: bold;
+} 
+
+.eClaimSubTitle1 {
+    color: black;
+    font-size: 16px;
+    margin-left: 20px;
+    width: 100%;
+} 
+
+.eClaimSubTitle2 {
+    color: black;
+    font-size: 18px;
+    margin-left: 15px;
+    margin-top: 10px;
+    width: 100%;
+} 
+
+.eClaimSubTitle3 {
+    color: black;
+    font-size: 20px;
+    padding:200px 50px;
+    width: 100%;
+} 
+
+.eClaimSubTitle4 {
+    color: black;
+    font-size: 20px;
+    width: 100%;
+} 
+.scroll{
+    height: calc(100% - 48px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.cm{
+    height: 100%;
+}
+
+.hiset{
+    display: block;
+
+}
+.nofu{
+    width: 605px;
+    margin:45pt auto;
+    border-radius: 5px;
+}
+.fuha{
+    width: calc(50% - 2pt);
+    display: inline-block;
+}
+
+.fuha1{
+    width: calc(100% - 2pt);
+    display: inline-block;
+
+}
+
+
+.fuha2{
+    width: calc(19% - 2pt);
+    display: inline-block;
+}
+
+
+.fuha3{
+    width: calc(33.333% - 2pt);
+    display: inline-block;
+}
+
+
+.Tabler {
+    width: 100%;
+    padding-top: 35px;
+    border-collapse: collapse;
+     table-layout:fixed; 
+}
+
+.Tabler tr.col7 td {
+    padding: 10px;
+	text-align: left;
+	word-wrap: break-word;
+	border: none;
+	border-bottom: 1px solid gainsboro;
+}
+
+
+
+    tr.colth {
+        color: white;
+    }
+    
+    th.lgl1 {
+        padding: 10px 5px;
+        border: none;
+        text-align: left;
+    }
+        
+
+
+        th.lgl2 {
+        padding: 5px 5px;
+        border: none;
+        font-size: 14px;
+    }
+        
+    td.lgl2 {
+        font-size: 14px;
+         padding: 2px;
+         text-align: center;
+       word-wrap: break-word;
+       border: none;
+         border-bottom: 1px solid gainsboro;
+         white-space: normal !important;
+    }
+
+    .Tabler tr.col7 td.lgl11 {
+
+        padding: 16px;
+        text-align: right;
+        word-wrap: break-word;
+        border-bottom:none;
+    }
+
+    .tblBrLeft { border-radius: 5px 0 0 5px !important;}
+    .tblBrRight { border-radius: 0 5px 5px 0 !important;}
+    .TColor{background: #A9A9A9 ;color: white;}
+.linedsg {border-bottom: 1px solid gainsboro ;}
+.graphHeaderStyle {border-top: 5px solid #A9A9A9 ;border-bottom: 1px solid gainsboro;}
+.fullWidth {width: 100% !important;}
+.row {
+
+    border-bottom: 1px solid gainsboro !important;
+}
+
+
+::-moz-placeholder {
+    font-size: 15px;
+  }
+  
+  :-ms-input-placeholder {
+    font-size: 15px;
+  }
+  
+::-webkit-input-placeholder {
+    font-size: 15px;
+  }
+
+  .datetime-md .datetime-placeholder { font-size: 15px; }
+
+ion-item.item.item-block.item-md.item-checkbox {
+    background: none !important;
+} 
+
+
+
+.split-pane-md.split-pane-visible > .split-pane-side {
+    min-width: 264px;
+    max-width: 20%;
+    border-right: 1px solid #dedede;
+    border-left: 0;
+    font-size: xx-small !important;
+}
+
+.clear{
+    clear: both;
+}
+
+.UPContent{
+    width:100%;
+}
+
+button.item.item-block.item-md {
+    font-size: 14px !important;
+}
+
+page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched{
+    color: black !important;
+}
+
+button.item.item-block.item-md{
+    font-size: 1.3rem;
+
+}
+
+.LeftMenu{
+    max-width: 150px;
+    height: 100%;
+    
+}
+
+.label-md[stacked] {
+    font-size: 14px !important;
+}
+
+.container{
+    max-height: 465px;
+    overflow-y: auto;
+
+}
+
+
+.scroll-content {
+
+    overflow-y: auto !important;
+
+  }
+
+
+  .over{
+      max-width: width 100px !important;
+  }
+
+
+ 
+//overwrite default css
+
+.popover-md .popover-content {
+    width: auto;
+}
+
+
+.popover-ios .popover-content {
+    width: auto;
+}
+
+.text-input-md {
+    margin: 11px 8px;
+}
+
+
+.text-input-ios {
+    margin: 11px 8px;
+}
+
+ion-toggle.toggle.toggle-md{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+ion-toggle.toggle.toggle-md.tog{
+    padding-left: 123px !important;
+    padding-right: 0px !important;
+}
+ion-toggle.toggle.toggle-md.yui{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+ion-toggle.toggle.toggle-md.stog{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.toggle-md.toggle-checked .toggle-icon{
+
+background-color: #5F9EA0,;
+}
+
+button[ion-fab] {
+    overflow: visible;
+    position: relative;
+    contain: layout;
+
+    ion-label {
+        position: absolute;
+        top: -8px;
+        right: 40px;
+        color: white;
+        background-color: rgba(0,0,0,0.7);
+        line-height: 24px;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+}
+
+// .item-input ion-input, .item-input ion-textarea {
+//     border-radius:5pt;
+//     padding-left: 5pt;
+// }
+
+
+// .item-label-stacked .input-wrapper, .item-label-floating .input-wrapper {
+//     border-bottom: 1pt solid gainsboro;
+// }
+
+
+// .item-input ion-input.cocus.input{
+//     border-radius: 5px;
+//     background: whitesmoke;
+//     padding-left: 5pt;
+// }
+
+.card-md .item-md.item-block .item-inner {
+    border-bottom: 1pt solid gainsboro;
+  }
+
+// .item-input ion-input, .item-input ion-textarea.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
+
+
+
+
+// ion-datetime.datetime.datetime-md.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
+
+// ion-datetime.datetime.datetime-ios.ng-dirty.ng-valid.ng-touched {
+//     border: 0;
+// }
+
+
+
+
+// ion-select.select.select-ios.ng-dirty.ng-valid.ng-touched{
+//     border: 0;
+// }
+// ion-select.select.select-md.ng-dirty.ng-valid.ng-touched{
+//     border: 0;
+// }
+
+.item-md.item-label-stacked [item-right], .item-md.item-label-floating [item-right], .item-md.item-label-stacked [item-end], .item-md.item-label-floating [item-end] {
+    margin-top: 29px;
+    margin-left: 5px;
+}
+.item-ios.item-label-stacked [item-right], .item-ios.item-label-floating [item-right], .item-ios.item-label-stacked [item-end], .item-ios.item-label-floating [item-end] {
+    margin-top: 30px;
+    margin-left: 5px;
+}
+.action-sheet-group {
+    overflow: auto !important; 
+}
+
+.til {
+    top: 36%;
+    font-size: 2.2em;
+    width: 100%;
+  }
+
+  .subtil{
+    font-size: 1.0em;
+    top: 52%;
+    width: 100%;
+  }
+
+
+
+.conta{
+    width: 45.5% !important;
+    display: inline-block !important;
+}
+
+  .label-md[stacked] {
+    font-size: 12px !important;
+  }
+
+//color scheme workout
+
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default, .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {
+    color: white !important;
+ }
+
+// .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default, .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {
+//     color: black !important;
+// }
+
+
+
+
+//responsive specific for chart
+
+@media (max-width: 466px){
+
+    .nofu{
+        width: 300px;
+    }
+
+    .round3{
+        display: none;
+    }
+
+    
+  .round2 {
+    width: calc(100% - 20px) ;
+  }
+
+  .hid{
+      display: none;
+  }
+
+}
+
+@media (min-width: 450px) and (max-width: 1138px){
+    .round3{
+        width: calc(100% - 20px);
+    }
+    .hide{
+        width: calc(100% - 20px);
+    }
+  .round2 {
+
+    width: calc(50% - 20px) ;
+
+  }
+
+}
+
+//responsive min size
+$ip5-phone: 320px;
+$tablet7: 600px;
+
+//specific for login card
+
+@media (min-width: 467px) and (max-width:610px) {
+    .nofu{
+        width:430px;
+    }
+}
+
+//responsive in between size- tablet / smaller laptop screen 
+
+@media (min-width: 600px) and (max-width: 1080px) {
+    .popup1{
+        width: 97%;
+        left: 10px;
+        top: 60px;
+        position: fixed;
+            height: 500px;
+    }
+
+    .round1 {
+        width: calc(25% - 20px);
+        min-height: 100px;
+      }
+  
+  
+      .Subtitle {
+        text-align: center;
+        font-size: 3.5vw;
+      }
+  
+  
+      .iconf {
+        font-size: 10vw;
+        color  :#009688,
+
+
+      }
+    
+ 
+            
+}
+
+
+@media (max-width: 599px){
+
+
+    .hiset{
+        display: none;
+        height:0;
+    }
+    
+    .popup1{
+        width: 94%;
+        left: 0px;
+        top: 60px;
+        position: fixed;
+            height: 500px;
+    }
+
+    .popup0{
+        width: 100%;
+        left: 0px;
+        top: 60px;
+        position: fixed;
+            height: 500px;
+    }
+
+    .fuha{
+        width: calc(100% - 2pt);
+        display: inline-block;
+    
+    }
+
+    .fuha2{
+        width: calc(100% - 2pt);
+        display: inline-block;
+    }
+
+    .fuha3{
+        width: calc(100% - 2pt);
+        display: inline-block;
+    }
+    .round1 {
+        width: calc(100% - 20px);
+        min-height: 100px;
+      }
+  
+  
+      .Subtitle {
+        text-align: center;
+        font-size: 3.5vw;
+      }
+  
+  
+      .iconf {
+        font-size: 10vw;
+        color  :#009688,
+
+
+      }
+    
+ 
+
+              
+}
+
+//combined media tablet and phone. For specific size, use previous two media rules.
+@media (min-width: 0px) and (max-width: 1080px){
+    .Tabler tr.col7 td {
+        padding: 4px;
+    }
+
+  
+    table.list th {
+        display: none;
+     }
+    
+        table.list tr {
+            display: block;
+            border: 1px solid #999999;
+           border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+    
+           table.list tr td {
+                display: block;
+             text-align: left !important;
+                 border: none;
+             }
+    
+    
+     
+                table.list tr.col7 td.getHeader::before {
+    
+                    content: attr(reshead)" : ";
+                    font-weight: bold;
+                    display: inline !important;
+                    margin-top: 5px;
+                }
 }

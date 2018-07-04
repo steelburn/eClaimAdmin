@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -12,6 +13,7 @@ import { ClaimTypeSetup_Service } from '../../services/claimtypesetup_service';
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
+import { LoginPage } from '../login/login';
 
 
 /**
@@ -23,20 +25,19 @@ import { UUID } from 'angular2-uuid';
 @IonicPage()
 @Component({
   selector: 'page-claimtype',
-  templateUrl: 'claimtype.html', providers: [ClaimTypeSetup_Service, BaseHttpService]
+  templateUrl: 'claimtype.html', providers: [ClaimTypeSetup_Service, BaseHttpService, TitleCasePipe]
 })
 export class ClaimtypePage {
   claimtype_entry: ClaimTypeSetup_Model = new ClaimTypeSetup_Model();
   Claimtypeform: FormGroup;
   //claimtype: ClaimTypeSetup_Model = new ClaimTypeSetup_Model();
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_type' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_type' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   public claimtypes: ClaimTypeSetup_Model[] = [];
 
   public AddClaimtypeClicked: boolean = false;
-  public EditClaimTypeClicked: boolean = false;
   public Exist_Record: boolean = false;
 
   public exist_record_details: any;
@@ -47,26 +48,36 @@ export class ClaimtypePage {
   public DESCRIPTION_ngModel_Add: any;
   //---------------------------------------------------------------------
 
-  //Set the Model Name for edit------------------------------------------
-  public NAME_ngModel_Edit: any;
-  public DESCRIPTION_ngModel_Edit: any;
-  //---------------------------------------------------------------------
-
+  Add_Form: boolean = false; Edit_Form: boolean = false; HeaderText = "";
   public AddClaimtypeClick() {
-    this.AddClaimtypeClicked = true;
-    this.ClearControls();
+    if (this.Edit_Form == false) {
+      this.AddClaimtypeClicked = true; this.Add_Form = true; this.Edit_Form = false; this.HeaderText = "REGISTER NEW CLAIM TYPE";
+      this.ClearControls();
+    }
+    else {
+      alert('Sorry !! You are in Edit Mode.');
+    }
   }
 
   public EditClick(CLAIM_TYPE_GUID: any) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
     this.ClearControls();
-    this.EditClaimTypeClicked = true;
+    this.AddClaimtypeClicked = true; this.Add_Form = false; this.Edit_Form = true; this.HeaderText = "UPDATE NEW CLAIM TYPE";
+
     var self = this;
     this.claimtypesetupservice
       .get(CLAIM_TYPE_GUID)
       .subscribe((data) => {
         self.claimtype_details = data;
-        this.NAME_ngModel_Edit = self.claimtype_details.NAME; localStorage.setItem('Prev_cl_Name', self.claimtype_details.NAME);
-        this.DESCRIPTION_ngModel_Edit = self.claimtype_details.DESCRIPTION;
+
+        this.NAME_ngModel_Add = self.claimtype_details.NAME; localStorage.setItem('Prev_cl_Name', self.claimtype_details.NAME);
+        this.DESCRIPTION_ngModel_Add = self.claimtype_details.DESCRIPTION;
+
+        this.loading.dismissAll();
       });
   }
 
@@ -101,203 +112,203 @@ export class ClaimtypePage {
   }
 
   public CloseClaimtypeClick() {
-
     if (this.AddClaimtypeClicked == true) {
       this.AddClaimtypeClicked = false;
-    }
-    if (this.EditClaimTypeClicked == true) {
-      this.EditClaimTypeClicked = false;
+      this.Add_Form = true; this.Edit_Form = false;
     }
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private claimtypesetupservice: ClaimTypeSetup_Service, private alertCtrl: AlertController) {
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.claimtypes = data.resource;
-      });
+  loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private claimtypesetupservice: ClaimTypeSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+    if (localStorage.getItem("g_USER_GUID") == null) {
+      alert('Sorry !! Please Login.');
+      this.navCtrl.push(LoginPage);
+    }
+    else {
+      //Get the role for this page------------------------------
+      this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        if (localStorage.getItem("g_KEY_ADD") == "0") { this.button_Add_Disable = true; }
+        if (localStorage.getItem("g_KEY_EDIT") == "0") { this.button_Edit_Disable = true; }
+        if (localStorage.getItem("g_KEY_DELETE") == "0") { this.button_Delete_Disable = true; }
+        if (localStorage.getItem("g_KEY_VIEW") == "0") { this.button_View_Disable = true; }
+      }
 
-    this.Claimtypeform = fb.group({
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][0-9a-zA-Z ]+'), Validators.required])],
-      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //DESCRIPTION: [null, Validators.compose([Validators.pattern('[a-zA-Z][a-zA-Z ]+'), Validators.required])],
-      //NAME: ["", Validators.required],
-      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //DESCRIPTION: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][0-9a-zA-Z ]+'), Validators.required])],
-      //DESCRIPTION: ["", Validators.required],
-    });
+      //Clear localStorage value--------------------------------      
+      this.ClearLocalStorage();
+
+      //Display Grid---------------------------- 
+      this.DisplayGrid();
+
+      //----------------------------------------
+      this.Claimtypeform = fb.group({
+        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        DESCRIPTION: [null],
+      });
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimtypePage');
   }
 
-  Save() {
-    if (this.Claimtypeform.valid) {
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      let options = new RequestOptions({ headers: headers });
-      let url: string;
-      url = this.baseResource_Url + "main_claim_type?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.http.get(url, options)
-        .map(res => res.json())
-        .subscribe(
-        data => {
-          let res = data["resource"];
-          if (res.length == 0) {
-            console.log("No records Found");
-            if (this.Exist_Record == false) {
-              this.claimtype_entry.NAME = this.NAME_ngModel_Add.trim();
-              this.claimtype_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
-
-              this.claimtype_entry.CLAIM_TYPE_GUID = UUID.UUID();
-              this.claimtype_entry.TENANT_GUID = UUID.UUID();
-              this.claimtype_entry.CREATION_TS = new Date().toISOString();
-              this.claimtype_entry.CREATION_USER_GUID = '1';
-              this.claimtype_entry.UPDATE_TS = new Date().toISOString();
-              this.claimtype_entry.UPDATE_USER_GUID = "";
-
-              this.claimtypesetupservice.save(this.claimtype_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Claim Type Registered successfully');
-                    //location.reload();
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
-            }
-          }
-          else {
-            console.log("Records Found");
-            alert("The Claimtype is already Exist.")
-
-          }
-
-        },
-        err => {
-          this.Exist_Record = false;
-          console.log("ERROR!: ", err);
-        }
-        );
-
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_cl_Name') == null) {
+      localStorage.setItem('Prev_cl_Name', null);
+    }
+    else {
+      localStorage.removeItem("Prev_cl_Name");
     }
   }
-  getClaimtypeList() {
-    let self = this;
-    let params: URLSearchParams = new URLSearchParams();
-    self.claimtypesetupservice.get_claim(params)
-      .subscribe((claimtypes: ClaimTypeSetup_Model[]) => {
-        self.claimtypes = claimtypes;
+
+  DisplayGrid() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.claimtypes = data.resource;
+
+        this.loading.dismissAll();
       });
   }
 
-  Update(CLAIM_TYPE_GUID: any) {
+  Save() {
     if (this.Claimtypeform.valid) {
-    if (this.claimtype_entry.NAME == null) { this.claimtype_entry.NAME = this.NAME_ngModel_Edit.trim(); }
-    if (this.claimtype_entry.DESCRIPTION == null) { this.claimtype_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit.trim(); }
-    
-   
+      //for Save Set Entities------------------------------------------------------------------------
+      if (this.Add_Form == true) {
+        this.SetEntityForAdd();
+      }
+      //for Update Set Entities----------------------------------------------------------------------
+      else {
+        this.SetEntityForUpdate();
+      }
+      //Common Entitity For Insert/Update-----------------    
+      this.SetCommonEntityForAddUpdate();
+
+      //Load the Controller--------------------------------
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+      });
+      this.loading.present();
+      //--------------------------------------------------
+
+      if (this.NAME_ngModel_Add.trim().toUpperCase() != localStorage.getItem('Prev_cl_Name').toUpperCase()) {
+        let val = this.CheckDuplicate();
+        val.then((res) => {
+          if (res.toString() == "0") {
+            //---Insert or Update-----------
+            if (this.Add_Form == true) {
+              //**************Save service if it is new details*************************              
+              this.Insert();
+              //**************************************************************************
+            }
+            else {
+              //**************Update service if it is new details*************************              
+              this.Update();
+              //**************************************************************************
+            }
+          }
+          else {
+            alert("The Claim Type is already Exist.");
+            this.loading.dismissAll();
+          }
+        });
+        val.catch((err) => {
+          console.log(err);
+        });
+      }
+      else {
+        //Simple update---------- 
+        this.Update();
+      }
+    }
+  }
+
+  SetEntityForAdd() {
+    this.claimtype_entry.CLAIM_TYPE_GUID = UUID.UUID();
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.claimtype_entry.TENANT_GUID = UUID.UUID();
+    }
+    else {
+      this.claimtype_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    this.claimtype_entry.CREATION_TS = new Date().toISOString();
+    this.claimtype_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.claimtype_entry.UPDATE_TS = new Date().toISOString();
+    this.claimtype_entry.UPDATE_USER_GUID = "";
+  }
+
+  SetEntityForUpdate() {
+    this.claimtype_entry.CLAIM_TYPE_GUID = this.claimtype_details.CLAIM_TYPE_GUID;
     this.claimtype_entry.TENANT_GUID = this.claimtype_details.TENANT_GUID;
     this.claimtype_entry.CREATION_TS = this.claimtype_details.CREATION_TS;
     this.claimtype_entry.CREATION_USER_GUID = this.claimtype_details.CREATION_USER_GUID;
-
-    this.claimtype_entry.CLAIM_TYPE_GUID = CLAIM_TYPE_GUID;
     this.claimtype_entry.UPDATE_TS = new Date().toISOString();
-    this.claimtype_entry.UPDATE_USER_GUID = '1';
+    this.claimtype_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+  }
 
-    if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_cl_Name')) {
-      // let headers = new Headers();
-      // headers.append('Content-Type', 'application/json');
-      // let options = new RequestOptions({ headers: headers });
-      let url: string;
-      url = this.baseResource_Url + "main_claim_type?filter=(NAME=" + this.NAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.http.get(url)
+  SetCommonEntityForAddUpdate() {
+    this.claimtype_entry.NAME = this.titlecasePipe.transform(this.NAME_ngModel_Add.trim());
+    this.claimtype_entry.DESCRIPTION = this.titlecasePipe.transform(this.DESCRIPTION_ngModel_Add.trim());
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_cl_Name");
+  }
+
+  CheckDuplicate() {
+    let url: string = "";
+    url = this.baseResource_Url + "main_claim_type?filter=NAME=" + this.NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+    let result: any;
+    return new Promise((resolve) => {
+      this.http
+        .get(url)
         .map(res => res.json())
-        .subscribe(
-        data => {
-          let res = data["resource"];
-          console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_cl_Name'));
-
-          if (res.length == 0) {
-            console.log("No records Found");
-            this.claimtype_entry.NAME = this.NAME_ngModel_Edit.trim();
-            
-            //**************Update service if it is new details*************************
-            this.claimtypesetupservice.update(this.claimtype_entry)
-              .subscribe((response) => {
-                if (response.status == 200) {
-                  alert('hii');
-                  alert('Claimtype updated successfully');
-                  this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                }
-              });
-            //**************************************************************************
-          }
-          else {
-            console.log("Records Found");
-            alert("The Claimtype is already Exist. ");
-          }
-        },
-        err => {
-          this.Exist_Record = false;
-          console.log("ERROR!: ", err);
+        .subscribe(data => {
+          result = data["resource"];
+          resolve(result.length);
         });
-    }
-    else {
-      if (this.claimtype_entry.NAME == null) { this.claimtype_entry.NAME = localStorage.getItem('Prev_cl_Name'); }
-      this.claimtype_entry.NAME = this.NAME_ngModel_Edit.trim();
-      
-      //**************Update service if it is old details*************************
-    this.claimtypesetupservice.update(this.claimtype_entry)
+    });
+  }
+
+  Insert() {
+    this.claimtypesetupservice.save(this.claimtype_entry)
       .subscribe((response) => {
         if (response.status == 200) {
-          alert('Claim Type updated successfully');
-          //location.reload();
+          alert('Claim Type Registered Successfully');
+
+          //Remove all storage values-----------------------------------------          
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
           this.navCtrl.setRoot(this.navCtrl.getActive().component);
         }
       });
   }
-}
-}
-ClearControls()
-{
-  this.NAME_ngModel_Add = "";
-  this.DESCRIPTION_ngModel_Add = "";
 
-  this.NAME_ngModel_Edit = "";
-  this.DESCRIPTION_ngModel_Edit = "";
+  Update() {
+    this.claimtypesetupservice.update(this.claimtype_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Claim Type Updated Successfully');
+
+          //Remove all storage values-----------------------------------------          
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  ClearControls() {
+    this.NAME_ngModel_Add = "";
+    this.DESCRIPTION_ngModel_Add = "";
+  }
 }
-}
-
- // if (this.Claimtypeform.valid) {
-    //   let headers = new Headers();
-    //   headers.append('Content-Type', 'application/json');
-    //   let options = new RequestOptions({ headers: headers });
-    //   let url: string;
-    //   url = "http://api.zen.com.my/api/v2/zcs/_table/main_claim_type?filter=(NAME=" + this.claimtype_entry.NAME + ")&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881";
-    //   this.http.get(url, options)
-    //     .map(res => res.json())
-    //     .subscribe(
-    //     data => {
-    //       let res = data["resource"];
-    //       if (res.length == 0) {
-    //         console.log("No records Found");
-    //         if (this.Exist_Record == false) {
-    // if (this.Claimtypeform.valid) {
-
-//}
-// else {
-//   console.log("Records Found");
-//   alert("The Claimtype is already Added.")
-
-// }
-// },
-// err => {
-//   this.Exist_Record = false;
-//   console.log("ERROR!: ", err);
-// }
-// );
-// }
-// }
-// }

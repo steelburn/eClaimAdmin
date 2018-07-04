@@ -13,7 +13,9 @@ export class UserData {
   constructor(
     public events: Events,
     public storage: Storage
-  ) {}
+  ) {
+    
+  }
 
   hasFavorite(sessionName: string): boolean {
     return (this._favorites.indexOf(sessionName) > -1);
@@ -53,7 +55,7 @@ export class UserData {
   };
 
   getUsername(): Promise<string> {
-    return this.storage.get('username').then((value) => {
+    return this.storage.get('username').then((value) => { 
       return value;
     });
   };

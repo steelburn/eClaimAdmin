@@ -6,6 +6,7 @@
 *.log
 *.tmp
 *.tmp.*
+*.zip
 log.txt
 *.sublime-project
 *.sublime-workspace
@@ -13,6 +14,7 @@ log.txt
 npm-debug.log*
 
 .idea/
+.sourcemaps/
 .sass-cache/
 .tmp/
 .versions/
@@ -33,3 +35,4 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 www/build/
+package-lock.json

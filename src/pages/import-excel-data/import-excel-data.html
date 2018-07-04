@@ -1,0 +1,83 @@
+<!--
+  Generated template for the ImportExcelDataPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <!-- hideBackButton="true" -->
+  <ion-navbar color="primary200">
+    <ion-title>Import Data</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-item>  
+        <h3>To main_customer</h3>
+      <input type="file" style="display: inline-block;" (change)="main_customer($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button  color="primary500" class="btn btn-info" (click)="main_customer_click()" [disabled]= "!chooseFile_main_customer">Upload</button>
+    </ion-item>
+
+  <ion-item>  
+    <h3>To main_project</h3>
+  <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx">
+  <button ion-button  color="primary500" class="btn btn-info" (click)="Upload()" [disabled]= "!chooseFile_incomingfile">Upload</button>
+</ion-item>
+
+<ion-item>  
+    <h3>To main_customer_location</h3>
+  <input type="file" style="display: inline-block;" (change)="main_customer_location($event)" placeholder="Upload file" accept=".xlsx">
+  <button ion-button  color="primary500" class="btn btn-info" (click)="main_customer_location_click()" [disabled]= "!chooseFile_main_customer_location">Upload</button>
+</ion-item>
+
+    <ion-item>  
+        <h3>To soc_main</h3>
+      <input type="file" style="display: inline-block;" (change)="soc_main($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button  color="primary500" class="btn btn-info" (click)="soc_main_click()" [disabled]= "!chooseFile_soc_main">Upload</button>
+    </ion-item>
+
+   <ion-item>
+  <h3>To user_main</h3>
+<input type="file" style="display: inline-block;" (change)="user_main($event)" placeholder="Upload file" accept=".xlsx">
+<button ion-button  color="primary500" class="btn btn-info" (click)="user_main_click()" [disabled]= "!chooseFile_user_main">Upload</button>
+</ion-item>
+
+<ion-item>
+    <h3>To user_info</h3>
+  <input type="file" style="display: inline-block;" (change)="user_info($event)" placeholder="Upload file" accept=".xlsx">
+  <button ion-button  color="primary500" class="btn btn-info" (click)="user_info_click()" [disabled]= "!chooseFile_user_info">Upload</button>
+  </ion-item>
+  
+  <ion-item>
+      <h3>To user_address</h3>
+    <input type="file" style="display: inline-block;" (change)="user_address($event)" placeholder="Upload file" accept=".xlsx">
+    <button ion-button  color="primary500" class="btn btn-info" (click)="user_address_click()" [disabled]= "!chooseFile_user_address">Upload</button>
+    </ion-item>
+
+    <ion-item>
+        <h3>To user_company</h3>
+      <input type="file" style="display: inline-block;" (change)="user_company($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button  color="primary500" class="btn btn-info" (click)="user_company_click()" [disabled]= "!chooseFile_user_company">Upload</button>
+      </ion-item>
+    
+      <ion-item>
+          <h3>To user_contact</h3>
+        <input type="file" style="display: inline-block;" (change)="user_contact($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button  color="primary500" class="btn btn-info" (click)="user_contact_click()" [disabled]= "!chooseFile_user_contact">Upload</button>
+        </ion-item>
+
+        <ion-item>
+            <h3>To user_qualification</h3>
+          <input type="file" style="display: inline-block;" (change)="user_qualification($event)" placeholder="Upload file" accept=".xlsx">
+          <button ion-button  color="primary500" class="btn btn-info" (click)="user_qualification_click()" [disabled]= "!chooseFile_user_qualification">Upload</button>
+          </ion-item>
+
+          <ion-item>
+              <h3>To user_role</h3>
+            <input type="file" style="display: inline-block;" (change)="user_role($event)" placeholder="Upload file" accept=".xlsx">
+            <button ion-button  color="primary500" class="btn btn-info" (click)="user_role_click()" [disabled]= "!chooseFile_user_role">Upload</button>
+            </ion-item>
+
+</ion-content>

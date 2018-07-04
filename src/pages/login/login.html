@@ -2,42 +2,92 @@
 
 </ion-header>
 
-<ion-content style="background:#393939">
-	<div class="logo">
-      <img src="assets/img/Untitled-1.png" alt="Ionic Logo">
+<ion-content>
+	<ion-card class="nofu">
 
+		<ion-card-content>
+		
+			<h1 style="margin-left:10pt;">Sign In to eClaim</h1>
+			<br/>
+
+			<p style="margin-left:10pt;">
+				<b>Please enter your login credentials</b>
+			</p>
+			<br/>
+			<form #loginForm="ngForm" novalidate>
+				<ion-list>
+					<ion-item>
+
+						<ion-label floating color="primary">{{ "USER_NAME_LABEL" | translate }} ({{ "FULL_EMAIL_ADDRESS_LABEL" | translate }})</ion-label>
+						<ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
+						 required>
+						</ion-input>
+						<!-- <ion-icon name="person" item-end></ion-icon> -->
+					</ion-item>
+					<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
+						Username is required
+					</p>
+
+					<ion-item>
+						<ion-label floating color="primary">Enter Your Password</ion-label>
+						<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+							<!-- <ion-icon item-end name="key"></ion-icon> -->
+						</ion-input>
+
+					</ion-item>
+					<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+						Password is required
+					</p>
+				</ion-list>
+
+				<div class="btn">
+					<!-- <button color="primary500" ion-button block (click)="onLogin(loginForm)" type="submit">Login</button> -->
+					<button color="primary500" ion-button block (click)="AuthenticateUserFromAdServer(loginForm)" type="submit">Login</button>
+				</div>
+				<!-- <div>
+
+					<p>
+
+						<a color="primary500" (click)="ForgotPasswordClick()">Forgot Your Password?</a>
+
+
+						<a color="primary500" style="float:right;" (click)="onSignup()">Create account</a>
+
+					</p>
+
+				</div> -->
+
+
+			</form>
+		</ion-card-content>
+	</ion-card>
+
+
+	<div class="blackcontainer" *ngIf="ForgotPasswordClicked">
 	</div>
+	<div class="popup0" padding *ngIf="ForgotPasswordClicked">
+		<ion-card>
+			<ion-card-header class="icTitle headerColor-white ">
+				<div class="icHeaderText">Forgot Password</div>
+				<button class="btnR" (click)="CloseForgotPasswordClick()">
+					<ion-icon name="md-close"></ion-icon>
+				</button>
+			</ion-card-header>
 
-	<form #loginForm="ngForm" novalidate >
-		<ion-list no-lines>
-			<ion-item style="background:#393939">
-				<ion-label floating color="primary">Username</ion-label>
-				<ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
-					required>
-				</ion-input>
-			</ion-item>
-			<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
-				Username is required
-			</p>
+			<ion-list>
+				<form [formGroup]="ForgotPasswordForm">
+					<ion-item>
+						<ion-label stacked>{{ 'Email' | translate }}</ion-label>
+						<ion-input type="email" formControlName="Email_ID" [(ngModel)]="email_ngModel" required placeholder="{{'Please fill in the email'}}"></ion-input>
+					</ion-item>
 
-			<ion-item style="background:#393939">
-				<ion-label floating color="primary">Password</ion-label>
-				<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
-				</ion-input>
-			</ion-item>
-			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
-				Password is required
-			</p>
-		</ion-list>
+					<div class="btn">
+						<button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!ForgotPasswordForm.valid" (click)="SaveForgotPassword()">{{"SUBMIT" | translate}}</button>
+					</div>
+				</form>
+			</ion-list>
 
-		<ion-row responsive-sm>
-			<ion-col>
-				<button ion-button (click)="onLogin(loginForm)" type="submit" block>Login</button>
-			</ion-col>
-			<ion-col>
-				<button ion-button (click)="onSignup()" block>Signup</button>
-			</ion-col>
-		</ion-row>
-	</form>
+		</ion-card>
+	</div>
 
 </ion-content>

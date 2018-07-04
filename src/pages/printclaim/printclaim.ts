@@ -1,264 +1,428 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-//import { FormBuilder, FormGroup } from '@angular/forms';
-
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
-
 import * as constants from '../../app/config/constants';
 import { PrintingClaim_Model } from '../../models/printingclaim_model';
-import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { PrintingClaim_Service } from '../../services/printingclaim_service';
 import { BaseHttpService } from '../../services/base-http';
-
+import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import { UUID } from 'angular2-uuid';
-
+import { DecimalPipe } from '@angular/common';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-//import {Camera} from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
 
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
-/**
- * Generated class for the PrintclaimPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { Services } from '../Services';
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
+import { MainClaimRequestModel } from '../../models/main-claim-request.model';
+import { ImageUpload_model } from '../../models/image-upload.model';
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
+import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { DashboardPage } from '../dashboard/dashboard';
+import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import moment from 'moment'; 
+
 @IonicPage()
 @Component({
   selector: 'page-printclaim',
-  templateUrl: 'printclaim.html',  providers: [PrintingClaim_Service, BaseHttpService, FileTransfer]
+  templateUrl: 'printclaim.html', providers: [PrintingClaim_Service, BaseHttpService, FileTransfer, DecimalPipe]
 })
 export class PrintclaimPage {
-  isReadyToSave: boolean;
-  printclaim_entry: PrintingClaim_Model = new PrintingClaim_Model();
-  masterclaim_entry: MasterClaim_Model = new MasterClaim_Model();
-    Printform: FormGroup;
 
-    baseResourceUrl1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-    baseResource_Url1: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+  uploadFileName: string;
+  loading = false;
+  CloudFilePath: string;
+  @ViewChild('fileInput') fileInput: ElementRef;
 
+  public MainClaimSaved: boolean = false;
+  Printing_Date_ngModel: any;
+  Printing_Description_ngModel: any;
+  Printing_Amount_ngModel: any;
+  Customer_GUID: any;
+  Soc_GUID: any;
+  ClaimRequestMain: any;
+  isCustomer: boolean = false;
+  Printform: FormGroup;
+  travelAmount: any;
+  validDate = new Date().toISOString();
+  claimFor: string = 'seg_project';
+  public Print_SOC_No_ngModel: any;
+  public Travel_ProjectName_ngModel: any;
+  Project_Lookup_ngModel: any;
+  Customer_Lookup_ngModel: any;
+  storeProjects: any[]; 
+  customers: any[]; 
+  storeCustomers: any[]; 
+  public projects: any[];
+  TenantGUID: any;
 
-    baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/claim_request_detail' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-    baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-
-    baseResourceUrl_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-    baseResource_Url_soc: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
+  ProjectLookupClicked: boolean = false;
+  CustomerLookupClicked: boolean = false; 
+  public AddLookupClicked: boolean = false;
+  public AddToLookupClicked: boolean = false;
+  currentItems: any;
   
-  
-   
-    public Exist_Record: boolean = false;
+  userGUID: any;
 
-    public Printing_SOC_No_ngModel: any;
-    public Printing_Date_ngModel: any;
-    public Printing_ProjectName_ngModel: any;
-    public Printing_CustomerName_ngModel: any;
-    public Printing_Description_ngModel: any;
-    public Printing_ClaimAmount_ngModel: any;
-    public socs:any;
-   
-    public AddLookupClicked: boolean = false;
-    
-      public AddLookupClick() 
-      {
-     
-        this.AddLookupClicked = true;
-      }
-    
-    
-      public CloseLookupClick() {
-        if (this.AddLookupClicked == true) {
-          this.AddLookupClicked = false;
-        }
-     
-      }
+  public assignedTo: any;
+  public profileLevel: any;
+  public stage: any;
+  public profileJSON: any;
+  ImageUploadValidation:boolean=false;
+  chooseFile: boolean = false;
 
-    constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
-       this.Printform = fb.group({
-        soc_no: '',
-        project_name: '',
-        customer_name:'',
-        print_date: '',
-        claim_amount: ['', Validators.required],
-        description: ['', Validators.required],
-      printname: '',
+  /********FORM EDIT VARIABLES***********/
+  isFormEdit: boolean = false;
+  claimRequestGUID: any;
+  claimRequestData: any; 
 
-    });
-    this.Printing_Date_ngModel = new Date().toISOString();
-    //this.entertainment_entry.UPDATE_TS = new Date().toISOString();
-    this.GetSocNo();
+  claimAmount: number = 0;
+  getCurrency(amount: number) {
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM 9,9999.00.')
+      this.Printing_Amount_ngModel = null
+      this.claimAmount = 0;
+    }
+    else {
+      this.claimAmount = amount;
+      this.Printing_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    }
+  } 
 
-    this.Printform.valueChanges.subscribe((v) => {
-      this.isReadyToSave = this.Printform.valid;
-    });
-  }
+  imageURLEdit: any = null
+  GetDataforEdit() {
+    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+      .subscribe(data => {
+        this.storeCustomers = this.customers = data["resource"];
+        this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+          .subscribe(data => {
+            this.storeProjects = this.projects = data["resource"];
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PrintclaimPage');
-  }
+            this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+              .subscribe(data => {
+                this.claimRequestData = data["resource"];
 
-  GetSocNo(){
-    this.http
-   .get(this.baseResourceUrl_soc)
-   .map(res => res.json())
-   .subscribe(data => {
-     this.socs = data["resource"];
-     
-     
-     if (this.Printing_SOC_No_ngModel == undefined) { return; }
-     if (this.Printing_SOC_No_ngModel != "" || this.Printing_SOC_No_ngModel != undefined) {
-       let headers = new Headers();
-       headers.append('Content-Type', 'application/json');
-       let options = new RequestOptions({ headers: headers });
-       let url: string;
-       let url1: string;
-       url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Printing_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-       url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Printing_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-       this.http.get(url, options)
-         .map(res => res.json())
-         .subscribe(
-         data => {
-           let res = data["resource"];
- 
-           if (res.length > 0) {
-             this.Printing_ProjectName_ngModel = res[0].Project;
-             this.Printing_CustomerName_ngModel=res[0].customer;
-           }
-           else {
-             alert('please enter valid soc no');
-             //return;
-             this.Printing_SOC_No_ngModel = "";
-           }
-         },
-         err => {
-           console.log("ERROR!: ", err);
-         });
-     }
-
-
-
-     
-   });
- }
-
-  // SOC_No_TextBox_Onchange(Entertainment_SOC_No_ngModel: string) {
-  //   console.log(this.Printing_SOC_No_ngModel);
-  //   if (this.Printing_SOC_No_ngModel == undefined) { return; }
-  //   if (this.Printing_SOC_No_ngModel != "" || this.Printing_SOC_No_ngModel != undefined) {
-  //     let headers = new Headers();
-  //     headers.append('Content-Type', 'application/json');
-  //     let options = new RequestOptions({ headers: headers });
-  //     let url: string;
-  //     let url1: string;
-  //     url = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Printing_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //     url1 = this.baseResource_Url + "vw_socno?filter=(SOC_NO=" + this.Printing_SOC_No_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //     this.http.get(url, options)
-  //       .map(res => res.json())
-  //       .subscribe(
-  //       data => {
-  //         let res = data["resource"];
-
-  //         if (res.length > 0) {
-  //           this.Printing_ProjectName_ngModel = res[0].Project;
-  //           this.Printing_CustomerName_ngModel = res[0].Project;
-  //         }
-  //         else {
-  //           alert('please enter valid soc no');
-  //           //return;
-  //           this.Printing_SOC_No_ngModel = "";
-  //         }
-  //       },
-  //       err => {
-  //         console.log("ERROR!: ", err);
-  //       });
-  //   }
-  // }
-
-  save() {
-    
-        //debugger;
-        //this.getImage();
-        //this.uploadFile();
-        if (this.Printform.valid) {
-          let headers = new Headers();
-          headers.append('Content-Type', 'application/json');
-          let options = new RequestOptions({ headers: headers });
-    
-    
-          let url: string;
-          let request_id = UUID.UUID();
-          //url = this.baseResource_Url + "claim_request_detail?filter=(DESCRIPTION=" + this.Travel_Description_ngModel + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-          url = this.baseResource_Url + "claim_request_detail?filter=(CLAIM_REQUEST_GUID=" + request_id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    
-          this.http.get(url, options)
-            .map(res => res.json())
-            .subscribe(
-            data => {
-              let res = data["resource"];
-              if (res.length == 0) {
-                console.log("No records Found");
-                if (this.Exist_Record == false) {
-                  // this.entertainment_entry.SOC_GUID = this.Entertainment_SOC_No_ngModel.trim();
-                 
-                  this.printclaim_entry.DESCRIPTION = this.Printing_Description_ngModel.trim();
-                  this.printclaim_entry.CLAIM_AMOUNT = this.Printing_ClaimAmount_ngModel.trim();
-                 //this.printclaim_entry.CLAIM_TYPE_GUID = this.masterclaim_entry.CLAIM_TYPE_GUID = "58c59b56-289e-31a2-f708-138e81a9c823";
-                 
-
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                this.ImageUploadValidation = true;
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT
+                this.Printing_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+                // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
                 
-                  this.masterclaim_entry.CLAIM_AMOUNT = this.Printing_ClaimAmount_ngModel.trim();
-                  this.masterclaim_entry.CLAIM_REQUEST_GUID = UUID.UUID();
-                  this.masterclaim_entry.CREATION_TS = new Date().toISOString();
-                  this.masterclaim_entry.UPDATE_TS = new Date().toISOString();
-                  //alert(this.masterclaim_entry.CLAIM_AMOUNT);
-    
-                  this.printclaim_entry.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
-                  this.printclaim_entry.CREATION_TS = new Date().toISOString();
-                  this.printclaim_entry.CREATION_USER_GUID = '1';
-                  this.printclaim_entry.UPDATE_TS = new Date().toISOString();
-                  this.printclaim_entry.UPDATE_USER_GUID = "";
-    
-    
-                  //this.uploadFile();
-    
-                  this.printingservice.save_main_claim_request(this.masterclaim_entry)
-                    .subscribe((response) => {
-                      if (response.status == 200) {
-                        //alert('PrintClaim Registered successfully');
-                        //location.reload();
-                        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                if (this.claimRequestData[0].SOC_GUID === null) {
+                  this.claimFor = 'seg_customer'
+                  this.isCustomer = true;
+                  if (this.storeCustomers != undefined)
+                    this.storeCustomers.forEach(element => {
+                      if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
+                        this.Customer_Lookup_ngModel = element.NAME
                       }
                     });
-    
-                  this.printingservice.save_claim_request_detail(this.printclaim_entry)
-    
-                    .subscribe((response) => {
-                      if (response.status == 200) {
-                        alert('PrintClaim Registered successfully');
-                        //location.reload();
-                        this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                      }
-                    });
-    
                 }
-              }
-              else {
-                console.log("Records Found");
-                alert("The Travelclaim is already Exist.")
-    
-              }
-    
-            },
-            err => {
-              this.Exist_Record = false;
-              console.log("ERROR!: ", err);
-            });
-        }
-    
-      }
+                else {
+                  this.claimFor = 'seg_project'
+                  this.isCustomer = false;
+                  if (this.storeCustomers != undefined)
+                    this.storeProjects.forEach(element => {
+                      if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
+                        this.Project_Lookup_ngModel = element.project_name
+                        this.Print_SOC_No_ngModel = element.soc
+                      }
+                    });
+                }
+                this.Printing_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                // this.Printing_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
+                this.Printing_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
+              });
+          });
+      })
+  }
 
-}
+  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+    this.userGUID = localStorage.getItem('g_USER_GUID');
+    this.isFormEdit = this.navParams.get('isFormEdit');
+    this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
+    this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
+    if (this.isFormEdit){
+      this.profileMng.initiateLevels('1');
+      this.GetDataforEdit();
+    }
+   
+  else {
+    this.LoadCustomers();
+    this.LoadProjects();
+  }
+    this.Printform = fb.group({
+      avatar1: null,
+      claimTypeGUID:'',
+      avatar: null,
+      soc_no: '',
+      travel_date: ['', Validators.required],
+      description: ['', Validators.required],
+      claim_amount: ['', Validators.required],
+      attachment_GUID: ''
+    });    
+  }
+
+  GetSocNo(item: any){
+    this.Print_SOC_No_ngModel = item.soc;
+    this.Project_Lookup_ngModel = item.project_name;
+    this.Soc_GUID = item.SOC_GUID;
+    this.CloseProjectLookup();
+  }
+
+  GetCustomer(guid: any, name: any) {
+    this.Customer_Lookup_ngModel = name;
+    this.Customer_GUID = guid;    
+    this.CloseCustomerLookup();
+  }
+
+  claimForChanged() {
+    // console.log(this.claimFor)
+    if (this.claimFor == 'seg_customer') this.isCustomer = true;
+    else this.isCustomer = false;
+  }
+
+  LoadProjects() {
+    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+      .subscribe(data => {
+        this.storeProjects = this.projects = data["resource"];
+      })
+  }
+
+  LoadCustomers() {
+    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+      .subscribe(data => {
+        this.storeCustomers = this.customers = data["resource"];
+      })
+  }
+
+  public CloseProjectLookup() {
+    if (this.ProjectLookupClicked == true) {
+      this.ProjectLookupClicked = false;
+    }
+  }
+
+  public CloseCustomerLookup() {
+    if (this.CustomerLookupClicked == true) {
+      this.CustomerLookupClicked = false;
+    }
+  }
+
+  public AddLookupClick() {
+    this.AddLookupClicked = true;
+    this.currentItems = null;
+  }
+
+  public AddToLookupClick() {
+    this.AddLookupClicked = true;
+    this.AddToLookupClicked = true;
+    this.currentItems = null;
+  }
+
+  public ProjectLookup() {
+    this.ProjectLookupClicked = true;      
+  }
+
+  public CustomerLookup() {
+    this.CustomerLookupClicked = true;
+  }
+
+  searchCustomer(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.customers = this.storeCustomers;
+      return;
+    }
+    this.customers = this.filterCustomer({
+      NAME: val
+    });
+  }
+  
+  filterCustomer(params?: any) {
+    if (!params) {
+      return this.storeCustomers;
+    }
+  
+    return this.customers.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+
+  searchProject(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.projects = this.storeProjects;
+      return;
+    }
+    this.projects = this.filterProjects({
+      project_name: val
+    });
+  }
+
+  filterProjects(params?: any) {
+    if (!params) {
+      return this.storeProjects;
+    }
+
+    return this.projects.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Printform.get('avatar').setValue(file);
+      this.uploadFileName = file.name;
+      reader.onload = () => {
+        this.Printform.get('avatar').setValue({
+          filename: file.name,
+          filetype: file.type,
+          value: reader.result.split(',')[1]
+        });
+      };
+    }
+    //this.chooseFile = true;
+  }
+
+  fileName1: string;
+  ProfileImage: any;
+  newImage:boolean=true;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+
+      const file = e.target.files[0];
+      this.Printform.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.ImageUploadValidation = false;
+    this.newImage=false;
+    this.onFileChange(e);
+  }
+
+  imageGUID: any;
+  saveIm(formValues: any) {
+    let uploadImage = this.UploadImage();
+    uploadImage.then((resJson) => {
+      //this.submitAction(this.uploadFileName, formValues);
+      this.imageGUID = this.uploadFileName;
+      this.chooseFile = false;
+      this.ImageUploadValidation=true;      
+    })    
+  } 
+
+  UploadImage() {
+    this.CloudFilePath = 'eclaim/'
+
+    this.loading = true;
+    const queryHeaders = new Headers();
+    queryHeaders.append('filename', this.uploadFileName);
+    queryHeaders.append('Content-Type', 'multipart/form-data');
+    queryHeaders.append('fileKey', 'file');
+    queryHeaders.append('chunkedMode', 'false');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    const options = new RequestOptions({ headers: queryHeaders });
+    return new Promise((resolve, reject) => {
+      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Printform.get('avatar').value, options)
+        .map((response) => {
+          return response;
+        }).subscribe((response) => {
+          resolve(response.json());
+        })
+    })
+  }
+
+  submitAction(formValues: any) {
+    if (this.isFormEdit) {
+      this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+        .subscribe(data => {
+          this.claimRequestData = data;
+          this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
+          this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
+          this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+          this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+          if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+              this.claimRequestData["resource"][0].STATUS = 'Pending'
+            }
+  
+          //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+          if (this.isCustomer) {
+            // this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
+            this.claimRequestData["resource"][0].CUSTOMER_GUID =this.Customer_GUID;
+            this.claimRequestData["resource"][0].SOC_GUID = null;
+          }
+          else {
+            // this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
+            this.claimRequestData["resource"][0].SOC_GUID =  this.Soc_GUID;
+            this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
+          }
+          //this.claimRequestData[0].STATUS = 'Pending';
+         // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
+         this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res =>
+          {
+            alert('Claim details updated successfully.')
+            this.navCtrl.push(UserclaimslistPage);
+         });
+        })
+    }
+    else {
+    formValues.claimTypeGUID = 'd9567482-033a-6d92-3246-f33043155746';
+    formValues.attachment_GUID = this.imageGUID;
+    this.travelAmount = this.claimAmount;
+    formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+    this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+
+  } 
+    }
+    NavigateTravelClaim() {
+      this.navCtrl.setRoot(TravelclaimPage); 
+    } 
+
+    displayImage: any
+    CloseDisplayImage()  {
+      this.displayImage = false;
+    }
+    imageURL: string;
+    DisplayImage(val: any) {
+      this.displayImage = true;
+      this.imageURL = val;
+    }
+  } 
+//}

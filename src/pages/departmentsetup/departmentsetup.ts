@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
@@ -12,6 +13,8 @@ import { DepartmentSetup_Service } from '../../services/departmentsetup_service'
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
+import { LoginPage } from '../login/login';
+
 /**
  * Generated class for the DepartmentsetupPage page.
  *
@@ -21,58 +24,64 @@ import { UUID } from 'angular2-uuid';
 @IonicPage()
 @Component({
   selector: 'page-departmentsetup',
-  templateUrl: 'departmentsetup.html', providers: [DepartmentSetup_Service, BaseHttpService]
+  templateUrl: 'departmentsetup.html', providers: [DepartmentSetup_Service, BaseHttpService, TitleCasePipe]
 })
 export class DepartmentsetupPage {
   department_entry: DepartmentSetup_Model = new DepartmentSetup_Model();
-  //department: DepartmentSetup_Model = new DepartmentSetup_Model();
   Departmentform: FormGroup;
 
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_department' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string = "";
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
   public departments: DepartmentSetup_Model[] = [];
 
-
   public AddDepartmentClicked: boolean = false;
-  public EditDepartmentClicked: boolean = false;
   public Exist_Record: boolean = false;
 
-  public department_details: any; 
+  public department_details: any;
   public exist_record_details: any;
 
   //Set the Model Name for Add------------------------------------------
   public NAME_ngModel_Add: any;
-  public COMPANY_ngModel_Add: any;
   public DESCRIPTION_ngModel_Add: any;
   //---------------------------------------------------------------------
 
-  //Set the Model Name for edit------------------------------------------
-  public NAME_ngModel_Edit: any;
-  public COMPANY_ngModel_Edit: any;
-  public DESCRIPTION_ngModel_Edit: any;
-  //---------------------------------------------------------------------
-
+  Tenant_Add_ngModel: any;
+  AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
+  tenants: any;
+  Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
 
   public AddDepartmentClick() {
-    this.AddDepartmentClicked = true;
-    this.ClearControls();
+    if (this.Edit_Form == false) {
+      this.AddDepartmentClicked = true; this.Add_Form = true; this.Edit_Form = false;
+      this.ClearControls();
+    }
+    else {
+      alert('Sorry !! You are in Edit Mode.');
+    }
   }
 
   public EditClick(DEPARTMENT_GUID: any) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+
     this.ClearControls();
-    this.EditDepartmentClicked = true;
+    this.AddDepartmentClicked = true; this.Add_Form = false; this.Edit_Form = true;
+
     var self = this;
     this.departmentsetupservice
       .get(DEPARTMENT_GUID)
       .subscribe((data) => {
-      self.department_details = data;
-      this.NAME_ngModel_Edit = self.department_details.NAME; localStorage.setItem('Prev_dep_Name', self.department_details.NAME); 
-      this.COMPANY_ngModel_Edit = self.department_details.COMPANY;
-      this.DESCRIPTION_ngModel_Edit = self.department_details.DESCRIPTION;
-   
-  });
-}
+        self.department_details = data;
+        this.Tenant_Add_ngModel = self.department_details.TENANT_GUID;
+        this.NAME_ngModel_Add = self.department_details.NAME; localStorage.setItem('Prev_Name', self.department_details.NAME); localStorage.setItem('Prev_TenantGuid', self.department_details.TENANT_GUID);
+        this.DESCRIPTION_ngModel_Add = self.department_details.DESCRIPTION;
+
+        this.loading.dismissAll();
+      });
+  }
 
   public DeleteClick(DEPARTMENT_GUID: any) {
     let alert = this.alertCtrl.create({
@@ -104,205 +113,299 @@ export class DepartmentsetupPage {
     }); alert.present();
   }
 
-
   public CloseDepartmentClick() {
-
     if (this.AddDepartmentClicked == true) {
       this.AddDepartmentClicked = false;
-    }
-    if (this.EditDepartmentClicked == true) {
-      this.EditDepartmentClicked = false;
+      this.Add_Form = true; this.Edit_Form = false;
     }
   }
-  //constructor(public navCtrl: NavController, public navParams: NavParams, fb:FormBuilder) {
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private departmentsetupservice: DepartmentSetup_Service, private alertCtrl: AlertController) {
 
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.departments = data.resource;
-      });
+  loading: Loading; button_Add_Disable:boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private departmentsetupservice: DepartmentSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+    if (localStorage.getItem("g_USER_GUID") == null) {
+      alert('Sorry !! Please Login.');
+      this.navCtrl.push(LoginPage);
+    }
+    else {
+      this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        //Get the role for this page------------------------------        
+        if(localStorage.getItem("g_KEY_ADD") == "0"){ this.button_Add_Disable = true; }
+        if(localStorage.getItem("g_KEY_EDIT") == "0"){ this.button_Edit_Disable = true; }
+        if(localStorage.getItem("g_KEY_DELETE") == "0"){ this.button_Delete_Disable = true; }
+        if(localStorage.getItem("g_KEY_VIEW") == "0"){ this.button_View_Disable = true; }
+        
+        //Clear localStorage value--------------------------------
+        this.ClearLocalStorage();
 
-    this.Departmentform = fb.group({
-      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
-      //NAME: ["", Validators.required],
-      //COMPANY: ["", Validators.required],
-      COMPANY: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //COMPANY: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])], 
-      DESCRIPTION: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])], 
-      //DESCRIPTION: ["", Validators.required],
-      
+        //fill all the tenant details----------------------------
+        this.FillTenant();
 
-    });
-
+        //Display Grid---------------------------------------------
+        this.DisplayGrid();
+      }
+      else {
+        alert('Sorry!! You are not authorized.');
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      }
+      //-------------------------------------------------------
+      if (localStorage.getItem("g_USER_GUID") != "sva") {
+        this.Departmentform = fb.group({
+          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          DESCRIPTION: [null],
+        });
+      }
+      else {
+        this.Departmentform = fb.group({
+          NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          DESCRIPTION: [null],
+          TENANT_NAME: [null, Validators.required],
+        });
+      }
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DepartmentsetupPage');
   }
-  Save() {
-    if (this.Departmentform.valid) {
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      let options = new RequestOptions({ headers: headers });
-      let url: string;
-      url =  this.baseResource_Url + "main_department?filter=(NAME=" + this.NAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      this.http.get(url, options)
-        .map(res => res.json())
-        .subscribe( 
-        data => {
-          let res = data["resource"];
-          if (res.length == 0) {
-            console.log("No records Found");
-            if (this.Exist_Record == false) {
-              this.department_entry.NAME = this.NAME_ngModel_Add.trim();
-              this.department_entry.COMPANY = this.COMPANY_ngModel_Add.trim();
-              this.department_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
 
-      this.department_entry.DEPARTMENT_GUID = UUID.UUID();
-      this.department_entry.CREATION_TS = new Date().toISOString();
-      this.department_entry.CREATION_USER_GUID = "1";
-      this.department_entry.UPDATE_TS = new Date().toISOString();
-      this.department_entry.UPDATE_USER_GUID = "";
-      
-      this.departmentsetupservice.save(this.department_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Department Type Registered successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        })
+  ClearLocalStorage() {
+    if (localStorage.getItem('Prev_Name') == null) {
+      localStorage.setItem('Prev_Name', null);
+    }
+    else {
+      localStorage.removeItem("Prev_Name");
+    }
+    if (localStorage.getItem('Prev_TenantGuid') == null) {
+      localStorage.setItem('Prev_TenantGuid', null);
+    }
+    else {
+      localStorage.removeItem("Prev_TenantGuid");
     }
   }
-  else {
-    console.log("Records Found");
-    alert("The Department is already Exist.")  
+
+  FillTenant() {
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
+      this.http
+        .get(tenantUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.tenants = data.resource;
+        });
+      this.AdminLogin = true;
+    }
+    else {
+      this.AdminLogin = false;
+    }
   }
-},
-err => {
-  this.Exist_Record = false;
-  console.log("ERROR!: ", err);
-});
-}
-}
-getBankList() {
-  let self = this;
-  let params: URLSearchParams = new URLSearchParams();
-  self.departmentsetupservice.get_department(params)
-    .subscribe((departments: DepartmentSetup_Model[]) => {
-      self.departments = departments;
+
+  stores: any[]; 
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.departments = this.stores;      
+      return;
+    }
+    this.departments = this.filter({
+      NAME: val      
     });
-}
+  }
 
-Update(DEPARTMENT_GUID: any) {
-  if (this.Departmentform.valid) {
-  if(this.department_entry.NAME==null){this.department_entry.NAME = this.NAME_ngModel_Edit.trim();}
-  if(this.department_entry.COMPANY==null){this.department_entry.COMPANY = this.COMPANY_ngModel_Edit.trim();}
-  if(this.department_entry.DESCRIPTION==null){this.department_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit.trim();}
-  
- 
-      this.department_entry.CREATION_TS = this.department_details.CREATION_TS;
-      this.department_entry.CREATION_USER_GUID = this.department_details.CREATION_USER_GUID;
-      this.department_entry.UPDATE_TS = this.department_details.UPDATE_TS;
-      this.department_entry.DEPARTMENT_GUID = DEPARTMENT_GUID;
-      this.department_entry.UPDATE_TS = new Date().toISOString();
-      this.department_entry.UPDATE_USER_GUID = '1';
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+    
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
 
-      if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_dep_Name')) {
-        let url: string;
-        url = this.baseResource_Url + "main_department?filter=(NAME=" + this.NAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        this.http.get(url)
-          .map(res => res.json())
-          .subscribe(
-          data => {
-            let res = data["resource"];
-            console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_dep_Name'));
+  DisplayGrid() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...',
+    });
+    this.loading.present();
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = true;
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_department_details' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.AdminLogin = false;
+    }
 
-            if (res.length == 0) {
-              console.log("No records Found");
-              this.department_entry.NAME = this.NAME_ngModel_Edit.trim();
-              
-              //**************Update service if it is new details*************************
-              this.departmentsetupservice.update(this.department_entry)
-                .subscribe((response) => {
-                  if (response.status == 200) {
-                    alert('Department updated successfully');
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                  }
-                });
+    this.http
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.departments = this.stores = data.resource;
+
+        this.loading.dismissAll();
+      });
+  }
+
+  Save() {
+    if (this.Departmentform.valid) {
+      //for Save Set Entities-------------------------------------------------------------
+      if (this.Add_Form == true) {
+        this.SetEntityForAdd();
+      }
+      //for Update Set Entities------------------------------------------------------------
+      else {
+        this.SetEntityForUpdate();
+      }
+
+      //Common Entitity For Insert/Update------------------------------------------------- 
+      this.SetCommonEntityForAddUpdate();
+
+      //Load the Controller--------------------------------
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+      });
+      this.loading.present();
+      //--------------------------------------------------
+
+      let strPrev_Name: string = "";
+      if (localStorage.getItem('Prev_Name') != null) { strPrev_Name = localStorage.getItem('Prev_Name').toUpperCase(); }
+
+      if (this.NAME_ngModel_Add.trim().toUpperCase() != strPrev_Name || this.Tenant_Add_ngModel != localStorage.getItem('Prev_TenantGuid')) {
+        let val = this.CheckDuplicate();
+        val.then((res) => {
+          if (res.toString() == "0") {
+            //---Insert or Update-------------------------------------------------------
+            if (this.Add_Form == true) {
+              //**************Save service if it is new details*************************
+              this.Insert();
               //**************************************************************************
             }
             else {
-              console.log("Records Found");
-              alert("The Department is already Exist. ");
+              //**************Update service if it is new details*************************
+              this.Update();
+              //**************************************************************************
             }
-          },
-          err => {
-            this.Exist_Record = false;
-            console.log("ERROR!: ", err);
-          });
+          }
+          else {
+            alert("The Department is already Exist.");
+            this.loading.dismissAll();
+          }
+        });
+        val.catch((err) => {
+          console.log(err);
+        });
       }
       else {
-        if (this.department_entry.NAME == null) { this.department_entry.NAME = localStorage.getItem('Prev_dep_Name'); }
-        this.department_entry.NAME = this.NAME_ngModel_Edit.trim();
-        //**************Update service if it is old details*************************
-      
-      this.departmentsetupservice.update(this.department_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            alert('Department is updated successfully');
-            //location.reload();
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        })
+        //Simple update----------------------------------------------------------
+        this.Update();
+      }
     }
   }
-}
-ClearControls()
-{
-  this.NAME_ngModel_Add = "";
-  this.COMPANY_ngModel_Add = "";
-  this.DESCRIPTION_ngModel_Add = "";
- 
-  this.NAME_ngModel_Edit = "";
-  this.COMPANY_ngModel_Edit = "";
-  this.DESCRIPTION_ngModel_Edit = "";
- 
-}
-}
-   // if (this.Departmentform.valid) {
-    
-  //         let headers = new Headers();
-  //         headers.append('Content-Type', 'application/json');
-  //         let options = new RequestOptions({ headers: headers });
-  //         let url: string;
-  //         url = "http://api.zen.com.my/api/v2/zcs/_table/main_department?filter=(NAME=" + this.department_entry.NAME + ")&api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881";
-  //         this.http.get(url, options)
-  //           .map(res => res.json())
-  //           .subscribe(
-  //           data => {
-  //             let res = data["resource"];
-  //             if (res.length == 0) {
-  //               console.log("No records Found");
-  //               if (this.Exist_Record == false) {
-    
-  //   if (this.Departmentform.valid) {
 
-//}
-// else {
-//   console.log("Records Found");
-//   alert("The Department is already Added.")
-  
-// }
-// },
-// err => {
-//   this.Exist_Record = false;
-//   console.log("ERROR!: ", err);
-// }
-// );
-// }
-// }
-// }
+  SetEntityForAdd() {
+    this.department_entry.DEPARTMENT_GUID = UUID.UUID();
+    this.department_entry.CREATION_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.department_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.department_entry.CREATION_USER_GUID = 'sva';
+    }
+    this.department_entry.UPDATE_TS = new Date().toISOString();
+    this.department_entry.UPDATE_USER_GUID = "";
+  }
+
+  SetEntityForUpdate() {
+    this.department_entry.DEPARTMENT_GUID = this.department_details.DEPARTMENT_GUID;
+    this.department_entry.CREATION_TS = this.department_details.CREATION_TS;
+    this.department_entry.CREATION_USER_GUID = this.department_details.CREATION_USER_GUID;
+    this.department_entry.UPDATE_TS = new Date().toISOString();
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.department_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    }
+    else {
+      this.department_entry.UPDATE_USER_GUID = 'sva';
+    }
+  }
+
+  SetCommonEntityForAddUpdate() {
+    this.department_entry.NAME = this.titlecasePipe.transform(this.NAME_ngModel_Add.trim());
+    this.department_entry.DESCRIPTION = this.titlecasePipe.transform(this.DESCRIPTION_ngModel_Add.trim());
+
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      this.department_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+    }
+    else {
+      this.department_entry.TENANT_GUID = this.Tenant_Add_ngModel;
+    }
+  }
+
+  RemoveStorageValues() {
+    localStorage.removeItem("Prev_Name");
+    localStorage.removeItem("Prev_TenantGuid");
+  }
+
+  Insert() {
+    this.departmentsetupservice.save(this.department_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Department Registered successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  Update() {
+    this.departmentsetupservice.update(this.department_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          alert('Department updated successfully');
+
+          //Remove all storage values-----------------------------------------
+          this.RemoveStorageValues();
+          //------------------------------------------------------------------
+
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
+      });
+  }
+
+  CheckDuplicate() {
+    let url: string = "";
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      url = this.baseResource_Url + "main_department?filter=NAME=" + this.NAME_ngModel_Add.trim() + ' AND TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else {
+      url = this.baseResource_Url + "main_department?filter=NAME=" + this.NAME_ngModel_Add.trim() + ' AND TENANT_GUID=' + this.Tenant_Add_ngModel + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    let result: any;
+    return new Promise((resolve) => {
+      this.http
+        .get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          result = data["resource"];
+          resolve(result.length);
+        });
+    });
+  }
+
+  ClearControls() {
+    this.NAME_ngModel_Add = "";
+    this.DESCRIPTION_ngModel_Add = "";
+    this.Tenant_Add_ngModel = "";
+  }
+}
