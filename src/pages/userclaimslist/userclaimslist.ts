@@ -27,7 +27,7 @@ import { MiscellaneousClaimPage } from '../../pages/miscellaneous-claim/miscella
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
 import { ExcelService } from '../../providers/excel.service';
-
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 /**
  * Generated class for the UserclaimslistPage page.
@@ -53,7 +53,7 @@ export class UserclaimslistPage {
   baseResourceUrl1: string;
   searchboxValue: string;
   Pending: any; Rejected: any; Approved: any; Paid: any;
-
+  public page:number = 1;
   constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
     //  this.claimrefguid=navParams.get("claimRefGuid");

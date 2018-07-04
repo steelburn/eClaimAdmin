@@ -30,4 +30,9 @@ npm install file-saver --save
 #plugin to install for proxy server
 npm install -g corsproxy
 
+#plugin to install for paging
+
+npm i ngx-pagination
+npm install ngx-pagination --save
+
 ```
