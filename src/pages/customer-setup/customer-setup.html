@@ -30,7 +30,7 @@
           <th class="lgl1">{{ 'Name' | translate }}</th>
           <!-- <th class="lgl1">{{ 'Location' | translate }}</th> -->
           <th class="lgl1">{{ 'Email' | translate }}</th>
-          <th class="lgl1">{{ 'Mobile No' | translate }}</th>          
+          <th class="lgl1"  style="width:120px">{{ 'Mobile No' | translate }}</th>          
           <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
         </tr>
 
@@ -39,7 +39,7 @@
           <td class="lgl1 getHeader"  reshead="Name" text-wrap>{{customer.CUSTOMER_NAME}}</td>
           <!-- <td class="lgl1" text-wrap>{{customer.CUSTOMER_LOCATION_NAME}}</td> -->
           <td class="lgl1 getHeader" reshead="Email." text-wrap>{{customer.EMAIL}}</td>          
-          <td class="lgl1 getHeader" reshead="Mobile No.">{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
+          <td class="lgl1 getHeader" reshead="Mobile No." text-wrap>{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
           <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)">
               <ion-icon name="md-create"></ion-icon>
@@ -56,7 +56,7 @@
 
   <div class="blackcontainer" *ngIf="AddCustomerClicked">
   </div>
-  <div class="popup" padding *ngIf="AddCustomerClicked">
+  <div class="popup4" padding *ngIf="AddCustomerClicked">
 
     <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">

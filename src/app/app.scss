@@ -80,6 +80,15 @@ position: fixed;
 height: 480px;
 }
 
+
+.popup4{
+    width: 83%;
+    left: 85px;
+    top: 96px;
+    position: fixed;
+        height: 500px;
+}
+
 .btn{
 
     text-align: center;
@@ -687,7 +696,7 @@ $tablet7: 600px;
 
 //responsive in between size- tablet / smaller laptop screen 
 
-@media (min-width: 600px) and (max-width: 1280px) {
+@media (min-width: 600px) and (max-width: 1080px) {
     .popup1{
         width: 97%;
         left: 10px;
@@ -784,7 +793,7 @@ $tablet7: 600px;
 }
 
 //combined media tablet and phone. For specific size, use previous two media rules.
-@media (min-width: 0px) and (max-width: 1280px){
+@media (min-width: 0px) and (max-width: 1080px){
     .Tabler tr.col7 td {
         padding: 4px;
     }
