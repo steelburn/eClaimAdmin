@@ -46,7 +46,7 @@ export class DashboardPage {
   PendingClaimAmount_year: any; RejectedClaimAmount_year: any;ApprovedClaimAmount_year: any;
   PaidClaimAmount = '0.00';
   PaidClaimAmount_year:any;
-  loading: Loading;
+  loading: Loading; 
   constructor(public numberPipe: DecimalPipe,public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
     public inAppBrowser: InAppBrowser, private loadingCtrl: LoadingController) {
     this.DashboardForm = fb.group({
@@ -125,7 +125,9 @@ export class DashboardPage {
   //   });
   //   // this.loading.dismissAll();
   // }
+  
   ngOnInit() {
+   
     // register plugin
     // var ctx = document.getElementById("myChart");
     // var myChart = new Chart(ctx);
