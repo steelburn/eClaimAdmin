@@ -208,6 +208,7 @@ onFileChange(event: any) {
   //this.chooseFile = true;
 }
 
+uniqueName: any;
 fileName1: string;
 ProfileImage: any;
 newImage:boolean=true;
@@ -236,31 +237,16 @@ imageGUID: any;
 saveIm() {
   let uploadImage = this.UploadImage();
   uploadImage.then((resJson) => {
-    this.imageGUID = this.uploadFileName;
+    this.imageGUID = this.uniqueName;
     this.chooseFile = false;
     this.ImageUploadValidation=true;   
   })  
 }
 
-// SaveImageinDB() {
-//   let objImage: ImageUpload_model = new ImageUpload_model();
-//   objImage.Image_Guid = UUID.UUID();
-//   objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-//   objImage.CREATION_TS = new Date().toISOString();
-//   objImage.Update_Ts = new Date().toISOString();
-//   return new Promise((resolve, reject) => {
-//     this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
-//       // let res = response.json();
-//       // let imageGUID = res["resource"][0].Image_Guid;
-//       resolve(objImage.toJson());
-//     })
-//   })
-// }
-
 UploadImage() {   
-  this.CloudFilePath = 'eclaim/'   
-
+  this.CloudFilePath = 'eclaim/'  
 this.loading = true;
+this.uniqueName = new Date().toISOString()+this.uploadFileName ;
 const queryHeaders = new Headers();
 queryHeaders.append('filename', this.uploadFileName);
 queryHeaders.append('Content-Type', 'multipart/form-data');
