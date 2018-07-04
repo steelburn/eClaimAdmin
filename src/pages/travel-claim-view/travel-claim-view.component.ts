@@ -58,7 +58,7 @@ export class TravelClaimViewPage {
           this.claimRequestData.forEach(element => {
             if (element.ATTACHMENT_ID !== null)
               element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-              this.TravelType = element.TRAVEL_TYPE === 0 ? 'Local' : 'Outstation';
+              this.TravelType = element.TRAVEL_TYPE === '0' ? 'Local' : 'Outstation';
             this.totalClaimAmount = element.MILEAGE_AMOUNT;
           });
           this.totalClaimAmount += tollorParkAmount;
