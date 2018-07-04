@@ -69,7 +69,7 @@
 
     <!-- add Tenant form start-->
     <div class="blackcontainer" *ngIf="AddUserClicked"></div>
-    <div class="popup1" padding *ngIf="AddUserClicked">
+    <div class="popup4" padding *ngIf="AddUserClicked">
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
@@ -552,7 +552,7 @@
 
     <!-- edit user form start -->
     <div class="blackcontainer" *ngIf="EditUserClicked"></div>
-    <div class="popup1" padding *ngIf="EditUserClicked">
+    <div class="popup4" padding *ngIf="EditUserClicked">
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
@@ -631,7 +631,11 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <!-- <img style="width: 10%" height="80px" src="http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881"> -->
+                        <ion-label stacked>{{ 'PROFILE PHOTO' | translate }}</ion-label>
+                        <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
+                        <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]="!chooseFile">Upload image</button>
+                    </ion-item>
+                    <ion-item class="text">
                         <img [src]="Profile_Image_Display" style="width: 20%">
                     </ion-item>
 
