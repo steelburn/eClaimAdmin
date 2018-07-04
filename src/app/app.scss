@@ -80,6 +80,15 @@ position: fixed;
 height: 480px;
 }
 
+
+.popup4{
+    width: 83%;
+    left: 85px;
+    top: 96px;
+    position: fixed;
+        height: 500px;
+}
+
 .btn{
 
     text-align: center;
@@ -302,6 +311,11 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
 .cm{
     height: 100%;
 }
+
+.hiset{
+    display: block;
+
+}
 .nofu{
     width: 605px;
     margin:45pt auto;
@@ -310,9 +324,6 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
 .fuha{
     width: calc(50% - 2pt);
     display: inline-block;
-
-
-
 }
 
 .fuha1{
@@ -320,6 +331,20 @@ background: linear-gradient(left, #22ADD4, #1E98BA);
     display: inline-block;
 
 }
+
+
+.fuha2{
+    width: calc(19% - 2pt);
+    display: inline-block;
+}
+
+
+.fuha3{
+    width: calc(33.333% - 2pt);
+    display: inline-block;
+}
+
+
 .Tabler {
     width: 100%;
     padding-top: 35px;
@@ -671,7 +696,7 @@ $tablet7: 600px;
 
 //responsive in between size- tablet / smaller laptop screen 
 
-@media (min-width: 600px) and (max-width: 1280px) {
+@media (min-width: 600px) and (max-width: 1080px) {
     .popup1{
         width: 97%;
         left: 10px;
@@ -699,44 +724,19 @@ $tablet7: 600px;
 
       }
     
-    .Tabler tr.col7 td {
-        padding: 4px;
-    }
-
-
-    table.list th {
-        display: none;
-     }
-    
-        table.list tr {
-            display: block;
-            border: 1px solid #999999;
-           border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 5px;
-        }
-    
-           table.list tr td {
-                display: block;
-             text-align: left !important;
-                 border: none;
-             }
-    
-    
-     
-                table.list tr.col7 td.getHeader::before {
-    
-                    content: attr(reshead)" : ";
-                    font-weight: bold;
-                    display: inline !important;
-                    margin-top: 5px;
-                }
-
+ 
             
 }
 
 
 @media (max-width: 599px){
+
+
+    .hiset{
+        display: none;
+        height:0;
+    }
+    
     .popup1{
         width: 94%;
         left: 0px;
@@ -758,6 +758,16 @@ $tablet7: 600px;
         display: inline-block;
     
     }
+
+    .fuha2{
+        width: calc(100% - 2pt);
+        display: inline-block;
+    }
+
+    .fuha3{
+        width: calc(100% - 2pt);
+        display: inline-block;
+    }
     .round1 {
         width: calc(100% - 20px);
         min-height: 100px;
@@ -777,6 +787,13 @@ $tablet7: 600px;
 
       }
     
+ 
+
+              
+}
+
+//combined media tablet and phone. For specific size, use previous two media rules.
+@media (min-width: 0px) and (max-width: 1080px){
     .Tabler tr.col7 td {
         padding: 4px;
     }
@@ -809,6 +826,4 @@ $tablet7: 600px;
                     display: inline !important;
                     margin-top: 5px;
                 }
-
-              
 }

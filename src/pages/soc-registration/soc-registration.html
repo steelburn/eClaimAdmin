@@ -8,6 +8,9 @@
   <ion-navbar color="primary200">
     <ion-title>{{ 'SOC_REGISTRATION_HEADING' | translate }}</ion-title>
   </ion-navbar>
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>  
 </ion-header>
 
 <ion-content padding>
@@ -17,10 +20,9 @@
     </button>
   </ion-fab>
 
-  <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'SOC_NUMBER' | translate }}</th>
@@ -31,12 +33,12 @@
         </tr>
 
         <tr class="col7" *ngFor="let soc of socs; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{soc.soc}}</td>
-          <td class="lgl1" text-wrap>{{soc.project_name}}</td>
-          <td class="lgl1">{{soc.customer_name}}</td>
-          <td class="lgl1" *ngIf="AdminLogin">{{soc.TENANT_ACCOUNT_NAME}}</td>
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="Soc Number">{{soc.soc}}</td>
+          <td class="lgl1 getHeader" reshead="Project Name" text-wrap>{{soc.project_name}}</td>
+          <td class="lgl1 getHeader"reshead="Customer Name" text-wrap>{{soc.customer_name}}</td>
+          <td class="lgl1 getHeader" *ngIf="AdminLogin" reshead="Tenant">{{soc.TENANT_ACCOUNT_NAME}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
             <!-- <button ion-button item-end (click)="EditClick(soc.TENANT_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
@@ -59,7 +61,7 @@
 
   <div class="blackcontainer" *ngIf="AddSocClicked">
   </div>
-  <div class="popup" padding *ngIf="AddSocClicked">
+  <div class="popup4" padding *ngIf="AddSocClicked">
 
     <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">

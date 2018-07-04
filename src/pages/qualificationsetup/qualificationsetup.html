@@ -8,6 +8,9 @@
   <ion-navbar color="primary200">
     <ion-title>{{ 'QUALIFICATION_CLAIM_HEADING' | translate }}</ion-title>
   </ion-navbar>
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>  
 </ion-header>
 
 
@@ -18,25 +21,24 @@
     </button>
   </ion-fab>
 
-  <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'QUALIFICATION' | translate }}</th>
-          <th class="lgl1" style="display: none;">{{ 'DESCRIPTION' | translate }}</th>
+     
 
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
 
         </tr>
 
         <tr class="col7" *ngFor="let qualificationsetup of qualificationsetups; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{qualificationsetup.TYPE_NAME}}</td>
-          <td class="lgl1" style="display: none;">{{qualificationsetup.TYPE_DESC}}</td>
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="Qualification">{{qualificationsetup.TYPE_NAME}}</td>
+       
 
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(qualificationsetup.QUALIFICATION_TYPE_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
@@ -52,7 +54,7 @@
   <!-- add Qualifyform start-->
   <div class="blackcontainer" *ngIf="AddQualifyClicked">
   </div>
-  <div class="popup" padding *ngIf="AddQualifyClicked">
+  <div class="popup4" padding *ngIf="AddQualifyClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
@@ -70,10 +72,6 @@
             <ion-input type="text" formControlName="TYPE_NAME" [(ngModel)]="TYPE_NAME_ngModel_Add" placeholder="{{'Please fill in the qualification'}}"></ion-input>
           </ion-item>
 
-          <ion-item style="display: none;">
-            <ion-label stacked>{{ 'DESCRIPTION' | translate }}</ion-label>
-            <ion-input type="text" formControlName="TYPE_DESC" [(ngModel)]="TYPE_DESC_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
-          </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Qualifyform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
           </div>

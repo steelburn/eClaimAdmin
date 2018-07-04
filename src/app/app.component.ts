@@ -130,6 +130,7 @@ export class ConferenceApp {
   rootPage = 'LoginPage';
   appPages_User: PageInterface[];
   USER_NAME_LABEL: any;
+  IMAGE_URL: any;
 
   //To control Menu-------------------------------
   blnDashboard_loggedInMenu_User: boolean = true;
@@ -256,9 +257,16 @@ export class ConferenceApp {
     
     // debugger;
     if (localStorage.length > 0) {
-      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
+      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME"); this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL"); 
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
+        this.blnDashboard_loggedInMenu_User = true;
+          this.blnTasks_loggedInMenu_User = true;
+          this.blnClaims_loggedInMenu_User = true;
+          this.blnReport_loggedInMenu_User = true;
+          this.blnAccount_loggedInMenu_User = true;
+
+          this.blnSetup_loggedInMenu_User = true;
         if (localStorage.getItem("g_USER_GUID") == "sva") {
           this.loggedInPages = [
             { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
@@ -276,6 +284,13 @@ export class ConferenceApp {
 
         //For Tenant Admin, Remove Admin Setup
         else if (localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
+          this.blnDashboard_loggedInMenu_User = true;
+          this.blnTasks_loggedInMenu_User = true;
+          this.blnClaims_loggedInMenu_User = true;
+          this.blnReport_loggedInMenu_User = true;
+          this.blnAccount_loggedInMenu_User = true;
+
+          this.blnSetup_loggedInMenu_User = true;
           this.appPages_User = [
             { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
             { title: 'Finance Task ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
@@ -306,7 +321,7 @@ export class ConferenceApp {
           this.setupsPages = [
             // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
             { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
-            { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
+            // { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
@@ -569,8 +584,8 @@ export class ConferenceApp {
         //For others
         else {
           this.appPages_User = [
-            // { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            // { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
           ];
 
           this.claimPages = [
