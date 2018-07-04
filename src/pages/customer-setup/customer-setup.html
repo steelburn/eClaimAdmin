@@ -24,7 +24,7 @@
   
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'Name' | translate }}</th>
@@ -35,12 +35,12 @@
         </tr>
 
         <tr class="col7" *ngFor="let customer of customers; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1" text-wrap>{{customer.CUSTOMER_NAME}}</td>
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader"  reshead="Name" text-wrap>{{customer.CUSTOMER_NAME}}</td>
           <!-- <td class="lgl1" text-wrap>{{customer.CUSTOMER_LOCATION_NAME}}</td> -->
-          <td class="lgl1" text-wrap>{{customer.EMAIL}}</td>          
-          <td class="lgl1">{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader" reshead="Email." text-wrap>{{customer.EMAIL}}</td>          
+          <td class="lgl1 getHeader" reshead="Mobile No.">{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>

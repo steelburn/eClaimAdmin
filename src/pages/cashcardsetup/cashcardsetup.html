@@ -20,28 +20,28 @@
 
     <ion-list>
         <ion-item>
-            <table class="Tabler ">
+            <table class="Tabler list">
                 <tr class="linedsg TColor">
                     <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
                     <!-- <th class="lgl1">CASHCARD NO.</th> -->
                     <th class="lgl1">{{ 'CARD_NO' | translate }}</th>
                     <th class="lgl1">{{ 'ACCOUNT_NO' | translate }}</th>
-                    <!-- <th class="lgl1">PASSWORD</th> -->
+            
                     <th class="lgl1">{{ 'MANAGEMENT_URL' | translate }}</th>
-                    <th class="lgl1" style="display: none;">{{ 'DESCRIPTION' | translate }}</th>
+
                     <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
                     <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let cashcard of cashcards; let i=index" [hidden] = "button_View_Disable">
-                    <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{cashcard.CASHCARD_SNO}}</td>
-                    <td class="lgl1">{{cashcard.ACCOUNT_ID}}</td>
-                    <!-- <td class="lgl1">{{cashcard.ACCOUNT_PASSWORD}}</td> -->
-                    <td class="lgl1">{{cashcard.MANAGEMENT_URL}}</td>
-                    <td class="lgl1" style="display: none;">{{cashcard.DESCRIPTION}}</td>
-                    <td class="lgl1" *ngIf="AdminLogin">{{cashcard.TENANT_ACCOUNT_NAME}}</td>
-                    <td class="lgl1 fColor">
+                    <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+                    <td class="lgl1 getHeader" reshead="Cashcard No.">{{cashcard.CASHCARD_SNO}}</td>
+                    <td class="lgl1 getHeader" reshead="Account No.">{{cashcard.ACCOUNT_ID}}</td>
+         
+                    <td class="lgl1 getHeader" reshead="Management URL">{{cashcard.MANAGEMENT_URL}}</td>
+     
+                    <td class="lgl1 getHeader" *ngIf="AdminLogin" reshead="Teanant Name">{{cashcard.TENANT_ACCOUNT_NAME}}</td>
+                    <td class="lgl1 getHeader fColor" reshead="Action">
                         <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(cashcard.CASHCARD_GUID)">
                             <ion-icon name="md-create"></ion-icon>
                         </button>
@@ -97,10 +97,6 @@
                         <ion-input type="text" formControlName="MANAGEMENT_URL" [(ngModel)]="MANAGEMENT_URL_ngModel_Add" placeholder="{{'Please fill in the management URL'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item style="display: none;">
-                        <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
-                        <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
-                    </ion-item>
                     <div class="btn">
                         <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Cashform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
                     </div>

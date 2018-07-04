@@ -8,6 +8,10 @@
   <ion-navbar color="primary200">
     <ion-title>{{ 'STATE_SETUP_HEADING' | translate }}</ion-title>
   </ion-navbar>
+
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
@@ -16,10 +20,9 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-  <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'STATE_NAME' | translate }}</th>
@@ -28,10 +31,10 @@
         </tr>
 
         <tr class="col7" *ngFor="let state of states; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{state.STATE_NAME}}</td>
-          <td class="lgl1">{{state.COUNTRY_NAME}}</td>
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="State Name">{{state.STATE_NAME}}</td>
+          <td class="lgl1 getHeader" reshead="Country Name">{{state.COUNTRY_NAME}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(state.STATE_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
