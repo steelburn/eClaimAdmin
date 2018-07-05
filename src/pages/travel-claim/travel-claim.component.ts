@@ -770,7 +770,7 @@ export class TravelclaimPage {
         // , formvalues
         //this.disableButton = true;
         //this.PublicTransValue = false;
-         this.PublicTransValue = true;
+        // this.PublicTransValue = true;
          this.chooseFile = false;
 
         this.ImageUploadValidation=false;
