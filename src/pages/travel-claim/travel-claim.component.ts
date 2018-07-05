@@ -764,6 +764,9 @@ export class TravelclaimPage {
       // let imageResult = this.SaveImageinDB();
       // imageResult.then((objImage: ImageUpload_model) => {      
 
+
+        this.ImageUploadValidation=true;
+
       //  this.imageGUID = objImage.Image_Guid
       this.imageGUID = this.uniqueName;
       // , formvalues
@@ -772,8 +775,7 @@ export class TravelclaimPage {
       // this.PublicTransValue = true;
       this.chooseFile = false;
 
-      this.ImageUploadValidation = false;
-
+     
 
 
       // })
