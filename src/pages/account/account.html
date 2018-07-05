@@ -98,27 +98,27 @@
           </ion-select>
         </ion-item>
 
-        <ion-item class="fuha">
-          <ion-label stacked>{{ 'MARITAL_STATUS' | translate }}</ion-label>
-          <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}"
-            (ionChange)="DisplayFamily_Edit()">
-            <ion-option [value]="0">Single</ion-option>
-            <ion-option [value]="1">Married</ion-option>
-            <ion-option [value]="2">Divorced</ion-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item  class="fuha">
-          <ion-label stacked>{{ 'PROFILE PHOTO' | translate }}</ion-label>
-          <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
-          <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]="!chooseFile">Upload image</button>
-        </ion-item>
-
         <div class="btn" *ngIf="EditProfileClicked==false">
           <button ion-button (click)="EditProfile" (click)="EditProfile()">{{"Edit Profile" | translate}}</button>
         </div>
 
         <div *ngIf="EditProfileClicked==true">
+          <ion-item class="fuha">
+            <ion-label stacked>{{ 'MARITAL_STATUS' | translate }}</ion-label>
+            <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_Edit_ngModel" placeholder="{{'Please fill the marital status'}}"
+              (ionChange)="DisplayFamily_Edit()">
+              <ion-option [value]="0">Single</ion-option>
+              <ion-option [value]="1">Married</ion-option>
+              <ion-option [value]="2">Divorced</ion-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item  class="fuha">
+            <ion-label stacked>{{ 'PROFILE PHOTO' | translate }}</ion-label>
+            <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
+            <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]="!chooseFile">Upload image</button>
+          </ion-item>
+          
           <div class="eClaimSubTitle2">
             <b>{{ 'EMPLOYMENT_DETAILS' | translate }}</b>
           </div>
