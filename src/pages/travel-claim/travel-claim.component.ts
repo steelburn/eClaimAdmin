@@ -773,7 +773,7 @@ export class TravelclaimPage {
         // this.PublicTransValue = true;
          this.chooseFile = false;
 
-        this.ImageUploadValidation=false;
+        this.ImageUploadValidation=true;
 
 
        
