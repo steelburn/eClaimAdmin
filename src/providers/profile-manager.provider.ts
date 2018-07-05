@@ -116,6 +116,7 @@ export class ProfileManagerProvider {
     }
 
     proceedNext(){
+     this.isRequester = false;
       let month = new Date(this.formValues.travel_date).getMonth() + 1;
       let year = new Date(this.formValues.travel_date).getFullYear(); this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
       .subscribe(claimRefdata => {
