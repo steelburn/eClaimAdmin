@@ -242,12 +242,12 @@
                 <td align="center" bgcolor="#FFFFFF" *ngIf="claim.TRAVEL_TYPE!='1'">0.00</td>
                 <td align="center" bgcolor="#FFFFFF">{{claim.STATUS}}</td>
                 <td align="center" bgcolor="#FFFFFF">{{claim.CATEGORY}}</td>
-                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY!='Public transport'">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
-                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY=='Public transport'">0.00</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY!='Public Transport'">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY=='Public Transport'">0.00</td>
                 <td align="center" bgcolor="#FFFFFF">{{claim.ParkingAmount | number:'1.2-2'}}</td>
                 <td align="center" bgcolor="#FFFFFF">{{claim.TollAmount | number:'1.2-2'}}</td>
-                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY=='Public transport'">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
-                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY!='Public transport'">0.00</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY=='Public Transport'">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
+                <td align="center" bgcolor="#FFFFFF" *ngIf="claim.CATEGORY!='Public Transport'">0.00</td>
                 <td align="center" bgcolor="#FFFFFF">{{claim.AccAmount | number:'1.2-2'}}</td>
                 <td align="center" bgcolor="#FFFFFF">{{claim.MealAmount | number:'1.2-2'}}</td>
                 <td align="center" bgcolor="#FFFF99">{{claim.Total | number:'1.2-2'}}</td>
