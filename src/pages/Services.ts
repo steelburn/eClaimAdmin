@@ -10,6 +10,8 @@ export class Services {
   constructor(public http:Http) {
 
   }
+
+
   static getUrl(table: string, args?: string) {
     if (args != null) {
       return constants.DREAMFACTORY_TABLE_URL + '/' + table + '?' + args + '&api_key=' + constants.DREAMFACTORY_API_KEY;

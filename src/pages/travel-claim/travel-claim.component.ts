@@ -4,11 +4,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
-import * as constants from '../../config/constants';     
+import * as constants from '../../config/constants';
 //import * as constants_home from '../../app/config/constants_home';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';     
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
 import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
@@ -21,35 +21,35 @@ import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
-import {Router, Request, Response, NextFunction} from 'express';
-import {AddTollPage} from '../../pages/add-toll/add-toll.component';
-import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http'; 
+import { Router, Request, Response, NextFunction } from 'express';
+import { AddTollPage } from '../../pages/add-toll/add-toll.component';
+import { HttpClient, HttpParams, HttpRequest, HttpEvent } from '@angular/common/http';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { DecimalPipe } from '@angular/common';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { DashboardPage } from '../dashboard/dashboard';
-import moment from 'moment'; 
+import moment from 'moment';
 
 @IonicPage()
 @Component({
   selector: 'page-travelclaim',
   templateUrl: 'travel-claim.html', providers: [Services, BaseHttpService, FileTransfer, DecimalPipe]
 })
-export class TravelclaimPage {         
-  isReadyToSave: boolean; 
- 
+export class TravelclaimPage {
+  isReadyToSave: boolean;
+
   vehicles: any[];
-  customers: any[]; 
-  storeCustomers: any[]; 
-  storeProjects: any[]; 
+  customers: any[];
+  storeCustomers: any[];
+  storeProjects: any[];
   public projects: any[];
   Travelform: FormGroup;
   TenantGUID: any;
   userGUID: any;
-  items: string[];  
+  items: string[];
   public assignedTo: any;
-  public profileLevel: any; 
+  public profileLevel: any;
   public stage: any;
   public profileJSON: any;
 
@@ -67,7 +67,7 @@ export class TravelclaimPage {
   Project_Lookup_ngModel: any;
   Travel_Customer_ngModel: any;
   Customer_Lookup_ngModel: any;
-  Customer_GUID: any; 
+  Customer_GUID: any;
   Soc_GUID: any;
   isFormSubmitted = false;
   tollParkLookupClicked = false;
@@ -75,7 +75,7 @@ export class TravelclaimPage {
   //public socGUID : any;
   public AddTravelClicked: boolean = false;
   ProjectLookupClicked: boolean = false;
-  CustomerLookupClicked: boolean = false; 
+  CustomerLookupClicked: boolean = false;
   public AddLookupClicked: boolean = false;
   public AddToLookupClicked: boolean = false;
   currentItems: any;
@@ -98,16 +98,16 @@ export class TravelclaimPage {
   travelAmountNgmodel: any;
   PublicTransValue: boolean = false;
   chooseFile: boolean = false;
-  ImageUploadValidation:boolean=false;
+  ImageUploadValidation: boolean = false;
 
 
 
-   /********FORM EDIT VARIABLES***********/
-   vehicleCategory: any;
-   isPublicTransport: boolean = false;
-   isFormEdit: boolean = false;
-   claimRequestGUID: any;
-   claimRequestData: any;
+  /********FORM EDIT VARIABLES***********/
+  vehicleCategory: any;
+  isPublicTransport: boolean = false;
+  isFormEdit: boolean = false;
+  claimRequestGUID: any;
+  claimRequestData: any;
 
   //  ngOnInit() {
   //   if (this.isFormEdit)
@@ -116,12 +116,11 @@ export class TravelclaimPage {
   //   this.MainClaimSaved=true;}
   // }
 
-   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api1: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
-  {
+  constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api1: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID');
-    this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
+    this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     // if (this.isFormEdit)
     // this.GetDataforEdit();
     if (this.isFormEdit) {
@@ -129,25 +128,25 @@ export class TravelclaimPage {
       this.GetDataforEdit();
       this.MainClaimSaved = true;
     }
-  else {
-    this.LoadCustomers();
-    this.LoadProjects();
-    this.LoadVehicles();
-    this.LoadPayments();
-  }
+    else {
+      this.LoadCustomers();
+      this.LoadProjects();
+      this.LoadVehicles();
+      this.LoadPayments();
+    }
     this.Travelform = fb.group({
       avatar1: null,
       avatar: null,
       PayType: '',
       soc_no: '',
-      distance: '', 
+      distance: '',
       uuid: '',
       travelType: '',
       //PublicTransValidation: ['', Validators.required],
       travel_date: '',
       destination: ['', Validators.required],
       start_DT: ['', Validators.required],
-      end_DT: ['', Validators.required], 
+      end_DT: ['', Validators.required],
       description: ['', Validators.required],
       origin: ['', Validators.required],
       vehicleType: ['', Validators.required],
@@ -156,21 +155,21 @@ export class TravelclaimPage {
       attachment_GUID: '',
       //travel_amount: ['', Validators.required],
       claim_amount: ['', Validators.required]
-    });   
-   
-  }   
-  
+    });
+
+  }
+
   getCurrency(amount: number) {
-   amount =Number(amount);
-   if (amount > 99999) {
-    alert('Amount should not exceed RM99999.')
-    this.travelAmountNgmodel = null
-  }
-  else{ 
-    this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
-    this.travelAmount = amount;
-    this.totalClaimAmount = amount;
-  }
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM99999.')
+      this.travelAmountNgmodel = null
+    }
+    else {
+      this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
+      this.travelAmount = amount;
+      this.totalClaimAmount = amount;
+    }
   }
 
   totalClaimAmount: number;
@@ -247,7 +246,7 @@ export class TravelclaimPage {
   //                     this.Travel_Type_ngModel = 'Outstation'
   //                     this.isTravelLocal = false;
   //                   }
-                    
+
   //                   else 
   //                   this.Travel_Type_ngModel = 'Local'
   //                   this.isTravelLocal = true;
@@ -302,8 +301,8 @@ export class TravelclaimPage {
               }
               // this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
               // this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
-              this.Start_DT_ngModel = moment(this.claimRequestData[0].START_TS).format('YYYY-MM-DDTHH:mm'); 
-              this.End_DT_ngModel =  moment(this.claimRequestData[0].END_TS).format('YYYY-MM-DDTHH:mm'); 
+              this.Start_DT_ngModel = moment(this.claimRequestData[0].START_TS).format('YYYY-MM-DDTHH:mm');
+              this.End_DT_ngModel = moment(this.claimRequestData[0].END_TS).format('YYYY-MM-DDTHH:mm');
 
               // this.Travel_Mode_ngModel = this.claimRequestData[0].MILEAGE_GUID;
 
@@ -344,10 +343,10 @@ export class TravelclaimPage {
     })
 
   }
- 
-  
 
-  GetSocNo(item: any){
+
+
+  GetSocNo(item: any) {
     this.Travel_SOC_No_ngModel = item.soc;
     this.Project_Lookup_ngModel = item.project_name;
     this.Soc_GUID = item.SOC_GUID;
@@ -356,7 +355,7 @@ export class TravelclaimPage {
 
   GetCustomer(guid: any, name: any) {
     this.Customer_Lookup_ngModel = name;
-    this.Customer_GUID = guid;    
+    this.Customer_GUID = guid;
     this.CloseCustomerLookup();
   }
 
@@ -396,7 +395,7 @@ export class TravelclaimPage {
   }
 
   LoadClaimDetails() {
-    this.tollParkAmount =0;
+    this.tollParkAmount = 0;
     return new Promise((resolve, reject) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
@@ -404,10 +403,10 @@ export class TravelclaimPage {
           if (element.ATTACHMENT_ID !== null)
             element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
           this.tollParkAmount += element.AMOUNT;
-          
+
         });
         if (this.isFormSubmitted) {
-          this.tollParkAmount=  this.tollParkAmount===undefined?0:this.tollParkAmount;
+          this.tollParkAmount = this.tollParkAmount === undefined ? 0 : this.tollParkAmount;
           this.totalClaimAmount = this.travelAmount + this.tollParkAmount;
         }
         else
@@ -437,7 +436,7 @@ export class TravelclaimPage {
     //   this.travelAmount = destination * this.VehicleRate, -2;
     // }
     var origin = this.Travel_From_ngModel;
-    var destination:any;
+    var destination: any;
     this.http.get(url).map(res => res.json()).subscribe(data => {
       let temp = data["rows"][0]["elements"][0];
       // console.table(data)
@@ -451,14 +450,14 @@ export class TravelclaimPage {
         if (!this.isPublicTransport)
           this.travelAmount = destination * this.VehicleRate, -2;
         this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
-        this.travelAmount=  this.travelAmount===undefined?0:this.travelAmount;
-        this.tollParkAmount=  this.tollParkAmount===undefined?0:this.tollParkAmount;
-        this.totalClaimAmount = this.travelAmount + this.tollParkAmount ;
+        this.travelAmount = this.travelAmount === undefined ? 0 : this.travelAmount;
+        this.tollParkAmount = this.tollParkAmount === undefined ? 0 : this.tollParkAmount;
+        this.totalClaimAmount = this.travelAmount + this.tollParkAmount;
       }
       else
         alert('Please select Valid Origin & Destination Places');
     });
-  } 
+  }
 
   public CloseTravelClick() {
     this.AddToLookupClicked = false;
@@ -474,7 +473,7 @@ export class TravelclaimPage {
     }
     if (this.Travel_From_ngModel != undefined && this.Travel_Destination_ngModel != undefined) {
       this.GetDistance();
-    }   
+    }
   }
 
   public CloseProjectLookup() {
@@ -501,7 +500,7 @@ export class TravelclaimPage {
   }
 
   public ProjectLookup() {
-    this.ProjectLookupClicked = true;   
+    this.ProjectLookupClicked = true;
     // this.projects = null;
   }
 
@@ -536,16 +535,16 @@ export class TravelclaimPage {
     });
   }
 
-// Search project start:
-    
+  // Search project start:
+
   searchProject(searchString: any) {
     let val = searchString.target.value;
     if (!val || !val.trim()) {
       this.projects = this.storeProjects;
       return;
     }
-   this.projects=  this.filterProjects({
-    project_name: val, soc: val
+    this.projects = this.filterProjects({
+      project_name: val, soc: val
     });
   }
 
@@ -567,7 +566,7 @@ export class TravelclaimPage {
       return null;
     });
   }
-  
+
   searchCustomer(searchString: any) {
     let val = searchString.target.value;
     if (!val || !val.trim()) {
@@ -597,31 +596,31 @@ export class TravelclaimPage {
     });
   }
 
-  showAddToll(claimDetailGuid:string) {
+  showAddToll(claimDetailGuid: string) {
     this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
       // MainClaim: localStorage.getItem("g_CR_GUID"),
-     ClaimReqDetailGuid:claimDetailGuid,
+      ClaimReqDetailGuid: claimDetailGuid,
       ClaimMethod: '03048acb-037a-11e8-a50c-00155de7e742',
       ClaimMethodName: 'Toll'
     });
   }
 
-  showAddParking(claimDetailGuid:string) {
+  showAddParking(claimDetailGuid: string) {
     this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
       // MainClaim: localStorage.getItem("g_CR_GUID"),
-      ClaimReqDetailGuid:claimDetailGuid,
+      ClaimReqDetailGuid: claimDetailGuid,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742',
       ClaimMethodName: 'Parking'
     });
   }
 
-  showAddAccommodation(claimDetailGuid:string) {
+  showAddAccommodation(claimDetailGuid: string) {
     this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
       // MainClaim: localStorage.getItem("g_CR_GUID"),
-      ClaimReqDetailGuid:claimDetailGuid,
+      ClaimReqDetailGuid: claimDetailGuid,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-ssh55de7e742',
       ClaimMethodName: 'Accommodation'
     });
@@ -629,7 +628,7 @@ export class TravelclaimPage {
 
 
 
-  showMealAllowance(claimDetailGuid:string) {
+  showMealAllowance(claimDetailGuid: string) {
     this.CloseTollParkLookup();
     if (claimDetailGuid === null) {
       this.api.getApiModel('claim_request_detail', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(CLAIM_METHOD_GUID=0ebb7e5f-ssha-11e8-a50c-ssh55de7e742)').subscribe(data => {
@@ -649,11 +648,11 @@ export class TravelclaimPage {
         ClaimMethod: '0ebb7e5f-ssha-11e8-a50c-ssh55de7e742',
         ClaimMethodName: 'Meal Allowance'
       });
-    }  
+    }
   }
 
 
-  onVehicleSelect(vehicle: any) { 
+  onVehicleSelect(vehicle: any) {
     this.VehicleId = vehicle.MILEAGE_GUID;
     this.VehicleRate = vehicle.RATE_PER_UNIT;
     this.vehicleCategory = vehicle.CATEGORY;
@@ -662,11 +661,11 @@ export class TravelclaimPage {
     this.PublicTransValue = true;
     if (vehicle.CATEGORY === 'Public Transport') {
       this.isPublicTransport = true;
-      if(this.isFormEdit)
-      this.PublicTransValue = true;
+      if (this.isFormEdit)
+        this.PublicTransValue = true;
       //this.travelAmount = undefined;
       else
-      this.PublicTransValue = false;
+        this.PublicTransValue = false;
     }
     else
       this.isPublicTransport = false;
@@ -680,7 +679,7 @@ export class TravelclaimPage {
     this.allowanceGUID = allowance.ALLOWANCE_GUID;
   }
 
-   imageGUID: any;
+  imageGUID: any;
   // onReceiveImageGUID(imageGUID: any) {
   //   this.PublicTransValue = true;
   //   this.imageGUID = imageGUID;
@@ -712,13 +711,13 @@ export class TravelclaimPage {
     //this.PublicTransValue = true;
     // this.PublicTransValue = false;
 
-    this.ImageUploadValidation=false;
+    this.ImageUploadValidation = false;
   }
 
   uniqueName: any
   fileName1: string;
   ProfileImage: any;
-  newImage:boolean=true;
+  newImage: boolean = true;
   private ProfileImageDisplay(e: any, fileChoose: string): void {
     let reader = new FileReader();
     if (e.target.files && e.target.files[0]) {
@@ -735,19 +734,19 @@ export class TravelclaimPage {
     }
     this.imageGUID = this.uploadFileName;
     this.chooseFile = true;
-    this.newImage=false;
+    this.newImage = false;
     this.onFileChange(e);
-    this.ImageUploadValidation=true;
+    this.ImageUploadValidation = true;
   }
 
- // imageGUID: any;
+  // imageGUID: any;
   // saveIm() {
   //   let uploadImage = this.UploadImage();
   //   uploadImage.then((resJson) => {
   //     console.table(resJson)
   //     let imageResult = this.SaveImageinDB();
   //     imageResult.then((objImage: ImageUpload_model) => {
-       
+
   //       //let result = this.submitAction(objImage.Image_Guid, formValues);
   //       this.imageGUID = objImage.Image_Guid
   //     })
@@ -764,19 +763,19 @@ export class TravelclaimPage {
       // console.table(resJson)
       // let imageResult = this.SaveImageinDB();
       // imageResult.then((objImage: ImageUpload_model) => {      
-        
-        //  this.imageGUID = objImage.Image_Guid
-        this.imageGUID = this.uniqueName;
-        // , formvalues
-        //this.disableButton = true;
-        //this.PublicTransValue = false;
-         this.PublicTransValue = true;
-         this.chooseFile = false;
 
-        this.ImageUploadValidation=false;
+      //  this.imageGUID = objImage.Image_Guid
+      this.imageGUID = this.uniqueName;
+      // , formvalues
+      //this.disableButton = true;
+      //this.PublicTransValue = false;
+      // this.PublicTransValue = true;
+      this.chooseFile = false;
+
+      this.ImageUploadValidation = false;
 
 
-       
+
       // })
     })
     // setTimeout(() => {
@@ -799,10 +798,10 @@ export class TravelclaimPage {
     })
   }
 
-  UploadImage() {   
-      this.CloudFilePath = 'eclaim/'      
+  UploadImage() {
+    this.CloudFilePath = 'eclaim/'
     this.loading = true;
-    this.uniqueName = new Date().toISOString()+this.uploadFileName ;
+    this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');
@@ -944,9 +943,14 @@ export class TravelclaimPage {
             else {
               this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
               this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
-             }
+            }
 
             this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
+
+              //Send Email------------------------------------------------
+              this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
+              //----------------------------------------------------------
+
               alert('Claim details updated successfully.')
               this.navCtrl.push(UserclaimslistPage);
             })
@@ -957,23 +961,19 @@ export class TravelclaimPage {
     }
   }
 
-  EditDetail(claimDetailId:string,claimMethodGuid:string)
-  {
-if(claimMethodGuid==='03048acb-037a-11e8-a50c-00155de7e742')
-   {this.showAddToll(claimDetailId)  }
-  else if(claimMethodGuid==='0ebb7e5f-037a-11e8-a50c-00155de7e742')
-   {this.showAddParking(claimDetailId)  }
-  else if(claimMethodGuid==='0ebb7e5f-ssha-11e8-a50c-ssh55de7e742')
-   {this.showMealAllowance(claimDetailId)  }
- else  if(claimMethodGuid==='0ebb7e5f-037a-11e8-a50c-ssh55de7e742')
-   {this.showAddAccommodation(claimDetailId)  }
-   
+  EditDetail(claimDetailId: string, claimMethodGuid: string) {
+    if (claimMethodGuid === '03048acb-037a-11e8-a50c-00155de7e742') { this.showAddToll(claimDetailId) }
+    else if (claimMethodGuid === '0ebb7e5f-037a-11e8-a50c-00155de7e742') { this.showAddParking(claimDetailId) }
+    else if (claimMethodGuid === '0ebb7e5f-ssha-11e8-a50c-ssh55de7e742') { this.showMealAllowance(claimDetailId) }
+    else if (claimMethodGuid === '0ebb7e5f-037a-11e8-a50c-ssh55de7e742') { this.showAddAccommodation(claimDetailId) }
+
   }
-  DeleteDetail(claimDetailId:string){
-    this.api.deleteApiModel('claim_request_detail',claimDetailId).subscribe(res =>{
+  DeleteDetail(claimDetailId: string) {
+    this.api.deleteApiModel('claim_request_detail', claimDetailId).subscribe(res => {
       this.tollParkAmount = 0;
       this.LoadClaimDetails();
-       alert('Claim detail has been deleted successfully.')});
+      alert('Claim detail has been deleted successfully.')
+    });
   }
-     
+
 }
