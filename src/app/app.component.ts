@@ -22,7 +22,7 @@ import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 
-import { PeermissionPage } from '../pages/peermission/peermission';
+import { PermissionPage } from '../pages/Permission/permission';
 import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
@@ -34,6 +34,7 @@ import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claima
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist';
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
+import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
 
 import { UploadPage } from '../pages/upload/upload';
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
@@ -54,6 +55,8 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
+
+
 
 export interface PageInterface {
   title: string;
@@ -86,56 +89,57 @@ export class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
-    // // { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, tabComponent: DashboardPage, index: 4, icon: 'apps' },
-    // { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-    // { title: 'SETUP', name: 'TabsPage', component: TabsPage, tabComponent: SetupPage, index: 1, icon: 'settings' },
-    // { title: 'ADMIN SETUP', name: 'TabsPage', component: TabsPage, tabComponent: AdminsetupPage, index: 2, icon: 'settings' },
-    // // { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
-
-    { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-    { title: 'SETUP', name: 'SetupPage', component: SetupPage, icon: 'settings' },
-    { title: 'ADMIN SETUP', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'settings' },
-
-    // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
-    // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
-    { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-    { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-    { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
-    { title: 'CLAIM HISTORY', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-    
+    { title: 'Dashboard', name: 'DashboardPage', component: DashboardPage, icon: 'apps' }
   ];
+
   claimPages: PageInterface[] = [
-    { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
-    { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
-    { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
-    { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
-    { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
-    { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+    { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+    { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+    { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+    { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+    { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+    { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+    { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
   ];
+
   loggedInPages: PageInterface[] = [
-    // { title: 'ACCOUNT', name: 'AccountPage', component: AccountPage, icon: 'person' },
-    { title: 'CHANGE PASSWORD', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
-    // { title: 'LOGOUT', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
-    { title: 'SIGN OUT', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+    { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+    { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+    { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
   ];
+
   loggedOutPages: PageInterface[] = [
-    { title: 'LOGIN', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-    { title: 'SIGNUP', name: 'SignupPage', component: SignupPage, icon: 'person-add' },
-    { title: 'FORGOT PASSWORD', name: 'LoginPage', component: LoginPage, icon: 'key' }
+    { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
+    { title: 'Sign Up', name: 'SignupPage', component: SignupPage, icon: 'person-add' },
+    { title: 'Forgot Password', name: 'LoginPage', component: LoginPage, icon: 'key' }
   ];
 
+  reportPages: PageInterface[] = [
+    { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
+    { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+    { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+    { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
+  ];
 
-  // appPages_User: PageInterface[] = [    
-  //   // { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, tabComponent: DashboardPage, index: 4, icon: 'apps' },
-  //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-  //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
-  // ];
-
-  // rootPage: any = LoginPage;
-  //public events: Events,   
+  setupsPages: PageInterface[] = [
+    { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+    { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
+    { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
+  ];
 
   rootPage = 'LoginPage';
   appPages_User: PageInterface[];
+  USER_NAME_LABEL: any;
+  IMAGE_URL: any;
+
+  //To control Menu-------------------------------
+  blnDashboard_loggedInMenu_User: boolean = true;
+  blnTasks_loggedInMenu_User: boolean = true;
+  blnClaims_loggedInMenu_User: boolean = true;
+  blnReport_loggedInMenu_User: boolean = true;
+  blnSetup_loggedInMenu_User: boolean = true;
+  blnAccount_loggedInMenu_User: boolean = true;
+  //----------------------------------------------
 
   constructor(
     public events: Events,
@@ -147,12 +151,7 @@ export class ConferenceApp {
     statusbar: StatusBar,
     splashScreen: SplashScreen, public translate: TranslateService, public http: Http
   ) {
-    //debugger;
-    // this.appPages_User = [
-    //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-    //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
-    // ];
-    this.blnLogin = false;
+    this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -194,8 +193,8 @@ export class ConferenceApp {
     // If we are already on tabs just change the selected tab
     // don't setRoot again, this maintains the history stack of the
     // tabs even if changing them from the menu
-    if (this.nav.getActiveChildNav() && page.index != undefined) {
-      this.nav.getActiveChildNav().select(page.index);
+    if (this.nav.getActiveChildNavs().length && page.index != undefined) {
+      this.nav.getActiveChildNavs()[0].select(page.index);
       // Set the root of the nav with params if it's a tab index
     } else {
       this.nav.setRoot(page.name, params).catch((err: any) => {
@@ -255,123 +254,368 @@ export class ConferenceApp {
 
     // this.menu.enable(loggedIn, 'loggedInMenu');
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
-
+    
+    // debugger;
     if (localStorage.length > 0) {
-      this.blnLogin = true;
+      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME"); this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL"); 
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
+        this.blnDashboard_loggedInMenu_User = true;
+          this.blnTasks_loggedInMenu_User = true;
+          this.blnClaims_loggedInMenu_User = true;
+          this.blnReport_loggedInMenu_User = true;
+          this.blnAccount_loggedInMenu_User = true;
+
+          this.blnSetup_loggedInMenu_User = true;
         if (localStorage.getItem("g_USER_GUID") == "sva") {
+          this.loggedInPages = [
+            { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+          ];
+
+          this.setupsPages = [
+            // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+            { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
+            { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
+          ];
+
           this.menu.enable(loggedIn, 'loggedInMenu');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
+
         //For Tenant Admin, Remove Admin Setup
-        else if (localStorage.getItem("g_IS_TENANT_AMDIN") == "1") {
+        else if (localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
+          this.blnDashboard_loggedInMenu_User = true;
+          this.blnTasks_loggedInMenu_User = true;
+          this.blnClaims_loggedInMenu_User = true;
+          this.blnReport_loggedInMenu_User = true;
+          this.blnAccount_loggedInMenu_User = true;
+
+          this.blnSetup_loggedInMenu_User = true;
           this.appPages_User = [
-            // { title: 'DASHBOARD', name: 'TabsPage', component: TabsPage, tabComponent: DashboardPage, index: 0, icon: 'apps' },
-            { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-            { title: 'SETUP', name: 'SetupPage', component: SetupPage, icon: 'settings' },
-            // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
-            { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
-            { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
-            { title: 'CLAIM HISTORY', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Finance Task ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
           ];
           this.claimPages = [
-            { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
-            { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
-            { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
-            { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
-            { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
-            { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+          ];
+
+          if (localStorage.getItem("Ad_Authenticaton") == "true") {
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+
+          this.setupsPages = [
+            // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+            { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
+            // { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
+
         //For Team Member, Home, Change Password, Sign Out
         else if (res.toString() == "Team Member") {
+          this.blnDashboard_loggedInMenu_User = true;
+          this.blnClaims_loggedInMenu_User = true;
+          this.blnReport_loggedInMenu_User = true;
+          this.blnAccount_loggedInMenu_User = true;
+
+          this.blnTasks_loggedInMenu_User = false;
+          this.blnSetup_loggedInMenu_User = false;
+
           this.appPages_User = [
-            // { title: 'DASHBOARD', name: 'TabsPage', component: TabsPage, tabComponent: DashboardPage, index: 0, icon: 'apps' },
-            // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
-            // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
-            
-            { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-            { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'CLAIM HISTORY', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
           ];
+
           this.claimPages = [
-            { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
-            { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
-            { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
-            { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
-            { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
-            { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
           ];
+
+          this.reportPages = [
+            // { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
+          ];
+
+          this.setupsPages = [
+            { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+            { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
+            { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
+          ];
+
+          if (localStorage.getItem("Ad_Authenticaton") == "true") {
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+
+        else if (res.toString() == "Finance Executive") {
+          this.blnDashboard_loggedInMenu_User = true;
+          this.blnTasks_loggedInMenu_User = true;
+          this.blnClaims_loggedInMenu_User = true;
+          this.blnReport_loggedInMenu_User = true;
+          this.blnAccount_loggedInMenu_User = true;
+
+          this.blnSetup_loggedInMenu_User = true;
+
+          this.appPages_User = [
+            { title: 'Finance Tasks', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' }
+          ];
+
+          this.claimPages = [
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' }
+          ];
+
+          this.reportPages = [
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' }
+
+            
+          ];
+
+          this.setupsPages = [
+            // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+            { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
+            // { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
+          ];
+
+          if (localStorage.getItem("Ad_Authenticaton") == "true") {
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
         //For Team Member, Home, Change Password, Sign Out
-        else if (res.toString() == "Finance Executive" || res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
+        else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
+          this.blnDashboard_loggedInMenu_User = true;
+          this.blnTasks_loggedInMenu_User = true;
+          this.blnClaims_loggedInMenu_User = true;
+          this.blnReport_loggedInMenu_User = true;
+          this.blnAccount_loggedInMenu_User = true;
+
+          this.blnSetup_loggedInMenu_User = true;
+
           this.appPages_User = [
-            // { title: 'DASHBOARD', name: 'TabsPage', component: TabsPage, tabComponent: DashboardPage, index: 0, icon: 'apps' },
-            // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
-            // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
-            
-            { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-            { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'FINANCE TASK LIST', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
-            { title: 'CLAIM HISTORY', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Finance Tasks', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' }
           ];
           this.claimPages = [
-            { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
-            { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
-            { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
-            { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
-            { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
-            { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
           ];
 
-          // this.Menu_Array = [];
-          // this.Menu_Array.push({ title: 'HOME', root: SpeakerListPage, icon: "apps", index: 0 });
-          // this.Menu_Array.push({ title: 'MY CLAIM LIST', root: UserclaimslistPage, icon: "ios-clipboard-outline", index: 1 });          
-          // this.Menu_Array.push({ title: 'APPROVER TASK LIST', root: ClaimapprovertasklistPage, icon: "checkbox-outline", index: 2 });          
-          // this.Menu_Array.push({ title: 'FINANCE TASK LIST', root: ClaimtasklistPage, icon: "md-clipboard", index: 3 });          
-          // this.nav.push(TabsPage, this.Menu_Array);
+          if (res.toString() == "Finance Admin") {
+            this.setupsPages = [
+              // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
+              { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
+              // { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
+            ];
+          }
+
+          this.reportPages = [
+          
+         
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' }
+          ];
+
+          if (localStorage.getItem("Ad_Authenticaton") == "true") {
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
-        //For Team Lead and others
-        else {
+
+        //For Manage Customer
+        else if (res.toString() == "Manage Customer") {
           this.appPages_User = [
-            // { title: 'DASHBOARD', name: 'TabsPage', component: TabsPage, tabComponent: DashboardPage, index: 0, icon: 'apps' },
-            // { title: 'MY CLAIM LIST', name: 'TabsPage', component: TabsPage, tabComponent: UserclaimslistPage, index: 1, icon: 'ios-clipboard-outline' },
-            // { title: 'APPROVER TASK LIST', name: 'TabsPage', component: TabsPage, tabComponent: ClaimapprovertasklistPage, index: 2, icon: 'checkbox-outline' },
-            
-            { title: 'DASHBOARD', name: 'DashboardPage', component: DashboardPage, icon: 'apps' },
-            { title: 'MY CLAIM LIST', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'APPROVER TASK LIST', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'CLAIM HISTORY', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' }
           ];
           this.claimPages = [
-            { title: 'TRAVEL CLAIM', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
-            { title: 'ENTERTAINMENT CLAIM', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
-            { title: 'GIFT CLAIM', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
-            { title: 'OVERTIME CLAIM', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
-            { title: 'PRINTING CLAIM', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
-            { title: 'MISCLLANEOUS CLAIM', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
           ];
 
-          // this.Menu_Array = [];
-          // this.Menu_Array.push({ title: 'HOME', root: SpeakerListPage, icon: "apps", index: 0 });
-          // this.Menu_Array.push({ title: 'MY CLAIM LIST', root: UserclaimslistPage, icon: "ios-clipboard-outline", index: 1 });          
-          // this.Menu_Array.push({ title: 'APPROVER TASK LIST', root: ClaimapprovertasklistPage, icon: "checkbox-outline", index: 2 }); 
-          // this.nav.push(TabsPage, this.Menu_Array);
+          this.reportPages = [
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
+          ];
+
+          this.setupsPages = [
+            { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' }
+          ];
+
+          if (localStorage.getItem("Ad_Authenticaton") == "true") {
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+
+        //For Team Lead
+        else if (res.toString() == "Team Lead") {
+          this.blnDashboard_loggedInMenu_User = true;
+          this.blnTasks_loggedInMenu_User = true;
+          this.blnClaims_loggedInMenu_User = true;
+          this.blnReport_loggedInMenu_User = true;
+          this.blnAccount_loggedInMenu_User = true;
+
+          this.blnSetup_loggedInMenu_User = false;
+
+          this.appPages_User = [
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+          ];
+
+          this.claimPages = [
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+          ];
+
+          this.reportPages = [
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' }
+           
+          ];
+
+          if (localStorage.getItem("Ad_Authenticaton") == "true") {
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+
+          this.menu.enable(loggedIn, 'loggedInMenu_User');
+          this.menu.enable(!loggedIn, 'loggedOutMenu');
+        }
+
+        //For others
+        else {
+          this.appPages_User = [
+            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            // { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
+          ];
+
+          this.claimPages = [
+            { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
+            { title: 'Entertainment Claim', name: 'EntertainmentclaimPage', component: EntertainmentclaimPage, icon: 'cafe' },
+            { title: 'Gift Claim', name: 'GiftclaimPage', component: GiftclaimPage, icon: 'basket' },
+            { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
+            { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
+            { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+          ];
+
+          this.reportPages = [
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' }
+           
+          ];
+
+          if (localStorage.getItem("Ad_Authenticaton") == "true") {
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
+          else{
+            this.loggedInPages = [
+              { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
+              { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
+              { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
+            ];
+          }
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
           this.menu.enable(!loggedIn, 'loggedOutMenu');
@@ -384,12 +628,6 @@ export class ConferenceApp {
     }
     else {
       this.blnLogin = false;
-      // alert(this.blnLogin);
-      // alert(localStorage.length);
-      // if (this.blnLogin == true) {
-      // this.menu.enable(loggedIn, 'loggedInMenu');
-      // this.menu.enable(!loggedIn, 'loggedOutMenu');        
-      // }      
     }
 
 
@@ -403,7 +641,7 @@ export class ConferenceApp {
     //     this.menu.enable(!loggedIn, 'loggedOutMenu');
     //   }
     //   //For user, distinct menu should display
-    //   else if (localStorage.getItem("g_IS_TENANT_AMDIN") != "1") {
+    //   else if (localStorage.getItem("g_IS_TENANT_ADMIN") != "1") {
     //     // this.appPages_User = [
     //     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
     //     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
@@ -426,7 +664,7 @@ export class ConferenceApp {
 
   isActive(page: PageInterface) {
     // debugger;    
-    let childNav = this.nav.getActiveChildNav();
+    let childNav = this.nav.getActiveChildNavs()[0];
 
     // Tabs are a special case because they have their own navigation
     if (childNav) {
@@ -467,7 +705,7 @@ export class ConferenceApp {
         .subscribe(data => {
           let roles = data["resource"];
           if (data["resource"].length > 0) {
-            resolve(roles[0]["ROLE_NAME"]);
+            resolve(roles[0]["ROLE_NAME"]); //localStorage.setItem("g_ROLE_NAME",roles[0]["ROLE_NAME"]);
           }
           else {
             resolve("NA");

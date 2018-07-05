@@ -25,6 +25,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import moment from 'moment'; 
 
 @IonicPage()
 @Component({
@@ -40,9 +41,9 @@ export class GiftclaimPage {
     customers: any[]; 
     storeProjects: any[];
     storeCustomers: any[];  
-    public projects: any;     
+    public projects: any[];     
     items: string[];  
-    claimFor: string = 'seg_customer';
+    claimFor: string = 'seg_project';
   
     public Gift_SOC_No_ngModel: any;
     public Gift_ProjectName_ngModel: any;  
@@ -74,7 +75,7 @@ export class GiftclaimPage {
     travelAmount: any;
     validDate = new Date().toISOString();
     ClaimRequestMain: any;
-    isCustomer: boolean = true;
+    isCustomer: boolean = false;
     ImageUploadValidation:boolean=false;
     chooseFile: boolean = false;
 
@@ -82,20 +83,6 @@ export class GiftclaimPage {
    isFormEdit: boolean = false;
    claimRequestGUID: any;
    claimRequestData: any;
-
-  //  ngOnInit(): void {
-  //    this.userGUID = localStorage.getItem('g_USER_GUID');
- 
-  //    this.isFormEdit = this.navParams.get('isFormEdit');
-  //     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-  //    //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
-  //    if (this.isFormEdit)
-  //      this.GetDataforEdit();
-  //  } 
-
-  getCurrency(amount: number) {
-    this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
-  }
 
   imageURLEdit: any = null
   GetDataforEdit() {
@@ -113,10 +100,13 @@ export class GiftclaimPage {
                 if (this.claimRequestData[0].ATTACHMENT_ID !== null)
                 this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
-                this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
+                // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+                this.Gift_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
@@ -126,6 +116,7 @@ export class GiftclaimPage {
                 }
                 else {
                   this.claimFor = 'seg_project'
+                  this.isCustomer = false;
                   if (this.storeCustomers != undefined)
                     this.storeProjects.forEach(element => {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
@@ -134,7 +125,10 @@ export class GiftclaimPage {
                       }
                     });
                 }
-                this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                // this.Gift_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.Gift_Date_ngModel = moment(this.claimRequestData[0].TRAVEL_DATE).format('YYYY-MM-DD'); 
+                // this.Gift_Date_ngModel = new Date(this.claimRequestData.TRAVEL_DATE).toISOString();
+                // this.Gift_Date_ngModel = this.claimRequestData[0].TRAVEL_DATE;
                 // this.Gift_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Gift_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
@@ -143,20 +137,38 @@ export class GiftclaimPage {
 
   }
 
+  claimAmount: number = 0;
+  getCurrency(amount: number) {
+    amount = Number(amount);
+    if (amount > 99999) {
+      alert('Amount should not exceed RM 9,9999.00.')
+      this.Gift_Amount_ngModel = null
+      this.claimAmount = 0;
+    }
+    else {
+      this.claimAmount = amount;
+      this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+    }
+  }
+
     constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) 
     { 
       this.userGUID = localStorage.getItem('g_USER_GUID');
       this.isFormEdit = this.navParams.get('isFormEdit');
       this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
-      if (this.isFormEdit)
-      this.GetDataforEdit();
+      if (this.isFormEdit){       
+        this.profileMng.initiateLevels('1');
+        this.GetDataforEdit();
+      }
+     
     else {
       this.LoadCustomers();
       this.LoadProjects();
     } 
  
   this.Giftform = fb.group({ 
+    avatar1: null,
     avatar: null,
     soc_no: '',   
     travel_date:  ['', Validators.required],
@@ -193,38 +205,48 @@ onFileChange(event: any) {
       });
     };
   }
+  //this.chooseFile = true;
+}
+
+uniqueName: any;
+fileName1: string;
+ProfileImage: any;
+newImage:boolean=true;
+private ProfileImageDisplay(e: any, fileChoose: string): void {
+  let reader = new FileReader();
+  if (e.target.files && e.target.files[0]) {
+
+    const file = e.target.files[0];
+    this.Giftform.get(fileChoose).setValue(file);
+    if (fileChoose === 'avatar1')
+      this.fileName1 = file.name;
+
+    reader.onload = (event: any) => {
+      this.ProfileImage = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  }
+  this.imageGUID = this.uploadFileName;
   this.chooseFile = true;
+  this.newImage=false;
+  this.onFileChange(e);
+  this.ImageUploadValidation = false;
 }
 
 imageGUID: any;
 saveIm() {
   let uploadImage = this.UploadImage();
   uploadImage.then((resJson) => {
-    this.imageGUID = this.uploadFileName;
+    this.imageGUID = this.uniqueName;
     this.chooseFile = false;
     this.ImageUploadValidation=true;   
   })  
 }
 
-SaveImageinDB() {
-  let objImage: ImageUpload_model = new ImageUpload_model();
-  objImage.Image_Guid = UUID.UUID();
-  objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-  objImage.CREATION_TS = new Date().toISOString();
-  objImage.Update_Ts = new Date().toISOString();
-  return new Promise((resolve, reject) => {
-    this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
-      // let res = response.json();
-      // let imageGUID = res["resource"][0].Image_Guid;
-      resolve(objImage.toJson());
-    })
-  })
-}
-
 UploadImage() {   
-  this.CloudFilePath = 'eclaim/'   
-
+  this.CloudFilePath = 'eclaim/'  
 this.loading = true;
+this.uniqueName = new Date().toISOString()+this.uploadFileName ;
 const queryHeaders = new Headers();
 queryHeaders.append('filename', this.uploadFileName);
 queryHeaders.append('Content-Type', 'multipart/form-data');
@@ -244,29 +266,43 @@ return new Promise((resolve, reject) => {
 
  claimForChanged() {
   // console.log(this.claimFor)
-  if (this.claimFor == 'customer') this.isCustomer = true;
+  if (this.claimFor == 'seg_customer') this.isCustomer = true;
   else this.isCustomer = false;
 }
 
 LoadProjects() {
-  this.http
-    .get(Services.getUrl('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID))
-    .map(res => res.json())
+  this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
     .subscribe(data => {
-    this.storeProjects=  this.projects = data["resource"];
-      console.table(this.projects)
+      this.storeProjects = this.projects = data["resource"];
     });
 }
 
 LoadCustomers() {
-  this.http
-    .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
-    .map(res => res.json())
+  this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
     .subscribe(data => {
       this.storeCustomers = this.customers = data["resource"];
-      // console.table(this.projects)
-    });
+    })
 }
+
+// LoadProjects() {
+//   this.http
+//     .get(Services.getUrl('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID))
+//     .map(res => res.json())
+//     .subscribe(data => {
+//     this.storeProjects=  this.projects = data["resource"];
+//       console.table(this.projects)
+//     });
+// }
+
+// LoadCustomers() {
+//   this.http
+//     .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
+//     .map(res => res.json())
+//     .subscribe(data => {
+//       this.storeCustomers = this.customers = data["resource"];
+//       // console.table(this.projects)
+//     });
+// }
 
 public CloseTravelClick() {
   this.AddToLookupClicked = false;
@@ -297,14 +333,11 @@ public AddToLookupClick() {
 }
 
 public ProjectLookup() {
-  this.ProjectLookupClicked = true;
- 
-  // this.projects = null;
+  this.ProjectLookupClicked = true; 
 }
 
 public CustomerLookup() {
-  this.CustomerLookupClicked = true;
-  // this.projects = null;
+  this.CustomerLookupClicked = true; 
 }
 
 searchProject(searchString: any) {
@@ -313,9 +346,27 @@ searchProject(searchString: any) {
     this.projects = this.storeProjects;
     return;
   }
-//  this.projects=  this.filterProjects({
-//   project_name: val
-//   });
+ this.projects=  this.filterProjects({
+  project_name: val
+  });
+}
+
+filterProjects(params?: any) {
+  if (!params) {
+    return this.storeProjects;
+  }
+
+  return this.projects.filter((item) => {
+    for (let key in params) {
+      let field = item[key];
+      if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+        return item;
+      } else if (field == params[key]) {
+        return item;
+      }
+    }
+    return null;
+  });
 }
 
 searchCustomer(searchString: any) {
@@ -324,9 +375,9 @@ searchCustomer(searchString: any) {
     this.customers = this.storeCustomers;
     return;
   }
-  // this.customers = this.filterCustomer({
-  //   NAME: val
-  // });
+  this.customers = this.filterCustomer({
+    NAME: val
+  });
 }
 
 filterCustomer(params?: any) {
@@ -368,12 +419,17 @@ submitAction(formValues: any) {
       .subscribe(data => {
         this.claimRequestData = data;
         this.claimRequestData["resource"][0].ATTACHMENT_ID =  this.imageGUID;
-        this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
-        this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+        this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+        this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
         this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
         this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
-
-        //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+        if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+          this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+          this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+          this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+          this.claimRequestData["resource"][0].STATUS = 'Pending'
+        }
+        
         if (this.isCustomer) {
           this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID ;
           this.claimRequestData["resource"][0].SOC_GUID = null;
@@ -386,20 +442,29 @@ submitAction(formValues: any) {
        // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
        this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res => 
         {
-          alert('Claim details are submitted successfully.')
+          alert('Claim details updated successfully.')
           this.navCtrl.push(UserclaimslistPage);
        });
       })
   }
   else {
   formValues.claimTypeGUID = '2d8d7c80-c9ae-9736-b256-4d592e7b7887';
-  formValues.meal_allowance = this.allowanceGUID;
   formValues.attachment_GUID =  this.imageGUID;       
-  this.travelAmount = formValues.claim_amount;
+  this.travelAmount = this.claimAmount;
   formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
   this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
   }
- }  
+ }
+ 
+ displayImage: any
+ CloseDisplayImage()  {
+   this.displayImage = false;
+ }
+ imageURL: string;
+ DisplayImage(val: any) {
+   this.displayImage = true;
+   this.imageURL = val;
+ }
 } 
 
 

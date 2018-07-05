@@ -1,62 +1,61 @@
 <ion-header>
 
-    <ion-navbar color="primary500">
+    <ion-navbar color="primary200">
         <ion-title>{{ 'USER_REGISTRATION_HEADING' | translate }}</ion-title>
     </ion-navbar>
-    <ion-toolbar no-border-top>
-        <ion-searchbar color="primary" placeholder="Search"></ion-searchbar>
-    </ion-toolbar>
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="user_search_ngModel" (ionInput)="searchUser($event)" placeholder='Search'></ion-searchbar>
+    </ion-toolbar>     
 </ion-header>
 
 
 <ion-content padding>
 
     <ion-fab top right edge>
-        <button ion-fab mini (click)="AddUserClick()">
+        <button ion-fab mini (click)="AddUserClick()" [disabled]="button_Add_Disable">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
-
+    
     <ion-list>
         <ion-item>
-            <table class="Tabler">
+            <table class="Tabler list">
                 <tr class="linedsg TColor">
 
-                    <th class="lgl1 tblBrLeft" style="width:60px">NO</th>
+                    <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
                     <th class="lgl1">{{ 'NAME' | translate }}</th>
-                    <th class="lgl1">{{ 'STAFF ID' | translate }}</th>
+                    <th class="lgl1">{{ 'Staff ID' | translate }}</th>
                     <th class="lgl1">{{ 'COMPANY' | translate }}</th>
                     <th class="lgl1">{{ 'DEPARTMENT' | translate }}</th>
                     <th class="lgl1">{{ 'DESIGNATION' | translate }}</th>
                     <th class="lgl1">{{ 'EMAIL' | translate }}</th>
-                    <!-- <th class="lgl1">{{ 'LOGINID' | translate }}</th> -->
-                    <th class="lgl1">{{ 'JOINING DATE' | translate }}</th>
+                    
+                    <th class="lgl1">{{ 'Joining Date' | translate }}</th>
                     <th class="lgl1">{{ 'STATUS' | translate }}</th>
 
                     <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of userview; let i=index">
+                <tr class="col7" *ngFor="let user of userview; let i=index" [hidden]="button_View_Disable">
+             
+                    <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+                    <td class="lgl1 getHeader" text-wrap reshead="Name">{{user.FULLNAME}}</td>
+                   
+                    <td class="lgl1 getHeader" reshead="Staff ID">{{user.STAFF_ID}}</td>
+                    <td class="lgl1 getHeader" text-wrap reshead="Company">{{user.tenant_company_name}} </td>
+                    <td class="lgl1 getHeader" text-wrap reshead="Department">{{user.department_name}}</td>
+                    <td class="lgl1 getHeader" text-wrap reshead="Designation">{{user.designation_name}}</td>
+                    <td class="lgl1 getHeader" text-wrap reshead="Email">{{user.EMAIL}}</td>
+                    <td class="lgl1 getHeader" reshead="Joining Date">{{user.JOIN_DATE | date:'dd/MM/yyyy'}}</td>
+                    <td class="lgl1 getHeader" reshead="Status">{{user.EMPLOYEE_STATUS}}</td>
 
-                    <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{user.FULLNAME}}</td>
-                    <!-- <td class="lgl1">{{user.PERSONAL_ID}}</td> -->
-                    <td class="lgl1">{{user.STAFF_ID}}</td>
-                    <td class="lgl1">{{user.tenant_company_name}}, {{user.SITE_NAME}} </td>
-                    <td class="lgl1">{{user.department_name}}</td>
-                    <td class="lgl1">{{user.designation_name}}</td>
-                    <td class="lgl1">{{user.EMAIL}}</td>
-                    <td class="lgl1">{{user.JOIN_DATE | date:'dd/MM/yyyy'}}</td>
-                    <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
+         
 
-                    <!-- <td class="lgl1">{{user.LOGIN_ID}}</td> -->
-
-
-                    <td class="lgl1 fColor">
-                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
+                    <td class="lgl1 getHeader fColor" reshead="Action">
+                        <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick_Personaldetails(user.USER_GUID)">
                             <ion-icon name="md-create"></ion-icon>
                         </button>
-                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
+                        <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(user.USER_GUID)">
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </td>
@@ -66,130 +65,11 @@
         </ion-item>
     </ion-list>
 
-
-    <!-- <div class="eClaimSubTitle">
-        <b>{{ 'PERSONAL_DETAILS' | translate }}</b>
-    </div>
-
-    <ion-list>
-        <ion-item>
-            <table class="Tabler">
-                <tr class="linedsg TColor">
-
-                    <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
-                    <th class="lgl1">{{ 'NAME' | translate }}</th>
-                    <th class="lgl1">{{ 'EMAIL' | translate }}</th>
-                    <th class="lgl1">{{ 'LOGINID' | translate }}</th>
-
-                    <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
-                </tr>
-
-                <tr class="col7" *ngFor="let user of userview; let i=index">
-
-                    <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{user.FULLNAME}}</td>
-                    <td class="lgl1">{{user.EMAIL}}</td>
-                    <td class="lgl1">{{user.LOGIN_ID}}</td>
-
-
-                    <td class="lgl1 fColor">
-                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
-                            <ion-icon name="md-create"></ion-icon>
-                        </button>
-                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
-                            <ion-icon name="md-close"></ion-icon>
-                        </button>
-                    </td>
-                </tr>
-
-            </table>
-        </ion-item>
-    </ion-list>
-
-    <div class="eClaimSubTitle">
-        <b>{{ 'EMPLOYMENT_DETAILS' | translate }} </b>
-    </div>
-
-    <ion-list>
-        <ion-item>
-            <table class="Tabler">
-                <tr class="linedsg TColor">
-                    <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
-                    <th class="lgl1">{{ 'DESIGNATION' | translate }}</th>
-                    <th class="lgl1">{{ 'COMPANY' | translate }}</th>
-                    <th class="lgl1">{{ 'DEPARTMENT' | translate }}</th>
-                    <th class="lgl1">{{ 'JOIN_DATE' | translate }}</th>
-                    <th class="lgl1">{{ 'BRANCH' | translate }}</th>
-                    <th class="lgl1">APPROVER</th>
-                    <th class="lgl1">{{ 'STATUS' | translate }} </th>
-                    <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
-                </tr>
-
-                <tr class="col7" *ngFor="let user of userview; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{user.designation_name}}</td>
-                    <td class="lgl1">{{user.tenant_company_name}}</td>
-                    <td class="lgl1">{{user.department_name}}</td>
-                    <td class="lgl1">{{user.JOIN_DATE}}</td>
-                    <td class="lgl1">{{user.SITE_NAME}}</td>
-                    <td class="lgl1">{{user.APPROVER1}}</td>
-                    <td class="lgl1">{{user.EMPLOYEE_STATUS}}</td>
-                    <td class="lgl1 fColor">
-                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
-                            <ion-icon name="md-create"></ion-icon>
-                        </button>
-                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
-                            <ion-icon name="md-close"></ion-icon>
-                        </button>
-                    </td>
-                </tr>
-
-
-            </table>
-        </ion-item>
-    </ion-list>
-
-    <div class="eClaimSubTitle">
-        <b>{{ 'RESIDENTIAL_ADDRESS' | translate }}</b>
-    </div>
-
-    <ion-list>
-        <ion-item>
-            <table class="Tabler">
-                <tr class="linedsg TColor">
-
-                    <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
-                    <th class="lgl1">{{ 'ADDRESS_LINE_1' | translate }}</th>
-                    <th class="lgl1">{{ 'ADDRESS_LINE_2' | translate }}</th>
-                    <th class="lgl1">{{ 'ADDRESS_LINE_3' | translate }}</th>
-                    <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
-                </tr>
-
-                <tr class="col7" *ngFor="let user of userview; let i=index">
-
-                    <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1">{{user.USER_ADDRESS1}}</td>
-                    <td class="lgl1">{{user.USER_ADDRESS2}}</td>
-                    <td class="lgl1">{{user.USER_ADDRESS3}}</td>
-
-
-                    <td class="lgl1 fColor">
-                        <button ion-button item-end (click)="EditClick_Personaldetails(user.USER_GUID)">
-                            <ion-icon name="md-create"></ion-icon>
-                        </button>
-                        <button ion-button item-end (click)="DeleteClick(user.USER_GUID)">
-                            <ion-icon name="md-close"></ion-icon>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </ion-item>
-    </ion-list> -->
 
 
     <!-- add Tenant form start-->
     <div class="blackcontainer" *ngIf="AddUserClicked"></div>
-    <div class="popup1" padding *ngIf="AddUserClicked">
+    <div class="popup4" padding *ngIf="AddUserClicked">
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
@@ -205,69 +85,62 @@
                     <div class="eClaimSubTitle2">
                         <b>{{ 'PERSONAL_DETAILS' | translate }}</b>
                     </div>
-                    <ion-item class="text">
+                    <ion-item >
                         <ion-label stacked>{{ 'NAME' | translate }}</ion-label>
                         <ion-input type="text" formControlName="NAME" [(ngModel)]="User_Name_ngModel" placeholder="{{'Please fill the name of the user'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item >
                         <ion-label stacked>{{ 'EMAIL' | translate }}</ion-label>
                         <ion-input type="email" formControlName="EMAIL" [(ngModel)]="User_Email_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text" style="display: none;">
-                        <ion-label stacked>{{ 'LOGINID' | translate }}</ion-label>
-                        <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_ngModel" placeholder="{{'Please fill the Login ID'}}"></ion-input>
-                    </ion-item>
+                
 
-                    <ion-item class="text" style="display: none;">
-                        <ion-label stacked>{{ 'PASSWORD_LABEL' | translate }}</ion-label>
-                        <ion-input type="password" formControlName="PASSWORD" [(ngModel)]="User_Password_ngModel" placeholder="{{'Please fill the Password'}}"></ion-input>
-                    </ion-item>
-
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{ 'PERSONAL_CONTACT_NO' | translate }}</ion-label>
                         <ion-input type="number" formControlName="CONTACT_NO" max="10" [(ngModel)]="User_PersonalNo_ngModel" placeholder="{{'Please fill the personal contact number'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{ 'COMAPANY_CONTACT_NO' | translate }}</ion-label>
                         <ion-input type="number" formControlName="COMPANY_CONTACT_NO" [(ngModel)]="User_CompanyNo_ngModel" placeholder="{{'Please fill in the Company Contact No'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item >
                         <ion-label stacked>{{ 'MARITAL_STATUS' | translate }}</ion-label>
                         <ion-select formControlName="MARITAL_STATUS" [(ngModel)]="User_Marital_ngModel" placeholder="{{'Please select marital status'}}"
                             (ionChange)="DisplayFamily()">
                             <ion-option [value]="0">Single</ion-option>
                             <ion-option [value]="1">Married</ion-option>
+                            <ion-option [value]="2">Divorced</ion-option>
                         </ion-select>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item>
                         <ion-label stacked>{{ 'STAFF_ID' | translate }}</ion-label>
                         <ion-input type="text" formControlName="PERSONAL_ID_TYPE" [(ngModel)]="User_StaffID_ngModel" placeholder="{{'Please fill the staff id'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item >
                         <ion-label stacked>{{ 'IC_NO' | translate }}</ion-label>
                         <ion-input type="text" formControlName="PERSONAL_ID" [(ngModel)]="User_ICNo_ngModel" placeholder="{{'Please fill the ic no'}}"></ion-input>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item >
                         <ion-label stacked>{{ 'DATE_OF_BIRTH' | translate }}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_ngModel" placeholder="{{'Please choose your date of birth'}}"></ion-datetime>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item >
                         <ion-label stacked>{{'GENDER' | translate}}</ion-label>
                         <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_ngModel" placeholder="{{'Please select the gender'}}">
-                            <ion-option [value]="1">Male</ion-option>
-                            <ion-option [value]="0">Female</ion-option>
+                            <ion-option [value]="1">{{ 'MALE' | translate }}</ion-option>
+                            <ion-option [value]="0">{{ 'FEMALE' | translate }}</ion-option>
                         </ion-select>
                     </ion-item>
 
-                    <ion-item class="text">
+                    <ion-item >
                         <ion-label id="profile_image" stacked>{{ 'PROFILE_PHOTO' | translate }}</ion-label>
                         <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
                         <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button>
@@ -343,6 +216,7 @@
                             <ion-option value="0">Probation</ion-option>
                             <ion-option value="1">Confirmed</ion-option>
                             <ion-option value="2">Terminated</ion-option>
+                            <ion-option value="3">Resigned</ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -653,15 +527,15 @@
                     </ion-item>
 
                     <div class="eClaimSubTitle2">
-                        <b>{{'ROLE DETAILS' | translate}}</b>
+                        <b>{{'Role Details' | translate}}</b>
                     </div>
 
                     <ion-item>
                         <ion-label stacked>{{"Role"}}</ion-label>
                         <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Add" placeholder="{{'Please select role'}}" multiple="true">
-                          <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                            <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
-                      </ion-item>
+                    </ion-item>
 
                     <div class="btn">
                         <button ion-button icon-left [disabled]="!Userform.valid" (click)="Save()">
@@ -678,7 +552,7 @@
 
     <!-- edit user form start -->
     <div class="blackcontainer" *ngIf="EditUserClicked"></div>
-    <div class="popup1" padding *ngIf="EditUserClicked">
+    <div class="popup4" padding *ngIf="EditUserClicked">
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
@@ -757,7 +631,11 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <!-- <img style="width: 10%" height="80px" src="http://api.zen.com.my/api/v2/files/eclaim/car1.jpg?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881"> -->
+                        <ion-label stacked>{{ 'PROFILE PHOTO' | translate }}</ion-label>
+                        <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
+                        <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]="!chooseFile">Upload image</button>
+                    </ion-item>
+                    <ion-item class="text">
                         <img [src]="Profile_Image_Display" style="width: 20%">
                     </ion-item>
 
@@ -1137,15 +1015,15 @@
                     </ion-item>
 
                     <div class="eClaimSubTitle2">
-                        <b>{{'ROLE DETAILS' | translate}}</b>
+                        <b>{{'Role Details' | translate}}</b>
                     </div>
 
                     <ion-item>
                         <ion-label stacked>{{"Role"}}</ion-label>
                         <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}" multiple="true">
-                          <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                            <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
-                      </ion-item>
+                    </ion-item>
 
                     <div class="btn">
                         <button ion-button [disabled]="!Userform.valid" (click)="Update(view_user_details[0].USER_GUID)">{{"SUBMIT" | translate}}</button>

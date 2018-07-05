@@ -3,13 +3,10 @@ import { IonicPage, NavController, NavParams,AlertController,ModalController } f
 import { Services } from '../Services';
 import { TranslateService } from '@ngx-translate/core';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
-import { BaseHttpService } from '../../services/base-http';
-//import { ClaimHistory_Model } from '../../models/claimhistory_model';
 import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
 import { ResourceLoader } from '@angular/compiler';
 
@@ -23,7 +20,7 @@ import { ResourceLoader } from '@angular/compiler';
 @IonicPage()
 @Component({
   selector: 'page-claimtasklist',
-  templateUrl: 'claimtasklist.html', providers: [BaseHttpService]
+  templateUrl: 'claimtasklist.html'
 })
 export class ClaimtasklistPage {
 
@@ -32,11 +29,22 @@ export class ClaimtasklistPage {
    claimTaskLists1:any[]=[];
    claimTaskListTotal: any[];
    searchboxValue: string;
+   baseResourceUrl: string;
+   loginUserRole=localStorage.getItem("g_ROLE_NAME");
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?filter=(ASSIGNED_TO='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+ 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
+    if(this.loginUserRole==="Finance Admin")
+ {
+  this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
+ }
+ else
+ {
+  this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL!=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+ }
+
     this.BindData();
     }
 
@@ -94,8 +102,6 @@ onSearchInput(ev: any) {
         this.claimTaskLists=this.claimTaskLists1;
        }
  }
-
-
     goToClaimApproverTaskList(claimrefguid:any){
     this.navCtrl.push(ClaimapprovertasklistPage,{
     claimRefGuid:claimrefguid
@@ -104,5 +110,4 @@ onSearchInput(ev: any) {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimtasklistPage');
   }
-
 }

@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary500">
+  <ion-navbar color="primary200">
     <ion-title>{{ 'CLAIM_TYPE_SETUP_HEADING' | translate }}</ion-title>
   </ion-navbar>
 
@@ -14,7 +14,7 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddClaimtypeClick()">
+    <button ion-fab mini (click)="AddClaimtypeClick()" [disabled]="button_Add_Disable">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
@@ -22,23 +22,22 @@
 
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'CLAIM_NAME' | translate }}</th>
-          <th class="lgl1" style="display: none;">{{ 'CLAIM_DESCRIPTION' | translate }}</th>
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let claimtype of claimtypes; let i=index">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{claimtype.NAME}}</td>
-          <td class="lgl1" style="display: none;">{{claimtype.DESCRIPTION}}</td>
-          <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(claimtype.CLAIM_TYPE_GUID)">
+        <tr class="col7" *ngFor="let claimtype of claimtypes; let i=index" [hidden]="button_View_Disable">
+          <td class="lgl1 getHeader"  reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader"  reshead="Name">{{claimtype.NAME}}</td>
+   
+          <td class="lgl1 getHeader fColor"  reshead="Action">
+            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(claimtype.CLAIM_TYPE_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
-            <button ion-button item-end (click)="DeleteClick(claimtype.CLAIM_TYPE_GUID)">
+            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(claimtype.CLAIM_TYPE_GUID)">
               <ion-icon name="md-close"></ion-icon>
             </button>
           </td>
@@ -65,10 +64,7 @@
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of claim'}}"></ion-input>
           </ion-item>
 
-          <ion-item style="display: none;">
-            <ion-label stacked>{{ 'CLAIM_DESCRIPTION' | translate }}</ion-label>
-            <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
-          </ion-item>
+
 
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Claimtypeform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>

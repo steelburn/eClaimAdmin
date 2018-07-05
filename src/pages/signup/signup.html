@@ -2,9 +2,9 @@
 
 </ion-header>
 
-<ion-content class="login-page" style="background:#f8f9fa">
+<ion-content>
 
-	<div class="logo">
+	<!-- <div class="logo">
 		<img src="assets/img/Untitled-2.png" alt="Ionic Logo">
 	</div>
 	<p style="text-align:center !important;"><b>Please create your login credentials</b></p>
@@ -32,6 +32,53 @@
 		<div padding>
 			<button ion-button (click)="onSignup(signupForm)" type="submit" block>Create</button>
 		</div>
-	</form>
+	</form> -->
 
+
+	<ion-card class="nofu">
+
+			<ion-card-content>
+					<!-- <img style="max-width:116px;max-height:42pt;"src="assets/img/Untitled-4.png"/>  -->
+					
+				<h1 style="margin-left:10pt;">Create Your Account</h1>
+				<p></p>
+				<p></p>
+				<h2 style="margin-left:10pt;">to continute to eClaim</h2>
+				<br/>
+				<form #signupForm="ngForm" novalidate>
+					<ion-list no-lines>
+						<ion-item>
+	
+							<ion-label floating color="primary">{{ "USER_NAME_LABEL" | translate }}</ion-label>
+							<ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" required>
+								</ion-input>
+							
+						</ion-item>
+						<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
+							Username is required
+						</p>
+	
+						<ion-item>
+							<ion-label floating color="primary">Password</ion-label>
+							<ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
+								</ion-input>
+	
+						</ion-item>
+						<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+							Password is required
+						</p>
+					</ion-list>
+					
+					<div class="btn">
+						<button color="primary500" ion-button block  (click)="onSignup(signupForm)" type="submit">Create</button>
+	
+	
+					</div>
+			
+	
+	
+				</form>
+			</ion-card-content>
+		</ion-card>
+	
 </ion-content>

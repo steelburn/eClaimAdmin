@@ -6,7 +6,6 @@ import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { OvertimeClaim_Model } from '../../models/overtimeclaim_model';
-//import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import { View_SOC_Model } from '../../models/view_soc_model';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
@@ -14,7 +13,6 @@ import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-//import {Camera} from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
@@ -27,6 +25,7 @@ import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import moment from 'moment'; 
 
 @IonicPage()
 @Component({
@@ -41,10 +40,10 @@ export class OvertimeclaimPage {
    CloudFilePath: string;
    @ViewChild('fileInput') fileInput: ElementRef;
   vehicles: any;
-  customers: any;
+  customers: any[];
   storeProjects: any[];
   storeCustomers: any[];  
-  public projects: any;
+  public projects: any[];
   Travelform: FormGroup;
 
   items: string[];  
@@ -68,7 +67,7 @@ export class OvertimeclaimPage {
   Customer_GUID: any;
   Soc_GUID: any;
   TenantGUID: any;
-  claimFor: string = 'seg_customer';
+  claimFor: string = 'seg_project';
 
   userGUID: any;
   public socGUID : any;
@@ -88,28 +87,30 @@ export class OvertimeclaimPage {
   travelAmount: any;
   validDate = new Date().toISOString();
   ClaimRequestMain: any;
-  isCustomer: boolean = true;
+  isCustomer: boolean = false;
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
 
    /********FORM EDIT VARIABLES***********/
    isFormEdit: boolean = false;
    claimRequestGUID: any;
-   claimRequestData: any;
+   claimRequestData: any; 
 
-  //  ngOnInit(): void {
-  //    this.userGUID = localStorage.getItem('g_USER_GUID'); 
-  //    this.isFormEdit = this.navParams.get('isFormEdit');
-  //     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-  //    //this.claimRequestGUID = 'aa124ed8-5c2d-4c39-d3bd-066857c45617';
-  //    if (this.isFormEdit)
-  //      this.GetDataforEdit();
-  //  }
+   claimAmount: number = 0;
+   getCurrency(amount: number) {
+     amount = Number(amount);
+     if (amount > 99999) {
+       alert('Amount should not exceed RM 9,9999.00.')
+       this.OT_Amount_ngModel = null
+       this.claimAmount = 0;
+     }
+     else {
+       this.claimAmount = amount;
+       this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+     }
+   } 
 
-  getCurrency(amount: number) {
-    this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
-  }
-
+ 
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -123,13 +124,14 @@ export class OvertimeclaimPage {
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
 
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
-                this.ImageUploadValidation = true;
-                this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
+                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                // this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                // this.ImageUploadValidation = true;
+                // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
+                  this.isCustomer = true;
                   if (this.storeCustomers != undefined)
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
@@ -139,6 +141,7 @@ export class OvertimeclaimPage {
                 }
                 else {
                   this.claimFor = 'seg_project'
+                  this.isCustomer = false;
                   if (this.storeCustomers != undefined)
                     this.storeProjects.forEach(element => {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
@@ -147,8 +150,12 @@ export class OvertimeclaimPage {
                       }
                     });
                 }
-                this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
-                this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
+                // this.Start_DT_ngModel = new Date(this.claimRequestData[0].START_TS).toISOString();
+                // this.End_DT_ngModel = new Date(this.claimRequestData[0].END_TS).toISOString();
+                this.Start_DT_ngModel = moment(this.claimRequestData[0].START_TS).format('YYYY-MM-DDTHH:mm'); 
+                this.End_DT_ngModel =  moment(this.claimRequestData[0].END_TS).format('YYYY-MM-DDTHH:mm'); 
+                this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
+                this.OT_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.OT_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.OT_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               }
@@ -161,8 +168,11 @@ export class OvertimeclaimPage {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');   
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-    if (this.isFormEdit)
+    if (this.isFormEdit){
+      this.profileMng.initiateLevels('1');
       this.GetDataforEdit();
+    }
+     
     else {
       this.LoadCustomers();
       this.LoadProjects();
@@ -178,72 +188,71 @@ export class OvertimeclaimPage {
       claim_amount: ['', Validators.required],
       attachment_GUID : '',  claimTypeGUID: '',
     });   
-  }
+  } 
 
-  onFileChange(event: any) {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.OTform.get('avatar').setValue(file);
-      this.uploadFileName = file.name;
-      reader.onload = () => {
-        this.OTform.get('avatar').setValue({
-          filename: file.name,
-          filetype: file.type,
-          value: reader.result.split(',')[1]
-        });
-      };
-    }
-    this.chooseFile = true;
-
-  }
+  // onFileChange(event: any) {
+  //   const reader = new FileReader();
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     this.OTform.get('avatar').setValue(file);
+  //     this.uploadFileName = file.name;
+  //     reader.onload = () => {
+  //       this.OTform.get('avatar').setValue({
+  //         filename: file.name,
+  //         filetype: file.type,
+  //         value: reader.result.split(',')[1]
+  //       });
+  //     };
+  //   }
+  //   this.chooseFile = true;
+  // }
  
    imageGUID: any;
-  saveIm(formValues: any) {
-    let uploadImage = this.UploadImage();
-    uploadImage.then((resJson) => {
-      // this.submitAction(this.uploadFileName, formValues);
-      this.imageGUID = this.uploadFileName;
-      this.chooseFile = false;
-      this.ImageUploadValidation=true;      
-    })    
-  }
+  // saveIm(formValues: any) {
+  //   let uploadImage = this.UploadImage();
+  //   uploadImage.then((resJson) => {
+  //     // this.submitAction(this.uploadFileName, formValues);
+  //     this.imageGUID = this.uploadFileName;
+  //     this.chooseFile = false;
+  //     this.ImageUploadValidation=true;      
+  //   })    
+  // }
 
-  SaveImageinDB() {
-    let objImage: ImageUpload_model = new ImageUpload_model();
-    objImage.Image_Guid = UUID.UUID();
-    objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-    objImage.CREATION_TS = new Date().toISOString();
-    objImage.Update_Ts = new Date().toISOString();
-    return new Promise((resolve, reject) => {
-      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
-        // let res = response.json();
-        // let imageGUID = res["resource"][0].Image_Guid;
-        resolve(objImage.toJson());
-      })
-    })
-  }
+  // SaveImageinDB() {
+  //   let objImage: ImageUpload_model = new ImageUpload_model();
+  //   objImage.Image_Guid = UUID.UUID();
+  //   objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
+  //   objImage.CREATION_TS = new Date().toISOString();
+  //   objImage.Update_Ts = new Date().toISOString();
+  //   return new Promise((resolve, reject) => {
+  //     this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+  //       // let res = response.json();
+  //       // let imageGUID = res["resource"][0].Image_Guid;
+  //       resolve(objImage.toJson());
+  //     })
+  //   })
+  // }
 
-  UploadImage() {   
-    this.CloudFilePath = 'eclaim/'   
+//   UploadImage() {   
+//     this.CloudFilePath = 'eclaim/'   
  
-  this.loading = true;
-  const queryHeaders = new Headers();
-  queryHeaders.append('filename', this.uploadFileName);
-  queryHeaders.append('Content-Type', 'multipart/form-data');
-  queryHeaders.append('fileKey', 'file');
-  queryHeaders.append('chunkedMode', 'false');
-  queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-  const options = new RequestOptions({ headers: queryHeaders });
-  return new Promise((resolve, reject) => {
-    this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.OTform.get('avatar').value, options)
-      .map((response) => {
-        return response;
-      }).subscribe((response) => {
-        resolve(response.json());
-      })
-  })
-}
+//   this.loading = true;
+//   const queryHeaders = new Headers();
+//   queryHeaders.append('filename', this.uploadFileName);
+//   queryHeaders.append('Content-Type', 'multipart/form-data');
+//   queryHeaders.append('fileKey', 'file');
+//   queryHeaders.append('chunkedMode', 'false');
+//   queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+//   const options = new RequestOptions({ headers: queryHeaders });
+//   return new Promise((resolve, reject) => {
+//     this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.OTform.get('avatar').value, options)
+//       .map((response) => {
+//         return response;
+//       }).subscribe((response) => {
+//         resolve(response.json());
+//       })
+//   })
+// }
 
   GetSocNo(item: any){
     this.OT_SOC_No_ngModel = item.soc;
@@ -265,25 +274,18 @@ export class OvertimeclaimPage {
   }
 
   LoadProjects() {
-    this.http
-      .get(Services.getUrl('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID))
-      .map(res => res.json())
+    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
-      this.storeProjects=  this.projects = data["resource"];
-        console.table(this.projects)
+        this.storeProjects = this.projects = data["resource"];
       });
   }
 
   LoadCustomers() {
-    this.http
-      .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
-      .map(res => res.json())
+    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
-        // console.table(this.projects)
-      }
-      );
-  }
+      })
+  }  
 
   public CloseTravelClick() {
     this.AddToLookupClicked = false;
@@ -314,14 +316,11 @@ export class OvertimeclaimPage {
   }
 
   public ProjectLookup() {
-    this.ProjectLookupClicked = true;
-   
-    // this.projects = null;
+    this.ProjectLookupClicked = true;   
   }
 
   public CustomerLookup() {
-    this.CustomerLookupClicked = true;
-    // this.projects = null;
+    this.CustomerLookupClicked = true;   
   }
 
   searchProject(searchString: any) {
@@ -330,10 +329,28 @@ export class OvertimeclaimPage {
       this.projects = this.storeProjects;
       return;
     }
-  //  this.projects=  this.filterProjects({
-  //   project_name: val
-  //   });
+   this.projects=  this.filterProjects({
+    project_name: val
+    });
   } 
+
+  filterProjects(params?: any) {
+    if (!params) {
+      return this.storeProjects;
+    }
+
+    return this.projects.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
 
   searchCustomer(searchString: any) {
     let val = searchString.target.value;
@@ -341,15 +358,44 @@ export class OvertimeclaimPage {
       this.customers = this.storeCustomers;
       return;
     }
-    // this.customers = this.filterCustomer({
-    //   NAME: val
-    // });
+    this.customers = this.filterCustomer({
+      NAME: val
+    });
   } 
 
-  clearFile() {
-    this.OTform.get('avatar').setValue(null);
-    this.fileInput.nativeElement.value = '';
+  filterCustomer(params?: any) {
+    if (!params) {
+      return this.storeCustomers;
+    }
+
+    return this.customers.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  } 
+  
+  validateDate() {
+    let today = Date.parse(new Date().toISOString())
+    let start = Date.parse(this.Start_DT_ngModel)
+    let end = Date.parse(this.End_DT_ngModel)
+    if (start > end || today < start) {
+      alert('The date range is not valid.')
+      return false;
+    }
+    return true;
   }
+
+  // clearFile() {
+  //   this.OTform.get('avatar').setValue(null);
+  //   this.fileInput.nativeElement.value = '';
+  // }
 
   allowanceGUID: any;
   onAllowanceSelect(allowance: any) {
@@ -357,17 +403,24 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
+    if (this.validateDate()){
     if (this.isFormEdit) {
       this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
         .subscribe(data => {
           this.claimRequestData = data;
           this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
-          this.claimRequestData["resource"][0].CLAIM_AMOUNT = formValues.claim_amount;
-          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = formValues.claim_amount;
+          this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
           this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
+          if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+              this.claimRequestData["resource"][0].STATUS = 'Pending'
+            }
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
@@ -380,20 +433,20 @@ export class OvertimeclaimPage {
           //this.claimRequestData[0].STATUS = 'Pending';
          // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
          this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res =>{
-            alert('Claim details are submitted successfully.')
+            alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
          });
-        })
-    }
-    else {
-   
+        })   
+  }
+    else {   
     formValues.claimTypeGUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
     formValues.travel_date = formValues.start_DT;
     formValues.attachment_GUID =  this.imageGUID;
-    this.travelAmount = formValues.claim_amount;
+    this.travelAmount = this.claimAmount;
     formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
     this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }
+  }
   }
 
   NavigateTravelClaim() {

@@ -5,39 +5,41 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-navbar  color="primary200">
     <ion-title>{{ 'DEPARTMENT_CLAIM_HEADING' | translate }}</ion-title>
   </ion-navbar>
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>  
 </ion-header>
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddDepartmentClick()">
+    <button ion-fab mini (click)="AddDepartmentClick()" [disabled]="button_Add_Disable">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-
+  
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</th>
-          <th class="lgl1" style="display: none;">{{ 'DEPARTMENT_CLAIM_DESCRIPTION' | translate }}</th>
+    
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let department of departments; let i=index">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{department.NAME}}</td>
-          <td class="lgl1" style="display: none;">{{department.DESCRIPTION}}</td>
-          <td class="lgl1" *ngIf="AdminLogin">{{department.TENANT_ACCOUNT_NAME}}</td>
-          <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(department.DEPARTMENT_GUID)">
+        <tr class="col7" *ngFor="let department of departments; let i=index" [hidden] = "button_View_Disable">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader"reshead="Department Name">{{department.NAME}}</td>
+          <td class="lgl1 getHeader" *ngIf="AdminLogin" reshead="Tenant Name">{{department.TENANT_ACCOUNT_NAME}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
+            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(department.DEPARTMENT_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
-            <button ion-button item-end (click)="DeleteClick(department.DEPARTMENT_GUID)">
+            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(department.DEPARTMENT_GUID)">
               <ion-icon name="md-close"></ion-icon>
             </button>
           </td>
@@ -48,7 +50,7 @@
 
   <!-- add department form start-->
   <div class="blackcontainer" *ngIf="AddDepartmentClicked"></div>
-  <div class="popup" padding *ngIf="AddDepartmentClicked">
+  <div class="popup4" padding *ngIf="AddDepartmentClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">

@@ -15,7 +15,7 @@ import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claima
 export class ProfileManagerProvider {
     managerInfo :any[];
     levels: any[];
-    userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; level: any;
+    userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; previousStage: string; level: any;    
     mainClaimReq: MainClaimRequestModel; claimRequestGUID: any; isRemarksAccepted: any;
   
     navCtrl:any;
@@ -26,21 +26,34 @@ export class ProfileManagerProvider {
     }
   
     profileLevel: any; assignedTo: any; stage: any;
+
+    checkMultipleLength:number;
+    checkCount:number;
+
   
     UpdateProfileInfo(mainClaimReq: MainClaimRequestModel) {
+      //debugger;
       this.api.updateClaimRequest(mainClaimReq).subscribe(res => 
         {
+          this.checkCount++;
+          //  if(this.checkMultipleLength===1)
+          //  {
           if(mainClaimReq.STATUS==='Rejected')
           alert('Claim has been '+mainClaimReq.STATUS +'.')
           else
           alert('Claim has been Approved.')
          // alert('Claim has been '+mainClaimReq.STATUS+'.');
           this.navCtrl.setRoot(ClaimapprovertasklistPage);
+          // }
+        });
       }
-      
-        // console.log(res.json())
-      )
-    }    
+
+      UpdateProfileInfoForMultiple(mainClaimReq: MainClaimRequestModel) {
+        //debugger;
+        this.api.updateClaimRequest(mainClaimReq).subscribe(res => 
+          {    });
+        }
+        
   
     getMainClaimReqInfo(claimRef: ClaimWorkFlowHistoryModel, level: any, claimRequestGUID: any, isRemarksAccepted: any) {
       this.level = level;
@@ -51,6 +64,7 @@ export class ProfileManagerProvider {
       this.api.getClaimRequestByClaimReqGUID(this.claimRequestGUID).subscribe(data => {
         claimRef.ASSIGNED_TO = this.previousAssignedTo = data[0].ASSIGNED_TO;
         claimRef.PROFILE_LEVEL = this.previousLevel = data[0].PROFILE_LEVEL;
+        this.previousStage = data[0].STAGE;
         // data[0].STAGE = this.stage;
         // data[0].ASSIGNED_TO = this.assignedTo;
         // data[0].PROFILE_LEVEL = this.level;
@@ -72,6 +86,9 @@ export class ProfileManagerProvider {
         this.managerInfo = res["resource"]
         this.managerInfo.forEach(userElm => {
           this.stage = userElm.DEPT_GUID;
+          if (this.isRequester) {
+            this.proceedNext();
+          }
         })
       }) 
       resolve(true);
@@ -79,18 +96,37 @@ export class ProfileManagerProvider {
     }
   
     GetDirectManager() {
+      this.userGUID = localStorage.getItem('g_USER_GUID');
+
       return new Promise((resolve, reject) => {
       this.api.getApiModel('view_manager_details', 'filter=USER_GUID=' + this.userGUID).subscribe(res => {
         this.managerInfo = res["resource"]
-        this.managerInfo.forEach(userElm => {
-          // this.assignedTo = userElm.MANAGER_GUID;
-          // this.stage = userElm.DEPT_GUID;
+        this.managerInfo.forEach(userElm => {          
           this.assignedTo = userElm.MANAGER_GUID;
           this.stage = userElm.MANAGER_DEPT_GUID;  
+          localStorage.setItem('edit_superior',this.assignedTo)
+          localStorage.setItem('edit_stage',this.stage)
+          if(this.isRequester){
+            this.proceedNext();
+          }
         })  
       })
       resolve(true);
     })  
+    }
+
+    proceedNext(){
+      let month = new Date(this.formValues.travel_date).getMonth() + 1;
+      let year = new Date(this.formValues.travel_date).getFullYear(); this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
+      .subscribe(claimRefdata => {
+        if (claimRefdata["resource"][0] == null) {
+          this.saveClaimRef(month, year);
+        }
+        else {
+          let claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+          this.SaveClaim(claimRefGUID);
+        }
+      })
     }
   
     SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any,level:any) {
@@ -103,16 +139,36 @@ export class ProfileManagerProvider {
         this.mainClaimReq.STAGE = this.stage;
         this.mainClaimReq.ASSIGNED_TO = this.assignedTo;
         this.mainClaimReq.PROFILE_LEVEL = this.level;
-        this.mainClaimReq.UPDATE_TS =  new Date().toISOString();
-        if (this.level === '-1')
-        this.mainClaimReq.STATUS = 'Approved';
-        else if (this.level === '0' || this.isRemarksAccepted === false){
-          this.mainClaimReq.STATUS = 'Rejected';
-          this.mainClaimReq.PROFILE_LEVEL = 0;
-          this.mainClaimReq.STAGE = null;
-          this.mainClaimReq.ASSIGNED_TO = null;
+        this.mainClaimReq.UPDATE_TS = new Date().toISOString();
+        // if (this.level === '-1')
+        //   this.mainClaimReq.STATUS = 'Paid';
+        if (this.level === '-1') {
+          this.mainClaimReq.STATUS = 'Paid';
+          this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+          this.mainClaimReq.STAGE = this.previousStage;
         }
+        // else  if (this.level === '3')
+        //   this.mainClaimReq.STATUS = 'Approved';
+        // else if (this.level === '0' || this.isRemarksAccepted === false) {
+       
+        //   this.mainClaimReq.STATUS = 'Rejected';
+        //   this.mainClaimReq.PROFILE_LEVEL = 0;
+        //   this.mainClaimReq.STAGE = null;
+        //   this.mainClaimReq.ASSIGNED_TO = null;
+        // }
+         if (this.level === '3')
+        this.mainClaimReq.STATUS = 'Approved';
+       if (this.level === '0' || this.isRemarksAccepted === false) {
+          this.mainClaimReq.STATUS = 'Rejected';
+          this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+          this.mainClaimReq.STAGE = this.previousStage;
+        this.mainClaimReq.PROFILE_LEVEL = 0;
+    
+      }
+        if(this.checkMultipleLength===1)
         this.UpdateProfileInfo(this.mainClaimReq);
+        else
+        this.UpdateProfileInfoForMultiple(this.mainClaimReq);
         //alert('Claim action submitted successfully.')
 
         // This is for Approval Send email to User and next approver
@@ -121,7 +177,9 @@ export class ProfileManagerProvider {
      
     }
   
-    ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any) { 
+    ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any, checkBoxLength:number) { 
+      //debugger
+      this.checkMultipleLength=checkBoxLength;
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
       this.userGUID = localStorage.getItem('g_USER_GUID');
 
@@ -129,7 +187,7 @@ export class ProfileManagerProvider {
       claimHistoryRef.CLAIM_WFH_GUID = UUID.UUID();
       claimHistoryRef.CLAIM_REQUEST_GUID = claimRequestGUID;
       claimHistoryRef.REMARKS = remarks;
-      claimHistoryRef.STATUS = isRemarksAccepted ? 'Accepted' : 'Rejected';
+      claimHistoryRef.STATUS = isRemarksAccepted ? 'Approved' : 'Rejected';
       claimHistoryRef.USER_GUID = approverGUID;
       claimHistoryRef.CREATION_TS = new Date().toISOString();
       claimHistoryRef.UPDATE_TS = new Date().toISOString();
@@ -244,26 +302,30 @@ export class ProfileManagerProvider {
       claimReqMainRef.ASSIGNED_TO = this.assignedTo;
       claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
       claimReqMainRef.PROFILE_JSON = this.profileJSON;
-      claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Drafting';
+      claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
       claimReqMainRef.STAGE = this.stage;
       claimReqMainRef.ATTACHMENT_ID = this.formValues.attachment_GUID;
       claimReqMainRef.TRAVEL_TYPE = this.formValues.travelType === 'Outstation' ? '1' : '0';
+      claimReqMainRef.claim_method_guid = this.formValues.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.formValues.PayType;
+
 
       if (this.isCustomer) {
         claimReqMainRef.CUSTOMER_GUID = this.formValues.soc_no;
+        claimReqMainRef.SOC_GUID =null;
       }
       else {
         claimReqMainRef.SOC_GUID = this.formValues.soc_no;
+        claimReqMainRef.CUSTOMER_GUID =null;
       }
       this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
         var postClaimMain = response.json();
-        this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString());
+        this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID );
         localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
         // this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
         //this.MainClaimSaved = true;
         if (this.formValues.uuid === undefined) {
           //this.api.presentToast('Claim has submitted successfully.')
-           alert('Claim has registered successfully.')
+           alert('Claim has submitted successfully.')
           this.navCtrl.setRoot(DashboardPage);
         }
         else
@@ -289,37 +351,46 @@ export class ProfileManagerProvider {
       })
     }
 
-    formValues: any; claimAmount: any; isCustomer: any; profileJSON: any;
+    formValues: any; claimAmount: any; isCustomer: any; profileJSON: any; isRequester:boolean=false;
     save(formValues: any, amount: any, isCustomer: any) {
+      this.isRequester = true;
       this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
       this.userGUID = localStorage.getItem('g_USER_GUID');
 
       this.formValues = formValues;
       this.claimAmount = amount;
       this.isCustomer = isCustomer;
-      let month = new Date(formValues.travel_date).getMonth() + 1;
-      let year = new Date(formValues.travel_date).getFullYear();
+      this.initiateLevels('1');
+
+      // let month = new Date(formValues.travel_date).getMonth() + 1;
+      // let year = new Date(formValues.travel_date).getFullYear();
   
       // this.api.getClaimRequestByClaimReqGUID('3d1a5bd4-7263-1203-dfd1-efbbf1621372').subscribe(data => {
-        this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => { 
-        let stringProfileJSON = this.profileJSON =  JSON.stringify(data); 
-        // let stringProfileJSON = this.profileJSON= data[0].PROFILE_JSON
-        let profileJSON = JSON.parse(stringProfileJSON);
-        let levels = profileJSON.profile.levels.level;
-        this.getInfoLevels(levels, '1');
-  
-  
-        this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
-          .subscribe(claimRefdata => {
-            if (claimRefdata["resource"][0] == null) {
-              this.saveClaimRef(month, year);
-            }
-            else {
-              let claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
-              this.SaveClaim(claimRefGUID);
-            }
-          })
-  
-      })
-    }  
+       
+    } 
+    
+   // month: any; year: any
+    initiateLevels(levelNo:string){
+
+    this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => { 
+      let stringProfileJSON = this.profileJSON =  JSON.stringify(data); 
+      // let stringProfileJSON = this.profileJSON= data[0].PROFILE_JSON
+      let profileJSON = JSON.parse(stringProfileJSON);
+      let levels = profileJSON.profile.levels.level;
+      this.getInfoLevels(levels, levelNo);
+
+
+      // this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')')
+      //   .subscribe(claimRefdata => {
+      //     if (claimRefdata["resource"][0] == null) {
+      //       this.saveClaimRef(this.month, this.year);
+      //     }
+      //     else {
+      //       let claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+      //       this.SaveClaim(claimRefGUID);
+      //     }
+      //   })
+
+    })
+  }
   }

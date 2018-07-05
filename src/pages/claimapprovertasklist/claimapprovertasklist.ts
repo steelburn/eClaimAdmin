@@ -21,6 +21,7 @@ import { MedicalClaimViewPage } from '../../pages/medical-claim-view/medical-cla
 import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../../pages/miscellaneous-claim-view/miscellaneous-claim-view';
+import { ClaimtasklistPage } from '../claimtasklist/claimtasklist';
 
 @IonicPage()
 @Component({
@@ -35,25 +36,34 @@ export class ClaimapprovertasklistPage {
   selectAll: boolean;
   claimrefguid: any;
   searchboxValue: string;
-  checkboxDataList: Checkboxlist[]=[];
-  loginUserGuid:string;
-  claimRequestGUID:any;
-  level:any;
+  checkboxDataList: Checkboxlist[] = [];
+  loginUserGuid: string;
+  claimRequestGUID: any;
+  level: any;
+  loginUserRole = localStorage.getItem("g_ROLE_NAME");
+  claimreqData: any[];
+  buttonText:string;
 
 
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
-
-   this.loginUserGuid=localStorage.getItem("g_USER_GUID");
+    this.loginUserGuid = localStorage.getItem("g_USER_GUID");
     this.claimrefguid = navParams.get("claimRefGuid");
     // alert(this.claimrefguid);
 
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
-
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      if (this.loginUserRole === "Finance Admin") {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+     this.buttonText="Pay";
+      }
+      else {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.buttonText="Approve";
+      }
     }
     else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.buttonText="Approve";
     }
     this.BindData();
   }
@@ -66,7 +76,7 @@ export class ClaimapprovertasklistPage {
 
         this.claimrequestdetails1 = this.claimrequestdetails;
       });
-    //console.table(this.claimrequestdetails);
+   
   }
 
   onSearchInput(ev: any) {
@@ -117,12 +127,12 @@ export class ClaimapprovertasklistPage {
   //   // alert(claimRequestGuid);
   // }
 
-  getCheckboxValue(event: Checkbox, claimRequestGuid: any,level:number) {
+  getCheckboxValue(event: Checkbox, claimRequestGuid: any, level: number, status: string) {
     // alert(event.id);
     // alert(event.checked);
     // alert(claimRequestGuid);
-
-    let checkboxData: Checkboxlist = new Checkboxlist(event.checked,claimRequestGuid,level);
+    debugger;
+    let checkboxData: Checkboxlist = new Checkboxlist(event.checked, claimRequestGuid, level, status);
     if (event.checked) {
       this.checkboxDataList.push(checkboxData);
     }
@@ -138,42 +148,114 @@ export class ClaimapprovertasklistPage {
     // alert(this.checkboxDataList.find(item => item.Chkid == event.id).Chkid + ","+this.checkboxDataList.find(item => item.Chkid == event.id).Checked+ ","+this.checkboxDataList.find(item => item.Chkid == event.id).claimRequestGuid);
   }
 
-approveClaims() {
-    //console.table(this.claimrequestdetails);
-    let count=0;
-if(this.checkboxDataList.length>0)
-{
-// for(let i=0;i<this.checkboxDataList.length;i++)
-// {
+approveAll(){
+  return new Promise((resolve, reject) => {
+
   this.checkboxDataList.forEach(element => {
-    if(element.Checked)
-    {
-      debugger;
-      this.profileMngProvider.ProcessProfileMng(null, this.loginUserGuid, element.level, element.ClaimRequestGuid, true);
-      count++;
-      
-     // 
+    if (element.Checked && element.status !== 'Paid') {
+      //debugger;
+      this.profileMngProvider.ProcessProfileMng(null, this.loginUserGuid, element.level, element.ClaimRequestGuid, true,2);
+      this.count++;
     }
   });
+  })
+}
 
-//}
-if(count>0)
-{
-  //alert("Claim(s) approved successfully.");
-}
-this.BindData();
-this.checkboxDataList=[];
-}
-else{alert("Please select the claim(s) which you want to approve.")
-}
-}
+count:number =0;
+  approveClaims() {
+    //console.table(this.claimrequestdetails);
+   this.count=0;
+    //debugger;
+    if (this.checkboxDataList.length > 0) {
+      let temp = this.approveAll();
+      // for(let i=0;i<this.checkboxDataList.length;i++)
+      // {
+      // this.checkboxDataList.forEach(element => {
+      //   if (element.Checked && element.status !== 'Paid') {
+      //     debugger;
+      //     this.profileMngProvider.ProcessProfileMng(null, this.loginUserGuid, element.level, element.ClaimRequestGuid, true);
+
+      //     count++;
+
+      //     // 
+      //   }
+      // });
+
+      //}
+      temp.then((res) => {
+    })
+    
+    if (this.count > 0 && this.claimrefguid!==null && this.claimrefguid!==undefined) {
+      //debugger;
+      this.claimreqData = [];
+      let pendingFlag = false;
+      let approvedFlag = false;
+      let url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_request?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(STATUS!=Paid)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      console.log(url)
+
+      this.api.getApiModel('main_claim_ref', 'filter=CLAIM_REF_GUID=' + this.claimrefguid)
+        .subscribe(data => {
+          let claimRefObj = data;
+          //debugger;
+          this.http
+            .get(url)
+            .map(res => res.json())
+            .subscribe(data1 => {
+              //debugger;
+              this.claimreqData = data1["resource"];
+           
+          if (this.claimreqData !== null && this.claimreqData !== undefined && this.claimreqData.length > 0) {
+            this.claimreqData.forEach(element => {
+              //debugger;
+              if (element.STATUS == "Pending" && !pendingFlag) {
+                pendingFlag = true;
+              }
+              else if (element.STATUS == "Approved" && !approvedFlag) {
+                approvedFlag = true;
+              }
+            });
+          }
+          
+          if (pendingFlag)
+            claimRefObj["resource"][0].STATUS = 'Pending';
+          else if (approvedFlag)
+            claimRefObj["resource"][0].STATUS = 'Approved';
+          else
+            claimRefObj["resource"][0].STATUS = 'Paid';
+          //debugger;
+          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(res => {
+            alert('Claim has been Approved.')
+            this.navCtrl.push(ClaimtasklistPage);
+          })
+        });
+        })
+      // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+      // this.MainClaimSaved = true;
+    }
+    if (this.claimrefguid===null || this.claimrefguid===undefined) {
+      alert('Claim has been Approved.')
+      this.navCtrl.setRoot(ClaimapprovertasklistPage);
+    }
+    this.BindData();
+    this.checkboxDataList = [];
+    
+// if(this.checkboxDataList.length>1)
+// {
+//   alert('Claim has been Approved.')
+//   this.navCtrl.push(ClaimtasklistPage);
+// }
+    }
+    else {
+      alert("Please select the claim(s) which you want to approve.")
+    }
+  }
 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimapprovertasklistPage');
   }
 
-viewClaim(claimRequestGUID: string, level: any, claimType: any) {
+  viewClaim(claimRequestGUID: string, level: any, claimType: any) {
     this.claimRequestGUID = claimRequestGUID;
     this.level = level;
 

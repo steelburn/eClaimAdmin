@@ -213,14 +213,20 @@ export class SocRegistrationPage {
     }
   }
 
-  loading: Loading;
+  loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private socservice: SocMain_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
     }
     else {
+      this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
       if (localStorage.getItem("g_USER_GUID") != "sva") {
+        //Get the role for this page------------------------------        
+        if (localStorage.getItem("g_KEY_ADD") == "0") { this.button_Add_Disable = true; }
+        if (localStorage.getItem("g_KEY_EDIT") == "0") { this.button_Edit_Disable = true; }
+        if (localStorage.getItem("g_KEY_DELETE") == "0") { this.button_Delete_Disable = true; }
+        if (localStorage.getItem("g_KEY_VIEW") == "0") { this.button_View_Disable = true; }
 
         //Clear localStorage value--------------------------------      
         this.ClearLocalStorage();
@@ -381,6 +387,38 @@ export class SocRegistrationPage {
     }
   }
 
+  stores: any[]; 
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.socs = this.stores;      
+      return;
+    }
+    this.socs = this.filter({
+      soc: val,
+      project_name: val,
+      customer_name: val      
+    });
+  }
+
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+    
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
+
   DisplayGrid() {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
@@ -400,7 +438,7 @@ export class SocRegistrationPage {
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.socs = data.resource;
+        this.socs = this.stores = data.resource;
 
         this.loading.dismissAll();
       });

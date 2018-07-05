@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController,ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { Services } from '../Services';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -26,6 +26,8 @@ import { MiscellaneousClaimPage } from '../../pages/miscellaneous-claim/miscella
 
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
+import { ExcelService } from '../../providers/excel.service';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 /**
  * Generated class for the UserclaimslistPage page.
@@ -37,94 +39,147 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 @IonicPage()
 @Component({
   selector: 'page-userclaimslist',
-  templateUrl: 'userclaimslist.html', providers: [BaseHttpService]
+  templateUrl: 'userclaimslist.html', providers: [BaseHttpService, ExcelService]
 })
 export class UserclaimslistPage {
-  userClaimhistorydetails: any[]; 
-  userClaimhistorydetails1: any[]; 
+  userClaimhistorydetails: any[];
+  userClaimhistorydetails1: any[];
 
-  userdetails: any; 
+  userdetails: any;
   //claimrefguid:any;
   //userguid:any;
   //month:any;
   baseResourceUrl: string;
   baseResourceUrl1: string;
   searchboxValue: string;
+  Pending: any; Rejected: any; Approved: any; Paid: any;
+  public page:number = 1;
+  constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
-  
-  constructor( private api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams,public http: Http, private httpService: BaseHttpService) {
-  //  this.claimrefguid=navParams.get("claimRefGuid");
-  //  this.userguid=navParams.get("userGuid");
-  //  this.month=navParams.get("Month");
-   //alert(this.userguid);
-    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    //  this.claimrefguid=navParams.get("claimRefGuid");
+    //  this.userguid=navParams.get("userGuid");
+    //  this.month=navParams.get("Month");
+    //alert(this.userguid);
+    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     console.log(this.baseResourceUrl);
-   this.BindData();
+
+    // this.onSearchInput();
+
+
+    this.Rejected = navParams.get("Rejected");
+    this.Pending = navParams.get("Pending");
+    this.Approved = navParams.get("Approved");
+    this.Paid = navParams.get("Paid");
+
+    this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid;
+    if (this.searchboxValue != undefined) {
+      this.onSearchInput();
+    }
+    else { this.BindData(); }
+
     this.getuserDetails();
+
+    this.excelService = excelService;
   }
 
-BindData()
-{
-  this.http
-  .get(this.baseResourceUrl)
-  .map(res => res.json())
-  .subscribe(data => {
-    this.userClaimhistorydetails= data["resource"];
-    this.userClaimhistorydetails1=this.userClaimhistorydetails;
-  });
-}
-
-  onSearchInput(ev: any) {  
-    // alert('hi')
-          let val = this.searchboxValue;
-          if (val && val.trim() != '') {
-           this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
-        let claimtype:number;
-        let status:number;
-        let stage:number;
-        let amount:number;
-        let date:number;
-            // console.log(item);
-             if(item.CLAIM_TYPE!=null)
-             {claimtype=item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase())}
-             if(item.TRAVEL_DATE!=null)
-             {date=item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase())}
-             if(item.STATUS!=null)
-             {status=item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase())}
-             if(item.STAGE!=null)
-             {stage=item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase())}
-             if(item.CLAIM_AMOUNT!=null)
-             {amount=item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
-             return (
-               (claimtype > -1) 
-             || (date > -1) 
-             || (status > -1) 
-             || ( stage> -1)
-             || (amount> -1) 
-           );
-           })
-         }
-         else
-         {
-this.userClaimhistorydetails=this.userClaimhistorydetails1;
-         }
-   }
-
-  getuserDetails(){
+  ExcelData: any[] = [];
+  BindData() {
     this.http
-    .get(this.baseResourceUrl1)
-    .map(res => res.json())
-    .subscribe(data => {
-      //alert(JSON.stringify(data));
-      this.userdetails= data["resource"];
-      //alert(this.userdetails);
-    });
+      .get(this.baseResourceUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.userClaimhistorydetails = data["resource"];
+        this.userClaimhistorydetails1 = this.userClaimhistorydetails;
+
+        for (var item in data["resource"]) {
+          this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
+        }
+      });
+
+  }
+
+  onSearchInput() {
+    // alert('hi')    
+    // this.searchboxValue='hi';
+
+    // debugger;
+
+    let val = this.searchboxValue;
+    // alert(this.searchboxValue)
+    if (val && val.trim() != '') {
+
+      // Lakshman June-13,2018
+      this.http
+        .get(this.baseResourceUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.userClaimhistorydetails1 = data["resource"];
+          //this.userClaimhistorydetails1 = this.userClaimhistorydetails;
+
+          this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
+            let claimtype: number;
+            let status: number;
+            let stage: number;
+            let amount: number;
+            let date: number;
+            // console.log(item);
+            if (item.CLAIM_TYPE != null) { claimtype = item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.STAGE != null) { stage = item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+            return (
+              (claimtype > -1)
+              || (date > -1)
+              || (status > -1)
+              || (stage > -1)
+              || (amount > -1)
+            );
+          })
+        });
+      // Lakshman June-13,2018
+
+      // this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
+      //   let claimtype: number;
+      //   let status: number;
+      //   let stage: number;
+      //   let amount: number;
+      //   let date: number;
+      //   // console.log(item);
+      //   if (item.CLAIM_TYPE != null) { claimtype = item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase()) }
+      //   if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
+      //   if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
+      //   if (item.STAGE != null) { stage = item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase()) }
+      //   if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+      //   return (
+      //     (claimtype > -1)
+      //     || (date > -1)
+      //     || (status > -1)
+      //     || (stage > -1)
+      //     || (amount > -1)
+      //   );
+      // })
+    }
+    else {
+      this.userClaimhistorydetails = this.userClaimhistorydetails1;
+    }
+  }
+
+  getuserDetails() {
+    this.http
+      .get(this.baseResourceUrl1)
+      .map(res => res.json())
+      .subscribe(data => {
+        //alert(JSON.stringify(data));
+        this.userdetails = data["resource"];
+        //alert(this.userdetails);
+      });
   };
 
   claimRequestGUID: string; level: string;
 
-  ClaimNavigation(claimRequestGUID: string, level:string, claimType:any, navType:number) {
+  ClaimNavigation(claimRequestGUID: string, level: string, claimType: any, navType: number) {
     this.claimRequestGUID = claimRequestGUID;
     this.level = level;
 
@@ -139,7 +194,7 @@ this.userClaimhistorydetails=this.userClaimhistorydetails1;
     }
   }
 
-  pushPage(claimType:any) {
+  pushPage(claimType: any) {
     this.navCtrl.push(claimType, {
       isApprover: false,
       cr_GUID: this.claimRequestGUID,
@@ -148,40 +203,44 @@ this.userClaimhistorydetails=this.userClaimhistorydetails1;
     });
   }
 
-  editPage(claimType:any) {
+  editPage(claimType: any) {
     this.navCtrl.push(claimType, {
       isFormEdit: 'true',
       cr_GUID: this.claimRequestGUID
     });
   }
-  // DeleteClaimRequest(claimReqGuid:any,claimTypeGuid:any)
-  // {
-  //      let alert1 = this.alertCtrl.create({
-  //       title: 'Confirm delete claim',
-  //       message: 'Are you sure you want to delete this claim?',
-  //       buttons: [
-  //           {
-  //               text: 'No',
-  //               handler: () => {
-  //                   return
-  //               }
-  //           },
-  //           {
-  //               text: 'Yes',
-  //               handler: () => {
-  //                 this.api.deleteApiModel('main_claim_request',claimReqGuid).subscribe(res =>{
-  //                   this.BindData();
-  //                   alert('Claim has been deleted successfully.')
-  //                 });
-  //               }
-  //           }
-  //       ]
-  //   })
-  //   alert1.present();
-  // }
+
+  DeleteClaimRequest(claimReqGuid: any, claimTypeGuid: any) {
+    let alert1 = this.alertCtrl.create({
+      title: 'Confirm delete claim',
+      message: 'Are you sure you want to delete this claim?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            return
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.api.deleteApiModel('main_claim_request', claimReqGuid).subscribe(res => {
+              this.BindData();
+              alert('Claim has been deleted successfully.')
+            });
+          }
+        }
+      ]
+    })
+    alert1.present();
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserclaimslistPage');
   }
 
+  ExportToExcel(evt: any) {
+    // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
+    this.excelService.exportAsExcelFile(this.ExcelData, 'Data');    
+  }
 }

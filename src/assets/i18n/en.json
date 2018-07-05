@@ -40,6 +40,9 @@
   "USER_REGISTRATION_HEADING": "User Registration",
   "PERSONAL_DETAILS": "Personal Details",
   "RESIDENTIAL_ADDRESS": "Residential Address",  
+
+  "MALE":"Male",
+  "FEMALE":"Female",
   
   "NAME": "Name",
   "EMAIL": "Email",
@@ -130,7 +133,7 @@
   "STATE_NAME": "State Name",
   "NO": "No.",
  
-
+  "FULL_EMAIL_ADDRESS_LABEL": "Full email address",
 
   "PROJECT_NAME_LABEL": "Project Name",
   "CUSTOMER_NAME_LABEL": "Customer Name",
@@ -140,7 +143,7 @@
   "MEDICAL_DATE_LABEL": "Medical Date",
   "OVERTIME_DATE_LABEL": "Overtime Date",
   "GIFT_DATE_LABEL": "Gift Date", 
-  "CLAIM_DATE_LABEL": "Miscellaneous Date",
+  "CLAIM_DATE_LABEL": "Claim Date",
   "CALENDAR_REF_LABEL": "Calendar Reference",
   "TRAVEL_MODE_LABEL": "Travel Mode",
   "TRAVEL_TYPE_LABEL": "Travel Type",
@@ -177,10 +180,14 @@
  "REMARKS_LABEL": "Remarks",
  "REJECT_BUTTON": "Reject",
  "ACCEPT_BUTTON": "Approve",
- "MISCELLANEOUS_CLAIM_HEADING": "Miscellaneous",
+ "MISCELLANEOUS_CLAIM_HEADING": "Miscellaneous Claim",
  "DASHBOARD_HEADING": "Dashboard",
  "TOTAL_AMOUNT_LABEL": "Total Amount",
  "NAVIGATE_LABEL": "Navigate",
  "CLAIMS_LABEL": "Claims",
- "Account_LABEL": "Account"
+ "Account_LABEL": "Account",
+ "APPROVER_NAME": "Approver Name",
+ "START_DATE_LABEL": "Start Date Time",
+ "END_DATE_LABEL": "End Date Time",
+ "TOTAL_CLAIM_AMOUNT_NOTE": "(Includes toll, parking, accommodation and meal-allowance)"
 } 

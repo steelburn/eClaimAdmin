@@ -49,7 +49,7 @@ import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneo
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
-import { PeermissionPage } from '../pages/peermission/peermission';
+import { PermissionPage } from '../pages/Permission/Permission';
 import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
@@ -66,7 +66,6 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { Chart } from 'chart.js';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
-
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -85,6 +84,8 @@ import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claima
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
+import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
+
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
@@ -100,8 +101,10 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { DatePipe } from '@angular/common'
-
+import { DatePipe, DecimalPipe } from '@angular/common'
+import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
+// import { Ng2PaginationModule } from 'ng2-pagination';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -114,7 +117,7 @@ import { DatePipe } from '@angular/common'
     OvertimeclaimPage,
     EntertainmentclaimPage,
     MiscellaneousClaimPage,
-    PeermissionPage,
+    PermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
     CountrysetupPage,
@@ -162,16 +165,17 @@ import { DatePipe } from '@angular/common'
     ClaimtasklistPage,
     UserclaimslistPage,
     ClaimReportPage,
+    MonthlyClaimReportPage,
 
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage
+    DashboardPage, ImportExcelDataPage
   ],
 
   imports: [
     BrowserModule,
-    HttpModule, HttpClientModule, ChartsModule,
+    HttpModule, HttpClientModule, ChartsModule,NgxPaginationModule,
     TranslateModule.forRoot
       ({
         loader: {
@@ -184,6 +188,7 @@ import { DatePipe } from '@angular/common'
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
         // { component: DashboardPage, name: 'Home', segment: 'Home' },
+        { component: ImportExcelDataPage, name: 'ImportExcelDataPage', segment: 'ImportExcelDataPage' },
         { component: DashboardPage, name: 'DashboardPage', segment: 'DashboardPage' },
         { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
         { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
@@ -198,12 +203,16 @@ import { DatePipe } from '@angular/common'
         { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
         { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
         { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
+        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },        
 
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
         { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
-        { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' }
-        
+        { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
+        { component: ClaimhistorydetailPage, name: 'ClaimhistorydetailPage', segment: 'ClaimhistorydetailPage' },
+        { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
+        { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' }
+     
       ]
     }),
     IonicStorageModule.forRoot()
@@ -232,7 +241,7 @@ import { DatePipe } from '@angular/common'
     CompanysetupPage,
     ClaimtypePage,
     CashcardsetupPage,
-    PeermissionPage,
+    PermissionPage,
     DesignationsetupPage,
     DepartmentsetupPage,
     MileagesetupPage,
@@ -273,19 +282,20 @@ import { DatePipe } from '@angular/common'
 
 
     ClaimReportPage,
+    MonthlyClaimReportPage,
     UploadPage,
 
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage
+    DashboardPage, ImportExcelDataPage 
 
 
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData, HttpClientModule, ApiManagerProvider,
-    UserData, DatePipe,
+    UserData, DatePipe, DecimalPipe,
     InAppBrowser,
     SplashScreen, StatusBar, Services,
 

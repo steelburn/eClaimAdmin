@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary200">
     <ion-title>Module Setup</ion-title>
   </ion-navbar>
 
@@ -34,7 +34,7 @@
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{module.MODULE_NAME}}</td>
           <td class="lgl1">{{module.DESCRIPTION}}</td>
-          <td class="lgl1">{{module.PAGE_NAME}}</td>
+          <td class="lgl1" text-wrap>{{module.PAGE_NAME}}</td>
           <td class="lgl1 fColor">
             <button ion-button item-end (click)="EditClick(module.MODULE_GUID)">
               <ion-icon name="md-create"></ion-icon>

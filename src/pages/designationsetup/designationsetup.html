@@ -6,9 +6,13 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+
+  <ion-navbar  color="primary200">
     <ion-title>{{ 'DESIGNATION_SETUP_HEADING' | translate }}</ion-title>
   </ion-navbar>
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>  
 
 </ion-header>
 
@@ -16,32 +20,32 @@
 <ion-content padding>
 
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddDesignationClick()">
+    <button ion-fab mini (click)="AddDesignationClick()" [disabled]="button_Add_Disable">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-
+  
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
+          <th class="lgl1 tblBrLeft" style="width:40px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'DESIGNATION_NAME' | translate }}</th>
-          <th class="lgl1" style="display: none;">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
-          <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:90px" style="text-align: justify;">{{ 'ACTION' | translate }}</th>          
+ <!-- <th class="lgl1" style="display: none;">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
+          <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th> -->
+          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let designation of designations; let i=index">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1" style="text-align: justify;">{{designation.NAME}}</td>
-          <td class="lgl1" style="display: none;">{{designation.DESCRIPTION}}</td>
-          <td class="lgl1" *ngIf="AdminLogin">{{designation.TENANT_ACCOUNT_NAME}}</td>
-          <td class="lgl1 fColor">
-            <button ion-button item-end (click)="EditClick(designation.DESIGNATION_GUID)">
+        <tr class="col7" *ngFor="let designation of designations; let i=index" [hidden]="button_View_Disable">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="Title">{{designation.NAME}}</td>
+          <!-- <td class="lgl1" style="display: none;">{{designation.DESCRIPTION}}</td>
+          <td class="lgl1" *ngIf="AdminLogin">{{designation.TENANT_ACCOUNT_NAME}}</td> -->
+          <td class="lgl1 getHeader fColor"  reshead="Action">
+            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(designation.DESIGNATION_GUID)">
               <ion-icon name="md-create"></ion-icon>
             </button>
-            <button ion-button item-end (click)="DeleteClick(designation.DESIGNATION_GUID)">
+            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(designation.DESIGNATION_GUID)">
               <ion-icon name="md-close"></ion-icon>
             </button>
           </td>
@@ -54,7 +58,7 @@
   <!-- add designation form start-->
   <div class="blackcontainer" *ngIf="AddDesignationClicked">
   </div>
-  <div class="popup" padding *ngIf="AddDesignationClicked">    
+  <div class="popup4" padding *ngIf="AddDesignationClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
@@ -66,7 +70,7 @@
         </button>
 
       </ion-card-header>
-      
+
       <ion-list>
         <form [formGroup]="Designationform">
           <ion-item *ngIf="AdminLogin">
@@ -90,9 +94,9 @@
           </div>
         </form>
       </ion-list>
-      
+
     </ion-card>
-    
+
   </div>
   <!-- add designation form end-->
 </ion-content>

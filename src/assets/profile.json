@@ -1,102 +1,78 @@
-{
-  "profile": {
-    "levels": {
-      "level": [
-        {
-          "-id": "1",
-          "approver": {
-            "-directManager": "1"
-          },
-          "conditions": {
-            "condition": [
-              {
-                "-status": "rejected",
-                "nextlevel": {
-                  "-final": "false"
-                }
+    {
+      "profile": {
+        "levels": {
+          "level": [
+            {
+              "-id": "1",
+              "approver": {
+                "-directManager": "1"
               },
-              {
-                "-status": "approved",
-                "nextlevel": {
-                  "-final": "false",
-                  "#text": "2"
-                }
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": {
+                      "-final": "false"
+                    }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": {
+                      "-final": "false",
+                      "#text": "2"
+                    }
+                  }
+                ]
               }
-            ]
-          }
-        },
-        {
-          "-id": "2",
-          "approver": {
-            "-keytype": "userGUID",
-            "#text": "0cc543ea-2dc6-ce6e-d10d-a11a9e946c2f"
-          },
-          "conditions": {
-            "condition": [
-              {
-                "-status": "rejected",
-                "nextlevel": {
-                  "-final": "false"
-                }
+            },
+            {
+              "-id": "2",
+              "approver": {
+                "-keytype": "userGUID",
+                "#text": "a9653bdf-e42b-b4bd-2bb1-9224cd06646e"
               },
-              {
-                "-status": "approved",
-                "nextlevel": {
-                  "-final": "false",
-                  "#text": "3"
-                }
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": {
+                      "-final": "false"
+                    }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": {
+                      "-final": "false",
+                      "#text": "3"
+                    }
+                  }
+                ]
               }
-            ]
-          }
-        },
-        {
-          "-id": "3",
-          "approver": {
-            "-keytype": "userGUID",
-            "#text": "bd73724a-14fe-935d-52f6-f2cd118338a0"
-          },
-          "conditions": {
-            "condition": [
-              {
-                "-status": "rejected",
-                "nextlevel": {
-                  "-final": "false"
-                }
+            },           
+            {
+              "-id": "3",
+              "approver": {
+                "-keytype": "userGUID",
+                "#text": "2b93fc11-23d5-db42-dd9f-bb9499071156"
               },
-              {
-                "-status": "approved",
-                "nextlevel": {
-                  "-final": "false",
-                  "#text": "4"
-                }
+              "conditions": {
+                "condition": [
+                  {
+                    "-status": "rejected",
+                    "nextlevel": {
+                      "-final": "false"
+                    }
+                  },
+                  {
+                    "-status": "approved",
+                    "nextlevel": {
+                      "-final": "true"
+                    }
+                  }
+                ]
               }
-            ]
-          }
-        },
-        {
-          "-id": "4",
-          "approver": {
-            "-keytype": "userGUID",
-            "#text": "ba1f8461-5912-368f-3317-4fc2fe4e03a5"
-          },
-          "conditions": {
-            "condition": [
-              {
-                "-status": "rejected",
-                "nextlevel": {
-                  "-final": "false"
-                }
-              },
-              {
-                "-status": "approved",
-                "nextlevel": {
-                  "-final": "true"
-                }
-              }
-            ]
-          }
+            }
+          ]
         }
-      ]
+      }
     }
-  }
-}

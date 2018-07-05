@@ -46,9 +46,10 @@ export class TravelClaimViewPage {
             return;
           }
         }
-        this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
+        this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted,1);
      }  
 
+     TravelType: any;
      LoadMainClaim() {
       let claimResult = this.LoadClaimDetails();
       claimResult.then((tollorParkAmount: number) => {
@@ -57,6 +58,7 @@ export class TravelClaimViewPage {
           this.claimRequestData.forEach(element => {
             if (element.ATTACHMENT_ID !== null)
               element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+              this.TravelType = element.TRAVEL_TYPE === '0' ? 'Local' : 'Outstation';
             this.totalClaimAmount = element.MILEAGE_AMOUNT;
           });
           this.totalClaimAmount += tollorParkAmount;

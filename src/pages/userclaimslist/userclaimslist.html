@@ -7,64 +7,84 @@
 <ion-header>
 
 
-  <ion-navbar color="primary500">
-    <ion-title>My Claim List</ion-title>
+  <ion-navbar color="primary200">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>My Claim History</ion-title>
 
   </ion-navbar>
 
-  <ion-toolbar no-border-top color="primary500">
-    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
+      <ion-icon name="download"></ion-icon>
+    </button>
+  </ion-fab>
 
-    <ion-item *ngFor="let userdetail of userdetails">
-        <ion-label>Name: {{userdetail.FULLNAME}}</ion-label>
-        <ion-label>Department: {{userdetail.DEPARTMENT}}</ion-label>
-      </ion-item>
-    
-      <ion-item *ngFor="let userdetail of userdetails">
-        <ion-label>Designation: {{userdetail.DESIGNATION}}</ion-label>
-        <ion-label></ion-label>
-      </ion-item>
+  <ion-item *ngFor="let userdetail of userdetails" class="fuha">
+    <ion-label text-wrap>Name: {{userdetail.FULLNAME}}</ion-label>
+
+  </ion-item>
+
+  <ion-item *ngFor="let userdetail of userdetails" class="fuha">
+
+    <ion-label text-wrap>Department: {{userdetail.DEPARTMENT}}</ion-label>
+  </ion-item>
+
+  <ion-item *ngFor="let userdetail of userdetails" class="fuha1">
+    <ion-label text-wrap>Designation: {{userdetail.DESIGNATION}}</ion-label>
+
+  </ion-item>
 
 
-        <ion-list>
-            <ion-item>
-                <table class="Tabler ">
-                    <tr class="linedsg TColor">
-                        <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
-              
-                        <th class="lgl1">Claim Type</th>
-                        <th class="lgl1">Date</th>
-                        <th class="lgl1">Status</th>
-                        <th class="lgl1">Stage</th>
-                        <th class="lgl1">Amount</th>
-                        <th class="lgl1 tblBrRight">Action</th>
-                     
-          
-                    </tr>
-          
-                    <tr class="col7" *ngFor="let claimhistorydetail of userClaimhistorydetails; let i=index">
-                        <td class="lgl1">{{i+1}}</td>
-                        <td class="lgl1" >{{claimhistorydetail.CLAIMTYPE}}</td>
-                        <td class="lgl1" >{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
-                        <td class="lgl1">{{claimhistorydetail.STATUS}}</td>
-                        <td class="lgl1">{{claimhistorydetail.STAGE}}</td>
-                        <td class="lgl1">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
-                        <td class="lgl1 fColor">
-                          <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)"><ion-icon name="md-eye"></ion-icon></button>
-                          <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1" (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,2)"><ion-icon name="md-create"></ion-icon></button>
-                          <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1" (click)="DeleteClaimRequest(claimhistorydetail.CLAIM_REQUEST_GUID,claimhistorydetail.CLAIM_TYPE_GUID)"><ion-icon name="md-close"></ion-icon></button>
-                        </td>
-                    </tr>
-          
-          
-                </table>
-            </ion-item>
-          </ion-list>
-          
+  <ion-list>
+    <ion-item>
+      <table class="Tabler list">
+        <tr class="linedsg TColor">
+          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+
+          <th class="lgl1">Claim Type</th>
+          <th class="lgl1">Date</th>
+          <th class="lgl1">Status</th>
+          <th class="lgl1">Stage</th>
+          <th class="lgl1">Amount(RM)</th>
+          <th class="lgl1 tblBrRight">Action</th>
+
+
+        </tr>
+
+        <tr class="col7" *ngFor="let claimhistorydetail of userClaimhistorydetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' } ; let i=index">
+          <!-- <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td> -->
+          <td class="lgl1" reshead="No."> {{ 10 * (page - 1) + i+1 }}</td>
+          <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIMTYPE}}</td>
+          <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
+          <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
+          <td class="lgl1 getHeader" reshead="Stage">{{claimhistorydetail.STAGE}}</td>
+          <td class="lgl1 getHeader" reshead="Amount">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
+            <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)">
+              <ion-icon name="md-eye"></ion-icon>
+            </button>
+            <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1 && claimhistorydetail.PROFILE_LEVEL!=0" (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,2)">
+              <ion-icon name="md-create"></ion-icon>
+            </button>
+            <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1 && claimhistorydetail.PROFILE_LEVEL!=0" (click)="DeleteClaimRequest(claimhistorydetail.CLAIM_REQUEST_GUID,claimhistorydetail.CLAIM_TYPE_GUID)">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+          </td>
+        </tr>
+      </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
+    </ion-item>
+  </ion-list>
+
 
 </ion-content>
