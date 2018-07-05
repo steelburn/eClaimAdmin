@@ -415,48 +415,9 @@ export class DashboardPage {
               this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
             }
             else this.PaidClaimAmount = '0.00';
-          //
+     
         }
-        // if (data["resource"][0] != null) {
-        //   var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
-        //   var pending = parseInt(this.claimrequestdetails.PendingReqCount);
-        //   var rejected = parseInt(this.claimrequestdetails.RejectedReqCount);
-        //   this.doughnutChartData = [approve, pending, rejected];
-
-        //   if (this.claimrequestdetails.ApprovedClaimAmount !== null && this.claimrequestdetails.ApprovedClaimAmount !== undefined) {
-        //     var approveAmount = parseFloat(this.claimrequestdetails.ApprovedClaimAmount).toFixed(2);
-        //   }
-        //   else { approveAmount = '0' }
-        //   if (this.claimrequestdetails.PendingClaimAmount !== null && this.claimrequestdetails.PendingClaimAmount !== undefined) {
-        //     var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
-        //   }
-        //   else { pendingAmount = '0' }
-        //   if (this.claimrequestdetails.RejectedClaimAmount !== null && this.claimrequestdetails.RejectedClaimAmount !== undefined) {
-        //     var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
-        //   }
-        //   else { rejectedAmount = '0' }
-
-        //   this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount)];
-
-        //   // For Display Data In Ion-cards
-        //   this.Rejected_Claim_Count = this.claimrequestdetails.RejectedReqCount;
-        //   this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
-        //   this.Approved_Claim_Count = this.claimrequestdetails.ApprovedReqCount;
-
-        //   if (this.claimrequestdetails.RejectedClaimAmount != null)
-        //   this.Rejected_Claim_Amount = this.claimrequestdetails.RejectedClaimAmount.toFixed(2).toString();        
-        //   else this.Rejected_Claim_Amount = '0.00';
-          
-        //   if (this.claimrequestdetails.PendingClaimAmount != null)
-        //     this.Pending_Claim_Amount = this.claimrequestdetails.PendingClaimAmount.toFixed(2).toString();
-        //   else this.Pending_Claim_Amount = '0.00';
-
-        //   if (this.claimrequestdetails.ApprovedClaimAmount != null)
-        //     this.Approved_Claim_Amount = this.claimrequestdetails.ApprovedClaimAmount.toFixed(2).toString();
-        //   else this.Approved_Claim_Amount = '0.00';
-        //   //
-
-        // }
+     
         else {
           approve = 0;
           pending = 0;

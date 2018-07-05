@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Events, MenuController, Nav, Platform, NavController } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage'; 
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
