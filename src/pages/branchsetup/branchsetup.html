@@ -34,7 +34,7 @@
 
   <ion-list>
     <ion-item>
-      <table class="Tabler">
+      <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
           <th class="lgl1">Company Name</th>
@@ -44,15 +44,15 @@
         </tr>
 
         <tr class="col7" *ngFor="let branch of branchs; let i=index">
-          <td class="lgl1">{{i+1}}</td>
-          <td class="lgl1">{{branch.NAME}}</td>
-          <td class="lgl1">{{branch.SITE_NAME}}</td>
-          <td class="lgl1">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="Company Name">{{branch.NAME}}</td>
+          <td class="lgl1 getHeader"reshead="Branch Name">{{branch.SITE_NAME}}</td>
+          <td class="lgl1 getHeader" reshead="Action">
             <ion-toggle class="tog" *ngIf="branch.ISHQ==1" checked=true></ion-toggle>
             <ion-toggle class="tog" *ngIf="branch.ISHQ==0" checked=false></ion-toggle>
           </td>
 
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader fColor">
             <button ion-button item-end (click)="EditClick(branch.TENANT_COMPANY_GUID, branch.TENANT_COMPANY_SITE_GUID, branch.NAME, branch.SITE_NAME)">
               <ion-icon name="md-create"></ion-icon>
             </button>

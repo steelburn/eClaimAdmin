@@ -7,6 +7,9 @@
 <ion-header>
 
     <ion-navbar color="primary200">
+            <button ion-button menuToggle>
+                    <ion-icon name="menu"></ion-icon>
+                  </button>
         <ion-title>Finance Task History</ion-title>
     </ion-navbar>
     <ion-toolbar no-border-top color="primary200">
@@ -23,7 +26,7 @@
     
     <ion-list>
         <ion-item>
-            <table class="Tabler ">
+            <table class="Tabler list">
                 <tr class="linedsg TColor">
                     <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
 
@@ -42,14 +45,14 @@
                 </tr>
 
                 <tr class="col7" *ngFor="let claimhistory of claimhistorys; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
-                    <td class="lgl1 tblBrLeft">{{claimhistory.FULLNAME}}</td>
-                    <td class="lgl1">{{claimhistory.DEPT}}</td>
-                    <td class="lgl1">{{claimhistory.MONTH}}</td>
+                    <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+                    <td class="lgl1 getHeader" reshead="Employee">{{claimhistory.FULLNAME}}</td>
+                    <td class="lgl1 getHeader" reshead="Department">{{claimhistory.DEPT}}</td>
+                    <td class="lgl1 getHeader" reshead="Month">{{claimhistory.MONTH}}</td>
                     <!-- <td class="lgl1">{{claimhistory.REQ_STATUS}}</td> -->
-                    <td class="lgl1">{{claimhistory.APPROVEDAMOUNT | number:'1.2-2'}}</td>
-                    <td class="lgl1">{{claimhistory.REJECTEDAMOUNT | number:'1.2-2'}}</td>
-                    <td class="lgl1 fColor">
+                    <td class="lgl1 getHeader" reshead="Approved Amount(RM)">{{claimhistory.APPROVEDAMOUNT | number:'1.2-2'}}</td>
+                    <td class="lgl1 getHeader"  reshead="Rejected Amount(RM)">{{claimhistory.REJECTEDAMOUNT | number:'1.2-2'}}</td>
+                    <td class="lgl1 getHeader fColor"  reshead="Action">
                         <button ion-button item-end (click)="goToClaimHistoryDetail(claimhistory.CLAIM_REF_GUID,claimhistory.USER_GUID,claimhistory.MONTH)">
                             <ion-icon name="md-eye"></ion-icon>
                         </button>

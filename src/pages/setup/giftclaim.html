@@ -19,18 +19,18 @@
   <div [ngSwitch]="claimFor">
     <div *ngSwitchDefault>
      
-      <ion-item text-wrap>
+      <ion-item>
         <ion-label  color="primary500" floating> {{ "CUSTOMER_NAME_LABEL" | translate }} </ion-label>
-        <ion-textarea (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-textarea>
+        <ion-input (click)="CustomerLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Customer_Lookup_ngModel" type="text"></ion-input>
       </ion-item>
 
     </div>
     <div *ngSwitchCase="'seg_project'">
       
-      <ion-item text-wrap>
+      <ion-item>
         <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
-        <ion-textarea (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" 
-          type="text"></ion-textarea>
+        <ion-input (click)="ProjectLookup()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" 
+          type="text"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -43,32 +43,28 @@
 
   <form [formGroup]="Giftform">
 
-    <ion-item  class="fuha">
+    <ion-item  style="width: 50%;display:inline-block;">
       <ion-label color="primary500" floating>{{ "GIFT_DATE_LABEL" | translate }}</ion-label>
       <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Gift_Date_ngModel" formControlName="travel_date" max={{validDate}}></ion-datetime>
     </ion-item>
 
-    <ion-item class="fuha">
+    <ion-item  style="width: 49%;display:inline-block;">
       <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-input type="text" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Gift_Amount_ngModel" ></ion-input>
     </ion-item>
 
-    <ion-item class="fuha1">
+    <ion-item>
       <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
       <ion-input type="text" formControlName="description" [(ngModel)]="Gift_Description_ngModel"></ion-input>
     </ion-item>    
 
-    <ion-item class="text fuha1">      
+    <ion-item class="text">      
       <ion-label>Attachment :</ion-label>
-      
       <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>  
       
   <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>  
   
   </ion-item>
-
-  
-  
 
   <div>
     <img src="{{ProfileImage}}" style="width: 20%">
@@ -78,11 +74,11 @@
     <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
   </div> -->
 
-  <div>
+  <ion-item>
     <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
         View Receipt
         </button>
-      </div>
+      </ion-item>
 
  
     <div class="btn">     
@@ -109,7 +105,7 @@
 
   <div class="blackcontainer" *ngIf="AddLookupClicked">
   </div>
-  <div class="popup1" padding *ngIf="AddLookupClicked">
+  <div class="popup" padding *ngIf="AddLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
@@ -145,7 +141,7 @@
         <div *ngFor="let item of projects">
           <button ion-item (click)="GetSocNo(item)">
             <ion-label>{{item.project_name}}
-              [{{item.soc}}]</ion-label> 
+              <>{{item.soc}}</ion-label>
           </button>
         </div>
       </ion-list>
@@ -155,7 +151,7 @@
 
   <div class="blackcontainer" *ngIf="CustomerLookupClicked">
   </div>
-  <div class="popup1" padding *ngIf="CustomerLookupClicked">
+  <div class="popup" padding *ngIf="CustomerLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>

@@ -40,6 +40,9 @@
   "USER_REGISTRATION_HEADING": "User Registration",
   "PERSONAL_DETAILS": "Personal Details",
   "RESIDENTIAL_ADDRESS": "Residential Address",  
+
+  "MALE":"Male",
+  "FEMALE":"Female",
   
   "NAME": "Name",
   "EMAIL": "Email",
@@ -130,7 +133,7 @@
   "STATE_NAME": "State Name",
   "NO": "No.",
  
-
+  "FULL_EMAIL_ADDRESS_LABEL": "Full email address",
 
   "PROJECT_NAME_LABEL": "Project Name",
   "CUSTOMER_NAME_LABEL": "Customer Name",
@@ -184,5 +187,7 @@
  "CLAIMS_LABEL": "Claims",
  "Account_LABEL": "Account",
  "APPROVER_NAME": "Approver Name",
+ "START_DATE_LABEL": "Start Date Time",
+ "END_DATE_LABEL": "End Date Time",
  "TOTAL_CLAIM_AMOUNT_NOTE": "(Includes toll, parking, accommodation and meal-allowance)"
 } 

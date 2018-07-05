@@ -73,7 +73,7 @@ export class ClaimReportPage {
           this.totalDistanceLocal = this.totalDistanceLocal + element.DISTANCE_KM;
           else
           this.totalDistanceOutstation = this.totalDistanceOutstation + element.DISTANCE_KM;
-          if (element.CATEGORY === 'Public transport')
+          if (element.CATEGORY === 'Public Transport')
             this.totalPublicTransportAmount = this.totalPublicTransportAmount + element.MILEAGE_AMOUNT;
           else
             this.totalMileageAmount = this.totalMileageAmount + element.MILEAGE_AMOUNT;

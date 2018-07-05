@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm, FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController, Loading } from 'ionic-angular';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import CryptoJS from 'crypto-js';
@@ -40,7 +40,7 @@ export class LoginPage {
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage, fb: FormBuilder, private userservice: UserSetup_Service, private adserverservice: AdServer_Service) {
+  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage, fb: FormBuilder, private userservice: UserSetup_Service, private adserverservice: AdServer_Service, private loadingCtrl: LoadingController) {
     localStorage.clear(); //debugger;
 
     // this.login.username: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])]
@@ -56,7 +56,7 @@ export class LoginPage {
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
       if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-        localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
+        localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
 
         //navigate to app.component page
         this.userData.login(this.login.username);
@@ -83,7 +83,14 @@ export class LoginPage {
               localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
               localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
               localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
-              localStorage.setItem("g_IS_TENANT_AMDIN", res[0]["IS_TENANT_ADMIN"]);
+              localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
+              debugger;
+              if(res[0]["IMAGE_URL"] == null || res[0]["IMAGE_URL"] == ''){
+                localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+              }
+              else{                
+                localStorage.setItem("g_IMAGE_URL",constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/eclaim/" + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
+              }
 
               // //Keep all the module to an array.-------------------------------------------
               // let MenuDetails: any[] = [];
@@ -141,6 +148,8 @@ export class LoginPage {
               localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
               localStorage.removeItem("g_ISHQ");
               localStorage.removeItem("g_IS_TENANT_ADMIN");
+              localStorage.removeItem("Ad_Authenticaton");
+              localStorage.removeItem("g_IMAGE_URL");
 
               alert("please enter valid login details.");
               this.login.username = "";
@@ -301,8 +310,11 @@ export class LoginPage {
   stringToSplit: string = "";
   tempUserSplit1: string = "";
   tempUserSplit2: string = "";
+  loading: Loading;
 
-  AuthenticateUserFromAdServer(form: NgForm) {
+  AuthenticateUserFromAdServer(form: NgForm) {    
+    localStorage.removeItem("Ad_Authenticaton");
+
     this.stringToSplit = this.login.username;
     this.tempUserSplit1 = this.stringToSplit.split("@")[0]
     this.tempUserSplit2 = this.stringToSplit.split("@")[1];
@@ -311,6 +323,11 @@ export class LoginPage {
       this.GetUserFromAdServer(form, this.tempUserSplit1.trim());
     }
     else {
+      // this.loading = this.loadingCtrl.create({
+      //   content: 'Loading...',
+      // });
+      // this.loading.present();
+      
       // user of username@zen.com.my ---> redirect auth to AD
       if (this.tempUserSplit2.trim() == "zen.com.my") {
         // let Adurl: string = '/api' + '/user/' + this.login.username + '/authenticate';
@@ -330,6 +347,7 @@ export class LoginPage {
           .subscribe(data => {
             if (data.data == true) {
               // alert('Authenticate');
+              localStorage.setItem("Ad_Authenticaton", "true");
               this.GetUserFromAdServer(form, this.tempUserSplit1.trim());
             }
             else {
@@ -340,11 +358,14 @@ export class LoginPage {
               localStorage.removeItem("g_TENANT_COMPANY_GUID");
               localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
               localStorage.removeItem("g_ISHQ");
-              localStorage.removeItem("g_IS_TENANT_ADMIN");
+              localStorage.removeItem("g_IS_TENANT_ADMIN");              
+              localStorage.removeItem("Ad_Authenticaton");
+              localStorage.removeItem("g_IMAGE_URL");
 
               alert("please enter valid login details.");
               this.login.username = "";
               this.login.password = "";
+              // this.loading.dismissAll();
             }
           }, error => {
             console.log(error);// Error getting the data
@@ -398,13 +419,14 @@ export class LoginPage {
     }
   }
 
-  GetUserFromAdServer(form: NgForm, username: string) {
+  GetUserFromAdServer(form: NgForm, username: string) {    
     if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-      localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
+      localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
 
       //navigate to app.component page
       this.userData.login(this.login.username);
       this.navCtrl.push(SetupguidePage);
+      // this.loading.dismissAll();
     }
     else {
       // let Adurl: string = '/api' + '/user/' + this.login.username;
@@ -430,11 +452,13 @@ export class LoginPage {
           if (form.valid) {
             //-----------Check if the login as super vendor-----------------------
             if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-              localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin");
+              localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
 
               //navigate to app.component page
               this.userData.login(this.login.username);
               this.navCtrl.push(SetupguidePage);
+
+              // this.loading.dismissAll();
             }
             else {
               this.userData.login(this.login.username);
@@ -442,7 +466,7 @@ export class LoginPage {
 
               let url: string;
               url = this.baseResource_Url + "vw_login?filter=(EMAIL=" + data.userPrincipalName + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
+debugger;
               this.http
                 .get(url)
                 .map(res => res.json())
@@ -456,7 +480,14 @@ export class LoginPage {
                     localStorage.setItem("g_TENANT_COMPANY_GUID", res[0]["TENANT_COMPANY_GUID"]);
                     localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
                     localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
-                    localStorage.setItem("g_IS_TENANT_AMDIN", res[0]["IS_TENANT_ADMIN"]);
+                    localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
+                    
+                    if(res[0]["IMAGE_URL"] == null || res[0]["IMAGE_URL"] == ''){
+                      localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+                    }
+                    else{
+                      localStorage.setItem("g_IMAGE_URL",constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/eclaim/" + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
+                    }
 
                     //Setup Guide for only Hq Users
                     if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
@@ -465,6 +496,7 @@ export class LoginPage {
                     else {
                       this.navCtrl.push(DashboardPage);
                     }
+                    // this.loading.dismissAll();
 
                     //Get the role of that particular user----------------------------------------------
                     let role_url: string = "";
@@ -490,6 +522,7 @@ export class LoginPage {
 
                     //navigate to app.component page
                     this.userData.login(this.login.username);
+                    // this.loading.dismissAll();
                   }
                   else {
                     localStorage.removeItem("g_USER_GUID");
@@ -500,6 +533,7 @@ export class LoginPage {
                     localStorage.removeItem("g_TENANT_COMPANY_SITE_GUID");
                     localStorage.removeItem("g_ISHQ");
                     localStorage.removeItem("g_IS_TENANT_ADMIN");
+                    localStorage.removeItem("g_IMAGE_URL");
 
                     alert("please enter valid login details.");
                     this.login.username = "";
@@ -509,6 +543,8 @@ export class LoginPage {
             }
           }
         });
+        // this.loading.dismissAll();
     }
+    
   }
 }

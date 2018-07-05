@@ -15,17 +15,17 @@ import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
 
 /**
- * Generated class for the PeermissionPage page.
+ * Generated class for the PermissionPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
 @Component({
-  selector: 'page-peermission',
-  templateUrl: 'peermission.html', providers: [BaseHttpService]
+  selector: 'page-Permission',
+  templateUrl: 'Permission.html', providers: [BaseHttpService]
 })
-export class PeermissionPage {
+export class PermissionPage {
   
   Permissionform: FormGroup;
   public AddPermissionClicked: boolean = false;
@@ -83,7 +83,7 @@ export class PeermissionPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PeermissionPage');
+    console.log('ionViewDidLoad PermissionPage');
   }
 
 }

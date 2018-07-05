@@ -49,7 +49,7 @@ import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneo
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
-import { PeermissionPage } from '../pages/peermission/peermission';
+import { PermissionPage } from '../pages/Permission/Permission';
 import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
@@ -103,6 +103,8 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
+// import { Ng2PaginationModule } from 'ng2-pagination';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -115,7 +117,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
     OvertimeclaimPage,
     EntertainmentclaimPage,
     MiscellaneousClaimPage,
-    PeermissionPage,
+    PermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
     CountrysetupPage,
@@ -168,12 +170,12 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage, ImportExcelDataPage 
+    DashboardPage, ImportExcelDataPage
   ],
 
   imports: [
     BrowserModule,
-    HttpModule, HttpClientModule, ChartsModule,
+    HttpModule, HttpClientModule, ChartsModule,NgxPaginationModule,
     TranslateModule.forRoot
       ({
         loader: {
@@ -239,7 +241,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
     CompanysetupPage,
     ClaimtypePage,
     CashcardsetupPage,
-    PeermissionPage,
+    PermissionPage,
     DesignationsetupPage,
     DepartmentsetupPage,
     MileagesetupPage,

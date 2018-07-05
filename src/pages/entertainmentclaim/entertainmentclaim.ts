@@ -23,6 +23,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -91,8 +92,11 @@ export class EntertainmentclaimPage {
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
-    if (this.isFormEdit)
-      this.GetDataforEdit();      
+    if (this.isFormEdit){
+      this.profileMng.initiateLevels('1');
+      this.GetDataforEdit(); 
+    }
+          
     else {
       this.LoadCustomers();
       this.LoadProjects();
@@ -174,7 +178,8 @@ export class EntertainmentclaimPage {
                       }
                     });
                 }
-                this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                // this.Entertainment_Date_ngModel = new Date(this.claimRequestData[0].TRAVEL_DATE).toISOString();
+                this.Entertainment_Date_ngModel = moment(this.claimRequestData[0].TRAVEL_DATE).format('YYYY-MM-DD'); 
                 // this.Entertainment_Amount_ngModel = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Entertainment_Description_ngModel = this.claimRequestData[0].DESCRIPTION;
               });
@@ -315,7 +320,8 @@ export class EntertainmentclaimPage {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       this.Entertainmentform.get('avatar').setValue(file);
-      this.uploadFileName = file.name;
+       this.uploadFileName = file.name;
+      //this.uniqueName = file.name;
       reader.onload = () => {
         this.Entertainmentform.get('avatar').setValue({
           filename: file.name,
@@ -326,6 +332,7 @@ export class EntertainmentclaimPage {
     }    
   }
 
+  uniqueName:any;
   fileName1: string;
   ProfileImage: any;
   newImage:boolean=true;
@@ -344,6 +351,7 @@ export class EntertainmentclaimPage {
       reader.readAsDataURL(e.target.files[0]);
     }
     this.imageGUID = this.uploadFileName;
+    // this.imageGUID = this.uniqueName
     this.chooseFile = true;
     this.newImage=false
     this.onFileChange(e);
@@ -356,17 +364,19 @@ export class EntertainmentclaimPage {
     uploadImage.then((resJson) => {
 
       // this.submitAction(this.uploadFileName, formValues);
-      this.imageGUID = this.uploadFileName;
+      this.imageGUID = this.uniqueName;
+      // this.imageGUID = this.uniqueName;
       this.chooseFile = false;
       this.ImageUploadValidation=true;
     })   
   } 
-
-  UploadImage() {
+    UploadImage() {
     this.CloudFilePath = 'eclaim/'
 
     this.loading = true;
-    const queryHeaders = new Headers();
+     this.uniqueName = new Date().toISOString()+this.uploadFileName ;
+    console.log(this.uniqueName);
+    const queryHeaders = new Headers();    
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');
     queryHeaders.append('fileKey', 'file');
@@ -374,7 +384,7 @@ export class EntertainmentclaimPage {
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
     return new Promise((resolve, reject) => {
-      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Entertainmentform.get('avatar').value, options)
+      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Entertainmentform.get('avatar').value, options)
         .map((response) => {
           return response;
         }).subscribe((response) => {
@@ -401,7 +411,12 @@ export class EntertainmentclaimPage {
           this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
-          //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+          if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+              this.claimRequestData["resource"][0].STATUS = 'Pending'
+            }
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID =this.Customer_GUID;
             this.claimRequestData["resource"][0].SOC_GUID = null;
@@ -421,7 +436,8 @@ export class EntertainmentclaimPage {
     }
     else {
       formValues.claimTypeGUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
-      formValues.attachment_GUID =  this.imageGUID ;
+       formValues.attachment_GUID =  this.imageGUID ;
+      //formValues.attachment_GUID =  this.uniqueName ;
       this.travelAmount = this.claimAmount;
       formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
       this.profileMng.save(formValues, this.travelAmount, this.isCustomer)

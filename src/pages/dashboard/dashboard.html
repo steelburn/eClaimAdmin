@@ -9,10 +9,10 @@
   <!-- <ion-navbar>
     <ion-title>dashboard</ion-title>
   </ion-navbar> -->
-  <ion-navbar color="primary200" hideBackButton="true">
-    <!-- <button ion-button menuToggle>
+  <ion-navbar color="primary200">
+     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button> -->
+    </button> 
     <ion-title>{{ "DASHBOARD_HEADING" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
@@ -146,7 +146,7 @@
       <hr>
 
       <p color="graye">Amount YTD: RM {{PaidClaimAmount_year}}</p>
-      <p color="graye"># YTD: {{PaidReqCount}}</p>
+      <p color="graye"># YTD: {{PaidClaimCount_year}}</p>
 
     </ion-card-content>
 

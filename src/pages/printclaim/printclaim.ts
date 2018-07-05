@@ -25,6 +25,7 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { DashboardPage } from '../dashboard/dashboard';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import moment from 'moment'; 
 
 @IonicPage()
 @Component({
@@ -148,8 +149,11 @@ export class PrintclaimPage {
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
-    if (this.isFormEdit)
-    this.GetDataforEdit();
+    if (this.isFormEdit){
+      this.profileMng.initiateLevels('1');
+      this.GetDataforEdit();
+    }
+   
   else {
     this.LoadCustomers();
     this.LoadProjects();
@@ -305,6 +309,7 @@ export class PrintclaimPage {
     //this.chooseFile = true;
   }
 
+  uniqueName: any;
   fileName1: string;
   ProfileImage: any;
   newImage:boolean=true;
@@ -334,7 +339,7 @@ export class PrintclaimPage {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
       //this.submitAction(this.uploadFileName, formValues);
-      this.imageGUID = this.uploadFileName;
+      this.imageGUID = this.uniqueName;
       this.chooseFile = false;
       this.ImageUploadValidation=true;      
     })    
@@ -342,8 +347,8 @@ export class PrintclaimPage {
 
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-
     this.loading = true;
+    this.uniqueName = new Date().toISOString()+this.uploadFileName ;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');
@@ -371,6 +376,12 @@ export class PrintclaimPage {
           this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+          if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+              this.claimRequestData["resource"][0].STATUS = 'Pending'
+            }
   
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;
           if (this.isCustomer) {
