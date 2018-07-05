@@ -565,7 +565,7 @@ export class AccountPage {
       .get(TableURL)
       .map(res => res.json())
       .subscribe(data => {
-        this.branches = data["resource"]; console.log(data["resource"]);
+        this.branches = data["resource"]; 
       });
   }
 
@@ -957,10 +957,10 @@ export class AccountPage {
     val.then((res) => {
       this.usermain_entry.TENANT_GUID = res.toString();
       this.usermain_entry.USER_GUID = USER_GUID;
-      this.usermain_entry.STAFF_ID = this.User_StaffID_Edit_ngModel.trim();
-      this.usermain_entry.LOGIN_ID = this.User_Email_Edit_ngModel.trim();
-      this.usermain_entry.PASSWORD = this.User_Password_Edit_ngModel.trim();
-      this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel.trim();
+      this.usermain_entry.STAFF_ID = this.User_StaffID_Edit_ngModel;
+      this.usermain_entry.LOGIN_ID = this.User_Email_Edit_ngModel;
+      this.usermain_entry.PASSWORD = this.User_Password_Edit_ngModel;
+      this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel;
       this.usermain_entry.ACTIVATION_FLAG = 1;
 
       this.usermain_entry.CREATION_TS = this.view_user_details[0]["CREATION_TS"];
@@ -987,15 +987,15 @@ export class AccountPage {
     // debugger;
     this.userinfo_entry.USER_INFO_GUID = this.USER_INFO_GUID_FOR_UPDATE;
     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
-    this.userinfo_entry.FULLNAME = this.titlecasePipe.transform(this.User_Name_Edit_ngModel.trim());
-    this.userinfo_entry.MANAGER_USER_GUID = this.User_Approver1_Edit_ngModel.trim();
-    this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_Edit_ngModel.trim();
-    this.userinfo_entry.PERSONAL_ID = this.User_ICNo_Edit_ngModel.trim();
-    this.userinfo_entry.DOB = this.User_DOB_Edit_ngModel.trim();
+    this.userinfo_entry.FULLNAME = this.titlecasePipe.transform(this.User_Name_Edit_ngModel);
+    this.userinfo_entry.MANAGER_USER_GUID = this.User_Approver1_Edit_ngModel;
+    this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_Edit_ngModel;
+    this.userinfo_entry.PERSONAL_ID = this.User_ICNo_Edit_ngModel;
+    this.userinfo_entry.DOB = this.User_DOB_Edit_ngModel;
     this.userinfo_entry.GENDER = this.User_Gender_Edit_ngModel;
-    this.userinfo_entry.JOIN_DATE = this.User_JoinDate_Edit_ngModel.trim();
+    this.userinfo_entry.JOIN_DATE = this.User_JoinDate_Edit_ngModel;
     this.userinfo_entry.MARITAL_STATUS = this.User_Marital_Edit_ngModel;
-    this.userinfo_entry.BRANCH = this.User_Branch_Edit_ngModel.trim();
+    this.userinfo_entry.BRANCH = this.User_Branch_Edit_ngModel;
     this.userinfo_entry.EMPLOYEE_TYPE = this.User_EmployeeType_Edit_ngModel;
     this.userinfo_entry.EMPLOYEE_STATUS = this.User_Employment_Edit_ngModel;
     this.userinfo_entry.DEPT_GUID = this.User_Department_Edit_ngModel;
@@ -1044,7 +1044,7 @@ export class AccountPage {
     this.useraddress_entry.USER_ADDRESS_GUID = this.USER_GUID_FOR_ADDRESS;
     this.useraddress_entry.USER_GUID = this.usermain_entry.USER_GUID;
 
-    this.useraddress_entry.USER_ADDRESS1 = this.titlecasePipe.transform(this.User_Address1_Edit_ngModel);
+    this.useraddress_entry.USER_ADDRESS1 = this.titlecasePipe.transform(this.User_Address1_Edit_ngModel.trim());
     this.useraddress_entry.USER_ADDRESS2 = this.titlecasePipe.transform(this.User_Address2_Edit_ngModel);
     this.useraddress_entry.USER_ADDRESS3 = this.titlecasePipe.transform(this.User_Address3_Edit_ngModel);
 
@@ -1144,15 +1144,6 @@ export class AccountPage {
       .subscribe(
         (response) => {
           if (response.status == 200) {
-            // let uploadImage = this.UploadImage('avatar3', this.fileName3);
-            // uploadImage.then((resJson) => {
-            //   console.table(resJson)
-            //   let imageResult = this.SaveImageinDB(this.fileName3);
-            //   imageResult.then((objImage: ImageUpload_model) => {
-            //     let result = this.Update_User_Certification(objImage.Image_Guid);
-            //   })
-            // })
-
             this.Update_User_Certification();
             this.Update_User_Spouse();
             this.Update_User_Children();
@@ -1162,16 +1153,6 @@ export class AccountPage {
             this.nav.setRoot(this.nav.getActive().component);
           }
         });
-
-    // return new Promise((resolve, reject) => {
-    //   this.api.postData('user_qualification', userqualification_entry.toJson(true)).subscribe((data) => {
-
-    //     let res = data.json();
-    //     console.log(res)
-    //     let ClaimRequestMainIdType2 = res["resource"][0].USER_QUALIFICATION_GUID;
-    //     resolve(ClaimRequestMainIdType2);
-    //   })
-    // });
   }
 
   Update_User_Certification() {
@@ -1367,7 +1348,7 @@ export class AccountPage {
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
     // this.loading = true;
-    let uniqueName = new Date().toISOString() + this.uploadFileName; console.log(uniqueName); localStorage.setItem("Unique_File_Name", uniqueName);
+    let uniqueName = new Date().toISOString() + this.uploadFileName; localStorage.setItem("Unique_File_Name", uniqueName);
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');

@@ -660,7 +660,7 @@ export class TravelclaimPage {
     let origin = this.Travel_From_ngModel;
     let destination = this.Travel_Destination_ngModel;
     this.PublicTransValue = true;
-    if (vehicle.CATEGORY === 'Public transport') {
+    if (vehicle.CATEGORY === 'Public Transport') {
       this.isPublicTransport = true;
       if(this.isFormEdit)
       this.PublicTransValue = true;
@@ -715,6 +715,7 @@ export class TravelclaimPage {
     this.ImageUploadValidation=false;
   }
 
+  uniqueName: any
   fileName1: string;
   ProfileImage: any;
   newImage:boolean=true;
@@ -765,7 +766,7 @@ export class TravelclaimPage {
       // imageResult.then((objImage: ImageUpload_model) => {      
         
         //  this.imageGUID = objImage.Image_Guid
-        this.imageGUID = this.uploadFileName;
+        this.imageGUID = this.uniqueName;
         // , formvalues
         //this.disableButton = true;
         //this.PublicTransValue = false;
@@ -799,9 +800,9 @@ export class TravelclaimPage {
   }
 
   UploadImage() {   
-      this.CloudFilePath = 'eclaim/'   
-   
+      this.CloudFilePath = 'eclaim/'      
     this.loading = true;
+    this.uniqueName = new Date().toISOString()+this.uploadFileName ;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');
