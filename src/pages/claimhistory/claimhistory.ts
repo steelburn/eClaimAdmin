@@ -47,7 +47,7 @@ export class ClaimhistoryPage {
 
   // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string;
-
+  public page:number = 1;
   constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
     let loginUserRole = localStorage.getItem("g_ROLE_NAME");
     if (loginUserRole === "Finance Admin") {

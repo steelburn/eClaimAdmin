@@ -35,7 +35,7 @@ export class ClaimhistorydetailPage {
   searchboxValue: string;
   FinanceLogin: boolean = false;
   loginUserRole:string;
-
+  public page:number = 1;
   constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
     this.claimrefguid = navParams.get("claimRefGuid");
     this.userguid = navParams.get("userGuid");

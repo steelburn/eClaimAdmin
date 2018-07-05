@@ -33,7 +33,7 @@ export class ClaimtasklistPage {
    loginUserRole=localStorage.getItem("g_ROLE_NAME");
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?filter=(ASSIGNED_TO='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
- 
+  public page:number = 1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
     if(this.loginUserRole==="Finance Admin")

@@ -39,7 +39,7 @@
     
               </tr>
     
-              <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails; let i=index">
+              <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
                   <td class="lgl1">
                     <ion-item>
                       <ion-checkbox item-end [checked]="selectAll" [disabled]="claimrequestdetail.STATUS=='Paid'" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID,claimrequestdetail.PROFILE_LEVEL,claimrequestdetail.STATUS)"> </ion-checkbox>
@@ -55,10 +55,11 @@
                   <td class="lgl1 getHeader fColor" reshead="Action">
                     <button ion-button item-end (click)='viewClaim(claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
                 </td>
-              </tr>   
-    
+              </tr>     
     
           </table>
+          <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+          </pagination-controls>
       </ion-item>
     </ion-list>
   </ion-content>
