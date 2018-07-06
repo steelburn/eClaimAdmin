@@ -101,7 +101,7 @@
 
                 </tr>
 
-                <tr class="col7" *ngFor="let item of claimList; let i=index">
+                <tr class="col7" *ngFor="let item of claimList | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
                     <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
                     <td class="lgl1 getHeader" reshead="Employee" text-wrap>{{item.FULLNAME}}</td>
                     <td class="lgl1 getHeader" reshead="Department">{{item.DEPT}}</td>
@@ -116,6 +116,9 @@
                 </tr>
 
             </table>
+            <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+            </pagination-controls>
+
         </ion-item>
         <!-- <ion-item style="color:#50C878;"> Total Amount(RM) : {{grandTotal | number:'1.2-2'}}</ion-item>  -->
 

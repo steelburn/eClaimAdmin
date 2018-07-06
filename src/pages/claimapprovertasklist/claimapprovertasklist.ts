@@ -43,7 +43,7 @@ export class ClaimapprovertasklistPage {
   loginUserRole = localStorage.getItem("g_ROLE_NAME");
   claimreqData: any[];
   buttonText:string;
-
+  public page:number = 1;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 

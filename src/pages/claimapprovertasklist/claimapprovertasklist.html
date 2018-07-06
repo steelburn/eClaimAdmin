@@ -32,21 +32,21 @@
                   <th>Name</th>
                   <th>Claim Type</th>
                   <th>Date</th>
-                  <th>Status</th>
+                  <th  style="width:68px">Status</th>
                   <th>Stage</th>
-                  <th>Amount</th>
-                  <th class="tblBrRight" style="width:90px">Action</th>
+                  <th style="width:110px">Amount(RM)</th>
+                  <th class="tblBrRight" style="width:80px">Action</th>
     
               </tr>
     
-              <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails; let i=index">
+              <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
                   <td class="lgl1">
                     <ion-item>
                       <ion-checkbox item-end [checked]="selectAll" [disabled]="claimrequestdetail.STATUS=='Paid'" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID,claimrequestdetail.PROFILE_LEVEL,claimrequestdetail.STATUS)"> </ion-checkbox>
                     </ion-item>
                   </td>
                   <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
-                  <td class="lgl1 getHeader" reshead="Name" >{{claimrequestdetail.FULLNAME}}</td>
+                  <td class="lgl1 getHeader" reshead="Name" text-wrap >{{claimrequestdetail.FULLNAME}}</td>
                   <td class="lgl1 getHeader" reshead="Claim Type">{{claimrequestdetail.CLAIMTYPE}}</td>
                   <td class="lgl1 getHeader" reshead="Date">{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                   <td class="lgl1 getHeader" reshead="Status">{{claimrequestdetail.STATUS}}</td>
@@ -55,10 +55,11 @@
                   <td class="lgl1 getHeader fColor" reshead="Action">
                     <button ion-button item-end (click)='viewClaim(claimrequestdetail.STAGE_GUID,claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
                 </td>
-              </tr>   
-    
+              </tr>     
     
           </table>
+          <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+          </pagination-controls>
       </ion-item>
     </ion-list>
   </ion-content>

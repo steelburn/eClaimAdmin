@@ -565,7 +565,7 @@ export class AccountPage {
       .get(TableURL)
       .map(res => res.json())
       .subscribe(data => {
-        this.branches = data["resource"]; 
+        this.branches = data["resource"];
       });
   }
 
@@ -1023,12 +1023,17 @@ export class AccountPage {
 
     //Added by bijay on 27/06/2018
     // this.userinfo_entry.ATTACHMENT_ID = this.view_user_details[0]["ATTACHMENT_ID"];
-    
-    if(localStorage.getItem("Unique_File_Name") != undefined && localStorage.getItem("Unique_File_Name") != ""){
+
+    if (localStorage.getItem("Unique_File_Name") != undefined && localStorage.getItem("Unique_File_Name") != "") {
       this.userinfo_entry.ATTACHMENT_ID = localStorage.getItem("Unique_File_Name");
     }
-    else{
-      this.userinfo_entry.ATTACHMENT_ID = this.view_user_details[0]["ATTACHMENT_ID"];
+    else {
+      if (this.view_user_details[0]["ATTACHMENT_ID"] == null || this.view_user_details[0]["ATTACHMENT_ID"] == '') {
+        this.userinfo_entry.ATTACHMENT_ID = null;
+      }
+      else {
+        this.userinfo_entry.ATTACHMENT_ID = this.view_user_details[0]["ATTACHMENT_ID"];
+      }
     }
 
     this.userservice.update_user_info(this.userinfo_entry)

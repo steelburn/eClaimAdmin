@@ -36,7 +36,7 @@
       
                   </tr>
       
-                  <tr class="col7" *ngFor="let claimTaskList of claimTaskLists; let i=index">
+                  <tr class="col7" *ngFor="let claimTaskList of claimTaskLists | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
                       <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
                       <td class="lgl1 getHeader"  reshead="Employee" >{{claimTaskList.FULLNAME}}</td>
                       <td class="lgl1 getHeader"  reshead="Department" >{{claimTaskList.DEPARTMENT}}</td>
@@ -48,10 +48,11 @@
                           <button ion-button item-end (click)="goToClaimApproverTaskList(claimTaskList.CLAIM_REF_GUID)"><ion-icon name="md-eye"></ion-icon></button>
                           <!-- <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button> -->
                       </td>
-                  </tr>
-      
+                  </tr>     
       
               </table>
+              <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+            </pagination-controls>
           </ion-item>
       </ion-list>
 </ion-content>
