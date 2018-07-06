@@ -29,6 +29,7 @@ export class EntertainmentClaimViewPage {
   //isRemarksAccepted: boolean =false;
   isRemarksAccepted: any;
   level: any;
+  approverDesignation: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
   
@@ -36,6 +37,7 @@ export class EntertainmentClaimViewPage {
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
     this.level = navParams.get('level_no');
+    this.approverDesignation = this.navParams.get("approverDesignation");
 
     this.LoadMainClaim();
   }
