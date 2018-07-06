@@ -25,7 +25,7 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { DashboardPage } from '../dashboard/dashboard';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
-import moment from 'moment'; 
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -55,31 +55,31 @@ export class PrintclaimPage {
   public Travel_ProjectName_ngModel: any;
   Project_Lookup_ngModel: any;
   Customer_Lookup_ngModel: any;
-  storeProjects: any[]; 
-  customers: any[]; 
-  storeCustomers: any[]; 
+  storeProjects: any[];
+  customers: any[];
+  storeCustomers: any[];
   public projects: any[];
   TenantGUID: any;
 
   ProjectLookupClicked: boolean = false;
-  CustomerLookupClicked: boolean = false; 
+  CustomerLookupClicked: boolean = false;
   public AddLookupClicked: boolean = false;
   public AddToLookupClicked: boolean = false;
   currentItems: any;
-  
+
   userGUID: any;
 
   public assignedTo: any;
   public profileLevel: any;
   public stage: any;
   public profileJSON: any;
-  ImageUploadValidation:boolean=false;
+  ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
 
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
-  claimRequestData: any; 
+  claimRequestData: any;
 
   claimAmount: number = 0;
   getCurrency(amount: number) {
@@ -93,7 +93,7 @@ export class PrintclaimPage {
       this.claimAmount = amount;
       this.Printing_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
     }
-  } 
+  }
 
   imageURLEdit: any = null
   GetDataforEdit() {
@@ -109,12 +109,12 @@ export class PrintclaimPage {
                 this.claimRequestData = data["resource"];
 
                 if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT
                 this.Printing_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
-                
+
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer'
                   this.isCustomer = true;
@@ -144,33 +144,33 @@ export class PrintclaimPage {
       })
   }
 
-  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider,public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
-    this.TenantGUID = localStorage.getItem('g_TENANT_GUID'); 
-    if (this.isFormEdit){
+    this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
+    if (this.isFormEdit) {
       this.profileMng.initiateLevels('1');
       this.GetDataforEdit();
     }
-   
-  else {
-    this.LoadCustomers();
-    this.LoadProjects();
-  }
+
+    else {
+      this.LoadCustomers();
+      this.LoadProjects();
+    }
     this.Printform = fb.group({
       avatar1: null,
-      claimTypeGUID:'',
+      claimTypeGUID: '',
       avatar: null,
       soc_no: '',
       travel_date: ['', Validators.required],
       description: ['', Validators.required],
       claim_amount: ['', Validators.required],
       attachment_GUID: ''
-    });    
+    });
   }
 
-  GetSocNo(item: any){
+  GetSocNo(item: any) {
     this.Print_SOC_No_ngModel = item.soc;
     this.Project_Lookup_ngModel = item.project_name;
     this.Soc_GUID = item.SOC_GUID;
@@ -179,7 +179,7 @@ export class PrintclaimPage {
 
   GetCustomer(guid: any, name: any) {
     this.Customer_Lookup_ngModel = name;
-    this.Customer_GUID = guid;    
+    this.Customer_GUID = guid;
     this.CloseCustomerLookup();
   }
 
@@ -227,7 +227,7 @@ export class PrintclaimPage {
   }
 
   public ProjectLookup() {
-    this.ProjectLookupClicked = true;      
+    this.ProjectLookupClicked = true;
   }
 
   public CustomerLookup() {
@@ -244,12 +244,12 @@ export class PrintclaimPage {
       NAME: val
     });
   }
-  
+
   filterCustomer(params?: any) {
     if (!params) {
       return this.storeCustomers;
     }
-  
+
     return this.customers.filter((item) => {
       for (let key in params) {
         let field = item[key];
@@ -312,7 +312,7 @@ export class PrintclaimPage {
   uniqueName: any;
   fileName1: string;
   ProfileImage: any;
-  newImage:boolean=true;
+  newImage: boolean = true;
   private ProfileImageDisplay(e: any, fileChoose: string): void {
     let reader = new FileReader();
     if (e.target.files && e.target.files[0]) {
@@ -330,7 +330,7 @@ export class PrintclaimPage {
     this.imageGUID = this.uploadFileName;
     this.chooseFile = true;
     this.ImageUploadValidation = false;
-    this.newImage=false;
+    this.newImage = false;
     this.onFileChange(e);
   }
 
@@ -341,14 +341,14 @@ export class PrintclaimPage {
       //this.submitAction(this.uploadFileName, formValues);
       this.imageGUID = this.uniqueName;
       this.chooseFile = false;
-      this.ImageUploadValidation=true;      
-    })    
-  } 
+      this.ImageUploadValidation = true;
+    })
+  }
 
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
     this.loading = true;
-    this.uniqueName = new Date().toISOString()+this.uploadFileName ;
+    this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');
@@ -378,52 +378,59 @@ export class PrintclaimPage {
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
-              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
-              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-              this.claimRequestData["resource"][0].STATUS = 'Pending'
-            }
-  
+            this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+            this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+            this.claimRequestData["resource"][0].STATUS = 'Pending'
+          }
+
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;
           if (this.isCustomer) {
             // this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
-            this.claimRequestData["resource"][0].CUSTOMER_GUID =this.Customer_GUID;
+            this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
             this.claimRequestData["resource"][0].SOC_GUID = null;
           }
           else {
             // this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
-            this.claimRequestData["resource"][0].SOC_GUID =  this.Soc_GUID;
+            this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
             this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
           }
           //this.claimRequestData[0].STATUS = 'Pending';
-         // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
-         this.apiMng.updateApiModel('main_claim_request',this.claimRequestData).subscribe(res =>
-          {
+          // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
+          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
+
+            //Send Email------------------------------------------------
+            let start_DT: string = "";
+            let end_DT: string = "";
+
+            this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+            //----------------------------------------------------------
+
             alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
-         });
+          });
         })
     }
     else {
-    formValues.claimTypeGUID = 'd9567482-033a-6d92-3246-f33043155746';
-    formValues.attachment_GUID = this.imageGUID;
-    this.travelAmount = this.claimAmount;
-    formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-    this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+      formValues.claimTypeGUID = 'd9567482-033a-6d92-3246-f33043155746';
+      formValues.attachment_GUID = this.imageGUID;
+      this.travelAmount = this.claimAmount;
+      formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+      this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
 
-  } 
     }
-    NavigateTravelClaim() {
-      this.navCtrl.setRoot(TravelclaimPage); 
-    } 
+  }
+  NavigateTravelClaim() {
+    this.navCtrl.setRoot(TravelclaimPage);
+  }
 
-    displayImage: any
-    CloseDisplayImage()  {
-      this.displayImage = false;
-    }
-    imageURL: string;
-    DisplayImage(val: any) {
-      this.displayImage = true;
-      this.imageURL = val;
-    }
-  } 
+  displayImage: any
+  CloseDisplayImage() {
+    this.displayImage = false;
+  }
+  imageURL: string;
+  DisplayImage(val: any) {
+    this.displayImage = true;
+    this.imageURL = val;
+  }
+}
 //}
