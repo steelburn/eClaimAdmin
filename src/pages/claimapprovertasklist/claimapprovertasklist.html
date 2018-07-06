@@ -34,8 +34,8 @@
                   <th>Date</th>
                   <th>Status</th>
                   <th>Stage</th>
-                  <th>Amount</th>
-                  <th class="tblBrRight" style="width:90px">Action</th>
+                  <th style="width:110px">Amount(RM)</th>
+                  <th class="tblBrRight" style="width:66px">Action</th>
     
               </tr>
     
@@ -46,7 +46,7 @@
                     </ion-item>
                   </td>
                   <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
-                  <td class="lgl1 getHeader" reshead="Name" >{{claimrequestdetail.FULLNAME}}</td>
+                  <td class="lgl1 getHeader" reshead="Name" text-wrap >{{claimrequestdetail.FULLNAME}}</td>
                   <td class="lgl1 getHeader" reshead="Claim Type">{{claimrequestdetail.CLAIMTYPE}}</td>
                   <td class="lgl1 getHeader" reshead="Date">{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                   <td class="lgl1 getHeader" reshead="Status">{{claimrequestdetail.STATUS}}</td>
