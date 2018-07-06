@@ -10,11 +10,11 @@
 
 <ion-content class="outer-content">
   <div padding-top *ngIf="username">
-    <div text-center>
-      <!-- <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar"> -->
-      <!-- <img src="http://api.zen.com.my/api/v2/files/eclaim/image003.png?api_key=cb82c1df0ba653578081b3b58179158594b3b8f29c4ee1050fda1b7bd91c3881" alt="avatar"> -->
-      <img [src]="Profile_Image_Display" alt="avatar">
-      
+    <div text-center >
+      <div class="profilepic" >
+        <img [src]="Profile_Image_Display" alt="avatar">
+      </div>
+
       <h2>{{username_display}}</h2>
     </div>
     <!-- <ion-list inset>
@@ -37,13 +37,13 @@
           <b>{{ 'PERSONAL_DETAILS' | translate }}</b>
         </div>
 
-        <ion-item  class="fuha">
+        <ion-item class="fuha">
           <ion-label stacked>{{ 'NAME' | translate }}</ion-label>
           <ion-input type="text" formControlName="NAME" [(ngModel)]="User_Name_Edit_ngModel" placeholder="{{'Please fill the name of the user'}}"
             [disabled]="isDisabled"></ion-input>
         </ion-item>
 
-        <ion-item  class="fuha">
+        <ion-item class="fuha">
           <ion-label stacked>{{ 'STAFF_ID' | translate }}</ion-label>
           <ion-input type="text" formControlName="PERSONAL_ID_TYPE" [(ngModel)]="User_StaffID_Edit_ngModel" placeholder="{{'Please fill the staff id'}}"
             [disabled]="isDisabled"></ion-input>
@@ -79,9 +79,10 @@
             [disabled]="isDisabled"></ion-input>
         </ion-item>
 
-        <ion-item  class="fuha">
+        <ion-item class="fuha">
           <ion-label stacked>{{ 'DATE_OF_BIRTH' | translate }}</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_Edit_ngModel" placeholder="{{'Please choose your date of birth'}}" [disabled]="isDisabled"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="DOB" [(ngModel)]="User_DOB_Edit_ngModel" placeholder="{{'Please choose your date of birth'}}"
+            [disabled]="isDisabled"></ion-datetime>
         </ion-item>
 
         <ion-item class="fuha">
@@ -90,7 +91,7 @@
             [disabled]="isDisabled"></ion-input>
         </ion-item>
 
-        <ion-item  class="fuha">
+        <ion-item class="fuha">
           <ion-label stacked>{{'GENDER' | translate }}</ion-label>
           <ion-select formControlName="GENDER" [(ngModel)]="User_Gender_Edit_ngModel" placeholder="{{'Please fill the gender'}}" [disabled]="isDisabled">
             <ion-option [value]="1">Male</ion-option>
@@ -123,47 +124,50 @@
             <b>{{ 'EMPLOYMENT_DETAILS' | translate }}</b>
           </div>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'COMPANY' | translate }}</ion-label>
-            <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{'Please fill the company'}}" 
-            [disabled]="isDisabled" (ionChange)="GetBranch('tenant_company_site', User_Company_Edit_ngModel,'SITE_NAME'); BindApprover1('view_get_tenant_admin')">
+            <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{'Please fill the company'}}"
+              [disabled]="isDisabled" (ionChange)="GetBranch('tenant_company_site', User_Company_Edit_ngModel,'SITE_NAME'); BindApprover1('view_get_tenant_admin')">
               <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'BRANCH' | translate }}</ion-label>
             <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_Edit_ngModel" placeholder="{{'Please select Branch'}}" [disabled]="isDisabled">
               <ion-option *ngFor="let branch of branches" [value]="branch.TENANT_COMPANY_SITE_GUID" selected="true">{{branch.SITE_NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'DESIGNATION' | translate }}</ion-label>
-            <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_Edit_ngModel" placeholder="{{'Please fill the designation'}}" [disabled]="isDisabled">
+            <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_Edit_ngModel" placeholder="{{'Please fill the designation'}}"
+              [disabled]="isDisabled">
               <ion-option *ngFor="let designation of designations" value="{{designation.DESIGNATION_GUID}}" selected="true">{{designation.NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'DEPARTMENT' | translate }}</ion-label>
-            <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_Edit_ngModel" placeholder="{{'Please fill in the Department'}}" [disabled]="isDisabled">
+            <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_Edit_ngModel" placeholder="{{'Please fill in the Department'}}"
+              [disabled]="isDisabled">
               <ion-option *ngFor="let department of departments" value="{{department.DEPARTMENT_GUID}}" selected="true">{{department.NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'JOIN_DATE' | translate }}</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_Edit_ngModel" placeholder="{{'Please fill the join date'}}" [disabled]="isDisabled"></ion-datetime>
+            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_Edit_ngModel" placeholder="{{'Please fill the join date'}}"
+              [disabled]="isDisabled"></ion-datetime>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'CONFIRMATION_DATE' | translate }}</ion-label>
             <ion-datetime displayFormat="DD/MM/YYYY" formControlName="CONFIRMATION_DATE" [(ngModel)]="User_ConfirmationDate_Edit_ngModel"
               placeholder="{{'Please fill the confirmation date'}}" [disabled]="isDisabled"></ion-datetime>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'RESIGNATION_DATE' | translate }}</ion-label>
             <ion-datetime displayFormat="DD/MM/YYYY" formControlName="RESIGNATION_DATE" [(ngModel)]="User_ResignationDate_Edit_ngModel"
               placeholder="{{'Please fill the Registration date'}}" [disabled]="isDisabled"></ion-datetime>
@@ -171,7 +175,8 @@
 
           <ion-item class="fuha">
             <ion-label stacked>{{ 'EMPLOYEE_TYPE' | translate }}</ion-label>
-            <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{'Please fill in the Email'}}" [disabled]="isDisabled">
+            <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{'Please fill in the Email'}}"
+              [disabled]="isDisabled">
               <ion-option value="0">Permanent</ion-option>
               <ion-option value="1">Contract</ion-option>
               <ion-option value="2">Temporary</ion-option>
@@ -180,7 +185,8 @@
 
           <ion-item class="fuha">
             <ion-label stacked>{{ 'EMPLOYEE_STATUS' | translate }}</ion-label>
-            <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_Edit_ngModel" placeholder="{{'Please fill the employement status'}}" [disabled]="isDisabled">
+            <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_Edit_ngModel" placeholder="{{'Please fill the employement status'}}"
+              [disabled]="isDisabled">
               <ion-option value="0">Probation</ion-option>
               <ion-option value="1">Confirmed</ion-option>
               <ion-option value="2">Terminated</ion-option>
@@ -189,7 +195,8 @@
 
           <ion-item class="fuha">
             <ion-label stacked>{{"Manager"}}</ion-label>
-            <ion-select formControlName="APPROVER1" [(ngModel)]="User_Approver1_Edit_ngModel" placeholder="{{'Please select Approver'}}" [disabled]="isDisabled">
+            <ion-select formControlName="APPROVER1" [(ngModel)]="User_Approver1_Edit_ngModel" placeholder="{{'Please select Approver'}}"
+              [disabled]="isDisabled">
               <ion-option *ngFor="let approver of approvers" [value]="approver.USER_GUID" selected="true">{{approver.FULLNAME}}</ion-option>
             </ion-select>
           </ion-item>
@@ -200,24 +207,28 @@
 
           <ion-item class="fuha">
             <ion-label stacked>{{ 'HIGHEST_QUALIFICATION' | translate }}</ion-label>
-            <ion-select formControlName="HIGHEST_QUALIFICATION" [(ngModel)]="User_HighestQualification_Edit_ngModel" placeholder="{{'Select Highest Qualification'}}" [disabled]="isDisabled">
+            <ion-select formControlName="HIGHEST_QUALIFICATION" [(ngModel)]="User_HighestQualification_Edit_ngModel" placeholder="{{'Select Highest Qualification'}}"
+              [disabled]="isDisabled">
               <ion-option *ngFor="let qualification of qualifications" [value]="qualification.QUALIFICATION_TYPE_GUID" selected="true">{{qualification.TYPE_NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
           <ion-item class="fuha">
             <ion-label stacked>{{ 'UNIVERSITY' | translate }}</ion-label>
-            <ion-input type="text" formControlName="UNIVERSITY" [(ngModel)]="User_University_Edit_ngModel" placeholder="{{'Please fill the University'}}" [disabled]="isDisabled"></ion-input>
+            <ion-input type="text" formControlName="UNIVERSITY" [(ngModel)]="User_University_Edit_ngModel" placeholder="{{'Please fill the University'}}"
+              [disabled]="isDisabled"></ion-input>
           </ion-item>
 
           <ion-item class="fuha">
             <ion-label stacked>{{ 'MAJOR' | translate }}</ion-label>
-            <ion-input type="text" formControlName="MAJOR" [(ngModel)]="User_Major_Edit_ngModel" placeholder="{{'Please fill the Major'}}" [disabled]="isDisabled"></ion-input>
+            <ion-input type="text" formControlName="MAJOR" [(ngModel)]="User_Major_Edit_ngModel" placeholder="{{'Please fill the Major'}}"
+              [disabled]="isDisabled"></ion-input>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'YEAR' | translate }}</ion-label>
-            <ion-input type="text" formControlName="EDU_YEAR" [(ngModel)]="User_EduYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}" [disabled]="isDisabled"></ion-input>
+            <ion-input type="text" formControlName="EDU_YEAR" [(ngModel)]="User_EduYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}"
+              [disabled]="isDisabled"></ion-input>
           </ion-item>
 
           <!-- <ion-item>
@@ -229,7 +240,7 @@
             <b>{{'PROFESSIONAL_CERTIFICATIONS' | translate}}</b>
           </div>
 
-          <ion-item  class="fuha1">
+          <ion-item class="fuha1">
             <ion-label stacked>{{'CERTIFICATION' | translate}}</ion-label>
             <ion-input type="text" formControlName="CERTIFICATION" [(ngModel)]="User_Certification_Edit_ngModel" placeholder="{{'Please fill the certifiation'}}"></ion-input>
           </ion-item>
@@ -239,7 +250,7 @@
             <ion-input type="text" formControlName="CERTIFICATION_GRADE" [(ngModel)]="User_CertificationGrade_Edit_ngModel" placeholder="{{'Please fill the Grade'}}"></ion-input>
           </ion-item>
 
-          <ion-item  class="fuha3">
+          <ion-item class="fuha3">
             <ion-label stacked>{{'YEAR' | translate}}</ion-label>
             <ion-input type="text" formControlName="CERTIFICATION_YEAR" [(ngModel)]="User_CertificationYear_Edit_ngModel" placeholder="{{'Please fill the Year'}}"></ion-input>
           </ion-item>
@@ -290,12 +301,12 @@
             <b>{{'RESIDENTIAL_ADDRESS' | translate}}</b>
           </div>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{'ADDRESS_LINE_1' | translate}}</ion-label>
             <ion-input type="text" formControlName="USER_ADDRESS1" [(ngModel)]="User_Address1_Edit_ngModel" [value]="USER_ADDRESS1" placeholder="{{'Please fill the address1'}}"></ion-input>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{'POST_CODE' | translate}}</ion-label>
             <ion-input type="number" formControlName="USER_POSTCODE" [(ngModel)]="User_PostCode_Edit_ngModel" placeholder="{{'Please fill the Post Code'}}"></ion-input>
           </ion-item>
@@ -312,12 +323,12 @@
             </ion-select>
           </ion-item>
 
-          <ion-item   class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{'CITY' | translate}}</ion-label>
             <ion-input type="text" formControlName="USER_ADDRESS3" [(ngModel)]="User_Address3_Edit_ngModel" [value]="USER_ADDRESS3" placeholder="{{'Please fill the address3'}}"></ion-input>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{'STATE' | translate}}</ion-label>
             <ion-select formControlName="USER_STATE" [(ngModel)]="User_State_Edit_ngModel" placeholder="{{'Select State'}}">
               <ion-option *ngFor="let state of states" [value]="state.STATE_GUID" selected="true">{{ state.NAME }}</ion-option>
@@ -370,7 +381,7 @@
               </ion-item>
             </ion-list>
 
-            <ion-item  class="fuha2">
+            <ion-item class="fuha2">
               <ion-label stacked>{{'CHILD_NAME' | translate}}</ion-label>
               <ion-input type="text" formControlName="CHILDNAME" [(ngModel)]="User_Child_Name_Edit_ngModel" placeholder="{{'Please fill the Child Name'}}"></ion-input>
             </ion-item>
@@ -439,7 +450,7 @@
             <ion-input type="text" formControlName="EMG_CONTACT_NAME1" [(ngModel)]="User_EMG_CONTACT_NAME1_Edit_ngModel" placeholder="{{'Please fill the Contact Name'}}"></ion-input>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{'CONTACT_NAME_2' | translate}}</ion-label>
             <ion-input type="text" formControlName="EMG_CONTACT_NAME2" [(ngModel)]="User_EMG_CONTACT_NAME2_Edit_ngModel" placeholder="{{'Please fill the Contact Name'}}"></ion-input>
           </ion-item>
@@ -469,7 +480,7 @@
             <b>{{'PAYROLL_DETAILS' | translate}}</b>
           </div>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{'EPF_NUMBER' | translate}}</ion-label>
             <ion-input type="text" formControlName="EPF_NUMBER" [(ngModel)]="User_EPF_NUMBER_Edit_ngModel" placeholder="{{'Please fill the Epf Number'}}"></ion-input>
           </ion-item>
@@ -486,7 +497,7 @@
             <ion-input type="text" formControlName="INCOMETAX_NO" [(ngModel)]="User_INCOMETAX_NO_Edit_ngModel" placeholder="{{'Please fill the Income Tax No'}}"></ion-input>
           </ion-item>
 
-          <ion-item  class="fuha">
+          <ion-item class="fuha">
             <ion-label stacked>{{'ACCOUNT_NUMBER' | translate}}</ion-label>
             <ion-input type="text" formControlName="ACCOUNT_NUMBER" [(ngModel)]="User_ACCOUNT_NUMBER_Edit_ngModel" placeholder="{{'Please fill the Account Number'}}"></ion-input>
           </ion-item>
@@ -495,9 +506,10 @@
             <b>{{'Role Details' | translate}}</b>
           </div>
 
-          <ion-item >
+          <ion-item>
             <ion-label stacked>{{"Role"}}</ion-label>
-            <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}" multiple="true" [disabled]="isDisabled">
+            <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}" multiple="true"
+              [disabled]="isDisabled">
               <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
             </ion-select>
           </ion-item>
