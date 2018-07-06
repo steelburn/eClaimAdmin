@@ -775,7 +775,7 @@ export class UserPage {
     this.loading.present();
 
     let TableURL_User: string;
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
+    if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_ROLE_NAME") == "Finance Executive" || localStorage.getItem("g_ROLE_NAME") == "Finance Admin" || localStorage.getItem("g_ROLE_NAME") == "Finance Manager") {
       TableURL_User = this.BaseTableURL + ViewName + '?' + this.Key_Param;
     }
     else if (localStorage.getItem("g_ISHQ") == "1" && localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
