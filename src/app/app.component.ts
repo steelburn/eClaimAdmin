@@ -257,7 +257,8 @@ export class ConferenceApp {
     
     // debugger;
     if (localStorage.length > 0) {
-      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME"); this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL"); 
+      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME"); 
+      this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL"); 
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
         this.blnDashboard_loggedInMenu_User = true;
