@@ -574,7 +574,7 @@ export class UserPage {
         DEPT_GUID: [null, Validators.required],
         JOIN_DATE: [null, Validators.required],
         CONFIRMATION_DATE: [null],
-        RESIGNATION_DATE: [],
+        RESIGNATION_DATE: [null],
         BRANCH: [null, Validators.required],
         EMPLOYEE_TYPE: [null, Validators.required],
         APPROVER1: [null, Validators.required],
@@ -623,10 +623,10 @@ export class UserPage {
         EPF_NUMBER: [null],
         INCOMETAX_NO: [null],
         BANK_NAME: ['', Validators.required],
-        ACCOUNT_NUMBER: [null, Validators.required],
+        ACCOUNT_NUMBER: [null],
 
         //-------------------ROLE DETAILS---------------------------
-        ROLE_NAME: [null],
+        ROLE_NAME: [null, Validators.required],
       });
     }
     else {
@@ -2534,16 +2534,6 @@ export class UserPage {
   GetQualificationID() {
     alert(this.User_HighestQualification_ngModel);
   }
-
-
-
-
-
-
-
-
-
-
 
   // fileName1: string; 
   // ProfileImage: any; 
