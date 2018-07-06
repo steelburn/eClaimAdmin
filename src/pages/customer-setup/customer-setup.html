@@ -83,7 +83,7 @@
 
           <ion-item>
             <ion-label stacked>{{ 'CUSTOMER_NAME' | translate }}</ion-label>
-            <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
+            <ion-input type="text" formControlName="customer_name" [(ngModel)]="CUSTOMER_NAME_ngModel_Add" placeholder="{{'Please fill the customer name'}}"></ion-input>
           </ion-item>
 
           <ion-item>
@@ -96,7 +96,7 @@
             <ion-input type="number" formControlName="contact_person_mobile_no" [(ngModel)]="CONTACT_PERSON_MOBILE_NO_ngModel_Add" placeholder="{{'Please fill the contact person mobile no'}}"></ion-input>
           </ion-item>
 
-          <ion-item>
+          <!-- <ion-item>
             <ion-label stacked>{{ 'Conctact Person' | translate }}</ion-label>
             <ion-input type="text" formControlName="contact_person" [(ngModel)]="CONTACT_PERSON_ngModel_Add" placeholder="{{'Please fill the contact person'}}"></ion-input>
           </ion-item>          
@@ -109,8 +109,8 @@
           <ion-item>
             <ion-label stacked>{{ 'Registration Number' | translate }}</ion-label>
             <ion-input type="text" formControlName="registration_no" [(ngModel)]="REGISTRATION_NO_ngModel_Add" placeholder="{{'Please fill the registration number'}}"></ion-input>
-          </ion-item>
-
+          </ion-item> -->
+<!-- 
           <ion-item>
             <ion-label stacked>{{ 'Address 1' | translate }}</ion-label>
             <ion-input type="text" formControlName="address1" [(ngModel)]="ADDRESS1_ngModel_Add" placeholder="{{'Please fill the Address 1'}}"></ion-input>
@@ -139,7 +139,7 @@
           <ion-item style="display: none">
             <ion-label stacked>{{ 'Division' | translate }}</ion-label>
             <ion-input type="text" formControlName="division" [(ngModel)]="DIVISION_ngModel_Add" placeholder="{{'Please fill the division'}}"></ion-input>
-          </ion-item>
+          </ion-item> -->
 
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Customerform.valid" (click)="Save()">Submit</button>
