@@ -59,16 +59,16 @@
     </ion-item>
 
 
-    <ion-item  class="fuha">
+    <ion-item class="fuha">
       <ion-label floating color="primary500">{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
       <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType">
-       
+
         <ion-option (ionSelect)="onTravelTypeSelect('Local')">Local</ion-option>
         <ion-option (ionSelect)="onTravelTypeSelect('Outstation')">Outstation</ion-option>
       </ion-select>
     </ion-item>
 
-  
+
 
     <ion-item class="fuha">
 
@@ -82,12 +82,12 @@
 
     <ion-item *ngIf="isPublicTransport">
       <ion-label fixed>{{ 'PAY_BY_LABEL' | translate }}</ion-label>
-      <ion-select [(ngModel)]="PayType" placeholder="Cash" formControlName="PayType" >
+      <ion-select [(ngModel)]="PayType" placeholder="Cash" formControlName="PayType">
         <ion-option *ngFor="let item of paymentTypes" value={{item.PAYMENT_TYPE_GUID}}>{{ item.NAME}}</ion-option>
       </ion-select>
     </ion-item>
 
-   
+
 
     <ion-item text-wrap>
       <ion-label floating color="primary500"> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
@@ -127,10 +127,10 @@
     </div> -->
 
     <div *ngIf="imageURLEdit!==null">
-      <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" >
-     View Receipt
-    </button>  
-  </div>
+      <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)">
+        View Receipt
+      </button>
+    </div>
     <!-- <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>             
@@ -143,7 +143,7 @@
       <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
       <!-- <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
       <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
-    </ion-item>   
+    </ion-item>
 
     <div>
       <img src="{{ProfileImage}}" style="width: 20%">
@@ -151,10 +151,11 @@
 
     <ion-item *ngIf="isPublicTransport">
       <button ion-button type="primary" (click)="saveIm()" [disabled]="!chooseFile">Upload image</button>
-      </ion-item>   
+    </ion-item>
 
     <div class="btn" *ngIf="!isFormSubmitted">
-      <button ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="(Travelform.valid  && !PublicTransValue) || !Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
+      <button ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
+      <!-- [disabled]="(Travelform.valid  && !PublicTransValue) || !Travelform.valid" -->
     </div>
     <div class="btn" *ngIf="isFormSubmitted">
       <button ion-button outline item-end icon-left (click)="TollParkLookup()">
@@ -216,8 +217,8 @@
         <ion-list>
           <div *ngFor="let item of projects">
             <button ion-item (click)="GetSocNo(item)">
-              <ion-label>{{item.project_name}}
-                [{{item.soc}}]</ion-label> 
+              <ion-label>{{item.project_name}} [{{item.soc}}]
+              </ion-label>
             </button>
           </div>
         </ion-list>

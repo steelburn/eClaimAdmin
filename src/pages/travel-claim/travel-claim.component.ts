@@ -528,7 +528,8 @@ export class TravelclaimPage {
       this.currentItems = [];
       return;
     }
-    var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=500&components=country:MY&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http.get(url).map(res => res.json()).subscribe(data => {
       this.currentItems = data["predictions"];
       console.table(this.currentItems);
@@ -764,6 +765,9 @@ export class TravelclaimPage {
       // let imageResult = this.SaveImageinDB();
       // imageResult.then((objImage: ImageUpload_model) => {      
 
+
+        this.ImageUploadValidation=true;
+
       //  this.imageGUID = objImage.Image_Guid
       this.imageGUID = this.uniqueName;
       // , formvalues
@@ -772,8 +776,7 @@ export class TravelclaimPage {
       // this.PublicTransValue = true;
       this.chooseFile = false;
 
-      this.ImageUploadValidation = false;
-
+     
 
 
       // })

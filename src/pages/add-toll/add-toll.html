@@ -84,7 +84,8 @@
           </ion-item> -->
           <div class="btn" *ngIf="ClaimMethodName != 'Meal Allowance'">
               <!-- *ngIf="ClaimMethodName === 'Meal Allowance'" -->
-              <button ion-button color="primary" (click)='Save(false)'  [disabled]="!ImageUploadValidation">{{ "SUBMIT_BUTTON" | translate }}</button>
+              <button ion-button color="primary" (click)='Save(false)'>{{ "SUBMIT_BUTTON" | translate }}</button>
+              <!-- [disabled]="!ImageUploadValidation" -->
             </div>
 
             <div class="btn" *ngIf="ClaimMethodName === 'Meal Allowance'">
