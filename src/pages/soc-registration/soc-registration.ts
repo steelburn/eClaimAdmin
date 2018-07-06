@@ -263,7 +263,7 @@ export class SocRegistrationPage {
             soc: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
             // registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             // address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             // address2: [null],
@@ -387,17 +387,17 @@ export class SocRegistrationPage {
     }
   }
 
-  stores: any[]; 
+  stores: any[];
   search(searchString: any) {
     let val = searchString.target.value;
     if (!val || !val.trim()) {
-      this.socs = this.stores;      
+      this.socs = this.stores;
       return;
     }
     this.socs = this.filter({
       soc: val,
       project_name: val,
-      customer_name: val      
+      customer_name: val
     });
   }
 
@@ -405,7 +405,7 @@ export class SocRegistrationPage {
     if (!params) {
       return this.stores;
     }
-    
+
     return this.stores.filter((item) => {
       for (let key in params) {
         let field = item[key];
