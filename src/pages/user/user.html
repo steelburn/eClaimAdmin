@@ -86,16 +86,16 @@
                         <b>{{ 'PERSONAL_DETAILS' | translate }}</b>
                     </div>
                     <ion-item>
-                        <ion-label stacked>{{ 'NAME' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'NAME' | translate }}</ion-label>
                         <ion-input type="text" formControlName="NAME" [(ngModel)]="User_Name_ngModel" placeholder="{{'Please fill the name of the user'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{ 'EMAIL' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'EMAIL' | translate }}</ion-label>
                         <ion-input type="email" formControlName="EMAIL" [(ngModel)]="User_Email_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
-
-
 
                     <ion-item>
                         <ion-label stacked>{{ 'PERSONAL_CONTACT_NO' | translate }}</ion-label>
@@ -157,7 +157,8 @@
                     </div>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'COMPANY' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'COMPANY' | translate }}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_ngModel" placeholder="{{'Please fill the company'}}"
                             (ionChange)="GetBranch('tenant_company_site', User_Company_ngModel,'SITE_NAME'); GetDesignation('main_designation', 'NAME'); GetDepartment('main_department', 'NAME'); BindBank('main_bank', 'NAME'); BindApprover1('view_get_tenant_admin')">
                             <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
@@ -165,21 +166,24 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'DESIGNATION' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'DESIGNATION' | translate }}</ion-label>
                         <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_ngModel" placeholder="{{'Please fill the designation'}}">
                             <ion-option *ngFor="let designation of designations" [value]="designation.DESIGNATION_GUID" selected="true">{{designation.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'DEPARTMENT' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'DEPARTMENT' | translate }}</ion-label>
                         <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_ngModel" placeholder="{{'Please fill in the Department'}}">
                             <ion-option *ngFor="let department of departments" [value]="department.DEPARTMENT_GUID" selected="true">{{department.NAME }}</ion-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'JOIN_DATE' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'JOIN_DATE' | translate }}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{'Please fill the joining date'}}"></ion-datetime>
                     </ion-item>
 
@@ -195,14 +199,16 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'BRANCH' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'BRANCH' | translate }}</ion-label>
                         <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_ngModel" placeholder="{{'Please select Branch'}}">
                             <ion-option *ngFor="let branch of branches" [value]="branch.TENANT_COMPANY_SITE_GUID" selected="true">{{branch.SITE_NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'EMPLOYEE_TYPE' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'EMPLOYEE_TYPE' | translate }}</ion-label>
                         <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_ngModel" placeholder="{{'Please fill in the Employee Type'}}">
                             <ion-option value="0">Permanent</ion-option>
                             <ion-option value="1">Contract</ion-option>
@@ -211,7 +217,8 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'EMPLOYEE_STATUS' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'EMPLOYEE_STATUS' | translate }}</ion-label>
                         <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_ngModel" placeholder="{{'Please select employement status'}}">
                             <ion-option value="0">Probation</ion-option>
                             <ion-option value="1">Confirmed</ion-option>
@@ -221,7 +228,8 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{"Manager"}}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{"Manager"}}</ion-label>
                         <ion-select formControlName="APPROVER1" [(ngModel)]="User_Approver1_ngModel" placeholder="{{'Please select Approver'}}">
                             <ion-option *ngFor="let approver of approvers" [value]="approver.USER_GUID" selected="true">{{approver.FULLNAME}}</ion-option>
                         </ion-select>
@@ -531,7 +539,8 @@
                     </div>
 
                     <ion-item>
-                        <ion-label stacked>{{"Role"}}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{"Role"}}</ion-label>
                         <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Add" placeholder="{{'Please select role'}}" multiple="true">
                             <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
@@ -569,12 +578,14 @@
                         <b>{{ 'PERSONAL_DETAILS' | translate }}</b>
                     </div>
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'NAME' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'NAME' | translate }}</ion-label>
                         <ion-input type="text" formControlName="NAME" [(ngModel)]="User_Name_Edit_ngModel" placeholder="{{'Please fill the name of the user'}}"></ion-input>
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'EMAIL' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'EMAIL' | translate }}</ion-label>
                         <ion-input type="email" formControlName="EMAIL" [(ngModel)]="User_Email_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"></ion-input>
                     </ion-item>
 
@@ -644,7 +655,8 @@
                     </div>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'COMPANY' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'COMPANY' | translate }}</ion-label>
                         <ion-select formControlName="TENANT_COMPANY_GUID" [(ngModel)]="User_Company_Edit_ngModel" placeholder="{{'Please fill the company'}}"
                             (ionChange)="GetBranch('tenant_company_site', User_Company_Edit_ngModel,'SITE_NAME'); BindApprover1('view_get_tenant_admin')">
                             <ion-option *ngFor="let company of companies" [value]="company.TENANT_COMPANY_GUID" selected="true">{{company.NAME}}</ion-option>
@@ -652,21 +664,24 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'DESIGNATION' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'DESIGNATION' | translate }}</ion-label>
                         <ion-select formControlName="DESIGNATION_GUID" [(ngModel)]="User_Designation_Edit_ngModel" placeholder="{{'Please fill the designation'}}">
                             <ion-option *ngFor="let designation of designations" value="{{designation.DESIGNATION_GUID}}" selected="true">{{designation.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'DEPARTMENT' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'DEPARTMENT' | translate }}</ion-label>
                         <ion-select formControlName="DEPT_GUID" [(ngModel)]="User_Department_Edit_ngModel" placeholder="{{'Please fill in the Department'}}">
                             <ion-option *ngFor="let department of departments" value="{{department.DEPARTMENT_GUID}}" selected="true">{{department.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'JOIN_DATE' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'JOIN_DATE' | translate }}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_Edit_ngModel" placeholder="{{'Please fill the join date'}}"></ion-datetime>
                         <!-- <ion-input type="text" formControlName="JOIN_DATE" [(ngModel)]="User_JoinDate_ngModel" placeholder="{{'Please fill the join date'}}"></ion-input> -->
                     </ion-item>
@@ -684,14 +699,16 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'BRANCH' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'BRANCH' | translate }}</ion-label>
                         <ion-select formControlName="BRANCH" [(ngModel)]="User_Branch_Edit_ngModel" placeholder="{{'Please select Branch'}}">
                             <ion-option *ngFor="let branch of branches" [value]="branch.TENANT_COMPANY_SITE_GUID" selected="true">{{branch.SITE_NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'EMPLOYEE_TYPE' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'EMPLOYEE_TYPE' | translate }}</ion-label>
                         <ion-select formControlName="EMPLOYEE_TYPE" [(ngModel)]="User_EmployeeType_Edit_ngModel" placeholder="{{'Please fill in the Email'}}">
                             <ion-option value="0">Permanent</ion-option>
                             <ion-option value="1">Contract</ion-option>
@@ -700,7 +717,8 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{ 'EMPLOYEE_STATUS' | translate }}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{ 'EMPLOYEE_STATUS' | translate }}</ion-label>
                         <ion-select formControlName="EMPLOYEE_STATUS" [(ngModel)]="User_Employment_Edit_ngModel" placeholder="{{'Please fill the employement status'}}">
                             <!-- <ion-option *ngFor="let empstatus of empstatuss" value="{{empstatus.value}}">{{empstatus.text}}</ion-option> -->
                             <ion-option value="0">Probation</ion-option>
@@ -710,7 +728,8 @@
                     </ion-item>
 
                     <ion-item class="text">
-                        <ion-label stacked>{{"Manager"}}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{"Manager"}}</ion-label>
                         <ion-select formControlName="APPROVER1" [(ngModel)]="User_Approver1_Edit_ngModel" placeholder="{{'Please select Approver'}}">
                             <ion-option *ngFor="let approver of approvers" [value]="approver.USER_GUID" selected="true">{{approver.FULLNAME}}</ion-option>
                         </ion-select>
@@ -1019,7 +1038,8 @@
                     </div>
 
                     <ion-item>
-                        <ion-label stacked>{{"Role"}}</ion-label>
+                        <ion-label stacked>
+                            <span style="color:red">*</span>{{"Role"}}</ion-label>
                         <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}" multiple="true">
                             <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
