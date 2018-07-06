@@ -73,7 +73,22 @@ export class ClaimapprovertasklistPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = data["resource"];
+        let key: any;
+        this.claimrequestdetails.forEach(element => {
+          if (element.STATUS === 'Rejected') {
+         element.STAGE_GUID = null;
+          }
+          else {
+            key = element.PROFILE_LEVEL;
+          }
 
+          switch (key) {
+            case 1: element.STAGE_GUID = 'Superior'; break;
+            case 2: element.STAGE_GUID = 'Finance Executive'; break;
+            case 3:
+            case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+          }
+        });
         this.claimrequestdetails1 = this.claimrequestdetails;
       });
    
@@ -255,9 +270,11 @@ count:number =0;
     console.log('ionViewDidLoad ClaimapprovertasklistPage');
   }
 
-  viewClaim(claimRequestGUID: string, level: any, claimType: any) {
+  designation:string;
+  viewClaim(designation:string,claimRequestGUID: string, level: any, claimType: any) {
     this.claimRequestGUID = claimRequestGUID;
     this.level = level;
+    this.designation = designation;
 
     switch (claimType) {
       case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': this.pushPage(GiftClaimViewPage); break;
@@ -273,6 +290,7 @@ count:number =0;
   pushPage(claimType: any) {
     this.navCtrl.push(claimType, {
       isApprover: true,
+      approverDesignation: this.designation,
       cr_GUID: this.claimRequestGUID,
       level_no: this.level,
       approver_GUID: localStorage.getItem('g_USER_GUID')
