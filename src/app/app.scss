@@ -15,6 +15,34 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.profilepic{
+    width: 140px;
+height: 140px;
+margin: 0 auto;
+} 
+
+
+
+.profilepic img{
+    object-fit: cover;
+    border-radius: 50%;
+height: 100%;
+width: 100%;
+}
+
+.profilepicapp{
+    width: 80px;
+height: 80px;
+margin: 0 auto;
+} 
+
+.profilepicapp img{
+    object-fit: cover;
+    border-radius: 50%;
+height: 100%;
+width: 100%;
+}
+
 
 ion-fab[top1] {
     top: 0 !important;
@@ -22,11 +50,7 @@ ion-fab[top1] {
 
 
 
-  .imgw{
-    max-width: 70px;
-border-radius: 50%;
 
-}
 
 .blackcontainer{
     top: 0;
@@ -44,6 +68,7 @@ border-radius: 50%;
     top: 60px;
     position: fixed;
         height: 500px;
+        z-index: 9999;
 }
 .popup{
     width: 50%;
@@ -51,6 +76,7 @@ border-radius: 50%;
     top: 60px;
     position: fixed;
         height: 500px;
+        z-index: 9999;
 }
 
 
@@ -60,6 +86,7 @@ border-radius: 50%;
     top: 60px;
     position: fixed;
         height: 500px;
+        z-index: 9999;
 }
 
 .popup2{
@@ -68,7 +95,7 @@ border-radius: 50%;
     top: 38px;
     position: fixed;
     height: 480px;
-
+    z-index: 9999;
 }
 
 
@@ -78,6 +105,7 @@ left: 125px;
 top: 38px;
 position: fixed;
 height: 480px;
+z-index: 9999;
 }
 
 
@@ -87,6 +115,7 @@ height: 480px;
     top: 96px;
     position: fixed;
         height: 500px;
+        z-index: 9999;
 }
 
 .btn{
