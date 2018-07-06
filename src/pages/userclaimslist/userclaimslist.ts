@@ -89,9 +89,26 @@ export class UserclaimslistPage {
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.userClaimhistorydetails = data["resource"];
-        this.userClaimhistorydetails1 = this.userClaimhistorydetails;
+        this.userClaimhistorydetails1 = data["resource"];
+        
 
+        let key: any;
+        this.userClaimhistorydetails1.forEach(element => {
+          if (element.STATUS === 'Rejected') {
+         element.STAGE_GUID = null;
+          }
+          else {
+            key = element.PROFILE_LEVEL;
+          }
+
+          switch (key) {
+            case 1: element.STAGE_GUID = 'Superior'; break;
+            case 2: element.STAGE_GUID = 'Finance Executive'; break;
+            case 3:
+            case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+          }
+        });
+        this.userClaimhistorydetails = this.userClaimhistorydetails1;
         for (var item in data["resource"]) {
           this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
         }
@@ -116,7 +133,16 @@ export class UserclaimslistPage {
         .subscribe(data => {
           this.userClaimhistorydetails1 = data["resource"];
           //this.userClaimhistorydetails1 = this.userClaimhistorydetails;
-
+          this.userClaimhistorydetails1.forEach(element => {
+            switch (element.PROFILE_LEVEL) {
+              case 1: element.STAGE_GUID = 'Superior'; break;
+              case 2: element.STAGE_GUID = 'Finance Executive'; break;
+              case 3:
+              case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+              // case 4: element.STAGE_GUID = 'Finance Manager'; break;
+              // case 5: element.STAGE_GUID = 'Finance & Admin'; break;
+            }
+          });
           this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
             let claimtype: number;
             let status: number;
@@ -124,7 +150,7 @@ export class UserclaimslistPage {
             let amount: number;
             let date: number;
             // console.log(item);
-            if (item.CLAIM_TYPE != null) { claimtype = item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase()) }
+            if (item.CLAIMTYPE != null) { claimtype = item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase()) }
             if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
             if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
             if (item.STAGE != null) { stage = item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase()) }
@@ -177,12 +203,12 @@ export class UserclaimslistPage {
       });
   };
 
-  claimRequestGUID: string; level: string;
+  claimRequestGUID: string; level: string;  designation:string;
 
-  ClaimNavigation(claimRequestGUID: string, level: string, claimType: any, navType: number) {
+  ClaimNavigation(designation:string,claimRequestGUID: string, level: string, claimType: any, navType: number) {
     this.claimRequestGUID = claimRequestGUID;
     this.level = level;
-
+    this.designation = designation;
     switch (claimType) {
       case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': if (navType === 1) this.pushPage(GiftClaimViewPage); else this.editPage(GiftclaimPage); break;
       case '37067b3d-1bf4-33a3-2b60-3ca40baf589a': if (navType === 1) this.pushPage(OvertimeClaimViewPage); else this.editPage(OvertimeclaimPage); break;
@@ -197,6 +223,7 @@ export class UserclaimslistPage {
   pushPage(claimType: any) {
     this.navCtrl.push(claimType, {
       isApprover: false,
+      approverDesignation: this.designation,
       cr_GUID: this.claimRequestGUID,
       level_no: this.level,
       approver_GUID: localStorage.getItem('g_USER_GUID')
