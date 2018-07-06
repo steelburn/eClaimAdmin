@@ -1529,7 +1529,12 @@ export class UserPage {
       this.userinfo_entry.ATTACHMENT_ID = localStorage.getItem("Unique_File_Name");
     }
     else {
-      this.userinfo_entry.ATTACHMENT_ID = null;
+      if (this.view_user_details[0]["ATTACHMENT_ID"] == null || this.view_user_details[0]["ATTACHMENT_ID"] == '') {
+        this.userinfo_entry.ATTACHMENT_ID = null;
+      }
+      else {
+        this.userinfo_entry.ATTACHMENT_ID = this.view_user_details[0]["ATTACHMENT_ID"];
+      }
     }
 
     // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
