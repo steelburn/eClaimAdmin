@@ -19,13 +19,15 @@ export class MiscellaneousClaimViewPage {
   Remarks_NgModel: any;
   isRemarksAccepted: any;
   isApprover: any;
+  approverDesignation: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
     this.level = navParams.get('level_no');
-    this.LoadMainClaim();    
+    this.LoadMainClaim();   
+    this.approverDesignation = this.navParams.get("approverDesignation"); 
   } 
 
   isAccepted(val: string) {

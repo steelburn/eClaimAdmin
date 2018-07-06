@@ -35,8 +35,8 @@
           Dashboard
         </ion-list-header>
 
-        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
-          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)"  [color]="isActive(p) ">
+          <ion-icon item-start [name]=" p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -47,8 +47,8 @@
           Tasks
         </ion-list-header>
 
-        <button ion-item menuClose *ngFor="let p of taskPages" (click)="openPage(p)">
-          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of taskPages" (click)="openPage(p)"  [color]="isActive(p) ">
+          <ion-icon item-start [name]=" p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -58,8 +58,8 @@
         <ion-list-header>
           {{"CLAIMS_LABEL" | translate}}
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -69,8 +69,8 @@
         <ion-list-header>
           Reports
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -80,8 +80,8 @@
         <ion-list-header>
           Setup
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of setupsPages" (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of setupsPages" (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -91,8 +91,8 @@
         <ion-list-header>
           {{"Account_LABEL" | translate}}
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of loggedOutPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of loggedOutPages " (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -134,8 +134,8 @@
           Dashboard
         </ion-list-header>
 
-        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
-          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)" [color]="isActive(p) ">
+          <ion-icon item-start [name]=" p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -145,8 +145,8 @@
           Tasks
         </ion-list-header>
 
-        <button ion-item menuClose *ngFor="let p of taskPages" (click)="openPage(p)">
-          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of taskPages" (click)="openPage(p)" [color]="isActive(p) ">
+          <ion-icon item-start [name]=" p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -156,8 +156,8 @@
         <ion-list-header>
           {{"CLAIMS_LABEL" | translate}}
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -167,8 +167,8 @@
         <ion-list-header>
           Reports
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) "  [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -179,8 +179,8 @@
         <ion-list-header>
           Setup
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of setupsPages" (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of setupsPages" (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -191,8 +191,8 @@
         <ion-list-header>
           {{"Account_LABEL" | translate}}
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) "  [color]="isActive(p) " >
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -233,8 +233,8 @@
           Dashboard
         </ion-list-header>
 
-        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
-          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)" [color]="isActive(p) ">
+          <ion-icon item-start [name]=" p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -244,8 +244,8 @@
           Tasks
         </ion-list-header>
 
-        <button ion-item menuClose *ngFor="let p of appPages_User" (click)="openPage(p)">
-          <ion-icon item-start [name]=" p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of appPages_User" (click)="openPage(p)" [color]="isActive(p) ">
+          <ion-icon item-start [name]=" p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -255,8 +255,8 @@
 
           {{"CLAIMS_LABEL" | translate}}
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -266,8 +266,8 @@
         <ion-list-header>
           Reports
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -277,8 +277,8 @@
         <ion-list-header>
           Setup
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of setupsPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of setupsPages " (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -289,8 +289,8 @@
         <ion-list-header>
           {{"Account_LABEL" | translate}}
         </ion-list-header>
-        <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) ">
-          <ion-icon item-start [name]="p.icon " [color]="isActive(p) "></ion-icon>
+        <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) " [color]="isActive(p) ">
+          <ion-icon item-start [name]="p.icon " ></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
