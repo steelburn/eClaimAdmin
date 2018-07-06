@@ -154,7 +154,8 @@
       </ion-item>   
 
     <div class="btn" *ngIf="!isFormSubmitted">
-      <button ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="(Travelform.valid  && !PublicTransValue) || !Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
+      <button ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
+      <!-- [disabled]="(Travelform.valid  && !PublicTransValue) || !Travelform.valid" -->
     </div>
     <div class="btn" *ngIf="isFormSubmitted">
       <button ion-button outline item-end icon-left (click)="TollParkLookup()">
