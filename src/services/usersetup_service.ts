@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
 //import {EntertainmentClaim_Model} from '../models/entertainment_model';
@@ -13,7 +13,6 @@ import { UserQualification_Model } from '../models/user_qualification_model';
 import { UserCertification_Model } from '../models/user_certification_model';
 import { UserSpouse_Model } from '../models/user_spouse_model';
 import { UserChildren_Model } from '../models/user_children_model';
-import { ViewUser_Model } from '../models/viewuser_model';
 import { BaseHttpService } from './base-http';
 
 import 'rxjs/add/operator/map';
@@ -23,11 +22,7 @@ import 'rxjs/add/observable/throw';
 
 import { NavController } from 'ionic-angular';
 
-class ServerResponse {
-	constructor(public resource: any) {
-
-	}
-};
+;
 
 @Injectable()
 
@@ -62,7 +57,7 @@ export class UserSetup_Service {
 
 	public USER_GUID: any;
 
-	constructor(private httpService: BaseHttpService, private nav: NavController) { };
+	constructor(private httpService: BaseHttpService) { };
 
 	private handleError(error: any) {
 		let errMsg = (error.message) ? error.message :
@@ -81,7 +76,6 @@ export class UserSetup_Service {
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
 			.map((response) => {
-				var result: any = response.json();
 				let banks: Array<UserInfo_Model> = [];
 
 				// result.resource.forEach((bank) => {
@@ -366,7 +360,6 @@ export class UserSetup_Service {
 		return this.httpService.http
 			.delete(url_multiple, { headers: queryHeaders })
 			.map((response) => {
-				var result: any = response.json();
 				//return result.PAGE_GUID;
 				return response;
 			});

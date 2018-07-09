@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -282,7 +281,7 @@ export class TenantsetupPage {
     }); alert.present();
   }
 
-  public DeleteUserClick(USER_GUID: any) {
+  public DeleteUserClick() {
     alert('In Progress....');
   }
 
@@ -297,7 +296,7 @@ export class TenantsetupPage {
     this.Add_Form = true; this.Edit_Form = false;
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb_tenant: FormBuilder, fb_user: FormBuilder, public http: Http, private httpService: BaseHttpService, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb_tenant: FormBuilder, fb_user: FormBuilder, public http: Http, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private alertCtrl: AlertController) {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       //--------------Clear all required storage------------------------
       localStorage.removeItem("PREV_TENANT_GUID");
@@ -793,69 +792,6 @@ export class TenantsetupPage {
 
       //Insert Record for tenant_main------------------------------------------
       this.Save_Tenant_Main();
-
-      //Insert Record for tenant company---------------------------------------
-      //this.Save_Tenant_Company();
-
-      //Insert Record for tenant company site----------------------------------
-      //this.Save_Tenant_Company_Site();
-
-
-
-
-
-
-
-
-      // let headers = new Headers();
-      // headers.append('Content-Type', 'application/json');
-      // let options = new RequestOptions({ headers: headers });
-      // let url: string;
-      // url = this.baseResource_Url + "tenant_company_site?filter=(SITE_NAME=" + this.tenant_company_site_entry.SITE_NAME + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      // this.http.get(url, options)
-      //   .map(res => res.json())
-      //   .subscribe(
-      //   data => {
-      //     let res = data["resource"];
-      //     if (res.length == 0) {
-      //       console.log("No records Found");
-      //       if (this.Exist_Record == false) {
-      //         this.tenant_company_site_entry.SITE_NAME = this.COMPANY_SITE_NAME_ngModel_Add.trim();
-      //         this.tenant_company_site_entry.REGISTRATION_NUM = this.REGISTRATION_NUM_ngModel_Add.trim();
-      //         this.tenant_company_site_entry.ADDRESS = this.ADDRESS_ngModel_Add.trim();
-      //         this.tenant_company_site_entry.EMAIL = this.EMAIL_ngModel_Add.trim();
-      //         this.tenant_company_site_entry.CONTACT_NO = this.CONTACT_NO_ngModel_Add.trim();
-      //         this.tenant_company_site_entry.WEBSITE = this.WEBSITE_ngModel_Add.trim();
-      //         this.tenant_company_site_entry.CONTACT_PERSON = this.CONTACT_PERSON_ngModel_Add.trim();
-      //         this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = this.CONTACT_PERSON_CONTACT_NO_ngModel_Add.trim();
-      //         this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = this.CONTACT_PERSON_EMAIL_ngModel_Add.trim();
-
-      //         this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
-      //         this.tenant_company_site_entry.TENANT_COMPANY_GUID = "298204b8-8c85-11e7-91cd-00155de7e742";
-      //         this.tenant_company_site_entry.CREATION_TS = new Date().toISOString();
-      //         this.tenant_company_site_entry.CREATION_USER_GUID = "1";
-      //         this.tenant_company_site_entry.UPDATE_TS = new Date().toISOString();
-      //         this.tenant_company_site_entry.UPDATE_USER_GUID = "";
-
-      //         this.tenantcompanysitesetupservice.save(this.tenant_company_site_entry)
-      //           .subscribe((response) => {
-      //             if (response.status == 200) {
-      //               alert('Tenant Registered successfully');                    
-      //               this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      //             }
-      //           })
-      //       }
-      //     }
-      //     else {
-      //       console.log("Records Found");
-      //       alert("The Tenant is already Exist.")
-      //     }
-
-      //   },
-      //   err => {
-      //     this.Exist_Record = false;
-      //     console.log("ERROR!: ", err);
-      //   });
     }
 
 
