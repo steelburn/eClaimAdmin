@@ -32,10 +32,10 @@
                   <th>Name</th>
                   <th>Claim Type</th>
                   <th>Date</th>
-                  <th>Status</th>
+                  <th  style="width:68px">Status</th>
                   <th>Stage</th>
-                  <th>Amount</th>
-                  <th class="tblBrRight" style="width:90px">Action</th>
+                  <th style="width:110px">Amount(RM)</th>
+                  <th class="tblBrRight" style="width:80px">Action</th>
     
               </tr>
     
@@ -46,14 +46,14 @@
                     </ion-item>
                   </td>
                   <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
-                  <td class="lgl1 getHeader" reshead="Name" >{{claimrequestdetail.FULLNAME}}</td>
+                  <td class="lgl1 getHeader" reshead="Name" text-wrap >{{claimrequestdetail.FULLNAME}}</td>
                   <td class="lgl1 getHeader" reshead="Claim Type">{{claimrequestdetail.CLAIMTYPE}}</td>
                   <td class="lgl1 getHeader" reshead="Date">{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                   <td class="lgl1 getHeader" reshead="Status">{{claimrequestdetail.STATUS}}</td>
                   <td class="lgl1 getHeader" reshead="Stage">{{claimrequestdetail.STAGE}}</td>
                   <td class="lgl1 getHeader" reshead="Amount">{{claimrequestdetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
                   <td class="lgl1 getHeader fColor" reshead="Action">
-                    <button ion-button item-end (click)='viewClaim(claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
+                    <button ion-button item-end (click)='viewClaim(claimrequestdetail.STAGE_GUID,claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
                 </td>
               </tr>     
     

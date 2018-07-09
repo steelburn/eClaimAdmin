@@ -156,14 +156,14 @@ export class CustomerSetupPage {
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             location_name: [null],
             registration_no: [null],
-            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
             address2: [null],
             address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
+            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
             contact_no1: [null],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')])],
             division: [null],
           });
         }
@@ -172,14 +172,14 @@ export class CustomerSetupPage {
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             location_name: [null],
             registration_no: [null],
-            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
             address2: [null],
             address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
+            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
             contact_no1: [null],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],            
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')])],
             division: [null],
             TENANT_NAME: [null],
           });
@@ -419,10 +419,10 @@ export class CustomerSetupPage {
 
   SetCommonEntityForCustomerLocationAddUpdate() {
     this.customer_location_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
-    if(this.LOCATION_NAME_ngModel_Add == undefined || this.LOCATION_NAME_ngModel_Add == ""){
-      this.LOCATION_NAME_ngModel_Add = "NA";
+    if (this.LOCATION_NAME_ngModel_Add == undefined || this.LOCATION_NAME_ngModel_Add == "") {
+      this.customer_location_entry.NAME = "NA";
     }
-    else{
+    else {
       this.customer_location_entry.NAME = this.titlecasePipe.transform(this.LOCATION_NAME_ngModel_Add.trim());
     }
     this.customer_location_entry.DESCRIPTION = "NA";
