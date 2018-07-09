@@ -12,11 +12,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
-class ServerResponse {
-    constructor(public resource: any) {
 
-    }
-};
 
 @Injectable()
 export class BranchSetup_Service {

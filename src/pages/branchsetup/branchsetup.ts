@@ -1,9 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -78,48 +77,13 @@ export class BranchsetupPage {
     }
   }
 
-  public EditClick(BRANCH_GUID: any) {
-    // this.ClearControls();
-    // this.EditBranchsClicked = true;
-    // var self = this;
-    // this.branchsetupservice
-    //   .get(BRANCH_GUID)
-    //   .subscribe((data) => {
-    //     self.branch_details = data;
-    //     this.NAME_ngModel_Edit = self.branch_details.NAME; localStorage.setItem('Prev_br_Name', self.branch_details.NAME);
-    //   });
+  public EditClick() {
   }
 
-  public DeleteClick(BRANCH_GUID: any) {
-    // let alert = this.alertCtrl.create({
-    //   title: 'Remove Confirmation',
-    //   message: 'Do you want to remove ?',
-    //   buttons: [
-    //     {
-    //       text: 'Cancel',
-    //       role: 'cancel',
-    //       handler: () => {
-    //         console.log('Cancel clicked');
-    //       }
-    //     },
-    //     {
-    //       text: 'OK',
-    //       handler: () => {
-    //         console.log('OK clicked');
-    //         var self = this;
-    //         this.branchsetupservice.remove(BRANCH_GUID)
-    //           .subscribe(() => {
-    //             self.branchs = self.branchs.filter((item) => {
-    //               return item.BRANCH_GUID != BRANCH_GUID
-    //             });
-    //           });
-    //       }
-    //     }
-    //   ]
-    // }); alert.present();
+  public DeleteClick() {
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service) {
     if (localStorage.getItem("g_USER_GUID") != null) {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/vw_tenantcompanysitedetails?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http
@@ -146,48 +110,6 @@ export class BranchsetupPage {
 
   Save() {
     if (this.Branchform.valid) {
-      // let headers = new Headers();
-      // headers.append('Content-Type', 'application/json');
-      // let options = new RequestOptions({ headers: headers });
-      // let url: string;
-      // url = this.baseResource_Url + "main_branch?filter=(NAME=" + this.BRANCHNAME_ngModel_Add.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      // this.http.get(url, options)
-      //   .map(res => res.json())
-      //   .subscribe(
-      //   data => {
-      //     let res = data["resource"];
-      //     if (res.length == 0) {
-      //       console.log("No records Found");
-      //       if (this.Exist_Record == false) {
-      //         this.branch_entry.NAME = this.BRANCHNAME_ngModel_Add.trim();
-
-      //         this.branch_entry.BRANCH_GUID = UUID.UUID();
-      //         this.branch_entry.CREATION_TS = new Date().toISOString();
-      //         this.branch_entry.CREATION_USER_GUID = '1';
-      //         this.branch_entry.UPDATE_TS = new Date().toISOString();
-      //         this.branch_entry.UPDATE_USER_GUID = "";
-
-      //         this.branchsetupservice.save(this.branch_entry)
-      //           .subscribe((response) => {
-      //             if (response.status == 200) {
-      //               alert('Branch Registered successfully');
-      //               //location.reload();
-      //               this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      //             }
-      //           })
-      //       }
-      //     }
-
-      //     else {
-      //       console.log("Records Found");
-      //       alert("The Branch is already Exist.")
-      //     }
-      //   },
-      //   err => {
-      //     this.Exist_Record = false;
-      //     console.log("ERROR!: ", err);
-      //   });
-
       this.Save_Tenant_Company();
     }
   }
@@ -225,7 +147,6 @@ export class BranchsetupPage {
             })
         }
       });
-    //console.log('Bijay Kumar'.replace(' ', '')); 
   }
 
   Save_Tenant_Company_Site() {
@@ -302,74 +223,9 @@ export class BranchsetupPage {
   }
 
   getBranchList() {
-    // let self = this;
-    // let params: URLSearchParams = new URLSearchParams();
-    // self.branchsetupservice.get_branch(params)
-    //   .subscribe((branchs: BranchSetup_Model[]) => {
-    //     self.branchs = branchs;
-    //   });
   }
 
-  Update(BRANCH_GUID: any) {
-    // if (this.Branchform.valid) {
-    //   if (this.branch_entry.NAME = null) { this.branch_entry.NAME = this.NAME_ngModel_Edit.trim(); }
-
-    //   this.branch_entry.CREATION_TS = this.branch_details.CREATION_TS;
-    //   this.branch_entry.CREATION_USER_GUID = this.branch_details.CREATION_USER_GUID;
-    //   this.branch_entry.BRANCH_GUID = BRANCH_GUID;
-    //   this.branch_entry.UPDATE_TS = new Date().toISOString();
-    //   this.branch_entry.UPDATE_USER_GUID = '1';
-
-    //   if (this.NAME_ngModel_Edit.trim() != localStorage.getItem('Prev_br_Name')) {
-    //     let url: string;
-    //     url = this.baseResource_Url + "main_branch?filter=(NAME=" + this.NAME_ngModel_Edit.trim() + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    //     this.http.get(url)
-    //       .map(res => res.json())
-    //       .subscribe(
-    //       data => {
-    //         let res = data["resource"];
-    //         console.log('Current Name : ' + this.NAME_ngModel_Edit + ', Previous Name : ' + localStorage.getItem('Prev_br_Name'));
-
-    //         if (res.length == 0) {
-    //           console.log("No records Found");
-    //           this.branch_entry.NAME = this.NAME_ngModel_Edit.trim();
-
-    //           //**************Update service if it is new details*************************
-    //           this.branchsetupservice.update(this.branch_entry)
-    //             .subscribe((response) => {
-    //               if (response.status == 200) {
-    //                 alert('Mileage updated successfully');
-    //                 this.navCtrl.setRoot(this.navCtrl.getActive().component);
-    //               }
-    //             });
-    //           //**************************************************************************
-    //         }
-    //         else {
-    //           console.log("Records Found");
-    //           alert("The Branch is already Exist. ");
-    //         }
-    //       },
-    //       err => {
-    //         this.Exist_Record = false;
-    //         console.log("ERROR!: ", err);
-    //       });
-    //   }
-    //   else {
-    //     if (this.branch_entry.NAME == null) { this.branch_entry.NAME = localStorage.getItem('Prev_br_Name'); }
-    //     this.branch_entry.NAME = this.NAME_ngModel_Edit.trim();
-
-    //     //**************Update service if it is old details*************************
-
-    //     this.branchsetupservice.update(this.branch_entry)
-    //       .subscribe((response) => {
-    //         if (response.status == 200) {
-    //           alert('Branch updated successfully');
-    //           //location.reload();
-    //           this.navCtrl.setRoot(this.navCtrl.getActive().component);
-    //         }
-    //       });
-    //   }
-    // }
+  Update() {
   }
 
   ClearControls() {

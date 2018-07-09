@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController,ModalController } from 'ionic-angular';
-import { Services } from '../Services';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
 import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
-import { ResourceLoader } from '@angular/compiler';
 
 /**
  * Generated class for the ClaimtasklistPage page.
@@ -70,7 +67,7 @@ BindData()
   });
 }
 
-onSearchInput(ev: any) {  
+onSearchInput() {  
   // alert('hi')
         let val = this.searchboxValue;
         if (val && val.trim() != '') {

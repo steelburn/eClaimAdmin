@@ -10,12 +10,6 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { NavController } from 'ionic-angular';
 
-class ServerResponse {
-    constructor(public resource: any) {
-
-    }
-};
-
 @Injectable()
 export class TenantMainSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_main';

@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { Services } from '../Services';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http } from '@angular/http';
 //import { HttpClient } from '@angular/common/http';
 
@@ -13,8 +10,6 @@ import * as constants from '../../app/config/constants';
 import { BaseHttpService } from '../../services/base-http';
 //import { ClaimHistory_Model } from '../../models/ClaimHistory_Model';
 import { ClaimhistorydetailPage } from '../claimhistorydetail/claimhistorydetail';
-import { ResourceLoader } from '@angular/compiler';
-import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 
 import { ExcelService } from '../../providers/excel.service';
 
@@ -48,7 +43,7 @@ export class ClaimhistoryPage {
   // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string;
   public page:number = 1;
-  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
+  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
     let loginUserRole = localStorage.getItem("g_ROLE_NAME");
     if (loginUserRole === "Finance Admin") {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -97,7 +92,7 @@ export class ClaimhistoryPage {
       });
   }
 
-  onSearchInput(ev: any) {
+  onSearchInput() {
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
       this.claimhistorys = this.claimhistorys1.filter((item) => {
@@ -189,7 +184,7 @@ export class ClaimhistoryPage {
 
   // }   
 
-  ExportToExcel(evt: any) {
+  ExportToExcel() {
     // this.excelService.exportAsExcelFile(this.claimhistorys, 'Data');
     this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
   }
