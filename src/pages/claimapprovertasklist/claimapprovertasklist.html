@@ -53,7 +53,7 @@
                   <td class="lgl1 getHeader" reshead="Stage">{{claimrequestdetail.STAGE}}</td>
                   <td class="lgl1 getHeader" reshead="Amount">{{claimrequestdetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
                   <td class="lgl1 getHeader fColor" reshead="Action">
-                    <button ion-button item-end (click)='viewClaim(claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
+                    <button ion-button item-end (click)='viewClaim(claimrequestdetail.STAGE_GUID,claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'><ion-icon name="md-eye"></ion-icon></button>
                 </td>
               </tr>     
     

@@ -29,12 +29,15 @@ export class OvertimeClaimViewPage {
 
   isRemarksAccepted: boolean =false;
   level: any;
+  approverDesignation: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {    
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
     this.level = navParams.get('level_no');
+    this.approverDesignation = this.navParams.get("approverDesignation");
+
 
     this.LoadMainClaim();
   }  
