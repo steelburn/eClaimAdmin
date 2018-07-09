@@ -1,5 +1,5 @@
 ﻿import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, Http } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -11,7 +11,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ConferenceApp } from './app.component';
+ import { eClaimApp } from './app.component';
 
 // import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
@@ -32,7 +32,6 @@ import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TenantsetupPage } from '../pages/tenantsetup/tenantsetup';
 import { SetupPage } from '../pages/setup/setup';
-import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
@@ -57,15 +56,13 @@ import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
 
 import { UploadPage } from '../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { Chart } from 'chart.js';
-import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -73,20 +70,16 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
-
 import { AddTollPage } from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
-
 import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
 import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist'
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
-
-
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
@@ -96,9 +89,7 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../pages/miscellaneous-claim-view/miscellaneous-claim-view';
 import { ApiManagerProvider } from '../providers//api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
-
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
-
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DatePipe, DecimalPipe } from '@angular/common'
@@ -107,7 +98,7 @@ import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-dat
 import {NgxPaginationModule} from 'ngx-pagination'; 
 @NgModule({
   declarations: [
-    ConferenceApp,
+    eClaimApp,
     AccountPage,
     LoginPage,
 //    PopoverPage,
@@ -158,7 +149,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     UploadPage,
     ProfileSetupPage,
     AddTollPage,
-
     ClaimhistoryPage,
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
@@ -166,9 +156,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     UserclaimslistPage,
     ClaimReportPage,
     MonthlyClaimReportPage,
-
     CustomerSetupPage,
-
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage
   ],
@@ -184,7 +172,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
           deps: [HttpClient]
         }
       }),
-    IonicModule.forRoot(ConferenceApp, {}, {
+    IonicModule.forRoot(eClaimApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs' },
         // { component: DashboardPage, name: 'Home', segment: 'Home' },
@@ -196,7 +184,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
         { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' },
-
         { component: TravelclaimPage, name: 'TravelclaimPage', segment: 'TravelclaimPage' },
         { component: EntertainmentclaimPage, name: 'EntertainmentclaimPage', segment: 'EntertainmentclaimPage' },
         { component: GiftclaimPage, name: 'GiftclaimPage', segment: 'GiftclaimPage' },
@@ -204,15 +191,13 @@ import {NgxPaginationModule} from 'ngx-pagination';
         { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
         { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
         { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },        
-
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
         { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
         { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
         { component: ClaimhistorydetailPage, name: 'ClaimhistorydetailPage', segment: 'ClaimhistorydetailPage' },
         { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
-        { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' }
-     
+        { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' }    
       ]
     }),
     IonicStorageModule.forRoot()
@@ -220,7 +205,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 
   bootstrap: [IonicApp],
   entryComponents: [
-    ConferenceApp,
+    eClaimApp,
     AccountPage,
     LoginPage,
 //    PopoverPage,
@@ -268,37 +253,26 @@ import {NgxPaginationModule} from 'ngx-pagination';
     UserPage,
     SocRegistrationPage,
     TravelclaimPage,
-
-
     ProfileSetupPage,
-
     AddTollPage,
     ClaimhistoryPage,
-
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
     ClaimtasklistPage,
     UserclaimslistPage,
-
-
     ClaimReportPage,
     MonthlyClaimReportPage,
     UploadPage,
-
     CustomerSetupPage,
-
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage 
-
-
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ConferenceData, HttpClientModule, ApiManagerProvider,
+     HttpClientModule, ApiManagerProvider,
     UserData, DatePipe, DecimalPipe,
     InAppBrowser,
     SplashScreen, StatusBar, Services,
-
     Camera, ProfileManagerProvider, 
     File,
     FilePath,

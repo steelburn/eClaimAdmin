@@ -8,9 +8,6 @@ import { BaseHttpService } from './base-http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
-//import 'rxjs/add/observable/throw';
-
-import { NavController } from 'ionic-angular';
 
 
 @Injectable()
@@ -36,15 +33,13 @@ export class BankSetup_Service {
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-			.map((response) => {
-				let banks: Array<BankSetup_Model> = [];
-
-				// result.resource.forEach((bank) => {
-				// 	banks.push(BankSetup_Model.fromJson(bank));
-				// });  
-				return banks;
-
-			}).catch(this.handleError);
+			.map(() => {
+					let banks: Array<BankSetup_Model> = [];
+					// result.resource.forEach((bank) => {
+					// 	banks.push(BankSetup_Model.fromJson(bank));
+					// });  
+					return banks;
+				}).catch(this.handleError);
 	};
 
 	save_bank(bank_main: BankSetup_Model): Observable<any> {
@@ -78,14 +73,13 @@ export class BankSetup_Service {
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-			.map((response) => {
-				let banks: Array<BankSetup_Model> = [];
-
-				// result.resource.forEach((bank) => {
-				//  	banks.push(BankSetup_Model.fromJson(bank));
-				//  });
-				return banks;
-			}).catch(this.handleError);
+			.map(() => {
+					let banks: Array<BankSetup_Model> = [];
+					// result.resource.forEach((bank) => {
+					//  	banks.push(BankSetup_Model.fromJson(bank));
+					//  });
+					return banks;
+				}).catch(this.handleError);
 	};
 
 	remove(id: string) {

@@ -13,7 +13,6 @@ import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
-import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 
@@ -52,17 +51,11 @@ export interface PageInterface {
 @Component({
   templateUrl: 'app.template.html'
 })
-export class ConferenceApp {
+export class eClaimApp {
   blnLogin: boolean = false;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   public Menu_Array: any[] = [];
-  //public setupPageClicked: boolean = false;
-  //public setupPageClick() {
-  //  this.setupPageClicked = !this.setupPageClicked;
-  //}
 
-  // the root nav is a child of the root app component
-  // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
 
   // List of pages that can be navigated to from the left menu
@@ -126,7 +119,6 @@ export class ConferenceApp {
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
-    public confData: ConferenceData,
     public storage: Storage,
     statusbar: StatusBar,
     splashScreen: SplashScreen, public translate: TranslateService, public http: Http
@@ -140,10 +132,6 @@ export class ConferenceApp {
 
     translate.setDefaultLang('en');
     platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
-
-    // Check if the user has already seen the tutorial
-    // load the conference data
-    confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
@@ -163,16 +151,10 @@ export class ConferenceApp {
     // debugger;    
     let params = {};
 
-    // the nav component was found using @ViewChild(Nav)
-    // setRoot on the nav to remove previous pages and only have this page
-    // we wouldn't want the back button to show in this scenario
     if (page.index) {
       params = { tabIndex: page.index };
     }
 
-    // If we are already on tabs just change the selected tab
-    // don't setRoot again, this maintains the history stack of the
-    // tabs even if changing them from the menu
     if (this.nav.getActiveChildNavs().length && page.index != undefined) {
       this.nav.getActiveChildNavs()[0].select(page.index);
       // Set the root of the nav with params if it's a tab index
@@ -204,38 +186,6 @@ export class ConferenceApp {
   }
 
   enableMenu(loggedIn: boolean) {
-    // debugger;
-    //Get all the roles and menus for that particular user.-------------------------------------------------------   
-    // let url: string; this.Menu_Array = []; let Role_Name: string = "";
-    // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-    // this.http
-    //   .get(url)
-    //   .map(res => res.json())
-    //   .subscribe(data => {
-    //     let res = data["resource"];
-    //     if (res.length > 0) {
-    //       for (var item in data["resource"]) {
-    //         if (data["resource"][item]["NAME"].toUpperCase() == "HOME") {
-    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' });
-    //         }
-    //         else if (data["resource"][item]["NAME"].toUpperCase() == "APPROVER TASK") {
-    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' });
-    //         }
-    //         else if (data["resource"][item]["NAME"].toUpperCase() == "CHANGE PASSWORD") {
-    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' });
-    //         }
-    //         else {
-    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' });
-    //         }            
-    //       }
-    //     }
-    //   });
-    // ---------------------------------------------------------------------------------------------------------------------------------   
-
-    // this.menu.enable(loggedIn, 'loggedInMenu');
-    // this.menu.enable(!loggedIn, 'loggedOutMenu');
-    
-    // debugger;
     if (localStorage.length > 0) {
       this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME"); this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL"); 
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
@@ -605,37 +555,6 @@ export class ConferenceApp {
     else {
       this.blnLogin = false;
     }
-
-
-
-
-
-    //For Super admin, All menu should display
-    // if (localStorage.length > 0) {
-    //   if (localStorage.getItem("g_USER_GUID") == "sva") {
-    //     this.menu.enable(loggedIn, 'loggedInMenu');
-    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
-    //   }
-    //   //For user, distinct menu should display
-    //   else if (localStorage.getItem("g_IS_TENANT_ADMIN") != "1") {
-    //     // this.appPages_User = [
-    //     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-    //     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
-    //     // ];
-    //     this.appPages_User = this.Menu_Array;
-
-    //     this.menu.enable(loggedIn, 'loggedInMenu_User');
-    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
-    //   }
-    //   else {
-    //     this.menu.enable(loggedIn, 'loggedInMenu');
-    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
-    //   }
-    // }
-    // else {
-    //   this.menu.enable(loggedIn, 'loggedInMenu');
-    //   this.menu.enable(!loggedIn, 'loggedOutMenu');
-    // }
   }
 
   isActive(page: PageInterface) {
