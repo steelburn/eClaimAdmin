@@ -1,7 +1,5 @@
 import { IonicPage, NavController, NavParams,LoadingController,Loading, Config } from 'ionic-angular';
-import { Component, NgModule, ElementRef, Inject, ViewChild, OnChanges } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
+import { Component } from '@angular/core';
 import { Chart } from 'chart.js';
 //import 'chartjs-plugin-deferred';
 import 'chart.piecelabel.js';
@@ -9,7 +7,6 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../config/constants';
 import { Http } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SetupPage } from '../setup/setup';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { DecimalPipe } from "@angular/common";
 
@@ -48,7 +45,7 @@ export class DashboardPage {
   PaidClaimAmount_year:any;
   loading: Loading; 
   constructor(public numberPipe: DecimalPipe,public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
-    public inAppBrowser: InAppBrowser, private loadingCtrl: LoadingController) {
+    public inAppBrowser: InAppBrowser) {
     this.DashboardForm = fb.group({
       'Month': [null, Validators.compose([Validators.required])],
       'Year': [null, Validators.compose([Validators.required])]
@@ -549,13 +546,13 @@ export class DashboardPage {
       });
       
   }
-  Rejected_Click(Rejected: any) {
+  Rejected_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Rejected: "Rejected" });
   }
-  Pending_Click(Pending: any) {
+  Pending_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
   }
-  Approved_Click(Approved: any) {
+  Approved_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
   }
   Paid_Click()

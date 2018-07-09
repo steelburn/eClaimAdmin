@@ -1,15 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { Component, ViewChild } from '@angular/core';
-import { Events, MenuController, Nav, Platform, NavController } from 'ionic-angular';
+import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage'; 
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { TabsPage } from '../pages/tabs/tabs';
 import { SetupPage } from '../pages/setup/setup';
-import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
@@ -18,41 +15,24 @@ import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
-import { UserPage } from '../pages/user/user';
-import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 
-import { PermissionPage } from '../pages/Permission/permission';
-import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
-import { PagesetupPage } from '../pages/pagesetup/pagesetup';
-import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
-import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
 
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
 import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist';
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist';
-import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
 
-import { UploadPage } from '../pages/upload/upload';
-import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
-import { StatesetupPage } from '../pages/statesetup/statesetup';
 
-import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
-//import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
-import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
 
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
 
@@ -694,7 +674,7 @@ export class ConferenceApp {
   GetUser_Role(user_guid: string) {
     // debugger;
     let TableURL = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + user_guid + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http
         .get(TableURL)
         .map(res => res.json())

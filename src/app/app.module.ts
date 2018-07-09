@@ -13,7 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ConferenceApp } from './app.component';
 
-import { PopoverPage } from '../pages/about-popover/about-popover';
+// import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { BanksetupPage } from '../pages/banksetup/banksetup';
@@ -110,7 +110,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ConferenceApp,
     AccountPage,
     LoginPage,
-    PopoverPage,
+//    PopoverPage,
     MedicalclaimPage,
     PrintclaimPage,
     GiftclaimPage,
@@ -223,7 +223,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ConferenceApp,
     AccountPage,
     LoginPage,
-    PopoverPage,
+//    PopoverPage,
     SetupguidePage,
     SignupPage,
     StatesetupPage,
