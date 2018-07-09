@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 
+@Component({
+
+})
 
 export class GlobalFunction {
   constructor(public alertCtrl: AlertController) {

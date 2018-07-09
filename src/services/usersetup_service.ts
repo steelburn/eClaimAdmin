@@ -20,10 +20,6 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
-import { NavController } from 'ionic-angular';
-
-;
-
 @Injectable()
 
 export class UserSetup_Service {
@@ -75,15 +71,10 @@ export class UserSetup_Service {
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-			.map((response) => {
-				let banks: Array<UserInfo_Model> = [];
-
-				// result.resource.forEach((bank) => {
-				// 	banks.push(BankSetup_Model.fromJson(bank));
-				// });  
-				return banks;
-
-			}).catch(this.handleError);
+			.map(() => {
+					let banks: Array<UserInfo_Model> = [];
+					return banks;
+				}).catch(this.handleError);
 	};
 
 	save_user_info(user_info: UserInfo_Model): Observable<any> {
@@ -337,20 +328,6 @@ export class UserSetup_Service {
 	}
 
 	remove_multiple(id: string, tablename: string) {
-		// let url_multiple: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/' + tablename;		
-
-		// var queryHeaders = new Headers();
-		// queryHeaders.append('Content-Type', 'application/json');
-		// //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-		// queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-		// return this.httpService.http
-		// 	.delete(url_multiple + '/' + id, { headers: queryHeaders })
-		// 	.map((response) => {
-		// 		var result: any = response.json();
-		// 		//return result.USER_GUID;
-		// 		return response;
-		// 	});
-
 		let url_multiple = this.baseResource_Url + tablename + "?filter=(USER_GUID=" + id + ")";
 
 		var queryHeaders = new Headers();
@@ -364,20 +341,4 @@ export class UserSetup_Service {
 				return response;
 			});
 	}
-
-	// get_bijay(id: string): Observable<ViewUser_Model> {
-	// 	var queryHeaders = new Headers();
-	// 	queryHeaders.append('Content-Type', 'application/json');
-	// 	//queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-
-	// 	return this.httpService.http
-	// 		//.get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders})
-	// 		.get(this.baseResourceView + "?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY, { headers: queryHeaders })
-	// 		.map((response) => {
-	// 			var result: any = response.json();
-	// 			let user: ViewUser_Model = ViewUser_Model.fromJson(result);
-	// 			//alert(JSON.stringify(user)); 
-	// 			return user;
-	// 		}).catch(this.handleError);
-	// };
 }

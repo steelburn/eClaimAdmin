@@ -9,11 +9,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 
-class ServerResponse {
-	constructor(public resource: any) {
 
-	}
-};
 @Injectable()
 export class AdServer_Service {
 	baseResource_Url: string = constants.AD_URL;
