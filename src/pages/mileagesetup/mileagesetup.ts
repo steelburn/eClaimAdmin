@@ -165,16 +165,16 @@ export class MileagesetupPage {
 
       if (localStorage.getItem("g_USER_GUID") != "sva") {
         this.Mileageform = fb.group({
-          CATEGORY: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          RATE_PER_UNIT: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          CATEGORY: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+          RATE_PER_UNIT: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER), Validators.required])],
           RATE_DATE: ["", Validators.required],
           ACTIVATION_FLAG: [""],
         });
       }
       else {
         this.Mileageform = fb.group({
-          CATEGORY: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-          RATE_PER_UNIT: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+          CATEGORY: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+          RATE_PER_UNIT: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER), Validators.required])],
           RATE_DATE: ["", Validators.required],
           ACTIVATION_FLAG: [""],
           TENANT_NAME: [null, Validators.required],

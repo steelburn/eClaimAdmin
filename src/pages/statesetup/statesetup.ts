@@ -155,7 +155,7 @@ export class StatesetupPage {
 
       //----------------------------------------
       this.Stateform = fb.group({
-        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
         COUNTRY_GUID: ["", Validators.required],
       });
     }

@@ -42,7 +42,7 @@ declare var cordova: any;
 import { LoginPage } from '../login/login';
 import { Conditional } from '@angular/compiler';
 import { ImageUpload_model } from '../../models/image-upload.model';
-declare var cordova: any;
+
 /**
  * Generated class for the UserPage page.
  *
@@ -560,7 +560,7 @@ export class UserPage {
         EMAIL: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
         LOGIN_ID: [null],
         PASSWORD: [null],
-        CONTACT_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
+        CONTACT_NO: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
         COMPANY_CONTACT_NO: [null],
         MARITAL_STATUS: [null],
         PERSONAL_ID_TYPE: [null],
@@ -614,10 +614,10 @@ export class UserPage {
         // -------------------EMERGENCY CONTACT DETAILS------------------------
         EMG_CONTACT_NAME1: [null],
         EMG_RELATIONSHIP: [null],
-        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
+        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
         EMG_CONTACT_NAME2: [null],
         EMG_RELATIONSHIP2: [null],
-        EMG_CONTACT_NO2: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
+        EMG_CONTACT_NO2: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
 
         // -------------------PAYROLL DETAILS------------------------
         EPF_NUMBER: [null],

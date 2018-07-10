@@ -138,7 +138,7 @@ export class PagesetupPage {
       this.Pageform = fb.group({
         NAME: ["", Validators.required],
         DESCRIPTION: [null],
-        //URL: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],          
+        //URL: [null, Validators.compose([Validators.pattern(constants.PATTERN_URL), Validators.required])],          
         URL: [null, Validators.compose([Validators.pattern('^(..\\/){0,1}[a-zA-Z0-9\\/\\-]+\\/[a-zA-Z]{2,20}[\\/]{0,1}$'), Validators.required])],
       });
     }

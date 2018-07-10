@@ -48,7 +48,7 @@ export class ChangePasswordPage {
       }
     }
     this.ChangePasswordForm = fb.group({
-      Current_Password: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],      
+      Current_Password: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],      
       New_Password: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]{5,7}'), Validators.required])],
       Confirm_Password: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]{5,7}'), Validators.required])],
     });
