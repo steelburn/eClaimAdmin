@@ -134,12 +134,12 @@ export class CompanysetupPage {
 
     this.Companyform = fb.group({
       //NAME: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9][a-zA-Z0-9 ]+'), Validators.required])],
-      NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
 
       //NAME: ["", Validators.required],
-      REGISTRATION_NO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      REGISTRATION_NO: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
       //REGISTRATION_NO: ["", Validators.required],
-      ADDRESS: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      ADDRESS: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
       //ADDRESS: ["", Validators.required],
       FAX: [null, Validators.compose([Validators.pattern('^[0-9]*'), Validators.required])],
       //FAX: ["", Validators.required],

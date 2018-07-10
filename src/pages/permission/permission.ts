@@ -42,8 +42,8 @@ export class PermissionPage {
       this.BindModule();
     
     this.Permissionform = fb.group({
-      TENANTNAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      MODULES: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],      
+      TENANTNAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+      MODULES: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],      
     });
   }
 

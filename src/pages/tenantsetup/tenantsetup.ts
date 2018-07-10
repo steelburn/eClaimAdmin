@@ -253,7 +253,7 @@ export class TenantsetupPage {
   public DeleteClick(TENANT_COMPANY_SITE_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Do you want to remove this entry?',
       buttons: [
         {
           text: 'Cancel',
@@ -314,28 +314,28 @@ export class TenantsetupPage {
       this.BindRole();
 
       this.Tenantform = fb_tenant.group({
-        TENANT_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        TENANT_COMPANY_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        COMPANY_SITE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        REGISTRATION_NUM: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        ADDRESS1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TENANT_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+        TENANT_COMPANY_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+        COMPANY_SITE_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+        REGISTRATION_NUM: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+        ADDRESS1: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
         ADDRESS2: ["", Validators.required],
         ADDRESS3: ["", Validators.required],
-        CONTACT_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        EMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-        CONTACT_PERSON: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        CONTACT_PERSON_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-        WEBSITE: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],
+        CONTACT_NO: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER), Validators.required])],
+        EMAIL: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL), Validators.required])],
+        CONTACT_PERSON: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+        CONTACT_PERSON_NO: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER), Validators.required])],
+        CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL), Validators.required])],
+        WEBSITE: [null, Validators.compose([Validators.pattern(constants.PATTERN_URL), Validators.required])],
         ISHQ_FLAG: [null],
         ACTIVE_FLAG: [null],
       });
 
       this.TenantUSerform = fb_user.group({
         //-------------For Tenant User--------------------
-        TULOGINID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        TUPASSWORD: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        TUEMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+        TULOGINID: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+        TUPASSWORD: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+        TUEMAIL: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL), Validators.required])],
         TUSERROLE: ["", Validators.required],
         //------------------------------------------------
       });

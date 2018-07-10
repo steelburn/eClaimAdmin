@@ -36,10 +36,6 @@ export class DepartmentSetup_Service {
             .map((response) => {
                 var result: any = response.json();
                 let branches: Array<DepartmentSetup_Model> = [];
-
-                // result.resource.forEach((branch) => {
-                // 	branches.push(BranchSetup_Model.fromJson(branche));
-                // });  
                 return branches;
 
             }).catch(this.handleError);
@@ -80,10 +76,6 @@ export class DepartmentSetup_Service {
             .map((response) => {
                 var result: any = response.json();
                 let branches: Array<DepartmentSetup_Model> = [];
-
-                // result.resource.forEach((branch) => {
-                //  	branches.push(BranchSetup_Model.fromJson(branch));
-                //  });
                 return branches;
             }).catch(this.handleError);
     };

@@ -152,33 +152,33 @@ export class CustomerSetupPage {
         //-------------------------------------------------------
         if (localStorage.getItem("g_USER_GUID") != "sva") {
           this.Customerform = fb.group({
-            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            customer_name: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
             location_name: [null],
             registration_no: [null],
-            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
+            address1: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT)])],
             address2: [null],
             address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
-            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
+            contact_person: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT)])],
+            contact_person_mobile_no: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
             contact_no1: [null],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')])],
+            email: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL)])],
             division: [null],
           });
         }
         else {
           this.Customerform = fb.group({
-            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            customer_name: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
             location_name: [null],
             registration_no: [null],
-            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
+            address1: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT)])],
             address2: [null],
             address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
-            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
+            contact_person: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT)])],
+            contact_person_mobile_no: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
             contact_no1: [null],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')])],
+            email: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL)])],
             division: [null],
             TENANT_NAME: [null],
           });

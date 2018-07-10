@@ -200,7 +200,7 @@ export class AccountPage {
         // -------------------EMERGENCY CONTACT DETAILS------------------------
         EMG_CONTACT_NAME1: [null],
         EMG_RELATIONSHIP: [null],
-        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
+        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
         EMG_CONTACT_NAME2: [null],
         EMG_RELATIONSHIP2: [null],
         EMG_CONTACT_NO2: [null],

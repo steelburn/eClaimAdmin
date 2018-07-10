@@ -138,39 +138,39 @@ export class SetupguidePage {
 
     this.Branchform1 = fb1.group({
       //-----------For Tenant Company-------------------
-      TENANT_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      //USER_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      TENANT_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+      //USER_ID: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
       USER_ID: [null],
-      PASSWORD: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      CONTACT_PERSON: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      PASSWORD: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+      CONTACT_PERSON: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
     });
 
     this.Branchform2 = fb2.group({
       //-----------For Tenant HQ------------------------
-      COMPANY_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      HQ_REGNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      COMPANY_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+      HQ_REGNO: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
       TENANT_EMAIL: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-      TENANT_CONTACTNO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      TENANT_CONTACTNO: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER), Validators.required])],
     });
 
     this.Branchform3 = fb3.group({
       //-----------For Branch---------------------------
-      BRANCH_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-      BRANCH_REGNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      BRANCH_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+      BRANCH_REGNO: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
       BRANCH_EMAIL: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
-      BRANCH_CONTACT_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      BRANCH_CONTACT_NO: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER), Validators.required])],
       //ISHQ_FLAG: [''],
     });
 
     this.Branchform4 = fb4.group({
       //-----------For Department-----------------------
-      DEPARTMENT_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      DEPARTMENT_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
       DEPARTMENT_DESCRIPTION: [null],
     });
 
     this.Branchform5 = fb5.group({
       //-----------For Designation----------------------
-      DESINATION_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      DESINATION_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
       DESIGNATION_DESC: [null],
     });
 

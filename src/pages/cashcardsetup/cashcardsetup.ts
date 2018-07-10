@@ -151,24 +151,24 @@ export class CashcardsetupPage {
         //-------------------------------------------------------
         if (localStorage.getItem("g_USER_GUID") != "sva") {
           this.Cashform = fb.group({
-            CASHCARD_SNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            ACCOUNT_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            CASHCARD_SNO: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+            ACCOUNT_ID: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
             ACCOUNT_PASSWORD: [null, Validators.compose([Validators.pattern('((?=.*\)(?=.*[a-zA-Z0-9]).{4,20})'), Validators.required])],
             //MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])],          
-            MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],
+            MANAGEMENT_URL: [null, Validators.compose([Validators.pattern(constants.PATTERN_URL), Validators.required])],
 
             //For email validation
-            //Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')
+            //Validators.pattern(constants.PATTERN_EMAIL)
             DESCRIPTION: [null],
           });
         }
         else {
           this.Cashform = fb.group({
-            CASHCARD_SNO: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            ACCOUNT_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            CASHCARD_SNO: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+            ACCOUNT_ID: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
             ACCOUNT_PASSWORD: [null, Validators.compose([Validators.pattern('((?=.*\)(?=.*[a-zA-Z0-9]).{6,20})'), Validators.required])],
             //MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'), Validators.required])],
-            MANAGEMENT_URL: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],
+            MANAGEMENT_URL: [null, Validators.compose([Validators.pattern(constants.PATTERN_URL), Validators.required])],
             DESCRIPTION: [null],
             TENANT_NAME: [null, Validators.required],
           });

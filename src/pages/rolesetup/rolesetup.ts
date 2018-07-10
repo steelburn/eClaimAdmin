@@ -181,7 +181,7 @@ export class RolesetupPage {
         });
 
       this.Roleform = fb.group({
-        NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
         DESCRIPTION: [null],
         ACTIVATION_FLAG: ["", Validators.required],
         ADD_PERMISSON: [null],

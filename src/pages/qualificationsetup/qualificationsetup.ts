@@ -146,7 +146,7 @@ export class QualificationsetupPage {
 
       //Load the Form control---------------------------      
       this.Qualifyform = fb.group({
-        TYPE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TYPE_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
         TYPE_DESC: [null],
       });
     }
