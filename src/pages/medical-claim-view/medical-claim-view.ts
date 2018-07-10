@@ -2,13 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Platform } from 'ionic-angular';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import { Services } from '../Services';
-import * as constants from '../../config/constants';
-import { ClaimWorkFlowHistoryModel } from '../../models/claim-work-flow-history.model';
-import {TravelclaimPage} from '../../pages/travelclaim/travelclaim';
 import {MedicalclaimPage} from '../../pages/medicalclaim/medicalclaim';
-import { UUID } from 'angular2-uuid';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 

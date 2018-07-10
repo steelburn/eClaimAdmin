@@ -1,18 +1,17 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController, Item } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import CryptoJS from 'crypto-js';
 import { TitleCasePipe } from '@angular/common';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Transfer, TransferObject } from '@ionic-native/transfer';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Transfer } from '@ionic-native/transfer';
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 import { GlobalFunction } from '../../shared/GlobalFunction';
 import * as constants from '../../app/config/constants';
@@ -35,12 +34,10 @@ import { UserRole_Model } from '../../models/user_role_model'
 
 import { UUID } from 'angular2-uuid';
 
-import { elementDef } from '@angular/core/src/view/element';
 
 declare var cordova: any;
 
 import { LoginPage } from '../login/login';
-import { Conditional } from '@angular/compiler';
 import { ImageUpload_model } from '../../models/image-upload.model';
 
 /**
@@ -304,7 +301,6 @@ export class UserPage {
     let url_user_Professional_Certification = this.baseResourceUrl2_URL + "user_certification?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url_user_Spouse = this.baseResourceUrl2_URL + "user_spouse?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url_user_Children = this.baseResourceUrl2_URL + "user_children?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    let url_user_Image = this.baseResourceUrl2_URL + "view_image_retrieve?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     //----------------Get the Details from Db and bind Controls---------------------------------
     this.http.get(url_user_edit, options)
@@ -502,7 +498,7 @@ export class UserPage {
   }
 
   button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api: Services, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: Transfer, public toastCtrl: ToastController, public platform: Platform, private fileTransfer_new: FileTransfer, private titlecasePipe: TitleCasePipe) {
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, fb: FormBuilder, public http: Http, private api: Services, private userservice: UserSetup_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, public toastCtrl: ToastController, public platform: Platform, private titlecasePipe: TitleCasePipe) {
     this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
     localStorage.removeItem("Unique_File_Name");
 
@@ -688,8 +684,8 @@ export class UserPage {
     objImage.IMAGE_URL = this.CloudFilePath + fileName;
     objImage.CREATION_TS = new Date().toISOString();
     objImage.Update_Ts = new Date().toISOString();
-    return new Promise((resolve, reject) => {
-      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+    return new Promise((resolve) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe(() => {
         // let res = response.json();
         // let imageGUID = res["resource"][0].Image_Guid;
         resolve(objImage.toJson());
@@ -708,7 +704,7 @@ export class UserPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + fileName, this.Userform.get(fileChoose).value, options)
         .map((response) => {
           return response;
@@ -1340,7 +1336,7 @@ export class UserPage {
 
   GetTenant_GUID(Tenant_company_guid: string) {
     let TableURL = this.BaseTableURL + "tenant_company" + '?filter=(TENANT_COMPANY_GUID=' + Tenant_company_guid + ')&' + this.Key_Param;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http
         .get(TableURL)
         .map(res => res.json())
@@ -1434,8 +1430,6 @@ export class UserPage {
 
   // Save_User_Info(imageGUID: string) {
   Save_User_Info() {
-    //debugger;
-    let userinfo_entry: UserInfo_Model = new UserInfo_Model();
     this.userinfo_entry.USER_INFO_GUID = UUID.UUID();
     this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
     this.userinfo_entry.FULLNAME = this.titlecasePipe.transform(this.User_Name_ngModel.trim());
@@ -1685,7 +1679,6 @@ export class UserPage {
             console.table(resJson)
             let imageResult = this.SaveImageinDB(this.fileName2);
             imageResult.then((objImage: ImageUpload_model) => {
-              let result = this.Save_User_Qualification(objImage.Image_Guid);
 
 
               //alert("User Contact inserted");
@@ -1715,7 +1708,6 @@ export class UserPage {
             console.table(resJson)
             let imageResult = this.SaveImageinDB(this.fileName2);
             imageResult.then((objImage: ImageUpload_model) => {
-              let result = this.Update_User_Qualification(objImage.Image_Guid);
 
               // if (this.view_user_details[0]["QUALIFICATION_GUID"] != "") {
               //   let result = this.Update_User_Qualification(objImage.Image_Guid);
@@ -1759,7 +1751,6 @@ export class UserPage {
               console.table(resJson)
               let imageResult = this.SaveImageinDB(this.fileName3);
               imageResult.then((objImage: ImageUpload_model) => {
-                let result = this.Save_User_Certification(objImage.Image_Guid);
                 //alert("User Qualification inserted");
               })
             })
@@ -1774,7 +1765,7 @@ export class UserPage {
           }
         });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.api.postData('user_qualification', userqualification_entry.toJson(true)).subscribe((data) => {
 
         let res = data.json();
@@ -1814,7 +1805,6 @@ export class UserPage {
               console.table(resJson)
               let imageResult = this.SaveImageinDB(this.fileName3);
               imageResult.then((objImage: ImageUpload_model) => {
-                let result = this.Update_User_Certification(objImage.Image_Guid);
               })
             })
 
@@ -1828,7 +1818,7 @@ export class UserPage {
           }
         });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.api.postData('user_qualification', userqualification_entry.toJson(true)).subscribe((data) => {
 
         let res = data.json();
@@ -1867,7 +1857,7 @@ export class UserPage {
             }
           });
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         this.api.postData('user_certification', UserCertification_Entry.toJson(true)).subscribe((data) => {
 
           let res = data.json();
@@ -2471,9 +2461,9 @@ export class UserPage {
         var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
-    }, (err) => {
-      this.presentToast('Error while selecting image.');
-    });
+    }, () => {
+        this.presentToast('Error while selecting image.');
+      });
   }
 
   private createFileName() {
@@ -2484,31 +2474,16 @@ export class UserPage {
   }
 
   private copyFileToLocalDir(namePath: any, currentName: any, newFileName: any) {
-    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(() => {
       this.lastImage = newFileName;
-    }, error => {
-      this.presentToast('Error while storing file.');
-    });
+    }, () => {
+        this.presentToast('Error while storing file.');
+      });
   }
 
   ProfileImage: any;
   fileList: FileList;
 
-  private ProfileImageDisplay_old(e: any, fileChoose: string): void {
-    let reader = new FileReader();
-    if (e.target.files && e.target.files[0]) {
-
-      const file = e.target.files[0];
-      this.Userform.get(fileChoose).setValue(file);
-      if (fileChoose === 'avatar1')
-        this.fileName1 = file.name;
-
-      reader.onload = (event: any) => {
-        this.ProfileImage = event.target.result;
-      }
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  }
 
   public ImageField: any;
   baseUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/files/eclaim/car1.jpg' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -2543,26 +2518,6 @@ export class UserPage {
   newImage: boolean = true;
   ImageUploadValidation: boolean = false;
 
-  private ProfileImageDisplay(e: any, fileChoose: string): void {
-    let reader = new FileReader();
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      this.Userform.get(fileChoose).setValue(file);
-      if (fileChoose === 'avatar1')
-        this.fileName1 = file.name;
-
-      reader.onload = (event: any) => {
-        this.ProfileImage = event.target.result;
-        this.Profile_Image_Display = event.target.result
-      }
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    this.imageGUID = this.uploadFileName;
-    this.chooseFile = true;
-    this.newImage = false;
-    this.onFileChange(e);
-    this.ImageUploadValidation = false;
-  }
 
   onFileChange(event: any) {
     const reader = new FileReader();
@@ -2582,7 +2537,7 @@ export class UserPage {
 
   saveIm() {
     let uploadImage = this.UploadImage();
-    uploadImage.then((resJson) => {
+    uploadImage.then(() => {
       this.imageGUID = this.uploadFileName;
       this.chooseFile = false;
       this.ImageUploadValidation = true;
@@ -2601,7 +2556,7 @@ export class UserPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + uniqueName, this.Userform.get('avatar').value, options)
         .map((response) => {
           return response;

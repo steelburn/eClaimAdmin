@@ -15,22 +15,16 @@ import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
 import { UserData } from '../providers/user-data';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
-
-
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
 import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist';
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist';
 import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
-
-
 import { TranslateService } from '@ngx-translate/core';
-
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';

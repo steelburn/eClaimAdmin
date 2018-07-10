@@ -2,13 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import * as constants from '../../config/constants';
 import { TranslateService } from '@ngx-translate/core';
-
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Services } from '../Services';
-
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ClaimRequestDetailModel } from '../../models/claim-request-detail.model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';

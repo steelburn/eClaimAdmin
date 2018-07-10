@@ -56,7 +56,7 @@ import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
 
 import { UploadPage } from '../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
-import { Camera } from '@ionic-native/camera';
+// import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
@@ -273,7 +273,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     UserData, DatePipe, DecimalPipe,
     InAppBrowser,
     SplashScreen, StatusBar, Services,
-    Camera, ProfileManagerProvider, 
+    // Camera, 
+    ProfileManagerProvider, 
     File,
     FilePath,
     FileTransfer,

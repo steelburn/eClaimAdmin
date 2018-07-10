@@ -28,7 +28,6 @@ import { UserRole_Model } from '../../models/user_role_model'
 
 import { UserSetup_Service } from '../../services/usersetup_service';
 
-
 import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
@@ -56,7 +55,7 @@ export class TenantsetupPage {
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
   userrole_entry: UserRole_Model = new UserRole_Model();
 
-  Tenantform: FormGroup; TenantUSerform: FormGroup;
+  Tenantform: FormGroup; TenantUserform: FormGroup;
 
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_tenantdetails' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -331,7 +330,7 @@ export class TenantsetupPage {
         ACTIVE_FLAG: [null],
       });
 
-      this.TenantUSerform = fb_user.group({
+      this.TenantUserform = fb_user.group({
         //-------------For Tenant User--------------------
         TULOGINID: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
         TUPASSWORD: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
@@ -341,7 +340,7 @@ export class TenantsetupPage {
       });
     }
     else {
-      alert("Sorry !! This is for only Super Admin.");
+      alert("Sorry, access is available only for Super Admin.");
       this.navCtrl.push(LoginPage);
     }
   }
