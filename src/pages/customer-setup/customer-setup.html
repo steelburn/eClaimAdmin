@@ -101,7 +101,7 @@
             <ion-input type="text" formControlName="contact_person" [(ngModel)]="CONTACT_PERSON_ngModel_Add" placeholder="{{'Please fill the contact person'}}"></ion-input>
           </ion-item>          
           
-          <ion-item style="display: none">
+          <!-- <ion-item style="display: none">
             <ion-label stacked>{{ 'Location Name' | translate }}</ion-label>
             <ion-input type="text" formControlName="location_name" [(ngModel)]="LOCATION_NAME_ngModel_Add" placeholder="{{'Please fill the location name'}}"></ion-input>
           </ion-item>
@@ -139,7 +139,7 @@
           <ion-item style="display: none">
             <ion-label stacked>{{ 'Division' | translate }}</ion-label>
             <ion-input type="text" formControlName="division" [(ngModel)]="DIVISION_ngModel_Add" placeholder="{{'Please fill the division'}}"></ion-input>
-          </ion-item>
+          </ion-item> -->
 
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Customerform.valid" (click)="Save()">Submit</button>
