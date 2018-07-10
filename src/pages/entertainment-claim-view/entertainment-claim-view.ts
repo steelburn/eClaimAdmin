@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Services } from '../Services';
 import {EntertainmentclaimPage} from '../../pages/entertainmentclaim/entertainmentclaim';

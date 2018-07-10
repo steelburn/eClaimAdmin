@@ -1,16 +1,12 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
-
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-
 import * as constants from '../../app/config/constants';
 import { PageSetup_Model } from '../../models/pagesetup_model';
 import { PageSetup_Service } from '../../services/pagesetup_service';
 import { BaseHttpService } from '../../services/base-http';
-
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
 
@@ -116,7 +112,7 @@ export class PagesetupPage {
   }
 
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private pagesetupservice: PageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private pagesetupservice: PageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry, please login.');
       this.navCtrl.push(LoginPage);

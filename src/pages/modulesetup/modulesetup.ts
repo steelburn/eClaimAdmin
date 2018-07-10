@@ -1,20 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
-
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-
 import * as constants from '../../app/config/constants';
 import { ModuleSetup_Model } from '../../models/modulesetup_model';
 import { ModuleSetup_Service } from '../../services/modulesetup_service';
-
 import { ModulePageSetup_Model } from '../../models/modulepagesetup_model';
 import { ModulePageSetup_Service } from '../../services/modulepagesetup_service';
-
 import { BaseHttpService } from '../../services/base-http';
-
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
 
@@ -160,7 +154,7 @@ export class ModulesetupPage {
   }
 
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private modulesetupservice: ModuleSetup_Service, private modulepagesetupservice: ModulePageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private modulesetupservice: ModuleSetup_Service, private modulepagesetupservice: ModulePageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
 
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       this.loading = this.loadingCtrl.create({

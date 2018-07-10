@@ -21,7 +21,7 @@ export class BankSetup_Service {
 		let errMsg = (error.message) ? error.message :
 			error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 		console.log(errMsg); // log to console instead
-		//localStorage.setItem('session_token', '');       
+		//localStorage.setItem('session_token', '');
 		return Observable.throw(errMsg);
 	}
 
@@ -37,7 +37,7 @@ export class BankSetup_Service {
 					let banks: Array<BankSetup_Model> = [];
 					// result.resource.forEach((bank) => {
 					// 	banks.push(BankSetup_Model.fromJson(bank));
-					// });  
+					// });
 					return banks;
 				}).catch(this.handleError);
 	};
@@ -107,7 +107,7 @@ export class BankSetup_Service {
 			.get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders })
 			.map((response) => {
 				var result: any = response.json();
-				let bank: BankSetup_Model = BankSetup_Model.fromJson(result);//alert(JSON.stringify(bank)); 
+				let bank: BankSetup_Model = BankSetup_Model.fromJson(result);//alert(JSON.stringify(bank));
 				return bank;
 			}).catch(this.handleError);
 	};

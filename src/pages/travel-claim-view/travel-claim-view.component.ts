@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Platform } from 'ionic-angular';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import { Services } from '../Services';
-import * as constants from '../../config/constants';
-import { ClaimWorkFlowHistoryModel } from '../../models/claim-work-flow-history.model';
 import {TravelclaimPage} from '../../pages/travel-claim/travel-claim.component';
-import { UUID } from 'angular2-uuid';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 
@@ -30,7 +26,7 @@ export class TravelClaimViewPage {
   level: any;
   // totalAmount: number = 0;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
@@ -65,26 +61,9 @@ export class TravelClaimViewPage {
         })
       })
     }
-  // LoadMainClaim() {
-  //   this.LoadClaimDetails();
-  //   console.log(Services.getUrl('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-  //   this.http
-  //     .get(Services.getUrl('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       this.claimRequestData = data["resource"];
-  //       this.claimRequestData.forEach(element => {
-  //         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-  //         this.totalClaimAmount = element.MILEAGE_AMOUNT + element.Allowance;
-  //         console.log(this.totalClaimAmount)
-  //       }); 
-  //       this.totalClaimAmount += this.tollParkAmount ;
-  //     }
-  //     );
-  // }
-
+ 
   LoadClaimDetails() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
         this.claimDetailsData.forEach(element => {
@@ -96,21 +75,6 @@ export class TravelClaimViewPage {
       })
     });
   }
-
-  // LoadClaimDetails() {
-  //   this.http
-  //     .get(Services.getUrl('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       this.claimDetailsData = data["resource"];
-
-  //   this.claimDetailsData.forEach(element => {
-  //     if (element.ATTACHMENT_ID !== null)
-  //         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-  //     this.tollParkAmount += element.AMOUNT;
-  //   }); 
-  //       });
-  // }
 
   EditClaim() {
     this.navCtrl.push(TravelclaimPage, {

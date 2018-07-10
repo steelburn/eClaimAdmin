@@ -1,23 +1,18 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 import { TitleCasePipe } from '@angular/common';
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-
 import * as constants from '../../app/config/constants';
 import { SocMain_Model } from '../../models/socmain_model';
 import { SocProject_Model } from '../../models/soc_project_model';
 import { SocCustomer_Model } from '../../models/soc_customer_model';
 import { SocCustomerLocation_Model } from '../../models/soc_customer_location_model';
 import { SocMain_Service } from '../../services/socmain_service';
-
 import { Tenant_Main_Model } from '../../models/tenant_main_model';
 import { View_SOC_Model } from '../../models/view_soc_model';
-
 import { BaseHttpService } from '../../services/base-http';
-
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
 
@@ -214,7 +209,7 @@ export class SocRegistrationPage {
   }
 
   loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private socservice: SocMain_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private socservice: SocMain_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
