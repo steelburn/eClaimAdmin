@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { Services } from '../Services';
+import { TranslateService } from '@ngx-translate/core';
 
-import { Http } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -24,6 +27,7 @@ import { MiscellaneousClaimPage } from '../../pages/miscellaneous-claim/miscella
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
 import { ExcelService } from '../../providers/excel.service';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 /**
  * Generated class for the UserclaimslistPage page.
@@ -50,7 +54,7 @@ export class UserclaimslistPage {
   searchboxValue: string;
   Pending: any; Rejected: any; Approved: any; Paid: any;
   public page:number = 1;
-  constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
     //  this.claimrefguid=navParams.get("claimRefGuid");
     //  this.userguid=navParams.get("userGuid");
@@ -233,7 +237,7 @@ export class UserclaimslistPage {
     });
   }
 
-  DeleteClaimRequest(claimReqGuid: any) {
+  DeleteClaimRequest(claimReqGuid: any, claimTypeGuid: any) {
     let alert1 = this.alertCtrl.create({
       title: 'Confirm delete claim',
       message: 'Are you sure you want to delete this claim?',
@@ -247,9 +251,9 @@ export class UserclaimslistPage {
         {
           text: 'Yes',
           handler: () => {
-            this.api.deleteApiModel('main_claim_request', claimReqGuid).subscribe(() => {
+            this.api.deleteApiModel('main_claim_request', claimReqGuid).subscribe(res => {
               this.BindData();
-              alert('Claim has been deleted successfully.');
+              alert('Claim has been deleted successfully.')
             });
           }
         }
@@ -262,7 +266,7 @@ export class UserclaimslistPage {
     console.log('ionViewDidLoad UserclaimslistPage');
   }
 
-  ExportToExcel() {
+  ExportToExcel(evt: any) {
     // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
     this.excelService.exportAsExcelFile(this.ExcelData, 'Data');    
   }

@@ -1,20 +1,31 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
+import { PrintingClaim_Model } from '../../models/printingclaim_model';
 import { PrintingClaim_Service } from '../../services/printingclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
-import { FileTransfer } from '@ionic-native/file-transfer';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FilePath } from '@ionic-native/file-path';
 
-import { ActionSheetController, ToastController } from 'ionic-angular';
+import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
+import { Services } from '../Services';
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
+import { MainClaimRequestModel } from '../../models/main-claim-request.model';
+import { ImageUpload_model } from '../../models/image-upload.model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { DashboardPage } from '../dashboard/dashboard';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -133,7 +144,7 @@ export class PrintclaimPage {
       })
   }
 
-  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
+  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private printingservice: PrintingClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -302,11 +313,31 @@ export class PrintclaimPage {
   fileName1: string;
   ProfileImage: any;
   newImage: boolean = true;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+
+      const file = e.target.files[0];
+      this.Printform.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.ImageUploadValidation = false;
+    this.newImage = false;
+    this.onFileChange(e);
+  }
 
   imageGUID: any;
-  saveIm() {
+  saveIm(formValues: any) {
     let uploadImage = this.UploadImage();
-    uploadImage.then(() => {
+    uploadImage.then((resJson) => {
       //this.submitAction(this.uploadFileName, formValues);
       this.imageGUID = this.uniqueName;
       this.chooseFile = false;
@@ -325,7 +356,7 @@ export class PrintclaimPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Printform.get('avatar').value, options)
         .map((response) => {
           return response;
@@ -365,13 +396,16 @@ export class PrintclaimPage {
           }
           //this.claimRequestData[0].STATUS = 'Pending';
           // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
-          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(() => {
+          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
+
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";
+
             this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
             //----------------------------------------------------------
-            alert('Claim details updated successfully.');
+
+            alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
           });
         })

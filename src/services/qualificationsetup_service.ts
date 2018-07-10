@@ -10,6 +10,11 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { NavController } from 'ionic-angular';
 
+class ServerResponse {
+    constructor(public resource: any) {
+
+    }
+};
 
 @Injectable()
 export class QualificationSetup_Service {

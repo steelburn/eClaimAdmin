@@ -14,7 +14,11 @@ import {Observable} from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
-
+class ServerResponse {
+	constructor(public resource: any) {
+        
+	}
+};
 @Injectable()
 export class EntertainmentClaim_Service 
 {	
@@ -23,7 +27,9 @@ export class EntertainmentClaim_Service
 
 	baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/claim_request_detail';
 	baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-		
+
+	
+	
 	constructor(private httpService: BaseHttpService, private nav: NavController) {};
 	
     private handleError (error: any) {

@@ -15,6 +15,11 @@ import {Observable} from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
+class ServerResponse {
+	constructor(public resource: any, public http:Http) {
+        
+	}
+};
 @Injectable()
 export class TravelClaim_Service 
 {	
@@ -51,7 +56,12 @@ export class TravelClaim_Service
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders})
 			.map((response) => {
-				let banks: Array<TravelClaim_Model> = []; 
+				var result: any = response.json();
+				let banks: Array<TravelClaim_Model> = [];
+				
+				// result.resource.forEach((bank) => {
+				// 	banks.push(BankSetup_Model.fromJson(bank));
+				// });  
 				return banks;
 				
 			}).catch(this.handleError);
@@ -69,6 +79,19 @@ export class TravelClaim_Service
 				return response;
 			});
 	}
+	
+	// save_main_claim_request (master_main: MasterClaim_Model): Observable<any> 
+	// {
+	// 	var queryHeaders = new Headers();
+    // 	queryHeaders.append('Content-Type', 'application/json');
+    // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+	// 	let options = new RequestOptions({ headers: queryHeaders });
+	// 	return this.httpService.http.post(this.baseResourceUrl1, master_main.toJson(true),options)
+	// 		.map((response) => {
+	// 			return response;
+	// 		});
+	// }
 
 	postUrl(table: string) {
 		return constants_home.DREAMFACTORY_TABLE_URL + '/' + table;

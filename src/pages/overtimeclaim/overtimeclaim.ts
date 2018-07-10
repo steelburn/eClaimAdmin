@@ -1,16 +1,27 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as constants from '../../app/config/constants';
+import { OvertimeClaim_Model } from '../../models/overtimeclaim_model';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { View_SOC_Model } from '../../models/view_soc_model';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
 import { BaseHttpService } from '../../services/base-http';
+import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
-import { FileTransfer } from '@ionic-native/file-transfer';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FilePath } from '@ionic-native/file-path';
 
-import { ActionSheetController, ToastController } from 'ionic-angular';
+import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
+import { Services } from '../Services';
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
+import { MainClaimRequestModel } from '../../models/main-claim-request.model';
+import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
@@ -153,7 +164,7 @@ export class OvertimeclaimPage {
       })
   }
 
-  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
+  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private overtimeservice: OvertimeClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -421,11 +432,13 @@ export class OvertimeclaimPage {
             }
             //this.claimRequestData[0].STATUS = 'Pending';
             // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
-            this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(() => {
+            this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
+
               //Send Email------------------------------------------------
               this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
               //----------------------------------------------------------
-              alert('Claim details updated successfully.');
+
+              alert('Claim details updated successfully.')
               this.navCtrl.push(UserclaimslistPage);
             });
           })

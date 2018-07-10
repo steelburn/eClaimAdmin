@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, ViewController, Item } from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+
+import { TranslateService } from '@ngx-translate/core';
+import CryptoJS from 'crypto-js';
 import { TitleCasePipe } from '@angular/common';
-import { Transfer } from '@ionic-native/transfer';
+import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
-import { FileTransfer } from '@ionic-native/file-transfer';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { GlobalFunction } from '../../shared/GlobalFunction';
 import * as constants from '../../app/config/constants';
 import { UserInfo_Model } from '../../models/usersetup_info_model';
 import { UserMain_Model } from '../../models/user_main_model';
@@ -17,11 +24,19 @@ import { UserQualification_Model } from '../../models/user_qualification_model';
 import { UserCertification_Model } from '../../models/user_certification_model';
 import { UserSpouse_Model } from '../../models/user_spouse_model';
 import { UserChildren_Model } from '../../models/user_children_model';
+import { ViewUser_Model } from '../../models/viewuser_model';
+import { View_Dropdown_Model } from '../../models/view_dropdown';
 import { UserSetup_Service } from '../../services/usersetup_service';
 import { BaseHttpService } from '../../services/base-http';
+import { Services } from '../Services';
+
 import { UserRole_Model } from '../../models/user_role_model'
 import { UUID } from 'angular2-uuid';
+import { elementDef } from '@angular/core/src/view/element';
 import { LoginPage } from '../login/login';
+import { Conditional } from '@angular/compiler';
+import { ImageUpload_model } from '../../models/image-upload.model';
+declare var cordova: any;
 
 @Component({
   selector: 'page-account',
@@ -104,7 +119,7 @@ export class AccountPage {
   public ROLE_ngModel_Edit: any;
 
   // constructor(public alertCtrl: AlertController, public nav: NavController, public userData: UserData, fb: FormBuilder) {
-  constructor(private alertCtrl: AlertController, public nav: NavController, public userData: UserData, fb: FormBuilder, public viewCtrl: ViewController, public navParams: NavParams, public http: Http, private userservice: UserSetup_Service, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController, public platform: Platform, private titlecasePipe: TitleCasePipe) {
+  constructor(private alertCtrl: AlertController, public nav: NavController, public userData: UserData, fb: FormBuilder, public viewCtrl: ViewController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private api: Services, private userservice: UserSetup_Service, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: Transfer, public toastCtrl: ToastController, public platform: Platform, private fileTransfer_new: FileTransfer, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") != null) {
       //---------Bind Company---------------------
       this.GetCompany("tenant_company", "NAME");
@@ -185,7 +200,7 @@ export class AccountPage {
         // -------------------EMERGENCY CONTACT DETAILS------------------------
         EMG_CONTACT_NAME1: [null],
         EMG_RELATIONSHIP: [null],
-        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
+        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
         EMG_CONTACT_NAME2: [null],
         EMG_RELATIONSHIP2: [null],
         EMG_CONTACT_NO2: [null],
@@ -293,6 +308,7 @@ export class AccountPage {
     let url_user_Professional_Certification = this.baseResourceUrl2_URL + "user_certification?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url_user_Spouse = this.baseResourceUrl2_URL + "user_spouse?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     let url_user_Children = this.baseResourceUrl2_URL + "user_children?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let url_user_Image = this.baseResourceUrl2_URL + "view_image_retrieve?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     // debugger;
     //----------------Get the Details from Db and bind Controls---------------------------------
     this.http.get(url_user_edit, options)
@@ -464,7 +480,7 @@ export class AccountPage {
   GetTenant_GUID(Tenant_company_guid: string) {
     // debugger;
     let TableURL = this.BaseTableURL + "tenant_company" + '?filter=(TENANT_COMPANY_GUID=' + Tenant_company_guid + ')&' + this.Key_Param;
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.http
         .get(TableURL)
         .map(res => res.json())
@@ -1287,6 +1303,26 @@ export class AccountPage {
   }
 
   fileName1: string; ProfileImage: any; imageGUID: any; uploadFileName: string; chooseFile: boolean = false; newImage: boolean = true; ImageUploadValidation: boolean = false;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      this.Userform.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+        this.Profile_Image_Display = event.target.result
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.newImage = false;
+    this.onFileChange(e);
+    this.ImageUploadValidation = false;
+  }
 
   onFileChange(event: any) {
     const reader = new FileReader();
@@ -1306,7 +1342,7 @@ export class AccountPage {
 
   saveIm() {
     let uploadImage = this.UploadImage();
-    uploadImage.then(() => {
+    uploadImage.then((resJson) => {
       this.imageGUID = this.uploadFileName;
       this.chooseFile = false;
       this.ImageUploadValidation = true;
@@ -1325,7 +1361,7 @@ export class AccountPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + uniqueName, this.Userform.get('avatar').value, options)
         .map((response) => {
           return response;

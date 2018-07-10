@@ -1,17 +1,23 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map'; 
 import * as constants from '../../app/config/constants';
+import { MedicalClaim_Model } from '../../models/medicalclaim_model';
 //import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { MedicalClaim_Service } from '../../services/medicalclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
-import { FileTransfer } from '@ionic-native/file-transfer';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FilePath } from '@ionic-native/file-path';
+import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
+import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 
-import {  ActionSheetController,  ToastController } from 'ionic-angular';
+import {  LoadingController, ActionSheetController,  Platform, Loading, ToastController } from 'ionic-angular';
 import { Services } from '../Services';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
@@ -99,7 +105,7 @@ export class MedicalclaimPage {
       );
   }
 
-  constructor(public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController ) {
+  constructor(public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private api: Services, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private medicalservice: MedicalClaim_Service, private alertCtrl: AlertController, private camera: Camera,  public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController ) {
   
     this.Medicalform = fb.group({
       avatar: null,
@@ -149,13 +155,17 @@ export class MedicalclaimPage {
     }, 1000);
   }
 
-  saveIm() {
+  saveIm(formValues: any) {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
       console.table(resJson)
       let imageResult = this.SaveImageinDB();
-      imageResult.then(() => {
+      imageResult.then((objImage: ImageUpload_model) => {
+        // console.table(objImage)
+        let result = this.submitAction(objImage.Image_Guid, formValues);
         // result.then((res) => {
+         
+        // })
       })
     })
     // setTimeout(() => {
@@ -169,8 +179,8 @@ export class MedicalclaimPage {
     objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
     objImage.CREATION_TS = new Date().toISOString();
     objImage.Update_Ts = new Date().toISOString();
-    return new Promise((resolve) => {
-      this.api.postData('main_images', objImage.toJson(true)).subscribe(() => {
+    return new Promise((resolve, reject) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {    
         // let res = response.json();
         // let imageGUID = res["resource"][0].Image_Guid;     
         resolve(objImage.toJson());
@@ -190,7 +200,7 @@ export class MedicalclaimPage {
   queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
   const options = new RequestOptions({ headers: queryHeaders });
   console.log(this.CloudFilePath);
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Medicalform.get('avatar').value, options)
       .map((response) => {
         return response;        

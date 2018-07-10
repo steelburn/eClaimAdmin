@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -11,6 +12,7 @@ import * as constants from '../../app/config/constants';
 // import { RoleSetup_Service } from '../../services/rolesetup_service';
 import { BaseHttpService } from '../../services/base-http';
 
+import { UUID } from 'angular2-uuid';
 
 /**
  * Generated class for the PermissionPage page.
@@ -32,7 +34,7 @@ export class PermissionPage {
   modules: any;
   tenants: any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private alertCtrl: AlertController) {
     //Bind Tenant-------------------------------------
     this.BindTenant();
 
@@ -40,8 +42,8 @@ export class PermissionPage {
       this.BindModule();
     
     this.Permissionform = fb.group({
-      TENANTNAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
-      MODULES: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],      
+      TENANTNAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+      MODULES: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],      
     });
   }
 

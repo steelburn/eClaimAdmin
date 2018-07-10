@@ -1,8 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Http } from '@angular/http';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { Services } from '../Services';
+import { TranslateService } from '@ngx-translate/core';
+
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+
 import * as constants from '../../app/config/constants';
+import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
+import { ResourceLoader } from '@angular/compiler';
+
 import { ExcelService } from '../../providers/excel.service';
 
 
@@ -246,7 +253,7 @@ export class MonthlyClaimReportPage {
     console.log('ionViewDidLoad MonthlyClaimReportPage');
   }
 
-  ExportToExcel() {
+  ExportToExcel(evt: any) {
     // this.excelService.exportAsExcelFile(this.claimListTotal,'Data');
     this.excelService.exportAsExcelFile(this.ExcelData,'Data');
   }

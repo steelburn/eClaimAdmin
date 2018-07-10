@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 import { TitleCasePipe } from '@angular/common';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -114,7 +115,7 @@ export class CustomerSetupPage {
         });
   }
 
-  public DeleteClick() {
+  public DeleteClick(CUSTOMER_GUID: any, CUSTOMER_LOCATION_GUID: any) {
     alert('Development on progress....');
   }
 
@@ -126,7 +127,7 @@ export class CustomerSetupPage {
   }
 
   loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private socservice: SocMain_Service, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private socservice: SocMain_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);
@@ -152,33 +153,33 @@ export class CustomerSetupPage {
         //-------------------------------------------------------
         if (localStorage.getItem("g_USER_GUID") != "sva") {
           this.Customerform = fb.group({
-            customer_name: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             location_name: [null],
             registration_no: [null],
-            address1: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT)])],
+            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
             address2: [null],
             address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT)])],
-            contact_person_mobile_no: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
+            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
+            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
             contact_no1: [null],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL)])],
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')])],
             division: [null],
           });
         }
         else {
           this.Customerform = fb.group({
-            customer_name: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             location_name: [null],
             registration_no: [null],
-            address1: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT)])],
+            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
             address2: [null],
             address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT)])],
-            contact_person_mobile_no: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER)])],
+            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
+            contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
             contact_no1: [null],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL)])],
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')])],
             division: [null],
             TENANT_NAME: [null],
           });

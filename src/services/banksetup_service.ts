@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
 import { BankSetup_Model } from '../models/banksetup_model';
@@ -8,20 +8,28 @@ import { BaseHttpService } from './base-http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
+//import 'rxjs/add/observable/throw';
 
+import { NavController } from 'ionic-angular';
+
+class ServerResponse {
+	constructor(public resource: any) {
+
+	}
+};
 
 @Injectable()
 export class BankSetup_Service {
 	baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank';
 	baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-	constructor(private httpService: BaseHttpService) { };
+	constructor(private httpService: BaseHttpService, private nav: NavController) { };
 
 	private handleError(error: any) {
 		let errMsg = (error.message) ? error.message :
 			error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 		console.log(errMsg); // log to console instead
-		//localStorage.setItem('session_token', '');
+		//localStorage.setItem('session_token', '');       
 		return Observable.throw(errMsg);
 	}
 
@@ -33,13 +41,16 @@ export class BankSetup_Service {
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-			.map(() => {
-					let banks: Array<BankSetup_Model> = [];
-					// result.resource.forEach((bank) => {
-					// 	banks.push(BankSetup_Model.fromJson(bank));
-					// });
-					return banks;
-				}).catch(this.handleError);
+			.map((response) => {
+				var result: any = response.json();
+				let banks: Array<BankSetup_Model> = [];
+
+				// result.resource.forEach((bank) => {
+				// 	banks.push(BankSetup_Model.fromJson(bank));
+				// });  
+				return banks;
+
+			}).catch(this.handleError);
 	};
 
 	save_bank(bank_main: BankSetup_Model): Observable<any> {
@@ -73,13 +84,15 @@ export class BankSetup_Service {
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-			.map(() => {
-					let banks: Array<BankSetup_Model> = [];
-					// result.resource.forEach((bank) => {
-					//  	banks.push(BankSetup_Model.fromJson(bank));
-					//  });
-					return banks;
-				}).catch(this.handleError);
+			.map((response) => {
+				var result: any = response.json();
+				let banks: Array<BankSetup_Model> = [];
+
+				// result.resource.forEach((bank) => {
+				//  	banks.push(BankSetup_Model.fromJson(bank));
+				//  });
+				return banks;
+			}).catch(this.handleError);
 	};
 
 	remove(id: string) {
@@ -107,12 +120,12 @@ export class BankSetup_Service {
 			.get(this.baseResourceUrl + '/' + id, { search: params, headers: queryHeaders })
 			.map((response) => {
 				var result: any = response.json();
-				let bank: BankSetup_Model = BankSetup_Model.fromJson(result);//alert(JSON.stringify(bank));
+				let bank: BankSetup_Model = BankSetup_Model.fromJson(result);//alert(JSON.stringify(bank)); 
 				return bank;
 			}).catch(this.handleError);
 	};
 
-	GetExistingRecord(bank_name: string): Observable<BankSetup_Model> {
+	GetExistingRecord(bank_name: string, params?: URLSearchParams): Observable<BankSetup_Model> {
 		var queryHeaders = new Headers();
 		queryHeaders.append('Content-Type', 'application/json');
 

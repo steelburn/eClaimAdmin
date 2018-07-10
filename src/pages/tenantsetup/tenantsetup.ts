@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http, URLSearchParams } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -27,6 +28,7 @@ import { UserAddress_Model } from '../../models/usersetup_address_model';
 import { UserRole_Model } from '../../models/user_role_model'
 
 import { UserSetup_Service } from '../../services/usersetup_service';
+
 
 import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
@@ -55,7 +57,7 @@ export class TenantsetupPage {
   useraddress_entry: UserAddress_Model = new UserAddress_Model();
   userrole_entry: UserRole_Model = new UserRole_Model();
 
-  Tenantform: FormGroup; TenantUserform: FormGroup;
+  Tenantform: FormGroup; TenantUSerform: FormGroup;
 
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/tenant_company_site' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_tenantdetails' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -252,7 +254,7 @@ export class TenantsetupPage {
   public DeleteClick(TENANT_COMPANY_SITE_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove this entry?',
+      message: 'Do you want to remove ?',
       buttons: [
         {
           text: 'Cancel',
@@ -280,7 +282,7 @@ export class TenantsetupPage {
     }); alert.present();
   }
 
-  public DeleteUserClick() {
+  public DeleteUserClick(USER_GUID: any) {
     alert('In Progress....');
   }
 
@@ -295,7 +297,7 @@ export class TenantsetupPage {
     this.Add_Form = true; this.Edit_Form = false;
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb_tenant: FormBuilder, fb_user: FormBuilder, public http: Http, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb_tenant: FormBuilder, fb_user: FormBuilder, public http: Http, private httpService: BaseHttpService, private TenantMainSetupService: TenantMainSetup_Service, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private userservice: UserSetup_Service, private alertCtrl: AlertController) {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       //--------------Clear all required storage------------------------
       localStorage.removeItem("PREV_TENANT_GUID");
@@ -313,34 +315,34 @@ export class TenantsetupPage {
       this.BindRole();
 
       this.Tenantform = fb_tenant.group({
-        TENANT_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
-        TENANT_COMPANY_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
-        COMPANY_SITE_NAME: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
-        REGISTRATION_NUM: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
-        ADDRESS1: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
+        TENANT_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TENANT_COMPANY_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        COMPANY_SITE_NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        REGISTRATION_NUM: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        ADDRESS1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         ADDRESS2: ["", Validators.required],
         ADDRESS3: ["", Validators.required],
-        CONTACT_NO: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER), Validators.required])],
-        EMAIL: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL), Validators.required])],
-        CONTACT_PERSON: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
-        CONTACT_PERSON_NO: [null, Validators.compose([Validators.pattern(constants.PATTERN_PHONENUMBER), Validators.required])],
-        CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL), Validators.required])],
-        WEBSITE: [null, Validators.compose([Validators.pattern(constants.PATTERN_URL), Validators.required])],
+        CONTACT_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        EMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+        CONTACT_PERSON: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        CONTACT_PERSON_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        CONTACT_PERSON_EMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
+        WEBSITE: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],
         ISHQ_FLAG: [null],
         ACTIVE_FLAG: [null],
       });
 
-      this.TenantUserform = fb_user.group({
+      this.TenantUSerform = fb_user.group({
         //-------------For Tenant User--------------------
-        TULOGINID: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
-        TUPASSWORD: [null, Validators.compose([Validators.pattern(constants.PATTERN_ANYTEXT), Validators.required])],
-        TUEMAIL: [null, Validators.compose([Validators.pattern(constants.PATTERN_EMAIL), Validators.required])],
+        TULOGINID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TUPASSWORD: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        TUEMAIL: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
         TUSERROLE: ["", Validators.required],
         //------------------------------------------------
       });
     }
     else {
-      alert("Sorry, access is available only for Super Admin.");
+      alert("Sorry !! This is for only Super Admin.");
       this.navCtrl.push(LoginPage);
     }
   }
@@ -791,6 +793,69 @@ export class TenantsetupPage {
 
       //Insert Record for tenant_main------------------------------------------
       this.Save_Tenant_Main();
+
+      //Insert Record for tenant company---------------------------------------
+      //this.Save_Tenant_Company();
+
+      //Insert Record for tenant company site----------------------------------
+      //this.Save_Tenant_Company_Site();
+
+
+
+
+
+
+
+
+      // let headers = new Headers();
+      // headers.append('Content-Type', 'application/json');
+      // let options = new RequestOptions({ headers: headers });
+      // let url: string;
+      // url = this.baseResource_Url + "tenant_company_site?filter=(SITE_NAME=" + this.tenant_company_site_entry.SITE_NAME + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      // this.http.get(url, options)
+      //   .map(res => res.json())
+      //   .subscribe(
+      //   data => {
+      //     let res = data["resource"];
+      //     if (res.length == 0) {
+      //       console.log("No records Found");
+      //       if (this.Exist_Record == false) {
+      //         this.tenant_company_site_entry.SITE_NAME = this.COMPANY_SITE_NAME_ngModel_Add.trim();
+      //         this.tenant_company_site_entry.REGISTRATION_NUM = this.REGISTRATION_NUM_ngModel_Add.trim();
+      //         this.tenant_company_site_entry.ADDRESS = this.ADDRESS_ngModel_Add.trim();
+      //         this.tenant_company_site_entry.EMAIL = this.EMAIL_ngModel_Add.trim();
+      //         this.tenant_company_site_entry.CONTACT_NO = this.CONTACT_NO_ngModel_Add.trim();
+      //         this.tenant_company_site_entry.WEBSITE = this.WEBSITE_ngModel_Add.trim();
+      //         this.tenant_company_site_entry.CONTACT_PERSON = this.CONTACT_PERSON_ngModel_Add.trim();
+      //         this.tenant_company_site_entry.CONTACT_PERSON_CONTACT_NO = this.CONTACT_PERSON_CONTACT_NO_ngModel_Add.trim();
+      //         this.tenant_company_site_entry.CONTACT_PERSON_EMAIL = this.CONTACT_PERSON_EMAIL_ngModel_Add.trim();
+
+      //         this.tenant_company_site_entry.TENANT_COMPANY_SITE_GUID = UUID.UUID();
+      //         this.tenant_company_site_entry.TENANT_COMPANY_GUID = "298204b8-8c85-11e7-91cd-00155de7e742";
+      //         this.tenant_company_site_entry.CREATION_TS = new Date().toISOString();
+      //         this.tenant_company_site_entry.CREATION_USER_GUID = "1";
+      //         this.tenant_company_site_entry.UPDATE_TS = new Date().toISOString();
+      //         this.tenant_company_site_entry.UPDATE_USER_GUID = "";
+
+      //         this.tenantcompanysitesetupservice.save(this.tenant_company_site_entry)
+      //           .subscribe((response) => {
+      //             if (response.status == 200) {
+      //               alert('Tenant Registered successfully');                    
+      //               this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      //             }
+      //           })
+      //       }
+      //     }
+      //     else {
+      //       console.log("Records Found");
+      //       alert("The Tenant is already Exist.")
+      //     }
+
+      //   },
+      //   err => {
+      //     this.Exist_Record = false;
+      //     console.log("ERROR!: ", err);
+      //   });
     }
 
 

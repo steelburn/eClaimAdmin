@@ -10,6 +10,12 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { NavController } from 'ionic-angular';
 
+class ServerResponse {
+    constructor(public resource: any) {
+
+    }
+}; 
+
 @Injectable()
 export class RoleSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_role';
@@ -34,7 +40,11 @@ export class RoleSetup_Service {
             .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
             .map((response) => {
                 var result: any = response.json();
-                let branches: Array<RoleSetup_Model> = []; 
+                let branches: Array<RoleSetup_Model> = [];
+
+                // result.resource.forEach((branch) => {
+                // 	branches.push(BranchSetup_Model.fromJson(branche));
+                // });  
                 return branches;
 
             }).catch(this.handleError);

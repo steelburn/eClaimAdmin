@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { Services } from '../Services';
+import { TranslateService } from '@ngx-translate/core';
 
-import { Http } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -33,7 +36,7 @@ export class ClaimhistorydetailPage {
   FinanceLogin: boolean = false;
   loginUserRole:string;
   public page:number = 1;
-  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
     this.claimrefguid = navParams.get("claimRefGuid");
     this.userguid = navParams.get("userGuid");
     this.month = navParams.get("Month");
@@ -99,7 +102,7 @@ export class ClaimhistorydetailPage {
         }
       });
   }
-  onSearchInput() {
+  onSearchInput(ev: any) {
     // alert('hi')
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
@@ -130,7 +133,7 @@ export class ClaimhistorydetailPage {
     console.log('ionViewDidLoad ClaimhistorydetailPage');
   }
 
-  ExportToExcel() {
+  ExportToExcel(evt: any) {
     // this.excelService.exportAsExcelFile(this.claimhistorydetails,'Data');
     this.excelService.exportAsExcelFile(this.ExcelData,'Data');
   }

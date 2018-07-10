@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Headers} from '@angular/http';
+import * as constants from '../app/config/constants';
 
 
 @Injectable()
