@@ -14,11 +14,6 @@ import {Observable} from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
-class ServerResponse {
-	constructor(public resource: any) {
-        
-	}
-};
 @Injectable()
 export class PrintingClaim_Service 
 {	
@@ -52,28 +47,12 @@ export class PrintingClaim_Service
 			.map((response) => {
 				var result: any = response.json();
 				let banks: Array<PrintingClaim_Model> = [];
-				
-				// result.resource.forEach((bank) => {
-				// 	banks.push(BankSetup_Model.fromJson(bank));
-				// });  
 				return banks;
 				
 			}).catch(this.handleError);
     };
     
     
-	// save_main_claim_request (master_main: MasterClaim_Model): Observable<any> 
-	// {
-	// 	var queryHeaders = new Headers();
-    // 	queryHeaders.append('Content-Type', 'application/json');
-    // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-    // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-	// 	let options = new RequestOptions({ headers: queryHeaders });
-	// 	return this.httpService.http.post(this.baseResourceUrl1, master_main.toJson(true),options)
-	// 		.map((response) => {
-	// 			return response;
-	// 		});
-    // }
 
     save_claim_request_detail (printing_main: PrintingClaim_Model): Observable<any> 
 	{

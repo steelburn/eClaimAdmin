@@ -10,12 +10,6 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { NavController } from 'ionic-angular';
 
-class ServerResponse {
-    constructor(public resource: any) {
-
-    }
-};
-
 @Injectable()
 export class ClaimTypeSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_type';
@@ -42,11 +36,7 @@ export class ClaimTypeSetup_Service {
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders})
 			.map((response) => {
 				var result: any = response.json();
-				let banks: Array<ClaimTypeSetup_Model> = [];
-				
-				// result.resource.forEach((bank) => {
-				// 	banks.push(BankSetup_Model.fromJson(bank));
-				// });  
+				let banks: Array<ClaimTypeSetup_Model> = []; 
 				return banks;
 				
 			}).catch(this.handleError);
@@ -88,10 +78,6 @@ export class ClaimTypeSetup_Service {
 			{
 				var result: any = response.json();
 				let banks: Array<ClaimTypeSetup_Model> = [];
-				
-				// result.resource.forEach((bank) => {
-				//  	banks.push(BankSetup_Model.fromJson(bank));
-				//  });
 				return banks;
 			}).catch(this.handleError);
 	};

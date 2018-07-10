@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { Services } from '../Services';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -18,7 +17,7 @@ import * as constants from '../../app/config/constants';
 @IonicPage()
 @Component({
   selector: 'page-claim-report',
-  templateUrl: 'claim-report.html',
+  templateUrl: 'claim-report.html'
 })
 export class ClaimReportPage {
 
@@ -163,10 +162,10 @@ export class ClaimReportPage {
   printToCart(printSectionId: any) {
     document.getElementById(printSectionId).hidden = false;
     var innerContents = document.getElementById(printSectionId).innerHTML;
-    var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-    popupWinindow.document.open();
-    popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
-    popupWinindow.document.close();
+    var popupWindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+    popupWindow.document.open();
+    popupWindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
+    popupWindow.document.close();
     document.getElementById(printSectionId).hidden = true;
   }
 }
