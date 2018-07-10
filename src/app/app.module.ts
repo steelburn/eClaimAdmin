@@ -1,4 +1,5 @@
-﻿import { BrowserModule } from '@angular/platform-browser';
+﻿import {enableProdMode} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
@@ -11,7 +12,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
- import { eClaimApp } from './app.component';
+import { eClaimApp } from './app.component';
 
 // import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
@@ -96,6 +97,8 @@ import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
 // import { Ng2PaginationModule } from 'ng2-pagination';
 import {NgxPaginationModule} from 'ngx-pagination'; 
+
+enableProdMode();
 @NgModule({
   declarations: [
     eClaimApp,
@@ -202,6 +205,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     }),
     IonicStorageModule.forRoot()
   ],
+
 
   bootstrap: [IonicApp],
   entryComponents: [
