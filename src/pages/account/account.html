@@ -61,18 +61,6 @@
             [disabled]="isDisabled"></ion-input>
         </ion-item>
 
-        <!-- <ion-item class="text" style="display: none;">
-          <ion-label stacked>{{ 'LOGINID' | translate }}</ion-label>
-          <ion-input type="text" formControlName="LOGIN_ID" [(ngModel)]="User_LoginId_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"
-            [disabled]="isDisabled"></ion-input>
-        </ion-item>
-
-        <ion-item class="text" style="display: none;">
-          <ion-label stacked>{{ 'PASSWORD' | translate }}</ion-label>
-          <ion-input type="password" formControlName="PASSWORD" [(ngModel)]="User_Password_Edit_ngModel" placeholder="{{'Please fill the email of the tenant'}}"
-            [disabled]="isDisabled"></ion-input>
-        </ion-item> -->
-
         <ion-item class="fuha">
           <ion-label stacked>{{ 'PERSONAL_CONTACT_NO' | translate }}</ion-label>
           <ion-input type="text" formControlName="CONTACT_NO" max="10" [(ngModel)]="User_PersonalNo_Edit_ngModel" placeholder="{{'Please fill the personal contact number'}}"
@@ -100,7 +88,7 @@
         </ion-item>
 
         <div class="btn" *ngIf="EditProfileClicked==false">
-          <button ion-button (click)="EditProfile" (click)="EditProfile()">{{"Edit Profile" | translate}}</button>
+          <button ion-button (click)="EditProfile()">{{"Edit Profile" | translate}}</button>
         </div>
 
         <div *ngIf="EditProfileClicked==true">
