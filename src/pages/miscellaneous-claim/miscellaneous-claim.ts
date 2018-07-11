@@ -324,7 +324,7 @@ export class MiscellaneousClaimPage {
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
     return new Promise((resolve, reject) => {
-      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.MiscellaneousForm.get('avatar').value, options)
+      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.MiscellaneousForm.get('avatar').value, options)
         .map((response) => {
           return response;
         }).subscribe((response) => {
@@ -389,6 +389,16 @@ export class MiscellaneousClaimPage {
       this.travelAmount = this.claimAmount;
       this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
     }
+  }
+
+  displayImage: any
+  CloseDisplayImage() {
+    this.displayImage = false;
+  }
+  imageURL: string;
+  DisplayImage(val: any) {
+    this.displayImage = true;
+    this.imageURL = val;
   }
 
 }

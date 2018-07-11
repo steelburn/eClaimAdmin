@@ -24,6 +24,8 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import moment from 'moment';
+//import { ExcelService } from '../../providers/excel.service';
+
 
 @IonicPage()
 @Component({
@@ -372,7 +374,6 @@ export class EntertainmentclaimPage {
   }
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-
     this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     console.log(this.uniqueName);
@@ -461,4 +462,12 @@ export class EntertainmentclaimPage {
     this.displayImage = true;
     this.imageURL = val;
   }
+
+  // ExcelData: any[] = [];
+  // ExportToExcel(evt: any) {
+  //   // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
+  //   this.excelService.exportAsExcelFile(this.ExcelData, 'Data');    
+  // }
+
+  
 } 

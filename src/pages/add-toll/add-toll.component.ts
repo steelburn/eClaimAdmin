@@ -4,21 +4,13 @@ import * as constants from '../../config/constants';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import { ClaimReqDetail_Model } from '../../models/ClaimReqDetail_Model';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
-import { Console } from '@angular/core/src/console';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Services } from '../Services';
-import { Transfer, TransferObject } from '@ionic-native/transfer';
-import { ActionSheetController,  Loading, LoadingController,  Platform, ToastController,  } from 'ionic-angular';
-
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ClaimRequestDetailModel } from '../../models/claim-request-detail.model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
-
-
 
 @IonicPage()
 @Component({

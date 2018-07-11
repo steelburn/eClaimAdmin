@@ -28,6 +28,7 @@ export class TravelClaimViewPage {
   isApprover: any;
   isRemarksAccepted: boolean = false;
   level: any;
+  approverDesignation: any;
   // totalAmount: number = 0;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
@@ -36,6 +37,7 @@ export class TravelClaimViewPage {
     this.Approver_GUID = this.navParams.get("approver_GUID");
     this.level = this.navParams.get('level_no');    
     this.LoadMainClaim();
+    this.approverDesignation = this.navParams.get("approverDesignation");
   }
 
   isAccepted(val: string) {
