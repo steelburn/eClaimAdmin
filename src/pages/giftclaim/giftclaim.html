@@ -122,7 +122,7 @@
       <ion-list>
         <ion-item-sliding *ngFor="let item of currentItems">
           <button ion-item (click)="openItem(item)">
-            <ion-label> {{item.description}}</ion-label>
+            <ion-label text-wrap> {{item.description}}</ion-label>
           </button>
         </ion-item-sliding>
       </ion-list>
@@ -144,7 +144,7 @@
       <ion-list>
         <div *ngFor="let item of projects">
           <button ion-item (click)="GetSocNo(item)">
-            <ion-label>{{item.project_name}}
+            <ion-label text-wrap>{{item.project_name}}
               [{{item.soc}}]</ion-label> 
           </button>
         </div>
@@ -168,7 +168,7 @@
       <ion-list>
         <div *ngFor="let item of customers">
           <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
-            <ion-label>{{item.NAME}}</ion-label>
+            <ion-label text-wrap>{{item.NAME}}</ion-label>
           </button>
         </div>
       </ion-list>
