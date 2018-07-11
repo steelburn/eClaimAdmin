@@ -10,12 +10,14 @@ import {EntertainmentclaimPage} from '../../pages/entertainmentclaim/entertainme
 import { UUID } from 'angular2-uuid';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { ExcelService } from '../../providers/excel.service';
+
 
 
 @IonicPage()
 @Component({
   selector: 'page-entertainment-claim-view',
-  templateUrl: 'entertainment-claim-view.html',
+  templateUrl: 'entertainment-claim-view.html', providers: [ExcelService]
 })
 export class EntertainmentClaimViewPage {
 
@@ -31,7 +33,7 @@ export class EntertainmentClaimViewPage {
   level: any;
   approverDesignation: any;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private excelService: ExcelService, public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
   
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
@@ -96,4 +98,10 @@ DisplayImage(val: any) {
   this.displayImage = true;
   this.imageURL = val;
 }
+
+// ExcelData: any[] = [];
+// ExportToExcel(evt: any) {
+//   // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
+//   this.excelService.saveFile("", 'Data');    
+// }
 }

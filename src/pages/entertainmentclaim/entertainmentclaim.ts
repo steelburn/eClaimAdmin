@@ -24,6 +24,8 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import moment from 'moment';
+import { ExcelService } from '../../providers/excel.service';
+
 
 @IonicPage()
 @Component({
@@ -87,7 +89,7 @@ export class EntertainmentclaimPage {
   claimRequestGUID: any;
   claimRequestData: any;
 
-  constructor(public numberPipe: DecimalPipe, public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, private api: Services, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+  constructor(private excelService: ExcelService, public numberPipe: DecimalPipe, public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, private api: Services, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private entertainmentservice: EntertainmentClaim_Service, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -460,4 +462,12 @@ export class EntertainmentclaimPage {
     this.displayImage = true;
     this.imageURL = val;
   }
+
+  // ExcelData: any[] = [];
+  // ExportToExcel(evt: any) {
+  //   // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
+  //   this.excelService.exportAsExcelFile(this.ExcelData, 'Data');    
+  // }
+
+  
 } 
