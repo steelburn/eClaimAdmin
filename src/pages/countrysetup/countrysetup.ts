@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 import { TitleCasePipe } from '@angular/common';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -113,7 +114,7 @@ export class CountrysetupPage {
   }
 
   loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private countrysetupservice: CountrySetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private countrysetupservice: CountrySetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
       this.navCtrl.push(LoginPage);

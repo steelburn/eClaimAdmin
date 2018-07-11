@@ -12,6 +12,12 @@ import { Observable } from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
+class ServerResponse {
+    constructor(public resource: any) {
+
+    }
+};
+
 @Injectable()
 export class StateSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_state';
@@ -26,6 +32,26 @@ export class StateSetup_Service {
         //localStorage.setItem('session_token', '');       
         return Observable.throw(errMsg);
     }    
+
+    // query(params?: URLSearchParams): Observable<StateSetup_Model[]> {
+    //     var queryHeaders = new Headers();
+    //     queryHeaders.append('Content-Type', 'application/json');
+    //     //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    //     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    //     return this.httpService.http
+    //         .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
+    //         .map((response) => {
+    //             var result: any = response.json();
+    //             let branches: Array<StateSetup_Model> = [];
+
+    //             // result.resource.forEach((branch) => {
+    //             // 	branches.push(BranchSetup_Model.fromJson(branche));
+    //             // });  
+    //             return branches;
+
+    //         }).catch(this.handleError);
+    // };
+
 
     Save(state_main: StateSetup_Model): Observable<any> {
         var queryHeaders = new Headers();
@@ -64,6 +90,37 @@ export class StateSetup_Service {
 				return result.STATE_GUID;
 			});
 	}
+
+    // get_cashcard(params?: URLSearchParams): Observable<CashcardSetup_Model[]> {
+    //     var queryHeaders = new Headers();
+    //     queryHeaders.append('Content-Type', 'application/json');
+    //     //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    //     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    //     return this.httpService.http
+    //         .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
+    //         .map((response) => {
+    //             var result: any = response.json();
+    //             let cashcards: Array<CashcardSetup_Model> = [];
+
+    //             // result.resource.forEach((cashcard) => {
+    //             //  	cashcards.push(CashcardSetup_Model.fromJson(cashcard));
+    //             //  });
+    //             return cashcards;
+    //         }).catch(this.handleError);
+    // };
+
+    // remove(id: string) {
+    //     var queryHeaders = new Headers();
+    //     queryHeaders.append('Content-Type', 'application/json');
+    //     //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    //     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    //     return this.httpService.http
+    //         .delete(this.baseResourceUrl + '/' + id, { headers: queryHeaders })
+    //         .map((response) => {
+    //             var result: any = response.json();
+    //             return result.cashcard_GUID;
+    //         });
+    // }
 
     get(id: string, params?: URLSearchParams): Observable<StateSetup_Model> {
         var queryHeaders = new Headers();

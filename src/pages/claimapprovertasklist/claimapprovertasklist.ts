@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { Services } from '../Services';
+import { TranslateService } from '@ngx-translate/core';
 
-import { Http } from '@angular/http';
+import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -42,7 +45,7 @@ export class ClaimapprovertasklistPage {
   buttonText:string;
   public page:number = 1;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
     this.loginUserGuid = localStorage.getItem("g_USER_GUID");
     this.claimrefguid = navParams.get("claimRefGuid");
@@ -91,7 +94,7 @@ export class ClaimapprovertasklistPage {
    
   }
 
-  onSearchInput() {
+  onSearchInput(ev: any) {
     // alert('hi')
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
@@ -161,7 +164,7 @@ export class ClaimapprovertasklistPage {
   }
 
 approveAll(){
-  return new Promise(() => {
+  return new Promise((resolve, reject) => {
 
   this.checkboxDataList.forEach(element => {
     if (element.Checked && element.status !== 'Paid') {
@@ -194,8 +197,8 @@ count:number =0;
       // });
 
       //}
-      temp.then(() => {
-      })
+      temp.then((res) => {
+    })
     
     if (this.count > 0 && this.claimrefguid!==null && this.claimrefguid!==undefined) {
       //debugger;
@@ -235,8 +238,8 @@ count:number =0;
           else
             claimRefObj["resource"][0].STATUS = 'Paid';
           //debugger;
-          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(() => {
-            alert('Claim has been Approved.');
+          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(res => {
+            alert('Claim has been Approved.')
             this.navCtrl.push(ClaimtasklistPage);
           })
         });

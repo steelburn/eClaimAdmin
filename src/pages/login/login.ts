@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NgForm, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NavController, Loading } from 'ionic-angular';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { NgForm, FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { NavController, LoadingController, Loading } from 'ionic-angular';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import CryptoJS from 'crypto-js';
 
@@ -23,18 +23,16 @@ export class LoginPage {
   login: { username?: string, password?: string } = {};
   submitted = false;
 
-  //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_bank' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage, fb: FormBuilder, private userservice: UserSetup_Service) {
-    localStorage.clear(); //debugger;
+  constructor(public navCtrl: NavController, public userData: UserData, public http: Http, public storage: Storage, fb: FormBuilder, private userservice: UserSetup_Service, private loadingCtrl: LoadingController) {
+    localStorage.clear();
     this.ForgotPasswordForm = fb.group({
       Email_ID: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
     });
   }
 
-  onLogin(form: NgForm) {
-    // this.navCtrl.push(DashboardPage);
+  onLogin(form: NgForm) {    
     this.submitted = true;
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
@@ -43,22 +41,17 @@ export class LoginPage {
 
         //navigate to app.component page
         this.userData.login(this.login.username);
-
-        //this.navCtrl.push(AdminsetupPage);
-//        this.navCtrl.push(SetupGuidePage); //original
-        this.navCtrl.push(DashboardPage);
+        this.navCtrl.push(SetupguidePage);
       }
       else {
         let url: string;
-        //CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex)
-        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-        //url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;        
 
         this.http
           .get(url)
           .map(res => res.json())
           .subscribe(data => {
-            let res = data["resource"];//console.log(data["resource"]);
+            let res = data["resource"];
             if (res.length > 0) {
               localStorage.setItem("g_USER_GUID", res[0]["USER_GUID"]);
               localStorage.setItem("g_TENANT_GUID", res[0]["TENANT_GUID"]);
@@ -68,7 +61,7 @@ export class LoginPage {
               localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
               localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
               localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
-              debugger;
+              
               if(res[0]["IMAGE_URL"] == null || res[0]["IMAGE_URL"] == ''){
                 localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
               }
@@ -76,13 +69,23 @@ export class LoginPage {
                 localStorage.setItem("g_IMAGE_URL",constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/eclaim/" + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
               }
 
+              // //Keep all the module to an array.-------------------------------------------
+              // let MenuDetails: any[] = [];
+              // this.storage.get('MenuDetails').then((val) => {                
+              //   MenuDetails.push(
+              //     { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+              //     { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+              //   );
+              // });
+              // //MenuDetails.push(this.navParams.get('id'));
+              // this.storage.set('MenuDetails', MenuDetails);
+              // //------------------------------------------------------------------------------
+
               //Setup Guide for only Hq Users
-              if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {
-                //this.navCtrl.push(SetupguidePage);
+              if (res[0]["ISHQ"] == "1" && res[0]["IS_TENANT_ADMIN"] == "1") {                
                 this.navCtrl.push(DashboardPage);
               }
               else {
-                //this.navCtrl.push(SetupPage);
                 this.navCtrl.push(DashboardPage);
               }
 
@@ -123,7 +126,7 @@ export class LoginPage {
               localStorage.removeItem("Ad_Authenticaton");
               localStorage.removeItem("g_IMAGE_URL");
 
-              alert("Please enter valid login details.");
+              alert("please enter valid login details.");
               this.login.username = "";
               this.login.password = "";
             }
@@ -263,10 +266,11 @@ export class LoginPage {
     };
     this.http.post(this.emailUrl, body, options)
       .map(res => res.json())
-      .subscribe(() => {
-          alert('Password has sent to your eMail Id.');
-          this.navCtrl.push(LoginPage);
-        });
+      .subscribe(data => {
+
+        alert('Password has sent to your eMail Id.');
+        this.navCtrl.push(LoginPage);
+      });
   }
 
   stringToSplit: string = "";
@@ -284,9 +288,9 @@ export class LoginPage {
     if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
       this.GetUserFromAdServer(form, this.tempUserSplit1.trim());
     }
-    else {
+    else {      
       // user of username@zen.com.my ---> redirect auth to AD
-      if (this.tempUserSplit2.trim() == "zen.com.my") {
+      if (this.tempUserSplit2.trim() == "zen.com.my") {        
         let Adurl: string = constants.AD_URL + '/user/' + this.tempUserSplit1.trim() + '/authenticate';
         var headers = new Headers();
         headers.append("Accept", 'application/json');
@@ -300,8 +304,7 @@ export class LoginPage {
         this.http.post(Adurl, postParams, options)
           .map(res => res.json())
           .subscribe(data => {
-            if (data.data == true) {
-              // alert('Authenticate');
+            if (data.data == true) {              
               localStorage.setItem("Ad_Authenticaton", "true");
               this.GetUserFromAdServer(form, this.tempUserSplit1.trim());
             }
@@ -320,7 +323,6 @@ export class LoginPage {
               alert("please enter valid login details.");
               this.login.username = "";
               this.login.password = "";
-              // this.loading.dismissAll();
             }
           }, error => {
             console.log(error);// Error getting the data
@@ -343,19 +345,19 @@ export class LoginPage {
       // this.loading.dismissAll();
     }
     else {
-      let Adurl: string = constants.AD_URL + '/user/' + username;
-       
+      let Adurl: string = constants.AD_URL + '/user/' + username;       
       var queryHeaders = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
       queryHeaders.append('Access-Control-Allow-Origin', '*');
       queryHeaders.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
       queryHeaders.append('Accept', 'application/json');
-      queryHeaders.append('Content-Type', 'application/json');
+      queryHeaders.append('Content-Type', 'application/json');      
 
       this.http
         .get(Adurl)
         .map(res => res.json())
-        .subscribe(data => {
+        .subscribe(data => {          
+          let res = data;
 
           this.submitted = true;
           if (form.valid) {
@@ -366,15 +368,13 @@ export class LoginPage {
               //navigate to app.component page
               this.userData.login(this.login.username);
               this.navCtrl.push(SetupguidePage);
-
-              // this.loading.dismissAll();
             }
             else {
               this.userData.login(this.login.username);
-              // console.log(data.userPrincipalName);
 
               let url: string;
               url = this.baseResource_Url + "vw_login?filter=(EMAIL=" + data.userPrincipalName + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
               this.http
                 .get(url)
                 .map(res => res.json())
@@ -404,7 +404,6 @@ export class LoginPage {
                     else {
                       this.navCtrl.push(DashboardPage);
                     }
-                    // this.loading.dismissAll();
 
                     //Get the role of that particular user----------------------------------------------
                     let role_url: string = "";
@@ -429,8 +428,7 @@ export class LoginPage {
                     //----------------------------------------------------------------------------------
 
                     //navigate to app.component page
-                    this.userData.login(this.login.username);
-                    // this.loading.dismissAll();
+                    this.userData.login(this.login.username);                    
                   }
                   else {
                     localStorage.removeItem("g_USER_GUID");
@@ -451,7 +449,6 @@ export class LoginPage {
             }
           }
         });
-        // this.loading.dismissAll();
     }
     
   }

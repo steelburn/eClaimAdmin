@@ -1,37 +1,58 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { Component, ViewChild } from '@angular/core';
-import { Events, MenuController, Nav, Platform } from 'ionic-angular';
+import { Events, MenuController, Nav, Platform, NavController } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage'; 
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
+import { TabsPage } from '../pages/tabs/tabs';
 import { SetupPage } from '../pages/setup/setup';
+import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
+import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
+import { UserPage } from '../pages/user/user';
+import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 
+import { PermissionPage } from '../pages/Permission/permission';
+import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
+import { PagesetupPage } from '../pages/pagesetup/pagesetup';
+import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
+import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
 
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
 import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist';
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist';
+import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
 
+import { UploadPage } from '../pages/upload/upload';
+import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
+import { StatesetupPage } from '../pages/statesetup/statesetup';
 
+import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
+//import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view';
+import { SetupguidePage } from '../pages/setupguide/setupguide';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
 
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
 
@@ -51,11 +72,17 @@ export interface PageInterface {
 @Component({
   templateUrl: 'app.template.html'
 })
-export class eClaimApp {
+export class ConferenceApp {
   blnLogin: boolean = false;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   public Menu_Array: any[] = [];
+  //public setupPageClicked: boolean = false;
+  //public setupPageClick() {
+  //  this.setupPageClicked = !this.setupPageClicked;
+  //}
 
+  // the root nav is a child of the root app component
+  // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
 
   // List of pages that can be navigated to from the left menu
@@ -119,6 +146,7 @@ export class eClaimApp {
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
+    public confData: ConferenceData,
     public storage: Storage,
     statusbar: StatusBar,
     splashScreen: SplashScreen, public translate: TranslateService, public http: Http
@@ -132,6 +160,10 @@ export class eClaimApp {
 
     translate.setDefaultLang('en');
     platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
+
+    // Check if the user has already seen the tutorial
+    // load the conference data
+    confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
@@ -151,10 +183,16 @@ export class eClaimApp {
     // debugger;    
     let params = {};
 
+    // the nav component was found using @ViewChild(Nav)
+    // setRoot on the nav to remove previous pages and only have this page
+    // we wouldn't want the back button to show in this scenario
     if (page.index) {
       params = { tabIndex: page.index };
     }
 
+    // If we are already on tabs just change the selected tab
+    // don't setRoot again, this maintains the history stack of the
+    // tabs even if changing them from the menu
     if (this.nav.getActiveChildNavs().length && page.index != undefined) {
       this.nav.getActiveChildNavs()[0].select(page.index);
       // Set the root of the nav with params if it's a tab index
@@ -186,6 +224,38 @@ export class eClaimApp {
   }
 
   enableMenu(loggedIn: boolean) {
+    // debugger;
+    //Get all the roles and menus for that particular user.-------------------------------------------------------   
+    // let url: string; this.Menu_Array = []; let Role_Name: string = "";
+    // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // this.http
+    //   .get(url)
+    //   .map(res => res.json())
+    //   .subscribe(data => {
+    //     let res = data["resource"];
+    //     if (res.length > 0) {
+    //       for (var item in data["resource"]) {
+    //         if (data["resource"][item]["NAME"].toUpperCase() == "HOME") {
+    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' });
+    //         }
+    //         else if (data["resource"][item]["NAME"].toUpperCase() == "APPROVER TASK") {
+    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' });
+    //         }
+    //         else if (data["resource"][item]["NAME"].toUpperCase() == "CHANGE PASSWORD") {
+    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' });
+    //         }
+    //         else {
+    //           this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' });
+    //         }            
+    //       }
+    //     }
+    //   });
+    // ---------------------------------------------------------------------------------------------------------------------------------   
+
+    // this.menu.enable(loggedIn, 'loggedInMenu');
+    // this.menu.enable(!loggedIn, 'loggedOutMenu');
+    
+    // debugger;
     if (localStorage.length > 0) {
       this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME"); this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL"); 
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
@@ -555,6 +625,37 @@ export class eClaimApp {
     else {
       this.blnLogin = false;
     }
+
+
+
+
+
+    //For Super admin, All menu should display
+    // if (localStorage.length > 0) {
+    //   if (localStorage.getItem("g_USER_GUID") == "sva") {
+    //     this.menu.enable(loggedIn, 'loggedInMenu');
+    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
+    //   }
+    //   //For user, distinct menu should display
+    //   else if (localStorage.getItem("g_IS_TENANT_ADMIN") != "1") {
+    //     // this.appPages_User = [
+    //     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
+    //     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
+    //     // ];
+    //     this.appPages_User = this.Menu_Array;
+
+    //     this.menu.enable(loggedIn, 'loggedInMenu_User');
+    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
+    //   }
+    //   else {
+    //     this.menu.enable(loggedIn, 'loggedInMenu');
+    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
+    //   }
+    // }
+    // else {
+    //   this.menu.enable(loggedIn, 'loggedInMenu');
+    //   this.menu.enable(!loggedIn, 'loggedOutMenu');
+    // }
   }
 
   isActive(page: PageInterface) {
@@ -593,7 +694,7 @@ export class eClaimApp {
   GetUser_Role(user_guid: string) {
     // debugger;
     let TableURL = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + user_guid + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.http
         .get(TableURL)
         .map(res => res.json())

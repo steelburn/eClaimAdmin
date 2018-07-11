@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Headers,RequestOptions, URLSearchParams} from '@angular/http';
+import {Http, Headers,RequestOptions, URLSearchParams} from '@angular/http';
 
 import * as constants from '../app/config/constants';
 //import {EntertainmentClaim_Model} from '../models/entertainment_model';
@@ -14,6 +14,11 @@ import {Observable} from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
+class ServerResponse {
+	constructor(public resource: any) {
+        
+	}
+};
 @Injectable()
 export class GiftClaim_Service 
 {	
@@ -25,7 +30,7 @@ export class GiftClaim_Service
 
 	
 	
-	constructor(private httpService: BaseHttpService) {};
+	constructor(private httpService: BaseHttpService, private nav: NavController) {};
 	
     private handleError (error: any) {
 	   let errMsg = (error.message) ? error.message :
@@ -45,11 +50,29 @@ export class GiftClaim_Service
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders})
 			.map((response) => {
+				var result: any = response.json();
 				let banks: Array<GiftClaim_Model> = [];
+				
+				// result.resource.forEach((bank) => {
+				// 	banks.push(BankSetup_Model.fromJson(bank));
+				// });  
 				return banks;
 				
 			}).catch(this.handleError);
 	};
+	
+	// save_main_claim_request (master_main: MasterClaim_Model): Observable<any> 
+	// {
+	// 	var queryHeaders = new Headers();
+    // 	queryHeaders.append('Content-Type', 'application/json');
+    // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+	// 	let options = new RequestOptions({ headers: queryHeaders });
+	// 	return this.httpService.http.post(this.baseResourceUrl1, master_main.toJson(true),options)
+	// 		.map((response) => {
+	// 			return response;
+	// 		});
+    // }
     
     save_claim_request_detail (gift_main: GiftClaim_Model): Observable<any> 
 	{
