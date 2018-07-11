@@ -154,19 +154,10 @@
             {{ "REJECT_BUTTON" | translate }} </button>
         </div>
 
-
-
-
     <ion-item *ngIf="!isApprover && level===1">
-
-
-
         <button ion-button outline item-start icon-left (click)="EditClaim()">
             {{ "EDIT_LABEL" | translate }} </button>
-
-        </ion-item>
-
-   
+        </ion-item>  
         
 
     <div class="blackcontainer" *ngIf="tollParkLookupClicked"></div>
@@ -200,10 +191,6 @@
                                 <td class="lgl1">{{item.CLAIM_METHOD}}</td>
 
                                 <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
-                            
-
-                      
-
                                 <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
                                 <td class="lgl1">{{item.DESCRIPTION}}</td>
                                 <td class="lgl1">
@@ -221,8 +208,6 @@
                             </tr>
                         </table>
                     </ion-item>
-
-
                 </ion-list>
             </ion-card-content>
         </ion-card>
