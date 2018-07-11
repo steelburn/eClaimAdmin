@@ -180,12 +180,12 @@ export class AccountPage {
         ATTACHMENT_PROFESSIONAL: [null],
 
         // -------------------RESIDENTIAL ADDRESS----------------------------
-        USER_ADDRESS1: [null, Validators.required],
+        USER_ADDRESS1: [null],
         USER_ADDRESS2: [null],
         USER_ADDRESS3: [null],
-        USER_POSTCODE: ['', Validators.required],
-        USER_COUNTRY: ['', Validators.required],
-        USER_STATE: ['', Validators.required],
+        USER_POSTCODE: [null],
+        USER_COUNTRY: [null],
+        USER_STATE: [null],
 
         // -------------------FAMILY DETAILS----------------------------------
         //--------For Spouse----------
@@ -198,9 +198,9 @@ export class AccountPage {
         SPOUSE_CHILD: [null],
 
         // -------------------EMERGENCY CONTACT DETAILS------------------------
-        EMG_CONTACT_NAME1: [null, Validators.required],
-        EMG_RELATIONSHIP: [null, Validators.required],
-        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        EMG_CONTACT_NAME1: [null],
+        EMG_RELATIONSHIP: [null],
+        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
         EMG_CONTACT_NAME2: [null],
         EMG_RELATIONSHIP2: [null],
         EMG_CONTACT_NO2: [null],
@@ -208,8 +208,8 @@ export class AccountPage {
         // -------------------PAYROLL DETAILS------------------------
         EPF_NUMBER: [null],
         INCOMETAX_NO: [null],
-        BANK_NAME: ['', Validators.required],
-        ACCOUNT_NUMBER: [null, Validators.required],
+        BANK_NAME: [null],
+        ACCOUNT_NUMBER: [null],
 
         //-------------------ROLE DETAILS---------------------------
         ROLE_NAME: [null],

@@ -242,9 +242,9 @@ export class SocRegistrationPage {
         //-------------------------------------------------------
         if (localStorage.getItem("g_USER_GUID") != "sva") {
           this.Socform = fb.group({
-            soc: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            soc: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\'\"\|\\s]+$'), Validators.required])],
+            project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\'\"\|\\s]+$'), Validators.required])],
+            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\'\"\|\\s]+$'), Validators.required])],
             // location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             // registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             // address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
@@ -260,10 +260,10 @@ export class SocRegistrationPage {
         }
         else {
           this.Socform = fb.group({
-            soc: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+            soc: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\'\"\|\\s]+$'), Validators.required])],
+            project_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\'\"\|\\s]+$'), Validators.required])],
+            customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\'\"\|\\s]+$'), Validators.required])],
+            location_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\'\"\|\\s]+$')])],
             // registration_no: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             // address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             // address2: [null],
@@ -387,17 +387,17 @@ export class SocRegistrationPage {
     }
   }
 
-  stores: any[]; 
+  stores: any[];
   search(searchString: any) {
     let val = searchString.target.value;
     if (!val || !val.trim()) {
-      this.socs = this.stores;      
+      this.socs = this.stores;
       return;
     }
     this.socs = this.filter({
       soc: val,
       project_name: val,
-      customer_name: val      
+      customer_name: val
     });
   }
 
@@ -405,7 +405,7 @@ export class SocRegistrationPage {
     if (!params) {
       return this.stores;
     }
-    
+
     return this.stores.filter((item) => {
       for (let key in params) {
         let field = item[key];
@@ -815,7 +815,8 @@ export class SocRegistrationPage {
   CheckDuplicate() {
     let url: string = "";
     if (localStorage.getItem("g_USER_GUID") != "sva") {
-      url = this.baseResource_Url + "view_soc_details?filter=TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ' AND soc=' + this.SOC_NO_ngModel_Add.trim() + ' AND project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ' AND customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+      // url = this.baseResource_Url + "view_soc_details?filter=TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ' AND soc=' + this.SOC_NO_ngModel_Add.trim() + ' AND project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ' AND customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+      url = this.baseResource_Url + "view_soc_details?filter=TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ' AND soc=' + this.SOC_NO_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     else {
       url = this.baseResource_Url + "view_soc_details?filter=TENANT_GUID=" + this.Tenant_Add_ngModel + ' AND soc=' + this.SOC_NO_ngModel_Add.trim() + ' AND project_name=' + this.PROJECT_NAME_ngModel_Add.trim() + ' AND customer_name=' + this.CUSTOMER_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;

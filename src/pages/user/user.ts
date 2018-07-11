@@ -261,7 +261,7 @@ export class UserPage {
     //this.User_Password_ngModel = Global_Function.Random().toString();
     this.User_Password_ngModel = CryptoJS.SHA256(strPassword).toString(CryptoJS.enc.Hex);
     //console.log(this.User_Password_ngModel);
-    alert(strPassword);
+    // alert(strPassword);
   }
 
   public CloseUserClick() {
@@ -560,13 +560,13 @@ export class UserPage {
         EMAIL: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'), Validators.required])],
         LOGIN_ID: [null],
         PASSWORD: [null],
-        CONTACT_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        CONTACT_NO: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
         COMPANY_CONTACT_NO: [null],
-        MARITAL_STATUS: ['', Validators.required],
+        MARITAL_STATUS: [null],
         PERSONAL_ID_TYPE: [null],
         PERSONAL_ID: [null],
         DOB: [null],
-        GENDER: [null, Validators.required],
+        GENDER: [null],
 
         // -------------------EMPLOYMENT DETAILS--------------------
         DESIGNATION_GUID: [null, Validators.required],
@@ -574,7 +574,7 @@ export class UserPage {
         DEPT_GUID: [null, Validators.required],
         JOIN_DATE: [null, Validators.required],
         CONFIRMATION_DATE: [null],
-        RESIGNATION_DATE: [],
+        RESIGNATION_DATE: [null],
         BRANCH: [null, Validators.required],
         EMPLOYEE_TYPE: [null, Validators.required],
         APPROVER1: [null, Validators.required],
@@ -582,7 +582,7 @@ export class UserPage {
         EMPLOYEE_STATUS: [null, Validators.required],
 
         // -------------------EDUCATIONAL QUALIFICATION--------------------
-        HIGHEST_QUALIFICATION: [null, Validators.required],
+        HIGHEST_QUALIFICATION: [null],
         UNIVERSITY: [null],
         MAJOR: [null],
         EDU_YEAR: [null],
@@ -594,12 +594,12 @@ export class UserPage {
         ATTACHMENT_PROFESSIONAL: [null],
 
         // -------------------RESIDENTIAL ADDRESS----------------------------
-        USER_ADDRESS1: [null, Validators.required],
+        USER_ADDRESS1: [null],
         USER_ADDRESS2: [null],
         USER_ADDRESS3: [null],
-        USER_POSTCODE: ['', Validators.required],
-        USER_COUNTRY: ['', Validators.required],
-        USER_STATE: ['', Validators.required],
+        USER_POSTCODE: [null],
+        USER_COUNTRY: [null],
+        USER_STATE: [null],
 
         // -------------------FAMILY DETAILS----------------------------------
         //--------For Spouse----------
@@ -612,21 +612,21 @@ export class UserPage {
         SPOUSE_CHILD: [null],
 
         // -------------------EMERGENCY CONTACT DETAILS------------------------
-        EMG_CONTACT_NAME1: [null, Validators.required],
-        EMG_RELATIONSHIP: [null, Validators.required],
-        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        EMG_CONTACT_NAME1: [null],
+        EMG_RELATIONSHIP: [null],
+        EMG_CONTACT_NO1: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
         EMG_CONTACT_NAME2: [null],
         EMG_RELATIONSHIP2: [null],
-        EMG_CONTACT_NO2: [null],
+        EMG_CONTACT_NO2: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
 
         // -------------------PAYROLL DETAILS------------------------
         EPF_NUMBER: [null],
         INCOMETAX_NO: [null],
-        BANK_NAME: ['', Validators.required],
-        ACCOUNT_NUMBER: [null, Validators.required],
+        BANK_NAME: [null],
+        ACCOUNT_NUMBER: [null],
 
         //-------------------ROLE DETAILS---------------------------
-        ROLE_NAME: [null],
+        ROLE_NAME: [null, Validators.required],
       });
     }
     else {
@@ -2534,16 +2534,6 @@ export class UserPage {
   GetQualificationID() {
     alert(this.User_HighestQualification_ngModel);
   }
-
-
-
-
-
-
-
-
-
-
 
   // fileName1: string; 
   // ProfileImage: any; 

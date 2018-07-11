@@ -72,7 +72,7 @@
             <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID,claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)">
               <ion-icon name="md-eye"></ion-icon>
             </button>
-            <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1 && claimhistorydetail.PROFILE_LEVEL!=0" (click)="ClaimNavigation(claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,2)">
+            <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1 && claimhistorydetail.PROFILE_LEVEL!=0" (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID, claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,2)">
               <ion-icon name="md-create"></ion-icon>
             </button>
             <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1 && claimhistorydetail.PROFILE_LEVEL!=0" (click)="DeleteClaimRequest(claimhistorydetail.CLAIM_REQUEST_GUID,claimhistorydetail.CLAIM_TYPE_GUID)">

@@ -76,7 +76,7 @@
 
     <ion-item>
         <ion-label> {{ "DESCRIPTION_LABEL" | translate }} : </ion-label>
-        <ion-label> {{ claim.DESCRIPTION }} </ion-label>
+        <ion-label text-wrap> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
 
     <!-- <ion-item>
@@ -89,6 +89,12 @@
                 View Receipt
             </button>
         </ion-item>
+
+        <!-- <ion-fab top right edge>
+            <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
+              <ion-icon name="download"></ion-icon>
+            </button>
+          </ion-fab> -->
     
               
         <div class="blackcontainer" *ngIf="displayImage">
@@ -104,8 +110,7 @@
                     <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null">
                 </ion-card>
             </div>
-
-
+           
 
 
     <ion-item *ngIf="isApprover">
