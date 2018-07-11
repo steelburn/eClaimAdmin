@@ -372,7 +372,6 @@ export class EntertainmentclaimPage {
   }
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-
     this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     console.log(this.uniqueName);
