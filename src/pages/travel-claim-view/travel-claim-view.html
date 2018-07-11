@@ -120,7 +120,7 @@
 
     <ion-item>
         <ion-label> {{ "DESCRIPTION_LABEL" | translate }} ： </ion-label>
-        <ion-label> {{ claim.DESCRIPTION }} </ion-label>
+        <ion-label text-wrap> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
 
     <!-- <ion-item>
@@ -192,7 +192,7 @@
 
                                 <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
                                 <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
-                                <td class="lgl1">{{item.DESCRIPTION}}</td>
+                                <td class="lgl1" text-wrap>{{item.DESCRIPTION}}</td>
                                 <td class="lgl1">
                                         <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)">
                                             Receipt
