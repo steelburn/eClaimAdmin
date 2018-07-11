@@ -116,7 +116,7 @@
         <ion-list>
           <div *ngFor="let item of projects">
             <button ion-item (click)="GetSocNo(item)">
-              <ion-label>{{item.project_name}}
+              <ion-label text-wrap>{{item.project_name}}
                 <!-- <>{{item.soc}}</ion-label> -->
                 [{{item.soc}}]</ion-label>
             </button>
@@ -141,7 +141,7 @@
         <ion-list>
           <div *ngFor="let item of customers">
             <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
-              <ion-label>{{item.NAME}}</ion-label>
+              <ion-label text-wrap>{{item.NAME}}</ion-label>
             </button>
           </div>
         </ion-list>
