@@ -32,8 +32,8 @@
           <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let soc of socs; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+        <tr class="col7" *ngFor="let soc of socs | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">
+          <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1 getHeader" reshead="Soc Number">{{soc.soc}}</td>
           <td class="lgl1 getHeader" reshead="Project Name" text-wrap>{{soc.project_name}}</td>
           <td class="lgl1 getHeader" reshead="Customer Name" text-wrap>{{soc.customer_name}}</td>
@@ -55,6 +55,8 @@
         </tr>
 
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
 

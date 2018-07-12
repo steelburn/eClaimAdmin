@@ -28,6 +28,7 @@ import { RoleModuleSetup_Service } from '../../services/rolemodulesetup_service'
   templateUrl: 'rolemodulesetup.html', providers: [RoleModuleSetup_Service, BaseHttpService]
 })
 export class RolemodulesetupPage {
+  public page:number = 1;
   Rolemoduleform: FormGroup;
   //For Add Module----------------------------
   ROLENAME_ngModel_Add: any;

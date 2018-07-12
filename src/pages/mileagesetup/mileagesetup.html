@@ -34,8 +34,8 @@
 
         </tr>
 
-        <tr class="col7" *ngFor="let mileage of mileages; let i=index" [hidden] = "button_View_Disable">
-          <td class="lgl1 getHeader"  reshead="No.">{{i+1}}</td>
+        <tr class="col7" *ngFor="let mileage of mileages | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden] = "button_View_Disable">
+          <td class="lgl1 getHeader"  reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1 getHeader" reshead="Category">{{mileage.CATEGORY}}</td>
           <td class="lgl1 getHeader" reshead="Rate Per Unit">{{mileage.RATE_PER_UNIT | number : '1.2-2'}}</td>
           <td class="lgl1 getHeader" reshead="Effective Date">{{mileage.RATE_DATE | date:'dd/MM/yyyy'}}</td>
@@ -56,6 +56,8 @@
 
 
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
   <!--Display Grid End-->
