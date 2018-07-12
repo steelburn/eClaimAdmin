@@ -252,53 +252,63 @@ export class ProfileManagerProvider {
         //   }
         // });
       }
-    }    
-
+    }   
+    
     getInfoLevels(levels: any[], level: any) {
       levels.forEach(element => {
         if (element['-id'] == level) {
           this.profileLevel = level;
           if (element['approver']['-directManager'] === '1') {
             let temp = this.GetDirectManager(); temp.then();
-
-    // else  if (this.level === '3')
-    //   this.mainClaimReq.STATUS = 'Approved';
-    // else if (this.level === '0' || this.isRemarksAccepted === false) {
-
-    //   this.mainClaimReq.STATUS = 'Rejected';
-    //   this.mainClaimReq.PROFILE_LEVEL = 0;
-    //   this.mainClaimReq.STAGE = null;
-    //   this.mainClaimReq.ASSIGNED_TO = null;
-    // }
-    if (this.level === '3')
-      this.mainClaimReq.STATUS = 'Approved';
-    if (this.level === '0' || this.isRemarksAccepted === false) {
-      this.mainClaimReq.STATUS = 'Rejected';
-      this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
-      this.mainClaimReq.STAGE = this.previousStage;
-      this.mainClaimReq.PROFILE_LEVEL = 0;
-
+          }
+          if (element['approver']['-keytype'] === 'userGUID') {
+            this.assignedTo = element['approver']['#text'];
+            let temp = this.GetDirectManagerByManagerGUID(); temp.then();
+          }
+        }
+      });
     }
-    if (this.checkMultipleLength === 1)
-      this.UpdateProfileInfo(this.mainClaimReq);
-    else
-      this.UpdateProfileInfoForMultiple(this.mainClaimReq);
-    //alert('Claim action submitted successfully.')
 
-    // This is for Approval Send email to User and next approver
-    this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.CLAIM_REF_GUID, this.mainClaimReq.ASSIGNED_TO, this.mainClaimReq.CLAIM_TYPE_GUID, this.mainClaimReq.START_TS, this.mainClaimReq.END_TS, this.mainClaimReq.CREATION_TS, this.profileLevel);
+  //   getInfoLevels(levels: any[], level: any) {
+  //     levels.forEach(element => {
+  //       if (element['-id'] == level) {
+  //         this.profileLevel = level;
+  //         if (element['approver']['-directManager'] === '1') {
+  //           let temp = this.GetDirectManager(); temp.then();
+
+  //   // else  if (this.level === '3')
+  //   //   this.mainClaimReq.STATUS = 'Approved';
+  //   // else if (this.level === '0' || this.isRemarksAccepted === false) {
+
+  //   //   this.mainClaimReq.STATUS = 'Rejected';
+  //   //   this.mainClaimReq.PROFILE_LEVEL = 0;
+  //   //   this.mainClaimReq.STAGE = null;
+  //   //   this.mainClaimReq.ASSIGNED_TO = null;
+  //   // }
+  //   if (this.level === '3')
+  //     this.mainClaimReq.STATUS = 'Approved';
+  //   if (this.level === '0' || this.isRemarksAccepted === false) {
+  //     this.mainClaimReq.STATUS = 'Rejected';
+  //     this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+  //     this.mainClaimReq.STAGE = this.previousStage;
+  //     this.mainClaimReq.PROFILE_LEVEL = 0;
+
+  //   }
+  //   if (this.checkMultipleLength === 1)
+  //     this.UpdateProfileInfo(this.mainClaimReq);
+  //   else
+  //     this.UpdateProfileInfoForMultiple(this.mainClaimReq);
+  //   //alert('Claim action submitted successfully.')
+
+  //   // This is for Approval Send email to User and next approver
+  //   this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID,this.mainClaimReq.ASSIGNED_TO,claimRef.STATUS);
 
 
-  }
-
-
-
- 
-          
+  // }         
          
           
-            getProfileForUser() {
-    this.api.getClaimRequestByClaimReqGUID('63a9730e-5421-28c1-0c60-e36c1384fac6').subscribe(data => {
+      getProfileForUser() {
+      this.api.getClaimRequestByClaimReqGUID('63a9730e-5421-28c1-0c60-e36c1384fac6').subscribe(data => {
       let stringProfileJSON = data[0].PROFILE_JSON
       let profileJSON = JSON.parse(stringProfileJSON);
       let levels = profileJSON.profile.levels.level;
@@ -390,6 +400,7 @@ export class ProfileManagerProvider {
   }
 
   formValues: any; claimAmount: any; isCustomer: any; profileJSON: any; isRequester: boolean = false;
+  
   save(formValues: any, amount: any, isCustomer: any) {
     this.isRequester = true;
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
