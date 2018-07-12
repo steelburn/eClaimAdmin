@@ -8,6 +8,8 @@ import { UUID } from 'angular2-uuid';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { NavController, App } from 'ionic-angular';
 import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist';
+import moment from 'moment';
+
 
 
 @Injectable()
@@ -140,7 +142,7 @@ export class ProfileManagerProvider {
         this.mainClaimReq.STAGE = this.stage;
         this.mainClaimReq.ASSIGNED_TO = this.assignedTo;
         this.mainClaimReq.PROFILE_LEVEL = this.level;
-        this.mainClaimReq.UPDATE_TS = new Date().toISOString();
+        this.mainClaimReq.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
         // if (this.level === '-1')
         //   this.mainClaimReq.STATUS = 'Paid';
         if (this.level === '-1') {
@@ -173,7 +175,7 @@ export class ProfileManagerProvider {
         //alert('Claim action submitted successfully.')
 
         // This is for Approval Send email to User and next approver
-        this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.CLAIM_REF_GUID, this.mainClaimReq.ASSIGNED_TO, this.mainClaimReq.CLAIM_TYPE_GUID, this.mainClaimReq.START_TS, this.mainClaimReq.END_TS, this.mainClaimReq.CREATION_TS, this.profileLevel);
+        this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID,this.mainClaimReq.ASSIGNED_TO,claimRef.STATUS);
   
      
     }
@@ -190,8 +192,8 @@ export class ProfileManagerProvider {
       claimHistoryRef.REMARKS = remarks;
       claimHistoryRef.STATUS = isRemarksAccepted ? 'Approved' : 'Rejected';
       claimHistoryRef.USER_GUID = approverGUID;
-      claimHistoryRef.CREATION_TS = new Date().toISOString();
-      claimHistoryRef.UPDATE_TS = new Date().toISOString();
+      claimHistoryRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+      claimHistoryRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
      
       this.getMainClaimReqInfo(claimHistoryRef, level, claimRequestGUID, isRemarksAccepted);
       // this.readProfile(level, claimRequestGUID, isRemarksAccepted) ;
@@ -294,8 +296,9 @@ export class ProfileManagerProvider {
       claimReqMainRef.END_TS = this.formValues.end_DT;
       claimReqMainRef.MILEAGE_AMOUNT = this.claimAmount;
       claimReqMainRef.CLAIM_AMOUNT = this.claimAmount;
-      claimReqMainRef.CREATION_TS = new Date().toISOString();
-      claimReqMainRef.UPDATE_TS = new Date().toISOString();
+      claimReqMainRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+      claimReqMainRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+      // claimReqMainRef.UPDATE_TS = new Date().toISOString();
       claimReqMainRef.FROM = this.formValues.origin;
       claimReqMainRef.DESTINATION = this.formValues.destination;
       claimReqMainRef.DISTANCE_KM = this.formValues.distance;
@@ -320,7 +323,7 @@ export class ProfileManagerProvider {
       }
       this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
         var postClaimMain = response.json();
-        this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID );
+        this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, moment(new Date()).format('YYYY-MM-DDTHH:mm'), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID );
         localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
         // this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
         //this.MainClaimSaved = true;
@@ -343,8 +346,8 @@ export class ProfileManagerProvider {
       claimReqRef.MONTH = month;
       claimReqRef.YEAR = year;
       claimReqRef.STATUS = 'Pending';
-      claimReqRef.CREATION_TS = new Date().toISOString();
-      claimReqRef.UPDATE_TS = new Date().toISOString();
+      claimReqRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+      claimReqRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
       this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
         var postClaimRef = response.json();
         let claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
