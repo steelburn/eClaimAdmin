@@ -12,6 +12,7 @@ import { UserMain_Model } from '../../models/user_main_model';
 import { UserSetup_Service } from '../../services/usersetup_service';
 
 import { LoginPage } from '../login/login';
+import moment from 'moment';
 
 /**
  * Generated class for the ChangePasswordPage page.
@@ -101,7 +102,7 @@ export class ChangePasswordPage {
             this.usermain_entry.CREATION_TS = this.user_details[0]["CREATION_TS"];
             this.usermain_entry.CREATION_USER_GUID = this.user_details[0]["CREATION_USER_GUID"];
 
-            this.usermain_entry.UPDATE_TS = new Date().toISOString();
+            this.usermain_entry.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
             this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
             this.usermain_entry.IS_TENANT_ADMIN = this.user_details[0]["IS_TENANT_ADMIN"];

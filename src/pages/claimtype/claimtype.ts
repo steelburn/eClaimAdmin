@@ -14,6 +14,7 @@ import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
+import moment from 'moment';
 
 
 /**
@@ -237,9 +238,9 @@ export class ClaimtypePage {
     else {
       this.claimtype_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
     }
-    this.claimtype_entry.CREATION_TS = new Date().toISOString();
+    this.claimtype_entry.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
     this.claimtype_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-    this.claimtype_entry.UPDATE_TS = new Date().toISOString();
+    this.claimtype_entry.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
     this.claimtype_entry.UPDATE_USER_GUID = "";
   }
 
@@ -248,7 +249,7 @@ export class ClaimtypePage {
     this.claimtype_entry.TENANT_GUID = this.claimtype_details.TENANT_GUID;
     this.claimtype_entry.CREATION_TS = this.claimtype_details.CREATION_TS;
     this.claimtype_entry.CREATION_USER_GUID = this.claimtype_details.CREATION_USER_GUID;
-    this.claimtype_entry.UPDATE_TS = new Date().toISOString();
+    this.claimtype_entry.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
     this.claimtype_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
   }
 
