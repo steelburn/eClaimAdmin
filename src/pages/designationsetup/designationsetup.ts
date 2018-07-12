@@ -30,7 +30,7 @@ export class DesignationsetupPage {
 
   Designationform: FormGroup;
   designation_entry: DesignationSetup_Model = new DesignationSetup_Model();
-
+  public page:number = 1;
   baseResourceUrl: string;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

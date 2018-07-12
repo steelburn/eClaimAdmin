@@ -30,7 +30,7 @@ export class RolesetupPage {
   role_entry: RoleSetup_Model = new RoleSetup_Model();
   //role: RoleSetup_Model = new RoleSetup_Model();
   Roleform: FormGroup;
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_role' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

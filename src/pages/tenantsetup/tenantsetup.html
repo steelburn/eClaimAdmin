@@ -38,8 +38,8 @@
                     <th class="lgl1 tblBrRight" style="width:120px">Action</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let tenant of tenants; let i=index">
-                    <td class="lgl1">{{i+1}}</td>
+                <tr class="col7" *ngFor="let tenant of tenants | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
+                    <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
                     <td class="lgl1">{{tenant.TENANT_ACCOUNT_NAME}}</td>
                     <td class="lgl1">{{tenant.NAME}}</td>
                     <td class="lgl1">23 - 4- 2222</td>
@@ -61,6 +61,8 @@
                     </td>
                 </tr>
             </table>
+            <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+            </pagination-controls>
         </ion-item>
     </ion-list>
     <!-- 

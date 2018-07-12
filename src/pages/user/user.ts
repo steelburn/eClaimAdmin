@@ -56,7 +56,7 @@ declare var cordova: any;
 })
 export class UserPage {
   //selectedValue: number;
-
+  public page:number = 1;
   fileName1: string;
   fileName2: string;
   fileName3: string;

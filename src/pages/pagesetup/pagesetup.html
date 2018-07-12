@@ -30,8 +30,8 @@
 
         </tr>
 
-        <tr class="col7" *ngFor="let page of pages; let i=index">
-          <td class="lgl1">{{i+1}}</td>
+        <tr class="col7" *ngFor="let page of pages | paginate:{itemsPerPage: 10, currentPage:p, id: 'i' }; let i=index">
+          <td class="lgl1">{{ 10 * (p - 1) + i+1 }}</td>
           <td class="lgl1">{{page.NAME}}</td>
           <td class="lgl1">{{page.DESCRIPTION}}</td>
           <td class="lgl1">{{page.URL}}</td>
@@ -44,6 +44,8 @@
 
 
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="p=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
 
