@@ -39,7 +39,7 @@ export class LoginPage {
     if (form.valid) {
       //-----------Check if the login as super vendor-----------------------
       if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-        localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+        localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "assets/img/profile_no_preview.png");
 
         //navigate to app.component page
         this.userData.login(this.login.username);
@@ -69,7 +69,7 @@ export class LoginPage {
               localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
               debugger;
               if(res[0]["IMAGE_URL"] == null || res[0]["IMAGE_URL"] == ''){
-                localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+                localStorage.setItem("g_IMAGE_URL", "assets/img/profile_no_preview.png");
               }
               else{                
                 localStorage.setItem("g_IMAGE_URL",constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/eclaim/" + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
@@ -334,7 +334,7 @@ export class LoginPage {
 
   GetUserFromAdServer(form: NgForm, username: string) {    
     if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-      localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+      localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "assets/img/profile_no_preview.png");
 
       //navigate to app.component page
       this.userData.login(this.login.username);
@@ -360,7 +360,7 @@ export class LoginPage {
           if (form.valid) {
             //-----------Check if the login as super vendor-----------------------
             if (this.login.username.trim() == "sva" && this.login.password.trim() == "sva") {
-              localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+              localStorage.setItem("g_USER_GUID", "sva"); localStorage.setItem("g_FULLNAME", "Super Admin"); localStorage.setItem("g_IMAGE_URL", "assets/img/profile_no_preview.png");
 
               //navigate to app.component page
               this.userData.login(this.login.username);
@@ -389,7 +389,7 @@ export class LoginPage {
                     localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
                     
                     if(res[0]["IMAGE_URL"] == null || res[0]["IMAGE_URL"] == ''){
-                      localStorage.setItem("g_IMAGE_URL", "../assets/img/profile_no_preview.png");
+                      localStorage.setItem("g_IMAGE_URL", "assets/img/profile_no_preview.png");
                     }
                     else{
                       localStorage.setItem("g_IMAGE_URL",constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/eclaim/" + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
