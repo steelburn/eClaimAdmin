@@ -31,7 +31,7 @@ export class ClaimtypePage {
   claimtype_entry: ClaimTypeSetup_Model = new ClaimTypeSetup_Model();
   Claimtypeform: FormGroup;
   //claimtype: ClaimTypeSetup_Model = new ClaimTypeSetup_Model();
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_type' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

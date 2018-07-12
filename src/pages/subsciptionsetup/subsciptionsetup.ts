@@ -28,7 +28,7 @@ export class SubsciptionsetupPage {
   Subscription_entry: SubsciptionSetup_Model = new SubsciptionSetup_Model();
   //subscription: SubsciptionSetup_Model = new SubsciptionSetup_Model();
   Subscriptionform: FormGroup;
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_subscription' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

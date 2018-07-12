@@ -30,7 +30,7 @@ export class PaymenttypesetupPage {
   Paymenttype_entry: PaymentTypeSetup_Model = new PaymentTypeSetup_Model();
   Paymenttypeform: FormGroup;
   //paymenttype: PaymentTypeSetup_Model = new PaymentTypeSetup_Model();
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_payment_type' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
