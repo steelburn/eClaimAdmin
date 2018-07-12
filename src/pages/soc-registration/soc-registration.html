@@ -10,12 +10,12 @@
   </ion-navbar>
   <ion-toolbar no-border-top color="primary200">
     <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
-  </ion-toolbar>  
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="AddSocClick()" [disabled]="button_Add_Disable">
+    <button ion-fab mini (click)="AddSocClick()" [disabled]="button_Add_Disable" title="Add">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
@@ -32,11 +32,11 @@
           <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let soc of socs; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+        <tr class="col7" *ngFor="let soc of socs | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">
+          <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1 getHeader" reshead="Soc Number">{{soc.soc}}</td>
           <td class="lgl1 getHeader" reshead="Project Name" text-wrap>{{soc.project_name}}</td>
-          <td class="lgl1 getHeader"reshead="Customer Name" text-wrap>{{soc.customer_name}}</td>
+          <td class="lgl1 getHeader" reshead="Customer Name" text-wrap>{{soc.customer_name}}</td>
           <td class="lgl1 getHeader" *ngIf="AdminLogin" reshead="Tenant">{{soc.TENANT_ACCOUNT_NAME}}</td>
           <td class="lgl1 getHeader fColor" reshead="Action">
             <!-- <button ion-button item-end (click)="EditClick(soc.TENANT_GUID)">
@@ -45,16 +45,18 @@
             <button ion-button item-end (click)="DeleteClick(soc.TENANT_GUID)">
               <ion-icon name="md-close"></ion-icon>
             </button> -->
-            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(soc.SOC_GUID)">
+            <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(soc.SOC_GUID)" title="Edit">
               <ion-icon name="md-create"></ion-icon>
             </button>
-            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(soc.SOC_GUID)">
+            <button ion-button item-end [disabled]="button_Delete_Disable" (click)="DeleteClick(soc.SOC_GUID)" title="Delete">
               <ion-icon name="md-close"></ion-icon>
             </button>
           </td>
         </tr>
 
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
 

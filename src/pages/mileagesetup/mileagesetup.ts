@@ -30,7 +30,7 @@ import { LoginPage } from '../login/login';
 export class MileagesetupPage {
   mileage_entry: MileageSetup_Model = new MileageSetup_Model();
   Mileageform: FormGroup;
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_mileage' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

@@ -4,21 +4,14 @@ import * as constants from '../../config/constants';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import { ClaimReqDetail_Model } from '../../models/ClaimReqDetail_Model';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
-import { Console } from '@angular/core/src/console';
 import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Services } from '../Services';
-import { Transfer, TransferObject } from '@ionic-native/transfer';
-import { ActionSheetController,  Loading, LoadingController,  Platform, ToastController,  } from 'ionic-angular';
-
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ClaimRequestDetailModel } from '../../models/claim-request-detail.model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
-
-
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -114,8 +107,8 @@ export class AddTollPage {
     // 2a543cd5-0177-a1d0-5482-48b52ec2100f
     claimReqRef.AMOUNT = this.claimAmount+'';
     claimReqRef.DESCRIPTION = this.Description;
-    claimReqRef.CREATION_TS = new Date().toISOString();
-    claimReqRef.UPDATE_TS = new Date().toISOString();
+    claimReqRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    claimReqRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
     claimReqRef.ATTACHMENT_ID = this.imageGUID;
 
     this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
@@ -132,7 +125,7 @@ export class AddTollPage {
           this.claimDetailsData["resource"][0].PAYMENT_TYPE_GUID = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
           this.claimDetailsData["resource"][0].AMOUNT = this.claimAmount;
           this.claimDetailsData["resource"][0].DESCRIPTION = this.Description;
-          this.claimDetailsData["resource"][0].UPDATE_TS = new Date().toISOString();
+          this.claimDetailsData["resource"][0].UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
           this.claimDetailsData["resource"][0].ATTACHMENT_ID = (this.imageGUID!==undefined || this.imageGUID!==null)?this.imageGUID:this.claimDetailsData["resource"][0].ATTACHMENT_ID;
          this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(res => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
          this.navCtrl.pop();
@@ -319,8 +312,8 @@ export class AddTollPage {
     let objImage: ImageUpload_model = new ImageUpload_model();
     objImage.Image_Guid = UUID.UUID();
     objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-    objImage.CREATION_TS = new Date().toISOString();
-    objImage.Update_Ts = new Date().toISOString();
+    objImage.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    objImage.Update_Ts = moment(new Date()).format('YYYY-MM-DDTHH:mm');
     return new Promise((resolve, reject) => {
       this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
         // let res = response.json();

@@ -30,8 +30,8 @@
           <th class="lgl1 tblBrRight" style="width:90px">Action</th>
         </tr>
 
-        <tr class="col7" *ngFor="let module of Module_New; let i=index">
-          <td class="lgl1">{{i+1}}</td>
+        <tr class="col7" *ngFor="let module of Module_New | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
+          <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1">{{module.MODULE_NAME}}</td>
           <td class="lgl1">{{module.DESCRIPTION}}</td>
           <td class="lgl1" text-wrap>{{module.PAGE_NAME}}</td>
@@ -45,6 +45,8 @@
           </td>
         </tr>
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
 

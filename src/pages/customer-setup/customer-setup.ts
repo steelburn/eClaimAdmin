@@ -38,7 +38,7 @@ export class CustomerSetupPage {
   tenant_entry: Tenant_Main_Model = new Tenant_Main_Model();
   view_entry: View_SOC_Model = new View_SOC_Model();
   Customerform: FormGroup;
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
@@ -156,10 +156,10 @@ export class CustomerSetupPage {
             customer_name: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
             location_name: [null],
             registration_no: [null],
-            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],            
+            address1: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
             address2: [null],
             address3: [null],
-            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],            
+            contact_person: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$')])],
             contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
             contact_no1: [null],
             contact_no2: [null],
@@ -179,7 +179,7 @@ export class CustomerSetupPage {
             contact_person_mobile_no: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$')])],
             contact_no1: [null],
             contact_no2: [null],
-            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')])],            
+            email: [null, Validators.compose([Validators.pattern('[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')])],
             division: [null],
             TENANT_NAME: [null],
           });
@@ -419,10 +419,10 @@ export class CustomerSetupPage {
 
   SetCommonEntityForCustomerLocationAddUpdate() {
     this.customer_location_entry.CUSTOMER_GUID = this.customer_entry.CUSTOMER_GUID;
-    if(this.LOCATION_NAME_ngModel_Add == undefined || this.LOCATION_NAME_ngModel_Add == ""){
+    if (this.LOCATION_NAME_ngModel_Add == undefined || this.LOCATION_NAME_ngModel_Add == "") {
       this.customer_location_entry.NAME = "NA";
     }
-    else{
+    else {
       this.customer_location_entry.NAME = this.titlecasePipe.transform(this.LOCATION_NAME_ngModel_Add.trim());
     }
     this.customer_location_entry.DESCRIPTION = "NA";

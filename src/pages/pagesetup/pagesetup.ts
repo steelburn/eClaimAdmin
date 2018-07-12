@@ -28,7 +28,7 @@ import { LoginPage } from '../login/login';
 export class PagesetupPage {
   page_entry: PageSetup_Model = new PageSetup_Model();
   Pageform: FormGroup;
-
+  public p:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_rolepage' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

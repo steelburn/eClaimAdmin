@@ -24,6 +24,8 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import moment from 'moment';
+//import { ExcelService } from '../../providers/excel.service';
+
 
 @IonicPage()
 @Component({
@@ -314,11 +316,16 @@ export class EntertainmentclaimPage {
     });
   }
 
+  isImage: boolean = false;
   selectedImage: any = null
   onFileChange(event: any, ) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      if(file.type==='image/jpeg')
+      this.isImage = true;
+      else
+      this.isImage = false;
       this.Entertainmentform.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       //this.uniqueName = file.name;
@@ -372,7 +379,6 @@ export class EntertainmentclaimPage {
   }
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-
     this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     console.log(this.uniqueName);
@@ -409,7 +415,8 @@ export class EntertainmentclaimPage {
           this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
           this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
-          this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+          // this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+          this.claimRequestData["resource"][0].TRAVEL_DATE = moment(this.claimRequestData.TRAVEL_DATE).format('YYYY-MM-DDTHH:mm');
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
@@ -461,4 +468,12 @@ export class EntertainmentclaimPage {
     this.displayImage = true;
     this.imageURL = val;
   }
+
+  // ExcelData: any[] = [];
+  // ExportToExcel(evt: any) {
+  //   // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
+  //   this.excelService.exportAsExcelFile(this.ExcelData, 'Data');    
+  // }
+
+  
 } 

@@ -16,6 +16,7 @@ export class ExcelService {
     // const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
     this.saveAsExcelFile(excelBuffer, excelFileName);
+    this.saveFile(excelBuffer, excelFileName);
   }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
@@ -23,5 +24,12 @@ export class ExcelService {
       type: EXCEL_TYPE
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
+
+  public saveFile(buffer: any, fileName: string, ): void {
+    const data: Blob = new Blob([buffer], {
+      //type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName);
   }
 }

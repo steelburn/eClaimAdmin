@@ -29,7 +29,7 @@ import { LoginPage } from '../login/login';
 export class CountrysetupPage {
   country_entry: CountrySetup_Model = new CountrySetup_Model();
   Countryform: FormGroup;
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_country' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   public countries: CountrySetup_Model[] = [];

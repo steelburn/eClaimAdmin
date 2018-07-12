@@ -31,7 +31,7 @@ export class ProfileSetupPage {
   profile_entry: Main_Profile_Model = new Main_Profile_Model();
   Profileform: FormGroup;
   current_profileGUID: string = '';
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_profile' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

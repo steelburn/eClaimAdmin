@@ -528,7 +528,8 @@ export class TravelclaimPage {
       this.currentItems = [];
       return;
     }
-    var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=500&components=country:MY&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http.get(url).map(res => res.json()).subscribe(data => {
       this.currentItems = data["predictions"];
       console.table(this.currentItems);
@@ -812,7 +813,7 @@ export class TravelclaimPage {
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
     return new Promise((resolve, reject) => {
-      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.Travelform.get('avatar').value, options)
+      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Travelform.get('avatar').value, options)
         .map((response) => {
           return response;
         }).subscribe((response) => {
