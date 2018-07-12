@@ -36,8 +36,8 @@
 
         </tr>
 
-        <tr class="col7" *ngFor="let role of roles; let i=index">
-          <td class="lgl1">{{i+1}}</td>
+        <tr class="col7" *ngFor="let role of roles | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
+          <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1">{{role.NAME}}</td>
           <td class="lgl1">{{role.DESCRIPTION}}</td>
           
@@ -76,6 +76,8 @@
 
 
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
 

@@ -34,8 +34,8 @@
 
         </tr>
 
-        <tr class="col7" *ngFor="let subscription of subscriptions; let i=index">
-          <td class="lgl1">{{i+1}}</td>
+        <tr class="col7" *ngFor="let subscription of subscriptions | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' } ; let i=index">
+          <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1">{{subscription.PLAN_NAME}}</td>
           <td class="lgl1">{{subscription.DURATION}}</td>
           <td class="lgl1">{{subscription.RATE}}</td>
@@ -53,6 +53,8 @@
 
 
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
 

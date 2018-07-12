@@ -30,7 +30,7 @@ export class PermissionPage {
   Permissionform: FormGroup;
   public AddPermissionClicked: boolean = false;
   public EditPermissionClicked: boolean = false;
-  
+  public page:number = 1;
   modules: any;
   tenants: any;
   
