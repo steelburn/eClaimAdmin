@@ -88,8 +88,9 @@
       <button ion-button color="primary500" (click)='submitAction(Entertainmentform.value)' [disabled]="(Entertainmentform.valid && !ImageUploadValidation) || !Entertainmentform.valid">{{ 'SUBMIT'}}</button>
     </div>
   </form>
-
-  <div class="popup2" padding *ngIf="displayImage">
+  <div class="blackcontainer" *ngIf="ProjectLookupClicked">
+  </div>
+  <div class="popup1" padding *ngIf="displayImage">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">Receipt</div>
