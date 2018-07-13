@@ -36,9 +36,9 @@
                     <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
-                <tr class="col7" *ngFor="let user of userview; let i=index" [hidden]="button_View_Disable">
+                <tr class="col7" *ngFor="let user of userview | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">
 
-                    <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+                    <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
                     <td class="lgl1 getHeader" text-wrap reshead="Name">{{user.FULLNAME}}</td>
 
                     <td class="lgl1 getHeader" reshead="Staff ID">{{user.STAFF_ID}}</td>
@@ -62,6 +62,8 @@
                 </tr>
 
             </table>
+            <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+            </pagination-controls>
         </ion-item>
     </ion-list>
 

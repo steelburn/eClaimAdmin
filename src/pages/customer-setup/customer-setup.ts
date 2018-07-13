@@ -38,7 +38,7 @@ export class CustomerSetupPage {
   tenant_entry: Tenant_Main_Model = new Tenant_Main_Model();
   view_entry: View_SOC_Model = new View_SOC_Model();
   Customerform: FormGroup;
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

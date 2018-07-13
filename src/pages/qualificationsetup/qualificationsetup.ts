@@ -31,7 +31,7 @@ export class QualificationsetupPage {
   Qualify_entry: QualificationSetup_Model = new QualificationSetup_Model();
   Qualifyform: FormGroup;
   //qualificationsetup: QualificationSetup_Model = new QualificationSetup_Model();
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_qualification_type' + '?order=TYPE_NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
