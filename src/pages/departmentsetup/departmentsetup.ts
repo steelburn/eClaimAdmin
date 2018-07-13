@@ -29,7 +29,7 @@ import { LoginPage } from '../login/login';
 export class DepartmentsetupPage {
   department_entry: DepartmentSetup_Model = new DepartmentSetup_Model();
   Departmentform: FormGroup;
-
+  public page:number = 1;
   baseResourceUrl: string = "";
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 

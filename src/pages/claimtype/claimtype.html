@@ -29,8 +29,8 @@
           <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let claimtype of claimtypes; let i=index" [hidden]="button_View_Disable">
-          <td class="lgl1 getHeader"  reshead="No.">{{i+1}}</td>
+        <tr class="col7" *ngFor="let claimtype of claimtypes | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">
+          <td class="lgl1 getHeader"  reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1 getHeader"  reshead="Name">{{claimtype.NAME}}</td>
    
           <td class="lgl1 getHeader fColor"  reshead="Action">
@@ -43,6 +43,8 @@
           </td>
         </tr>
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
 

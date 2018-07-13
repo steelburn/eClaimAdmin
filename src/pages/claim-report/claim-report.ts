@@ -21,7 +21,7 @@ import * as constants from '../../app/config/constants';
   templateUrl: 'claim-report.html',
 })
 export class ClaimReportPage {
-
+  public page:number = 1;
   baseResourceUrl: string;
   claimsList: any[];
   deptList: any[];

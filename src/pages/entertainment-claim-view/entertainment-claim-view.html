@@ -90,6 +90,12 @@
             </button>
         </ion-item>
 
+        <!-- <ion-item *ngIf="!isImage">
+            <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" *ngIf="claim.ATTACHMENT_ID!==null">
+                    View Receipt
+                </button>
+            </ion-item> -->
+
         <!-- <ion-fab top right edge>
             <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
               <ion-icon name="download"></ion-icon>
@@ -107,7 +113,10 @@
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </ion-card-header>
-                    <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null">
+                    <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null && isImage">
+                    <a href={{imageURL}} *ngIf="!isImage">Download</a>
+
+                    <!-- *ngIf="isImage" -->
                 </ion-card>
             </div>
            

@@ -28,8 +28,8 @@
 
         </tr>
 
-        <tr class="col7" *ngFor="let profile of profiles; let i=index">
-          <td class="lgl1">{{i+1}}</td>
+        <tr class="col7" *ngFor="let profile of profiles | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
+          <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1">{{profile.PROFILE_NAME}}</td>
           <td class="lgl1">{{profile.PROFILE_XML}}</td>
           <td class="lgl1 fColor">
@@ -44,6 +44,8 @@
 
 
       </table>
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      </pagination-controls>
     </ion-item>
   </ion-list>
   <!--Display Grid End-->
