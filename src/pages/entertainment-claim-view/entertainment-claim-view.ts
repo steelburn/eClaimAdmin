@@ -79,10 +79,10 @@ export class EntertainmentClaimViewPage {
         if (element.ATTACHMENT_ID !== null)
        { 
         this.stringToSplit = element.ATTACHMENT_ID ;
-        this.tempUserSplit1 = this.stringToSplit.split(".")[0]
+        this.tempUserSplit1 = this.stringToSplit.split(".")[0];
         this.tempUserSplit2 = this.stringToSplit.split(".")[1];
         this.tempUserSplit3 = this.stringToSplit.split(".")[2];
-        if(this.tempUserSplit3==='jpeg')
+        if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
         this.isImage = true
         else {
           this.isImage = false
