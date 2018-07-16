@@ -42,12 +42,28 @@ export class GiftClaimViewPage {
 
   }
 
+  stringToSplit: string = "";
+  tempUserSplit1: string = "";
+  tempUserSplit2: string = "";
+  tempUserSplit3: string = "";
+
+  isImage: boolean = false;
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
-        if (element.ATTACHMENT_ID !== null)
-        element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+        if (element.ATTACHMENT_ID !== null){
+          this.stringToSplit = element.ATTACHMENT_ID ;
+          this.tempUserSplit1 = this.stringToSplit.split(".")[0];
+          this.tempUserSplit2 = this.stringToSplit.split(".")[1];
+          this.tempUserSplit3 = this.stringToSplit.split(".")[2];
+          if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
+          this.isImage = true
+          else {
+            this.isImage = false
+          }
+          element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+        }       
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
       });
     })
