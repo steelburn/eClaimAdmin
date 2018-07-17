@@ -24,6 +24,8 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
 import moment from 'moment';
+//import { ExcelService } from '../../providers/excel.service';
+
 
 @IonicPage()
 @Component({
@@ -137,6 +139,10 @@ export class EntertainmentclaimPage {
   //   this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   // }
 
+  stringToSplit: string = "";
+  tempUserSplit1: string = "";
+  tempUserSplit2: string = "";
+  tempUserSplit3: string = "";
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -151,7 +157,21 @@ export class EntertainmentclaimPage {
                 this.claimRequestData = data["resource"];
 
                 if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                { 
+                 this.stringToSplit = this.claimRequestData[0].ATTACHMENT_ID ;
+                 this.tempUserSplit1 = this.stringToSplit.split(".")[0];
+                 this.tempUserSplit2 = this.stringToSplit.split(".")[1];
+                 this.tempUserSplit3 = this.stringToSplit.split(".")[2];
+                 if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
+                 this.isImage = true
+                 else {
+                   this.isImage = false
+                 }
+                 this.imageURLEdit =  this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+               }
+
+                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                //   this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
@@ -314,11 +334,16 @@ export class EntertainmentclaimPage {
     });
   }
 
+  isImage: boolean = false;
   selectedImage: any = null
   onFileChange(event: any, ) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      if(file.type==='image/jpeg')
+      this.isImage = true;
+      else
+      this.isImage = false;
       this.Entertainmentform.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       //this.uniqueName = file.name;
@@ -372,7 +397,6 @@ export class EntertainmentclaimPage {
   }
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-
     this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     console.log(this.uniqueName);
@@ -409,7 +433,8 @@ export class EntertainmentclaimPage {
           this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
           this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
-          this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+          // this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+          this.claimRequestData["resource"][0].TRAVEL_DATE = moment(this.claimRequestData.TRAVEL_DATE).format('YYYY-MM-DDTHH:mm');
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
@@ -461,4 +486,12 @@ export class EntertainmentclaimPage {
     this.displayImage = true;
     this.imageURL = val;
   }
+
+  // ExcelData: any[] = [];
+  // ExportToExcel(evt: any) {
+  //   // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
+  //   this.excelService.exportAsExcelFile(this.ExcelData, 'Data');    
+  // }
+
+  
 } 

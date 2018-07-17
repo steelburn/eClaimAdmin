@@ -127,7 +127,7 @@
     </div> -->
 
     <div *ngIf="imageURLEdit!==null">
-      <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)">
+      <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
         View Receipt
       </button>
     </div>
@@ -217,7 +217,7 @@
         <ion-list>
           <div *ngFor="let item of projects">
             <button ion-item (click)="GetSocNo(item)">
-              <ion-label>{{item.project_name}} [{{item.soc}}]
+              <ion-label text-wrap>{{item.project_name}} [{{item.soc}}]
               </ion-label>
             </button>
           </div>
@@ -244,7 +244,7 @@
         <ion-list>
           <div *ngFor="let item of customers">
             <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
-              <ion-label>{{item.NAME}}</ion-label>
+              <ion-label text-wrap>{{item.NAME}}</ion-label>
             </button>
           </div>
         </ion-list>
@@ -286,7 +286,7 @@
 
 
               <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
-              <td class="lgl1">{{item.DESCRIPTION}}</td>
+              <td class="lgl1" text-wrap>{{item.DESCRIPTION}}</td>
               <td class="lgl1">
                 <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)">
                   Receipt
@@ -320,7 +320,7 @@
   <div class="popup1" padding *ngIf="displayImage">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
-        <div class="icHeaderText">{{ "CUSTOMER_NAME_LABEL" | translate }}</div>
+        <div class="icHeaderText">Receipt</div>
         <button class="btnR" (click)="CloseDisplayImage()">
           <ion-icon name="md-close"></ion-icon>
         </button>

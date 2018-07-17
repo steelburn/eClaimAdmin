@@ -65,12 +65,9 @@
       
   <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>  
   
-  </ion-item>
+  </ion-item> 
 
-  
-  
-
-  <div>
+  <div *ngIf= "isImage">
     <img src="{{ProfileImage}}" style="width: 20%">
 </div>
 
@@ -103,7 +100,9 @@
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
-      <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
+      <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null  && isImage">
+      <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
+      <!-- <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null"> -->
     </ion-card>
   </div>
 
@@ -122,7 +121,7 @@
       <ion-list>
         <ion-item-sliding *ngFor="let item of currentItems">
           <button ion-item (click)="openItem(item)">
-            <ion-label> {{item.description}}</ion-label>
+            <ion-label text-wrap> {{item.description}}</ion-label>
           </button>
         </ion-item-sliding>
       </ion-list>
@@ -144,7 +143,7 @@
       <ion-list>
         <div *ngFor="let item of projects">
           <button ion-item (click)="GetSocNo(item)">
-            <ion-label>{{item.project_name}}
+            <ion-label text-wrap>{{item.project_name}}
               [{{item.soc}}]</ion-label> 
           </button>
         </div>
@@ -168,7 +167,7 @@
       <ion-list>
         <div *ngFor="let item of customers">
           <button ion-item (click)="GetCustomer(item.CUSTOMER_GUID,item.NAME)">
-            <ion-label>{{item.NAME}}</ion-label>
+            <ion-label text-wrap>{{item.NAME}}</ion-label>
           </button>
         </div>
       </ion-list>

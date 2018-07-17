@@ -10,12 +10,14 @@ import {EntertainmentclaimPage} from '../../pages/entertainmentclaim/entertainme
 import { UUID } from 'angular2-uuid';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+//import { ExcelService } from '../../providers/excel.service';
+
 
 
 @IonicPage()
 @Component({
   selector: 'page-entertainment-claim-view',
-  templateUrl: 'entertainment-claim-view.html',
+  templateUrl: 'entertainment-claim-view.html', 
 })
 export class EntertainmentClaimViewPage {
 
@@ -59,12 +61,34 @@ export class EntertainmentClaimViewPage {
      
   }
 
+  stringToSplit: string = "";
+  tempUserSplit1: string = "";
+  tempUserSplit2: string = "";
+  tempUserSplit3: string = "";
+
+  // isImage(){
+  //   this.stringToSplit = this.login.username;
+  //   this.tempUserSplit1 = this.stringToSplit.split(".")[0]
+  //   this.tempUserSplit2 = this.stringToSplit.split(".")[1];
+  // }
+  isImage: boolean = false;
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
         if (element.ATTACHMENT_ID !== null)
-        element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+       { 
+        this.stringToSplit = element.ATTACHMENT_ID ;
+        this.tempUserSplit1 = this.stringToSplit.split(".")[0];
+        this.tempUserSplit2 = this.stringToSplit.split(".")[1];
+        this.tempUserSplit3 = this.stringToSplit.split(".")[2];
+        if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
+        this.isImage = true
+        else {
+          this.isImage = false
+        }
+         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+      }
         this.totalClaimAmount = element.MILEAGE_AMOUNT;       
       });
     })
@@ -96,4 +120,10 @@ DisplayImage(val: any) {
   this.displayImage = true;
   this.imageURL = val;
 }
+
+// ExcelData: any[] = [];
+// ExportToExcel(evt: any) {
+//   // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
+//   this.excelService.saveFile("", 'Data');    
+// }
 }

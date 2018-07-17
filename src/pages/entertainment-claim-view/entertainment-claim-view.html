@@ -76,7 +76,7 @@
 
     <ion-item>
         <ion-label> {{ "DESCRIPTION_LABEL" | translate }} : </ion-label>
-        <ion-label> {{ claim.DESCRIPTION }} </ion-label>
+        <ion-label text-wrap> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
 
     <!-- <ion-item>
@@ -89,11 +89,23 @@
                 View Receipt
             </button>
         </ion-item>
+
+        <!-- <ion-item *ngIf="!isImage">
+            <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" *ngIf="claim.ATTACHMENT_ID!==null">
+                    View Receipt
+                </button>
+            </ion-item> -->
+
+        <!-- <ion-fab top right edge>
+            <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
+              <ion-icon name="download"></ion-icon>
+            </button>
+          </ion-fab> -->
     
               
         <div class="blackcontainer" *ngIf="displayImage">
             </div>
-            <div class="popup2" padding *ngIf="displayImage">
+            <div class="popup1" padding *ngIf="displayImage">
                 <ion-card>
                     <ion-card-header class="icTitle headerColor-white ">
                         <div class="icHeaderText">Receipt</div>
@@ -101,11 +113,13 @@
                             <ion-icon name="md-close"></ion-icon>
                         </button>
                     </ion-card-header>
-                    <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null">
+                    <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null && isImage">
+                    <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
+
+                    <!-- *ngIf="isImage" -->
                 </ion-card>
             </div>
-
-
+           
 
 
     <ion-item *ngIf="isApprover">
