@@ -139,6 +139,10 @@ export class EntertainmentclaimPage {
   //   this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   // }
 
+  stringToSplit: string = "";
+  tempUserSplit1: string = "";
+  tempUserSplit2: string = "";
+  tempUserSplit3: string = "";
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -153,7 +157,21 @@ export class EntertainmentclaimPage {
                 this.claimRequestData = data["resource"];
 
                 if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                { 
+                 this.stringToSplit = this.claimRequestData[0].ATTACHMENT_ID ;
+                 this.tempUserSplit1 = this.stringToSplit.split(".")[0];
+                 this.tempUserSplit2 = this.stringToSplit.split(".")[1];
+                 this.tempUserSplit3 = this.stringToSplit.split(".")[2];
+                 if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
+                 this.isImage = true
+                 else {
+                   this.isImage = false
+                 }
+                 this.imageURLEdit =  this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+               }
+
+                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                //   this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
