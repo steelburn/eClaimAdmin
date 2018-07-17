@@ -65,12 +65,9 @@
       
   <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>  
   
-  </ion-item>
+  </ion-item> 
 
-  
-  
-
-  <div>
+  <div *ngIf= "isImage">
     <img src="{{ProfileImage}}" style="width: 20%">
 </div>
 
@@ -103,7 +100,9 @@
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
-      <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
+      <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null  && isImage">
+      <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
+      <!-- <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null"> -->
     </ion-card>
   </div>
 
