@@ -69,11 +69,7 @@
 
     <div  *ngIf= "isImage">
       <img src="{{ProfileImage}}" style="width: 20%">
-    </div>
-
-    <!-- <div *ngIf="newImage">
-      <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
-    </div> -->
+    </div>  
 
     <div>
       <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
@@ -83,11 +79,7 @@
 
     <div class="btn">
       <button ion-button color="primary500" (click)='submitAction(Printform.value)' [disabled]="(Printform.valid && !ImageUploadValidation) || !Printform.valid">{{ 'SUBMIT'}}</button>
-    </div>
-
-    <!-- <div class="btn">
-        <button ion-button (click)='saveIm(Printform.value)' [disabled]="Printform.invalid || loading" >{{ 'SUBMIT' }}</button>
-    </div>     -->
+    </div>   
   </form>
 
   <div class="popup2" padding *ngIf="displayImage">
