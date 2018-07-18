@@ -45,6 +45,12 @@ export class ClaimapprovertasklistPage {
   buttonText:string;
   public page:number = 1;
 
+  deptList: any[];
+  employeeList: any[];
+  claimTypeList: any[];
+  yearsList: any[] = [];
+  currentYear: number = new Date().getFullYear();
+
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
 
     this.loginUserGuid = localStorage.getItem("g_USER_GUID");
@@ -62,9 +68,12 @@ export class ClaimapprovertasklistPage {
       }
     }
     else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' +this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.buttonText="Approve";
     }
+    this.BindEmployeesbyDepartment();
+    this.BindClaimTypes();
+    this.BindYears();
     this.BindData();
   }
   BindData() {
@@ -296,5 +305,56 @@ count:number =0;
       approver_GUID: localStorage.getItem('g_USER_GUID')
     });
   }
+
+  
+  BindClaimTypes() {
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_type?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.claimTypeList = data["resource"];
+      });
+  }
+
+  BindYears() {
+    for (let i = 2016; i <= new Date().getFullYear(); i++) {
+      this.yearsList.push(i);
+    }
+  }
+  
+  BindEmployeesbyDepartment() {
+    //alert(dept);
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display_new?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.employeeList = data["resource"];
+      });
+
+  }
+
+  
+  SearchClaimsData(ddlEmployee: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
+    if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
+      if (this.loginUserRole === "Finance Admin") {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      }
+      else {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      }
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' +this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    this.BindData();
+
+    if (this.claimrequestdetails.length != 0) {
+      if (ddlEmployee.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
+      if (ddlClaimTypes.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
+      if (ddlStatus.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
+
+    }
+  }
+  
 
 }

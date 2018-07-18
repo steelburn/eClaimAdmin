@@ -77,22 +77,25 @@
         </button>
     </ion-item>
 
-    <div class="blackcontainer" *ngIf="displayImage">
-    </div>
-    <div class="popup2" padding *ngIf="displayImage">
-        <ion-card>
-            <ion-card-header class="icTitle headerColor-white ">
-                <div class="icHeaderText">Receipt</div>
-                <button class="btnR" (click)="CloseDisplayImage()">
-                    <ion-icon name="md-close"></ion-icon>
-                </button>
-            </ion-card-header>
-            <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null && isImage">
-            <a href={{imageURL}} *ngIf="!isImage" target=_ blank>VIEW</a>
+   
+    
+              
+        <div class="blackcontainer" *ngIf="displayImage">
+            </div>
+            <div class="popup1" padding *ngIf="displayImage">
+                <ion-card>
+                    <ion-card-header class="icTitle headerColor-white ">
+                        <div class="icHeaderText">Receipt</div>
+                        <button class="btnR" (click)="CloseDisplayImage()">
+                            <ion-icon name="md-close"></ion-icon>
+                        </button>
+                    </ion-card-header>
+                    <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null && isImage">
+                    <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
 
-            <!-- *ngIf="isImage" -->
-        </ion-card>
-    </div>
+                    <!-- *ngIf="isImage" -->
+                </ion-card>
+            </div>      
 
 
 
