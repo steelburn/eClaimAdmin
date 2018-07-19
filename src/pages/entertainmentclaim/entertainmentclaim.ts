@@ -26,7 +26,6 @@ import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component
 import moment from 'moment';
 //import { ExcelService } from '../../providers/excel.service';
 
-
 @IonicPage()
 @Component({
   selector: 'page-entertainmentclaim',
@@ -127,22 +126,8 @@ export class EntertainmentclaimPage {
       this.claimAmount = amount;
       this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
     }
-  }
-
-  // getCurrency(amount: number) {
-  //   amount = Number(amount);
-  //   if (amount > 99999) {
-  //     alert('Amount should not exceed RM99999.')
-  //     this.Entertainment_Amount_ngModel = null
-  //   }
-  //   else
-  //   this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
-  // }
-
-  stringToSplit: string = "";
-  tempUserSplit1: string = "";
-  tempUserSplit2: string = "";
-  tempUserSplit3: string = "";
+  } 
+ 
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -156,22 +141,7 @@ export class EntertainmentclaimPage {
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
 
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                { 
-                 this.stringToSplit = this.claimRequestData[0].ATTACHMENT_ID ;
-                 this.tempUserSplit1 = this.stringToSplit.split(".")[0];
-                 this.tempUserSplit2 = this.stringToSplit.split(".")[1];
-                 this.tempUserSplit3 = this.stringToSplit.split(".")[2];
-                 if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
-                 this.isImage = true
-                 else {
-                   this.isImage = false
-                 }
-                 this.imageURLEdit =  this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
-               }
-
-                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                //   this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                  this.imageURLEdit =this.claimRequestData[0].ATTACHMENT_ID;
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
@@ -485,13 +455,10 @@ export class EntertainmentclaimPage {
   DisplayImage(val: any) {
     this.displayImage = true;
     this.imageURL = val;
-  }
-
-  // ExcelData: any[] = [];
-  // ExportToExcel(evt: any) {
-  //   // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
-  //   this.excelService.exportAsExcelFile(this.ExcelData, 'Data');    
-  // }
-
-  
+    if (val !== null) { 
+      this.imageURL = this.apiMng.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.apiMng.isFileImage(val); 
+    }
+  }  
 } 

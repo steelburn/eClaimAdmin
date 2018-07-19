@@ -101,6 +101,7 @@ export class MiscellaneousClaimPage {
   //   this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   // }
 
+  
   imageURLEdit: any = null
   GetDataforEdit() {
     this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -114,8 +115,8 @@ export class MiscellaneousClaimPage {
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
 
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                  this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+              
+                this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
                 this.ImageUploadValidation = true;
                 //this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
 
@@ -258,10 +259,15 @@ export class MiscellaneousClaimPage {
     });
   }
 
+  isImage: boolean = false;
   onFileChange(event: any) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      if(file.type==='image/jpeg')
+      this.isImage = true;
+      else
+      this.isImage = false;
       this.MiscellaneousForm.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       reader.onload = () => {
@@ -399,6 +405,11 @@ export class MiscellaneousClaimPage {
   DisplayImage(val: any) {
     this.displayImage = true;
     this.imageURL = val;
+    if (val !== null) { 
+      this.imageURL = this.api.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.api.isFileImage(val); 
+    }
   }
 
 }

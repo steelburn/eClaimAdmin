@@ -12,8 +12,6 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 //import { ExcelService } from '../../providers/excel.service';
 
-
-
 @IonicPage()
 @Component({
   selector: 'page-entertainment-claim-view',
@@ -42,12 +40,7 @@ export class EntertainmentClaimViewPage {
     this.approverDesignation = this.navParams.get("approverDesignation");
 
     this.LoadMainClaim();
-  }
-
-  // isAccepted(val:string) {   
-  //   this.isRemarksAccepted = val==='Accepted'?true:false;
-  //   alert('Claim '+val)
-  // } 
+  } 
 
   isAccepted(val: string) {
     this.isRemarksAccepted = val === 'accepted' ? true : false;
@@ -59,50 +52,17 @@ export class EntertainmentClaimViewPage {
         }
         this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted,1);
      
-  }
-
-  stringToSplit: string = "";
-  tempUserSplit1: string = "";
-  tempUserSplit2: string = "";
-  tempUserSplit3: string = "";
-
-  // isImage(){
-  //   this.stringToSplit = this.login.username;
-  //   this.tempUserSplit1 = this.stringToSplit.split(".")[0]
-  //   this.tempUserSplit2 = this.stringToSplit.split(".")[1];
-  // }
+  } 
+ 
   isImage: boolean = false;
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
-      this.claimRequestData.forEach(element => {
-        if (element.ATTACHMENT_ID !== null)
-       { 
-        this.stringToSplit = element.ATTACHMENT_ID ;
-        this.tempUserSplit1 = this.stringToSplit.split(".")[0];
-        this.tempUserSplit2 = this.stringToSplit.split(".")[1];
-        this.tempUserSplit3 = this.stringToSplit.split(".")[2];
-        if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
-        this.isImage = true
-        else {
-          this.isImage = false
-        }
-         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-      }
+      this.claimRequestData.forEach(element => {     
         this.totalClaimAmount = element.MILEAGE_AMOUNT;       
       });
     })
 }
-
-// SubmitAction() {
-//   if (!this.isRemarksAccepted) {
-//     if (this.Remarks_NgModel === undefined) {
-//       alert('Please input valid Remarks');
-//       return;
-//     }
-//   }
-//   this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted);
-// }
 
 EditClaim() {
   this.navCtrl.push(EntertainmentclaimPage, {
@@ -119,11 +79,10 @@ imageURL: string;
 DisplayImage(val: any) {
   this.displayImage = true;
   this.imageURL = val;
+  if (val !== null) { 
+    this.imageURL = this.api.getImageUrl(val); 
+    this.displayImage = true; 
+    this.isImage = this.api.isFileImage(val); 
+  }
 }
-
-// ExcelData: any[] = [];
-// ExportToExcel(evt: any) {
-//   // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
-//   this.excelService.saveFile("", 'Data');    
-// }
 }
