@@ -126,6 +126,8 @@ export class AddTollPage {
           this.claimDetailsData["resource"][0].AMOUNT = this.claimAmount;
           this.claimDetailsData["resource"][0].DESCRIPTION = this.Description;
           this.claimDetailsData["resource"][0].UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+
+
           this.claimDetailsData["resource"][0].ATTACHMENT_ID = (this.imageGUID!==undefined || this.imageGUID!==null)?this.imageGUID:this.claimDetailsData["resource"][0].ATTACHMENT_ID;
          this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(res => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
          this.navCtrl.pop();
@@ -152,6 +154,10 @@ export class AddTollPage {
     {this.GetClaimDetailsByGuid();this.isFormEdit=true}
   }
 
+  stringToSplit: string = "";
+  tempUserSplit1: string = "";
+  tempUserSplit2: string = "";
+  tempUserSplit3: string = "";
   imageURLEdit: any =null;
   GetClaimDetailsByGuid()
   {
@@ -170,8 +176,22 @@ export class AddTollPage {
     }
     this.Amount = this.numberPipe.transform(this.claimDetailsData[0].AMOUNT, '1.2-2');
     this.claimAmount = this.claimDetailsData[0].AMOUNT;
-    this.imageURLEdit = this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID);
-    //this.ImageUploadValidation=false;
+  //   if (this.claimDetailsData[0].ATTACHMENT_ID !== null)
+  //   { 
+  //    this.stringToSplit = this.claimDetailsData[0].ATTACHMENT_ID ;
+  //    this.tempUserSplit1 = this.stringToSplit.split(".")[0];
+  //    this.tempUserSplit2 = this.stringToSplit.split(".")[1];
+  //    this.tempUserSplit3 = this.stringToSplit.split(".")[2];
+  //    if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
+  //    this.isImage = true
+  //    else {
+  //      this.isImage = false
+  //    }
+  //    this.imageURLEdit =  this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID);
+  //  }
+
+    this.imageURLEdit = this.claimDetailsData[0].ATTACHMENT_ID
+    // this.ImageUploadValidation=false;
     this.ImageUploadValidation=true;
     //this.chooseFile = false;
       this.Description=this.claimDetailsData[0].DESCRIPTION;
@@ -185,10 +205,15 @@ export class AddTollPage {
    DetailsType: string;
    CloudFilePath: string;  
 
+  isImage: boolean = false;
   onFileChange(event: any) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      if(file.type==='image/jpeg')
+      this.isImage = true;
+      else
+      this.isImage = false;
       this.DetailsForm.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       reader.onload = () => {
@@ -268,6 +293,22 @@ export class AddTollPage {
           resolve(response.json());
         })
     })
+  }
+
+  displayImage: any
+  CloseDisplayImage() {
+    this.displayImage = false;
+  }
+
+  imageURL: string;
+  DisplayImage(val: any) {
+    this.displayImage = true;
+    this.imageURL = val;
+    if (val !== null) { 
+      this.imageURL = this.api.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.api.isFileImage(val); 
+    }
   }
 
 }

@@ -49,70 +49,35 @@ export class TravelClaimViewPage {
           }
         }
         this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted,1);
-     }  
-
+     }
+    
+     isImage: boolean = false;   
      TravelType: any;
      LoadMainClaim() {
       let claimResult = this.LoadClaimDetails();
       claimResult.then((tollorParkAmount: number) => {
         this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
           this.claimRequestData = res['resource'];
-          this.claimRequestData.forEach(element => {
-            if (element.ATTACHMENT_ID !== null)
-              element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+          this.claimRequestData.forEach(element => {             
               this.TravelType = element.TRAVEL_TYPE === '0' ? 'Local' : 'Outstation';
             this.totalClaimAmount = element.MILEAGE_AMOUNT;
           });
           this.totalClaimAmount += tollorParkAmount;
         })
       })
-    }
-  // LoadMainClaim() {
-  //   this.LoadClaimDetails();
-  //   console.log(Services.getUrl('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-  //   this.http
-  //     .get(Services.getUrl('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       this.claimRequestData = data["resource"];
-  //       this.claimRequestData.forEach(element => {
-  //         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-  //         this.totalClaimAmount = element.MILEAGE_AMOUNT + element.Allowance;
-  //         console.log(this.totalClaimAmount)
-  //       }); 
-  //       this.totalClaimAmount += this.tollParkAmount ;
-  //     }
-  //     );
-  // }
+    }  
 
   LoadClaimDetails() {
     return new Promise((resolve, reject) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
-        this.claimDetailsData.forEach(element => {
-          if (element.ATTACHMENT_ID !== null)
-          element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+        this.claimDetailsData.forEach(element => {              
           this.tollParkAmount += element.AMOUNT;
         });
         resolve(this.tollParkAmount);
       })
     });
-  }
-
-  // LoadClaimDetails() {
-  //   this.http
-  //     .get(Services.getUrl('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID))
-  //     .map(res => res.json())
-  //     .subscribe(data => {
-  //       this.claimDetailsData = data["resource"];
-
-  //   this.claimDetailsData.forEach(element => {
-  //     if (element.ATTACHMENT_ID !== null)
-  //         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-  //     this.tollParkAmount += element.AMOUNT;
-  //   }); 
-  //       });
-  // }
+  } 
 
   EditClaim() {
     this.navCtrl.push(TravelclaimPage, {
@@ -140,5 +105,10 @@ export class TravelClaimViewPage {
   DisplayImage(val: any) {
     this.displayImage = true;
     this.imageURL = val;
+    if (val !== null) { 
+      this.imageURL = this.api.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.api.isFileImage(val); 
+    }
   }
 }

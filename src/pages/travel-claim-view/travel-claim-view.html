@@ -2,26 +2,10 @@
     <ion-navbar color="primary200">
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
-        </button>
-
-        <!-- <div class="headerInfo">
-            <ion-fab top right>
-                <button ion-fab mini class="btnClear">
-                    <ion-icon name="settings"></ion-icon>
-                </button>
-                <ion-fab-list class="settingBtnFab" side="left">
-                    <button ion-fab color="primary" [class.menuHide]="translateToMalayClicked" (click)="translateToMalay()">ML</button>
-                </ion-fab-list>
-                <ion-fab-list class="settingBtnFab" side="bottom">
-                    <button ion-fab color="primary" [class.menuHide]="translateToEnglishClicked" (click)="translateToEnglish()">ENG</button>
-                </ion-fab-list>
-            </ion-fab>
-        </div> -->
+        </button>      
         <ion-title>{{ 'TRAVEL_CLAIM_HEADING' | translate }}</ion-title>
     </ion-navbar>
 </ion-header>
-
-
 
 <ion-content padding *ngFor="let claim of claimRequestData">
     <ion-item>
@@ -41,12 +25,7 @@
     <ion-item>
         <ion-label> {{ "END_DATE_LABEL" | translate }} :</ion-label>
         <ion-label>{{ claim.END_TS |date:'MMM dd, yyyy HH:mm' }} </ion-label>
-    </ion-item>
-
-    <!-- <ion-item>
-        <ion-label> {{ "CLAIM_DATE_LABEL" | translate }} :</ion-label>
-        <ion-label> {{ claim.TRAVEL_DATE | date }} </ion-label>
-    </ion-item> -->
+    </ion-item>  
 
     <ion-item *ngIf="claim.CUSTOMER_NAME">
         <ion-label> {{ "CUSTOMER_NAME_LABEL" | translate }} :</ion-label>
@@ -194,7 +173,7 @@
                                 <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
                                 <td class="lgl1" text-wrap>{{item.DESCRIPTION}}</td>
                                 <td class="lgl1">
-                                        <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)">
+                                        <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)" *ngIf="item.ATTACHMENT_ID!==null">
                                             Receipt
                                         </button>
                                     </td>
@@ -216,13 +195,13 @@
     <div class="popup1" padding *ngIf="displayImage">
         <ion-card>
             <ion-card-header class="icTitle headerColor-white ">
-                <div class="icHeaderText">Receipt</div>
+                <div class="icHeaderText">Reeeceipt</div>
                 <button class="btnR" (click)="CloseDisplayImage()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>
             </ion-card-header>
-            <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
-
+            <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null && isImage">
+            <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
         </ion-card>
     </div>
 </ion-content>
