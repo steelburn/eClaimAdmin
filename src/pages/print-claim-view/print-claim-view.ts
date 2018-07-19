@@ -51,14 +51,13 @@ export class PrintClaimViewPage {
           }
         }
         this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted,1);     
-  }
+  }  
 
+  isImage: boolean = false;
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
-      this.claimRequestData.forEach(element => {
-        if (element.ATTACHMENT_ID !== null)
-        element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
+      this.claimRequestData.forEach(element => {      
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
       });
     })
@@ -79,6 +78,11 @@ imageURL: string;
 DisplayImage(val: any) {
   this.displayImage = true;
   this.imageURL = val;
+  if (val !== null) { 
+    this.imageURL = this.api.getImageUrl(val); 
+    this.displayImage = true; 
+    this.isImage = this.api.isFileImage(val); 
+  }
 }
 
 }

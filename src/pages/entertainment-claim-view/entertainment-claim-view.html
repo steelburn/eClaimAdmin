@@ -10,7 +10,9 @@
 <ion-content padding *ngFor="let claim of claimRequestData">
     <ion-item>
 
-        <ion-label><b>Entertainment Claim View</b> </ion-label>
+        <ion-label>
+            <b>Entertainment Claim View</b>
+        </ion-label>
     </ion-item>
 
     <ion-item>
@@ -49,24 +51,14 @@
     </ion-item>
 
     <ion-item *ngIf="claim.PROFILE_LEVEL!=1">
-        <ion-label> {{ "STAGE_LABEL" | translate }}  : </ion-label>
+        <ion-label> {{ "STAGE_LABEL" | translate }} : </ion-label>
         <ion-label> {{ claim.STAGE }} </ion-label>
     </ion-item>
 
     <ion-item *ngIf="claim.PROFILE_LEVEL===1">
-        <ion-label stacked> {{ "STAGE_LABEL" | translate }}: </ion-label>           
+        <ion-label stacked> {{ "STAGE_LABEL" | translate }}: </ion-label>
         <ion-label>Superior</ion-label>
     </ion-item>
-
-    <!-- <ion-item>
-        <ion-label> {{ "STATUS_LABEL" | translate }} : </ion-label>
-        <ion-label> {{ claim.STATUS }} </ion-label>
-    </ion-item>
-
-    <ion-item>
-        <ion-label> {{ "STAGE_LABEL" | translate }} : </ion-label>
-        <ion-label> {{ claim.STAGE }} </ion-label>
-    </ion-item> -->
 
     <ion-item>
         <ion-label> {{ "APPROVER_NAME" | translate }} : </ion-label>
@@ -79,33 +71,18 @@
         <ion-label text-wrap> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
 
-    <!-- <ion-item>
-        <ion-label>Receipt :</ion-label>
-    </ion-item>
-    <img style="width: 25%" height="50%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null"> -->
-
     <ion-item>
         <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" *ngIf="claim.ATTACHMENT_ID!==null">
-                View Receipt
-            </button>
-        </ion-item>
+            View Receipt
+        </button>
+    </ion-item>
 
-        <!-- <ion-item *ngIf="!isImage">
-            <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" *ngIf="claim.ATTACHMENT_ID!==null">
-                    View Receipt
-                </button>
-            </ion-item> -->
-
-        <!-- <ion-fab top right edge>
-            <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
-              <ion-icon name="download"></ion-icon>
-            </button>
-          </ion-fab> -->
+   
     
               
         <div class="blackcontainer" *ngIf="displayImage">
             </div>
-            <div class="popup2" padding *ngIf="displayImage">
+            <div class="popup1" padding *ngIf="displayImage">
                 <ion-card>
                     <ion-card-header class="icTitle headerColor-white ">
                         <div class="icHeaderText">Receipt</div>
@@ -114,12 +91,12 @@
                         </button>
                     </ion-card-header>
                     <img style="width: 25%" height="50%" src={{imageURL}} *ngIf="imageURL!==null && isImage">
-                    <a href={{imageURL}} *ngIf="!isImage">Download</a>
+                    <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
 
                     <!-- *ngIf="isImage" -->
                 </ion-card>
-            </div>
-           
+            </div>      
+
 
 
     <ion-item *ngIf="isApprover">

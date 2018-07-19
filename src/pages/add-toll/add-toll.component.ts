@@ -126,61 +126,14 @@ export class AddTollPage {
           this.claimDetailsData["resource"][0].AMOUNT = this.claimAmount;
           this.claimDetailsData["resource"][0].DESCRIPTION = this.Description;
           this.claimDetailsData["resource"][0].UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+
+
           this.claimDetailsData["resource"][0].ATTACHMENT_ID = (this.imageGUID!==undefined || this.imageGUID!==null)?this.imageGUID:this.claimDetailsData["resource"][0].ATTACHMENT_ID;
          this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(res => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
          this.navCtrl.pop();
         })
   }
   }
-
-  // SaveClaimDetails(formValues: any, isMA:boolean, imageGUID: any) {
-  //   if(isMA){
-  //     if(this.MA_SELECT==='NA' || this.MA_SELECT===undefined){
-  //       alert('Please select meal allowance.')
-  //       return;
-  //     }
-  //     if(this.Description===undefined){
-  //       alert('Please enter valid description.')
-  //       return;
-  //     }
-  //   }
-  //   if(this.ClaimDetailGuid===undefined || this.ClaimDetailGuid===null)
-  //   {
-  //   // alert(imageID)
-  //   let claimReqRef: ClaimRequestDetailModel = new ClaimRequestDetailModel();
-  //   claimReqRef.CLAIM_REQUEST_DETAIL_GUID = UUID.UUID();
-  //   claimReqRef.CLAIM_REQUEST_GUID = this.ClaimMainGUID;
-  //   claimReqRef.CLAIM_METHOD_GUID = this.ClaimMethodGUID;
-  //   claimReqRef.PAYMENT_TYPE_GUID = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
-  //   // 2a543cd5-0177-a1d0-5482-48b52ec2100f
-  //   claimReqRef.AMOUNT = this.Amount;
-  //   claimReqRef.DESCRIPTION = this.Description;
-  //   claimReqRef.CREATION_TS = new Date().toISOString();
-  //   claimReqRef.UPDATE_TS = new Date().toISOString();
-  //   claimReqRef.ATTACHMENT_ID = this.imageGUID;
-
-  //   this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
-  //     var postClaimRef = response.json();
-  //     alert('Your ' + this.ClaimMethodName + ' details are submitted successfully.')
-  //     this.navCtrl.pop();
-  //   })
-  // }
-  // else
-  // {
-  //   this.api.getApiModel('claim_request_detail', 'filter=CLAIM_REQUEST_DETAIL_GUID=' + this.ClaimDetailGuid)
-  //       .subscribe(data => {
-  //         this.claimDetailsData = data;
-  //         this.claimDetailsData["resource"][0].PAYMENT_TYPE_GUID = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
-  //         this.claimDetailsData["resource"][0].AMOUNT = this.Amount;
-  //         this.claimDetailsData["resource"][0].DESCRIPTION = this.Description;
-  //         this.claimDetailsData["resource"][0].UPDATE_TS = new Date().toISOString();
-  //         this.claimDetailsData["resource"][0].ATTACHMENT_ID = (imageGUID!==undefined || imageGUID!==null)?imageGUID:this.claimDetailsData["resource"][0].ATTACHMENT_ID;
-  //        this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(res => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
-  //        this.navCtrl.pop();
-  //       })
-  // }
-  // }
-
 
   allowanceList: any[];
   LoadAllowanceDetails() {
@@ -201,6 +154,10 @@ export class AddTollPage {
     {this.GetClaimDetailsByGuid();this.isFormEdit=true}
   }
 
+  stringToSplit: string = "";
+  tempUserSplit1: string = "";
+  tempUserSplit2: string = "";
+  tempUserSplit3: string = "";
   imageURLEdit: any =null;
   GetClaimDetailsByGuid()
   {
@@ -219,8 +176,22 @@ export class AddTollPage {
     }
     this.Amount = this.numberPipe.transform(this.claimDetailsData[0].AMOUNT, '1.2-2');
     this.claimAmount = this.claimDetailsData[0].AMOUNT;
-    this.imageURLEdit = this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID);
-    //this.ImageUploadValidation=false;
+  //   if (this.claimDetailsData[0].ATTACHMENT_ID !== null)
+  //   { 
+  //    this.stringToSplit = this.claimDetailsData[0].ATTACHMENT_ID ;
+  //    this.tempUserSplit1 = this.stringToSplit.split(".")[0];
+  //    this.tempUserSplit2 = this.stringToSplit.split(".")[1];
+  //    this.tempUserSplit3 = this.stringToSplit.split(".")[2];
+  //    if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
+  //    this.isImage = true
+  //    else {
+  //      this.isImage = false
+  //    }
+  //    this.imageURLEdit =  this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID);
+  //  }
+
+    this.imageURLEdit = this.claimDetailsData[0].ATTACHMENT_ID
+    // this.ImageUploadValidation=false;
     this.ImageUploadValidation=true;
     //this.chooseFile = false;
       this.Description=this.claimDetailsData[0].DESCRIPTION;
@@ -234,10 +205,15 @@ export class AddTollPage {
    DetailsType: string;
    CloudFilePath: string;  
 
+  isImage: boolean = false;
   onFileChange(event: any) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      if(file.type==='image/jpeg')
+      this.isImage = true;
+      else
+      this.isImage = false;
       this.DetailsForm.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       reader.onload = () => {
@@ -273,64 +249,34 @@ export class AddTollPage {
     this.newImage=false
     this.onFileChange(e);
   }
-
+  uniqueName: any;
   imageGUID: any;
   saveIm() {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
      
-      this.imageGUID = this.uploadFileName;
+      this.imageGUID = this.uniqueName;
       this.chooseFile = false;
        this.ImageUploadValidation=true;
       //this.ImageUploadValidation=false;      
     })   
   }
-
-  // saveIm(imageGUID: any) {
-  //   let uploadImage = this.UploadImage();
-  //   uploadImage.then((resJson) => {
-     
-  //     this.imageGUID = this.uploadFileName;
-  //     this.chooseFile = false;
-  //     // this.ImageUploadValidation=true;
-  //     this.ImageUploadValidation=false;
-
-  //     if(imageGUID==='capture' && this.isFormEdit) {this.imageURLEdit=null;
-  //       this.ImageUploadValidation = false;}
-  //     else{
-  //     this.imageGUID = imageGUID; this.ImageUploadValidation = true;}     
-  //   })   
-  // }
-
  
   clearFile() {
     this.DetailsForm.get('avatar').setValue(null);
     this.fileInput.nativeElement.value = '';
-  } 
-
-  SaveImageinDB() {
-    let objImage: ImageUpload_model = new ImageUpload_model();
-    objImage.Image_Guid = UUID.UUID();
-    objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-    objImage.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
-    objImage.Update_Ts = moment(new Date()).format('YYYY-MM-DDTHH:mm');
-    return new Promise((resolve, reject) => {
-      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
-        // let res = response.json();
-        // let imageGUID = res["resource"][0].Image_Guid;
-        resolve(objImage.toJson());
-      })
-    })
-  }
+  }  
 
   UploadImage() {
-    if (this.DetailsType === 'Toll') {
-      this.CloudFilePath = 'eclaim/toll/'
-    }
-    else if (this.DetailsType === 'Parking') {
-      this.CloudFilePath = 'eclaim/parking/'
-    }
+    // if (this.DetailsType === 'Toll') {
+    //   this.CloudFilePath = 'eclaim/toll/'
+    // }
+    // else if (this.DetailsType === 'Parking') {
+    //   this.CloudFilePath = 'eclaim/parking/'
+    // }
+    this.CloudFilePath = 'eclaim/'
     this.loading = true;
+    this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');
@@ -339,7 +285,8 @@ export class AddTollPage {
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
     return new Promise((resolve, reject) => {
-      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.DetailsForm.get('avatar').value, options)
+      // this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.DetailsForm.get('avatar').value, options)
+      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.DetailsForm.get('avatar').value, options)
         .map((response) => {
           return response;
         }).subscribe((response) => {
@@ -348,8 +295,20 @@ export class AddTollPage {
     })
   }
 
+  displayImage: any
+  CloseDisplayImage() {
+    this.displayImage = false;
+  }
 
+  imageURL: string;
+  DisplayImage(val: any) {
+    this.displayImage = true;
+    this.imageURL = val;
+    if (val !== null) { 
+      this.imageURL = this.api.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.api.isFileImage(val); 
+    }
+  }
 
-  
-  // Amount: any; PayType: any; Description: any;
 }

@@ -83,7 +83,7 @@ export class GiftclaimPage {
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
-
+ 
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -95,10 +95,8 @@ export class GiftclaimPage {
 
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
-                this.claimRequestData = data["resource"];
-
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                this.claimRequestData = data["resource"];             
+                this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
@@ -190,10 +188,15 @@ export class GiftclaimPage {
     this.CloseCustomerLookup();
   }
 
+  isImage: boolean = false;
   onFileChange(event: any) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      if(file.type==='image/jpeg')
+      this.isImage = true;
+      else
+      this.isImage = false;
       this.Giftform.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       reader.onload = () => {
@@ -470,6 +473,11 @@ export class GiftclaimPage {
   DisplayImage(val: any) {
     this.displayImage = true;
     this.imageURL = val;
+    if (val !== null) { 
+      this.imageURL = this.apiMng.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.apiMng.isFileImage(val); 
+    }
   }
 }
 
