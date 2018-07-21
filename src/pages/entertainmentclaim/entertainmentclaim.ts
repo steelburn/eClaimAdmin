@@ -35,7 +35,7 @@ export class EntertainmentclaimPage {
 
   Entertainmentform: FormGroup;
   uploadFileName: string;
-  loading = false;
+  loading : Loading;
   CloudFilePath: string;
   @ViewChild('fileInput') fileInput: ElementRef;
   travel_date: any;
@@ -308,6 +308,10 @@ export class EntertainmentclaimPage {
   selectedImage: any = null
   onFileChange(event: any, ) {
     const reader = new FileReader();
+
+    
+
+
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       if(file.type==='image/jpeg')
@@ -344,19 +348,21 @@ export class EntertainmentclaimPage {
         this.ProfileImage = event.target.result;
       }
       reader.readAsDataURL(e.target.files[0]);
-    }
+    }    
     this.imageGUID = this.uploadFileName;
     // this.imageGUID = this.uniqueName
     this.chooseFile = true;
     this.newImage = false
     this.onFileChange(e);
     this.ImageUploadValidation = false;
+    this.saveIm();
   }
 
   imageGUID: any;
   saveIm() {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
+     
 
       // this.submitAction(this.uploadFileName, formValues);
       this.imageGUID = this.uniqueName;
@@ -367,7 +373,6 @@ export class EntertainmentclaimPage {
   }
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-    this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     console.log(this.uniqueName);
     const queryHeaders = new Headers();
@@ -377,9 +382,16 @@ export class EntertainmentclaimPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
+
     return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Entertainmentform.get('avatar').value, options)
-        .map((response) => {
+        .map((response) => 
+        {
+          this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
           resolve(response.json());

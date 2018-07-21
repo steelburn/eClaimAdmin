@@ -35,7 +35,7 @@ import moment from 'moment';
 export class PrintclaimPage {
 
   uploadFileName: string;
-  loading = false;
+  loading : Loading;
   CloudFilePath: string;
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -336,10 +336,11 @@ export class PrintclaimPage {
     this.ImageUploadValidation = false;
     this.newImage = false;
     this.onFileChange(e);
+    this.saveIm();
   }
 
   imageGUID: any;
-  saveIm(formValues: any) {
+  saveIm() {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
       //this.submitAction(this.uploadFileName, formValues);
@@ -351,7 +352,6 @@ export class PrintclaimPage {
 
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-    this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
@@ -360,9 +360,16 @@ export class PrintclaimPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
+
     return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Printform.get('avatar').value, options)
-        .map((response) => {
+        .map((response) => 
+        {
+          this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
           resolve(response.json());

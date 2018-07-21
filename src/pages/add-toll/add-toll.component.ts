@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController, Loading, LoadingController } from 'ionic-angular';
 import * as constants from '../../config/constants';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -23,7 +23,7 @@ export class AddTollPage {
 
   lastImage: string = null;
   MA_SELECT: any;
-  // loading: Loading;
+   loading: Loading;
   TenantGUID: any;
   paymentTypes: any; DetailsForm: FormGroup; ClaimMainGUID: any; 
   ClaimMethodGUID: any; ClaimMethodName: any;
@@ -31,7 +31,7 @@ export class AddTollPage {
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
 
-  constructor(public numberPipe: DecimalPipe, fb: FormBuilder, public api: ApiManagerProvider, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(public numberPipe: DecimalPipe, fb: FormBuilder, public api: ApiManagerProvider, private loadingCtrl: LoadingController, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.LoadPayments();
     this.LoadAllowanceDetails();
@@ -77,6 +77,15 @@ export class AddTollPage {
         this.paymentTypes = data["resource"];
       }
       );
+  }
+
+  imageOptional: boolean = false;
+  onPaySelect(payBy: any) {
+    if (payBy.NAME === "Touch 'n Go") {
+      this.imageOptional = true;
+    }
+    else
+      this.imageOptional = false;
   }
 
   Save(isMA:boolean) {
@@ -200,7 +209,7 @@ export class AddTollPage {
 
 
   Amount: any; PayType: any; Description: any; 
-   loading = false;
+  //  loading = false;
    uploadFileName: string;
    DetailsType: string;
    CloudFilePath: string;  
@@ -225,6 +234,7 @@ export class AddTollPage {
       };
     }
     this.chooseFile = true;
+    
   } 
   
   fileName1: string;
@@ -248,6 +258,8 @@ export class AddTollPage {
     this.chooseFile = true;
     this.newImage=false
     this.onFileChange(e);
+    this.ImageUploadValidation=true;  
+    this.saveIm();
   }
   uniqueName: any;
   imageGUID: any;
@@ -257,7 +269,6 @@ export class AddTollPage {
      
       this.imageGUID = this.uniqueName;
       this.chooseFile = false;
-       this.ImageUploadValidation=true;
       //this.ImageUploadValidation=false;      
     })   
   }
@@ -275,7 +286,7 @@ export class AddTollPage {
     //   this.CloudFilePath = 'eclaim/parking/'
     // }
     this.CloudFilePath = 'eclaim/'
-    this.loading = true;
+    // this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
@@ -284,10 +295,16 @@ export class AddTollPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
     return new Promise((resolve, reject) => {
       // this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.DetailsForm.get('avatar').value, options)
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.DetailsForm.get('avatar').value, options)
-        .map((response) => {
+        .map((response) => 
+        {
+          this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
           resolve(response.json());
