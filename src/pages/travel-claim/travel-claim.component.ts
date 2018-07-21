@@ -85,7 +85,7 @@ export class TravelclaimPage {
   OriginPlaceID: string;
   CloudFilePath: string;
   uploadFileName: string;
-  loading = false;
+  loading : Loading;
   Travel_Type_ngModel: any;
   VehicleId: any;
   VehicleRate: any;
@@ -549,6 +549,15 @@ export class TravelclaimPage {
     }
   }
 
+  imageOptional: boolean = false;
+  onPaySelect(payBy: any) {
+    if (payBy.NAME === "Touch 'n Go") {
+      this.imageOptional = true;
+    }
+    else
+      this.imageOptional = false;
+  }
+
   onVehicleSelect(vehicle: any) {
     this.VehicleId = vehicle.MILEAGE_GUID;
     this.VehicleRate = vehicle.RATE_PER_UNIT;
@@ -613,7 +622,7 @@ export class TravelclaimPage {
       };
     }
     //this.disableButton = false;
-    //this.PublicTransValue = true;
+    this.PublicTransValue = true;
     // this.PublicTransValue = false;
 
     this.ImageUploadValidation = false;
@@ -642,6 +651,7 @@ export class TravelclaimPage {
     this.newImage = false;
     this.onFileChange(e);
     this.ImageUploadValidation = true;
+    this.saveIm();
   }
  
   disableButton: any;
@@ -685,7 +695,6 @@ export class TravelclaimPage {
 
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-    this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
@@ -694,9 +703,15 @@ export class TravelclaimPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
     return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Travelform.get('avatar').value, options)
-        .map((response) => {
+        .map((response) => 
+        {
+          this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
           resolve(response.json());
