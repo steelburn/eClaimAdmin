@@ -193,7 +193,9 @@ export class ConferenceApp {
   listenToLoginEvents() {
     // this.MenuService.EventListener();
     // debugger;    
+
     this.events.subscribe('user:login', () => {      
+
       this.enableMenu(true);
     });
 
@@ -661,7 +663,7 @@ export class ConferenceApp {
   }
 
   public translateToMalayClicked: boolean = false;
-  
+
   public translateToEnglishClicked: boolean = true;
 
   public translateToEnglish() {
