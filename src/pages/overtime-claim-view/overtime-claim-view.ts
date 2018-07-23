@@ -37,8 +37,6 @@ export class OvertimeClaimViewPage {
     this.Approver_GUID = this.navParams.get("approver_GUID");
     this.level = navParams.get('level_no');
     this.approverDesignation = this.navParams.get("approverDesignation");
-
-
     this.LoadMainClaim();
   }  
 

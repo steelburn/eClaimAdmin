@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,Loading, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
@@ -23,7 +23,7 @@ import moment from 'moment';
 export class MiscellaneousClaimPage {
   uploadFileName: string;
   @ViewChild('fileInput') fileInput: ElementRef;
-  loading = false; MiscellaneousForm: FormGroup;
+  loading : Loading; MiscellaneousForm: FormGroup;
   //claimFor: any;
   Customer_Lookup_ngModel: any;
   Project_Lookup_ngModel: any;
@@ -60,7 +60,7 @@ export class MiscellaneousClaimPage {
   claimRequestGUID: any;
   claimRequestData: any;
 
-  constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, fb: FormBuilder, private service: Services, public navCtrl: NavController, public http: Http, public navParams: NavParams, public api: ApiManagerProvider) {
+  constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, fb: FormBuilder, private loadingCtrl: LoadingController, private service: Services, public navCtrl: NavController, public http: Http, public navParams: NavParams, public api: ApiManagerProvider) {
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -101,6 +101,7 @@ export class MiscellaneousClaimPage {
   //   this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   // }
 
+  
   imageURLEdit: any = null
   GetDataforEdit() {
     this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -114,8 +115,8 @@ export class MiscellaneousClaimPage {
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
 
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                  this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+              
+                this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
                 this.ImageUploadValidation = true;
                 //this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
 
@@ -258,10 +259,15 @@ export class MiscellaneousClaimPage {
     });
   }
 
+  isImage: boolean = false;
   onFileChange(event: any) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      if(file.type==='image/jpeg')
+      this.isImage = true;
+      else
+      this.isImage = false;
       this.MiscellaneousForm.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       reader.onload = () => {
@@ -299,10 +305,11 @@ export class MiscellaneousClaimPage {
     this.ImageUploadValidation = false;
     this.newImage = false;
     this.onFileChange(e);
+    this.saveIm();
   }
 
   imageGUID: any;
-  saveIm(formValues: any) {
+  saveIm() {
     let uploadImage = this.UploadImage();
     uploadImage.then((resJson) => {
       //this.submitAction(this.uploadFileName, formValues);
@@ -314,7 +321,6 @@ export class MiscellaneousClaimPage {
 
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-    this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
@@ -323,9 +329,15 @@ export class MiscellaneousClaimPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
     return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.MiscellaneousForm.get('avatar').value, options)
-        .map((response) => {
+        .map((response) => 
+        {
+          this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
           resolve(response.json());
@@ -399,6 +411,11 @@ export class MiscellaneousClaimPage {
   DisplayImage(val: any) {
     this.displayImage = true;
     this.imageURL = val;
+    if (val !== null) { 
+      this.imageURL = this.api.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.api.isFileImage(val); 
+    }
   }
 
 }

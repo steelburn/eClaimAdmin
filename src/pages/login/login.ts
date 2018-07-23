@@ -67,7 +67,7 @@ export class LoginPage {
               localStorage.setItem("g_TENANT_COMPANY_SITE_GUID", res[0]["TENANT_COMPANY_SITE_GUID"]);
               localStorage.setItem("g_ISHQ", res[0]["ISHQ"]);
               localStorage.setItem("g_IS_TENANT_ADMIN", res[0]["IS_TENANT_ADMIN"]);
-              debugger;
+              // debugger;
               if (res[0]["IMAGE_URL"] == null || res[0]["IMAGE_URL"] == '') {
                 localStorage.setItem("g_IMAGE_URL", "assets/img/profile_no_preview.png");
               }
@@ -186,7 +186,7 @@ export class LoginPage {
             .subscribe((response) => {
               if (response.status == 200) {
                 //Send Mail---------------------------
-                debugger;
+                // debugger;
                 this.sendEmail(res[0]["FULLNAME"], this.email_ngModel, strPassword);
               }
             });

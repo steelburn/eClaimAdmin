@@ -110,7 +110,6 @@ export class OvertimeclaimPage {
     }
   }
 
-
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -188,71 +187,9 @@ export class OvertimeclaimPage {
       claim_amount: ['', Validators.required],
       attachment_GUID: '', claimTypeGUID: '',
     });
-  }
-
-  // onFileChange(event: any) {
-  //   const reader = new FileReader();
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     this.OTform.get('avatar').setValue(file);
-  //     this.uploadFileName = file.name;
-  //     reader.onload = () => {
-  //       this.OTform.get('avatar').setValue({
-  //         filename: file.name,
-  //         filetype: file.type,
-  //         value: reader.result.split(',')[1]
-  //       });
-  //     };
-  //   }
-  //   this.chooseFile = true;
-  // }
+  }  
 
   imageGUID: any;
-  // saveIm(formValues: any) {
-  //   let uploadImage = this.UploadImage();
-  //   uploadImage.then((resJson) => {
-  //     // this.submitAction(this.uploadFileName, formValues);
-  //     this.imageGUID = this.uploadFileName;
-  //     this.chooseFile = false;
-  //     this.ImageUploadValidation=true;      
-  //   })    
-  // }
-
-  // SaveImageinDB() {
-  //   let objImage: ImageUpload_model = new ImageUpload_model();
-  //   objImage.Image_Guid = UUID.UUID();
-  //   objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
-  //   objImage.CREATION_TS = new Date().toISOString();
-  //   objImage.Update_Ts = new Date().toISOString();
-  //   return new Promise((resolve, reject) => {
-  //     this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
-  //       // let res = response.json();
-  //       // let imageGUID = res["resource"][0].Image_Guid;
-  //       resolve(objImage.toJson());
-  //     })
-  //   })
-  // }
-
-  //   UploadImage() {   
-  //     this.CloudFilePath = 'eclaim/'   
-
-  //   this.loading = true;
-  //   const queryHeaders = new Headers();
-  //   queryHeaders.append('filename', this.uploadFileName);
-  //   queryHeaders.append('Content-Type', 'multipart/form-data');
-  //   queryHeaders.append('fileKey', 'file');
-  //   queryHeaders.append('chunkedMode', 'false');
-  //   queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-  //   const options = new RequestOptions({ headers: queryHeaders });
-  //   return new Promise((resolve, reject) => {
-  //     this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.OTform.get('avatar').value, options)
-  //       .map((response) => {
-  //         return response;
-  //       }).subscribe((response) => {
-  //         resolve(response.json());
-  //       })
-  //   })
-  // }
 
   GetSocNo(item: any) {
     this.OT_SOC_No_ngModel = item.soc;
@@ -390,12 +327,7 @@ export class OvertimeclaimPage {
       return false;
     }
     return true;
-  }
-
-  // clearFile() {
-  //   this.OTform.get('avatar').setValue(null);
-  //   this.fileInput.nativeElement.value = '';
-  // }
+  }  
 
   allowanceGUID: any;
   onAllowanceSelect(allowance: any) {
