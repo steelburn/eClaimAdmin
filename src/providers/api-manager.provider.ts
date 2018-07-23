@@ -453,4 +453,18 @@ export class ApiManagerProvider {
     return items;
   }
 
+  stringToSplit: string = "";
+  tempSplit: string = "";
+  isFileImage(val: any) {
+    if (val !== null) {
+      this.stringToSplit = val;
+      this.tempSplit = this.stringToSplit.split(".")[2];
+      if (this.tempSplit == "jpeg" || this.tempSplit == "jpg" || this.tempSplit == "png")
+        return true
+      else {
+        return false
+      }
+    }
+  }
+
 }

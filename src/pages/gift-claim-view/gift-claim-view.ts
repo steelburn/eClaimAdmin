@@ -40,30 +40,13 @@ export class GiftClaimViewPage {
     this.LoadMainClaim();
     this.approverDesignation = this.navParams.get("approverDesignation");
 
-  }
-
-  stringToSplit: string = "";
-  tempUserSplit1: string = "";
-  tempUserSplit2: string = "";
-  tempUserSplit3: string = "";
+  } 
 
   isImage: boolean = false;
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
-      this.claimRequestData.forEach(element => {
-        if (element.ATTACHMENT_ID !== null){
-          this.stringToSplit = element.ATTACHMENT_ID ;
-          this.tempUserSplit1 = this.stringToSplit.split(".")[0];
-          this.tempUserSplit2 = this.stringToSplit.split(".")[1];
-          this.tempUserSplit3 = this.stringToSplit.split(".")[2];
-          if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
-          this.isImage = true
-          else {
-            this.isImage = false
-          }
-          element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
-        }       
+      this.claimRequestData.forEach(element => {       
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
       });
     })
@@ -95,5 +78,10 @@ isAccepted(val: string) {
   DisplayImage(val: any) {
     this.displayImage = true;
     this.imageURL = val;
+    if (val !== null) { 
+      this.imageURL = this.api.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.api.isFileImage(val); 
+    }
   }
 }

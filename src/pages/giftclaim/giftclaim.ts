@@ -35,7 +35,7 @@ import moment from 'moment';
 export class GiftclaimPage {
   Giftform: FormGroup;
   uploadFileName: string;
-  loading = false;
+  loading : Loading;
   CloudFilePath: string;
   @ViewChild('fileInput') fileInput: ElementRef;
   customers: any[];
@@ -83,11 +83,7 @@ export class GiftclaimPage {
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
-
-  stringToSplit: string = "";
-  tempUserSplit1: string = "";
-  tempUserSplit2: string = "";
-  tempUserSplit3: string = "";
+ 
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -99,23 +95,8 @@ export class GiftclaimPage {
 
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
-                this.claimRequestData = data["resource"];
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                { 
-                 this.stringToSplit = this.claimRequestData[0].ATTACHMENT_ID ;
-                 this.tempUserSplit1 = this.stringToSplit.split(".")[0];
-                 this.tempUserSplit2 = this.stringToSplit.split(".")[1];
-                 this.tempUserSplit3 = this.stringToSplit.split(".")[2];
-                 if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
-                 this.isImage = true
-                 else {
-                   this.isImage = false
-                 }
-                 this.imageURLEdit =  this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
-               }
-
-                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                //   this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
+                this.claimRequestData = data["resource"];             
+                this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
@@ -252,6 +233,7 @@ export class GiftclaimPage {
     this.newImage = false;
     this.onFileChange(e);
     this.ImageUploadValidation = false;
+    this.saveIm();
   }
 
   imageGUID: any;
@@ -266,7 +248,6 @@ export class GiftclaimPage {
 
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-    this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
@@ -274,10 +255,17 @@ export class GiftclaimPage {
     queryHeaders.append('fileKey', 'file');
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
+
     const options = new RequestOptions({ headers: queryHeaders });
     return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Giftform.get('avatar').value, options)
-        .map((response) => {
+        .map((response) => 
+        {
+          this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
           resolve(response.json());
@@ -492,6 +480,11 @@ export class GiftclaimPage {
   DisplayImage(val: any) {
     this.displayImage = true;
     this.imageURL = val;
+    if (val !== null) { 
+      this.imageURL = this.apiMng.getImageUrl(val); 
+      this.displayImage = true; 
+      this.isImage = this.apiMng.isFileImage(val); 
+    }
   }
 }
 

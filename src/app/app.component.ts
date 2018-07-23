@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
+// import { SplashScreen } from '@ionic-native/splash-screen';
+// import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
@@ -126,8 +126,9 @@ export class ConferenceApp {
     public platform: Platform,
     public confData: ConferenceData,
     public storage: Storage,
-    statusbar: StatusBar,
-    splashScreen: SplashScreen, public translate: TranslateService, public http: Http
+    // statusbar: StatusBar,
+    // splashScreen: SplashScreen, 
+    public translate: TranslateService, public http: Http
   ) {
     // debugger;
     this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
@@ -138,11 +139,11 @@ export class ConferenceApp {
     });
 
     translate.setDefaultLang('en');
-    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
+//    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
 
     // Check if the user has already seen the tutorial
     // load the conference data
-    confData.load();
+//    confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
@@ -192,7 +193,9 @@ export class ConferenceApp {
   listenToLoginEvents() {
     // this.MenuService.EventListener();
     // debugger;    
-    this.events.subscribe('user:login', () => {
+
+    this.events.subscribe('user:login', () => {      
+
       this.enableMenu(true);
     });
 

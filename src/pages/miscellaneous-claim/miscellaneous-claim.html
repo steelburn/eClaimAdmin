@@ -64,16 +64,12 @@
               <ion-item class="text">      
                 <ion-label>Attachment :</ion-label>
                 <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>               
-                <button ion-button item-end color="primary500"   (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button> 
+                <!-- <button ion-button item-end color="primary500"   (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>  -->
             </ion-item>
           
-            <div>
+            <div *ngIf= "isImage">
               <img src="{{ProfileImage}}" style="width: 20%">
-            </div>
-          
-              <!-- <div  *ngIf="newImage">
-              <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">
-              </div> -->
+            </div>             
 
               <div>
                 <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
@@ -98,7 +94,9 @@
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
-      <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null">
+      <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null  && isImage">
+      <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
+      <!-- <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null"> -->
     </ion-card>
   </div>
 
