@@ -81,7 +81,7 @@ export class AddTollPage {
 
   imageOptional: boolean = false;
   onPaySelect(payBy: any) {
-    if (payBy.NAME === "Touch 'n Go") {
+    if (payBy.REQUIRE_ATTACHMENT === 0) {
       this.imageOptional = true;
     }
     else
@@ -154,7 +154,8 @@ export class AddTollPage {
   isFormEdit:boolean=false;
   ngOnInit(): void {
     // this.ClaimMainGUID = this.navParams.get('MainClaim');
-    this.ClaimMainGUID = localStorage.getItem("g_CR_GUID");
+    // this.ClaimMainGUID = localStorage.getItem("g_CR_GUID");
+    this.ClaimMainGUID = this.navParams.get("MainClaim");
     this.ClaimMethodGUID = this.navParams.get('ClaimMethod');
     this.ClaimMethodName = this.navParams.get('ClaimMethodName');
     this.ClaimDetailGuid = this.navParams.get('ClaimReqDetailGuid');
