@@ -129,7 +129,7 @@ export class ConferenceApp {
     statusbar: StatusBar,
     splashScreen: SplashScreen, public translate: TranslateService, public http: Http
   ) {
-    debugger;
+    // debugger;
     this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
@@ -159,7 +159,7 @@ export class ConferenceApp {
   }
 
   openPage(page: PageInterface) {
-    debugger;    
+    // debugger;    
     let params = {};
 
     // the nav component was found using @ViewChild(Nav)
@@ -191,8 +191,8 @@ export class ConferenceApp {
 
   listenToLoginEvents() {
     // this.MenuService.EventListener();
-    debugger;    
-    this.events.subscribe('user:login', () => {      
+    // debugger;    
+    this.events.subscribe('user:login', () => {
       this.enableMenu(true);
     });
 
@@ -206,7 +206,7 @@ export class ConferenceApp {
   }
 
   enableMenu(loggedIn: boolean) {
-    debugger;
+    // debugger;
     //Get all the roles and menus for that particular user.-------------------------------------------------------   
     // let url: string; this.Menu_Array = []; let Role_Name: string = "";
     // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -642,7 +642,7 @@ export class ConferenceApp {
   }
 
   isActive(page: PageInterface) {
-    debugger;    
+    // debugger;    
     let childNav = this.nav.getActiveChildNavs()[0];
 
     // Tabs are a special case because they have their own navigation
@@ -660,7 +660,7 @@ export class ConferenceApp {
   }
 
   public translateToMalayClicked: boolean = false;
-  
+
   public translateToEnglishClicked: boolean = true;
 
   public translateToEnglish() {
