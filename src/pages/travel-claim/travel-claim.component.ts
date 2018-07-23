@@ -499,7 +499,7 @@ export class TravelclaimPage {
   showAddToll(claimDetailGuid: string) {
     this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
-      // MainClaim: localStorage.getItem("g_CR_GUID"),
+      MainClaim: this.claimRequestGUID,
       ClaimReqDetailGuid: claimDetailGuid,
       ClaimMethod: '03048acb-037a-11e8-a50c-00155de7e742',
       ClaimMethodName: 'Toll'
@@ -509,7 +509,7 @@ export class TravelclaimPage {
   showAddParking(claimDetailGuid: string) {
     this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
-      // MainClaim: localStorage.getItem("g_CR_GUID"),
+      MainClaim: this.claimRequestGUID,
       ClaimReqDetailGuid: claimDetailGuid,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-00155de7e742',
       ClaimMethodName: 'Parking'
@@ -519,7 +519,7 @@ export class TravelclaimPage {
   showAddAccommodation(claimDetailGuid: string) {
     this.CloseTollParkLookup();
     this.navCtrl.push(AddTollPage, {
-      // MainClaim: localStorage.getItem("g_CR_GUID"),
+      MainClaim: this.claimRequestGUID,
       ClaimReqDetailGuid: claimDetailGuid,
       ClaimMethod: '0ebb7e5f-037a-11e8-a50c-ssh55de7e742',
       ClaimMethodName: 'Accommodation'
@@ -532,7 +532,7 @@ export class TravelclaimPage {
       this.api.getApiModel('claim_request_detail', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(CLAIM_METHOD_GUID=0ebb7e5f-ssha-11e8-a50c-ssh55de7e742)').subscribe(data => {
         if (data['resource'].length === 1) { alert('Meal Allowance is already applied.'); return; }
         this.navCtrl.push(AddTollPage, {
-          // MainClaim: localStorage.getItem("g_CR_GUID"),
+          MainClaim: this.claimRequestGUID,
           ClaimReqDetailGuid: claimDetailGuid,
           ClaimMethod: '0ebb7e5f-ssha-11e8-a50c-ssh55de7e742',
           ClaimMethodName: 'Meal Allowance'
@@ -541,7 +541,7 @@ export class TravelclaimPage {
     }
     else {
       this.navCtrl.push(AddTollPage, {
-        // MainClaim: localStorage.getItem("g_CR_GUID"),
+        MainClaim: this.claimRequestGUID,
         ClaimReqDetailGuid: claimDetailGuid,
         ClaimMethod: '0ebb7e5f-ssha-11e8-a50c-ssh55de7e742',
         ClaimMethodName: 'Meal Allowance'
@@ -551,7 +551,7 @@ export class TravelclaimPage {
 
   imageOptional: boolean = false;
   onPaySelect(payBy: any) {
-    if (payBy.NAME === "Touch 'n Go") {
+    if (payBy.REQUIRE_ATTACHMENT === 0) {
       this.imageOptional = true;
     }
     else
@@ -565,7 +565,7 @@ export class TravelclaimPage {
     let origin = this.Travel_From_ngModel;
     let destination = this.Travel_Destination_ngModel;
     this.PublicTransValue = true;
-    if (vehicle.CATEGORY === 'Public Transport') {
+    if (vehicle.AUTO_CALCULATE === 0) {
       this.isPublicTransport = true;
       if (this.isFormEdit)
         this.PublicTransValue = true;
@@ -817,6 +817,8 @@ export class TravelclaimPage {
   }
 
   EditDetail(claimDetailId: string, claimMethodGuid: string) {
+    if (this.claimRequestGUID === null)
+    this.claimRequestGUID = localStorage.getItem("g_CR_GUID")
     if (claimMethodGuid === '03048acb-037a-11e8-a50c-00155de7e742') { this.showAddToll(claimDetailId) }
     else if (claimMethodGuid === '0ebb7e5f-037a-11e8-a50c-00155de7e742') { this.showAddParking(claimDetailId) }
     else if (claimMethodGuid === '0ebb7e5f-ssha-11e8-a50c-ssh55de7e742') { this.showMealAllowance(claimDetailId) }
