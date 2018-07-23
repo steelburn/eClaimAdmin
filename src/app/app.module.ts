@@ -1,5 +1,5 @@
 ﻿import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, Http } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -65,7 +65,7 @@ import { TranslatePage } from '../pages/translate/translate';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 // import { Chart } from 'chart.js';
-import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
 export function createTranslateLoader(http: HttpClient) {
