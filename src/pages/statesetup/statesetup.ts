@@ -245,7 +245,7 @@ export class StatesetupPage {
       });
       this.loading.present();
       //--------------------------------------------------
-      debugger;
+      // debugger;
       let strPrev_Value: string = "";
       if (localStorage.getItem('Previ_state') != null) { strPrev_Value = localStorage.getItem('Previ_state').toUpperCase(); }
 
@@ -308,7 +308,7 @@ export class StatesetupPage {
 
   CheckDuplicate() {
     let url: string = "";
-    debugger;
+    // debugger;
     url = this.baseResource_Url + "main_state?filter=NAME=" + this.STATE_NAME_ngModel_Add.trim() + '&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     let result: any;

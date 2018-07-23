@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
+// import { SplashScreen } from '@ionic-native/splash-screen';
+// import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
@@ -126,10 +126,11 @@ export class ConferenceApp {
     public platform: Platform,
     public confData: ConferenceData,
     public storage: Storage,
-    statusbar: StatusBar,
-    splashScreen: SplashScreen, public translate: TranslateService, public http: Http
+    // statusbar: StatusBar,
+    // splashScreen: SplashScreen, 
+    public translate: TranslateService, public http: Http
   ) {
-    debugger;
+    // debugger;
     this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
@@ -138,11 +139,11 @@ export class ConferenceApp {
     });
 
     translate.setDefaultLang('en');
-    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
+//    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
 
     // Check if the user has already seen the tutorial
     // load the conference data
-    confData.load();
+//    confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
@@ -159,7 +160,7 @@ export class ConferenceApp {
   }
 
   openPage(page: PageInterface) {
-    debugger;    
+    // debugger;    
     let params = {};
 
     // the nav component was found using @ViewChild(Nav)
@@ -191,7 +192,7 @@ export class ConferenceApp {
 
   listenToLoginEvents() {
     // this.MenuService.EventListener();
-    debugger;    
+    // debugger;    
     this.events.subscribe('user:login', () => {      
       this.enableMenu(true);
     });
@@ -206,7 +207,7 @@ export class ConferenceApp {
   }
 
   enableMenu(loggedIn: boolean) {
-    debugger;
+    // debugger;
     //Get all the roles and menus for that particular user.-------------------------------------------------------   
     // let url: string; this.Menu_Array = []; let Role_Name: string = "";
     // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -642,7 +643,7 @@ export class ConferenceApp {
   }
 
   isActive(page: PageInterface) {
-    debugger;    
+    // debugger;    
     let childNav = this.nav.getActiveChildNavs()[0];
 
     // Tabs are a special case because they have their own navigation
