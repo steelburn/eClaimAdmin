@@ -102,18 +102,17 @@
         <ion-label text-wrap> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
 
-    <!-- <ion-item>
-        <ion-label>Receipt ： </ion-label>     
-    </ion-item> 
-    <img style="width: 50%" height="50%" src={{claim.ATTACHMENT_ID}} *ngIf="claim.ATTACHMENT_ID!==null"> -->
 
     <ion-item *ngIf="claim.ATTACHMENT_ID!==null">
+      
+             
         <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" >
-                View Receipt
-                </button>
-            </ion-item>
+            View Receipt
+        </button>
+    </ion-item>
 
     <div>
+
         <button ion-button outline item-end icon-left (click)="TollParkLookup()">
             <ion-icon name="eye"></ion-icon>
             {{ "CLAIM_DETAILS_BUTTON" | translate }} </button>
@@ -173,9 +172,11 @@
                                 <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
                                 <td class="lgl1" text-wrap>{{item.DESCRIPTION}}</td>
                                 <td class="lgl1">
-                                        <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)" *ngIf="item.ATTACHMENT_ID!==null">
+                                        <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)" *ngIf="item.ATTACHMENT_ID!==null ">
                                             Receipt
                                         </button>
+                                     
+                               
                                     </td>
                                 <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td>
                             </tr>
@@ -195,13 +196,13 @@
     <div class="popup1" padding *ngIf="displayImage">
         <ion-card>
             <ion-card-header class="icTitle headerColor-white ">
-                <div class="icHeaderText">Reeeceipt</div>
+                <div class="icHeaderText">Receipt</div>
                 <button class="btnR" (click)="CloseDisplayImage()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>
             </ion-card-header>
             <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null && isImage">
-            <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
+            <a href={{imageURL}} *ngIf="!isImage" target=_ blank>VIEW</a>
         </ion-card>
     </div>
 </ion-content>
