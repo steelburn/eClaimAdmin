@@ -35,7 +35,7 @@ import moment from 'moment';
 export class GiftclaimPage {
   Giftform: FormGroup;
   uploadFileName: string;
-  loading = false;
+  loading : Loading;
   CloudFilePath: string;
   @ViewChild('fileInput') fileInput: ElementRef;
   customers: any[];
@@ -233,6 +233,7 @@ export class GiftclaimPage {
     this.newImage = false;
     this.onFileChange(e);
     this.ImageUploadValidation = false;
+    this.saveIm();
   }
 
   imageGUID: any;
@@ -247,7 +248,6 @@ export class GiftclaimPage {
 
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
-    this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
@@ -255,10 +255,17 @@ export class GiftclaimPage {
     queryHeaders.append('fileKey', 'file');
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
+
     const options = new RequestOptions({ headers: queryHeaders });
     return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Giftform.get('avatar').value, options)
-        .map((response) => {
+        .map((response) => 
+        {
+          this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
           resolve(response.json());

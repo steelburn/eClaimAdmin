@@ -19,7 +19,7 @@
                 <ion-label floating color="primary500">{{ 'PAY_BY_LABEL' | translate }}</ion-label>
                 <ion-select  [ngModelOptions]="{standalone: true}" [(ngModel)]="PayType" placeholder="Cash">
                    
-                  <ion-option *ngFor="let item of paymentTypes" value={{item.PAYMENT_TYPE_GUID}} >{{ item.NAME}}</ion-option>
+                  <ion-option *ngFor="let item of paymentTypes" (ionSelect)="onPaySelect(item)" value={{item.PAYMENT_TYPE_GUID}} >{{ item.NAME}}</ion-option>
                 </ion-select>
               </ion-item>
 
@@ -59,7 +59,7 @@
                 <ion-label>Attachment :</ion-label> 
                 <!-- <img style="width: 50%" height="100%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">      -->
               <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
-              <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button item-end color="primary500"  (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>
+              <!-- <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button item-end color="primary500"  (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button> -->
             
               <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
               <!-- <button ion-button type="button"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
@@ -88,7 +88,9 @@
           </ion-item> -->
           <div class="btn" *ngIf="ClaimMethodName != 'Meal Allowance'">
               <!-- *ngIf="ClaimMethodName === 'Meal Allowance'" -->              
-              <button ion-button color="primary" (click)='Save(false)'>{{ "SUBMIT_BUTTON" | translate }}</button>
+              <!-- <button ion-button color="primary" (click)='Save(false)'>{{ "SUBMIT_BUTTON" | translate }}</button> -->
+              <button *ngIf="imageOptional" ion-button color="primary" (click)='Save(false)'>{{ "SUBMIT_BUTTON" | translate }}</button>
+              <button *ngIf="!imageOptional" ion-button color="primary" (click)='Save(false)' [disabled]="!ImageUploadValidation">{{ "SUBMIT_BUTTON" | translate }}</button>
               <!-- [disabled]="!ImageUploadValidation" -->
             </div>
 

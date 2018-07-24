@@ -104,7 +104,7 @@ export class MonthlyClaimReportPage {
   }
 
   MonthChange(month: any) {
-    debugger;
+    // debugger;
     let monthAr = month.toString().split(",");
     if (monthAr[0] !== "All" || month.length > 0)
       this.monthAll = false;

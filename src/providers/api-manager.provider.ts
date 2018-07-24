@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
-import { ToastController, AlertController } from 'ionic-angular';
+import { ToastController, AlertController, DateTime } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import * as constants from '../config/constants';
 import { MainClaimRequestModel } from '../models/main-claim-request.model';
@@ -37,7 +37,7 @@ export class ApiManagerProvider {
     return this.http.get(url, { headers: queryHeaders }).map(res => res.json())
   }
 
-  sendEmail(ClaimType_GUID: string, startDate: string, endDate: string, CreatedDate: string, TravelDate: string, CLAIM_REQUEST_GUID: string) {
+  sendEmail(ClaimType_GUID: string, startDate: any, endDate: any, CreatedDate: string, TravelDate: string, CLAIM_REQUEST_GUID: string) {
     let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_details?filter=USER_GUID=' + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(url)
@@ -168,7 +168,6 @@ export class ApiManagerProvider {
   }
 
   EmailNextApprover(CLAIM_REQUEST_GUID: string, ASSIGNED_TO: string, claimStatus: string) {
-
     let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_approver?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(url)
@@ -206,8 +205,9 @@ export class ApiManagerProvider {
                 //assignedTo = email_details[0]["APPROVER_NAME"];
                 //let dept = email_details[0]["APPROVER1_DEPT_NAME"];
                 let dept: string = "";
-
-                let startDate: string = ""; let endDate: string = ""; let CreatedDate: string = ""; let TravelDate: string = "";
+                
+                let startDate: any = ""; let endDate: any = "";
+                let CreatedDate: string = ""; let TravelDate: string = "";
                 startDate = email_details[0]["START_DATE"];
                 endDate = email_details[0]["END_DATE"];
                 CreatedDate = email_details[0]["APPLIED_DATE"];
