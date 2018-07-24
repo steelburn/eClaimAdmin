@@ -166,9 +166,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     UserclaimslistPage,
     ClaimReportPage,
     MonthlyClaimReportPage,
-
     CustomerSetupPage,
-
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage
   ],
