@@ -111,4 +111,10 @@ export class TravelClaimViewPage {
       this.isImage = this.api.isFileImage(val); 
     }
   }
+
+  
+  isImageUrl: boolean = true; 
+  CheckAttachment() {
+      this.isImageUrl = true;
+  }
 }
