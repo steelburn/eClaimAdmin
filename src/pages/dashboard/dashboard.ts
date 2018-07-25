@@ -9,8 +9,7 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../config/constants';
 import { Http } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SetupPage } from '../setup/setup';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+// import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { DecimalPipe } from "@angular/common";
 
 /**
@@ -652,13 +651,13 @@ export class DashboardPage {
       });
 
   }
-  Rejected_Click(Rejected: any) {
+  Rejected_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Rejected: "Rejected" });
   }
-  Pending_Click(Pending: any) {
+  Pending_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
   }
-  Approved_Click(Approved: any) {
+  Approved_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
   }
   Paid_Click() {
