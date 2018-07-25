@@ -1,14 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController, Loading, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Loading, LoadingController } from 'ionic-angular';
 import * as constants from '../../config/constants';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Services } from '../Services';
-import { ImageUpload_model } from '../../models/image-upload.model';
 import { ClaimRequestDetailModel } from '../../models/claim-request-detail.model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import moment from 'moment';
@@ -121,7 +120,6 @@ export class AddTollPage {
     claimReqRef.ATTACHMENT_ID = this.imageGUID;
 
     this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
-      var postClaimRef = response.json();
       alert('Your ' + this.ClaimMethodName + ' details submitted successfully.')
       this.navCtrl.pop();
     })
@@ -138,7 +136,7 @@ export class AddTollPage {
 
 
           this.claimDetailsData["resource"][0].ATTACHMENT_ID = (this.imageGUID!==undefined || this.imageGUID!==null)?this.imageGUID:this.claimDetailsData["resource"][0].ATTACHMENT_ID;
-         this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(res => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
+         this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(() => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
          this.navCtrl.pop();
         })
   }
@@ -241,36 +239,13 @@ export class AddTollPage {
   fileName1: string;
   ProfileImage: any; 
   newImage:boolean=true;
-  private ProfileImageDisplay(e: any, fileChoose: string): void {
-    let reader = new FileReader();
-    if (e.target.files && e.target.files[0]) {
-
-      const file = e.target.files[0];
-      this.DetailsForm.get(fileChoose).setValue(file);
-      if (fileChoose === 'avatar1')
-        this.fileName1 = file.name;
-
-      reader.onload = (event: any) => {
-        this.ProfileImage = event.target.result;
-      }
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    this.imageGUID = this.uploadFileName;
-    this.chooseFile = true;
-    this.newImage=false
-    this.onFileChange(e);
-    this.ImageUploadValidation=true;  
-    this.saveIm();
-  }
   uniqueName: any;
   imageGUID: any;
   saveIm() {
     let uploadImage = this.UploadImage();
-    uploadImage.then((resJson) => {
-     
+    uploadImage.then(() => {
       this.imageGUID = this.uniqueName;
       this.chooseFile = false;
-      //this.ImageUploadValidation=false;      
     })   
   }
  
@@ -300,7 +275,7 @@ export class AddTollPage {
       content: 'Please wait...',
     });
     this.loading.present();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       // this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.DetailsForm.get('avatar').value, options)
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.DetailsForm.get('avatar').value, options)
         .map((response) => 
