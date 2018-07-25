@@ -11,9 +11,6 @@ import { DepartmentsetupPage } from '../departmentsetup/departmentsetup';
 import { MileagesetupPage } from '../mileagesetup/mileagesetup';
 import { PaymenttypesetupPage } from '../paymenttypesetup/paymenttypesetup';
 import { QualificationsetupPage } from '../qualificationsetup/qualificationsetup';
-import { SubsciptionsetupPage } from '../subsciptionsetup/subsciptionsetup';
-import { RolesetupPage } from '../rolesetup/rolesetup';
-import { TenantsetupPage } from '../tenantsetup/tenantsetup';
 import { UserPage } from '../user/user';
 import { SocRegistrationPage } from '../soc-registration/soc-registration';
 import { CountrysetupPage } from '../countrysetup/countrysetup';
@@ -32,12 +29,9 @@ import { SetupguidePage } from '../setupguide/setupguide';
 import { UUID } from 'angular2-uuid';
 
 import { LoginPage } from '../login/login';
-import { Inject } from '@angular/core';
-import { AlertController } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -99,7 +93,7 @@ export class SetupPage {
     }
   }
 
-  public EditClick(BRANCH_GUID: any) {
+  public EditClick() {
     // this.ClearControls();
     // this.EditBranchsClicked = true;
     // var self = this;
@@ -111,7 +105,7 @@ export class SetupPage {
     //   });
   }
 
-  public DeleteClick(BRANCH_GUID: any) {
+  public DeleteClick() {
     // let alert = this.alertCtrl.create({
     //   title: 'Remove Confirmation',
     //   message: 'Do you want to remove ?',
@@ -140,7 +134,7 @@ export class SetupPage {
     // }); alert.present();
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service) {
 
     if (localStorage.getItem("g_USER_GUID") != null) {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/vw_tenantcompanysitedetails?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -351,7 +345,7 @@ export class SetupPage {
 
   }
 
-  Update(BRANCH_GUID: any) {
+  Update() {
 
   }
 
