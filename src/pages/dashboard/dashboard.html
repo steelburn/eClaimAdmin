@@ -149,8 +149,57 @@
       <p color="graye"># YTD: {{PaidClaimCount_year}}</p>
 
     </ion-card-content>
+  </ion-card>
+  <!-- *ngIf="IsApprover" -->
+  <ion-card  class="round2" *ngIf="IsApprover" (click)="Approver_Click()">
+    <ion-card-header style="background:rgb(90, 165, 90);margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
+      <h2 style="color:white !important">Supervisor</h2>
+    </ion-card-header>
+    <ion-card-content text-center>
 
+      <h1>RM {{ApproverLevel_PendAmount}}</h1>
+      <h3># this month: {{ApproverLevel_PendCount}}</h3>
 
+      <hr>
+
+      <p color="graye">Amount YTD: RM {{ApproverLevel_PendAmount_Year}}</p>
+      <p color="graye"># YTD: {{ApproverLevel_PendCount_Year}}</p>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="round2" *ngIf="IsFinanceExecutive" (click)="Finance_Executive_Click()">
+    <ion-card-header style="background:rgb(90, 165, 90);margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
+      <h2 style="color:white !important">Finance Executive</h2>
+    </ion-card-header>
+    <ion-card-content text-center>
+
+      <h1>RM {{FinanceExecLevel_PendAmt}}</h1>
+      <h3># this month: {{FinanceExecLevel_PendCount}}</h3>
+
+      <hr>
+
+      <p color="graye">Amount YTD: RM {{FinanceExecLevel_PendAmt_Year}}</p>
+      <p color="graye"># YTD: {{FinanceExecLevel_PendCount_Year}}</p>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="round2" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()">
+    <ion-card-header style="background:rgb(90, 165, 90);margin-bottom: 18pt;padding: 8pt 0 5pt 5pt;">
+      <h2 style="color:white !important">Finance Manager</h2>
+    </ion-card-header>
+    <ion-card-content text-center>
+
+      <h1>RM {{FinanceMgrLevel_PendAmt}}</h1>
+      <h3># this month: {{FinanceMgrLevel_PendCount}}</h3>
+
+      <hr>
+
+      <p color="graye">Amount YTD: RM {{FinanceMgrLevel_PendAmt_Year}}</p>
+      <p color="graye"># YTD: {{FinanceMgrLevel_PendCount_Year}}</p>
+
+    </ion-card-content>
   </ion-card>
 
 </ion-content>

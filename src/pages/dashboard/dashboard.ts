@@ -1,4 +1,4 @@
-import { IonicPage, NavController, NavParams,LoadingController,Loading, Config } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Loading, Config } from 'ionic-angular';
 import { Component, NgModule, ElementRef, Inject, ViewChild, OnChanges } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
@@ -26,6 +26,7 @@ import { DecimalPipe } from "@angular/common";
   templateUrl: 'dashboard.html', providers: [DecimalPipe]
 })
 export class DashboardPage {
+
   baseResourceUrl: string;
   baseResourceUrl_New: string;
   claimrequestdetails: any;
@@ -40,14 +41,30 @@ export class DashboardPage {
   Pending_Claim_Count = 0; Pending_Claim_Amount = '0.00';
   Approved_Claim_Count = 0; Approved_Claim_Amount = '0.00';
   baseResourceUrl_Card: any; Year_Card: any;
-  RejectedClaimCount_year: any;PendingClaimCount_year: any;ApprovedClaimCount_year: any;
-  PaidClaimCount_year:any;
-  PaidReqCount= 0;
-  PendingClaimAmount_year: any; RejectedClaimAmount_year: any;ApprovedClaimAmount_year: any;
+  RejectedClaimCount_year: any; PendingClaimCount_year: any; ApprovedClaimCount_year: any;
+  PaidClaimCount_year: any;
+  PaidReqCount = 0;
+  PendingClaimAmount_year: any; RejectedClaimAmount_year: any; ApprovedClaimAmount_year: any;
   PaidClaimAmount = '0.00';
-  PaidClaimAmount_year:any;
-  loading: Loading; 
-  constructor(public numberPipe: DecimalPipe,public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
+  PaidClaimAmount_year: any;
+  loading: Loading;
+
+  // Role Based Dashboard Details
+  IsApprover: boolean = false;
+  IsFinanceExecutive: boolean = false;
+  IsFinanceManager: boolean = false;
+  baseResource_RoleUrl: string;
+  roleBasedData: any;
+  ApproverLevel_PendAmount: any; ApproverLevel_PendAmount_Year: any;
+  ApproverLevel_PendCount: any; ApproverLevel_PendCount_Year: any;
+
+  FinanceExecLevel_PendAmt: any; FinanceExecLevel_PendAmt_Year: any;
+  FinanceExecLevel_PendCount: any; FinanceExecLevel_PendCount_Year: any;
+
+  FinanceMgrLevel_PendAmt: any; FinanceMgrLevel_PendAmt_Year: any;
+  FinanceMgrLevel_PendCount: any; FinanceMgrLevel_PendCount_Year: any;
+
+  constructor(public numberPipe: DecimalPipe, public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
     public inAppBrowser: InAppBrowser, private loadingCtrl: LoadingController) {
     this.DashboardForm = fb.group({
       'Month': [null, Validators.compose([Validators.required])],
@@ -64,6 +81,8 @@ export class DashboardPage {
     this.GetDashboardInfo();
     this.GetInfoForCards();
     this.GetData_Years();
+    this.GetRoleDashboard();
+    
   }
   // Unique and Sort years
   sortUnique(arr: any) {
@@ -86,7 +105,7 @@ export class DashboardPage {
       return result;
     }
   }
-  
+
   // ngOnInit() {     
   //   // this.loading = this.loadingCtrl.create({
   //   //   content: 'Loading...',
@@ -109,7 +128,7 @@ export class DashboardPage {
   //       ctx.font = fontSize + "px Verdana";
   //       ctx.textBaseline = "middle";
   //       ctx.fillStyle = "blue";
-         
+
   //      if (sum != 0) {
   //         var text = sum,
   //           textX = Math.round((width - ctx.measureText(text).width) / 2),
@@ -125,20 +144,20 @@ export class DashboardPage {
   //   });
   //   // this.loading.dismissAll();
   // }
-  
+
   ngOnInit() {
-   
+
     // register plugin
     // var ctx = document.getElementById("myChart");
     // var myChart = new Chart(ctx);
-    Chart.plugins.register({    
-      beforeDraw: function (chart:any) {       
+    Chart.plugins.register({
+      beforeDraw: function (chart: any) {
         if (chart.config.options.plugin_one_attribute === 'chart1') {
           // alert('hi')
           // Plugin code here...    
-               
+
           var data = chart.data.datasets[0].data;
-          var sum = data.reduce(function (a:any, b:any) {
+          var sum = data.reduce(function (a: any, b: any) {
             var x = a + b;
             var y = parseFloat(x.toFixed(2));
             // y=this.numberPipe.transform(y, '1.2-2');
@@ -152,8 +171,8 @@ export class DashboardPage {
           ctx.font = fontSize + "px Verdana";
           ctx.textBaseline = "middle";
           ctx.fillStyle = "blue";
-          ctx.fontStyle= "bold";
-        
+          ctx.fontStyle = "bold";
+
           if (sum != 0) {
             // var text = sum,
             var text = sum.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
@@ -173,7 +192,7 @@ export class DashboardPage {
         if (chart.config.options.plugin_one_attribute === 'chart2') {
           // alert('hi1')
           var data = chart.data.datasets[0].data;
-          var sum = data.reduce(function (a:any, b:any) {
+          var sum = data.reduce(function (a: any, b: any) {
             var x = a + b;
             var y = parseFloat(x.toFixed(2));
             // y=this.numberPipe.transform(y, '1.2-2');
@@ -187,7 +206,7 @@ export class DashboardPage {
           ctx.font = fontSize + "px Verdana";
           ctx.textBaseline = "middle";
           ctx.fillStyle = "blue";
-          ctx.fontStyle= "bold";
+          ctx.fontStyle = "bold";
 
 
           if (sum != 0) {
@@ -210,15 +229,15 @@ export class DashboardPage {
 
   }
   ionViewDidLoad() {
-    
+
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
-  public doughnutChartLabels: Array<string> = ['Approved', 'Pending', 'Rejected','Paid'];
+  public doughnutChartLabels: Array<string> = ['Approved', 'Pending', 'Rejected', 'Paid'];
   public doughnutChartData: Array<number> = [];
 
   public doughnutChartType: string = 'doughnut';
-  public doughnutChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "red","rgb(90, 165, 90)"] }];
+  public doughnutChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "red", "rgb(90, 165, 90)"] }];
 
   public chartClicked(e: any): void {
     console.log(e);
@@ -239,7 +258,7 @@ export class DashboardPage {
     },
     title: {
       display: true,
-    //  text: 'My Claim Count',
+      //  text: 'My Claim Count',
       fontSize: 20,
       fontColor: 'green'
     },
@@ -264,10 +283,10 @@ export class DashboardPage {
   }
 
   // ClaimAmountChart
-  public claimAmountLabels: Array<string> = ['Approved', 'Pending', 'Rejected','Paid'];
+  public claimAmountLabels: Array<string> = ['Approved', 'Pending', 'Rejected', 'Paid'];
   public claimAmountData: Array<number> = [];
   public claimAmountChartType: string = 'doughnut';
-  public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "red","rgb(90, 165, 90)"] }];
+  public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "red", "rgb(90, 165, 90)"] }];
   public claimAmountClicked(e: any): void {
     console.log(e);
   }
@@ -286,7 +305,7 @@ export class DashboardPage {
     },
     title: {
       display: true,
-     // text: 'My Claim Amount',
+      // text: 'My Claim Amount',
       fontSize: 20,
       fontColor: 'green'
     },
@@ -316,18 +335,103 @@ export class DashboardPage {
       }
     },
   }
+  // Role Based Dashboard
+  GetRoleDashboard() {
+    // alert('hi1');
+    
+    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log("Role " + this.baseResource_RoleUrl);
+    this.http
+      .get(this.baseResource_RoleUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.roleBasedData = data["resource"][0];
+      console.table( this.roleBasedData);
+      // console.log( this.roleBasedData.length);
+        if (data["resource"][0] != null && data["resource"][0] != undefined) {
+          this.ApproverLevel_PendAmount = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel;
+          this.ApproverLevel_PendCount = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel;
+          this.ApproverLevel_PendAmount_Year = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel_Year;
+          this.ApproverLevel_PendCount_Year = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel_Year;
 
+          this.FinanceExecLevel_PendAmt = this.roleBasedData.PendingAmount_Fe_FinalLevel;
+          this.FinanceExecLevel_PendCount = this.roleBasedData.PendingCount_Fe_FinalLevel;
+          this.FinanceExecLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fe_FinalLevel_Year;
+          this.FinanceExecLevel_PendCount_Year = this.roleBasedData.PendingCount_Fe_FinalLevel_Year;
+
+          this.FinanceMgrLevel_PendAmt = this.roleBasedData.PendingAmount_Fm_MgrLevel;
+          this.FinanceMgrLevel_PendCount = this.roleBasedData.PendingCount_Fm_MgrLevel;
+          this.FinanceMgrLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fm_MgrLevel_Year;
+          this.FinanceMgrLevel_PendCount_Year = this.roleBasedData.PendingCount_Fm_MgrLevel_Year;
+
+          this.RoleFIlter();
+        }
+        else {
+          this.ApproverLevel_PendAmount = "0.00";
+          this.ApproverLevel_PendCount = 0;
+          this.ApproverLevel_PendAmount_Year = "0.00";
+          this.ApproverLevel_PendCount_Year = 0;
+
+          this.FinanceExecLevel_PendAmt = "0.00";
+          this.FinanceExecLevel_PendCount = 0;
+          this.FinanceExecLevel_PendAmt_Year = "0.00";
+          this.FinanceExecLevel_PendCount_Year = 0;
+
+          this.FinanceMgrLevel_PendAmt = "0.00";
+          this.FinanceMgrLevel_PendCount = 0;
+          this.FinanceMgrLevel_PendAmt_Year = "0.00";
+          this.FinanceMgrLevel_PendCount_Year = 0;
+          this.RoleFIlter();
+        }     
+      });     
+     
+  }
+  RoleFIlter()
+  {
+    if ((this.ApproverLevel_PendAmount != "0.00" || this.ApproverLevel_PendAmount !=undefined) &&
+    (this.ApproverLevel_PendCount != 0 &&  this.ApproverLevel_PendCount != undefined) &&
+     this.ApproverLevel_PendAmount_Year != "0.00" && this.ApproverLevel_PendCount_Year != 0) {
+     this.IsApprover = true;
+     // alert('hi');
+     }
+     else
+     {
+       this.IsApprover=false;
+     }
+     if (this.FinanceExecLevel_PendAmt != "0.00" && this.FinanceExecLevel_PendAmt !=undefined &&
+      this.FinanceExecLevel_PendCount != 0 &&  this.FinanceExecLevel_PendCount !=undefined &&
+     this.FinanceExecLevel_PendAmt_Year != "0.00" && this.FinanceExecLevel_PendCount_Year != 0) {
+     this.IsFinanceExecutive = true;
+     // alert('hi');
+     }
+     else
+     {
+       this.IsFinanceExecutive=false;
+     }
+     if (this.FinanceMgrLevel_PendAmt != "0.00" && this.FinanceMgrLevel_PendAmt !=  undefined &&
+      this.FinanceMgrLevel_PendCount != 0 &&  this.FinanceMgrLevel_PendCount != undefined &&
+     this.FinanceMgrLevel_PendAmt_Year != "0.00" && this.FinanceMgrLevel_PendCount_Year != 0) {
+     this.IsFinanceManager = true;
+     // alert('hi');
+     }
+     else
+     {
+       this.IsFinanceManager=false;
+     }
+  }
   Month_Changed(value: any) {
     //alert(value)
     this.month_value = value;
     this.GetDashboardInfo();
     this.GetInfoForCards();
+    this.GetRoleDashboard();
   }
   Year_Changed(value: any) {
     //alert(value)
     this.year_value = value;
     this.GetDashboardInfo();
     this.GetInfoForCards();
+    this.GetRoleDashboard();
   }
   GetDashboardInfo() {
 
@@ -361,7 +465,7 @@ export class DashboardPage {
             // pendingAmount=this.format(pendingAmount);
             // this.numberPipe.transform(amount, '1.2-2');
             // pendingAmount = this.numberPipe.transform(pendingAmount, '1.2-2');
-          //  alert(pendingAmount)
+            //  alert(pendingAmount)
           }
           else { pendingAmount = '0.00' }
 
@@ -384,7 +488,7 @@ export class DashboardPage {
           this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
 
           // console.log(this.claimAmountData)
-          
+
           // For Display Data In Ion-cards
           this.Rejected_Claim_Count = this.claimrequestdetails.RejectedReqCount;
           this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
@@ -393,41 +497,41 @@ export class DashboardPage {
           this.PaidReqCount = this.claimrequestdetails.PaidReqCount;
 
           if (this.claimrequestdetails.RejectedClaimAmount != null) {
-          this.Rejected_Claim_Amount = this.claimrequestdetails.RejectedClaimAmount.toFixed(2).toString();
+            this.Rejected_Claim_Amount = this.claimrequestdetails.RejectedClaimAmount.toFixed(2).toString();
             this.Rejected_Claim_Amount = this.numberPipe.transform(this.Rejected_Claim_Amount, '1.2-2');
           }
           else this.Rejected_Claim_Amount = '0.00';
 
           if (this.claimrequestdetails.PendingClaimAmount != null) {
-          this.Pending_Claim_Amount = this.claimrequestdetails.PendingClaimAmount.toFixed(2).toString();
+            this.Pending_Claim_Amount = this.claimrequestdetails.PendingClaimAmount.toFixed(2).toString();
             this.Pending_Claim_Amount = this.numberPipe.transform(this.Pending_Claim_Amount, '1.2-2');
           }
           else this.Pending_Claim_Amount = '0.00';
 
           if (this.claimrequestdetails.ApprovedClaimAmount != null) {
-          this.Approved_Claim_Amount = this.claimrequestdetails.ApprovedClaimAmount.toFixed(2).toString();
+            this.Approved_Claim_Amount = this.claimrequestdetails.ApprovedClaimAmount.toFixed(2).toString();
             this.Approved_Claim_Amount = this.numberPipe.transform(this.Approved_Claim_Amount, '1.2-2');
           }
           else this.Approved_Claim_Amount = '0.00';
 
           if (this.claimrequestdetails.PaidClaimAmount != null) {
             this.PaidClaimAmount = this.claimrequestdetails.PaidClaimAmount.toFixed(2).toString();
-              this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
-            }
-            else this.PaidClaimAmount = '0.00';
-     
+            this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
+          }
+          else this.PaidClaimAmount = '0.00';
+
         }
-     
+
         else {
           approve = 0;
           pending = 0;
           rejected = 0;
           paid = 0;
-          this.doughnutChartData = [approve, pending, rejected,paid];
+          this.doughnutChartData = [approve, pending, rejected, paid];
           pendingAmount = '0.00';
           rejectedAmount = '0.00';
           approveAmount = '0.00';
-          PaidClaimAmount='0.00';
+          PaidClaimAmount = '0.00';
 
           this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
 
@@ -439,12 +543,12 @@ export class DashboardPage {
           this.Rejected_Claim_Count = 0;
           this.Pending_Claim_Count = 0;
           this.Approved_Claim_Count = 0;
-          this.PaidReqCount=0;
+          this.PaidReqCount = 0;
 
           this.Rejected_Claim_Amount = '0.00';
           this.Pending_Claim_Amount = '0.00';
           this.Approved_Claim_Amount = '0.00';
-          this.PaidClaimAmount= '0.00';
+          this.PaidClaimAmount = '0.00';
           //
         }
       });
@@ -467,76 +571,75 @@ export class DashboardPage {
             this.RejectedClaimCount_year;
           else
             this.RejectedClaimCount_year = '0';
-  
+
           this.PendingClaimCount_year = this.Year_Card[0]["PendingClaimCount_year"];
           if (this.PendingClaimCount_year != null && this.PendingClaimCount_year != undefined)
             this.PendingClaimCount_year;
           else
             this.PendingClaimCount_year = '0';
-  
-            this.ApprovedClaimCount_year = this.Year_Card[0]["ApprovedClaimCount_year"];
-            if (this.ApprovedClaimCount_year != null && this.ApprovedClaimCount_year != undefined)
-              this.ApprovedClaimCount_year;
-            else
-              this.ApprovedClaimCount_year = '0';
 
-              this.PaidClaimCount_year = this.Year_Card[0]["PaidClaimCount_year"];
-              if (this.PaidClaimCount_year != null && this.PaidClaimCount_year != undefined)
-                this.PaidClaimCount_year;
-              else
-                this.PaidClaimCount_year = '0';
-  
-            this.RejectedClaimAmount_year = this.Year_Card[0]["RejectedClaimAmount_year"];
+          this.ApprovedClaimCount_year = this.Year_Card[0]["ApprovedClaimCount_year"];
+          if (this.ApprovedClaimCount_year != null && this.ApprovedClaimCount_year != undefined)
+            this.ApprovedClaimCount_year;
+          else
+            this.ApprovedClaimCount_year = '0';
+
+          this.PaidClaimCount_year = this.Year_Card[0]["PaidClaimCount_year"];
+          if (this.PaidClaimCount_year != null && this.PaidClaimCount_year != undefined)
+            this.PaidClaimCount_year;
+          else
+            this.PaidClaimCount_year = '0';
+
+          this.RejectedClaimAmount_year = this.Year_Card[0]["RejectedClaimAmount_year"];
           if (this.RejectedClaimAmount_year != null && this.RejectedClaimAmount_year != undefined)
             this.RejectedClaimAmount_year = this.numberPipe.transform(this.RejectedClaimAmount_year, '1.2-2');
           else
             this.RejectedClaimAmount_year = '0.00';
-  
+
           this.PendingClaimAmount_year = this.Year_Card[0]["PendingClaimAmount_year"];
           if (this.PendingClaimAmount_year != null && this.PendingClaimAmount_year != undefined)
             this.PendingClaimAmount_year = this.numberPipe.transform(this.PendingClaimAmount_year, '1.2-2');
           else
             this.PendingClaimAmount_year = '0.00';
-  
-            this.ApprovedClaimAmount_year = this.Year_Card[0]["ApprovedClaimAmount_year"];
-            if (this.ApprovedClaimAmount_year != null && this.ApprovedClaimAmount_year != undefined)
-              this.ApprovedClaimAmount_year = this.numberPipe.transform(this.ApprovedClaimAmount_year, '1.2-2');
-            else
-              this.ApprovedClaimAmount_year = '0.00';
 
-              this.PaidClaimAmount_year = this.Year_Card[0]["PaidClaimAmount_year"];
-            if (this.PaidClaimAmount_year != null && this.PaidClaimAmount_year != undefined)
-              this.PaidClaimAmount_year = this.numberPipe.transform(this.PaidClaimAmount_year, '1.2-2');
-            else
-              this.PaidClaimAmount_year = '0.00';
-            }
-            else
-            {
-              this.RejectedClaimCount_year = '0';
-              this.PendingClaimCount_year = '0';
-              this.ApprovedClaimCount_year = '0';
-              this.PaidClaimCount_year= '0';
+          this.ApprovedClaimAmount_year = this.Year_Card[0]["ApprovedClaimAmount_year"];
+          if (this.ApprovedClaimAmount_year != null && this.ApprovedClaimAmount_year != undefined)
+            this.ApprovedClaimAmount_year = this.numberPipe.transform(this.ApprovedClaimAmount_year, '1.2-2');
+          else
+            this.ApprovedClaimAmount_year = '0.00';
 
-              this.RejectedClaimAmount_year = '0.00';
-              this.PendingClaimAmount_year = '0.00';
-              this.ApprovedClaimAmount_year = '0.00';
-              this.PaidClaimAmount_year='0.00';
-            }
+          this.PaidClaimAmount_year = this.Year_Card[0]["PaidClaimAmount_year"];
+          if (this.PaidClaimAmount_year != null && this.PaidClaimAmount_year != undefined)
+            this.PaidClaimAmount_year = this.numberPipe.transform(this.PaidClaimAmount_year, '1.2-2');
+          else
+            this.PaidClaimAmount_year = '0.00';
+        }
+        else {
+          this.RejectedClaimCount_year = '0';
+          this.PendingClaimCount_year = '0';
+          this.ApprovedClaimCount_year = '0';
+          this.PaidClaimCount_year = '0';
+
+          this.RejectedClaimAmount_year = '0.00';
+          this.PendingClaimAmount_year = '0.00';
+          this.ApprovedClaimAmount_year = '0.00';
+          this.PaidClaimAmount_year = '0.00';
+        }
 
 
       });
   }
   GetData_Years() {
-       this.http
+    this.http
       .get(this.baseResourceUrl_New)
       .map(res => res.json())
       .subscribe(data => {
         this.years_data = data["resource"];
         // console.log(this.years_data.length)
-       
+
         if (this.years_data.length == 0) {
           this.years = [this.year_value - 1, this.year_value];
-             return;
+          return;
         }
         else { }
         this.years = this.years_data;
@@ -547,7 +650,7 @@ export class DashboardPage {
         //console.log(SortuniqueYears)
         this.years = SortuniqueYears;
       });
-      
+
   }
   Rejected_Click(Rejected: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Rejected: "Rejected" });
@@ -558,9 +661,20 @@ export class DashboardPage {
   Approved_Click(Approved: any) {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
   }
-  Paid_Click()
-  {
+  Paid_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Paid" });
+  }
+  Approver_Click()
+  {
+    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+  }
+  Finance_Executive_Click()
+  {
+    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+  }
+  Finance_Manager_Click()
+  {
+    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
   }
 
 }
