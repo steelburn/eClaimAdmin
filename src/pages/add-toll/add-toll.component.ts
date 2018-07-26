@@ -239,8 +239,30 @@ export class AddTollPage {
   fileName1: string;
   ProfileImage: any; 
   newImage:boolean=true;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+
+      const file = e.target.files[0];
+      this.DetailsForm.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.newImage=false
+    this.onFileChange(e);
+    this.ImageUploadValidation=true;  
+    this.saveIm();
+  }
   uniqueName: any;
-  imageGUID: any;
+  imageGUID: any
+  
   saveIm() {
     let uploadImage = this.UploadImage();
     uploadImage.then(() => {
