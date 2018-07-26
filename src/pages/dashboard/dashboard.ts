@@ -1,4 +1,4 @@
-import { IonicPage, NavController, NavParams, LoadingController, Loading, Config } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading, Config } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Chart } from 'chart.js';
 //import 'chartjs-plugin-deferred';
