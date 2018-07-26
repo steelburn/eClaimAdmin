@@ -1,9 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -27,7 +26,7 @@ import { LoginPage } from '../login/login';
 export class CashcardsetupPage {
   cashcard_entry: CashcardSetup_Model = new CashcardSetup_Model();
   Cashform: FormGroup;
-
+  public page:number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_cashcard' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
@@ -126,7 +125,7 @@ export class CashcardsetupPage {
   }
 
   loading: Loading; button_Add_Disable:boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private cashcardsetupservice: CashcardSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private cashcardsetupservice: CashcardSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry, Please login.');
       this.navCtrl.push(LoginPage);

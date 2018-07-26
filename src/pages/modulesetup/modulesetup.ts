@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -37,7 +36,7 @@ export class ModulesetupPage {
 
   Moduleform: FormGroup;
   public pages: any;
-
+  public page:number = 1;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_module' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_mainmodule' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_modulepage_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_mainmodulepage' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -160,7 +159,7 @@ export class ModulesetupPage {
   }
 
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private modulesetupservice: ModuleSetup_Service, private modulepagesetupservice: ModulePageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private modulesetupservice: ModuleSetup_Service, private modulepagesetupservice: ModulePageSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
 
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       this.loading = this.loadingCtrl.create({

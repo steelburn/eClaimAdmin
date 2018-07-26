@@ -47,7 +47,7 @@ export class BanksetupPage {
   Tenant_Add_ngModel: any;
   AdminLogin: boolean = false; Add_Form: boolean = false; Edit_Form: boolean = false;
   tenants: any;
-
+  public page:number = 1;
   //Set the Model Name for Add------------------------------------------
   public NAME_ngModel_Add: any;
   //---------------------------------------------------------------------

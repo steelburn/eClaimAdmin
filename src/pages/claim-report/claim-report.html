@@ -94,8 +94,8 @@
                         <th class="lgl1 tblBrRight"  style="width:130px">Total Amount(RM)</th>
                     </tr>
     
-                    <tr class="col7" *ngFor="let claim of claimsList; let i=index">
-                        <td class="lgl1">{{i+1}}</td>
+                    <tr class="col7" *ngFor="let claim of claimsList | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
+                        <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
                         <td class="lgl1" *ngIf="!travelClaimType && !overTimeClaim">{{claim.TRAVEL_DATE | date:'M/d/y'}}</td>
                         <td class="lgl1" *ngIf="travelClaimType || overTimeClaim" text-wrap>{{claim.START_TS | date:'M/d/y HH:mm'}}</td>
                         <td class="lgl1" *ngIf="travelClaimType || overTimeClaim" text-wrap>{{claim.END_TS | date:'M/d/y HH:mm'}}</td>
@@ -119,6 +119,8 @@
                         <td colspan="7" class="lgl11"  *ngIf="overTimeClaim" style="color:#50C878;" > Total Amount(RM) : {{totalClaimAmount}}</td>
                     </tr>
                 </table>
+                <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+                </pagination-controls>
             </ion-item>
         </ion-list>
         <!-- <ion-item text-right color="primary">

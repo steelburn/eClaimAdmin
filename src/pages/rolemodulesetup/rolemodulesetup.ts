@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -28,6 +27,7 @@ import { RoleModuleSetup_Service } from '../../services/rolemodulesetup_service'
   templateUrl: 'rolemodulesetup.html', providers: [RoleModuleSetup_Service, BaseHttpService]
 })
 export class RolemodulesetupPage {
+  public page:number = 1;
   Rolemoduleform: FormGroup;
   //For Add Module----------------------------
   ROLENAME_ngModel_Add: any;
@@ -75,7 +75,7 @@ export class RolemodulesetupPage {
   }
 
   loading: Loading;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private rolemodulesetupservice: RoleModuleSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private rolemodulesetupservice: RoleModuleSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       //Display Grid------------------------------------
       this.DisplayGrid();

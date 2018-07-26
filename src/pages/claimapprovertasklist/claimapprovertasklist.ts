@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { Services } from '../Services';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -45,7 +42,13 @@ export class ClaimapprovertasklistPage {
   buttonText:string;
   public page:number = 1;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
+  deptList: any[];
+  employeeList: any[];
+  claimTypeList: any[];
+  yearsList: any[] = [];
+  currentYear: number = new Date().getFullYear();
+
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     this.loginUserGuid = localStorage.getItem("g_USER_GUID");
     this.claimrefguid = navParams.get("claimRefGuid");
@@ -62,9 +65,12 @@ export class ClaimapprovertasklistPage {
       }
     }
     else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' +this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.buttonText="Approve";
     }
+    this.BindEmployeesbyDepartment();
+    this.BindClaimTypes();
+    this.BindYears();
     this.BindData();
   }
   BindData() {
@@ -94,7 +100,7 @@ export class ClaimapprovertasklistPage {
    
   }
 
-  onSearchInput(ev: any) {
+  onSearchInput() {
     // alert('hi')
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
@@ -146,7 +152,7 @@ export class ClaimapprovertasklistPage {
     // alert(event.id);
     // alert(event.checked);
     // alert(claimRequestGuid);
-    debugger;
+    // debugger;
     let checkboxData: Checkboxlist = new Checkboxlist(event.checked, claimRequestGuid, level, status);
     if (event.checked) {
       this.checkboxDataList.push(checkboxData);
@@ -164,7 +170,7 @@ export class ClaimapprovertasklistPage {
   }
 
 approveAll(){
-  return new Promise((resolve, reject) => {
+  return new Promise(() => {
 
   this.checkboxDataList.forEach(element => {
     if (element.Checked && element.status !== 'Paid') {
@@ -197,8 +203,8 @@ count:number =0;
       // });
 
       //}
-      temp.then((res) => {
-    })
+      temp.then(() => {
+      })
     
     if (this.count > 0 && this.claimrefguid!==null && this.claimrefguid!==undefined) {
       //debugger;
@@ -238,8 +244,8 @@ count:number =0;
           else
             claimRefObj["resource"][0].STATUS = 'Paid';
           //debugger;
-          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(res => {
-            alert('Claim has been Approved.')
+          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(() => {
+            alert('Claim has been Approved.');
             this.navCtrl.push(ClaimtasklistPage);
           })
         });
@@ -296,5 +302,56 @@ count:number =0;
       approver_GUID: localStorage.getItem('g_USER_GUID')
     });
   }
+
+  
+  BindClaimTypes() {
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_type?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.claimTypeList = data["resource"];
+      });
+  }
+
+  BindYears() {
+    for (let i = 2016; i <= new Date().getFullYear(); i++) {
+      this.yearsList.push(i);
+    }
+  }
+  
+  BindEmployeesbyDepartment() {
+    //alert(dept);
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display_new?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.employeeList = data["resource"];
+      });
+
+  }
+
+  
+  SearchClaimsData(ddlEmployee: string, ddlClaimTypes: string, ddlStatus: string) {
+    if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
+      if (this.loginUserRole === "Finance Admin") {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      }
+      else {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      }
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' +this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    this.BindData();
+
+    if (this.claimrequestdetails.length != 0) {
+      if (ddlEmployee.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
+      if (ddlClaimTypes.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
+      if (ddlStatus.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
+
+    }
+  }
+  
 
 }

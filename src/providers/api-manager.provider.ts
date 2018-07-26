@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
-import { ToastController, AlertController } from 'ionic-angular';
+import { Headers, Http, RequestOptions } from '@angular/http';
+import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import * as constants from '../config/constants';
 import { MainClaimRequestModel } from '../models/main-claim-request.model';
@@ -17,7 +17,7 @@ export class ApiManagerProvider {
 
   LoadMainClaim(claimReqGUID: any) {
     let totalAmount: number;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + claimReqGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
         this.claimDetailsData.forEach(element => {
@@ -37,7 +37,7 @@ export class ApiManagerProvider {
     return this.http.get(url, { headers: queryHeaders }).map(res => res.json())
   }
 
-  sendEmail(ClaimType_GUID: string, startDate: string, endDate: string, CreatedDate: string, TravelDate: string, CLAIM_REQUEST_GUID: string) {
+  sendEmail(ClaimType_GUID: string, startDate: any, endDate: any, CreatedDate: string, TravelDate: string, CLAIM_REQUEST_GUID: string) {
     let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_details?filter=USER_GUID=' + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(url)
@@ -53,7 +53,6 @@ export class ApiManagerProvider {
           let ename = email_details[0]["APPLIER_NAME"];
           //let level = '1';
           let assignedTo = email_details[0]["APPROVER1_NAME"];
-          let dept = email_details[0]["APPROVER1_DEPT_NAME"];
           
           //Get the Total Claim Amount and Status----------------------
           let ClaimAmt: string = "0.00"; let Status: string = "";
@@ -144,18 +143,14 @@ export class ApiManagerProvider {
                       //Send Email For Applier---------------------------------------------- 
                       this.http.post(this.emailUrl, body, options)
                         .map(res => res.json())
-                        .subscribe(data => {
-                          // this.result= data["resource"];
-                          // alert(JSON.stringify(data));
-                        });
+                        .subscribe(() => {
+                          });
 
                       //Send Email For Approver 1-------------------------------------------
                       this.http.post(this.emailUrl, body1, options)
                         .map(res => res.json())
-                        .subscribe(data => {
-                          // this.result= data["resource"];
-                          // alert(JSON.stringify(data));
-                        });
+                        .subscribe(() => {
+                          });
                       //---------------------------------------------------------
                     }
                   });
@@ -167,10 +162,7 @@ export class ApiManagerProvider {
     //---------------------------------------------------------------
   }
 
-  EmailNextApprover(CLAIM_REQUEST_GUID: string, CLAIM_REF_GUID: string, ASSIGNED_TO: string, CLAIM_TYPE_GUID: string, START_TS: string, END_TS: string, CREATION_TS: string, PROFILE_LEVEL: number) {
-    //debugger;
-    //email to applier as well as next approver    
-    //let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_approver?filter=(CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + ') AND (PROFILE_LEVEL='+ PROFILE_LEVEL +')&api_key=' + constants.DREAMFACTORY_API_KEY;
+  EmailNextApprover(CLAIM_REQUEST_GUID: string, ASSIGNED_TO: string, claimStatus: string) {
     let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_approver?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(url)
@@ -188,6 +180,9 @@ export class ApiManagerProvider {
           let ClaimAmt = this.numberPipe.transform(email_details[0]["CLAIM_AMOUNT"], '1.2-2');
 
           let Status = email_details[0]["STATUS"];
+          if (claimStatus === 'Rejected') {
+            Status = claimStatus;
+          }
           let Role_Name = email_details[0]["ROLE_NAME"];
 
           //Here get the approver name and emailid----------------------------------
@@ -202,11 +197,9 @@ export class ApiManagerProvider {
                 assignedTo = approver_details[0]["FULLNAME"];
                 Approver_email = approver_details[0]["EMAIL"];
 
-                //assignedTo = email_details[0]["APPROVER_NAME"];
-                //let dept = email_details[0]["APPROVER1_DEPT_NAME"];
-                let dept: string = "";
-
-                let startDate: string = ""; let endDate: string = ""; let CreatedDate: string = ""; let TravelDate: string = "";
+                
+                let startDate: any = ""; let endDate: any = "";
+                let CreatedDate: string = ""; let TravelDate: string = "";
                 startDate = email_details[0]["START_DATE"];
                 endDate = email_details[0]["END_DATE"];
                 CreatedDate = email_details[0]["APPLIED_DATE"];
@@ -220,12 +213,12 @@ export class ApiManagerProvider {
                 let claimType: string = "";
                 let strSubjectApplier: string = ""; let strSubjectApprover: string; let strBody_html: string;
                 if (claimType == "Travel Claim" || claimType == "Overtime Claim") {
-                  strSubjectApplier = "Your " + claimType + " application (" + this.datepipe.transform(startDate, 'dd/MM/yyyy HH:mm') + " - " + this.datepipe.transform(endDate, 'dd/MM/yyyy HH:mm') + ") has been forwarded for "+ localStorage.getItem("g_ROLE_NAME") +" approval.";
-                  strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + name + '<BR><BR>Your ' + claimType + ' application has been forwarded to '+ Role_Name +' for approval.<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">START DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(startDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">END DATE </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(endDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
+                  strSubjectApplier = "Your " + claimType + " application (" + this.datepipe.transform(startDate, 'dd/MM/yyyy HH:mm') + " - " + this.datepipe.transform(endDate, 'dd/MM/yyyy HH:mm') + ") has been forwarded for " + localStorage.getItem("g_ROLE_NAME") + " approval.";
+                  strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + name + '<BR><BR>Your ' + claimType + ' application has been forwarded to ' + Role_Name + ' for approval.<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">START DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(startDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">END DATE </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(endDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
                 }
                 else {
-                  strSubjectApplier = "Your " + claimType + " application has been forwarded for "+ Role_Name +" approval.";
-                  strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + name + '<BR><BR>Your ' + claimType + ' application has been forwarded to '+ Role_Name +' for approval.<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">APPLIED DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(CreatedDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">CLAIM DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(TravelDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
+                  strSubjectApplier = "Your " + claimType + " application has been forwarded for " + Role_Name + " approval.";
+                  strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + name + '<BR><BR>Your ' + claimType + ' application has been forwarded to ' + Role_Name + ' for approval.<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">APPLIED DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(CreatedDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">CLAIM DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(TravelDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
                 }
 
                 //Body Contents For Applier------------------------
@@ -247,15 +240,22 @@ export class ApiManagerProvider {
                   "reply_to_name": "",
                   "reply_to_email": ""
                 };
-                
+                let mailInitial;
+                if (claimStatus === 'Rejected') {                                  
+                  mailInitial = 'You have Rejected the below '+ claimType + ' application.'
+                }
+                else{
+                  mailInitial = 'Your action is required for the below ' + claimType + ' application.'
+                }
+
                 //Body Contents For Approver-----------------------                
                 if (claimType == "Travel Claim" || claimType == "Overtime Claim") {
                   strSubjectApprover = "Pending Your Approval - " + claimType + " application by " + name + " (" + this.datepipe.transform(startDate, 'dd/MM/yyyy HH:mm') + " - " + this.datepipe.transform(endDate, 'dd/MM/yyyy HH:mm') + ")";
-                  strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + Approver_name + '<BR><BR>Your action is required for the below ' + claimType + ' application.<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">START DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(startDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">END DATE </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(endDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">APPLIED DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(CreatedDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
+                  strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + Approver_name + '<BR><BR>'+mailInitial+'<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">START DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(startDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">END DATE </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(endDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">APPLIED DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(CreatedDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
                 }
                 else {
                   strSubjectApprover = "Pending Your Approval - " + claimType + " application by " + name;
-                  strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + Approver_name + '<BR><BR>Your action is required for the below ' + claimType + ' application.<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">APPLIED DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(CreatedDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">CLAIM DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(TravelDate, 'dd/MM/yyyy HH:mm') + '</TD><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
+                  strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + Approver_name + '<BR><BR>'+mailInitial+'<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">APPLIED DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(CreatedDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">CLAIM DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(TravelDate, 'dd/MM/yyyy HH:mm') + '</TD><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
                 }
                 let body1 = {
                   "template": "",
@@ -279,24 +279,21 @@ export class ApiManagerProvider {
                 //Send Email For Applier---------------------------------------------- 
                 this.http.post(this.emailUrl, body, options)
                   .map(res => res.json())
-                  .subscribe(data => {
-                    // this.result= data["resource"];
-                    // alert(JSON.stringify(data));
-                  });
+                  .subscribe(() => {
+                    });
 
                 //Send Email For Approver 1-------------------------------------------
                 this.http.post(this.emailUrl, body1, options)
                   .map(res => res.json())
-                  .subscribe(data => {
-                    // this.result= data["resource"];
-                    // alert(JSON.stringify(data));
-                  });
+                  .subscribe(() => {
+                    });
                 //---------------------------------------------------------
               }
             });
         }
       });
-  }  
+  }
+  
 
   getImageUrl(imageName: string) {
     return constants.IMAGE_URL + imageName + '?api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -371,7 +368,7 @@ export class ApiManagerProvider {
   }
 
 
-  getClaimRequestByClaimReqGUID(claimReqGUID: string, params?: URLSearchParams): Observable<MainClaimRequestModel[]> {
+  getClaimRequestByClaimReqGUID(claimReqGUID: string): Observable<MainClaimRequestModel[]> {
     var queryHeaders = new Headers();
     queryHeaders.append('Content-Type', 'application/json');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
@@ -390,7 +387,7 @@ export class ApiManagerProvider {
   }
 
   getApiData(endPoint: string, args?: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http
         .get(this.getUrl(endPoint, args))
         .map(res => res.json())
@@ -442,6 +439,20 @@ export class ApiManagerProvider {
       return items;
     });
     return items;
+  }
+
+  stringToSplit: string = "";
+  tempSplit: string = "";
+  isFileImage(val: any) {
+    if (val !== null) {
+      this.stringToSplit = val;
+      this.tempSplit = this.stringToSplit.split(".")[2];
+      if (this.tempSplit == "jpeg" || this.tempSplit == "jpg" || this.tempSplit == "png")
+        return true
+      else {
+        return false
+      }
+    }
   }
 
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { Services } from '../Services';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -21,7 +20,7 @@ import * as constants from '../../app/config/constants';
   templateUrl: 'claim-report.html',
 })
 export class ClaimReportPage {
-
+  public page:number = 1;
   baseResourceUrl: string;
   claimsList: any[];
   deptList: any[];

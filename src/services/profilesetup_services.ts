@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
 import { Main_Profile_Model } from '../models/main_profile_model';
@@ -31,11 +31,10 @@ export class ProfileSetup_Service {
 		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-			.map((response) => {
-				let profiles: Array<Main_Profile_Model> = [];
-				return profiles;
-
-			}).catch(this.handleError);
+			.map(() => {
+					let profiles: Array<Main_Profile_Model> = [];
+					return profiles;
+				}).catch(this.handleError);
 	};
 
 	save(profile: Main_Profile_Model): Observable<any> {
@@ -67,7 +66,6 @@ export class ProfileSetup_Service {
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
 			.map((response) => {
-				var result: any = response.json();
 				let profiles: Array<Main_Profile_Model> = [];
 				return profiles;
 			}).catch(this.handleError);
@@ -98,7 +96,7 @@ export class ProfileSetup_Service {
 			}).catch(this.handleError);
 	};
 
-	GetExistingRecord(PROFILE_NAME: string, params?: URLSearchParams): Observable<Main_Profile_Model> {
+	GetExistingRecord(PROFILE_NAME: string): Observable<Main_Profile_Model> {
 		var queryHeaders = new Headers();
 		queryHeaders.append('Content-Type', 'application/json');
 		let options = new RequestOptions({ headers: queryHeaders });

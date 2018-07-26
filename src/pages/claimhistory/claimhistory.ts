@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { Services } from '../Services';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http } from '@angular/http';
 //import { HttpClient } from '@angular/common/http';
 
@@ -13,8 +10,6 @@ import * as constants from '../../app/config/constants';
 import { BaseHttpService } from '../../services/base-http';
 //import { ClaimHistory_Model } from '../../models/ClaimHistory_Model';
 import { ClaimhistorydetailPage } from '../claimhistorydetail/claimhistorydetail';
-import { ResourceLoader } from '@angular/compiler';
-import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 
 import { ExcelService } from '../../providers/excel.service';
 
@@ -43,24 +38,33 @@ export class ClaimhistoryPage {
   searchboxValue: string;
   claimhistorys: any[];
   claimhistorys1: any[] = [];
+  deptList: any[];
+  employeeList: any[] = [];
+  employeeList1: any[] = [];
+  yearsList: any[] = [];
+  currentYear: number = new Date().getFullYear();
+  loginUserRole:string;
   // claimhistoryTotal: any[];
 
   // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string;
-  public page:number = 1;
-  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
-    let loginUserRole = localStorage.getItem("g_ROLE_NAME");
-    if (loginUserRole === "Finance Admin") {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
+  public page: number = 1;
+  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+    this.loginUserRole = localStorage.getItem("g_ROLE_NAME");
+    if (this.loginUserRole === "Finance Admin") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
+    this.BindDepartment();
+    this.BindEmployeesbyDepartment("All");
+    this.BindYears();
     this.BindData();
 
     this.excelService = excelService;
   }
-  
+
   ExcelData: any[] = [];
   BindData() {
     this.http
@@ -68,36 +72,15 @@ export class ClaimhistoryPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimhistorys = this.claimhistorys1 = data["resource"];
-        //  this.claimhistoryTotal.forEach(element => {
-        //     if(this.claimhistorys1.length===0 || (this.claimhistorys1.length>0 && this.claimhistorys1.find(e=>e.CLAIM_REF_GUID==element.CLAIM_REF_GUID)===undefined))
-        //     {
-        //        this.claimhistorys1.push(element);
-        //    }
-        //     else
-        //     {
-        //     var claimObj=  this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID);
-        //        if(element.STATUS.toString()==="Approved")
-        //        {
-        //         if(claimObj.STATUS.toString()===element.STATUS.toString())
-        //         {
-
-        //         }
-        //        }
-        //        else
-        //        {}
-
-        //       this.claimhistorys1.find(e=>e.CLAIM_REF_GUID===element.CLAIM_REF_GUID && e.STATUS==="Rejected").CLAIM_AMOUNT_REJ+=element.CLAIM_AMOUNT_REJ;
-        //     }
-        //   });
         this.claimhistorys = this.claimhistorys1;
 
         for (var item in data["resource"]) {
-          this.ExcelData.push({ Employee: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPT"], Month: data["resource"][item]["MONTH"], ApprovedAmt : data["resource"][item]["APPROVEDAMOUNT"], RejectedAmount: data["resource"][item]["REJECTEDAMOUNT"] });
+          this.ExcelData.push({ Employee: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPT"], Month: data["resource"][item]["MONTH"], ApprovedAmt: data["resource"][item]["APPROVEDAMOUNT"], RejectedAmount: data["resource"][item]["REJECTEDAMOUNT"] });
         }
       });
   }
 
-  onSearchInput(ev: any) {
+  onSearchInput() {
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
       this.claimhistorys = this.claimhistorys1.filter((item) => {
@@ -140,58 +123,56 @@ export class ClaimhistoryPage {
     })
   }
 
-
-
-
-  //   goToEmailTest(){
-  //     var queryHeaders = new Headers();
-  //     queryHeaders.append('Content-Type', 'application/json');
-  //     queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
-  //     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-  //     let options = new RequestOptions({ headers: queryHeaders });
-
-  // let body = {
-  //   "template": "",           
-  //   "template_id": 0,        
-  //   "to": [
-  //     {
-  //       "name": "ajay varma",
-  //       "email": "ajayvarma403@gmail.com"
-  //     }
-  //   ],
-  //   "cc": [
-  //     {
-  //       "name": "fdf",
-  //       "email": "ajayvarma403@gmail.com"
-  //     }
-  //   ],
-  //   "bcc": [
-  //     {
-  //       "name": "asd",
-  //       "email": "ajayvarma403@gmail.com"
-  //     }
-  //   ],
-  //   "subject": "Test",
-  //   "body_text": "",
-  //   "body_html": "",
-  //   "from_name": "Ajay DAV",
-  //   "from_email": "ajay1591ani@gmail.com",
-  //   "reply_to_name": "",
-  //   "reply_to_email": ""
-  //       };
-
-  // this.http.post(this.emailUrl, body,options)
-  // .map(res => res.json())
-  // .subscribe(data => {
-  //  // this.result= data["resource"];
-  //   alert(JSON.stringify(data));
-  // });
-
-  // }   
-
-  ExportToExcel(evt: any) {
+  ExportToExcel() {
     // this.excelService.exportAsExcelFile(this.claimhistorys, 'Data');
     this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
+  }
+
+  BindDepartment() {
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_department?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.deptList = data["resource"];
+      });
+    //console.log(this.deptList);
+  }
+
+  BindEmployeesbyDepartment(dept: string) {
+    //alert(dept);
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display_new?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.employeeList1 = data["resource"];
+        this.employeeList = this.employeeList1;
+        if (dept !== "All") {
+          this.employeeList = this.employeeList1.filter(s => s.DEPT_GUID.toString() === dept.toString());
+        }
+      });
+
+  }
+
+  BindYears() {
+    for (let i = 2016; i <= new Date().getFullYear(); i++) {
+      this.yearsList.push(i);
+    }
+  }
+
+  SearchClaimsData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlYear: number) {
+    if (this.loginUserRole === "Finance Admin") {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+     this.BindData();
+    if (this.claimhistorys.length != 0) {
+      if (ddlDept.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.DEPT_GUID.toString() === ddlDept.toString()) }
+      if (ddlEmployee.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
+      if (ddlmonth.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
+
+    }
   }
 
 }
