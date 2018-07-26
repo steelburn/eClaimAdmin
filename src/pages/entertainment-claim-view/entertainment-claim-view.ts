@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Platform } from 'ionic-angular';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import { Services } from '../Services';
-import * as constants from '../../config/constants';
-import { ClaimWorkFlowHistoryModel } from '../../models/claim-work-flow-history.model';
 import {EntertainmentclaimPage} from '../../pages/entertainmentclaim/entertainmentclaim';
-import { UUID } from 'angular2-uuid';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 //import { ExcelService } from '../../providers/excel.service';
@@ -31,7 +27,7 @@ export class EntertainmentClaimViewPage {
   level: any;
   approverDesignation: any;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
   
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
