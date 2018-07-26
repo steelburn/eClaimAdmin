@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
 import { BranchSetup_Model } from '../models/branchsetup_model';
@@ -12,18 +12,14 @@ import { Observable } from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
-class ServerResponse {
-    constructor(public resource: any) {
-
-    }
-};
+;
 
 @Injectable()
 export class BranchSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_branch';
     baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-    constructor(private httpService: BaseHttpService, private nav: NavController) { };
+    constructor(private httpService: BaseHttpService) { };
 
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
@@ -41,7 +37,6 @@ export class BranchSetup_Service {
         return this.httpService.http
             .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
             .map((response) => {
-                var result: any = response.json();
                 let branches: Array<BranchSetup_Model> = [];
 
                 // result.resource.forEach((branch) => {
@@ -84,7 +79,6 @@ export class BranchSetup_Service {
         return this.httpService.http
             .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
             .map((response) => {
-                var result: any = response.json();
                 let branches: Array<BranchSetup_Model> = [];
 
                 // result.resource.forEach((branch) => {

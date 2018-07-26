@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController  } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
@@ -132,7 +131,7 @@ export class SubsciptionsetupPage {
           this.EditSubscriptionClicked = false;
         }
     }
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private subscriptionsetupservice: SubsciptionSetup_Service, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private subscriptionsetupservice: SubsciptionSetup_Service, private alertCtrl: AlertController) {
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())

@@ -1,9 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -78,7 +77,7 @@ export class BranchsetupPage {
     }
   }
 
-  public EditClick(BRANCH_GUID: any) {
+  public EditClick() {
     // this.ClearControls();
     // this.EditBranchsClicked = true;
     // var self = this;
@@ -90,7 +89,7 @@ export class BranchsetupPage {
     //   });
   }
 
-  public DeleteClick(BRANCH_GUID: any) {
+  public DeleteClick() {
     // let alert = this.alertCtrl.create({
     //   title: 'Remove Confirmation',
     //   message: 'Do you want to remove ?',
@@ -119,7 +118,7 @@ export class BranchsetupPage {
     // }); alert.present();
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private TenantCompanySetupService: TenantCompanySetup_Service, private tenantcompanysitesetupservice: TenantCompanySiteSetup_Service) {
     if (localStorage.getItem("g_USER_GUID") != null) {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/zcs/_table/vw_tenantcompanysitedetails?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.http
@@ -310,7 +309,7 @@ export class BranchsetupPage {
     //   });
   }
 
-  Update(BRANCH_GUID: any) {
+  Update() {
     // if (this.Branchform.valid) {
     //   if (this.branch_entry.NAME = null) { this.branch_entry.NAME = this.NAME_ngModel_Edit.trim(); }
 

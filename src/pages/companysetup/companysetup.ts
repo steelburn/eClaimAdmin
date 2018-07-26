@@ -1,9 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 //import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
@@ -124,7 +123,7 @@ export class CompanysetupPage {
   }
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private companysetupservice: CompanySetup_Service, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private companysetupservice: CompanySetup_Service, private alertCtrl: AlertController) {
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -265,8 +264,7 @@ export class CompanysetupPage {
             //start
             else {
               if (this.REGISTRATION_NO_ngModel_Edit.trim() != localStorage.getItem('Prev_co_Reg') && this.FAX_ngModel_Edit.trim() == localStorage.getItem('Prev_co_Fax') && this.PHONE_ngModel_Edit.trim() == localStorage.getItem('Prev_co_Phone') && this.EMAIL_ngModel_Edit.trim() == localStorage.getItem('Prev_co_Email')) {
-                let j = 0;
-                for (let i of res1) {
+                for (let {} of res1) {
                   //alert(res1[j++]["ACCOUNT_ID"]);
 
                   // if(res1[j++]["ACCOUNT_ID"].trim()!=this.ACCOUNT_ID_ngModel_Edit.trim()){
