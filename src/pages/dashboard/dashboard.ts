@@ -666,15 +666,17 @@ export class DashboardPage {
   }
   Approver_Click()
   {
-    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+    // this.navCtrl.setRoot('ClaimapprovertasklistPage', { Pending: "Pending" });
+    this.navCtrl.setRoot('ClaimapprovertasklistPage');
   }
   Finance_Executive_Click()
   {
-    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+    // this.navCtrl.setRoot('ClaimtasklistPage', { Pending: "Pending" });
+    this.navCtrl.setRoot('ClaimtasklistPage');
   }
   Finance_Manager_Click()
   {
-    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+    this.navCtrl.setRoot('ClaimtasklistPage');
   }
 
 }
