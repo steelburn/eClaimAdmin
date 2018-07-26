@@ -1,14 +1,13 @@
 ﻿<ion-split-pane>
 
   <!-- logged out menu -->
-  <ion-menu id="loggedOutMenu" [content]="content" *ngIf="blnLogin">
+  <!-- <ion-menu id="loggedOutMenu" [content]="content" *ngIf="blnLogin">
 
     <ion-header>
       <ion-toolbar color="primary200">
         <div style="height:141px;margin-top:-15pt;color:white;" text-center>
           <h3 style="padding-top:15pt;">Welcome to eClaim</h3>
           <div style="width: 30%;float: left;margin-left: 5pt;">
-            <!-- <img class="imgw" src="../assets/img/profile_no_preview.png" alt="avatar"> -->
             <div class="profilepicapp">
               <img src={{IMAGE_URL}} alt="avatar">
             </div>
@@ -17,20 +16,12 @@
           <div style="color: white;">
             <h6 text-center text-wrap>{{ USER_NAME_LABEL }}</h6>
           </div>
-
-
-
         </div>
-
-        <!-- <ion-title>eClaim</ion-title>  -->
-        <!-- <div style="color: aliceblue; font-size: small;">{{ USER_NAME_LABEL }}</div> -->
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="outer-content">
-
       <ion-list>
-
         <ion-list-header>
           Dashboard
         </ion-list-header>
@@ -100,18 +91,16 @@
 
     </ion-content>
 
-  </ion-menu>
+  </ion-menu> -->
 
   <!-- logged in menu -->
-  <ion-menu id="loggedInMenu" [content]="content" *ngIf="blnLogin">
+  <!-- <ion-menu id="loggedInMenu" [content]="content" *ngIf="blnLogin">
 
     <ion-header>
-      <ion-toolbar color="primary200">
-        <!-- <ion-title>eClaim</ion-title>   -->
+      <ion-toolbar color="primary200">        
         <div style="height:141px;margin-top:-15pt;color:white;" text-center>
           <h3 style="padding-top:15pt;">Welcome to eClaim</h3>
-          <div style="width: 30%;float: left;margin-left: 5pt;">
-            <!-- <img class="imgw" src="../assets/img/profile_no_preview.png" alt="avatar"> -->
+          <div style="width: 30%;float: left;margin-left: 5pt;">            
             <div class="profilepicapp">
               <img src={{IMAGE_URL}} alt="avatar">
             </div>
@@ -200,7 +189,7 @@
 
     </ion-content>
 
-  </ion-menu>
+  </ion-menu> -->
 
   <ion-menu id="loggedInMenu_User" [content]="content" *ngIf="blnLogin">
     <ion-header>
@@ -208,7 +197,6 @@
         <div style="height:141px;margin-top:-15pt;color:white;" text-center>
           <h3 style="padding-top:15pt;">Welcome to eClaim</h3>
           <div style="width: 30%;float: left;margin-left: 5pt;">
-            <!-- <img class="imgw" src="../assets/img/profile_no_preview.png" alt="avatar"> -->
             <div class="profilepicapp">
               <img src={{IMAGE_URL}} alt="avatar">
             </div>
@@ -221,9 +209,6 @@
 
 
         </div>
-        <!--   
-          <ion-title>eClaim</ion-title>   -->
-        <!-- <div style="color: aliceblue; font-size: small;">{{ USER_NAME_LABEL }}</div> -->
       </ion-toolbar>
     </ion-header>
 
@@ -234,7 +219,7 @@
         </ion-list-header>
 
         <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)" [color]="isActive(p) ">
-          <ion-icon item-start [name]=" p.icon " ></ion-icon>
+          <ion-icon item-start [name]=" p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -245,7 +230,7 @@
         </ion-list-header>
 
         <button ion-item menuClose *ngFor="let p of appPages_User" (click)="openPage(p)" [color]="isActive(p) ">
-          <ion-icon item-start [name]=" p.icon " ></ion-icon>
+          <ion-icon item-start [name]=" p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -256,7 +241,7 @@
           {{"CLAIMS_LABEL" | translate}}
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of claimPages " (click)="openPage(p) " [color]="isActive(p) ">
-          <ion-icon item-start [name]="p.icon " ></ion-icon>
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -267,7 +252,7 @@
           Reports
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of reportPages " (click)="openPage(p) " [color]="isActive(p) ">
-          <ion-icon item-start [name]="p.icon " ></ion-icon>
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -278,7 +263,7 @@
           Setup
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of setupsPages " (click)="openPage(p) " [color]="isActive(p) ">
-          <ion-icon item-start [name]="p.icon " ></ion-icon>
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>
@@ -290,7 +275,7 @@
           {{"Account_LABEL" | translate}}
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of loggedInPages " (click)="openPage(p) " [color]="isActive(p) ">
-          <ion-icon item-start [name]="p.icon " ></ion-icon>
+          <ion-icon item-start [name]="p.icon "></ion-icon>
           {{p.title}}
         </button>
       </ion-list>

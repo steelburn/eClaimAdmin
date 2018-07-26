@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
-import { ToastController, AlertController } from 'ionic-angular';
+import { Headers, Http, RequestOptions } from '@angular/http';
+import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import * as constants from '../config/constants';
 import { MainClaimRequestModel } from '../models/main-claim-request.model';
@@ -17,7 +17,7 @@ export class ApiManagerProvider {
 
   LoadMainClaim(claimReqGUID: any) {
     let totalAmount: number;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + claimReqGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
         this.claimDetailsData.forEach(element => {
@@ -37,7 +37,7 @@ export class ApiManagerProvider {
     return this.http.get(url, { headers: queryHeaders }).map(res => res.json())
   }
 
-  sendEmail(ClaimType_GUID: string, startDate: string, endDate: string, CreatedDate: string, TravelDate: string, CLAIM_REQUEST_GUID: string) {
+  sendEmail(ClaimType_GUID: string, startDate: any, endDate: any, CreatedDate: string, TravelDate: string, CLAIM_REQUEST_GUID: string) {
     let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_details?filter=USER_GUID=' + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(url)
@@ -53,7 +53,6 @@ export class ApiManagerProvider {
           let ename = email_details[0]["APPLIER_NAME"];
           //let level = '1';
           let assignedTo = email_details[0]["APPROVER1_NAME"];
-          let dept = email_details[0]["APPROVER1_DEPT_NAME"];
           
           //Get the Total Claim Amount and Status----------------------
           let ClaimAmt: string = "0.00"; let Status: string = "";
@@ -144,18 +143,14 @@ export class ApiManagerProvider {
                       //Send Email For Applier---------------------------------------------- 
                       this.http.post(this.emailUrl, body, options)
                         .map(res => res.json())
-                        .subscribe(data => {
-                          // this.result= data["resource"];
-                          // alert(JSON.stringify(data));
-                        });
+                        .subscribe(() => {
+                          });
 
                       //Send Email For Approver 1-------------------------------------------
                       this.http.post(this.emailUrl, body1, options)
                         .map(res => res.json())
-                        .subscribe(data => {
-                          // this.result= data["resource"];
-                          // alert(JSON.stringify(data));
-                        });
+                        .subscribe(() => {
+                          });
                       //---------------------------------------------------------
                     }
                   });
@@ -168,7 +163,6 @@ export class ApiManagerProvider {
   }
 
   EmailNextApprover(CLAIM_REQUEST_GUID: string, ASSIGNED_TO: string, claimStatus: string) {
-
     let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_approver?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(url)
@@ -203,11 +197,9 @@ export class ApiManagerProvider {
                 assignedTo = approver_details[0]["FULLNAME"];
                 Approver_email = approver_details[0]["EMAIL"];
 
-                //assignedTo = email_details[0]["APPROVER_NAME"];
-                //let dept = email_details[0]["APPROVER1_DEPT_NAME"];
-                let dept: string = "";
-
-                let startDate: string = ""; let endDate: string = ""; let CreatedDate: string = ""; let TravelDate: string = "";
+                
+                let startDate: any = ""; let endDate: any = "";
+                let CreatedDate: string = ""; let TravelDate: string = "";
                 startDate = email_details[0]["START_DATE"];
                 endDate = email_details[0]["END_DATE"];
                 CreatedDate = email_details[0]["APPLIED_DATE"];
@@ -287,18 +279,14 @@ export class ApiManagerProvider {
                 //Send Email For Applier---------------------------------------------- 
                 this.http.post(this.emailUrl, body, options)
                   .map(res => res.json())
-                  .subscribe(data => {
-                    // this.result= data["resource"];
-                    // alert(JSON.stringify(data));
-                  });
+                  .subscribe(() => {
+                    });
 
                 //Send Email For Approver 1-------------------------------------------
                 this.http.post(this.emailUrl, body1, options)
                   .map(res => res.json())
-                  .subscribe(data => {
-                    // this.result= data["resource"];
-                    // alert(JSON.stringify(data));
-                  });
+                  .subscribe(() => {
+                    });
                 //---------------------------------------------------------
               }
             });
@@ -380,7 +368,7 @@ export class ApiManagerProvider {
   }
 
 
-  getClaimRequestByClaimReqGUID(claimReqGUID: string, params?: URLSearchParams): Observable<MainClaimRequestModel[]> {
+  getClaimRequestByClaimReqGUID(claimReqGUID: string): Observable<MainClaimRequestModel[]> {
     var queryHeaders = new Headers();
     queryHeaders.append('Content-Type', 'application/json');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
@@ -399,7 +387,7 @@ export class ApiManagerProvider {
   }
 
   getApiData(endPoint: string, args?: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http
         .get(this.getUrl(endPoint, args))
         .map(res => res.json())
