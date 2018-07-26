@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
 import { MileageSetup_Model } from '../models/mileagesetup_model';
@@ -8,20 +8,14 @@ import { BaseHttpService } from './base-http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
-import { NavController } from 'ionic-angular';
 
-class ServerResponse {
-    constructor(public resource: any) {
-
-    }
-};
 
 @Injectable()
 export class MileageSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_mileage';
     baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-    constructor(private httpService: BaseHttpService, private nav: NavController) { };
+    constructor(private httpService: BaseHttpService) { };
 
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
@@ -38,16 +32,13 @@ export class MileageSetup_Service {
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
         return this.httpService.http
             .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-            .map((response) => {
-                var result: any = response.json();
-                let branches: Array<MileageSetup_Model> = [];
-
-                // result.resource.forEach((branch) => {
-                // 	branches.push(BranchSetup_Model.fromJson(branche));
-                // });  
-                return branches;
-
-            }).catch(this.handleError);
+            .map(() => {
+                    let branches: Array<MileageSetup_Model> = [];
+                    // result.resource.forEach((branch) => {
+                    // 	branches.push(BranchSetup_Model.fromJson(branche));
+                    // });  
+                    return branches;
+                }).catch(this.handleError);
     };
 
     save(mileage_main: MileageSetup_Model): Observable<any> {
@@ -81,15 +72,13 @@ export class MileageSetup_Service {
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
         return this.httpService.http
             .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-            .map((response) => {
-                var result: any = response.json();
-                let branches: Array<MileageSetup_Model> = [];
-
-                // result.resource.forEach((branch) => {
-                //  	branches.push(BranchSetup_Model.fromJson(branch));
-                //  });
-                return branches;
-            }).catch(this.handleError);
+            .map(() => {
+                    let branches: Array<MileageSetup_Model> = [];
+                    // result.resource.forEach((branch) => {
+                    //  	branches.push(BranchSetup_Model.fromJson(branch));
+                    //  });
+                    return branches;
+                }).catch(this.handleError);
     };
 
 

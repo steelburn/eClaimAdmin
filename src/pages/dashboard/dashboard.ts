@@ -1,7 +1,5 @@
-import { IonicPage, NavController, NavParams, LoadingController, Loading, Config } from 'ionic-angular';
-import { Component, NgModule, ElementRef, Inject, ViewChild, OnChanges } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
+import { IonicPage, NavController, NavParams, Loading, Config } from 'ionic-angular';
+import { Component } from '@angular/core';
 import { Chart } from 'chart.js';
 //import 'chartjs-plugin-deferred';
 import 'chart.piecelabel.js';
@@ -63,8 +61,7 @@ export class DashboardPage {
   FinanceMgrLevel_PendAmt: any; FinanceMgrLevel_PendAmt_Year: any;
   FinanceMgrLevel_PendCount: any; FinanceMgrLevel_PendCount_Year: any;
 
-  constructor(public numberPipe: DecimalPipe, public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config,
-    public inAppBrowser: InAppBrowser, private loadingCtrl: LoadingController) {
+  constructor(public numberPipe: DecimalPipe, public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config) {
     this.DashboardForm = fb.group({
       'Month': [null, Validators.compose([Validators.required])],
       'Year': [null, Validators.compose([Validators.required])]

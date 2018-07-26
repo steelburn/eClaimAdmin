@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { NavParams, Tabs } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 
-import { SetupPage } from '../setup/setup';
-import { AdminsetupPage } from '../adminsetup/adminsetup';
-import { ApproverTaskListPage } from '../approver-task-list/approver-task-list';
 import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
-import { ClaimtasklistPage } from '../claimtasklist/claimtasklist';
 import { DashboardPage } from '../dashboard/dashboard';
 @Component({
   templateUrl: 'tabs.html'
