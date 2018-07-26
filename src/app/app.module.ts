@@ -1,19 +1,19 @@
 ﻿import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, Http } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
+// import { InAppBrowser } from '@ionic-native/in-app-browser';
+// import { SplashScreen } from '@ionic-native/splash-screen';
+// import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ConferenceApp } from './app.component';
 
-import { PopoverPage } from '../pages/about-popover/about-popover';
+// import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { BanksetupPage } from '../pages/banksetup/banksetup';
@@ -57,15 +57,15 @@ import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
 
 import { UploadPage } from '../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { File } from '@ionic-native/file';
-import { FilePath } from '@ionic-native/file-path';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-import { FileUploadOptions } from '@ionic-native/file-transfer';
+// import { Camera, CameraOptions } from '@ionic-native/camera';
+// import { File } from '@ionic-native/file';
+// import { FilePath } from '@ionic-native/file-path';
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+// import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { Chart } from 'chart.js';
-import { ChartsModule, Color } from 'ng2-charts/ng2-charts';
+// import { Chart } from 'chart.js';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 // import {AddTollPage} from '../pages/add-toll/add-toll';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -110,7 +110,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ConferenceApp,
     AccountPage,
     LoginPage,
-    PopoverPage,
+//    PopoverPage,
     MedicalclaimPage,
     PrintclaimPage,
     GiftclaimPage,
@@ -166,9 +166,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     UserclaimslistPage,
     ClaimReportPage,
     MonthlyClaimReportPage,
-
     CustomerSetupPage,
-
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage
   ],
@@ -223,7 +221,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ConferenceApp,
     AccountPage,
     LoginPage,
-    PopoverPage,
+//    PopoverPage,
     SetupguidePage,
     SignupPage,
     StatesetupPage,
@@ -296,15 +294,18 @@ import {NgxPaginationModule} from 'ngx-pagination';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData, HttpClientModule, ApiManagerProvider,
     UserData, DatePipe, DecimalPipe,
-    InAppBrowser,
-    SplashScreen, StatusBar, Services,
+  //  InAppBrowser,
+  //  SplashScreen, StatusBar, 
+    Services,
 
-    Camera, ProfileManagerProvider, 
-    File,
-    FilePath,
-    FileTransfer,
-    //FileUploadOptions,
-    FileTransferObject, ApiManagerProvider, ProfileManagerProvider
+  //  Camera, 
+    ProfileManagerProvider, 
+    // File,
+    // FilePath,
+    // FileTransfer,
+    // //FileUploadOptions,
+    //FileTransferObject, 
+    ApiManagerProvider, ProfileManagerProvider
   ]
 })
 export class AppModule { }

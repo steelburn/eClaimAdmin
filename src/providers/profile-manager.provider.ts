@@ -6,7 +6,7 @@ import { MainClaimRequestModel } from './../models/main-claim-request.model';
 import { MainClaimReferanceModel } from './../models/main-claim-ref.model';
 import { UUID } from 'angular2-uuid';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { NavController, App } from 'ionic-angular';
+import { App } from 'ionic-angular';
 import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist';
 import moment from 'moment';
 
@@ -35,23 +35,22 @@ export class ProfileManagerProvider {
 
   UpdateProfileInfo(mainClaimReq: MainClaimRequestModel) {
     //debugger;
-    this.api.updateClaimRequest(mainClaimReq).subscribe(res => {
+    this.api.updateClaimRequest(mainClaimReq).subscribe(() => {
       this.checkCount++;
       //  if(this.checkMultipleLength===1)
       //  {
       if (mainClaimReq.STATUS === 'Rejected')
-        alert('Claim has been ' + mainClaimReq.STATUS + '.')
+        alert('Claim has been ' + mainClaimReq.STATUS + '.');
       else
-        alert('Claim has been Approved.')
+        alert('Claim has been Approved.');
       // alert('Claim has been '+mainClaimReq.STATUS+'.');
       this.navCtrl.setRoot(ClaimapprovertasklistPage);
-      // }
     });
   }
 
   UpdateProfileInfoForMultiple(mainClaimReq: MainClaimRequestModel) {
     //debugger;
-    this.api.updateClaimRequest(mainClaimReq).subscribe(res => { });
+    this.api.updateClaimRequest(mainClaimReq).subscribe(() => { });
   }
 
 
@@ -81,7 +80,7 @@ export class ProfileManagerProvider {
   }
 
   GetDirectManagerByManagerGUID() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.api.getApiModel('user_info', 'filter=USER_GUID=' + this.assignedTo).subscribe(res => {
         this.managerInfo = res["resource"]
         this.managerInfo.forEach(userElm => {
@@ -98,7 +97,7 @@ export class ProfileManagerProvider {
   GetDirectManager() {
     this.userGUID = localStorage.getItem('g_USER_GUID');
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.api.getApiModel('view_manager_details', 'filter=USER_GUID=' + this.userGUID).subscribe(res => {
         this.managerInfo = res["resource"]
         this.managerInfo.forEach(userElm => {
@@ -136,7 +135,6 @@ export class ProfileManagerProvider {
     SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any,level:any) {
   
       this.api.postData('claim_work_flow_history', claimRef.toJson(true)).subscribe((response) => {
-        var postClaimMain = response.json();
         //this.api.sendEmail();
       })
       this.processProfileJSON(profile_Json,level)
