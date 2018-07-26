@@ -19,9 +19,9 @@
 
 
 <ion-content padding style="background: #eeeeee;">
-  <ion-card class="hid" style="background: white; border-radius: 5px;" >
+  <!-- <ion-card class="hid" style="background: white; border-radius: 5px;" > -->
     <form [formGroup]="DashboardForm">
-      <ion-item text-center style="background:gray;color: white;" >
+      <!-- <ion-item text-center style="background:gray;color: white;" >
         Filter 
       </ion-item>
       <ion-item style="width: 50%;display: inline-block;"> 
@@ -41,7 +41,6 @@
         
         </ion-label>
         <ion-select formControlName="Month" [(ngModel)]="Month_Change_ngModel" (ionChange)="Month_Changed(Month_Change_ngModel)">
-            <!-- <ion-option value="0"  selected="true">Select</ion-option> -->
             <ion-option value="1">January</ion-option>
             <ion-option value="2">February</ion-option>
             <ion-option value="3">March</ion-option>
@@ -57,18 +56,26 @@
           </ion-select>  
     
 
-      </ion-item>
-
+      </ion-item> -->
+           
+      <div>
+        <ion-item text-center>
+          <ion-label inset color="primary" text-left>Filter : </ion-label>
+          <ion-select formControlName="Year" [(ngModel)]="Year_Change_ngModel" (ionChange)="Year_Changed(Year_Change_ngModel)">
+            <ion-option *ngFor="let year of yeardata">{{year.MONTH}} {{year.YEAR}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </div>
     </form>
-  </ion-card>
+  <!-- </ion-card> -->
 
-  <ion-card class="round3" >
+  <ion-card *ngIf="chart1" class="round3" >
     <ion-card-header style="background:gray;color: white;">My Claim Count</ion-card-header>
     <canvas #mycanvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" [options]="doughnutChartOptions"
       [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
   </ion-card>
 
-  <ion-card class="round3">
+  <ion-card *ngIf="chart2" class="round3">
       <ion-card-header style="background:gray;color: white;">My Claim Amount(RM)</ion-card-header>
     <canvas #claimAmount baseChart [data]="claimAmountData" [labels]="claimAmountLabels" [chartType]="claimAmountChartType" [options]="claimAmountOptions"
       [colors]="claimAmountChartColors" (chartHover)="claimAmountHovered($event)" (chartClick)="claimAmountClicked($event)"></canvas>
