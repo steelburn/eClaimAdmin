@@ -80,7 +80,7 @@
                       <ion-checkbox item-end [checked]="selectAll" [disabled]="claimrequestdetail.STATUS=='Paid'" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID,claimrequestdetail.PROFILE_LEVEL,claimrequestdetail.STATUS)"> </ion-checkbox>
                     </ion-item>
                   </td>
-                  <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+                  <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
                   <td class="lgl1 getHeader" reshead="Name" text-wrap >{{claimrequestdetail.FULLNAME}}</td>
                   <td class="lgl1 getHeader" reshead="Claim Type">{{claimrequestdetail.CLAIMTYPE}}</td>
                   <td class="lgl1 getHeader" reshead="Date">{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
