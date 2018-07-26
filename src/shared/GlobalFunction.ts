@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 @Component({
 

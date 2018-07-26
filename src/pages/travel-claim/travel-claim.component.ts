@@ -1,34 +1,23 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController, ModalController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../../config/constants';
-//import * as constants_home from '../../app/config/constants_home';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
-import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ImageUpload_model } from '../../models/image-upload.model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
 //import { TravelClaim_Service } from '../../services/travelclaim_service';
 import { Services } from '../Services';
 import { BaseHttpService } from '../../services/base-http';
 import { UUID } from 'angular2-uuid';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { File } from '@ionic-native/file';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { FilePath } from '@ionic-native/file-path';
-import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
-import { Router, Request, Response, NextFunction } from 'express';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { LoadingController, ActionSheetController, Loading, ToastController } from 'ionic-angular';
 import { AddTollPage } from '../../pages/add-toll/add-toll.component';
-import { HttpClient, HttpParams, HttpRequest, HttpEvent } from '@angular/common/http';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { DecimalPipe } from '@angular/common';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
-import { DashboardPage } from '../dashboard/dashboard';
 import moment from 'moment';
 
 @IonicPage()
@@ -107,7 +96,7 @@ export class TravelclaimPage {
   claimRequestGUID: any;
   claimRequestData: any;
 
-   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private api1: Services, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID');
@@ -305,7 +294,7 @@ export class TravelclaimPage {
 
   LoadClaimDetails() {
     this.tollParkAmount = 0;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
         this.claimDetailsData.forEach(element => {           
@@ -327,14 +316,6 @@ export class TravelclaimPage {
       alert('You have added toll/parking/accommodation details to previous path. Please review the details.')
     }
     let url = 'http://api.zen.com.my/api/v2/google/distancematrix/json?destinations=place_id:' + this.DestinationPlaceID + '&origins=place_id:' + this.OriginPlaceID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-    // let destination;
-    // let DistKm: string = this.api.GetGoogleDistance(url);
-    // if (DistKm != undefined) {
-    //   this.Travel_Distance_ngModel = destination = DistKm.substring(0, DistKm.length - 2)
-    //   this.Travel_Mode_ngModel = this.vehicleCategory;
-    //   this.travelAmount = destination * this.VehicleRate, -2;
-    // }
-    var origin = this.Travel_From_ngModel;
     var destination: any;
     this.http.get(url).map(res => res.json()).subscribe(data => {
       let temp = data["rows"][0]["elements"][0];
@@ -562,8 +543,6 @@ export class TravelclaimPage {
     this.VehicleId = vehicle.MILEAGE_GUID;
     this.VehicleRate = vehicle.RATE_PER_UNIT;
     this.vehicleCategory = vehicle.CATEGORY;
-    let origin = this.Travel_From_ngModel;
-    let destination = this.Travel_Destination_ngModel;
     this.PublicTransValue = true;
     if (vehicle.AUTO_CALCULATE === 0) {
       this.isPublicTransport = true;
@@ -657,13 +636,12 @@ export class TravelclaimPage {
   disableButton: any;
   saveIm() {
     let uploadImage = this.UploadImage();
-    uploadImage.then((resJson) => {
+    uploadImage.then(() => {
       //this.imageGUID(this.uploadFileName, formvalues)
       // console.table(resJson)
       // let imageResult = this.SaveImageinDB();
       // imageResult.then((objImage: ImageUpload_model) => { 
-        this.ImageUploadValidation=true;
-
+      this.ImageUploadValidation = true;
       //  this.imageGUID = objImage.Image_Guid
       this.imageGUID = this.uniqueName;
       // , formvalues
@@ -671,7 +649,6 @@ export class TravelclaimPage {
       //this.PublicTransValue = false;
       // this.PublicTransValue = true;
       this.chooseFile = false;
-      // })
     })
     // setTimeout(() => {
     //   this.loading = false;
@@ -684,8 +661,8 @@ export class TravelclaimPage {
     objImage.IMAGE_URL = this.CloudFilePath + this.uploadFileName;
     objImage.CREATION_TS = new Date().toISOString();
     objImage.Update_Ts = new Date().toISOString();
-    return new Promise((resolve, reject) => {
-      this.api.postData('main_images', objImage.toJson(true)).subscribe((response) => {
+    return new Promise((resolve) => {
+      this.api.postData('main_images', objImage.toJson(true)).subscribe(() => {
         // let res = response.json();
         // let imageGUID = res["resource"][0].Image_Guid;
         resolve(objImage.toJson());
@@ -707,7 +684,7 @@ export class TravelclaimPage {
       content: 'Please wait...',
     });
     this.loading.present();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Travelform.get('avatar').value, options)
         .map((response) => 
         {
@@ -746,7 +723,6 @@ export class TravelclaimPage {
   }
   
   submitAction(formValues: any) {
-    let status: string;
     if (this.validateDate()) {
       if (!this.isFormSubmitted) {
         this.isFormSubmitted = true;
@@ -800,13 +776,11 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
             }
 
-            this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
-
+            this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(() => {
               //Send Email------------------------------------------------
               this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
               //----------------------------------------------------------
-
-              alert('Claim details updated successfully.')
+              alert('Claim details updated successfully.');
               this.navCtrl.push(UserclaimslistPage);
             })
           })
@@ -826,10 +800,10 @@ export class TravelclaimPage {
 
   }
   DeleteDetail(claimDetailId: string) {
-    this.api.deleteApiModel('claim_request_detail', claimDetailId).subscribe(res => {
+    this.api.deleteApiModel('claim_request_detail', claimDetailId).subscribe(() => {
       this.tollParkAmount = 0;
       this.LoadClaimDetails();
-      alert('Claim detail has been deleted successfully.')
+      alert('Claim detail has been deleted successfully.');
     });
   }
 

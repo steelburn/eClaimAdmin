@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
 import { TenantCompanySiteSetup_Model } from '../models/tenantcompanysitesetup_model';
@@ -8,13 +8,8 @@ import { BaseHttpService } from './base-http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
-import { NavController } from 'ionic-angular';
 
-class ServerResponse {
-    constructor(public resource: any) {
-
-    }
-};
+;
 
 @Injectable()
 export class TenantCompanySiteSetup_Service {
@@ -24,7 +19,7 @@ export class TenantCompanySiteSetup_Service {
     baseResourceUrl_view: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_tenant_edit';
 
 
-    constructor(private httpService: BaseHttpService, private nav: NavController) { };
+    constructor(private httpService: BaseHttpService) { };
 
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
@@ -67,15 +62,13 @@ export class TenantCompanySiteSetup_Service {
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
         return this.httpService.http
             .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-            .map((response) => {
-                var result: any = response.json();
-                let branches: Array<TenantCompanySiteSetup_Model> = [];
-
-                // result.resource.forEach((branch) => {
-                //  	branches.push(BranchSetup_Model.fromJson(branch));
-                //  });
-                return branches;
-            }).catch(this.handleError);
+            .map(() => {
+                    let branches: Array<TenantCompanySiteSetup_Model> = [];
+                    // result.resource.forEach((branch) => {
+                    //  	branches.push(BranchSetup_Model.fromJson(branch));
+                    //  });
+                    return branches;
+                }).catch(this.handleError);
     };
 
 
@@ -101,7 +94,6 @@ export class TenantCompanySiteSetup_Service {
         return this.httpService.http
             .delete(url_multiple, { headers: queryHeaders })
             .map((response) => {
-                var result: any = response.json();
 				//return result.PAGE_GUID;
 				return response;
             });

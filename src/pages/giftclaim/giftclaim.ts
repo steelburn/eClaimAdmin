@@ -1,26 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
-import { GiftClaim_Model } from '../../models/giftclaim_model';
 //import { MasterClaim_Model } from '../../models/masterclaim_model';
 import { GiftClaim_Service } from '../../services/giftclaim_service';
 import { BaseHttpService } from '../../services/base-http';
-import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-//import {Camera} from 'ionic-native';
-import { File } from '@ionic-native/file';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { FilePath } from '@ionic-native/file-path';
-import { LoadingController, ActionSheetController, Platform, Loading, ToastController } from 'ionic-angular';
-import { Services } from '../Services';
-import { MainClaimReferanceModel } from '../../models/main-claim-ref.model';
-import { MainClaimRequestModel } from '../../models/main-claim-request.model';
-import { ImageUpload_model } from '../../models/image-upload.model';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { LoadingController, ActionSheetController, Loading, ToastController } from 'ionic-angular';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
@@ -149,7 +139,7 @@ export class GiftclaimPage {
     }
   }
 
-  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, platform: Platform, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, private api: Services, fb: FormBuilder, public http: Http, private httpService: BaseHttpService, private giftservice: GiftClaim_Service, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private file: File, private filePath: FilePath, private transfer: FileTransfer, public toastCtrl: ToastController) {
+  constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -236,10 +226,11 @@ export class GiftclaimPage {
     this.saveIm();
   }
 
+
   imageGUID: any;
   saveIm() {
     let uploadImage = this.UploadImage();
-    uploadImage.then((resJson) => {
+    uploadImage.then(() => {
       this.imageGUID = this.uniqueName;
       this.chooseFile = false;
       this.ImageUploadValidation = true;
@@ -261,7 +252,7 @@ export class GiftclaimPage {
     this.loading.present();
 
     const options = new RequestOptions({ headers: queryHeaders });
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Giftform.get('avatar').value, options)
         .map((response) => 
         {
@@ -449,16 +440,13 @@ export class GiftclaimPage {
           }
           //this.claimRequestData[0].STATUS = 'Pending';
           // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
-          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
-
+          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(() => {
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";
-
             this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
             //-----------------------------------------------------------
-
-            alert('Claim details updated successfully.')
+            alert('Claim details updated successfully.');
             this.navCtrl.push(UserclaimslistPage);
           });
         })

@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Platform } from 'ionic-angular';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import { Services } from '../Services';
-import * as constants from '../../config/constants';
-import { ClaimWorkFlowHistoryModel } from '../../models/claim-work-flow-history.model';
 import {TravelclaimPage} from '../../pages/travel-claim/travel-claim.component';
-import { UUID } from 'angular2-uuid';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 
@@ -31,7 +27,7 @@ export class TravelClaimViewPage {
   approverDesignation: any;
   // totalAmount: number = 0;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, platform: Platform, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
@@ -68,7 +64,7 @@ export class TravelClaimViewPage {
     }  
 
   LoadClaimDetails() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
         this.claimDetailsData.forEach(element => {              
@@ -110,5 +106,11 @@ export class TravelClaimViewPage {
       this.displayImage = true; 
       this.isImage = this.api.isFileImage(val); 
     }
+  }
+
+  
+  isImageUrl: boolean = true; 
+  CheckAttachment() {
+      this.isImageUrl = true;
   }
 }
