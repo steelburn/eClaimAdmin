@@ -64,7 +64,7 @@
               <ion-item class="text">      
                 <ion-label>Attachment :</ion-label>
                 <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>               
-                <button ion-button item-end color="primary500"   (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button> 
+                <!-- <button ion-button item-end color="primary500"   (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button>  -->
             </ion-item>
           
             <div *ngIf= "isImage">

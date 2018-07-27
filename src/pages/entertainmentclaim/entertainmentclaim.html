@@ -55,14 +55,10 @@
       <ion-input type="text" formControlName="description" [(ngModel)]="Entertainment_Description_ngModel"></ion-input>
     </ion-item>
 
-
-
     <ion-item class="text">
       <ion-label>Attachment :</ion-label>
       <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
-      <button ion-button color="primary500" item-end (click)="saveIm()" [disabled]="!chooseFile">Upload image</button>
-      <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
-      <!-- <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
+      <!-- <button ion-button color="primary500" item-end (click)="saveIm()" [disabled]="!chooseFile">Upload image</button> -->
       <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
     </ion-item>
 

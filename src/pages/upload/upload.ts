@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { File } from '@ionic-native/file';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { FilePath } from '@ionic-native/file-path';
-import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
-import {Observable} from "rxjs";
-import { OnInit, ViewChild } from '@angular/core';
+import { ViewChild } from '@angular/core';
 
 /**
  * Generated class for the UploadPage page.
@@ -24,7 +18,7 @@ export class UploadPage {
 
   @ViewChild('fileInput') fileInput: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }  
 
   ngOnInit() {

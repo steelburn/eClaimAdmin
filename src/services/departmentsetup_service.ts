@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import * as constants from '../app/config/constants';
 import { DepartmentSetup_Model } from '../models/departmentsetup_model';
@@ -8,20 +8,13 @@ import { BaseHttpService } from './base-http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
-import { NavController } from 'ionic-angular';
-
-class ServerResponse {
-    constructor(public resource: any) {
-
-    }
-};
 
 @Injectable()
 export class DepartmentSetup_Service {
     baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_department';
     baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
-    constructor(private httpService: BaseHttpService, private nav: NavController) { };
+    constructor(private httpService: BaseHttpService) { };
 
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
@@ -38,16 +31,13 @@ export class DepartmentSetup_Service {
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
         return this.httpService.http
             .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-            .map((response) => {
-                var result: any = response.json();
-                let branches: Array<DepartmentSetup_Model> = [];
-
-                // result.resource.forEach((branch) => {
-                // 	branches.push(BranchSetup_Model.fromJson(branche));
-                // });  
-                return branches;
-
-            }).catch(this.handleError);
+            .map(() => {
+                    let branches: Array<DepartmentSetup_Model> = [];
+                    // result.resource.forEach((branch) => {
+                    // 	branches.push(BranchSetup_Model.fromJson(branche));
+                    // });  
+                    return branches;
+                }).catch(this.handleError);
     };
 
 
@@ -82,15 +72,13 @@ export class DepartmentSetup_Service {
         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
         return this.httpService.http
             .get(this.baseResourceUrl, { search: params, headers: queryHeaders })
-            .map((response) => {
-                var result: any = response.json();
-                let branches: Array<DepartmentSetup_Model> = [];
-
-                // result.resource.forEach((branch) => {
-                //  	branches.push(BranchSetup_Model.fromJson(branch));
-                //  });
-                return branches;
-            }).catch(this.handleError);
+            .map(() => {
+                    let branches: Array<DepartmentSetup_Model> = [];
+                    // result.resource.forEach((branch) => {
+                    //  	branches.push(BranchSetup_Model.fromJson(branch));
+                    //  });
+                    return branches;
+                }).catch(this.handleError);
     };
 
 
@@ -116,7 +104,6 @@ export class DepartmentSetup_Service {
         return this.httpService.http
             .delete(url_multiple, { headers: queryHeaders })
             .map((response) => {
-                var result: any = response.json();
 				//return result.PAGE_GUID;
 				return response;
             });
