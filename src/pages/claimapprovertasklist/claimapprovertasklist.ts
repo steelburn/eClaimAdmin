@@ -44,7 +44,7 @@ export class ClaimapprovertasklistPage {
   claimreqData: any[];
   buttonText:string;
   public page:number = 1;
-
+  FinanceLogin: boolean = false;
   deptList: any[];
   employeeList: any[];
   claimTypeList: any[];
@@ -58,6 +58,7 @@ export class ClaimapprovertasklistPage {
     // alert(this.claimrefguid);
 
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
+      this.FinanceLogin = true;
       if (this.loginUserRole === "Finance Admin") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
      this.buttonText="Pay";
