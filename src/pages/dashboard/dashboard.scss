@@ -1,3 +1,34 @@
 page-dashboard {
+//dashboard start
+.dashhead{
+    position: absolute;
+    top: 80px;
+    left: 15px;
+}
 
+.icondash{
+
+    padding: 10px 15px;
+    position: relative;
+}
+
+.icondash ion-icon{font-size: 70px !important;}
+
+   
+
+.wordash{
+
+    position: relative;
+    margin-bottom: 0 !important;
+}
+
+
+.wordash1{
+    padding: 0px 12px 13px !important ;
+    position: relative;
+    margin-bottom: 0 !important;
+}
+
+
+//dashboard end
 }
