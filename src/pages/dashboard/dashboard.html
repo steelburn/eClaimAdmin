@@ -20,12 +20,12 @@
 
 <ion-content padding style="background: #eeeeee;">
 
-    <div class="hid" style="background: white; border-radius: 5px;">
+    <div>
     <form [formGroup]="DashboardForm">
  
            
       <div>
-        <ion-item text-center>
+        <ion-item text-center  class="hid" style="background: white; border-radius: 10px;">
           <ion-label inset color="primary" text-left>Filter : </ion-label>
           <ion-select formControlName="Year" [(ngModel)]="Year_Change_ngModel" (ionChange)="Year_Changed(Year_Change_ngModel)">
             <ion-option *ngFor="let year of yeardata">{{year.MONTH}} {{year.YEAR}}</ion-option>
@@ -48,6 +48,53 @@
   </ion-card>
 
   <div class="clear"></div>
+ <!-- *ngIf="IsApprover" -->
+ <ion-card  class="round30" *ngIf="IsApprover" (click)="Approver_Click()" color="war">
+    <div class="icondash">
+        <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
+        <h2 class="dashhead">Pending HOD Approval</h2>
+        <div text-right class="wordash">
+            <h1>RM {{ApproverLevel_PendAmount}}</h1>
+            <h3># this month: {{ApproverLevel_PendCount}}</h3>
+      
+          <p>Amount YTD: RM {{ApproverLevel_PendAmount_Year}}</p>
+          <p># YTD: {{ApproverLevel_PendCount_Year}}</p>
+        </div>
+      </div>
+
+
+</ion-card>
+
+<ion-card  class="round4" *ngIf="IsFinanceExecutive" (click)="Finance_Executive_Click()" color="war">
+    <div class="icondash">
+        <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
+        <h2 class="dashhead">Pending Finance Approval</h2>
+        <div text-right class="wordash">
+            <h1>RM {{FinanceExecLevel_PendAmt}}</h1>
+            <h3># this month: {{FinanceExecLevel_PendCount}}</h3>
+      
+          <p>Amount YTD: RM {{FinanceExecLevel_PendAmt_Year}}</p>
+          <p># YTD: {{FinanceExecLevel_PendCount_Year}}</p>
+        </div>
+      </div>
+
+
+</ion-card>
+
+<ion-card  class="round30" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war">
+    <div class="icondash">
+        <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
+        <h2 class="dashhead">Pending Finance Payment</h2>
+        <div text-right class="wordash">
+            <h1>RM {{FinanceMgrLevel_PendAmt}}</h1>
+            <h3># this month: {{FinanceMgrLevel_PendCount}}</h3>
+      
+          <p>Amount YTD: RM {{FinanceMgrLevel_PendAmt_Year}}</p>
+          <p># YTD: {{FinanceMgrLevel_PendCount_Year}}</p>
+        </div>
+      </div>
+
+</ion-card>
 
   <ion-card (click)="Rejected_Click()" class="round2" color="danger">
       <div class="icondash">
@@ -108,52 +155,5 @@
         </div>
       </div>
   </ion-card>
-  <!-- *ngIf="IsApprover" -->
-  <ion-card  class="round2" *ngIf="IsApprover" (click)="Approver_Click()">
-      <div class="icondash">
-          <ion-icon name="close-circle" color="light" style="float: left; "></ion-icon>
-          <h2 class="dashhead">Pending HOD Approval</h2>
-          <div text-right class="wordash">
-              <h1>RM {{ApproverLevel_PendAmount}}</h1>
-              <h3># this month: {{ApproverLevel_PendCount}}</h3>
-        
-            <p>Amount YTD: RM {{ApproverLevel_PendAmount_Year}}</p>
-            <p># YTD: {{ApproverLevel_PendCount_Year}}</p>
-          </div>
-        </div>
-
  
-  </ion-card>
-
-  <ion-card  class="round2" *ngIf="IsFinanceExecutive" (click)="Finance_Executive_Click()" color="war">
-      <div class="icondash">
-          <ion-icon name="close-circle" color="light" style="float: left; "></ion-icon>
-          <h2 class="dashhead">Pending Finance Approval</h2>
-          <div text-right class="wordash">
-              <h1>RM {{FinanceExecLevel_PendAmt}}</h1>
-              <h3># this month: {{FinanceExecLevel_PendCount}}</h3>
-        
-            <p>Amount YTD: RM {{FinanceExecLevel_PendAmt_Year}}</p>
-            <p># YTD: {{FinanceExecLevel_PendCount_Year}}</p>
-          </div>
-        </div>
-
-  
-  </ion-card>
-
-  <ion-card  class="round2" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war">
-      <div class="icondash">
-          <ion-icon name="close-circle" color="light" style="float: left; "></ion-icon>
-          <h2 class="dashhead">Pending Finance Approval</h2>
-          <div text-right class="wordash">
-              <h1>RM {{FinanceMgrLevel_PendAmt}}</h1>
-              <h3># this month: {{FinanceMgrLevel_PendCount}}</h3>
-        
-            <p>Amount YTD: RM {{FinanceMgrLevel_PendAmt_Year}}</p>
-            <p># YTD: {{FinanceMgrLevel_PendCount_Year}}</p>
-          </div>
-        </div>
-
-  </ion-card>
-
 </ion-content>
