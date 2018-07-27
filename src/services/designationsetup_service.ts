@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers,RequestOptions, URLSearchParams} from '@angular/http';
+import {Headers,RequestOptions, URLSearchParams} from '@angular/http';
 
 import * as constants from '../app/config/constants';
 import {DesignationSetup_Model} from '../models/designationsetup_model';
@@ -8,15 +8,6 @@ import {BaseHttpService} from './base-http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable';
-//import 'rxjs/add/observable/throw';
-
-import { NavController } from 'ionic-angular';
-
-class ServerResponse {
-	constructor(public resource: any) {
-        
-	}
-};
 
 @Injectable()
 export class DesignationSetup_Service 
@@ -24,7 +15,7 @@ export class DesignationSetup_Service
 	baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_designation';
 	baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 	
-	constructor(private httpService: BaseHttpService, private nav: NavController) {};
+	constructor(private httpService: BaseHttpService) {};
 	
     private handleError (error: any) {
 	   let errMsg = (error.message) ? error.message :
@@ -43,16 +34,13 @@ export class DesignationSetup_Service
     	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);    	
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params, headers: queryHeaders})
-			.map((response) => {
-				var result: any = response.json();
-				let banks: Array<DesignationSetup_Model> = [];
-				
-				// result.resource.forEach((bank) => {
-				// 	banks.push(BankSetup_Model.fromJson(bank));
-				// });  
-				return banks;
-				
-			}).catch(this.handleError);
+			.map(() => {
+					let banks: Array<DesignationSetup_Model> = [];
+					// result.resource.forEach((bank) => {
+					// 	banks.push(BankSetup_Model.fromJson(bank));
+					// });  
+					return banks;
+				}).catch(this.handleError);
 	};
 	
 	
@@ -90,16 +78,13 @@ export class DesignationSetup_Service
     	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
 		return this.httpService.http
 			.get(this.baseResourceUrl, { search: params ,headers: queryHeaders})
-			.map((response) => 
-			{
-				var result: any = response.json();
-				let banks: Array<DesignationSetup_Model> = [];
-				
-				// result.resource.forEach((bank) => {
-				//  	banks.push(BankSetup_Model.fromJson(bank));
-				//  });
-				return banks;
-			}).catch(this.handleError);
+			.map(() => {
+					let banks: Array<DesignationSetup_Model> = [];
+					// result.resource.forEach((bank) => {
+					//  	banks.push(BankSetup_Model.fromJson(bank));
+					//  });
+					return banks;
+				}).catch(this.handleError);
 	};
 	
 	remove (id: string) {
@@ -124,7 +109,6 @@ export class DesignationSetup_Service
         return this.httpService.http
             .delete(url_multiple, { headers: queryHeaders })
             .map((response) => {
-                var result: any = response.json();
 				//return result.PAGE_GUID;
 				return response;
             });

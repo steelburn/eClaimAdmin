@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { Storage } from '@ionic/storage'; 
+// import { SplashScreen } from '@ionic-native/splash-screen';
+// import { StatusBar } from '@ionic-native/status-bar';
+import { Storage } from '@ionic/storage';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
@@ -13,7 +13,6 @@ import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
-import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
 
@@ -36,6 +35,8 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
 
+// import { MenuService } from '../providers/menu.service'
+
 
 
 export interface PageInterface {
@@ -56,7 +57,7 @@ export class ConferenceApp {
   blnLogin: boolean = false;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
   public Menu_Array: any[] = [];
-  
+
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
@@ -122,11 +123,13 @@ export class ConferenceApp {
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
-    public confData: ConferenceData,
+//    public confData: ConferenceData,
     public storage: Storage,
-    statusbar: StatusBar,
-    splashScreen: SplashScreen, public translate: TranslateService, public http: Http
+    // statusbar: StatusBar,
+    // splashScreen: SplashScreen, 
+    public translate: TranslateService, public http: Http
   ) {
+    // debugger;
     this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
@@ -135,11 +138,11 @@ export class ConferenceApp {
     });
 
     translate.setDefaultLang('en');
-    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
+//    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
 
     // Check if the user has already seen the tutorial
     // load the conference data
-    confData.load();
+//    confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
@@ -184,9 +187,14 @@ export class ConferenceApp {
     }
   }
 
+  // MenuService: MenuService = new MenuService();
+
   listenToLoginEvents() {
-    //debugger;    
-    this.events.subscribe('user:login', () => {
+    // this.MenuService.EventListener();
+    // debugger;    
+
+    this.events.subscribe('user:login', () => {      
+
       this.enableMenu(true);
     });
 
@@ -230,20 +238,20 @@ export class ConferenceApp {
 
     // this.menu.enable(loggedIn, 'loggedInMenu');
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
-    
+
     // debugger;
     if (localStorage.length > 0) {
-      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME"); 
-      this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL"); 
+      this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
+      this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL");
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
         this.blnDashboard_loggedInMenu_User = true;
-          this.blnTasks_loggedInMenu_User = true;
-          this.blnClaims_loggedInMenu_User = true;
-          this.blnReport_loggedInMenu_User = true;
-          this.blnAccount_loggedInMenu_User = true;
+        this.blnTasks_loggedInMenu_User = true;
+        this.blnClaims_loggedInMenu_User = true;
+        this.blnReport_loggedInMenu_User = true;
+        this.blnAccount_loggedInMenu_User = true;
 
-          this.blnSetup_loggedInMenu_User = true;
+        this.blnSetup_loggedInMenu_User = true;
         if (localStorage.getItem("g_USER_GUID") == "sva") {
           this.loggedInPages = [
             { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
@@ -287,7 +295,7 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
-          else{
+          else {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
               { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
@@ -345,7 +353,7 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
-          else{
+          else {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
               { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
@@ -382,7 +390,7 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
-            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' }            
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' }
           ];
 
           this.setupsPages = [
@@ -397,7 +405,7 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
-          else{
+          else {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
               { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
@@ -453,7 +461,7 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
-          else{
+          else {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
               { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
@@ -495,7 +503,7 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
-          else{
+          else {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
               { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
@@ -533,7 +541,7 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' }
-           
+
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -542,7 +550,7 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
-          else{
+          else {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
               { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
@@ -573,7 +581,7 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' }
-           
+
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -582,7 +590,7 @@ export class ConferenceApp {
               { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
             ];
           }
-          else{
+          else {
             this.loggedInPages = [
               { title: 'My Profile', name: 'AccountPage', component: AccountPage, icon: 'person' },
               { title: 'Change Password', name: 'ChangePasswordPage', component: ChangePasswordPage, icon: 'unlock' },
@@ -654,6 +662,7 @@ export class ConferenceApp {
   }
 
   public translateToMalayClicked: boolean = false;
+
   public translateToEnglishClicked: boolean = true;
 
   public translateToEnglish() {

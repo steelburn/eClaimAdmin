@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { Services } from '../Services';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -43,15 +40,18 @@ export class ClaimapprovertasklistPage {
   loginUserRole = localStorage.getItem("g_ROLE_NAME");
   claimreqData: any[];
   buttonText:string;
+
   public page:number = 1;
   FinanceLogin: boolean = false;
+
   deptList: any[];
   employeeList: any[];
   claimTypeList: any[];
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
+  // Pending: any;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService) {
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     this.loginUserGuid = localStorage.getItem("g_USER_GUID");
     this.claimrefguid = navParams.get("claimRefGuid");
@@ -72,10 +72,17 @@ export class ClaimapprovertasklistPage {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' +this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.buttonText="Approve";
     }
+    // this.Pending = navParams.get("Pending");
     this.BindEmployeesbyDepartment();
     this.BindClaimTypes();
     this.BindYears();
     this.BindData();
+    // alert(this.Pending);
+    // this.searchboxValue = this.Pending ;
+    // if (this.searchboxValue != undefined) {
+    //   this.onSearchInput( this.Pending);
+    // }
+    // else { this.BindData(); }
   }
   BindData() {
     this.http
@@ -104,8 +111,9 @@ export class ClaimapprovertasklistPage {
    
   }
 
-  onSearchInput(ev: any) {
+  onSearchInput() {
     // alert('hi')
+    // alert(this.searchboxValue);
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
       this.claimrequestdetails = this.claimrequestdetails1.filter((item) => {
@@ -156,7 +164,7 @@ export class ClaimapprovertasklistPage {
     // alert(event.id);
     // alert(event.checked);
     // alert(claimRequestGuid);
-    debugger;
+    // debugger;
     let checkboxData: Checkboxlist = new Checkboxlist(event.checked, claimRequestGuid, level, status);
     if (event.checked) {
       this.checkboxDataList.push(checkboxData);
@@ -174,7 +182,7 @@ export class ClaimapprovertasklistPage {
   }
 
 approveAll(){
-  return new Promise((resolve, reject) => {
+  return new Promise(() => {
 
   this.checkboxDataList.forEach(element => {
     if (element.Checked && element.status !== 'Paid') {
@@ -207,8 +215,8 @@ count:number =0;
       // });
 
       //}
-      temp.then((res) => {
-    })
+      temp.then(() => {
+      })
     
     if (this.count > 0 && this.claimrefguid!==null && this.claimrefguid!==undefined) {
       //debugger;
@@ -248,8 +256,8 @@ count:number =0;
           else
             claimRefObj["resource"][0].STATUS = 'Paid';
           //debugger;
-          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(res => {
-            alert('Claim has been Approved.')
+          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(() => {
+            alert('Claim has been Approved.');
             this.navCtrl.push(ClaimtasklistPage);
           })
         });
@@ -335,7 +343,7 @@ count:number =0;
   }
 
   
-  SearchClaimsData(ddlEmployee: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
+  SearchClaimsData(ddlEmployee: string, ddlClaimTypes: string, ddlStatus: string) {
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       if (this.loginUserRole === "Finance Admin") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;

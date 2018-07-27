@@ -1,14 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Loading, LoadingController } from 'ionic-angular';
 import * as constants from '../../config/constants';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
-import { FormControlDirective, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Services } from '../Services';
-import { ImageUpload_model } from '../../models/image-upload.model';
 import { ClaimRequestDetailModel } from '../../models/claim-request-detail.model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import moment from 'moment';
@@ -23,7 +22,7 @@ export class AddTollPage {
 
   lastImage: string = null;
   MA_SELECT: any;
-  // loading: Loading;
+   loading: Loading;
   TenantGUID: any;
   paymentTypes: any; DetailsForm: FormGroup; ClaimMainGUID: any; 
   ClaimMethodGUID: any; ClaimMethodName: any;
@@ -31,7 +30,7 @@ export class AddTollPage {
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
 
-  constructor(public numberPipe: DecimalPipe, fb: FormBuilder, public api: ApiManagerProvider, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(public numberPipe: DecimalPipe, fb: FormBuilder, public api: ApiManagerProvider, private loadingCtrl: LoadingController, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.LoadPayments();
     this.LoadAllowanceDetails();
@@ -79,6 +78,15 @@ export class AddTollPage {
       );
   }
 
+  imageOptional: boolean = false;
+  onPaySelect(payBy: any) {
+    if (payBy.REQUIRE_ATTACHMENT === 0) {
+      this.imageOptional = true;
+    }
+    else
+      this.imageOptional = false;
+  }
+
   Save(isMA:boolean) {
     if(isMA){
       if(this.MA_SELECT==='NA' || this.MA_SELECT===undefined){
@@ -112,7 +120,6 @@ export class AddTollPage {
     claimReqRef.ATTACHMENT_ID = this.imageGUID;
 
     this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
-      var postClaimRef = response.json();
       alert('Your ' + this.ClaimMethodName + ' details submitted successfully.')
       this.navCtrl.pop();
     })
@@ -129,7 +136,7 @@ export class AddTollPage {
 
 
           this.claimDetailsData["resource"][0].ATTACHMENT_ID = (this.imageGUID!==undefined || this.imageGUID!==null)?this.imageGUID:this.claimDetailsData["resource"][0].ATTACHMENT_ID;
-         this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(res => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
+         this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(() => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
          this.navCtrl.pop();
         })
   }
@@ -145,7 +152,8 @@ export class AddTollPage {
   isFormEdit:boolean=false;
   ngOnInit(): void {
     // this.ClaimMainGUID = this.navParams.get('MainClaim');
-    this.ClaimMainGUID = localStorage.getItem("g_CR_GUID");
+    // this.ClaimMainGUID = localStorage.getItem("g_CR_GUID");
+    this.ClaimMainGUID = this.navParams.get("MainClaim");
     this.ClaimMethodGUID = this.navParams.get('ClaimMethod');
     this.ClaimMethodName = this.navParams.get('ClaimMethodName');
     this.ClaimDetailGuid = this.navParams.get('ClaimReqDetailGuid');
@@ -200,7 +208,7 @@ export class AddTollPage {
 
 
   Amount: any; PayType: any; Description: any; 
-   loading = false;
+  //  loading = false;
    uploadFileName: string;
    DetailsType: string;
    CloudFilePath: string;  
@@ -225,6 +233,7 @@ export class AddTollPage {
       };
     }
     this.chooseFile = true;
+    
   } 
   
   fileName1: string;
@@ -248,17 +257,17 @@ export class AddTollPage {
     this.chooseFile = true;
     this.newImage=false
     this.onFileChange(e);
+    this.ImageUploadValidation=true;  
+    this.saveIm();
   }
   uniqueName: any;
-  imageGUID: any;
+  imageGUID: any
+  
   saveIm() {
     let uploadImage = this.UploadImage();
-    uploadImage.then((resJson) => {
-     
+    uploadImage.then(() => {
       this.imageGUID = this.uniqueName;
       this.chooseFile = false;
-       this.ImageUploadValidation=true;
-      //this.ImageUploadValidation=false;      
     })   
   }
  
@@ -275,7 +284,7 @@ export class AddTollPage {
     //   this.CloudFilePath = 'eclaim/parking/'
     // }
     this.CloudFilePath = 'eclaim/'
-    this.loading = true;
+    // this.loading = true;
     this.uniqueName = new Date().toISOString() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
@@ -284,10 +293,16 @@ export class AddTollPage {
     queryHeaders.append('chunkedMode', 'false');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     const options = new RequestOptions({ headers: queryHeaders });
-    return new Promise((resolve, reject) => {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
+    return new Promise((resolve) => {
       // this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uploadFileName, this.DetailsForm.get('avatar').value, options)
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.DetailsForm.get('avatar').value, options)
-        .map((response) => {
+        .map((response) => 
+        {
+          this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
           resolve(response.json());
