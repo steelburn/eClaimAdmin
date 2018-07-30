@@ -26,7 +26,9 @@
         <tr class="col7" *ngFor="let item of monthsList; let i=index">
           <td class="lgl1">{{i+1}}</td>
           <td class="lgl1">{{item}}</td>
-          <td class="lgl1" text-wrap><button ion-button item-end (click)="BindData('printSectionId',item)">Print</button></td>
+          <td class="lgl1" text-wrap>
+            <button ion-button item-end (click)="BindData('printSectionId',item)">Print</button>
+          </td>
         </tr>
       </table>
     </ion-item>
@@ -99,22 +101,22 @@
             </tr>
           </table>
 
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.TollAmount!==0">
             <tr>
               <td align="left" bgcolor="#ffffff">Toll</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.ParkingAmount!==0">
             <tr>
               <td align="left" bgcolor="#ffffff">Parking</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.MealAmount!==0">
             <tr>
               <td align="left" bgcolor="#ffffff">Meal Allowance</td>
             </tr>
           </table>
-          <table width="100%" *ngIf="claim.TYPE==='TRV'">
+          <table width="100%" *ngIf="claim.TYPE==='TRV' && claim.AccAmount!==0">
             <tr>
               <td align="left" bgcolor="#ffffff">Accomodation</td>
             </tr>
@@ -149,22 +151,22 @@
               <td align="left" bgcolor="#ffffff">&nbsp;</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.TollAmount!==0">
             <tr>
               <td align="left" bgcolor="#ffffff">{{claim.TollAmount | number:'1.2-2'}}</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.ParkingAmount!==0">
             <tr>
               <td align="left" bgcolor="#ffffff">{{claim.ParkingAmount | number:'1.2-2'}}</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.MealAmount!==0">
             <tr>
               <td align="left" bgcolor="#ffffff">{{claim.MealAmount | number:'1.2-2'}}</td>
             </tr>
           </table>
-          <table width="100%" *ngIf="claim.TYPE==='TRV'">
+          <table width="100%" *ngIf="claim.TYPE==='TRV' && claim.AccAmount!==0">
             <tr>
               <td align="left" bgcolor="#ffffff">{{claim.AccAmount | number:'1.2-2'}}</td>
             </tr>
