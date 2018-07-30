@@ -54,7 +54,10 @@ export class EntertainmentClaimViewPage {
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
-      this.claimRequestData.forEach(element => {     
+      this.claimRequestData.forEach(element => {
+        if (element.ATTACHMENT_ID !== null) { 
+          this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
+      }      
         this.totalClaimAmount = element.MILEAGE_AMOUNT;       
       });
     })
@@ -72,13 +75,13 @@ CloseDisplayImage()  {
   this.displayImage = false;
 }
 imageURL: string;
-DisplayImage(val: any) {
-  this.displayImage = true;
-  this.imageURL = val;
-  if (val !== null) { 
-    this.imageURL = this.api.getImageUrl(val); 
-    this.displayImage = true; 
-    this.isImage = this.api.isFileImage(val); 
-  }
-}
+// DisplayImage(val: any) {
+//   this.displayImage = true;
+//   this.imageURL = val;
+//   if (val !== null) { 
+//     this.imageURL = this.api.getImageUrl(val); 
+//     this.displayImage = true; 
+//     this.isImage = this.api.isFileImage(val); 
+//   }
+// }
 }
