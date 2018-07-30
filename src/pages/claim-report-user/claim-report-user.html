@@ -1,12 +1,12 @@
 <!--
-  Generated template for the ClaimReportPage page.
+  Generated template for the ClaimReportUserPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
 
-  <ion-navbar color="primary200">
+  <ion-navbar>
     <ion-title>Claim Report</ion-title>
   </ion-navbar>
 
@@ -14,114 +14,24 @@
 
 
 <ion-content padding>
-
-  <ion-item style="width: 49%;display:inline-block;">
-
-    <ion-label>Department : </ion-label>
-    <ion-select interface="popover" (ionChange)="BindEmployeesbyDepartment($event)" #ddlDept>
-      <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
-    </ion-select>
-
-  </ion-item>
-  <ion-item style="width: 50%;display:inline-block;">
-
-    <ion-label>User Name : </ion-label>
-
-    <ion-select interface="popover" #ddlEmployee>
-      <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
-    </ion-select>
-
-
-  </ion-item>
-  <ion-item style="width: 49%;display:inline-block;">
-    <ion-label>
-
-      Claim Month : </ion-label>
-
-    <ion-select interface="popover" #ddlmonth>
-
-     <ion-option value="Jan">Jan</ion-option>
-      <ion-option value="Feb">Feb</ion-option>
-      <ion-option value="Mar">Mar</ion-option>
-      <ion-option value="Apr">Apr</ion-option>
-      <ion-option value="May">May</ion-option>
-      <ion-option value="Jun">Jun</ion-option>
-      <ion-option value="Jul">Jul</ion-option>
-      <ion-option value="Aug">Aug</ion-option>
-      <ion-option value="Sep">Sep</ion-option>
-      <ion-option value="Oct">Oct</ion-option>
-      <ion-option value="Nov">Nov</ion-option>
-      <ion-option value="Dec">Dec</ion-option>
-    </ion-select>
-  </ion-item>
-
-  <!-- <ion-item style="width: 50%;display:inline-block;">
-    <ion-label>Claim Type: </ion-label>
-    <ion-select interface="popover" #ddlClaimTypes>
-      <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
-    </ion-select>
-  </ion-item>
-   -->
-  <ion-item>
-    <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value)">Search</button>
-    <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
-  </ion-item>
   <ion-list>
     <ion-item>
       <table class="Tabler ">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
-          <th class="lgl1">Claim Date</th>
-          <th class="lgl1">Type</th>
-          <th class="lgl1">Project/SOC/Customer</th>
-          <!-- <th class="lgl1">Location as per SOC</th> -->
-          <th class="lgl1">Mode</th>
-          <!-- <th class="lgl1">Remarks(Location- if is not at customer location)</th> -->
-          <!-- <th class="lgl1">Recommended Post Code</th> -->
-          <th class="lgl1">From</th>
-          <th class="lgl1">To</th>
-          <!-- <th class="lgl1" *ngIf="travelClaimType" style="width:55px">Distance</th>
-          <!-- <th class="lgl1">Distance(Outstn/Oths)KM</th> -->
-          <!-- <th class="lgl1">Status</th>
-          <th class="lgl1" *ngIf="travelClaimType" style="width:60px">Mileage</th>
-          <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Parking</th>
-          <!-- <th class="lgl1">Parking (Without GST)</th> -->
-          <!-- <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Toll</th>
-          <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Meal</th>
-          <th class="lgl1" *ngIf="travelClaimType" style="width:45px">Hotel</th> -->
-          <!-- <th class="lgl1">Outstation Allowance</th>  -->
-          <th class="lgl1 tblBrRight" style="width:130px">Total Amount(RM)</th>
+          <th class="lgl1">Month</th>
+          <th class="lgl1">Action</th>
         </tr>
 
-        <tr class="col7" *ngFor="let claim of claimsList | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
-          <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
-          <td class="lgl1">{{claim.TRAVEL_DATE | date:'d/M/y'}}</td>
-          <td class="lgl1" text-wrap>{{claim.TYPE}}</td>
-          <td class="lgl1" text-wrap>{{claim.PROJECT_NAME}} {{claim.SOC_NO}} {{claim.CUSTOMER_NAME}}</td>
-          <td class="lgl1" text-wrap>{{claim.MODE}}</td>
-          <td class="lgl1" text-wrap>{{claim.from}}</td>
-          <td class="lgl1" text-wrap>{{claim.to}}</td>
-          <!-- <td class="lgl1" *ngIf="travelClaimType">{{claim.DISTANCE_KM}}</td>
-          <td class="lgl1">{{claim.STATUS}}</td>
-          <td class="lgl1" *ngIf="travelClaimType">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}</td>
-          <td class="lgl1" *ngIf="travelClaimType">{{claim.ParkingAmount | number:'1.2-2'}}</td>
-          <td class="lgl1" *ngIf="travelClaimType">{{claim.TollAmount | number:'1.2-2'}}</td>
-          <td class="lgl1" *ngIf="travelClaimType">{{claim.MealAmount | number:'1.2-2'}}</td>
-          <td class="lgl1" *ngIf="travelClaimType">{{claim.AccAmount | number:'1.2-2'}}</td> -->
-          <td class="lgl1">{{claim.Total | number:'1.2-2'}}</td>
-        </tr>
-
-        <tr class="col7">
-          <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount(RM) : {{totalClaimAmount | number:'1.2-2'}}</td>
+        <tr class="col7" *ngFor="let item of monthsList; let i=index">
+          <td class="lgl1">{{i+1}}</td>
+          <td class="lgl1">{{item}}</td>
+          <td class="lgl1" text-wrap><button ion-button item-end (click)="BindData('printSectionId',item)">Print</button></td>
         </tr>
       </table>
-      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
-      </pagination-controls>
     </ion-item>
   </ion-list>
 </ion-content>
-
-
 
 <body id="printSectionId" hidden>
   <table width="100%" border="0" bgcolor="#cccccc">
@@ -140,15 +50,15 @@
           <h2 style="color:#FFFFFF;">CLAIM REPORT</h2>
         </td>
         <td colspan="3" align="left" bgcolor="#002060" colspan=3 style="border-left: none">
-          <h2 style="color:#ffffff;">{{ddlmonth.text}} {{todayDate.getFullYear()}}</h2>
+          <h2 style="color:#ffffff;">{{month}} {{year}}</h2>
         </td>
       </tr>
       <tr *ngFor="let item of empData">
         <td colspan="7" bgcolor="#ffffff">Company : {{item.tenant_company_name}}</td>
       </tr>
-      <tr>
-        <td colspan="4" bgcolor="#ffffff">Name : {{ddlEmployee.text}}</td>
-        <td colspan="3" bgcolor="#ffffff">Department : {{ddlDept.text}}</td>
+      <tr *ngFor="let item of empData">
+        <td colspan="4" bgcolor="#ffffff">Name : {{item.FULLNAME}}</td>
+        <td colspan="3" bgcolor="#ffffff">Department : {{item.department_name}}</td>
       </tr>
       <tr *ngFor="let item of empData">
         <td colspan="4" bgcolor="#ffffff">Position :{{item.designation_name}}</td>
@@ -168,7 +78,7 @@
         <td align="center" bgcolor="#002060">To</td>
         <td align="center" bgcolor="#002060">Amount (RM)</td>
       </tr>
-      <tr *ngFor="let claim of claimsListPrint">
+      <tr *ngFor="let claim of claimsList">
         <td align="left" bgcolor="#ffffff">{{claim.TRAVEL_DATE | date:'d/M/y'}}</td>
         <td align="left" bgcolor="#ffffff">{{claim.TYPE}}</td>
 
@@ -189,22 +99,22 @@
             </tr>
           </table>
 
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.TollAmount!==0">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
             <tr>
               <td align="left" bgcolor="#ffffff">Toll</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.ParkingAmount!==0">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
             <tr>
               <td align="left" bgcolor="#ffffff">Parking</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.MealAmount!==0">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
             <tr>
               <td align="left" bgcolor="#ffffff">Meal Allowance</td>
             </tr>
           </table>
-          <table width="100%" *ngIf="claim.TYPE==='TRV' && claim.AccAmount!==0">
+          <table width="100%" *ngIf="claim.TYPE==='TRV'">
             <tr>
               <td align="left" bgcolor="#ffffff">Accomodation</td>
             </tr>
@@ -239,22 +149,22 @@
               <td align="left" bgcolor="#ffffff">&nbsp;</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.TollAmount!==0">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
             <tr>
               <td align="left" bgcolor="#ffffff">{{claim.TollAmount | number:'1.2-2'}}</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.ParkingAmount!==0">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
             <tr>
               <td align="left" bgcolor="#ffffff">{{claim.ParkingAmount | number:'1.2-2'}}</td>
             </tr>
           </table>
-          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.MealAmount!==0">
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
             <tr>
               <td align="left" bgcolor="#ffffff">{{claim.MealAmount | number:'1.2-2'}}</td>
             </tr>
           </table>
-          <table width="100%" *ngIf="claim.TYPE==='TRV' && claim.AccAmount!==0">
+          <table width="100%" *ngIf="claim.TYPE==='TRV'">
             <tr>
               <td align="left" bgcolor="#ffffff">{{claim.AccAmount | number:'1.2-2'}}</td>
             </tr>
