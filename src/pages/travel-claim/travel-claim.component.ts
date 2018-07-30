@@ -143,7 +143,9 @@ export class TravelclaimPage {
     amount = Number(amount);
     if (amount > 99999) {
       alert('Amount should not exceed RM99999.')
-      this.travelAmountNgmodel = null
+      this.travelAmountNgmodel = null;
+      this.travelAmount = 0;
+      this.totalClaimAmount = 0;
     }
     else {
       this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');

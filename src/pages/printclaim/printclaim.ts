@@ -97,7 +97,9 @@ export class PrintclaimPage {
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
                 this.claimRequestData = data["resource"];             
-                this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
+                // this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null) 
+                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID); 
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT
                 this.Printing_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
@@ -426,14 +428,14 @@ export class PrintclaimPage {
     this.displayImage = false;
   }
   imageURL: string;
-  DisplayImage(val: any) {
-    this.displayImage = true;
-    this.imageURL = val;
-    if (val !== null) { 
-      this.imageURL = this.apiMng.getImageUrl(val); 
-      this.displayImage = true; 
-      this.isImage = this.apiMng.isFileImage(val); 
-    }
-  }
+  // DisplayImage(val: any) {
+  //   this.displayImage = true;
+  //   this.imageURL = val;
+  //   if (val !== null) { 
+  //     this.imageURL = this.apiMng.getImageUrl(val); 
+  //     this.displayImage = true; 
+  //     this.isImage = this.apiMng.isFileImage(val); 
+  //   }
+  // }
 }
 //}
