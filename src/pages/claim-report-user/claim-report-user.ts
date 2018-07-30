@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer, } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
@@ -24,8 +24,10 @@ export class ClaimReportUserPage {
   month: string;
   year: string;
   empData: any;
+  baseResourceUrlSummery: string;
+  claimsListSummery: any[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private el: ElementRef, private renderer: Renderer) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private el: ElementRef, private renderer: Renderer, private alertCtrl: AlertController) {
     this.loginUserGuid = localStorage.getItem("g_USER_GUID");
     this.BindMonths();
     this.BindEmpDetails();
@@ -49,16 +51,29 @@ export class ClaimReportUserPage {
           this.claimsList.forEach(element => {
             this.totalClaimAmount = this.totalClaimAmount + element.Total;
           });
-          this.printToCart(printSectionId);
         });
-      // window.onload = function() {
-      //  
-      //   {
-
-      //   }
-      // };
-
+        this.BindSummeryData();
     }
+
+    let alert1 = this.alertCtrl.create({
+      title: 'Confirm Print Report',
+      message: 'Do you want to print ' + item + ' claims?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            return
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.printToCart(printSectionId);
+          }
+        }
+      ]
+    })
+    alert1.present();
   }
 
   BindEmpDetails() {
@@ -68,6 +83,17 @@ export class ClaimReportUserPage {
       .subscribe(data => {
         this.empData = data["resource"];
       });
+  }
+
+  BindSummeryData() {
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summery?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.claimsListSummery = data["resource"];
+      });
+      console.log(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summery?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY);
+      console.log (this.claimsListSummery);
   }
 
   printToCart(printSectionId: any) {
@@ -107,4 +133,7 @@ export class ClaimReportUserPage {
         currentMonth === 9 ? 'Sep' : currentMonth === 10 ? 'Oct' : currentMonth === 11 ? 'Nov' : currentMonth === 12 ? 'Dec' : '';
     return monthName;
   }
+
+
+
 }
