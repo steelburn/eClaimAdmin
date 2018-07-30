@@ -33,6 +33,8 @@ export class ClaimReportPage {
   travelClaimType: boolean = false;
   overTimeClaim: boolean = false;
   todayDate: Date = new Date();
+  month: any;
+  year: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
@@ -51,7 +53,6 @@ export class ClaimReportPage {
         this.claimsListPrint = data["resource"];
         this.claimsList = this.claimsListPrint;
         this.claimsListPrint.forEach(element => {
-          //alert(element.CLAIM_AMOUNT);
           this.totalClaimAmount = this.totalClaimAmount + element.Total;
         });
       });
@@ -112,9 +113,10 @@ export class ClaimReportPage {
     // alert(emp);
     // alert(month);
     // alert(claimType);
-    let year = new Date().getFullYear();
-    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.baseResourceUrlSummery = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summery?filter=(DEPARTMENT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.year = new Date().getFullYear();
+    this.month = month;
+    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrlSummery = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summery?filter=(DEPARTMENT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     //this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?api_key=' + constants.DREAMFACTORY_API_KEY;
     this.BindEmpDetails(emp);
