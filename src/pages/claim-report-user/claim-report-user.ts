@@ -19,6 +19,7 @@ import * as constants from '../../app/config/constants';
 export class ClaimReportUserPage {
   monthsList: any[] = [];
   claimsList: any[];
+  claimsListPrint:any[];
   totalClaimAmount: number = 0;
   loginUserGuid: string;
   month: string;
@@ -48,6 +49,7 @@ export class ClaimReportUserPage {
         .map(res => res.json())
         .subscribe(data => {
           this.claimsList = data["resource"];
+          this.claimsListPrint=this.claimsList;
           this.claimsList.forEach(element => {
             this.totalClaimAmount = this.totalClaimAmount + element.Total;
           });
@@ -56,17 +58,17 @@ export class ClaimReportUserPage {
     }
 
     let alert1 = this.alertCtrl.create({
-      title: 'Confirm Print Report',
-      message: 'Do you want to print ' + item + ' claims?',
+      title: 'Print Report',
+      message: 'Preparing printing...',
       buttons: [
         {
-          text: 'No',
+          text: 'Cancel',
           handler: () => {
             return
           }
         },
         {
-          text: 'Yes',
+          text: 'Ok',
           handler: () => {
             this.printToCart(printSectionId);
           }

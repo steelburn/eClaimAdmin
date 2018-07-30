@@ -86,6 +86,7 @@ import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
 import { ClaimReportUserPage } from '../pages/claim-report-user/claim-report-user';
+import { ClaimReportPrintPage } from '../pages/claim-report-print/claim-report-print';
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
@@ -169,7 +170,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CustomerSetupPage,
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage,
-    ClaimReportUserPage
+    ClaimReportUserPage,
+    ClaimReportPrintPage
   ],
 
   imports: [
@@ -289,7 +291,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage,
-    ClaimReportUserPage
+    ClaimReportUserPage,
+    ClaimReportPrintPage
 
 
   ],
