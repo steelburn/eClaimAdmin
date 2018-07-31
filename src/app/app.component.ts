@@ -95,7 +95,7 @@ export class ConferenceApp {
 
   reportPages: PageInterface[] = [
     { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
-    { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+    { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
     { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
     { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
   ];
@@ -392,11 +392,12 @@ export class ConferenceApp {
 
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
             { title: 'My Claim Report', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
-            { title: 'Finance Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'ios-paper-outline' }
-         
+            { title: 'Finance Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' }
+
           ];
 
           this.setupsPages = [
@@ -457,10 +458,12 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
-            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'ios-list-box-outline' },
+
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
             { title: 'My Claim Report', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
-            { title: 'Finance Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'ios-paper-outline' }
+            { title: 'Finance Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' }
+
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
