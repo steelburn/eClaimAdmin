@@ -351,14 +351,27 @@ export class ApiManagerProvider {
       });
   }
 
-  updateApiModel(endPoint: string, modelJSON: any) {
+  // updateApiModel(endPoint: string, modelJSON: any) {
+  //   var queryHeaders = new Headers();
+  //   queryHeaders.append('Content-Type', 'application/json');
+  //   queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+  //   let options = new RequestOptions({ headers: queryHeaders });
+  //   return this.http.patch(this.postUrl(endPoint), modelJSON, options)
+  //     .map((response) => {
+  //       return response;
+  //     });
+  // }
 
+  updateApiModel(endPoint: string, modelJSONData: any, isClaim: boolean) {
+    let modelJSON = modelJSONData["resource"][0];
     var queryHeaders = new Headers();
     queryHeaders.append('Content-Type', 'application/json');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     let options = new RequestOptions({ headers: queryHeaders });
-    return this.http.patch(this.postUrl(endPoint), modelJSON, options)
+    return this.http.patch(this.postUrl(endPoint), modelJSONData, options)
       .map((response) => {
+        if (isClaim && modelJSON.STATUS != 'Draft')
+          this.sendEmail(modelJSON.CLAIM_TYPE_GUID, modelJSON.START_TS, modelJSON.END_TS, modelJSON.CREATION_TS, modelJSON.TRAVEL_DATE, modelJSON.CLAIM_REQUEST_GUID);
         return response;
       });
   }

@@ -7,9 +7,11 @@
 <ion-header>
 
   <ion-navbar color="primary200">
+
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
       </button>
+
     <ion-title>Claim Report</ion-title>
   </ion-navbar>
 
@@ -58,6 +60,7 @@
     </ion-select>
   </ion-item>
 
+
   <ion-item>
     <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value)">Search</button>
     <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
@@ -71,10 +74,12 @@
           <th class="lgl1">Type</th>
           <th class="lgl1">Project/SOC/Customer</th>
 
+
           <th class="lgl1">Mode</th>
   
           <th class="lgl1">From</th>
           <th class="lgl1">To</th>
+
 
           <th class="lgl1 tblBrRight" style="width:130px">Total Amount(RM)</th>
         </tr>
@@ -87,6 +92,7 @@
           <td class="lgl1" text-wrap>{{claim.MODE}}</td>
           <td class="lgl1" text-wrap>{{claim.from}}</td>
           <td class="lgl1" text-wrap>{{claim.to}}</td>
+
           <td class="lgl1">{{claim.Total | number:'1.2-2'}}</td>
         </tr>
 
@@ -101,4 +107,5 @@
 </ion-content>
 <div id="printSectionId" hidden>
   <page-claim-report-print [claimsListPrint]="claimsListPrint" [claimsListSummery]="claimsListSummery" [empData]="empData" [year]="year" [month]="month" [totalClaimAmount]="totalClaimAmount"></page-claim-report-print>
+
 </div>
