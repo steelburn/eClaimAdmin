@@ -175,7 +175,7 @@
                                         <!-- <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)" *ngIf="item.ATTACHMENT_ID!==null ">
                                             Receipt
                                         </button> -->
-                                        <a href={{imageURL}} target='_blank'>View Receipt</a> 
+                                        <a href={{item.ATTACHMENT_ID}} target='_blank' *ngIf="item.ATTACHMENT_ID!==null">Receipt</a>
                                      
                                
                                     </td>

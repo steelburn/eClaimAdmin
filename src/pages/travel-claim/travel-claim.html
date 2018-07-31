@@ -280,7 +280,7 @@
                 <!-- <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)" *ngIf="item.ATTACHMENT_ID!==null">
                   Receipt
                 </button> -->
-                <a href={{imageURLEdit}} target='_blank'>View Receipt</a>
+                <a href={{imageURLEdit}} target='_blank' *ngIf="item.ATTACHMENT_ID!=null">Receipt</a>
               </td>
               <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
               <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
