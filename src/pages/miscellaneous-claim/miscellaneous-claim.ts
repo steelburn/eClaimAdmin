@@ -382,7 +382,7 @@ export class MiscellaneousClaimPage {
             this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
             this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
           }
-          this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
+          this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";

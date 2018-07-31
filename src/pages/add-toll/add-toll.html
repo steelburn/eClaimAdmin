@@ -74,9 +74,10 @@
           </div>
 
           <div *ngIf="imageURLEdit!==null">
-            <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" >
+            <!-- <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" >
                 View Receipt
-                </button>
+                </button> -->
+                <a href={{imageURLEdit}} target='_blank'>View Receipt</a> 
               </div>
 
         <!-- <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
