@@ -56,9 +56,9 @@ export class TravelClaimViewPage {
           this.claimRequestData = res['resource'];
           this.claimRequestData.forEach(element => {             
               this.TravelType = element.TRAVEL_TYPE === '0' ? 'Local' : 'Outstation';
-            this.totalClaimAmount = element.MILEAGE_AMOUNT;
+            this.totalClaimAmount = element.CLAIM_AMOUNT;
           });
-          this.totalClaimAmount += tollorParkAmount;
+        //  this.totalClaimAmount += tollorParkAmount;
         })
       })
     }  

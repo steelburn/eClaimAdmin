@@ -72,9 +72,13 @@
     </ion-item>
 
     <ion-item>
-        <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" *ngIf="claim.ATTACHMENT_ID!==null">
+        <!-- <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" *ngIf="claim.ATTACHMENT_ID!==null">
             View Receipt
-        </button>
+        </button> -->
+        <a href={{imageURL}} target='_blank'>View Receipt</a> 
+        <!-- <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" > 
+            View Receipt 
+        </button>         -->
     </ion-item>
 
    
