@@ -23,33 +23,37 @@
 
 <ion-content padding>
   <ion-fab top right edge>
+    <!-- ExportToExcel($event) -->
     <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
       <ion-icon name="download"></ion-icon>
     </button>
   </ion-fab>
 
+
+
   <ion-item class="fuha">
     <ion-label>Claim Type:</ion-label>
     <ion-select interface="popover" #ddlClaimTypes>
-        <ion-option [value]="All" [selected]="true">All</ion-option>
-        <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
+      <ion-option [value]="All" [selected]="true">All</ion-option>
+      <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
     </ion-select>
-</ion-item>
-<ion-item class="fuha">
+  </ion-item>
+
+  <ion-item class="fuha">
     <ion-label>Status:</ion-label>
     <ion-select interface="popover" #ddlStatus>
-        <ion-option [value]="All" [selected]="true">All</ion-option>
-        <ion-option [value]="Paid">Paid</ion-option>
-        <ion-option [value]="Pending">Pending</ion-option>
-        <ion-option [value]="Approved">Approved</ion-option>
-        <ion-option [value]="Rejected">Rejected</ion-option>
+      <ion-option [value]="All" [selected]="true">All</ion-option>
+      <ion-option [value]="Paid">Paid</ion-option>
+      <ion-option [value]="Pending">Pending</ion-option>
+      <ion-option [value]="Approved">Approved</ion-option>
+      <ion-option [value]="Rejected">Rejected</ion-option>
 
     </ion-select>
-</ion-item>
+  </ion-item>
 
-<ion-item class="fuha">
-  <ion-label>Claim Month :</ion-label>
-  <ion-select interface="popover" #ddlmonth>
+  <ion-item class="fuha">
+    <ion-label>Claim Month :</ion-label>
+    <ion-select interface="popover" #ddlmonth>
       <ion-option [value]="All" [selected]="true">All</ion-option>
       <ion-option value="Jan">Jan</ion-option>
       <ion-option value="Feb">Feb</ion-option>
@@ -63,20 +67,20 @@
       <ion-option value="Oct">Oct</ion-option>
       <ion-option value="Nov">Nov</ion-option>
       <ion-option value="Dec">Dec</ion-option>
-  </ion-select>
-</ion-item>
+    </ion-select>
+  </ion-item>
 
 
   <ion-item class="fuha">
     <ion-label>Year:</ion-label>
     <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
-        <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
+      <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
     </ion-select>
-</ion-item>
+  </ion-item>
 
-<ion-item>
-  <button ion-button item-end (click)="SearchClaimsData(ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
-</ion-item>
+  <ion-item>
+    <button ion-button item-end (click)="SearchClaimsData(ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
+  </ion-item>
 
   <ion-item *ngFor="let userdetail of userdetails" class="fuha">
     <ion-label text-wrap>Name: {{userdetail.FULLNAME}}</ion-label>
@@ -135,6 +139,43 @@
       </pagination-controls>
     </ion-item>
   </ion-list>
+
+  <!-- Popup for Export to Excel Starts-->
+  <div class="blackcontainer" *ngIf="ExportExcelClicked">
+  </div>
+  <div class="popup4" padding *ngIf="ExportExcelClicked">
+    <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">EXPORT TO EXCEL</div>
+
+        <button class="btnR" (click)="CloseExportExcel()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+
+      </ion-card-header>
+      <ion-list>
+        <div style="width:100%; display:inline-table !important;">
+        
+          <ion-card>
+            <div>
+              <ion-list>
+                <ion-item *ngFor="let ExcelColumn of ExcelColumns">
+                  <ion-label>{{ExcelColumn.Columns}}</ion-label>
+                  <ion-checkbox color="secondary" checked="false" (ionChange)="SelectColumn($event, ExcelColumn)" item-end></ion-checkbox>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-card>
+        </div>
+      </ion-list>
+      <div class="btn">
+        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="SubmitExportExcel()">{{"SUBMIT" | translate}}</button>
+      </div>
+    </ion-card>
+    
+  </div>
+  <!-- Popup for Export to Excel End-->
 
 
 </ion-content>
