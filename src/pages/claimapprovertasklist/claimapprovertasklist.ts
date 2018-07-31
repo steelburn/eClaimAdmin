@@ -256,7 +256,7 @@ count:number =0;
           else
             claimRefObj["resource"][0].STATUS = 'Paid';
           //debugger;
-          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(() => {
+          this.api.updateApiModel('main_claim_ref', claimRefObj, false).subscribe(() => {
             alert('Claim has been Approved.');
             this.navCtrl.push(ClaimtasklistPage);
           })

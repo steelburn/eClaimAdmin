@@ -136,7 +136,7 @@ export class AddTollPage {
 
 
           this.claimDetailsData["resource"][0].ATTACHMENT_ID = (this.imageGUID!==undefined || this.imageGUID!==null)?this.imageGUID:this.claimDetailsData["resource"][0].ATTACHMENT_ID;
-         this.api.updateApiModel('claim_request_detail',this.claimDetailsData).subscribe(() => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
+         this.api.updateApiModel('claim_request_detail',this.claimDetailsData, false).subscribe(() => alert('Your ' + this.ClaimMethodName + ' details are updated successfully.'))
          this.navCtrl.pop();
         })
   }
@@ -184,21 +184,10 @@ export class AddTollPage {
     }
     this.Amount = this.numberPipe.transform(this.claimDetailsData[0].AMOUNT, '1.2-2');
     this.claimAmount = this.claimDetailsData[0].AMOUNT;
-  //   if (this.claimDetailsData[0].ATTACHMENT_ID !== null)
-  //   { 
-  //    this.stringToSplit = this.claimDetailsData[0].ATTACHMENT_ID ;
-  //    this.tempUserSplit1 = this.stringToSplit.split(".")[0];
-  //    this.tempUserSplit2 = this.stringToSplit.split(".")[1];
-  //    this.tempUserSplit3 = this.stringToSplit.split(".")[2];
-  //    if(this.tempUserSplit3=="jpeg" ||this.tempUserSplit3=="jpg" ||this.tempUserSplit3=="png")
-  //    this.isImage = true
-  //    else {
-  //      this.isImage = false
-  //    }
-  //    this.imageURLEdit =  this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID);
-  //  }
+    if (this.claimDetailsData[0].ATTACHMENT_ID !== null) 
+    this.imageURLEdit = this.api.getImageUrl(this.claimDetailsData[0].ATTACHMENT_ID); 
 
-    this.imageURLEdit = this.claimDetailsData[0].ATTACHMENT_ID
+    // this.imageURLEdit = this.claimDetailsData[0].ATTACHMENT_ID
     // this.ImageUploadValidation=false;
     this.ImageUploadValidation=true;
     //this.chooseFile = false;
@@ -316,14 +305,14 @@ export class AddTollPage {
   }
 
   imageURL: string;
-  DisplayImage(val: any) {
-    this.displayImage = true;
-    this.imageURL = val;
-    if (val !== null) { 
-      this.imageURL = this.api.getImageUrl(val); 
-      this.displayImage = true; 
-      this.isImage = this.api.isFileImage(val); 
-    }
-  }
+  // DisplayImage(val: any) {
+  //   this.displayImage = true;
+  //   this.imageURL = val;
+  //   if (val !== null) { 
+  //     this.imageURL = this.api.getImageUrl(val); 
+  //     this.displayImage = true; 
+  //     this.isImage = this.api.isFileImage(val); 
+  //   }
+  // }
 
 }
