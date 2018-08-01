@@ -107,9 +107,9 @@ export class UserclaimslistPage {
           }
         });
         this.userClaimhistorydetails = this.userClaimhistorydetails1;
-        for (var item in data["resource"]) {
-          this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
-        }
+        // for (var item in data["resource"]) {
+        //   this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
+        // }
       });
 
   }
@@ -279,9 +279,141 @@ export class UserclaimslistPage {
     console.log('ionViewDidLoad UserclaimslistPage');
   }
 
+  ExportExcelClicked: boolean = false; ExcelColumns: any[] = [];
   ExportToExcel() {
-    // this.excelService.exportAsExcelFile(this.userClaimhistorydetails, 'Data');
-    this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
+    this.ExportExcelClicked = true;
+    this.ExcelColumns = [];
+    this.ExcelColumns.push({ Columns: 'Claim Type' });
+    this.ExcelColumns.push({ Columns: 'Date' });
+    this.ExcelColumns.push({ Columns: 'Status' });
+    this.ExcelColumns.push({ Columns: 'Stage' });
+    this.ExcelColumns.push({ Columns: 'Amount(RM)' });
+  }
+
+  CloseExportExcel() {
+    this.ExportExcelClicked = false;
+    this.checked.length = 0;
+  }
+
+  checked: any[] = [];
+  SelectColumn(e: any, SelectedColumn: any) {
+    if (e.checked == true) {
+      this.checked.push(SelectedColumn);
+    } else {
+      let index = this.RemoveCheckedFromArray(SelectedColumn);
+      this.checked.splice(index, 1);
+    }
+  }
+
+  RemoveCheckedFromArray(checkbox: String) {
+    return this.checked.findIndex((category) => {
+      return category === checkbox;
+    })
+  }
+
+  SubmitExportExcel() {
+    this.ExcelData = [];
+    if (this.checked.length > 0) {
+      for (var item in this.userClaimhistorydetails) {
+        if (this.checked.length > 0) {
+          let ctr: number = 0;
+          let jsonStr = '';
+          for (var chkItem in this.checked) {
+            ctr = ctr + 1;
+            switch (this.checked[chkItem]["Columns"]) {
+              case "Claim Type":
+                if (this.checked.length == 1) {
+                  jsonStr += '{"ClaimType":"' + this.userClaimhistorydetails[item]["CLAIMTYPE"] + '"';
+                }
+                else {
+                  jsonStr += '{"ClaimType":"' + this.userClaimhistorydetails[item]["CLAIMTYPE"] + '",';
+                }
+                break;
+              case "Date":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Date":"' + this.userClaimhistorydetails[item]["TRAVEL_DATE"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Date":"' + this.userClaimhistorydetails[item]["TRAVEL_DATE"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Date":"' + this.userClaimhistorydetails[item]["TRAVEL_DATE"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Date":"' + this.userClaimhistorydetails[item]["TRAVEL_DATE"] + '",';
+                  }
+                }
+                break;
+              case "Status":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Status":"' + this.userClaimhistorydetails[item]["STATUS"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Status":"' + this.userClaimhistorydetails[item]["STATUS"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Status":"' + this.userClaimhistorydetails[item]["STATUS"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Status":"' + this.userClaimhistorydetails[item]["STATUS"] + '",';
+                  }
+                }
+                break;
+              case "Stage":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Stage":"' + this.userClaimhistorydetails[item]["STAGE"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Stage":"' + this.userClaimhistorydetails[item]["STAGE"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Stage":"' + this.userClaimhistorydetails[item]["STAGE"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Stage":"' + this.userClaimhistorydetails[item]["STAGE"] + '",';
+                  }
+                }
+                break;
+              case "Amount(RM)":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '",';
+                  }
+                }
+                break;
+            }
+            if (ctr == this.checked.length) {
+              jsonStr += '}';
+            }
+          }
+          this.ExcelData.push(JSON.parse(jsonStr));
+        }
+      }
+      this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
+    }
+    else {
+      alert('Please select one item.');
+    }
   }
 
   SearchClaimsData(ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
@@ -294,4 +426,5 @@ export class UserclaimslistPage {
 
     }
   }
+
 }

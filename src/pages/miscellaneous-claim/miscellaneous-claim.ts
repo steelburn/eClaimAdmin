@@ -116,7 +116,9 @@ export class MiscellaneousClaimPage {
                 this.claimRequestData = data["resource"];
 
               
-                this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
+                // this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null) 
+                this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID); 
                 this.ImageUploadValidation = true;
                 //this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
 
@@ -380,7 +382,7 @@ export class MiscellaneousClaimPage {
             this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
             this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
           }
-          this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(res => {
+          this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";
@@ -408,14 +410,14 @@ export class MiscellaneousClaimPage {
     this.displayImage = false;
   }
   imageURL: string;
-  DisplayImage(val: any) {
-    this.displayImage = true;
-    this.imageURL = val;
-    if (val !== null) { 
-      this.imageURL = this.api.getImageUrl(val); 
-      this.displayImage = true; 
-      this.isImage = this.api.isFileImage(val); 
-    }
-  }
+  // DisplayImage(val: any) {
+  //   this.displayImage = true;
+  //   this.imageURL = val;
+  //   if (val !== null) { 
+  //     this.imageURL = this.api.getImageUrl(val); 
+  //     this.displayImage = true; 
+  //     this.isImage = this.api.isFileImage(val); 
+  //   }
+  // }
 
 }

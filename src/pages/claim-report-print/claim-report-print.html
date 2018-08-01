@@ -1,0 +1,225 @@
+<!--
+  Generated template for the ClaimReportPrintPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>claim-report-print</ion-title>
+  </ion-navbar> -->
+
+</ion-header>
+
+<ion-content padding>
+
+
+  <body style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;">
+    <table width="100%" border="0" bgcolor="#cccccc">
+
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr bgcolor="#002060" style="background-color:#002060;">
+        <td align="center" valign="middle" bgcolor="#002060" colspan="4" style="border-right: none">
+          <h2 style="color:#FFFFFF;">CLAIM REPORT</h2>
+        </td>
+        <td colspan="3"  valign="middle" align="center" bgcolor="#002060" colspan=3 style="border-left: none">
+          <h2 style="color:#ffffff;">{{month}} {{year}}</h2>
+        </td>
+      </tr>
+      <tr *ngFor="let item of empData">
+        <td colspan="7" bgcolor="#ffffff">Company : {{item.tenant_company_name}}</td>
+      </tr>
+      <tr *ngFor="let item of empData">
+        <td colspan="4" bgcolor="#ffffff">Name : {{item.FULLNAME}}</td>
+        <td colspan="3" bgcolor="#ffffff">Department : {{item.department_name}}</td>
+      </tr>
+      <tr *ngFor="let item of empData">
+        <td colspan="4" bgcolor="#ffffff">Position :{{item.designation_name}}</td>
+        <td colspan="3" bgcolor="#ffffff">Approver :{{item.MANAGER}}</td>
+      </tr>
+      <tr>
+        <td colspan="7" bgcolor="#ffffff">&nbsp;</td>
+      </tr>
+    </table>
+    <table width="100%" border="0" bgcolor="#cccccc">
+      <tr style="color:#ffffff;">
+        <td align="center" bgcolor="#002060">Claim Date</td>
+        <td align="center" bgcolor="#002060">Type</td>
+        <td align="center" bgcolor="#002060">Details</td>
+        <td align="center" bgcolor="#002060">Mode</td>
+        <td align="center" bgcolor="#002060">From</td>
+        <td align="center" bgcolor="#002060">To</td>
+        <td align="center" bgcolor="#002060">Amount (RM)</td>
+      </tr>
+      <tr *ngFor="let claim of claimsListPrint">
+        <td align="left" valign="top" bgcolor="#ffffff">{{claim.TRAVEL_DATE | date:'d/M/y'}}</td>
+        <td align="left" valign="top" bgcolor="#ffffff">{{claim.TYPE}}</td>
+
+        <td align="left" bgcolor="#ffffff">
+          <table width="100%" style="border-bottom:1px solid grey">
+            <tr>
+              <td align="left" bgcolor="#ffffff"  valign="top" >{{claim.PROJECT_NAME}}/{{claim.SOC}} {{claim.CUSTOMER_NAME}}</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey">
+            <tr>
+              <td align="left" bgcolor="#ffffff">{{claim.DESCRIPTION}}</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV'">
+            <tr>
+              <td align="left" bgcolor="#ffffff">({{claim.DISTANCE_KM}}KM * RM{{claim.RATE_PER_UNIT}})</td>
+            </tr>
+          </table>
+
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.TollAmount!==0">
+            <tr>
+              <td align="left" bgcolor="#ffffff">Toll</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.ParkingAmount!==0">
+            <tr>
+              <td align="left" bgcolor="#ffffff">Parking</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.MealAmount!==0">
+            <tr>
+              <td align="left" bgcolor="#ffffff">Meal Allowance</td>
+            </tr>
+          </table>
+          <table width="100%" *ngIf="claim.TYPE==='TRV' && claim.AccAmount!==0">
+            <tr>
+              <td align="left" bgcolor="#ffffff">Accomodation</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='OT'">
+            <tr>
+              <td align="left" bgcolor="#ffffff">Start date/time : {{claim.START_TS | date:'d/M/y HH:mm'}}</td>
+            </tr>
+          </table>
+          <table width="100%" *ngIf="claim.TYPE==='OT'">
+            <tr>
+              <td align="left" bgcolor="#ffffff">End date / time: {{claim.END_TS | date:'d/M/y HH:mm'}}</td>
+            </tr>
+          </table>
+        </td>
+        <td align="left" valign="top" bgcolor="#ffffff">{{claim.MODE}}</td>
+        <td align="left" valign="top" bgcolor="#ffffff">{{claim.from}}</td>
+        <td align="left" valign="top" bgcolor="#ffffff">{{claim.to}}</td>
+        <td align="left" bgcolor="#ffffff">
+          <table width="100%">
+            <tr>
+              <td align="left" valign="top" bgcolor="#ffffff">{{claim.MILEAGE_AMOUNT | number:'1.2-2'}}
+
+
+ 
+                <table width="100%">
+                  <tr>
+                    <td align="left" bgcolor="#ffffff">&nbsp;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+    
+          <table width="100%" style="border-bottom:1px solid grey">
+            <tr>
+              <td align="left" bgcolor="#ffffff">&nbsp;</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey">
+            <tr>
+              <td align="left" bgcolor="#ffffff">&nbsp;</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey">
+            <tr>
+              <td align="left" bgcolor="#ffffff">&nbsp;</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.TollAmount!==0">
+            <tr>
+              <td align="left" bgcolor="#ffffff">{{claim.TollAmount | number:'1.2-2'}}</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.ParkingAmount!==0">
+            <tr>
+              <td align="left" bgcolor="#ffffff">{{claim.ParkingAmount | number:'1.2-2'}}</td>
+            </tr>
+          </table>
+          <table width="100%" style="border-bottom:1px solid grey" *ngIf="claim.TYPE==='TRV' && claim.MealAmount!==0">
+            <tr>
+              <td align="left" bgcolor="#ffffff">{{claim.MealAmount | number:'1.2-2'}}</td>
+            </tr>
+          </table>
+          <table width="100%" *ngIf="claim.TYPE==='TRV' && claim.AccAmount!==0">
+            <tr>
+              <td align="left" bgcolor="#ffffff">{{claim.AccAmount | number:'1.2-2'}}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC" colspan="2">TOTAL CLAIM AMOUNT</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">{{totalClaimAmount | number:'1.2-2'}}</td>
+      </tr>
+      <tr>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="left">&nbsp;</td>
+        <td align="left">&nbsp;</td>
+        <td align="left">&nbsp;</td>
+        <td align="left">&nbsp;</td>
+        <td align="left">&nbsp;</td>
+        <td align="left">&nbsp;</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+    </table>
+    <table width="100%" border="0" bgcolor="#cccccc">
+      <tr style="color:#ffffff;">
+        <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
+        <td align="right" bgcolor="#002060">Amount (RM)</td>
+      </tr>
+      <tr *ngFor="let claim of claimsListSummery">
+        <td align="left" bgcolor="#ffffff">&nbsp;</td>
+        <td align="left" bgcolor="#ffffff">{{claim.TRAVEL}}</td>
+        <td align="left" bgcolor="#ffffff">{{claim.MILEAGE}} </td>
+        <td align="left" bgcolor="#ffffff">{{claim.SHORTFORM}} </td>
+        <td colspan="2" align="left" bgcolor="#ffffff">&nbsp;</td>
+        <td align="right" bgcolor="#ffffff">{{claim.AMOUNT| number:'1.2-2'}}</td>
+      </tr>
+      <tr>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="left" bgcolor="#B3CCEC">TOTAL CLAIM AMOUNT</td>
+        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td colspan="2" align="left" bgcolor="#B3CCEC">&nbsp;</td>
+        <td align="right" bgcolor="#B3CCEC">{{totalClaimAmount | number:'1.2-2'}}</td>
+      </tr>
+
+    </table>
+
+  </body>
+</ion-content>
+
