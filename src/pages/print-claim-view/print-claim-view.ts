@@ -52,6 +52,9 @@ export class PrintClaimViewPage {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
+        element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+        element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+
         if (element.ATTACHMENT_ID !== null) { 
           this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
       }         

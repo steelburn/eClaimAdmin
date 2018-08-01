@@ -52,6 +52,10 @@ export class ClaimReportPage {
       .subscribe(data => {
         this.claimsListPrint = data["resource"];
         this.claimsList = this.claimsListPrint;
+        this.claimsList.forEach(element => {
+          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+    
+        });
         this.claimsListPrint.forEach(element => {
           this.totalClaimAmount = this.totalClaimAmount + element.Total;
         });

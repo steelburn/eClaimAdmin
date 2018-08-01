@@ -52,7 +52,10 @@ export class MiscellaneousClaimViewPage {
       this.claimRequestData.forEach(element => { 
         if (element.ATTACHMENT_ID !== null) { 
           this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
-      }         
+      }    
+      element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+      element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+   
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
       });
     })

@@ -92,6 +92,8 @@ export class UserclaimslistPage {
         this.userClaimhistorydetails1 = data["resource"];
         let key: any;
         this.userClaimhistorydetails1.forEach(element => {
+          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+
           if (element.STATUS === 'Rejected') {
             element.STAGE_GUID = null;
           }
