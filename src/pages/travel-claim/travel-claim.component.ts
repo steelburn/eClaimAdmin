@@ -143,7 +143,9 @@ export class TravelclaimPage {
     amount = Number(amount);
     if (amount > 99999) {
       alert('Amount should not exceed RM99999.')
-      this.travelAmountNgmodel = null
+      this.travelAmountNgmodel = null;
+      this.travelAmount = 0;
+      this.totalClaimAmount = 0;
     }
     else {
       this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
@@ -173,7 +175,9 @@ export class TravelclaimPage {
             this.claimRequestData = data["resource"];
             this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
               this.paymentTypes = data["resource"];            
-                this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
+                // this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null) 
+                this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID); 
               this.PublicTransValue = true;
               this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
               this.totalClaimAmount = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
@@ -297,12 +301,22 @@ export class TravelclaimPage {
     return new Promise((resolve) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
-        this.claimDetailsData.forEach(element => {           
+        this.claimDetailsData.forEach(element => {
+          if (element.ATTACHMENT_ID !== null) 
+          element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);            
           this.tollParkAmount += element.AMOUNT;
         });
         if (this.isFormSubmitted) {
           this.tollParkAmount = this.tollParkAmount === undefined ? 0 : this.tollParkAmount;
           this.totalClaimAmount = this.travelAmount + this.tollParkAmount;
+
+          this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+          .subscribe(data => {
+            this.claimRequestData = data;          
+            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.totalClaimAmount;
+            this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
+            })
+          })
         }
         else
           this.totalClaimAmount = 0;
@@ -567,19 +581,19 @@ export class TravelclaimPage {
   imageGUID: any;
  
   displayImage: any
-  CloseDisplayImage() {
-    this.displayImage = false;
-  }
-  imageURL: string;
-  DisplayImage(val: any) {
-    this.displayImage = true;
-    this.imageURL = val;
-    if (val !== null) { 
-      this.imageURL = this.api.getImageUrl(val); 
-      this.displayImage = true; 
-      this.isImage = this.api.isFileImage(val); 
-    }
-  }
+  // CloseDisplayImage() {
+  //   this.displayImage = false;
+  // }
+  // imageURL: string;
+  // DisplayImage(val: any) {
+  //   this.displayImage = true;
+  //   this.imageURL = val;
+  //   if (val !== null) { 
+  //     this.imageURL = this.api.getImageUrl(val); 
+  //     this.displayImage = true; 
+  //     this.isImage = this.api.isFileImage(val); 
+  //   }
+  // }
 
   isImage: boolean = false;
   onFileChange(event: any) {
@@ -776,7 +790,7 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
             }
 
-            this.api.updateApiModel('main_claim_request', this.claimRequestData).subscribe(() => {
+            this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
               //Send Email------------------------------------------------
               this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
               //----------------------------------------------------------

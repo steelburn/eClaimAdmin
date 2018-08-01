@@ -134,7 +134,9 @@ export class EntertainmentclaimPage {
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
 
-                  this.imageURLEdit =this.claimRequestData[0].ATTACHMENT_ID;
+                  // this.imageURLEdit =this.claimRequestData[0].ATTACHMENT_ID;
+                  if (this.claimRequestData[0].ATTACHMENT_ID !== null) 
+                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID); 
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
@@ -425,7 +427,7 @@ export class EntertainmentclaimPage {
           }
           //this.claimRequestData[0].STATUS = 'Pending';
           // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
-          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(() => {
+          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";
@@ -454,13 +456,13 @@ export class EntertainmentclaimPage {
     this.displayImage = false;
   }
   imageURL: string;
-  DisplayImage(val: any) {
-    this.displayImage = true;
-    this.imageURL = val;
-    if (val !== null) { 
-      this.imageURL = this.apiMng.getImageUrl(val); 
-      this.displayImage = true; 
-      this.isImage = this.apiMng.isFileImage(val); 
-    }
-  }  
+  // DisplayImage(val: any) {
+  //   this.displayImage = true;
+  //   this.imageURL = val;
+  //   if (val !== null) { 
+  //     this.imageURL = this.apiMng.getImageUrl(val); 
+  //     this.displayImage = true; 
+  //     this.isImage = this.apiMng.isFileImage(val); 
+  //   }
+  // }  
 } 

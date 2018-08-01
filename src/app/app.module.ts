@@ -85,7 +85,8 @@ import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
 import { UserclaimslistPage } from '../pages/userclaimslist/userclaimslist'
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
-
+import { ClaimReportUserPage } from '../pages/claim-report-user/claim-report-user';
+import { ClaimReportPrintPage } from '../pages/claim-report-print/claim-report-print';
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
@@ -168,7 +169,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MonthlyClaimReportPage,
     CustomerSetupPage,
     ChangePasswordPage,
-    DashboardPage, ImportExcelDataPage
+    DashboardPage, ImportExcelDataPage,
+    ClaimReportUserPage,
+    ClaimReportPrintPage
   ],
 
   imports: [
@@ -209,7 +212,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
         { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
         { component: ClaimhistorydetailPage, name: 'ClaimhistorydetailPage', segment: 'ClaimhistorydetailPage' },
         { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
-        { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' }
+        { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' },
+        { component: ClaimReportUserPage, name: 'ClaimReportUserPage', segment: 'ClaimReportUserPage' }
      
       ]
     }),
@@ -286,7 +290,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CustomerSetupPage,
 
     ChangePasswordPage,
-    DashboardPage, ImportExcelDataPage 
+    DashboardPage, ImportExcelDataPage,
+    ClaimReportUserPage,
+    ClaimReportPrintPage
 
 
   ],

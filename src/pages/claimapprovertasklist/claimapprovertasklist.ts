@@ -40,13 +40,16 @@ export class ClaimapprovertasklistPage {
   loginUserRole = localStorage.getItem("g_ROLE_NAME");
   claimreqData: any[];
   buttonText:string;
+
   public page:number = 1;
+  FinanceLogin: boolean = false;
 
   deptList: any[];
   employeeList: any[];
   claimTypeList: any[];
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
+  // Pending: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
@@ -55,6 +58,7 @@ export class ClaimapprovertasklistPage {
     // alert(this.claimrefguid);
 
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
+      this.FinanceLogin = true;
       if (this.loginUserRole === "Finance Admin") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
      this.buttonText="Pay";
@@ -68,10 +72,17 @@ export class ClaimapprovertasklistPage {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' +this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.buttonText="Approve";
     }
+    // this.Pending = navParams.get("Pending");
     this.BindEmployeesbyDepartment();
     this.BindClaimTypes();
     this.BindYears();
     this.BindData();
+    // alert(this.Pending);
+    // this.searchboxValue = this.Pending ;
+    // if (this.searchboxValue != undefined) {
+    //   this.onSearchInput( this.Pending);
+    // }
+    // else { this.BindData(); }
   }
   BindData() {
     this.http
@@ -102,6 +113,7 @@ export class ClaimapprovertasklistPage {
 
   onSearchInput() {
     // alert('hi')
+    // alert(this.searchboxValue);
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
       this.claimrequestdetails = this.claimrequestdetails1.filter((item) => {
@@ -244,7 +256,7 @@ count:number =0;
           else
             claimRefObj["resource"][0].STATUS = 'Paid';
           //debugger;
-          this.api.updateApiModel('main_claim_ref', claimRefObj).subscribe(() => {
+          this.api.updateApiModel('main_claim_ref', claimRefObj, false).subscribe(() => {
             alert('Claim has been Approved.');
             this.navCtrl.push(ClaimtasklistPage);
           })

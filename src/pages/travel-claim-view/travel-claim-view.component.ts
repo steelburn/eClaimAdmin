@@ -47,6 +47,7 @@ export class TravelClaimViewPage {
         this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted,1);
      }
     
+     imageURL: any;
      isImage: boolean = false;   
      TravelType: any;
      LoadMainClaim() {
@@ -54,11 +55,14 @@ export class TravelClaimViewPage {
       claimResult.then((tollorParkAmount: number) => {
         this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
           this.claimRequestData = res['resource'];
-          this.claimRequestData.forEach(element => {             
+          this.claimRequestData.forEach(element => {
+            if (element.ATTACHMENT_ID !== null) { 
+              this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
+            }
               this.TravelType = element.TRAVEL_TYPE === '0' ? 'Local' : 'Outstation';
-            this.totalClaimAmount = element.MILEAGE_AMOUNT;
+            this.totalClaimAmount = element.CLAIM_AMOUNT;
           });
-          this.totalClaimAmount += tollorParkAmount;
+        //  this.totalClaimAmount += tollorParkAmount;
         })
       })
     }  
@@ -67,7 +71,10 @@ export class TravelClaimViewPage {
     return new Promise((resolve) => {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
-        this.claimDetailsData.forEach(element => {              
+        this.claimDetailsData.forEach(element => {
+          if (element.ATTACHMENT_ID !== null) { 
+            element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID); 
+          }               
           this.tollParkAmount += element.AMOUNT;
         });
         resolve(this.tollParkAmount);
@@ -93,20 +100,20 @@ export class TravelClaimViewPage {
   }
 
   displayImage: any
-  CloseDisplayImage() {
-    this.displayImage = false;
-  }
+  // CloseDisplayImage() {
+  //   this.displayImage = false;
+  // }
 
-  imageURL: string;
-  DisplayImage(val: any) {
-    this.displayImage = true;
-    this.imageURL = val;
-    if (val !== null) { 
-      this.imageURL = this.api.getImageUrl(val); 
-      this.displayImage = true; 
-      this.isImage = this.api.isFileImage(val); 
-    }
-  }
+  // imageURL: string;
+  // DisplayImage(val: any) {
+  //   this.displayImage = true;
+  //   this.imageURL = val;
+  //   if (val !== null) { 
+  //     this.imageURL = this.api.getImageUrl(val); 
+  //     this.displayImage = true; 
+  //     this.isImage = this.api.isFileImage(val); 
+  //   }
+  // }
 
   
   isImageUrl: boolean = true; 

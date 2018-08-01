@@ -182,8 +182,8 @@ z-index: 9999;
 
   .round2 {
     float: left;
-    width: calc(25% - 20px) ;
-    margin: 10px !important;
+    width: calc(25% - 10px) ;
+    margin: 5px !important;
 
     cursor: pointer;
     border-radius: 5px;
@@ -192,8 +192,18 @@ z-index: 9999;
 
   .round3 {
     float: left;
-    width: calc(50% - 20px);
-    margin: 10px !important;
+    width: calc(50% - 10px);
+    margin: 5px !important;
+ 
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
+
+  .round30 {
+    float: left;
+    width: calc(50% - 10px);
+    margin: 5px !important;
  
     cursor: pointer;
     border-radius: 5px;
@@ -201,6 +211,15 @@ z-index: 9999;
   }
 
 
+  .round4 {
+    float: left;
+    width: calc(100% - 10px);
+    margin: 5px !important;
+ 
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
 
   .icon {
     text-align: center;
@@ -685,9 +704,15 @@ button[ion-fab] {
         display: none;
     }
 
+    .round30 {
+     
+        width: calc(100% - 10px);
+     
+      }
+    
     
   .round2 {
-    width: calc(100% - 20px) ;
+    width: calc(100% - 10px) ;
   }
 
   .hid{
@@ -698,14 +723,14 @@ button[ion-fab] {
 
 @media (min-width: 450px) and (max-width: 1138px){
     .round3{
-        width: calc(100% - 20px);
+        width: calc(100% - 10px);
     }
     .hide{
         width: calc(100% - 20px);
     }
   .round2 {
 
-    width: calc(50% - 20px) ;
+    width: calc(50% - 10px) ;
 
   }
 

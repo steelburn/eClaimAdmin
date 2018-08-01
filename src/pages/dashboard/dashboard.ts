@@ -47,6 +47,11 @@ export class DashboardPage {
   loading: Loading;
 
   // Role Based Dashboard Details
+  // i:any;
+  yeardata: any[] = [];
+  MONTH:any; YEAR:any;
+  chart1:boolean=false;
+  chart2:boolean=false;
   IsApprover: boolean = false;
   IsFinanceExecutive: boolean = false;
   IsFinanceManager: boolean = false;
@@ -66,17 +71,26 @@ export class DashboardPage {
       'Month': [null, Validators.compose([Validators.required])],
       'Year': [null, Validators.compose([Validators.required])]
     })
+    
     this.baseResourceUrl_New = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     var current_date = new Date();
     this.month_value = current_date.getMonth();
-    this.Month_Change_ngModel = this.month_value + 1;
     this.year_value = current_date.getFullYear();
-    this.Year_Change_ngModel = this.year_value;
+    this.Month_Change_ngModel = this.month_value + 1;
 
+    let Year_ngModel = this.monthNames(this.Month_Change_ngModel) + " " + this.year_value;   
+    this.Year_Change_ngModel = Year_ngModel;
+    //  alert(this.Year_Change_ngModel)
+   
+    // For web
+    // this.Year_Change_ngModel = this.year_value;
+    this.MONTH = this.monthNames(this.Month_Change_ngModel);
+    this.YEAR = this.year_value;
     // console.log(this.baseResourceUrl_New)
     this.GetDashboardInfo();
     this.GetInfoForCards();
     this.GetData_Years();
+    this.GetData_filter();
     this.GetRoleDashboard();
     
   }
@@ -151,7 +165,6 @@ export class DashboardPage {
         if (chart.config.options.plugin_one_attribute === 'chart1') {
           // alert('hi')
           // Plugin code here...    
-
           var data = chart.data.datasets[0].data;
           var sum = data.reduce(function (a: any, b: any) {
             var x = a + b;
@@ -168,7 +181,6 @@ export class DashboardPage {
           ctx.textBaseline = "middle";
           ctx.fillStyle = "blue";
           ctx.fontStyle = "bold";
-
           if (sum != 0) {
             // var text = sum,
             var text = sum.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
@@ -176,8 +188,10 @@ export class DashboardPage {
               // var text = this.numberPipe.transform(sum, '1.2-2'),          
               textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 1.9;
+              this.chart1=true;
           }
           else {
+            this.chart1=false;
             text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 2;
           }
@@ -212,8 +226,10 @@ export class DashboardPage {
               // var text = this.numberPipe.transform(sum, '1.2-2'),          
               textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 1.9;
+              this.chart2=true;
           }
           else {
+            this.chart2=false;
             text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 2;
           }
@@ -224,8 +240,8 @@ export class DashboardPage {
     });
 
   }
-  ionViewDidLoad() {
 
+  ionViewDidLoad() {
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
@@ -332,6 +348,60 @@ export class DashboardPage {
     },
   }
   // Role Based Dashboard
+  monthNames(monthNumber:any) {
+    var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    return monthNames[monthNumber - 1];
+
+  }
+  GetData_filter() {
+    console.log(this.baseResourceUrl_New);
+    this.http
+      .get(this.baseResourceUrl_New)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.years_data = data["resource"];
+
+        if (this.years_data.length == 0) {
+          // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
+          this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
+          // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
+          //return;
+          this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
+          this.Pending_Claim_Count; this.Pending_Claim_Amount;
+          this.Approved_Claim_Count; this.Approved_Claim_Amount;
+        }
+        else {
+          //alert(this.Year_Change_ngModel)
+          let tempdata: any; let id: any;
+          tempdata = {
+            MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
+            CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
+          };
+
+          let item;
+          //  let i;
+          this.years_data.some((i:any) => {
+            if (i.MONTH === this.MONTH) {
+              item = i;
+              return true;
+            }
+            return false;
+          });
+          if (item) {
+            this.yeardata = this.years_data;
+          }
+          else {
+
+            this.years_data.push(tempdata);
+          }
+          this.yeardata = this.years_data;
+        }
+
+      });
+      console.table(this.yeardata);
+  }
+
   GetRoleDashboard() {
     // alert('hi1');
     
@@ -342,7 +412,7 @@ export class DashboardPage {
       .map(res => res.json())
       .subscribe(data => {
         this.roleBasedData = data["resource"][0];
-      console.table( this.roleBasedData);
+      // console.table( this.roleBasedData);
       // console.log( this.roleBasedData.length);
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
           this.ApproverLevel_PendAmount = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel;
@@ -382,6 +452,7 @@ export class DashboardPage {
       });     
      
   }
+
   RoleFIlter()
   {
     if ((this.ApproverLevel_PendAmount != "0.00" || this.ApproverLevel_PendAmount !=undefined) &&
@@ -415,6 +486,7 @@ export class DashboardPage {
        this.IsFinanceManager=false;
      }
   }
+
   Month_Changed(value: any) {
     //alert(value)
     this.month_value = value;
@@ -422,9 +494,20 @@ export class DashboardPage {
     this.GetInfoForCards();
     this.GetRoleDashboard();
   }
+  // Year_Changed(value: any) {
+  //   //alert(value)
+  //   this.year_value = value;
+  //   this.GetDashboardInfo();
+  //   this.GetInfoForCards();
+  //   this.GetRoleDashboard();
+  // }
+  // From Mobile
   Year_Changed(value: any) {
-    //alert(value)
-    this.year_value = value;
+    let stringToSplit = value;
+    // console.log(stringToSplit.split(" ")[0]);
+    // console.log(stringToSplit.split(" ")[2]);
+    this.Month_Change_ngModel = stringToSplit.split(" ")[0]
+    this.year_value = stringToSplit.split(" ")[1];
     this.GetDashboardInfo();
     this.GetInfoForCards();
     this.GetRoleDashboard();
@@ -432,7 +515,7 @@ export class DashboardPage {
   GetDashboardInfo() {
 
     if (this.month_value != undefined) {
-      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       // console.log('hi ' + this.baseResourceUrl)
     }
     this.http
@@ -442,7 +525,8 @@ export class DashboardPage {
         this.claimrequestdetails = data["resource"][0];
         // console.table(this.claimrequestdetails)
         if (data["resource"][0] != null) {
-
+          this.chart1=true;
+          this.chart2=true;
           var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
           var pending = parseInt(this.claimrequestdetails.PendingReqCount);
           var rejected = parseInt(this.claimrequestdetails.RejectedReqCount);
@@ -519,6 +603,8 @@ export class DashboardPage {
         }
 
         else {
+          this.chart1=false;
+          this.chart2=false;
           approve = 0;
           pending = 0;
           rejected = 0;
@@ -662,15 +748,17 @@ export class DashboardPage {
   }
   Approver_Click()
   {
-    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+    // this.navCtrl.setRoot('ClaimapprovertasklistPage', { Pending: "Pending" });
+    this.navCtrl.setRoot('ClaimapprovertasklistPage');
   }
   Finance_Executive_Click()
   {
-    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+    // this.navCtrl.setRoot('ClaimtasklistPage', { Pending: "Pending" });
+    this.navCtrl.setRoot('ClaimtasklistPage');
   }
   Finance_Manager_Click()
   {
-    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+    this.navCtrl.setRoot('ClaimtasklistPage');
   }
 
 }
