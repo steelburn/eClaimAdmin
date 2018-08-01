@@ -98,6 +98,7 @@ export class ClaimhistorydetailPage {
         this.claimhistorydetails = data["resource"];
         if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
           this.claimhistorydetails.forEach(element => {
+            element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
             if (element.STATUS.toString() === "Approved" && element.PROFILE_LEVEL.toString() === "3") { element.STATUS = "Paid"; }
           });
         }
