@@ -399,7 +399,7 @@ export class PrintclaimPage {
           }
           //this.claimRequestData[0].STATUS = 'Pending';
           // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
-          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData).subscribe(() => {
+          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";

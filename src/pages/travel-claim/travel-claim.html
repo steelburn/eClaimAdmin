@@ -137,9 +137,10 @@
     </ion-item>
 
     <div *ngIf="imageURLEdit!==null">
-      <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
+      <!-- <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
         View Receipt
-      </button>
+      </button> -->
+      <a href={{imageURLEdit}} target='_blank'>View Receipt</a>  
     </div>
 
     <div *ngIf= "isImage">
@@ -276,9 +277,10 @@
               <td class="lgl1">{{item.PAYMENT_TYPE}}</td>
               <td class="lgl1" text-wrap>{{item.DESCRIPTION}}</td>
               <td class="lgl1">
-                <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)" *ngIf="item.ATTACHMENT_ID!==null">
+                <!-- <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)" *ngIf="item.ATTACHMENT_ID!==null">
                   Receipt
-                </button>
+                </button> -->
+                <a href={{imageURLEdit}} target='_blank' *ngIf="item.ATTACHMENT_ID!=null">Receipt</a>
               </td>
               <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
               <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>

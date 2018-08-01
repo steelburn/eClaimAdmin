@@ -412,7 +412,7 @@ export class DashboardPage {
       .map(res => res.json())
       .subscribe(data => {
         this.roleBasedData = data["resource"][0];
-      console.table( this.roleBasedData);
+      // console.table( this.roleBasedData);
       // console.log( this.roleBasedData.length);
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
           this.ApproverLevel_PendAmount = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel;
@@ -515,7 +515,7 @@ export class DashboardPage {
   GetDashboardInfo() {
 
     if (this.month_value != undefined) {
-      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       // console.log('hi ' + this.baseResourceUrl)
     }
     this.http

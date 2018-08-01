@@ -6,10 +6,12 @@
 -->
 <ion-header>
 
+
   <ion-navbar color="primary200">
   <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
   </button>
+
     <ion-title>Claim Report</ion-title>
   </ion-navbar>
 
@@ -23,8 +25,10 @@
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
           <th class="lgl1">Month</th>
+
           <th class="lgl1 tblBrRight" style="width:90px">Action</th>
       
+
         </tr>
 
         <tr class="col7" *ngFor="let item of monthsList; let i=index">
@@ -41,4 +45,7 @@
 
 <div id="printSectionId" hidden>
   <page-claim-report-print [claimsListPrint]="claimsListPrint" [claimsListSummery]="claimsListSummery" [empData]="empData" [year]="year" [month]="month" [totalClaimAmount]="totalClaimAmount"></page-claim-report-print>
+
+
 </div>
+
