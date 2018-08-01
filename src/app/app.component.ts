@@ -341,7 +341,7 @@ export class ConferenceApp {
           this.reportPages = [
             // { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'My Claim Report', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
+            { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
           ];
 
           this.setupsPages = [
@@ -395,8 +395,10 @@ export class ConferenceApp {
 
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
-            { title: 'My Claim Report', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
-            { title: 'Finance Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' }
+
+            { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
+            { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' }
+         
 
           ];
 
@@ -461,8 +463,9 @@ export class ConferenceApp {
 
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
-            { title: 'My Claim Report', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
-            { title: 'Finance Claim Report', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' }
+
+            { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
+            { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' }
 
           ];
 
@@ -502,7 +505,7 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'My Claim Report', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
+            { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
          
           ];
 
@@ -554,7 +557,7 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
-            { title: 'My Claim Report', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
+            { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -594,7 +597,7 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
-            { title: 'My Claim Report', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
+            { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
 
           ];
 
