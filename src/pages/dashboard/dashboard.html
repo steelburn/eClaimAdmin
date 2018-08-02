@@ -65,7 +65,8 @@
 
 </ion-card>
 
-<ion-card  class="round4" *ngIf="IsFinanceExecutive" (click)="Finance_Executive_Click()" color="war">
+<!-- *ngIf="IsFinanceExecutive" -->
+<ion-card  class="round4" *ngIf="IsFinanceExecutive"  (click)="Finance_Executive_Click()" color="war">
     <div class="icondash">
         <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
         <h2 class="dashhead">Pending Finance Approval</h2>
@@ -80,7 +81,7 @@
 
 
 </ion-card>
-
+<!-- *ngIf="IsFinanceManager" -->
 <ion-card  class="round30" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war">
     <div class="icondash">
         <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
