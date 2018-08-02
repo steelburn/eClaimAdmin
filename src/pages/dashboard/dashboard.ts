@@ -48,10 +48,11 @@ export class DashboardPage {
 
   // Role Based Dashboard Details
   // i:any;
+  role_name: any;
   yeardata: any[] = [];
-  MONTH:any; YEAR:any;
-  chart1:boolean=false;
-  chart2:boolean=false;
+  MONTH: any; YEAR: any;
+  chart1: boolean = false;
+  chart2: boolean = false;
   IsApprover: boolean = false;
   IsFinanceExecutive: boolean = false;
   IsFinanceManager: boolean = false;
@@ -71,28 +72,33 @@ export class DashboardPage {
       'Month': [null, Validators.compose([Validators.required])],
       'Year': [null, Validators.compose([Validators.required])]
     })
-    
+
     this.baseResourceUrl_New = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     var current_date = new Date();
     this.month_value = current_date.getMonth();
     this.year_value = current_date.getFullYear();
     this.Month_Change_ngModel = this.month_value + 1;
 
-    let Year_ngModel = this.monthNames(this.Month_Change_ngModel) + " " + this.year_value;   
+    this.Month_Change_ngModel = this.monthNames(this.Month_Change_ngModel);
+
+    // let Year_ngModel = this.monthNames(this.Month_Change_ngModel) + " " + this.year_value;   
+    let Year_ngModel = this.Month_Change_ngModel + " " + this.year_value;
     this.Year_Change_ngModel = Year_ngModel;
     //  alert(this.Year_Change_ngModel)
-   
+
     // For web
     // this.Year_Change_ngModel = this.year_value;
-    this.MONTH = this.monthNames(this.Month_Change_ngModel);
+    // this.MONTH = this.monthNames(this.Month_Change_ngModel);
+    this.MONTH = this.Month_Change_ngModel;
     this.YEAR = this.year_value;
     // console.log(this.baseResourceUrl_New)
+    this.GetRoleName();
     this.GetDashboardInfo();
     this.GetInfoForCards();
     this.GetData_Years();
-    this.GetData_filter();
+    // this.GetData_filter();
     this.GetRoleDashboard();
-    
+    this.GetRoleDashboard_Year();
   }
   // Unique and Sort years
   sortUnique(arr: any) {
@@ -115,7 +121,65 @@ export class DashboardPage {
       return result;
     }
   }
+  GetRoleName() {
+    //Get the role of that particular user----------------------------------------------
+    let role_url: string = "";
+    let result: any;
+    // let baseResource_Url_role: string = constants.DREAMFACTORY_TABLE_URL;
+    role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log(role_url)
+    this.http
+      .get(role_url)
+      .map(res => res.json())
+      .subscribe(data => {
+        let role_result = data["resource"];
 
+        if (role_result.length > 0) {
+          this.role_name = role_result[0]["ROLE_NAME"];
+          //  localStorage.setItem("g_ROLE_NAME")=role_name;
+          localStorage.setItem("g_ROLE_NAME", this.role_name);
+          //  localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
+          //  localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
+          //  localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
+          //  localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
+          // alert(localStorage.getItem("g_ROLE_NAME"));
+        }
+        else {
+          //  localStorage.setItem("g_KEY_VIEW", "1");
+          //  localStorage.removeItem("g_ROLE_NAME");
+        }
+        if (localStorage.getItem("g_ROLE_NAME") === "Team Lead" || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD") {
+          this.IsApprover = true;
+        }
+        // else
+        // {
+        //   this.IsFinanceExecutive=false;
+        //   this.IsFinanceManager=false;
+        // }
+        // Finance Executive
+        if (localStorage.getItem("g_ROLE_NAME") === "Finance Executive") {
+          this.IsFinanceExecutive = true;
+        }
+        // else
+        // {
+        //   this.IsApprover=false;
+        //   this.IsFinanceManager=false;
+        // }
+    
+        if (localStorage.getItem("g_ROLE_NAME") === "Finance Manager" || localStorage.getItem("g_ROLE_NAME") === "Finance Admin") {
+          this.IsFinanceManager = true;
+          this.IsApprover = true;
+        }
+        // else
+        // {
+        //   this.IsApprover=false;
+        //   this.IsFinanceExecutive=false;
+        // }
+        this.GetData_filter();
+      });
+    // localStorage.setItem("g_ROLE_NAME",  this.role_name);
+    //----------------------------------------------------------------------------------
+  }
   // ngOnInit() {     
   //   // this.loading = this.loadingCtrl.create({
   //   //   content: 'Loading...',
@@ -156,7 +220,7 @@ export class DashboardPage {
   // }
 
   ngOnInit() {
-
+    // this.GetRoleName();
     // register plugin
     // var ctx = document.getElementById("myChart");
     // var myChart = new Chart(ctx);
@@ -188,10 +252,10 @@ export class DashboardPage {
               // var text = this.numberPipe.transform(sum, '1.2-2'),          
               textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 1.9;
-              this.chart1=true;
+            this.chart1 = true;
           }
           else {
-            this.chart1=false;
+            this.chart1 = false;
             text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 2;
           }
@@ -226,10 +290,10 @@ export class DashboardPage {
               // var text = this.numberPipe.transform(sum, '1.2-2'),          
               textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 1.9;
-              this.chart2=true;
+            this.chart2 = true;
           }
           else {
-            this.chart2=false;
+            this.chart2 = false;
             text = 'Data Not Available', textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 2;
           }
@@ -348,144 +412,247 @@ export class DashboardPage {
     },
   }
   // Role Based Dashboard
-  monthNames(monthNumber:any) {
+  monthNames(monthNumber: any) {
     var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'];
     return monthNames[monthNumber - 1];
 
   }
   GetData_filter() {
-    console.log(this.baseResourceUrl_New);
-    this.http
-      .get(this.baseResourceUrl_New)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.years_data = data["resource"];
+    // alert(localStorage.getItem("g_ROLE_NAME"));
+    // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    if (localStorage.getItem("g_ROLE_NAME") === "Finance Executive" || localStorage.getItem("g_ROLE_NAME") === "Team Lead"
+      || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD" ||
+      localStorage.getItem("g_ROLE_NAME") === "Finance Manager" || localStorage.getItem("g_ROLE_NAME") === "Finance Admin") {
+      console.log(this.baseResource_RoleUrl);
+      this.http
+        .get(this.baseResource_RoleUrl)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.years_data = data["resource"];
 
-        if (this.years_data.length == 0) {
-          // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
-          this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
-          // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
-          //return;
-          this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
-          this.Pending_Claim_Count; this.Pending_Claim_Amount;
-          this.Approved_Claim_Count; this.Approved_Claim_Amount;
-        }
-        else {
-          //alert(this.Year_Change_ngModel)
-          let tempdata: any; let id: any;
-          tempdata = {
-            MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
-            CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
-          };
-
-          let item;
-          //  let i;
-          this.years_data.some((i:any) => {
-            if (i.MONTH === this.MONTH) {
-              item = i;
-              return true;
-            }
-            return false;
-          });
-          if (item) {
-            this.yeardata = this.years_data;
+          if (this.years_data.length == 0) {
+            // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
+            this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
+            // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
+            //return;
+            this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
+            this.Pending_Claim_Count; this.Pending_Claim_Amount;
+            this.Approved_Claim_Count; this.Approved_Claim_Amount;
           }
           else {
+            //alert(this.Year_Change_ngModel)
+            let tempdata: any; let id: any;
+            tempdata = {
+              MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
+              CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
+            };
 
-            this.years_data.push(tempdata);
+            let item;
+            //  let i;
+            this.years_data.some((i: any) => {
+              if (i.MONTH === this.MONTH) {
+                item = i;
+                return true;
+              }
+              return false;
+            });
+            if (item) {
+              this.yeardata = this.years_data;
+            }
+            else {
+
+              this.years_data.push(tempdata);
+            }
+            this.yeardata = this.years_data;
           }
-          this.yeardata = this.years_data;
-        }
 
-      });
+        });
       console.table(this.yeardata);
+    }
+    else {
+      console.log(this.baseResourceUrl_New);
+      this.http
+        .get(this.baseResourceUrl_New)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.years_data = data["resource"];
+
+          if (this.years_data.length == 0) {
+            // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
+            this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
+            // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
+            //return;
+            this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
+            this.Pending_Claim_Count; this.Pending_Claim_Amount;
+            this.Approved_Claim_Count; this.Approved_Claim_Amount;
+          }
+          else {
+            //alert(this.Year_Change_ngModel)
+            let tempdata: any; let id: any;
+            tempdata = {
+              MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
+              CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
+            };
+
+            let item;
+            //  let i;
+            this.years_data.some((i: any) => {
+              if (i.MONTH === this.MONTH) {
+                item = i;
+                return true;
+              }
+              return false;
+            });
+            if (item) {
+              this.yeardata = this.years_data;
+            }
+            else {
+
+              this.years_data.push(tempdata);
+            }
+            this.yeardata = this.years_data;
+          }
+
+        });
+      console.table(this.yeardata);
+    }
   }
 
   GetRoleDashboard() {
     // alert('hi1');
-    
-    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     console.log("Role " + this.baseResource_RoleUrl);
     this.http
       .get(this.baseResource_RoleUrl)
       .map(res => res.json())
       .subscribe(data => {
         this.roleBasedData = data["resource"][0];
-      console.table( this.roleBasedData);
-      // console.log( this.roleBasedData.length);
+        // console.table( this.roleBasedData);
+        // console.log( this.roleBasedData.length);
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
           this.ApproverLevel_PendAmount = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel;
           this.ApproverLevel_PendCount = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel;
-          this.ApproverLevel_PendAmount_Year = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel_Year;
-          this.ApproverLevel_PendCount_Year = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel_Year;
+          // this.ApproverLevel_PendAmount_Year = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel_Year;
+          // this.ApproverLevel_PendCount_Year = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel_Year;
 
           this.FinanceExecLevel_PendAmt = this.roleBasedData.PendingAmount_Fe_FinalLevel;
           this.FinanceExecLevel_PendCount = this.roleBasedData.PendingCount_Fe_FinalLevel;
-          this.FinanceExecLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fe_FinalLevel_Year;
-          this.FinanceExecLevel_PendCount_Year = this.roleBasedData.PendingCount_Fe_FinalLevel_Year;
+          // this.FinanceExecLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fe_FinalLevel_Year;
+          // this.FinanceExecLevel_PendCount_Year = this.roleBasedData.PendingCount_Fe_FinalLevel_Year;
 
           this.FinanceMgrLevel_PendAmt = this.roleBasedData.PendingAmount_Fm_MgrLevel;
           this.FinanceMgrLevel_PendCount = this.roleBasedData.PendingCount_Fm_MgrLevel;
-          this.FinanceMgrLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fm_MgrLevel_Year;
-          this.FinanceMgrLevel_PendCount_Year = this.roleBasedData.PendingCount_Fm_MgrLevel_Year;
+          // this.FinanceMgrLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fm_MgrLevel_Year;
+          // this.FinanceMgrLevel_PendCount_Year = this.roleBasedData.PendingCount_Fm_MgrLevel_Year;
 
-          this.RoleFIlter();
+          // this.RoleFIlter();
         }
         else {
           this.ApproverLevel_PendAmount = "0.00";
           this.ApproverLevel_PendCount = 0;
-          this.ApproverLevel_PendAmount_Year = "0.00";
-          this.ApproverLevel_PendCount_Year = 0;
+          // this.ApproverLevel_PendAmount_Year = "0.00";
+          // this.ApproverLevel_PendCount_Year = 0;
 
           this.FinanceExecLevel_PendAmt = "0.00";
           this.FinanceExecLevel_PendCount = 0;
-          this.FinanceExecLevel_PendAmt_Year = "0.00";
-          this.FinanceExecLevel_PendCount_Year = 0;
+          // this.FinanceExecLevel_PendAmt_Year = "0.00";
+          // this.FinanceExecLevel_PendCount_Year = 0;
 
           this.FinanceMgrLevel_PendAmt = "0.00";
           this.FinanceMgrLevel_PendCount = 0;
+          // this.FinanceMgrLevel_PendAmt_Year = "0.00";
+          // this.FinanceMgrLevel_PendCount_Year = 0;
+          // this.RoleFIlter();
+        }
+      });
+
+  }
+  GetRoleDashboard_Year() {
+    // alert('hi1');
+
+    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard_year?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log("Role_year " + this.baseResource_RoleUrl);
+    this.http
+      .get(this.baseResource_RoleUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.roleBasedData = data["resource"][0];
+        // console.table( this.roleBasedData);
+        // console.log( this.roleBasedData.length);
+        if (data["resource"][0] != null && data["resource"][0] != undefined) {
+          // this.ApproverLevel_PendAmount = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel;
+          // this.ApproverLevel_PendCount = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel;
+          this.ApproverLevel_PendAmount_Year = this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel_Year;
+          this.ApproverLevel_PendCount_Year = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel_Year;
+
+          // this.FinanceExecLevel_PendAmt = this.roleBasedData.PendingAmount_Fe_FinalLevel;
+          // this.FinanceExecLevel_PendCount = this.roleBasedData.PendingCount_Fe_FinalLevel;
+          this.FinanceExecLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fe_FinalLevel_Year;
+          this.FinanceExecLevel_PendCount_Year = this.roleBasedData.PendingCount_Fe_FinalLevel_Year;
+
+          // this.FinanceMgrLevel_PendAmt = this.roleBasedData.PendingAmount_Fm_MgrLevel;
+          // this.FinanceMgrLevel_PendCount = this.roleBasedData.PendingCount_Fm_MgrLevel;
+          this.FinanceMgrLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fm_MgrLevel_Year;
+          this.FinanceMgrLevel_PendCount_Year = this.roleBasedData.PendingCount_Fm_MgrLevel_Year;
+
+          // this.RoleFIlter();
+        }
+        else {
+          // this.ApproverLevel_PendAmount = "0.00";
+          // this.ApproverLevel_PendCount = 0;
+          this.ApproverLevel_PendAmount_Year = "0.00";
+          this.ApproverLevel_PendCount_Year = 0;
+
+          // this.FinanceExecLevel_PendAmt = "0.00";
+          // this.FinanceExecLevel_PendCount = 0;
+          this.FinanceExecLevel_PendAmt_Year = "0.00";
+          this.FinanceExecLevel_PendCount_Year = 0;
+
+          // this.FinanceMgrLevel_PendAmt = "0.00";
+          // this.FinanceMgrLevel_PendCount = 0;
           this.FinanceMgrLevel_PendAmt_Year = "0.00";
           this.FinanceMgrLevel_PendCount_Year = 0;
-          this.RoleFIlter();
-        }     
-      });     
-     
-  }
+          // this.RoleFIlter();
+        }
+      });
 
-  RoleFIlter()
-  {
-    if ((this.ApproverLevel_PendAmount != "0.00" || this.ApproverLevel_PendAmount !=undefined) &&
-    (this.ApproverLevel_PendCount != 0 &&  this.ApproverLevel_PendCount != undefined) &&
-     this.ApproverLevel_PendAmount_Year != "0.00" && this.ApproverLevel_PendCount_Year != 0) {
-     this.IsApprover = true;
-     // alert('hi');
-     }
-     else
-     {
-       this.IsApprover=false;
-     }
-     if (this.FinanceExecLevel_PendAmt != "0.00" && this.FinanceExecLevel_PendAmt !=undefined &&
-      this.FinanceExecLevel_PendCount != 0 &&  this.FinanceExecLevel_PendCount !=undefined &&
-     this.FinanceExecLevel_PendAmt_Year != "0.00" && this.FinanceExecLevel_PendCount_Year != 0) {
-     this.IsFinanceExecutive = true;
-     // alert('hi');
-     }
-     else
-     {
-       this.IsFinanceExecutive=false;
-     }
-     if (this.FinanceMgrLevel_PendAmt != "0.00" && this.FinanceMgrLevel_PendAmt !=  undefined &&
-      this.FinanceMgrLevel_PendCount != 0 &&  this.FinanceMgrLevel_PendCount != undefined &&
-     this.FinanceMgrLevel_PendAmt_Year != "0.00" && this.FinanceMgrLevel_PendCount_Year != 0) {
-     this.IsFinanceManager = true;
-     // alert('hi');
-     }
-     else
-     {
-       this.IsFinanceManager=false;
-     }
   }
+  // RoleFIlter()
+  // {
+  //   if ((this.ApproverLevel_PendAmount != "0.00" || this.ApproverLevel_PendAmount !=undefined) &&
+  //   (this.ApproverLevel_PendCount != 0 &&  this.ApproverLevel_PendCount != undefined) &&
+  //    this.ApproverLevel_PendAmount_Year != "0.00" && this.ApproverLevel_PendCount_Year != 0) {
+  //    this.IsApprover = true;
+  //    // alert('hi');
+  //    }
+  //    else
+  //    {
+  //      this.IsApprover=false;
+  //    }
+  //    if (this.FinanceExecLevel_PendAmt != "0.00" && this.FinanceExecLevel_PendAmt !=undefined &&
+  //     this.FinanceExecLevel_PendCount != 0 &&  this.FinanceExecLevel_PendCount !=undefined &&
+  //    this.FinanceExecLevel_PendAmt_Year != "0.00" && this.FinanceExecLevel_PendCount_Year != 0) {
+  //    this.IsFinanceExecutive = true;
+  //    // alert('hi');
+  //    }
+  //    else
+  //    {
+  //      this.IsFinanceExecutive=false;
+  //    }
+  //    if (this.FinanceMgrLevel_PendAmt != "0.00" && this.FinanceMgrLevel_PendAmt !=  undefined &&
+  //     this.FinanceMgrLevel_PendCount != 0 &&  this.FinanceMgrLevel_PendCount != undefined &&
+  //    this.FinanceMgrLevel_PendAmt_Year != "0.00" && this.FinanceMgrLevel_PendCount_Year != 0) {
+  //    this.IsFinanceManager = true;
+  //    // alert('hi');
+  //    }
+  //    else
+  //    {
+  //      this.IsFinanceManager=false;
+  //    }
+  // }
 
   Month_Changed(value: any) {
     //alert(value)
@@ -515,7 +682,7 @@ export class DashboardPage {
   GetDashboardInfo() {
 
     if (this.month_value != undefined) {
-      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       // console.log('hi ' + this.baseResourceUrl)
     }
     this.http
@@ -525,8 +692,8 @@ export class DashboardPage {
         this.claimrequestdetails = data["resource"][0];
         // console.table(this.claimrequestdetails)
         if (data["resource"][0] != null) {
-          this.chart1=true;
-          this.chart2=true;
+          this.chart1 = true;
+          this.chart2 = true;
           var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
           var pending = parseInt(this.claimrequestdetails.PendingReqCount);
           var rejected = parseInt(this.claimrequestdetails.RejectedReqCount);
@@ -600,11 +767,19 @@ export class DashboardPage {
           }
           else this.PaidClaimAmount = '0.00';
 
+          if (approve == 0 && pending == 0 && rejected == 0 && paid == 0) {
+            this.chart1 = false;
+            this.chart2 = false;
+          } else {
+            this.chart1 = true;
+            this.chart2 = true;
+          }
+
         }
 
         else {
-          this.chart1=false;
-          this.chart2=false;
+          this.chart1 = false;
+          this.chart2 = false;
           approve = 0;
           pending = 0;
           rejected = 0;
@@ -746,18 +921,15 @@ export class DashboardPage {
   Paid_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Paid" });
   }
-  Approver_Click()
-  {
+  Approver_Click() {
     // this.navCtrl.setRoot('ClaimapprovertasklistPage', { Pending: "Pending" });
     this.navCtrl.setRoot('ClaimapprovertasklistPage');
   }
-  Finance_Executive_Click()
-  {
+  Finance_Executive_Click() {
     // this.navCtrl.setRoot('ClaimtasklistPage', { Pending: "Pending" });
     this.navCtrl.setRoot('ClaimtasklistPage');
   }
-  Finance_Manager_Click()
-  {
+  Finance_Manager_Click() {
     this.navCtrl.setRoot('ClaimtasklistPage');
   }
 

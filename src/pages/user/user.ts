@@ -785,7 +785,12 @@ export class UserPage {
       .get(TableURL_User)
       .map(res => res.json())
       .subscribe(data => {
-        this.userview = data["resource"]; this.storeUsers = data["resource"];
+        this.userview = data["resource"]; 
+        this.userview.forEach(element => {
+          element.JOIN_DATE = new Date(element.JOIN_DATE.replace(/-/g, "/"))
+
+        });
+        this.storeUsers = data["resource"];
         this.loading.dismissAll();
       });
   }

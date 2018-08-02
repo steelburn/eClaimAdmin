@@ -22,7 +22,7 @@ export class ClaimReportPrintPage {
   @Input() month: any;
   @Input() totalClaimAmount: number;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    console.log(this.claimsListPrint);
+
   }
 
   ionViewDidLoad() {

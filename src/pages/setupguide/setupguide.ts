@@ -15,7 +15,7 @@ import { UUID } from 'angular2-uuid';
 
 import { BaseHttpService } from '../../services/base-http';
 import * as constants from '../../app/config/constants';
-import { SetupPage } from '../../pages/setup/setup';
+import { SetupPage } from '../setup/setup';
 
 import { TenantMainSetup_Model } from '../../models/tenantmainsetup_model';
 import { TenantMainSetup_Service } from '../../services/tenantmainsetup_service';
