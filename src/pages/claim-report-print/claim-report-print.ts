@@ -22,12 +22,7 @@ export class ClaimReportPrintPage {
   @Input() month: any;
   @Input() totalClaimAmount: number;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.claimsListPrint.forEach(element => {
-      element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
-      element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
-      element.END_TS = new Date(element.END_TS.replace(/-/g, "/"))
 
-    });
   }
 
   ionViewDidLoad() {
