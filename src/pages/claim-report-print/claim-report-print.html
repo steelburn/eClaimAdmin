@@ -99,7 +99,7 @@
         </td>
         <td align="right"  valign="top" bgcolor="#ffffff">
           <span *ngIf="claim.RowNum==1">
-            {{claim.MILEAGE_AMOUNT| number:'1.2-2'}}
+            {{claim.MILEAGE_AMOUNT | number:'1.2-2'}}
           </span>
           <!--  <span *ngIf="claim.RowNum==2">
                 {{claim.DESCRIPTION}}
@@ -108,16 +108,16 @@
                 ({{claim.DISTANCE_KM}}KM * RM{{claim.RATE_PER_UNIT}})
               </span> -->
           <span *ngIf="claim.RowNum==4 && claim.TYPE==='TRV' && claim.TollAmount!==0">
-            {{claim.TollAmount| number:'1.2-2'}}
+            {{claim.TollAmount | number:'1.2-2'}}
           </span>
           <span *ngIf="claim.RowNum==5 && claim.TYPE==='TRV' && claim.ParkingAmount!==0">
-            {{claim.ParkingAmount| number:'1.2-2'}}
+            {{claim.ParkingAmount | number:'1.2-2'}}
           </span>
           <span *ngIf="claim.RowNum==6 && claim.TYPE==='TRV' && claim.MealAmount!==0">
-            {{claim.MealAmount| number:'1.2-2'}}
+            {{claim.MealAmount | number:'1.2-2'}}
           </span>
           <span *ngIf="claim.RowNum==7 && claim.TYPE==='TRV' && claim.AccAmount!==0">
-            {{claim.AccAmount| number:'1.2-2'}}
+            {{claim.AccAmount | number:'1.2-2'}}
           </span>
           <!-- <span *ngIf="claim.RowNum==3  && claim.TYPE==='OT'">
                   Start date/time : {{claim.START_TS | date:'d/M/y HH:mm'}}
