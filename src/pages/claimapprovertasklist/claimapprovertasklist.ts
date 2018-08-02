@@ -92,6 +92,8 @@ export class ClaimapprovertasklistPage {
         this.claimrequestdetails = data["resource"];
         let key: any;
         this.claimrequestdetails.forEach(element => {
+          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+
           if (element.STATUS === 'Rejected') {
          element.STAGE_GUID = null;
           }

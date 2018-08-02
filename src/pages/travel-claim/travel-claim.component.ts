@@ -167,7 +167,7 @@ export class TravelclaimPage {
     //TODO: Take data by Effective Date
     this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
       this.vehicles = data["resource"];
-      this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
+      this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
         this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID).subscribe(data => {
           this.storeProjects = this.projects = data["resource"];
@@ -283,7 +283,7 @@ export class TravelclaimPage {
   }
 
   LoadCustomers() {
-    this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -303,7 +303,8 @@ export class TravelclaimPage {
         this.claimDetailsData = res['resource'];
         this.claimDetailsData.forEach(element => {
           if (element.ATTACHMENT_ID !== null) 
-          element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);            
+          // element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);    
+         this.imageURLEdit = this.api.getImageUrl(element.ATTACHMENT_ID);            
           this.tollParkAmount += element.AMOUNT;
         });
         if (this.isFormSubmitted) {

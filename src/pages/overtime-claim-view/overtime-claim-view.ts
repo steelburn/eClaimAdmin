@@ -51,6 +51,10 @@ export class OvertimeClaimViewPage {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
+        element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
+        element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+        element.END_TS = new Date(element.END_TS.replace(/-/g, "/"))
+
         if (element.ATTACHMENT_ID !== null)
         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
