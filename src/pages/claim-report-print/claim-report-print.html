@@ -45,7 +45,9 @@
       </tr>
     </table>
 
+
     <table width="100%" border="0" bgcolor="#cccccc">
+
       <tr style="color:#ffffff;">
         <td align="center" bgcolor="#002060">Claim Date</td>
         <td align="center" bgcolor="#002060">Type</td>
@@ -55,6 +57,7 @@
         <td align="center" bgcolor="#002060">To</td>
         <td align="center" bgcolor="#002060">Amount (RM)</td>
       </tr>
+
       <!-- Odd number styling-->
       <!-- First *ngFor (Date, Customer Name, Project Name, etc)-->
 
@@ -136,122 +139,15 @@
         </td>
 
       </tr>
-
-      <!-- Description-->
-      <!-- <tr>
-        <td  bgcolor="#ffffff" >&nbsp;</td>
-        <td  bgcolor="#ffffff" ></td>
-        <td  bgcolor="#ffffff" >Description</td>
-        <td  bgcolor="#ffffff" ></td>
-        <td  bgcolor="#ffffff" ></td>
-        <td  bgcolor="#ffffff" ></td>
-        <td  bgcolor="#ffffff" ></td>
-      </tr> -->
-      <!-- Distance -->
-      <!-- <tr>
-    <td  bgcolor="#ffffff" >&nbsp;</td>
-    <td  bgcolor="#ffffff" ></td>
-    <td  bgcolor="#ffffff" >Distance</td>
-    <td  bgcolor="#ffffff" ></td>
-    <td  bgcolor="#ffffff" ></td>
-    <td  bgcolor="#ffffff" ></td>
-    <td  bgcolor="#ffffff" ></td>
-  </tr> -->
-
-      <!-- 2nd *ngFor for anything with Type-->
-      <!-- <tr>
-      <td  bgcolor="#ffffff" >&nbsp;</td>
-      <td  bgcolor="#ffffff" ></td>
-      <td  bgcolor="#ffffff" >Toll, parking, etc</td>
-      <td  bgcolor="#ffffff" ></td>
-      <td  bgcolor="#ffffff" ></td>
-      <td  bgcolor="#ffffff" ></td>
-      <td  bgcolor="#ffffff" ></td>
-    </tr> -->
-
-      <!-- Even number styling-->
-      <!-- First *ngFor (Date, Customer Name, Project Name, etc)-->
-      <!-- <tr >
-          <td align="left" valign="top" bgcolor="#D3D3D3" >claim.TRAVEL_DATE</td>
-          <td align="left" valign="top" bgcolor="#D3D3D3" >claim.TYPE</td>
-          <td align="left" bgcolor="#D3D3D3">claim.CUSTOMER_NAME</td>
-          <td align="left" valign="top" bgcolor="#D3D3D3">MODE</td>
-          <td align="left" valign="top" bgcolor="#D3D3D3" >from</td>
-          <td align="left" valign="top" bgcolor="#D3D3D3">to</td>
-          <td align="right" bgcolor="#D3D3D3">claim.MILEAGE_AMOUNT </td>
-
-      </tr> -->
-      <!-- Description-->
-      <!-- <tr>
-        <td  bgcolor="#D3D3D3" >&nbsp;</td>
-        <td  bgcolor="#D3D3D3" ></td>
-        <td  bgcolor="#D3D3D3" >Description</td>
-        <td  bgcolor="#D3D3D3" ></td>
-        <td  bgcolor="#D3D3D3" ></td>
-        <td  bgcolor="#D3D3D3" ></td>
-        <td  bgcolor="#D3D3D3" ></td>
-      </tr> -->
-      <!-- Distance -->
-      <!-- <tr>
-    <td  bgcolor="#D3D3D3" >&nbsp;</td>
-    <td  bgcolor="#D3D3D3" ></td>
-    <td  bgcolor="#D3D3D3" >Distance</td>
-    <td  bgcolor="#D3D3D3" ></td>
-    <td  bgcolor="#D3D3D3" ></td>
-    <td  bgcolor="#D3D3D3" ></td>
-    <td  bgcolor="#D3D3D3" ></td>
-  </tr> -->
-
-      <!-- 2nd *ngFor for anything with Type-->
-      <!-- <tr>
-      <td  bgcolor="#D3D3D3" >&nbsp;</td>
-      <td  bgcolor="#D3D3D3" ></td>
-      <td  bgcolor="#D3D3D3" >Toll, parking, etc</td>
-      <td  bgcolor="#D3D3D3" ></td>
-      <td  bgcolor="#D3D3D3" ></td>
-      <td  bgcolor="#D3D3D3" ></td>
-      <td  bgcolor="#D3D3D3" ></td>
-    </tr> -->
-      <!-- <tr>
-        <td align="left" bgcolor="#ffffff">DESCRIPTION</td>
-      </tr>
-
-      <tr>
-        <td align="left" bgcolor="#ffffff">45x12</td>
-      </tr>
-      <tr>
-        <td align="left" bgcolor="#ffffff">Toll</td>
-        <td align="right" bgcolor="#ffffff">claim.TollAmount</td>
-      </tr>
-
-      <tr>
-        <td align="left" bgcolor="#ffffff">Parking</td>
-      </tr>
-
-      <tr>
-        <td align="left" bgcolor="#ffffff">Meal Allowance</td>
-      </tr>
-
-      <tr>
-        <td align="left" bgcolor="#ffffff">Accomodation</td>
-      </tr>
-
-      <tr>
-        <td align="left" bgcolor="#ffffff">Start date/time : </td>
-      </tr>
-
-      <tr  >
-        <td align="left" bgcolor="#ffffff">End date / time: </td>
-      </tr> -->
-
-
       <tr>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td align="left" bgcolor="#B3CCEC" colspan="2">TOTAL CLAIM AMOUNT</td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+
         <td align="right" bgcolor="#B3CCEC">{{totalClaimAmount | number:'1.2-2'}}</td>
+
       </tr>
       <tr>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>

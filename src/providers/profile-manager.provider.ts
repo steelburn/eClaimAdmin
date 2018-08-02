@@ -1,9 +1,9 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { ApiManagerProvider } from '../providers/api-manager.provider';
-import { ClaimWorkFlowHistoryModel } from './../models/claim-work-flow-history.model';
-import { MainClaimRequestModel } from './../models/main-claim-request.model';
-import { MainClaimReferanceModel } from './../models/main-claim-ref.model';
+import { ApiManagerProvider } from './api-manager.provider';
+import { ClaimWorkFlowHistoryModel } from '../models/claim-work-flow-history.model';
+import { MainClaimRequestModel } from '../models/main-claim-request.model';
+import { MainClaimReferanceModel } from '../models/main-claim-ref.model';
 import { UUID } from 'angular2-uuid';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { App } from 'ionic-angular';

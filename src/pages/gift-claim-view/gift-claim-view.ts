@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Services } from '../Services';
-import {GiftclaimPage} from '../../pages/giftclaim/giftclaim';
+import { GiftclaimPage } from '../giftclaim/giftclaim';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 
@@ -15,7 +15,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 })
 export class GiftClaimViewPage {
 
-  totalClaimAmount:number=0;
+  totalClaimAmount: number = 0;
   claimRequestData: any[];
   Remarks_NgModel: any;
   claimRequestGUID: any;
@@ -23,11 +23,11 @@ export class GiftClaimViewPage {
   Approver_GUID: any;
   isApprover: any;
 
-  isRemarksAccepted: boolean =false;
+  isRemarksAccepted: boolean = false;
   level: any;
   approverDesignation: any;
 
-  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {    
+  constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
     this.isApprover = this.navParams.get("isApprover");
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
@@ -35,31 +35,33 @@ export class GiftClaimViewPage {
     this.LoadMainClaim();
     this.approverDesignation = this.navParams.get("approverDesignation");
 
-  } 
+  }
 
   isImage: boolean = false;
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
-        if (element.ATTACHMENT_ID !== null) { 
-          this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
-      }          
+        element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+        element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+        if (element.ATTACHMENT_ID !== null) {
+          this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID);
+        }
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
       });
     })
-}
+  }
 
-isAccepted(val: string) {
-  this.isRemarksAccepted = val === 'accepted' ? true : false;
-  if (!this.isRemarksAccepted) {
-        if (this.Remarks_NgModel === undefined) {
-          alert('Please enter valid remarks');
-          return;
-        }
+  isAccepted(val: string) {
+    this.isRemarksAccepted = val === 'accepted' ? true : false;
+    if (!this.isRemarksAccepted) {
+      if (this.Remarks_NgModel === undefined) {
+        alert('Please enter valid remarks');
+        return;
       }
-      this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted,1);   
-}
+    }
+    this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted, 1);
+  }
 
   EditClaim() {
     this.navCtrl.push(GiftclaimPage, {
@@ -67,9 +69,9 @@ isAccepted(val: string) {
       cr_GUID: this.claimRequestGUID
     });
   }
-  
+
   displayImage: any
-  CloseDisplayImage()  {
+  CloseDisplayImage() {
     this.displayImage = false;
   }
   imageURL: string;

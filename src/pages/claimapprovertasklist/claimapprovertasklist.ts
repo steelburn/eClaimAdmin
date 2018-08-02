@@ -11,13 +11,13 @@ import { Checkboxlist } from '../../models/checkbox-list.model';
 
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
-import { TravelClaimViewPage } from '../../pages/travel-claim-view/travel-claim-view.component';
-import { EntertainmentClaimViewPage } from '../../pages/entertainment-claim-view/entertainment-claim-view';
-import { OvertimeClaimViewPage } from '../../pages/overtime-claim-view/overtime-claim-view';
-import { MedicalClaimViewPage } from '../../pages/medical-claim-view/medical-claim-view';
-import { PrintClaimViewPage } from '../../pages/print-claim-view/print-claim-view';
-import { GiftClaimViewPage } from '../../pages/gift-claim-view/gift-claim-view';
-import { MiscellaneousClaimViewPage } from '../../pages/miscellaneous-claim-view/miscellaneous-claim-view';
+import { TravelClaimViewPage } from '../travel-claim-view/travel-claim-view.component';
+import { EntertainmentClaimViewPage } from '../entertainment-claim-view/entertainment-claim-view';
+import { OvertimeClaimViewPage } from '../overtime-claim-view/overtime-claim-view';
+import { MedicalClaimViewPage } from '../medical-claim-view/medical-claim-view';
+import { PrintClaimViewPage } from '../print-claim-view/print-claim-view';
+import { GiftClaimViewPage } from '../gift-claim-view/gift-claim-view';
+import { MiscellaneousClaimViewPage } from '../miscellaneous-claim-view/miscellaneous-claim-view';
 import { ClaimtasklistPage } from '../claimtasklist/claimtasklist';
 
 @IonicPage()
@@ -92,6 +92,8 @@ export class ClaimapprovertasklistPage {
         this.claimrequestdetails = data["resource"];
         let key: any;
         this.claimrequestdetails.forEach(element => {
+          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+
           if (element.STATUS === 'Rejected') {
             element.STAGE_GUID = null;
           }

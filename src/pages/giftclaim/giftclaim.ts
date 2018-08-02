@@ -13,8 +13,8 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { LoadingController, ActionSheetController, Loading, ToastController } from 'ionic-angular';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
-import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
 
 @IonicPage()
@@ -76,7 +76,7 @@ export class GiftclaimPage {
  
   imageURLEdit: any = null
   GetDataforEdit() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
         this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -280,7 +280,7 @@ export class GiftclaimPage {
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -298,7 +298,7 @@ export class GiftclaimPage {
 
   // LoadCustomers() {
   //   this.http
-  //     .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
+  //     .get(Services.getUrl('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
   //     .map(res => res.json())
   //     .subscribe(data => {
   //       this.storeCustomers = this.customers = data["resource"];

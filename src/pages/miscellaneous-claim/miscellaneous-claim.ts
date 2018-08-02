@@ -4,14 +4,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
 import 'rxjs/add/operator/map';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import * as constants from '../../app/config/constants';
 import { Services } from '../Services';
 import { ImageUpload_model } from '../../models/image-upload.model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
-import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
 
 
@@ -104,7 +104,7 @@ export class MiscellaneousClaimPage {
   
   imageURLEdit: any = null
   GetDataforEdit() {
-    this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
         this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -197,7 +197,7 @@ export class MiscellaneousClaimPage {
   }
 
   LoadCustomers() {
-    this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })

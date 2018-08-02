@@ -39,6 +39,7 @@ import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
+import { AllClaimListPage } from '../pages/all-claim-list/all-claim-list';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
@@ -95,7 +96,7 @@ import { MedicalClaimViewPage } from '../pages/medical-claim-view/medical-claim-
 import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../pages/miscellaneous-claim-view/miscellaneous-claim-view';
-import { ApiManagerProvider } from '../providers//api-manager.provider';
+import { ApiManagerProvider } from '../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
@@ -111,8 +112,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ConferenceApp,
     AccountPage,
     LoginPage,
-//    PopoverPage,
-    MedicalclaimPage,
+    AllClaimListPage,    MedicalclaimPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
@@ -197,6 +197,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
         { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' },
+        { component: AllClaimListPage, name: 'AllClaimListPage', segment: 'AllClaimList' },
 
         { component: TravelclaimPage, name: 'TravelclaimPage', segment: 'TravelclaimPage' },
         { component: EntertainmentclaimPage, name: 'EntertainmentclaimPage', segment: 'EntertainmentclaimPage' },
@@ -225,8 +226,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ConferenceApp,
     AccountPage,
     LoginPage,
-//    PopoverPage,
-    SetupguidePage,
+    AllClaimListPage,    SetupguidePage,
     SignupPage,
     StatesetupPage,
     SetupPage,
