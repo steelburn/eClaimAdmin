@@ -76,7 +76,7 @@ export class GiftclaimPage {
  
   imageURLEdit: any = null
   GetDataforEdit() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
         this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -280,7 +280,7 @@ export class GiftclaimPage {
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -298,7 +298,7 @@ export class GiftclaimPage {
 
   // LoadCustomers() {
   //   this.http
-  //     .get(Services.getUrl('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
+  //     .get(Services.getUrl('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID))
   //     .map(res => res.json())
   //     .subscribe(data => {
   //       this.storeCustomers = this.customers = data["resource"];
