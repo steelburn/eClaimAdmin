@@ -104,7 +104,7 @@ export class MiscellaneousClaimPage {
   
   imageURLEdit: any = null
   GetDataforEdit() {
-    this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
         this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -197,7 +197,7 @@ export class MiscellaneousClaimPage {
   }
 
   LoadCustomers() {
-    this.api.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
