@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
-import { MiscellaneousClaimPage } from '../../pages/miscellaneous-claim/miscellaneous-claim';
+import { MiscellaneousClaimPage } from '../miscellaneous-claim/miscellaneous-claim';
 
 
 @IonicPage()

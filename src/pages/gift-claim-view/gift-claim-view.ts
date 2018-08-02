@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Services } from '../Services';
-import { GiftclaimPage } from '../../pages/giftclaim/giftclaim';
+import { GiftclaimPage } from '../giftclaim/giftclaim';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 

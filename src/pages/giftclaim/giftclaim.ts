@@ -13,8 +13,8 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { LoadingController, ActionSheetController, Loading, ToastController } from 'ionic-angular';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
-import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
 
 @IonicPage()
