@@ -303,7 +303,8 @@ export class TravelclaimPage {
         this.claimDetailsData = res['resource'];
         this.claimDetailsData.forEach(element => {
           if (element.ATTACHMENT_ID !== null) 
-          element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);            
+          // element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);    
+         this.imageURLEdit = this.api.getImageUrl(element.ATTACHMENT_ID);            
           this.tollParkAmount += element.AMOUNT;
         });
         if (this.isFormSubmitted) {
