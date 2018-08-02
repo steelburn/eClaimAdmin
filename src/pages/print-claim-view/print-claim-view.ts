@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Http } from '@angular/http';
 import { Services } from '../Services';
-import {PrintclaimPage} from '../../pages/printclaim/printclaim';
+import {PrintclaimPage} from '../printclaim/printclaim';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 

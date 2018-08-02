@@ -14,8 +14,8 @@ import { LoadingController, ActionSheetController, Loading, ToastController } fr
 import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
-import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
 //import { ExcelService } from '../../providers/excel.service';
 

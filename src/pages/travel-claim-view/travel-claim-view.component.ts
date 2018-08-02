@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Http } from '@angular/http';
 import { Services } from '../Services';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 
@@ -56,6 +56,10 @@ export class TravelClaimViewPage {
       this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimRequestData = res['resource'];
         this.claimRequestData.forEach(element => {
+
+          element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
+          element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+          element.END_TS = new Date(element.END_TS.replace(/-/g, "/"))
           if (element.ATTACHMENT_ID !== null) {
             this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID);
           }
@@ -72,9 +76,6 @@ export class TravelClaimViewPage {
       this.api.getApiModel('view_claim_details', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimDetailsData = res['resource'];
         this.claimDetailsData.forEach(element => {
-          element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
-          element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
-          element.END_TS = new Date(element.END_TS.replace(/-/g, "/"))
           if (element.ATTACHMENT_ID !== null) {
             element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
           }

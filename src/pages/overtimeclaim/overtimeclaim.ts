@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 import { DecimalPipe } from '@angular/common';
@@ -13,7 +13,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { ActionSheetController, ToastController } from 'ionic-angular';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
-import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
 
 @IonicPage()
