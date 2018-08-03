@@ -121,13 +121,39 @@ export class DashboardPage {
       return result;
     }
   }
+  deduplicate_month(data: any) {
+    if (data.length > 0) {
+      var result: any[] = [];
+      data.forEach(function (elem: any) {
+
+        if (result.indexOf(elem.MONTH) === -1) {
+          result.push(elem.MONTH);
+          // if (result.indexOf(elem.YEAR) === -1) {
+          //   result.push(elem.YEAR);            
+          // }
+        }
+      });
+      return result;
+    }
+  }
+  // deduplicate_year(data: any) {
+  //   if (data.length > 0) {
+  //     var result: any[] = [];
+  //     data.forEach(function (elem: any) {
+  //       if (result.indexOf(elem.YEAR) === -1) {
+  //         result.push(elem.YEAR);
+  //       }
+  //     });
+  //     return result;
+  //   }
+  // }
   GetRoleName() {
     //Get the role of that particular user----------------------------------------------
     let role_url: string = "";
     let result: any;
     // let baseResource_Url_role: string = constants.DREAMFACTORY_TABLE_URL;
     role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log(role_url)
+    // console.log(role_url)
     this.http
       .get(role_url)
       .map(res => res.json())
@@ -418,106 +444,152 @@ export class DashboardPage {
     return monthNames[monthNumber - 1];
 
   }
-  GetData_filter() {
-    // alert(localStorage.getItem("g_ROLE_NAME"));
-    // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    if (localStorage.getItem("g_ROLE_NAME") === "Finance Executive" || localStorage.getItem("g_ROLE_NAME") === "Team Lead"
-      || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD" ||
-      localStorage.getItem("g_ROLE_NAME") === "Finance Manager" || localStorage.getItem("g_ROLE_NAME") === "Finance Admin") {
-      console.log(this.baseResource_RoleUrl);
-      this.http
-        .get(this.baseResource_RoleUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.years_data = data["resource"];
+  // GetData_filter() {
+  //   // alert(localStorage.getItem("g_ROLE_NAME"));
+  //   // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+  //   this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+  //   if (localStorage.getItem("g_ROLE_NAME") === "Finance Executive" || localStorage.getItem("g_ROLE_NAME") === "Team Lead"
+  //     || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD" ||
+  //     localStorage.getItem("g_ROLE_NAME") === "Finance Manager" || localStorage.getItem("g_ROLE_NAME") === "Finance Admin") {
+  //     // console.log(this.baseResource_RoleUrl);
+  //     this.http
+  //       .get(this.baseResource_RoleUrl)
+  //       .map(res => res.json())
+  //       .subscribe(data => {
+  //         this.years_data = data["resource"];
 
-          if (this.years_data.length == 0) {
-            // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
-            this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
-            // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
-            //return;
-            this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
-            this.Pending_Claim_Count; this.Pending_Claim_Amount;
-            this.Approved_Claim_Count; this.Approved_Claim_Amount;
-          }
-          else {
-            //alert(this.Year_Change_ngModel)
-            let tempdata: any; let id: any;
-            tempdata = {
-              MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
-              CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
-            };
+  //         if (this.years_data.length == 0) {
+  //           // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
+  //           this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
+  //           // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
+  //           //return;
+  //           this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
+  //           this.Pending_Claim_Count; this.Pending_Claim_Amount;
+  //           this.Approved_Claim_Count; this.Approved_Claim_Amount;
+  //         }
+  //         else {
+  //           //alert(this.Year_Change_ngModel)
+  //           let tempdata: any; let id: any;
+  //           tempdata = {
+  //             MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
+  //             CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
+  //           };
 
-            let item;
-            //  let i;
-            this.years_data.some((i: any) => {
-              if (i.MONTH === this.MONTH) {
-                item = i;
-                return true;
-              }
-              return false;
-            });
-            if (item) {
-              this.yeardata = this.years_data;
+  //           let item;
+  //           //  let i;
+  //           this.years_data.some((i: any) => {
+  //             if (i.MONTH === this.MONTH) {
+  //               item = i;
+  //               return true;
+  //             }
+  //             return false;
+  //           });
+  //           if (item) {
+  //             this.yeardata = this.years_data;
+  //           }
+  //           else {
+
+  //             this.years_data.push(tempdata);
+  //           }
+  //           this.yeardata = this.years_data;
+  //         }
+
+  //       });
+  //     // console.table(this.yeardata);
+  //   }
+  //   else {
+  //     // console.log(this.baseResourceUrl_New);
+  //     this.http
+  //       .get(this.baseResourceUrl_New)
+  //       .map(res => res.json())
+  //       .subscribe(data => {
+  //         this.years_data = data["resource"];
+
+  //         if (this.years_data.length == 0) {
+  //           // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
+  //           this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
+  //           // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
+  //           //return;
+  //           this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
+  //           this.Pending_Claim_Count; this.Pending_Claim_Amount;
+  //           this.Approved_Claim_Count; this.Approved_Claim_Amount;
+  //         }
+  //         else {
+  //           //alert(this.Year_Change_ngModel)
+  //           let tempdata: any; let id: any;
+  //           tempdata = {
+  //             MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
+  //             CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
+  //           };
+
+  //           let item;
+  //           //  let i;
+  //           this.years_data.some((i: any) => {
+  //             if (i.MONTH === this.MONTH) {
+  //               item = i;
+  //               return true;
+  //             }
+  //             return false;
+  //           });
+  //           if (item) {
+  //             this.yeardata = this.years_data;
+  //           }
+  //           else {
+
+  //             this.years_data.push(tempdata);
+  //           }
+  //           this.yeardata = this.years_data;
+  //         }
+
+  //       });
+  //     // console.table(this.yeardata);
+  //   }
+  // }
+  
+  GetData_filter(){
+    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_filter?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')or(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log(this.baseResource_RoleUrl);
+    this.http
+      .get(this.baseResource_RoleUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.years_data = data["resource"];
+
+        if (this.years_data.length == 0) {
+          this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
+          this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
+          this.Pending_Claim_Count; this.Pending_Claim_Amount;
+          this.Approved_Claim_Count; this.Approved_Claim_Amount;
+        }
+        else {
+          let tempdata: any; let id: any;
+          tempdata = {
+            MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
+            CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
+          };
+          let item;
+          this.years_data.some((i: any) => {
+            if (i.MONTH === this.MONTH) {
+              item = i;
+              return true;
             }
-            else {
+            return false;
+          });
 
-              this.years_data.push(tempdata);
-            }
+          if (item) {
             this.yeardata = this.years_data;
           }
-
-        });
-      console.table(this.yeardata);
-    }
-    else {
-      console.log(this.baseResourceUrl_New);
-      this.http
-        .get(this.baseResourceUrl_New)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.years_data = data["resource"];
-
-          if (this.years_data.length == 0) {
-            // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
-            this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
-            // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
-            //return;
-            this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
-            this.Pending_Claim_Count; this.Pending_Claim_Amount;
-            this.Approved_Claim_Count; this.Approved_Claim_Amount;
-          }
           else {
-            //alert(this.Year_Change_ngModel)
-            let tempdata: any; let id: any;
-            tempdata = {
-              MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
-              CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
-            };
-
-            let item;
-            //  let i;
-            this.years_data.some((i: any) => {
-              if (i.MONTH === this.MONTH) {
-                item = i;
-                return true;
-              }
-              return false;
-            });
-            if (item) {
-              this.yeardata = this.years_data;
-            }
-            else {
-
-              this.years_data.push(tempdata);
-            }
-            this.yeardata = this.years_data;
+            this.years_data.push(tempdata);
           }
-
-        });
-      console.table(this.yeardata);
-    }
+          this.years_data = this.years_data.filter((thing: any, index: any, self: any) =>
+            index === self.findIndex((t: any) => (
+              t.MONTH === thing.MONTH && t.YEAR === thing.YEAR
+            ))
+          )
+          this.yeardata = this.years_data;
+        }
+      });    
   }
 
   GetRoleDashboard() {
