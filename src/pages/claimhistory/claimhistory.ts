@@ -60,20 +60,25 @@ export class ClaimhistoryPage {
     this.BindDepartment();
     this.BindEmployeesbyDepartment("All");
     this.BindYears();
-    this.BindData();
+    this.BindData("All", "All","All");
 
     this.excelService = excelService;
   }
 
   ExcelData: any[] = [];
-  BindData() {
+  BindData(ddlDept: string, ddlEmployee: string, ddlmonth: string) {
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
         this.claimhistorys = this.claimhistorys1 = data["resource"];
         this.claimhistorys = this.claimhistorys1;
-
+        if (this.claimhistorys.length != 0) {
+          if (ddlDept.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.DEPT_GUID.toString() === ddlDept.toString()) }
+          if (ddlEmployee.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
+          if (ddlmonth.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
+    
+        }
         for (var item in data["resource"]) {
           this.ExcelData.push({ Employee: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPT"], Month: data["resource"][item]["MONTH"], ApprovedAmt: data["resource"][item]["APPROVEDAMOUNT"], RejectedAmount: data["resource"][item]["REJECTEDAMOUNT"] });
         }
@@ -166,13 +171,8 @@ export class ClaimhistoryPage {
     else {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-     this.BindData();
-    if (this.claimhistorys.length != 0) {
-      if (ddlDept.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.DEPT_GUID.toString() === ddlDept.toString()) }
-      if (ddlEmployee.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
-      if (ddlmonth.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
-
-    }
+     this.BindData(ddlDept,ddlEmployee,ddlmonth);
+    
   }
 
 }

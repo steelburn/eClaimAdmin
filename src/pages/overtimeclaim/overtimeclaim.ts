@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 import { DecimalPipe } from '@angular/common';
@@ -13,7 +13,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { ActionSheetController, ToastController } from 'ionic-angular';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
-import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
 
 @IonicPage()
@@ -101,7 +101,7 @@ export class OvertimeclaimPage {
 
   imageURLEdit: any = null
   GetDataforEdit() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
         this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -207,7 +207,7 @@ export class OvertimeclaimPage {
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })

@@ -1,9 +1,9 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { ApiManagerProvider } from '../providers/api-manager.provider';
-import { ClaimWorkFlowHistoryModel } from './../models/claim-work-flow-history.model';
-import { MainClaimRequestModel } from './../models/main-claim-request.model';
-import { MainClaimReferanceModel } from './../models/main-claim-ref.model';
+import { ApiManagerProvider } from './api-manager.provider';
+import { ClaimWorkFlowHistoryModel } from '../models/claim-work-flow-history.model';
+import { MainClaimRequestModel } from '../models/main-claim-request.model';
+import { MainClaimReferanceModel } from '../models/main-claim-ref.model';
 import { UUID } from 'angular2-uuid';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { App } from 'ionic-angular';
@@ -174,7 +174,7 @@ export class ProfileManagerProvider {
     //alert('Claim action submitted successfully.')
 
     // This is for Approval Send email to User and next approver
-    this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS);
+    this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS, this.level);
 
 
   }

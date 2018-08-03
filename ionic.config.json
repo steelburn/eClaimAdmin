@@ -4,5 +4,6 @@
     "cordova": {}
   },
   "type": "ionic-angular",
-  "pro_id": "eclaim-desktop"
+  "pro_id": "eclaim-desktop",
+  "app_id": ""
 }

@@ -21,6 +21,7 @@ export class ClaimReportUserPage {
   monthsData: any[];
   claimsList: any[];
   claimsListPrint: any[];
+  claimsListPrintTemp: any[] = [];
   totalClaimAmount: number = 0;
   loginUserGuid: string;
   month: string;
@@ -52,6 +53,41 @@ export class ClaimReportUserPage {
           this.claimsList = data["resource"];
           this.claimsListPrint = this.claimsList;
           this.claimsList.forEach(element => {
+            if (element.TYPE === 'TRV') {
+              let j = 3;
+              if (element.TollAmount != 0)
+                j++
+              if (element.ParkingAmount != 0)
+                j++
+              if (element.MealAmount != 0)
+                j++
+              if (element.AccAmount != 0)
+                j++
+              element.RowNum = "1";
+              this.claimsListPrintTemp.push(element);
+              for (let i = 2; i <= j; i++) {
+                const myClonedObject = Object.assign({}, element);
+                myClonedObject.RowNum = i.toString();
+                this.claimsListPrintTemp.push(myClonedObject);
+              }
+            }
+            else if (element.TYPE === 'OT') {
+              element.RowNum = "1";
+              this.claimsListPrintTemp.push(element);
+              for (let i = 2; i <= 4; i++) {
+                const myClonedObject = Object.assign({}, element);
+                myClonedObject.RowNum = i.toString();
+                this.claimsListPrintTemp.push(myClonedObject);
+              }
+            }
+            else {
+              element.RowNum = "1";
+              this.claimsListPrintTemp.push(element);
+              const myClonedObject = Object.assign({}, element);
+              myClonedObject.RowNum = "2";
+              this.claimsListPrintTemp.push(myClonedObject);
+            }
+  
             this.totalClaimAmount = this.totalClaimAmount + element.Total;
           });
         });
@@ -131,7 +167,7 @@ export class ClaimReportUserPage {
 
   BindMonths() {
     let i = 1;
-     let currentMonth = new Date().getMonth() + 1;
+    let currentMonth = new Date().getMonth() + 1;
     let currentYear = new Date().getFullYear();
     if (this.loginUserGuid !== undefined) {
       this.http
@@ -140,7 +176,7 @@ export class ClaimReportUserPage {
         .subscribe(data => {
           this.monthsData = data["resource"];
           this.monthsData.forEach(element => {
-            if (i <= 12 && ((element.year==currentYear && element.MONTHNUM<=currentMonth)||(element.year==currentYear-1 && element.MONTHNUM>currentMonth))) {
+            if (i <= 12 && ((element.year == currentYear && element.MONTHNUM <= currentMonth) || (element.year == currentYear - 1 && element.MONTHNUM > currentMonth))) {
               let item = element.month + '-' + element.year;
               this.monthsList.push(item);
               i++;
