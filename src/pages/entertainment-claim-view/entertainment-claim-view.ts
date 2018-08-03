@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Http } from '@angular/http';
 import { Services } from '../Services';
-import {EntertainmentclaimPage} from '../../pages/entertainmentclaim/entertainmentclaim';
+import {EntertainmentclaimPage} from '../entertainmentclaim/entertainmentclaim';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 //import { ExcelService } from '../../providers/excel.service';
@@ -55,6 +55,9 @@ export class EntertainmentClaimViewPage {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
+        element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+        element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+
         if (element.ATTACHMENT_ID !== null) { 
           this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
       }      

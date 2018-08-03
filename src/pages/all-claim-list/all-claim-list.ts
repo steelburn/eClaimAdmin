@@ -35,9 +35,9 @@ import { ExcelService } from '../../providers/excel.service';
 @IonicPage()
 @Component({
   selector: 'page-userclaimslist',
-  templateUrl: 'userclaimslist.html', providers: [BaseHttpService, ExcelService]
+  templateUrl: 'all-claim-list.html', providers: [BaseHttpService, ExcelService]
 })
-export class UserclaimslistPage {
+export class AllClaimListPage {
   userClaimhistorydetails: any[];
   userClaimhistorydetails1: any[];
   claimTypeList: any[];
@@ -59,7 +59,7 @@ export class UserclaimslistPage {
     //  this.userguid=navParams.get("userGuid");
     //  this.month=navParams.get("Month");
     //alert(this.userguid);
-    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     console.log(this.baseResourceUrl);
 
@@ -76,7 +76,7 @@ export class UserclaimslistPage {
     if (this.searchboxValue != undefined) {
       this.onSearchInput();
     }
-    else { this.BindData('All','All','All'); }
+    else { this.BindData(); }
 
     this.getuserDetails();
 
@@ -84,7 +84,7 @@ export class UserclaimslistPage {
   }
 
   ExcelData: any[] = [];
-  BindData(ddlmonth: string, ddlClaimTypes: string, ddlStatus: string) {
+  BindData() {
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -109,12 +109,6 @@ export class UserclaimslistPage {
           }
         });
         this.userClaimhistorydetails = this.userClaimhistorydetails1;
-        if (this.userClaimhistorydetails.length != 0) {
-          if (ddlmonth.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
-          if (ddlStatus.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
-          if (ddlClaimTypes.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
-    
-        }
         // for (var item in data["resource"]) {
         //   this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
         // }
@@ -273,7 +267,7 @@ export class UserclaimslistPage {
           text: 'Yes',
           handler: () => {
             this.api.deleteApiModel('main_claim_request', claimReqGuid).subscribe(() => {
-              this.BindData('All','All','All');
+              this.BindData();
               alert('Claim has been deleted successfully.');
             });
           }
@@ -426,7 +420,13 @@ export class UserclaimslistPage {
 
   SearchClaimsData(ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.BindData(ddlmonth,ddlClaimTypes,ddlStatus);
+    this.BindData();
+    if (this.userClaimhistorydetails.length != 0) {
+      if (ddlmonth.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
+      if (ddlStatus.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
+      if (ddlClaimTypes.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
+
+    }
   }
 
 }

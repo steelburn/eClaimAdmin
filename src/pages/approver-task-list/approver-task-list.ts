@@ -14,7 +14,7 @@ import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 })
 export class ApproverTaskListPage {
   baseResourceUrl: string;
-  claimrequestdetails: any;
+  claimrequestdetails: any[];
   selectAll: boolean;
   claimrefguid: any;
   claimRequestGUID: string;
@@ -46,6 +46,9 @@ export class ApproverTaskListPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = data["resource"]; 
+        this.claimrequestdetails.forEach(element => {
+          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+        });
         console.table(this.claimrequestdetails);      
       });
   }

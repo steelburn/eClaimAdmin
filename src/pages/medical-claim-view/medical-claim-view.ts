@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Services } from '../Services';
-import {MedicalclaimPage} from '../../pages/medicalclaim/medicalclaim';
+import {MedicalclaimPage} from '../medicalclaim/medicalclaim';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 
