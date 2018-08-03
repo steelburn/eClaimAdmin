@@ -136,12 +136,13 @@
       <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
     </ion-item>
 
-    <div *ngIf="imageURLEdit!==null">
+     <ion-item *ngIf="imageURLEdit!==null">
       <!-- <button ion-button outline item-start icon-left (click)="DisplayImage(imageURLEdit)" *ngIf="imageURLEdit!==null">
         View Receipt
       </button> -->
-      <a href={{imageURLEdit}} target='_blank'>View Receipt</a>  
-    </div>
+      <a href={{imageURLEdit}} target='_blank'>View Receipt</a> 
+      </ion-item> 
+    
 
     <div *ngIf= "isImage">
       <img src="{{ProfileImage}}" style="width: 20%">
@@ -280,7 +281,8 @@
                 <!-- <button ion-button (click)="DisplayImage(item.ATTACHMENT_ID)" *ngIf="item.ATTACHMENT_ID!==null">
                   Receipt
                 </button> -->
-                <a href={{imageURLEdit}} target='_blank' *ngIf="item.ATTACHMENT_ID!=null">Receipt</a>
+                <a href={{item.ATTACHMENT_ID}} target='_blank' *ngIf="item.ATTACHMENT_ID!=null">Receipt</a> 
+                <!-- <a href={{imageURLEdit}} target='_blank' *ngIf="item.ATTACHMENT_ID!=null">Receipt</a> -->
               </td>
               <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
               <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
