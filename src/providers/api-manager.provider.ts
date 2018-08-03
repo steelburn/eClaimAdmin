@@ -218,7 +218,7 @@ export class ApiManagerProvider {
                 let claimType: string = ""; claimType = email_details[0]["CLAIM_TYPE"];
                 let strSubjectApplier: string = ""; let strSubjectApprover: string; let strBody_html: string;
 
-                if (Level == 0) {
+                if (Level == -1) {
                   if (claimType == "Travel Claim" || claimType == "Overtime Claim") {
                     strSubjectApplier = "Your " + claimType + " application (" + moment(startDate).format('YYYY-MM-DD HH:mm') + " - " + moment(endDate).format('YYYY-MM-DD HH:mm') + ") has approved by " + localStorage.getItem("g_ROLE_NAME") + ".";
                     strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c"><DIV style="FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px"><B><I>Notification</I></B></DIV></DIV><BR><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: center; PADDING-TOP: 20px">Dear ' + name + '<BR><BR>Your ' + claimType + ' application has approved by ' + Role_Name + '.<H1 style="FONT-SIZE: 14px; TEXT-ALIGN: center; PADDING-TOP: 10px"><BR><B>Claim Details :</B><BR></H1><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">EMPLOYEE</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">START DATE</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(startDate).format('YYYY-MM-DD HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">END DATE </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(endDate).format('YYYY-MM-DD HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Superior Name</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + assignedTo + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Status</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Status + '</TD></TR></TBODY></TABLE><BR><DIV style="TEXT-ALIGN: center; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
@@ -301,7 +301,7 @@ export class ApiManagerProvider {
                   });
 
                 //Send Email For Approver 1-------------------------------------------
-                if (Level != 0) {
+                if (Level != -1) {
                   this.http.post(this.emailUrl, body1, options)
                     .map(res => res.json())
                     .subscribe(() => {
