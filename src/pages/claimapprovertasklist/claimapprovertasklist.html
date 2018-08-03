@@ -16,7 +16,7 @@
 
 
 
-    <ion-item class="fuha">
+    <ion-item class="fuha" *ngIf="!FinanceLogin">
         <ion-label>User Name :</ion-label>
         <ion-select interface="popover" #ddlEmployee>
             <ion-option [value]="All" [selected]="true">All</ion-option>
@@ -30,13 +30,13 @@
             <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
         </ion-select>
     </ion-item>
-    <ion-item class="fuha">
+    <ion-item class="fuha" *ngIf="!FinanceLogin">
         <ion-label>Year:</ion-label>
         <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
             <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
         </ion-select>
     </ion-item>
-    <ion-item class="fuha">
+    <!-- <ion-item class="fuha">
         <ion-label>Status:</ion-label>
         <ion-select interface="popover" #ddlStatus>
             <ion-option [value]="All" [selected]="true">All</ion-option>
@@ -46,10 +46,11 @@
             <ion-option [value]="Rejected">Rejected</ion-option>
 
         </ion-select>
-    </ion-item>
+    </ion-item> -->
 
     <ion-item>
-        <button ion-button item-end (click)="SearchClaimsData(ddlEmployee.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
+        <button *ngIf="!FinanceLogin" ion-button item-end (click)="SearchClaimsData(ddlEmployee.value,ddlClaimTypes.value,ddlYear.value)">Search</button>
+        <button *ngIf="FinanceLogin" ion-button item-end (click)="SearchClaimsData('All',ddlClaimTypes.value,'All')">Search</button>
         <button ion-button item-end (click)="approveClaims()">{{buttonText}}</button>
     </ion-item>
 
@@ -64,7 +65,7 @@
                     </ion-item>
                   </th> 
                   <th style="width:60px">No.</th>
-                  <th>Name</th>
+                  <th *ngIf="!FinanceLogin">Name</th>
                   <th>Claim Type</th>
                   <th>Date</th>
                   <th  style="width:68px">Status</th>
@@ -81,7 +82,7 @@
                     </ion-item>
                   </td>
                   <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
-                  <td class="lgl1 getHeader" reshead="Name" text-wrap >{{claimrequestdetail.FULLNAME}}</td>
+                  <td class="lgl1 getHeader" *ngIf="!FinanceLogin" reshead="Name" text-wrap >{{claimrequestdetail.FULLNAME}}</td>
                   <td class="lgl1 getHeader" reshead="Claim Type">{{claimrequestdetail.CLAIMTYPE}}</td>
                   <td class="lgl1 getHeader" reshead="Date">{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                   <td class="lgl1 getHeader" reshead="Status">{{claimrequestdetail.STATUS}}</td>

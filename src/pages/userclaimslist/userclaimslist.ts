@@ -76,7 +76,7 @@ export class UserclaimslistPage {
     if (this.searchboxValue != undefined) {
       this.onSearchInput();
     }
-    else { this.BindData(); }
+    else { this.BindData('All','All','All'); }
 
     this.getuserDetails();
 
@@ -84,7 +84,7 @@ export class UserclaimslistPage {
   }
 
   ExcelData: any[] = [];
-  BindData() {
+  BindData(ddlmonth: string, ddlClaimTypes: string, ddlStatus: string) {
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -109,6 +109,12 @@ export class UserclaimslistPage {
           }
         });
         this.userClaimhistorydetails = this.userClaimhistorydetails1;
+        if (this.userClaimhistorydetails.length != 0) {
+          if (ddlmonth.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
+          if (ddlStatus.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
+          if (ddlClaimTypes.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
+    
+        }
         // for (var item in data["resource"]) {
         //   this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
         // }
@@ -267,7 +273,7 @@ export class UserclaimslistPage {
           text: 'Yes',
           handler: () => {
             this.api.deleteApiModel('main_claim_request', claimReqGuid).subscribe(() => {
-              this.BindData();
+              this.BindData('All','All','All');
               alert('Claim has been deleted successfully.');
             });
           }
@@ -420,13 +426,7 @@ export class UserclaimslistPage {
 
   SearchClaimsData(ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.BindData();
-    if (this.userClaimhistorydetails.length != 0) {
-      if (ddlmonth.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
-      if (ddlStatus.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
-      if (ddlClaimTypes.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
-
-    }
+    this.BindData(ddlmonth,ddlClaimTypes,ddlStatus);
   }
 
 }
