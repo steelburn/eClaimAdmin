@@ -56,25 +56,29 @@ export class ClaimReportPage {
         this.claimsList = this.claimsListPrint;
         this.claimsList.forEach(element => {
           element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
-    
+
         });
         this.claimsListPrint.forEach(element => {
           if (element.TYPE === 'TRV') {
-            let j = 3;
-            if (element.TollAmount != 0)
-              j++
-            if (element.ParkingAmount != 0)
-              j++
-            if (element.MealAmount != 0)
-              j++
-            if (element.AccAmount != 0)
-              j++
             element.RowNum = "1";
             this.claimsListPrintTemp.push(element);
-            for (let i = 2; i <= j; i++) {
-              const myClonedObject = Object.assign({}, element);
-              myClonedObject.RowNum = i.toString();
-              this.claimsListPrintTemp.push(myClonedObject);
+            for (let i = 2; i <= 7; i++) {
+              let flag = false;
+              if (i <= 3)
+                flag = true;
+              else if (i == 4 && element.TollAmount != 0)
+                flag = true;
+              else if (i == 5 && element.ParkingAmount != 0)
+                flag = true;
+              else if (i == 6 && element.MealAmount != 0)
+                flag = true;
+              else if (i == 7 && element.AccAmount != 0)
+                flag = true;
+              if (flag) {
+                const myClonedObject = Object.assign({}, element);
+                myClonedObject.RowNum = i.toString();
+                this.claimsListPrintTemp.push(myClonedObject);
+              }
             }
           }
           else if (element.TYPE === 'OT') {
