@@ -11,16 +11,6 @@
 
   <body style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;">
     <table width="100%" border="0" bgcolor="#cccccc">
-
-      <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
       <tr bgcolor="#002060" style="background-color:#002060;">
         <td align="center" valign="middle" bgcolor="#002060" colspan="4" style="border-right: none">
           <h2 style="color:#FFFFFF;">CLAIM REPORT</h2>
@@ -76,7 +66,7 @@
             {{claim.DESCRIPTION}}
           </span>
           <span *ngIf="claim.RowNum==3 && claim.TYPE==='TRV'">
-            ({{claim.DISTANCE_KM}}KM * RM{{claim.RATE_PER_UNIT}})
+            ({{claim.DISTANCE_KM}}KM * RM{{claim.RATE_PER_UNIT| number:'1.2-2'}})
           </span>
           <span *ngIf="claim.RowNum==4 && claim.TYPE==='TRV' && claim.TollAmount!==0">
             Toll
@@ -107,9 +97,9 @@
         <td align="left" valign="top" bgcolor="#ffffff">
           <span *ngIf="claim.RowNum==1">{{claim.to}}</span>
         </td>
-        <td align="right" bgcolor="#ffffff">
+        <td align="right"  valign="top" bgcolor="#ffffff">
           <span *ngIf="claim.RowNum==1">
-            {{claim.MILEAGE_AMOUNT}}
+            {{claim.MILEAGE_AMOUNT | number:'1.2-2'}}
           </span>
           <!--  <span *ngIf="claim.RowNum==2">
                 {{claim.DESCRIPTION}}
@@ -118,16 +108,16 @@
                 ({{claim.DISTANCE_KM}}KM * RM{{claim.RATE_PER_UNIT}})
               </span> -->
           <span *ngIf="claim.RowNum==4 && claim.TYPE==='TRV' && claim.TollAmount!==0">
-            {{claim.TollAmount}}
+            {{claim.TollAmount | number:'1.2-2'}}
           </span>
           <span *ngIf="claim.RowNum==5 && claim.TYPE==='TRV' && claim.ParkingAmount!==0">
-            {{claim.ParkingAmount}}
+            {{claim.ParkingAmount | number:'1.2-2'}}
           </span>
           <span *ngIf="claim.RowNum==6 && claim.TYPE==='TRV' && claim.MealAmount!==0">
-            {{claim.MealAmount}}
+            {{claim.MealAmount | number:'1.2-2'}}
           </span>
           <span *ngIf="claim.RowNum==7 && claim.TYPE==='TRV' && claim.AccAmount!==0">
-            {{claim.AccAmount}}
+            {{claim.AccAmount | number:'1.2-2'}}
           </span>
           <!-- <span *ngIf="claim.RowNum==3  && claim.TYPE==='OT'">
                   Start date/time : {{claim.START_TS | date:'d/M/y HH:mm'}}
@@ -142,33 +132,15 @@
       <tr>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC" colspan="2">TOTAL CLAIM AMOUNT</td>
+        <td align="left" bgcolor="#B3CCEC" colspan="2"><em>TOTAL CLAIM AMOUNT</em></td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
 
-        <td align="right" bgcolor="#B3CCEC">{{totalClaimAmount | number:'1.2-2'}}</td>
+        <td align="right" bgcolor="#B3CCEC"><em>{{totalClaimAmount | number:'1.2-2'}}</em></td>
 
-      </tr>
-      <tr>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-      </tr>
-      <tr>
-        <td align="left">&nbsp;</td>
-        <td align="left">&nbsp;</td>
-        <td align="left">&nbsp;</td>
-        <td align="left">&nbsp;</td>
-        <td align="left">&nbsp;</td>
-        <td align="left">&nbsp;</td>
-        <td align="left">&nbsp;</td>
       </tr>
     </table>
-
+<br />
     <table width="100%" border="0" bgcolor="#cccccc">
       <tr style="color:#ffffff;">
         <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
@@ -185,10 +157,10 @@
       <tr>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">TOTAL CLAIM AMOUNT</td>
+        <td align="left" bgcolor="#B3CCEC"><em>TOTAL CLAIM AMOUNT</em></td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td colspan="2" align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="right" bgcolor="#B3CCEC">{{totalClaimAmount | number:'1.2-2'}}</td>
+        <td align="right" bgcolor="#B3CCEC"><em>{{totalClaimAmount | number:'1.2-2'}}</em></td>
       </tr>
 
     </table>
