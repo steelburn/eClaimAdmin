@@ -164,8 +164,7 @@ export class ApiManagerProvider {
     //---------------------------------------------------------------
   }
 
-  EmailNextApprover(CLAIM_REQUEST_GUID: string, ASSIGNED_TO: string, claimStatus: string, Level: any) {
-    alert(Level);
+  EmailNextApprover(CLAIM_REQUEST_GUID: string, ASSIGNED_TO: string, claimStatus: string, Level: any) {    
     let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_approver?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(url)
