@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
-import { MiscellaneousClaimPage } from '../../pages/miscellaneous-claim/miscellaneous-claim';
+import { MiscellaneousClaimPage } from '../miscellaneous-claim/miscellaneous-claim';
 
 
 @IonicPage()
@@ -52,7 +52,10 @@ export class MiscellaneousClaimViewPage {
       this.claimRequestData.forEach(element => { 
         if (element.ATTACHMENT_ID !== null) { 
           this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
-      }         
+      }    
+      element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+      element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+   
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
       });
     })

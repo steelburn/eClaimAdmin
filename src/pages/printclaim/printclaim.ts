@@ -7,14 +7,14 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { PrintingClaim_Service } from '../../services/printingclaim_service';
 import { BaseHttpService } from '../../services/base-http';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { DecimalPipe } from '@angular/common';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 import { LoadingController, ActionSheetController, Loading, ToastController } from 'ionic-angular';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
-import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
+import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 
 @IonicPage()
 @Component({
@@ -87,7 +87,7 @@ export class PrintclaimPage {
  
   imageURLEdit: any = null
   GetDataforEdit() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
         this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -187,7 +187,7 @@ export class PrintclaimPage {
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })

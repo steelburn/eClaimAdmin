@@ -14,8 +14,8 @@ import { LoadingController, ActionSheetController, Loading, ToastController } fr
 import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
-import { UserclaimslistPage } from '../../pages/userclaimslist/userclaimslist';
-import { TravelclaimPage } from '../../pages/travel-claim/travel-claim.component';
+import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
+import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
 //import { ExcelService } from '../../providers/excel.service';
 
@@ -123,7 +123,7 @@ export class EntertainmentclaimPage {
  
   imageURLEdit: any = null
   GetDataforEdit() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
         this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -199,7 +199,7 @@ export class EntertainmentclaimPage {
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('main_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
