@@ -36,6 +36,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
+import { AllClaimListPage } from '../pages/all-claim-list/all-claim-list';
 
 // import { MenuService } from '../providers/menu.service'
 
@@ -240,8 +241,7 @@ export class ConferenceApp {
 
     // this.menu.enable(loggedIn, 'loggedInMenu');
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
-
-    // debugger;
+    
     if (localStorage.length > 0) {
       this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
       this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL");
@@ -270,7 +270,7 @@ export class ConferenceApp {
         }
 
         //For Tenant Admin, Remove Admin Setup
-        else if (localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
+        else if (localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {          
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -289,6 +289,13 @@ export class ConferenceApp {
             { title: 'Overtime Claim', name: 'OvertimeclaimPage', component: OvertimeclaimPage, icon: 'stopwatch' },
             { title: 'Printing Claim', name: 'PrintclaimPage', component: PrintclaimPage, icon: 'print' },
             { title: 'Miscellaneous Claim', name: 'MiscellaneousClaimPage', component: MiscellaneousClaimPage, icon: 'albums' },
+          ];
+          this.reportPages = [
+            { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
+            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
+            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'All Claim List', name: 'AllClaimListPage', component: AllClaimListPage, icon: 'ios-paper-outline' }
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {

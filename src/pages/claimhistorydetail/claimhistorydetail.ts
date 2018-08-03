@@ -46,6 +46,8 @@ export class ClaimhistorydetailPage {
     this.userguid = navParams.get("userGuid");
     this.month = navParams.get("Month");
     this.loginUserRole = localStorage.getItem("g_ROLE_NAME");
+// let ddlDept:any;
+//     alert(ddlDept.value)
     //alert(this.userguid);
     //this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     //console.log(this.baseResourceUrl);
@@ -71,7 +73,7 @@ export class ClaimhistorydetailPage {
     this.BindEmployeesbyDepartment("All");
     this.BindClaimTypes();
     this.BindYears();
-    this.BindData();
+    this.BindData("All","All","All","All","All");
     if (this.FinanceLogin) {
       this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID=' + this.userguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.getuserDetails();
@@ -90,7 +92,7 @@ export class ClaimhistorydetailPage {
   };
 
   ExcelData: any[] = [];
-  BindData() {
+  BindData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlClaimTypes: string, ddlStatus: string) {
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -103,7 +105,14 @@ export class ClaimhistorydetailPage {
           });
         }
         this.claimhistorydetails1 = this.claimhistorydetails;
-
+        if (this.claimhistorydetails.length != 0) {
+          if (ddlDept.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.DEPARTMENT_GUID.toString() === ddlDept.toString()) }
+          if (ddlEmployee.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
+          if (ddlmonth.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
+          if (ddlClaimTypes.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
+          if (ddlStatus.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
+    
+        }
         for (var item in data["resource"]) {
           this.ExcelData.push({ Name: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPARTMENT"], Month: data["resource"][item]["MONTH"], ClaimType: data["resource"][item]["CLAIM_TYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
         }
@@ -199,16 +208,8 @@ export class ClaimhistorydetailPage {
     else {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=1)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-    this.BindData();
+    this.BindData(ddlDept,ddlEmployee,ddlmonth,ddlClaimTypes,ddlStatus);
 
-    if (this.claimhistorydetails.length != 0) {
-      if (ddlDept.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.DEPARTMENT_GUID.toString() === ddlDept.toString()) }
-      if (ddlEmployee.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
-      if (ddlmonth.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
-      if (ddlClaimTypes.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
-      if (ddlStatus.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
-
-    }
   }
 
 
