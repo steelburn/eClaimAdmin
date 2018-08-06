@@ -54,8 +54,7 @@ export class ApiManagerProvider {
 
           let Approver1_name: string; let Approver1_email: string
           Approver1_name = email_details[0]["APPROVER1_NAME"]; Approver1_email = email_details[0]["APPROVER1_EMAIL"];
-          let ename = email_details[0]["APPLIER_NAME"];
-          //let level = '1';
+          let ename = email_details[0]["APPLIER_NAME"];          
           let assignedTo = email_details[0]["APPROVER1_NAME"];
 
           //Get the Total Claim Amount and Status----------------------
