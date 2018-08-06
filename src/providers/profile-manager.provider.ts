@@ -174,7 +174,7 @@ export class ProfileManagerProvider {
     //alert('Claim action submitted successfully.')
 
     // This is for Approval Send email to User and next approver
-    this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS);
+    this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS, this.level);
 
 
   }
