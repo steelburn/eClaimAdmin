@@ -7,9 +7,9 @@
 <ion-header>
 
     <ion-navbar color="primary200">
-            <button ion-button menuToggle>
-                    <ion-icon name="menu"></ion-icon>
-                  </button>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>Monthly Claim Report</ion-title>
     </ion-navbar>
 </ion-header>
@@ -123,4 +123,41 @@
         <!-- <ion-item style="color:#50C878;"> Total Amount(RM) : {{grandTotal | number:'1.2-2'}}</ion-item>  -->
 
     </ion-list>
+
+    <!-- Popup for Export to Excel Starts-->
+    <div class="blackcontainer" *ngIf="ExportExcelClicked">
+    </div>
+    <div class="popup4" padding *ngIf="ExportExcelClicked">
+        <ion-card>
+            <ion-card-header class="icTitle headerColor-white ">
+
+                <div class="icHeaderText">EXPORT TO EXCEL</div>
+
+                <button class="btnR" (click)="CloseExportExcel()">
+                    <ion-icon name="md-close"></ion-icon>
+                </button>
+
+            </ion-card-header>
+            <ion-list>
+                <div style="width:100%; display:inline-table !important;">
+
+                    <ion-card>
+                        <div>
+                            <ion-list>
+                                <ion-item *ngFor="let ExcelColumn of ExcelColumns">
+                                    <ion-label>{{ExcelColumn.Columns}}</ion-label>
+                                    <ion-checkbox color="secondary" checked="false" (ionChange)="SelectColumn($event, ExcelColumn)" item-end></ion-checkbox>
+                                </ion-item>
+                            </ion-list>
+                        </div>
+                    </ion-card>
+                </div>
+            </ion-list>
+            <div class="btn">
+                <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="SubmitExportExcel()">{{"SUBMIT" | translate}}</button>
+            </div>
+        </ion-card>
+
+    </div>
+    <!-- Popup for Export to Excel End-->
 </ion-content>

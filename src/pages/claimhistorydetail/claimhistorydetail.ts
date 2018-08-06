@@ -46,8 +46,8 @@ export class ClaimhistorydetailPage {
     this.userguid = navParams.get("userGuid");
     this.month = navParams.get("Month");
     this.loginUserRole = localStorage.getItem("g_ROLE_NAME");
-// let ddlDept:any;
-//     alert(ddlDept.value)
+    // let ddlDept:any;
+    //     alert(ddlDept.value)
     //alert(this.userguid);
     //this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     //console.log(this.baseResourceUrl);
@@ -73,7 +73,7 @@ export class ClaimhistorydetailPage {
     this.BindEmployeesbyDepartment("All");
     this.BindClaimTypes();
     this.BindYears();
-    this.BindData("All","All","All","All","All");
+    this.BindData("All", "All", "All", "All", "All");
     if (this.FinanceLogin) {
       this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID=' + this.userguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.getuserDetails();
@@ -111,11 +111,11 @@ export class ClaimhistorydetailPage {
           if (ddlmonth.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
           if (ddlClaimTypes.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
           if (ddlStatus.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
-    
+
         }
-        for (var item in data["resource"]) {
-          this.ExcelData.push({ Name: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPARTMENT"], Month: data["resource"][item]["MONTH"], ClaimType: data["resource"][item]["CLAIM_TYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
-        }
+        // for (var item in data["resource"]) {
+        //   this.ExcelData.push({ Name: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPARTMENT"], Month: data["resource"][item]["MONTH"], ClaimType: data["resource"][item]["CLAIM_TYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
+        // }
       });
   }
   onSearchInput() {
@@ -148,12 +148,6 @@ export class ClaimhistorydetailPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimhistorydetailPage');
   }
-
-  ExportToExcel() {
-    // this.excelService.exportAsExcelFile(this.claimhistorydetails,'Data');
-    this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
-  }
-
 
   BindClaimTypes() {
     this.http
@@ -208,9 +202,185 @@ export class ClaimhistorydetailPage {
     else {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=1)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-    this.BindData(ddlDept,ddlEmployee,ddlmonth,ddlClaimTypes,ddlStatus);
+    this.BindData(ddlDept, ddlEmployee, ddlmonth, ddlClaimTypes, ddlStatus);
 
   }
 
+  ExportExcelClicked: boolean = false; ExcelColumns: any[] = [];
+  ExportToExcel() {
+    // this.excelService.exportAsExcelFile(this.claimhistorydetails,'Data');
+    // this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
 
+    this.ExportExcelClicked = true;
+    this.ExcelColumns = [];
+    this.ExcelColumns.push({ Columns: 'Name' });
+    this.ExcelColumns.push({ Columns: 'Department' });
+    this.ExcelColumns.push({ Columns: 'Month' });
+    this.ExcelColumns.push({ Columns: 'ClaimType' });
+    this.ExcelColumns.push({ Columns: 'Date' });
+    this.ExcelColumns.push({ Columns: 'Status' });
+    this.ExcelColumns.push({ Columns: 'Amount' });
+  }
+
+  CloseExportExcel() {
+    this.ExportExcelClicked = false;
+    this.checked.length = 0;
+  }
+
+  checked: any[] = [];
+  SelectColumn(e: any, SelectedColumn: any) {
+    if (e.checked == true) {
+      this.checked.push(SelectedColumn);
+    } else {
+      let index = this.RemoveCheckedFromArray(SelectedColumn);
+      this.checked.splice(index, 1);
+    }
+  }
+
+  RemoveCheckedFromArray(checkbox: String) {
+    return this.checked.findIndex((category) => {
+      return category === checkbox;
+    })
+  }
+
+  SubmitExportExcel() {
+    this.ExcelData = [];
+    if (this.checked.length > 0) {
+      for (var item in this.claimhistorydetails) {
+        if (this.checked.length > 0) {
+          let ctr: number = 0;
+          let jsonStr = '';
+          for (var chkItem in this.checked) {
+            ctr = ctr + 1;
+            switch (this.checked[chkItem]["Columns"]) {
+              case "Name":
+                if (this.checked.length == 1) {
+                  jsonStr += '{"Name":"' + this.claimhistorydetails[item]["FULLNAME"] + '"';
+                }
+                else {
+                  jsonStr += '{"Name":"' + this.claimhistorydetails[item]["FULLNAME"] + '",';
+                }
+                break;
+              case "Department":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Department":"' + this.claimhistorydetails[item]["DEPARTMENT"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Department":"' + this.claimhistorydetails[item]["DEPARTMENT"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Department":"' + this.claimhistorydetails[item]["DEPARTMENT"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Department":"' + this.claimhistorydetails[item]["DEPARTMENT"] + '",';
+                  }
+                }
+                break;
+              case "Month":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Month":"' + this.claimhistorydetails[item]["MONTH"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Month":"' + this.claimhistorydetails[item]["MONTH"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Month":"' + this.claimhistorydetails[item]["MONTH"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Month":"' + this.claimhistorydetails[item]["MONTH"] + '",';
+                  }
+                }
+                break;
+              case "ClaimType":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"ClaimType":"' + this.claimhistorydetails[item]["CLAIM_TYPE"] + '"';
+                  }
+                  else {
+                    jsonStr += '"ClaimType":"' + this.claimhistorydetails[item]["CLAIM_TYPE"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"ClaimType":"' + this.claimhistorydetails[item]["CLAIM_TYPE"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"ClaimType":"' + this.claimhistorydetails[item]["CLAIM_TYPE"] + '",';
+                  }
+                }
+                break;
+              case "Date":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Date":"' + this.claimhistorydetails[item]["TRAVEL_DATE"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Date":"' + this.claimhistorydetails[item]["TRAVEL_DATE"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Date":"' + this.claimhistorydetails[item]["TRAVEL_DATE"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Date":"' + this.claimhistorydetails[item]["TRAVEL_DATE"] + '",';
+                  }
+                }
+                break;
+              case "Status":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Status":"' + this.claimhistorydetails[item]["STATUS"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Status":"' + this.claimhistorydetails[item]["STATUS"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Status":"' + this.claimhistorydetails[item]["STATUS"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Status":"' + this.claimhistorydetails[item]["STATUS"] + '",';
+                  }
+                }
+                break;
+              case "Amount":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Amount":"' + this.claimhistorydetails[item]["CLAIM_AMOUNT"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Amount":"' + this.claimhistorydetails[item]["CLAIM_AMOUNT"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Amount":"' + this.claimhistorydetails[item]["CLAIM_AMOUNT"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Amount":"' + this.claimhistorydetails[item]["CLAIM_AMOUNT"] + '",';
+                  }
+                }
+                break;
+            }
+            if (ctr == this.checked.length) {
+              jsonStr += '}';
+            }
+          }
+          this.ExcelData.push(JSON.parse(jsonStr));
+        }
+      }
+      this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
+    }
+    else {
+      alert('Please select one item.');
+    }
+  }
 }
