@@ -58,11 +58,11 @@ import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
 
 import { UploadPage } from '../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
-// import { Camera, CameraOptions } from '@ionic-native/camera';
-// import { File } from '@ionic-native/file';
-// import { FilePath } from '@ionic-native/file-path';
-// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-// import { FileUploadOptions } from '@ionic-native/file-transfer';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FilePath } from '@ionic-native/file-path';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileUploadOptions } from '@ionic-native/file-transfer';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 // import { Chart } from 'chart.js';
@@ -104,15 +104,15 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DatePipe, DecimalPipe } from '@angular/common'
-import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data'; 
+import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data';
 // import { Ng2PaginationModule } from 'ng2-pagination';
-import {NgxPaginationModule} from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     ConferenceApp,
     AccountPage,
     LoginPage,
-    AllClaimListPage,    MedicalclaimPage,
+    AllClaimListPage, MedicalclaimPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
@@ -176,7 +176,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 
   imports: [
     BrowserModule,
-    HttpModule, HttpClientModule, ChartsModule,NgxPaginationModule,
+    HttpModule, HttpClientModule, ChartsModule, NgxPaginationModule,
     TranslateModule.forRoot
       ({
         loader: {
@@ -192,7 +192,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
         { component: ImportExcelDataPage, name: 'ImportExcelDataPage', segment: 'ImportExcelDataPage' },
         { component: DashboardPage, name: 'DashboardPage', segment: 'DashboardPage' },
         { component: SetupPage, name: 'SetupPage', segment: 'Setup' },
-        { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage'},
+        { component: AdminsetupPage, name: 'AdminsetupPage', segment: 'AdminsetupPage' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
@@ -205,7 +205,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
         { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
         { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
         { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
-        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },        
+        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },
 
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
@@ -215,7 +215,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
         { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
         { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' },
         { component: ClaimReportUserPage, name: 'ClaimReportUserPage', segment: 'ClaimReportUserPage' }
-     
+
       ]
     }),
     IonicStorageModule.forRoot()
@@ -226,7 +226,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ConferenceApp,
     AccountPage,
     LoginPage,
-    AllClaimListPage,    SetupguidePage,
+    AllClaimListPage, SetupguidePage,
     SignupPage,
     StatesetupPage,
     SetupPage,
@@ -300,17 +300,17 @@ import {NgxPaginationModule} from 'ngx-pagination';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData, HttpClientModule, ApiManagerProvider,
     UserData, DatePipe, DecimalPipe,
-  //  InAppBrowser,
-  //  SplashScreen, StatusBar, 
+    //  InAppBrowser,
+    //  SplashScreen, StatusBar, 
     Services,
 
-  //  Camera, 
-    ProfileManagerProvider, 
-    // File,
-    // FilePath,
-    // FileTransfer,
-    // //FileUploadOptions,
-    //FileTransferObject, 
+    Camera,
+    ProfileManagerProvider,
+    File,
+    FilePath,
+    FileTransfer,
+    //FileUploadOptions,
+    FileTransferObject,
     ApiManagerProvider, ProfileManagerProvider
   ]
 })
