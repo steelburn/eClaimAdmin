@@ -132,7 +132,7 @@
 
         <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
           <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
-          <td class="lgl1 getHeader" reshead="Name" *ngIf="!FinanceLogin">{{claimhistorydetail.FULLNAME}}</td>
+          <td class="lgl1 getHeader" reshead="Name" *ngIf="!FinanceLogin" text-wrap>{{claimhistorydetail.FULLNAME}}</td>
           <td class="lgl1 getHeader" reshead="Department" *ngIf="!FinanceLogin">{{claimhistorydetail.DEPARTMENT}}</td>
           <td class="lgl1 getHeader" reshead="Month" *ngIf="!FinanceLogin">{{claimhistorydetail.MONTH}}</td>
 
@@ -149,6 +149,43 @@
       </pagination-controls>
     </ion-item>
   </ion-list>
+
+  <!-- Popup for Export to Excel Starts-->
+  <div class="blackcontainer" *ngIf="ExportExcelClicked">
+  </div>
+  <div class="popup4" padding *ngIf="ExportExcelClicked">
+    <ion-card>
+      <ion-card-header class="icTitle headerColor-white ">
+
+        <div class="icHeaderText">EXPORT TO EXCEL</div>
+
+        <button class="btnR" (click)="CloseExportExcel()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+
+      </ion-card-header>
+      <ion-list>
+        <div style="width:100%; display:inline-table !important;">
+
+          <ion-card>
+            <div>
+              <ion-list>
+                <ion-item *ngFor="let ExcelColumn of ExcelColumns">
+                  <ion-label>{{ExcelColumn.Columns}}</ion-label>
+                  <ion-checkbox color="secondary" checked="false" (ionChange)="SelectColumn($event, ExcelColumn)" item-end></ion-checkbox>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-card>
+        </div>
+      </ion-list>
+      <div class="btn">
+        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="SubmitExportExcel()">{{"SUBMIT" | translate}}</button>
+      </div>
+    </ion-card>
+
+  </div>
+  <!-- Popup for Export to Excel End-->
 
 
 </ion-content>
