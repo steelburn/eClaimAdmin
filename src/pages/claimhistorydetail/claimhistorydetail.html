@@ -132,7 +132,7 @@
 
         <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
           <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
-          <td class="lgl1 getHeader" reshead="Name" *ngIf="!FinanceLogin">{{claimhistorydetail.FULLNAME}}</td>
+          <td class="lgl1 getHeader" reshead="Name" *ngIf="!FinanceLogin" text-wrap>{{claimhistorydetail.FULLNAME}}</td>
           <td class="lgl1 getHeader" reshead="Department" *ngIf="!FinanceLogin">{{claimhistorydetail.DEPARTMENT}}</td>
           <td class="lgl1 getHeader" reshead="Month" *ngIf="!FinanceLogin">{{claimhistorydetail.MONTH}}</td>
 
