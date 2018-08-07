@@ -16,6 +16,7 @@ import { SocRegistrationPage } from '../soc-registration/soc-registration';
 import { CountrysetupPage } from '../countrysetup/countrysetup';
 import { StatesetupPage } from '../statesetup/statesetup';
 import { ImportExcelDataPage } from '../import-excel-data/import-excel-data';
+import { DeviceSetupPage } from '../device-setup/device-setup';
 
 import { TenantCompanySetup_Model } from '../../models/tenantcompanysetup_model';
 import { TenantCompanySiteSetup_Model } from '../../models/tenantcompanysitesetup_model';
@@ -219,6 +220,11 @@ export class SetupPage {
   goToMileagesetup() {
     this.navCtrl.push(MileagesetupPage)
   }
+
+  goToDevicesetup(){
+    this.navCtrl.push(DeviceSetupPage);
+  }
+
   goToImport_Excel_Data_setup()
   {
     this.navCtrl.push(ImportExcelDataPage)
