@@ -55,6 +55,7 @@ import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
 import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
+import { DeviceSetupPage } from '../pages/device-setup/device-setup';
 
 import { UploadPage } from '../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
@@ -138,7 +139,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TranslatePage,
     MileagesetupPage,
     RolesetupPage,
-    ModulesetupPage,
+    ModulesetupPage, DeviceSetupPage,
     PaymenttypesetupPage,
     QualificationsetupPage,
     SubsciptionsetupPage,
@@ -230,7 +231,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SignupPage,
     StatesetupPage,
     SetupPage,
-    ModulesetupPage,
+    ModulesetupPage, DeviceSetupPage,
     MedicalclaimPage,
     TravelclaimPage,
     PrintclaimPage,
