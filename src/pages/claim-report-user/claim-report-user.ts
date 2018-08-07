@@ -44,6 +44,7 @@ export class ClaimReportUserPage {
   BindData(printSectionId: any, item: string) {
     if (this.loginUserGuid !== undefined) {
       this.totalClaimAmount = 0;
+      this.claimsListPrintTemp = [];
       this.month = item.split('-')[0];
       this.year = item.split('-')[1];
       this.http
