@@ -43,7 +43,7 @@ export class ClaimhistoryPage {
   employeeList1: any[] = [];
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
-  loginUserRole:string;
+  loginUserRole: string;
   // claimhistoryTotal: any[];
 
   // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -60,7 +60,7 @@ export class ClaimhistoryPage {
     this.BindDepartment();
     this.BindEmployeesbyDepartment("All");
     this.BindYears();
-    this.BindData("All", "All","All");
+    this.BindData("All", "All", "All");
 
     this.excelService = excelService;
   }
@@ -77,11 +77,11 @@ export class ClaimhistoryPage {
           if (ddlDept.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.DEPT_GUID.toString() === ddlDept.toString()) }
           if (ddlEmployee.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
           if (ddlmonth.toString() !== "All") { this.claimhistorys = this.claimhistorys.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
-    
+
         }
-        for (var item in data["resource"]) {
-          this.ExcelData.push({ Employee: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPT"], Month: data["resource"][item]["MONTH"], ApprovedAmt: data["resource"][item]["APPROVEDAMOUNT"], RejectedAmount: data["resource"][item]["REJECTEDAMOUNT"] });
-        }
+        // for (var item in data["resource"]) {
+        //   this.ExcelData.push({ Employee: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPT"], Month: data["resource"][item]["MONTH"], ApprovedAmt: data["resource"][item]["APPROVEDAMOUNT"], RejectedAmount: data["resource"][item]["REJECTEDAMOUNT"] });
+        // }
       });
   }
 
@@ -128,10 +128,10 @@ export class ClaimhistoryPage {
     })
   }
 
-  ExportToExcel() {
-    // this.excelService.exportAsExcelFile(this.claimhistorys, 'Data');
-    this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
-  }
+  // ExportToExcel() {
+  //   // this.excelService.exportAsExcelFile(this.claimhistorys, 'Data');
+  //   this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
+  // }
 
   BindDepartment() {
     this.http
@@ -171,8 +171,145 @@ export class ClaimhistoryPage {
     else {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(APPROVER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-     this.BindData(ddlDept,ddlEmployee,ddlmonth);
-    
+    this.BindData(ddlDept, ddlEmployee, ddlmonth);
+
+  }
+
+  ExportExcelClicked: boolean = false; ExcelColumns: any[] = [];
+  ExportToExcel() {
+    this.ExportExcelClicked = true;
+    this.ExcelColumns = [];
+    this.ExcelColumns.push({ Columns: 'Employee' });
+    this.ExcelColumns.push({ Columns: 'Department' });
+    this.ExcelColumns.push({ Columns: 'Month' });
+    this.ExcelColumns.push({ Columns: 'ApprovedAmt' });
+    this.ExcelColumns.push({ Columns: 'RejectedAmount' });
+  }
+
+  CloseExportExcel() {
+    this.ExportExcelClicked = false;
+    this.checked.length = 0;
+  }
+
+  checked: any[] = [];
+  SelectColumn(e: any, SelectedColumn: any) {
+    if (e.checked == true) {
+      this.checked.push(SelectedColumn);
+    } else {
+      let index = this.RemoveCheckedFromArray(SelectedColumn);
+      this.checked.splice(index, 1);
+    }
+  }
+
+  RemoveCheckedFromArray(checkbox: String) {
+    return this.checked.findIndex((category) => {
+      return category === checkbox;
+    })
+  }
+
+  SubmitExportExcel() {
+    this.ExcelData = [];
+    if (this.checked.length > 0) {
+      for (var item in this.claimhistorys) {
+        if (this.checked.length > 0) {
+          let ctr: number = 0;
+          let jsonStr = '';
+          for (var chkItem in this.checked) {
+            ctr = ctr + 1;
+            switch (this.checked[chkItem]["Columns"]) {
+              case "Employee":
+                if (this.checked.length == 1) {
+                  jsonStr += '{"Employee":"' + this.claimhistorys[item]["FULLNAME"] + '"';
+                }
+                else {
+                  jsonStr += '{"Employee":"' + this.claimhistorys[item]["FULLNAME"] + '",';
+                }
+                break;
+              case "Department":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Department":"' + this.claimhistorys[item]["DEPT"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Department":"' + this.claimhistorys[item]["DEPT"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Department":"' + this.claimhistorys[item]["DEPT"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Department":"' + this.claimhistorys[item]["DEPT"] + '",';
+                  }
+                }
+                break;
+              case "Month":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"Month":"' + this.claimhistorys[item]["MONTH"] + '"';
+                  }
+                  else {
+                    jsonStr += '"Month":"' + this.claimhistorys[item]["MONTH"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"Month":"' + this.claimhistorys[item]["MONTH"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"Month":"' + this.claimhistorys[item]["MONTH"] + '",';
+                  }
+                }
+                break;
+              case "ApprovedAmt":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"ApprovedAmt":"' + this.claimhistorys[item]["APPROVEDAMOUNT"] + '"';
+                  }
+                  else {
+                    jsonStr += '"ApprovedAmt":"' + this.claimhistorys[item]["APPROVEDAMOUNT"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"ApprovedAmt":"' + this.claimhistorys[item]["APPROVEDAMOUNT"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"ApprovedAmt":"' + this.claimhistorys[item]["APPROVEDAMOUNT"] + '",';
+                  }
+                }
+                break;
+              case "RejectedAmount":
+                if (jsonStr.length > 0) {
+                  if (ctr == this.checked.length) {
+                    jsonStr += '"RejectedAmount":"' + this.claimhistorys[item]["REJECTEDAMOUNT"] + '"';
+                  }
+                  else {
+                    jsonStr += '"RejectedAmount":"' + this.claimhistorys[item]["REJECTEDAMOUNT"] + '",';
+                  }
+                }
+                else {
+                  if (this.checked.length == 1) {
+                    jsonStr += '{"RejectedAmount":"' + this.claimhistorys[item]["REJECTEDAMOUNT"] + '"';
+                  }
+                  else {
+                    jsonStr += '{"RejectedAmount":"' + this.claimhistorys[item]["REJECTEDAMOUNT"] + '",';
+                  }
+                }
+                break;
+            }
+            if (ctr == this.checked.length) {
+              jsonStr += '}';
+            }
+          }
+          this.ExcelData.push(JSON.parse(jsonStr));
+        }
+      }
+      this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
+    }
+    else {
+      alert('Please select one item.');
+    }
   }
 
 }
