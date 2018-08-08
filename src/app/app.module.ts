@@ -107,6 +107,9 @@ import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data';
 // import { Ng2PaginationModule } from 'ng2-pagination';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Transfer, TransferObject } from '@ionic-native/transfer';
+// import { Transfer } from "../providers/file-transfer";
+
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -171,7 +174,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage,
     ClaimReportUserPage,
-    ClaimReportPrintPage
+    ClaimReportPrintPage,
+   
   ],
 
   imports: [
@@ -302,6 +306,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UserData, DatePipe, DecimalPipe,
     //  InAppBrowser,
     //  SplashScreen, StatusBar, 
+
+    // TransferObject,
+    // Transfer,
+
     Services,
 
     Camera,
@@ -311,7 +319,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FileTransfer,
     //FileUploadOptions,
     FileTransferObject,
-    ApiManagerProvider, ProfileManagerProvider
+    ApiManagerProvider,Transfer
   ]
 })
 export class AppModule { }
