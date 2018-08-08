@@ -55,6 +55,7 @@ import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
 import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
+import { DeviceSetupPage } from '../pages/device-setup/device-setup';
 
 import { UploadPage } from '../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
@@ -141,7 +142,7 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     TranslatePage,
     MileagesetupPage,
     RolesetupPage,
-    ModulesetupPage,
+    ModulesetupPage, DeviceSetupPage,
     PaymenttypesetupPage,
     QualificationsetupPage,
     SubsciptionsetupPage,
@@ -234,7 +235,7 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     SignupPage,
     StatesetupPage,
     SetupPage,
-    ModulesetupPage,
+    ModulesetupPage, DeviceSetupPage,
     MedicalclaimPage,
     TravelclaimPage,
     PrintclaimPage,
