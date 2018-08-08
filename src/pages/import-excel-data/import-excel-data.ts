@@ -1277,7 +1277,7 @@ export class ImportExcelDataPage {
   //  For main_attendance
   chooseFile_main_attendance: boolean = false;
   arrayBuffer_main_attendance: any;
-  file_main_attendance: File;
+  file_main_attendance: File; 
   // main_attendance_Url: any;
   loading: Loading;
 
@@ -1370,6 +1370,8 @@ export class ImportExcelDataPage {
   attendance_click() {
     // this.Get_Device_GUID();
 
+    let CurInTime: any; let PrevInTime: any; let OutTime: any;
+
     this.attendance_Url = constants.DREAMFACTORY_TABLE_URL + '/device_raw_data?&api_key=' + constants.DREAMFACTORY_API_KEY;
     let fileReader = new FileReader();
 
@@ -1388,6 +1390,18 @@ export class ImportExcelDataPage {
       this.attendance_data.forEach(element => {
         //Check duplicate & insert record to db---------------------------------
         this.duplicateCheck_device_raw_data(element);
+
+        //Compare the time and check the exact intime and out time--------------
+        // if (element.Dev_ID == "1") {
+        //   CurInTime = element.Att_Time;
+        //   if (PrevInTime != null) {
+        //     if (CurInTime < PrevInTime) {
+
+        //     }
+        //   }
+        //   PrevInTime = element.Att_Time;
+        // }
+
         //----------------------------------------------------------------------
       });
     }
@@ -1451,4 +1465,9 @@ export class ImportExcelDataPage {
         }
       });
   }
+
+  Insert_User_Attendance() {
+
+  }
+
 }
