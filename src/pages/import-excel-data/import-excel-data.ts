@@ -15,8 +15,10 @@ import { UserContact_Model } from '../../models/user_contact_model';
 import { UserQualification_Model } from '../../models/user_qualification_model';
 import { UserRole_Model } from '../../models/user_role_model';
 import { Main_Attendance_Model } from '../../models/main_attendance_model';
+import { Device_Raw_Data_Model } from '../../models/device_raw_data_model';
 
 import * as constants from '../../config/constants';
+// import * as constants from '../../app/config/constants';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import * as XLSX from 'xlsx';
 import { UUID } from 'angular2-uuid';
@@ -54,6 +56,7 @@ export class ImportExcelDataPage {
   main_customer_location_Url: any;
   main_customer_location_data: any[];
   constructor(private apiMng: ApiManagerProvider, public datepipe: DatePipe, public navCtrl: NavController, public navParams: NavParams, public http: Http, private loadingCtrl: LoadingController) {
+    this.Get_Device_GUID();
   }
 
   ionViewDidLoad() {
@@ -1220,6 +1223,7 @@ export class ImportExcelDataPage {
     this.chooseFile_user_role = true;
     this.file_user_role = event.target.files[0];
   }
+
   user_role_click() {
     this.user_role_Url = constants.DREAMFACTORY_TABLE_URL + '/user_role?&api_key=' + constants.DREAMFACTORY_API_KEY;
     let fileReader = new FileReader();
@@ -1274,11 +1278,12 @@ export class ImportExcelDataPage {
   chooseFile_main_attendance: boolean = false;
   arrayBuffer_main_attendance: any;
   file_main_attendance: File;
-  main_attendance_Url: any;
+  // main_attendance_Url: any;
   loading: Loading;
 
   Main_Attendance_Model: Main_Attendance_Model = new Main_Attendance_Model();
-  main_attendance_data: any[];
+  Device_Raw_Data_Model: Device_Raw_Data_Model = new Device_Raw_Data_Model();
+  main_attendance_data: any[]; attendance_data: any[];
 
   main_attendance(event: any) {
     this.chooseFile_main_attendance = true;
@@ -1286,14 +1291,87 @@ export class ImportExcelDataPage {
   }
 
 
-  main_attendance_click() {
-    this.main_attendance_Url = constants.DREAMFACTORY_TABLE_URL + '/main_attendance?&api_key=' + constants.DREAMFACTORY_API_KEY;
-    let fileReader = new FileReader();
+  // main_attendance_click() {
+  //   this.main_attendance_Url = constants.DREAMFACTORY_TABLE_URL + '/main_attendance?&api_key=' + constants.DREAMFACTORY_API_KEY;
+  //   let fileReader = new FileReader();
 
-    // this.loading = this.loadingCtrl.create({
-    //   content: 'Please wait...',
-    // });
-    // this.loading.present();
+  //   // this.loading = this.loadingCtrl.create({
+  //   //   content: 'Please wait...',
+  //   // });
+  //   // this.loading.present();
+
+  //   fileReader.onload = (e) => {
+  //     this.arrayBuffer_main_attendance = fileReader.result;
+  //     var data = new Uint8Array(this.arrayBuffer_main_attendance);
+  //     var arr = new Array();
+  //     for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+  //     var bstr = arr.join("");
+  //     var workbook = XLSX.read(bstr, { type: "binary" });
+  //     // zero for first sheet
+  //     var first_sheet_name = workbook.SheetNames[0];
+  //     var worksheet = workbook.Sheets[first_sheet_name];
+  //     this.main_attendance_data = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+
+  //     this.main_attendance_data.forEach(element => {
+  //       //Check duplicate & insert record to db---------------------------------
+  //       this.duplicateCheck_main_attendance(element);
+  //       //----------------------------------------------------------------------
+  //     });
+  //   }
+
+  //   fileReader.readAsArrayBuffer(this.file_main_attendance);
+  // }
+
+  // duplicateCheck_main_attendance(checkData: any) {
+  //   this.apiMng.getApiModel('main_attendance', 'filter=(user_id=' + checkData.UserID.trim() + ') AND (attendance_time=' + checkData.Att_Time + ')')
+  //     .subscribe(data => {
+  //       let checkDataFromDB = data["resource"];
+  //       if (checkDataFromDB.length == 0) {
+  //         this.Main_Attendance_Model.user_id = checkData.UserID;
+  //         this.Main_Attendance_Model.employee_code = checkData.EmployeeCode;
+  //         this.Main_Attendance_Model.employee_name = checkData.Name;
+  //         this.Main_Attendance_Model.dept = checkData.Dept;
+  //         this.Main_Attendance_Model.attendance_time = checkData.Att_Time;
+  //         this.Main_Attendance_Model.att_id = checkData.Att_ID;
+  //         this.Main_Attendance_Model.dev_id = checkData.Dev_ID;
+  //         this.Main_Attendance_Model.photo_id = checkData.Photo_ID;
+
+  //         this.Main_Attendance_Model.CREATION_TS = new Date().toISOString();;
+  //         this.Main_Attendance_Model.CREATION_USER_GUID = 'sva_test';
+  //         this.Main_Attendance_Model.UPDATE_TS = new Date().toISOString();;
+  //         this.Main_Attendance_Model.UPDATE_USER_GUID = 'sva_test';
+
+  //         var queryHeaders = new Headers();
+  //         queryHeaders.append('Content-Type', 'application/json');
+  //         queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+  //         let options = new RequestOptions({ headers: queryHeaders });
+  //         return new Promise((resolve, reject) => {
+  //           this.http.post(this.main_attendance_Url, this.Main_Attendance_Model.toJson(true), options)
+  //             .map((response) => {
+  //               return response;
+  //             }).subscribe((response) => {
+  //               resolve(response.json());
+
+  //               this.fileInputAttendance.nativeElement.value = '';
+  //               this.chooseFile_main_attendance = false;
+  //             })
+  //         })
+  //       }
+  //       else {
+  //         this.fileInputAttendance.nativeElement.value = '';
+  //         this.chooseFile_main_attendance = false;
+  //         return;
+  //       }
+  //     })
+  // }
+
+
+  attendance_Url: string = "";
+  attendance_click() {
+    // this.Get_Device_GUID();
+
+    this.attendance_Url = constants.DREAMFACTORY_TABLE_URL + '/device_raw_data?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let fileReader = new FileReader();
 
     fileReader.onload = (e) => {
       this.arrayBuffer_main_attendance = fileReader.result;
@@ -1305,43 +1383,42 @@ export class ImportExcelDataPage {
       // zero for first sheet
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
-      this.main_attendance_data = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      this.attendance_data = XLSX.utils.sheet_to_json(worksheet, { raw: true });
 
-      this.main_attendance_data.forEach(element => {
+      this.attendance_data.forEach(element => {
         //Check duplicate & insert record to db---------------------------------
-        this.duplicateCheck_main_attendance(element);
+        this.duplicateCheck_device_raw_data(element);
         //----------------------------------------------------------------------
       });
     }
-
     fileReader.readAsArrayBuffer(this.file_main_attendance);
   }
 
-  duplicateCheck_main_attendance(checkData: any) {
-    this.apiMng.getApiModel('main_attendance', 'filter=(user_id=' + checkData.UserID.trim() + ') AND (attendance_time=' + checkData.Att_Time + ')')
+  duplicateCheck_device_raw_data(checkData: any) {
+    this.apiMng.getApiModel('device_raw_data', 'filter=(REF_NO=' + checkData.UserID.trim() + ') AND (DATA_ENTRY_TS=' + checkData.Att_Time + ')')
       .subscribe(data => {
         let checkDataFromDB = data["resource"];
         if (checkDataFromDB.length == 0) {
-          this.Main_Attendance_Model.user_id = checkData.UserID;
-          this.Main_Attendance_Model.employee_code = checkData.EmployeeCode;
-          this.Main_Attendance_Model.employee_name = checkData.Name;
-          this.Main_Attendance_Model.dept = checkData.Dept;
-          this.Main_Attendance_Model.attendance_time = checkData.Att_Time;
-          this.Main_Attendance_Model.att_id = checkData.Att_ID;
-          this.Main_Attendance_Model.dev_id = checkData.Dev_ID;
-          this.Main_Attendance_Model.photo_id = checkData.Photo_ID;
-
-          this.Main_Attendance_Model.CREATION_TS = new Date().toISOString();;
-          this.Main_Attendance_Model.CREATION_USER_GUID = 'sva_test';
-          this.Main_Attendance_Model.UPDATE_TS = new Date().toISOString();;
-          this.Main_Attendance_Model.UPDATE_USER_GUID = 'sva_test';
+          this.Device_Raw_Data_Model.RAW_DATA_GUID = UUID.UUID();
+          if (checkData.Dev_ID == "1") {
+            this.Device_Raw_Data_Model.DEVICE_GUID = localStorage.getItem("Input_Device_GUID");
+          }
+          else {
+            this.Device_Raw_Data_Model.DEVICE_GUID = localStorage.getItem("Output_Device_GUID");;
+          }
+          this.Device_Raw_Data_Model.REF_NO = checkData.UserID;
+          this.Device_Raw_Data_Model.DATA_ENTRY_TS = checkData.Att_Time;
+          this.Device_Raw_Data_Model.CREATION_TS = new Date().toISOString();
+          this.Device_Raw_Data_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+          this.Device_Raw_Data_Model.UPDATE_TS = new Date().toISOString();
+          this.Device_Raw_Data_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
           var queryHeaders = new Headers();
           queryHeaders.append('Content-Type', 'application/json');
           queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
           let options = new RequestOptions({ headers: queryHeaders });
           return new Promise((resolve, reject) => {
-            this.http.post(this.main_attendance_Url, this.Main_Attendance_Model.toJson(true), options)
+            this.http.post(this.attendance_Url, this.Device_Raw_Data_Model.toJson(true), options)
               .map((response) => {
                 return response;
               }).subscribe((response) => {
@@ -1352,11 +1429,26 @@ export class ImportExcelDataPage {
               })
           })
         }
-        else {          
+        else {
           this.fileInputAttendance.nativeElement.value = '';
           this.chooseFile_main_attendance = false;
           return;
         }
       })
+  }
+
+  devices: any;
+  Get_Device_GUID() {
+    let url = constants.DREAMFACTORY_TABLE_URL + "/main_device?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ') AND (ACTIVATION_FLAG=0)' + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http
+      .get(url)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.devices = data["resource"];
+        for (var item in data["resource"]) {
+          if (data["resource"][item]["ROLE"] == 1) { localStorage.setItem("Input_Device_GUID", data["resource"][item]["DEVICE_GUID"]); }
+          if (data["resource"][item]["ROLE"] == 2) { localStorage.setItem("Output_Device_GUID", data["resource"][item]["DEVICE_GUID"]); }
+        }
+      });
   }
 }

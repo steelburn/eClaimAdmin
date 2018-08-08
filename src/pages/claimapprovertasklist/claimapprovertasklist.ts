@@ -85,6 +85,7 @@ export class ClaimapprovertasklistPage {
     // else { this.BindData(); }
   }
   BindData(ddlEmployee?: string, ddlClaimTypes?: string) {
+    this.claimrequestdetails = [];
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -208,25 +209,10 @@ export class ClaimapprovertasklistPage {
     //debugger;
     if (this.checkboxDataList.length > 0) {
       let temp = this.approveAll();
-      // for(let i=0;i<this.checkboxDataList.length;i++)
-      // {
-      // this.checkboxDataList.forEach(element => {
-      //   if (element.Checked && element.status !== 'Paid') {
-      //     debugger;
-      //     this.profileMngProvider.ProcessProfileMng(null, this.loginUserGuid, element.level, element.ClaimRequestGuid, true);
-
-      //     count++;
-
-      //     // 
-      //   }
-      // });
-
-      //}
       temp.then(() => {
       })
 
       if (this.count > 0 && this.claimrefguid !== null && this.claimrefguid !== undefined) {
-        //debugger;
         this.claimreqData = [];
         let pendingFlag = false;
         let approvedFlag = false;
@@ -265,25 +251,21 @@ export class ClaimapprovertasklistPage {
                 //debugger;
                 this.api.updateApiModel('main_claim_ref', claimRefObj, false).subscribe(() => {
                   alert('Claim has been Approved.');
-                  this.navCtrl.push(ClaimtasklistPage);
+                  this.BindData("All", "All");
+                  this.checkboxDataList = [];
+                  this.navCtrl.setRoot(ClaimtasklistPage);
                 })
               });
           })
-        // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
-        // this.MainClaimSaved = true;
       }
       if (this.claimrefguid === null || this.claimrefguid === undefined) {
         alert('Claim has been Approved.')
+        this.claimrequestdetails = [];
+        this.checkboxDataList = [];
+        this.BindData("All", "All");
         this.navCtrl.setRoot(ClaimapprovertasklistPage);
       }
-      this.BindData("All", "All");
-      this.checkboxDataList = [];
 
-      // if(this.checkboxDataList.length>1)
-      // {
-      //   alert('Claim has been Approved.')
-      //   this.navCtrl.push(ClaimtasklistPage);
-      // }
     }
     else {
       alert("Please select the claim(s) which you want to approve.")
@@ -322,6 +304,11 @@ export class ClaimapprovertasklistPage {
     });
   }
 
+  ionViewWillEnter() {
+    //if(!this.isFormEdit)
+    this.BindData("All", "All");
+
+  }
 
   BindClaimTypes() {
     this.http
