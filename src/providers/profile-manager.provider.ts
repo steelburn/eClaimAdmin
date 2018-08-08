@@ -44,7 +44,7 @@ export class ProfileManagerProvider {
       else
         alert('Claim has been Approved.');
       // alert('Claim has been '+mainClaimReq.STATUS+'.');
-      this.navCtrl.setRoot(ClaimapprovertasklistPage);
+      this.navCtrl.pop();
     });
   }
 
