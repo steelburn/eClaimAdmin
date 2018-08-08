@@ -18,13 +18,26 @@ import { Main_Attendance_Model } from '../../models/main_attendance_model';
 import { Device_Raw_Data_Model } from '../../models/device_raw_data_model';
 
 import * as constants from '../../config/constants';
+
+import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/http';
+
 // import * as constants from '../../app/config/constants';
-import { Http, Headers, RequestOptions } from '@angular/http';
 import * as XLSX from 'xlsx';
 import { UUID } from 'angular2-uuid';
 import { Constants } from './../util/constants';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
+import {Observable} from 'rxjs/Rx';
+// import {Observable} from 'rxjs/Observable';
+import {saveAs as importedSaveAs} from "file-saver";
+
+// import { ExcelService } from '../../providers/excel.service';
+// // import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
+// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+// import { saveAs } from 'file-saver/FileSaver';
+
+// import { ConfigService } from 'app/common/services/config.service';
+// import { getFileNameFromResponseContentDisposition, saveFile } from 'app/core/helpers/file-download-helper';
 
 /**
  * Generated class for the ImportExcelDataPage page.
@@ -34,12 +47,15 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
  */
 
 @IonicPage()
+
 @Component({
   selector: 'page-import-excel-data',
   templateUrl: 'import-excel-data.html',
-  providers: [DatePipe]
+ providers: [DatePipe, DataTransfer]
 })
+
 export class ImportExcelDataPage {
+  
   @ViewChild('fileInputAttendance') fileInputAttendance: ElementRef;
   // test_model: test_model = new test_model();  
 
@@ -55,8 +71,10 @@ export class ImportExcelDataPage {
 
   main_customer_location_Url: any;
   main_customer_location_data: any[];
+
   constructor(private apiMng: ApiManagerProvider, public datepipe: DatePipe, public navCtrl: NavController, public navParams: NavParams, public http: Http, private loadingCtrl: LoadingController) {
     this.Get_Device_GUID();
+
   }
 
   ionViewDidLoad() {
@@ -1451,6 +1469,68 @@ export class ImportExcelDataPage {
       })
   }
 
+
+
+
+Templates_ngModel:any;    
+download_file_name: string = "";      
+
+downloadFile_service(): Observable<Blob> {
+if(this.Templates_ngModel == "Bank"){
+this.download_file_name = "Bank.xlsx";
+}
+if(this.Templates_ngModel == "Designation"){
+  this.download_file_name = "Designation.xlsx";
+  }
+  if(this.Templates_ngModel == "Department"){
+    this.download_file_name = "Department.xlsx";
+    }
+    if(this.Templates_ngModel == "Mileage"){
+      this.download_file_name = "Mileage.xlsx";
+      }
+      if(this.Templates_ngModel == "Payment Type"){
+        this.download_file_name = "Payment_type.xlsx";
+        }
+        if(this.Templates_ngModel == "Qualification"){
+          this.download_file_name = "Qualification.xlsx";
+          }
+          if(this.Templates_ngModel == "Customer"){
+            this.download_file_name = "User_Template.xlsx";
+            }
+            if(this.Templates_ngModel == "SOC"){
+              this.download_file_name = "SOC_Registration.xlsx";
+              }
+              if(this.Templates_ngModel == "Country"){
+                this.download_file_name = "User_Template.xlsx";
+                }
+                if(this.Templates_ngModel == "State"){
+                  this.download_file_name = "State.xlsx";
+                  }
+                  if(this.Templates_ngModel == "Templates"){
+                    this.download_file_name = "User_Template.xlsx";
+                    }
+const url ='http://api.zen.com.my/api/v2/files/Templates/' + this.download_file_name +'?api_key=' +constants.DREAMFACTORY_API_KEY;
+let options = new RequestOptions({responseType: ResponseContentType.Blob });
+console.log(url)
+return this.http.get(url,options)
+.map(res => res.blob())
+// .catch(this.handleError)
+// .then((response) => {
+//   resolve(response)
+//   }).catch(err => {
+//   errorHandler.checkError(context, err)
+//   reject(err)
+//   })
+//   })responseType: ResponseContentType.Blob ,
+}
+
+download() {
+this.downloadFile_service().subscribe(blob => {
+importedSaveAs(blob, this.download_file_name);
+})
+}
+
+
   devices: any;
   Get_Device_GUID() {
     let url = constants.DREAMFACTORY_TABLE_URL + "/main_device?filter=(TENANT_GUID=" + localStorage.getItem("g_TENANT_GUID") + ') AND (ACTIVATION_FLAG=0)' + '&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -1465,9 +1545,4 @@ export class ImportExcelDataPage {
         }
       });
   }
-
-  Insert_User_Attendance() {
-
-  }
-
 }
