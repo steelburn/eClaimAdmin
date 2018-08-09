@@ -133,7 +133,7 @@ export class ConferenceApp {
     public translate: TranslateService, public http: Http
   ) {
     // debugger;
-    this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
+    this.blnLogin = false; 
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -158,7 +158,8 @@ export class ConferenceApp {
     this.userData.logout();
     this.enableMenu(false);
 
-    this.menu.enable(false, 'loggedInMenu');
+    // this.menu.enable(false, 'loggedInMenu');
+    this.menu.enable(false, 'loggedInMenu_User');    
   }
 
   openPage(page: PageInterface) {
@@ -196,8 +197,7 @@ export class ConferenceApp {
     // this.MenuService.EventListener();
     // debugger;    
 
-    this.events.subscribe('user:login', () => {      
-
+    this.events.subscribe('user:login', () => {
       this.enableMenu(true);
     });
 
@@ -206,11 +206,15 @@ export class ConferenceApp {
     });
 
     this.events.subscribe('user:logout', () => {
-      this.enableMenu(false);
+        this.enableMenu(false);            
     });
   }
 
-  enableMenu(loggedIn: boolean) {
+  enableMenu(loggedIn: boolean) {    
+    if(localStorage.getItem("g_USER_GUID") != null){
+      loggedIn = true;
+    }
+    // alert(loggedIn);
     // debugger;
     //Get all the roles and menus for that particular user.-------------------------------------------------------   
     // let url: string; this.Menu_Array = []; let Role_Name: string = "";
@@ -266,6 +270,7 @@ export class ConferenceApp {
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu');
+          // this.menu.enable(loggedIn, 'loggedInMenu_User');          
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 

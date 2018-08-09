@@ -14,6 +14,35 @@
 
 
 <ion-content padding>
+
+ <div style="width:48%; display:inline-table !important;">
+    <div style="width:78%; display:inline-table !important;">
+      <ion-item>
+        <h3>Templates</h3>
+        <ion-select [(ngModel)]="Templates_ngModel" placeholder="{{'Please select template'}}">
+          <ion-option [value]="Bank">Bank</ion-option>
+          <ion-option [value]="Designation">Designation</ion-option>
+          <ion-option [value]="Department">Department</ion-option>
+          <ion-option [value]="Mileage">Mileage</ion-option>
+          <ion-option [value]="PaymentType">Payment Type</ion-option>
+          <ion-option [value]="Qualification">Qualification</ion-option>
+          <ion-option [value]="Customer">Customer</ion-option>
+          <ion-option [value]="SOC">SOC</ion-option>
+          <ion-option [value]="Country">Country</ion-option>
+          <ion-option [value]="State">State</ion-option>
+          <ion-option [value]="User_Templates">Templates</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div style="width:20%; display:inline-table !important;">
+      <ion-item>
+        <button ion-fab mini (click)="download()" title="Download templates">
+          <ion-icon name="download"></ion-icon>
+        </button>
+      </ion-item>
+    </div>
+  </div>
+
   <div style="width:48%; display:inline-table !important;">
     <ion-item>
       <h3>To main_customer</h3>
@@ -100,7 +129,7 @@
     <ion-item>
       <h3>To main_attendance</h3>
       <input type="file" #fileInputAttendance style="display: inline-block;" (change)="main_attendance($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="main_attendance_click()" [disabled]="!chooseFile_main_attendance">Upload</button>
+      <button ion-button color="primary500" class="btn btn-info" (click)="attendance_click()" [disabled]="!chooseFile_main_attendance">Upload</button>
     </ion-item>
   </div>
 
