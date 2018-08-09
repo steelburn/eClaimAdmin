@@ -15,6 +15,7 @@ import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
 import { UserData } from '../providers/user-data';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
+import { AllClaimhistoryPage } from '../pages/allclaimhistory/claimhistory';
 
 
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
@@ -300,6 +301,7 @@ export class ConferenceApp {
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'All Finance Task History', name: 'AllClaimhistoryPage', component: AllClaimhistoryPage, icon: 'ios-clipboard-outline' },
             { title: 'All Claim List', name: 'AllClaimListPage', component: AllClaimListPage, icon: 'ios-paper-outline' }
           ];
 
