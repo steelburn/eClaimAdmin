@@ -40,6 +40,7 @@ export class ClaimhistorydetailPage {
   claimTypeList: any[];
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
+  ddlDep: any = 'All'; ddlName: any = 'All'; ddlMon: any = 'All'; ddlClaim: any = 'All'; ddlSta: any = 'All';
 
   constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
     this.claimrefguid = navParams.get("claimRefGuid");
@@ -127,13 +128,22 @@ export class ClaimhistorydetailPage {
         let status: number;
         let amount: number;
         let date: number;
+        let dept: number;
+        let user: number;
+        let month: number;
 
+        if (item.DEPARTMENT != null && !this.FinanceLogin) { dept = item.DEPARTMENT.toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.FULLNAME != null && !this.FinanceLogin) { user = item.FULLNAME.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.MONTH != null && !this.FinanceLogin) { month = item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) }
         if (item.CLAIM_TYPE != null) { claimtype = item.CLAIM_TYPE.toLowerCase().indexOf(val.toLowerCase()) }
         if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
         if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
         if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
         return (
-          (claimtype > -1)
+          (dept > -1)
+         || (user > -1)
+         || (month > -1)
+         || (claimtype > -1)
           || (date > -1)
           || (status > -1)
           || (amount > -1)
@@ -189,7 +199,7 @@ export class ClaimhistorydetailPage {
 
   }
 
-  SearchClaimsData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
+  SearchClaimsData() {
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       if (this.loginUserRole === "Finance Admin") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -200,9 +210,9 @@ export class ClaimhistorydetailPage {
 
     }
     else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=1)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=1)AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-    this.BindData(ddlDept, ddlEmployee, ddlmonth, ddlClaimTypes, ddlStatus);
+    this.BindData(this.ddlDep, this.ddlName, this.ddlMon, this.ddlClaim, this.ddlSta);
 
   }
 

@@ -9,9 +9,10 @@
 </ion-header>
 
 <ion-content class="outer-content">
-  <div padding-top *ngIf="username">
-    <div text-center >
-      <div class="profilepic" >
+  <!-- <div padding-top *ngIf="username"> -->
+  <div padding-top>
+    <div text-center>
+      <div class="profilepic">
         <img [src]="Profile_Image_Display" alt="avatar">
       </div>
 
@@ -113,13 +114,13 @@
               <ion-option [value]="2">Divorced</ion-option>
             </ion-select>
           </ion-item>
-  
-          <ion-item  class="fuha">
+
+          <ion-item class="fuha">
             <ion-label stacked>{{ 'PROFILE PHOTO' | translate }}</ion-label>
             <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
             <button ion-button item-end color="primary500" (click)="saveIm()" [disabled]="!chooseFile">Upload image</button>
           </ion-item>
-          
+
           <div class="eClaimSubTitle2">
             <b>{{ 'EMPLOYMENT_DETAILS' | translate }}</b>
           </div>
