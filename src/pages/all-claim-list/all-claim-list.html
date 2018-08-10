@@ -1,20 +1,18 @@
 <!--
-  Generated template for the UserclaimslistPage page.
+  Generated template for the ClaimhistorydetailPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
 
-
   <ion-navbar color="primary200">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>My Claim History</ion-title>
-
+    <ion-title *ngIf="FinanceLogin">Finance Task History Details</ion-title>
+    <ion-title *ngIf="!FinanceLogin">Approver Task History</ion-title>
   </ion-navbar>
-
   <ion-toolbar no-border-top color="primary200">
     <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
   </ion-toolbar>
@@ -23,31 +21,30 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <!-- ExportToExcel($event) -->
     <button ion-fab mini (click)="ExportToExcel($event)" title="Export to excel">
       <ion-icon name="download"></ion-icon>
     </button>
   </ion-fab>
 
-
-
   <ion-item class="fuha">
-    <ion-label>Claim Type:</ion-label>
-    <ion-select interface="popover" #ddlClaimTypes>
+
+    <ion-label>Department :</ion-label>
+    <ion-select interface="popover" (ionChange)="BindEmployeesbyDepartment(ddlDept.value)" #ddlDept>
       <ion-option [value]="All" [selected]="true">All</ion-option>
-      <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
+      <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
     </ion-select>
   </ion-item>
-
   <ion-item class="fuha">
-    <ion-label>Status:</ion-label>
-    <ion-select interface="popover" #ddlStatus>
+    <ion-label>User Name :</ion-label>
+    <ion-select interface="popover" #ddlEmployee>
       <ion-option [value]="All" [selected]="true">All</ion-option>
-      <ion-option [value]="Paid">Paid</ion-option>
-      <ion-option [value]="Pending">Pending</ion-option>
-      <ion-option [value]="Approved">Approved</ion-option>
-      <ion-option [value]="Rejected">Rejected</ion-option>
-
+      <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item class="fuha">
+    <ion-label>Year:</ion-label>
+    <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
+      <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
     </ion-select>
   </ion-item>
 
@@ -69,113 +66,101 @@
       <ion-option value="Dec">Dec</ion-option>
     </ion-select>
   </ion-item>
-
-
   <ion-item class="fuha">
-    <ion-label>Year:</ion-label>
-    <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
-      <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
+    <ion-label>Claim Type:</ion-label>
+    <ion-select interface="popover" #ddlClaimTypes>
+      <ion-option [value]="All" [selected]="true">All</ion-option>
+      <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item class="fuha">
+    <ion-label>Status:</ion-label>
+    <ion-select interface="popover" #ddlStatus>
+      <ion-option [value]="All" [selected]="true">All</ion-option>
+      <ion-option [value]="Paid">Paid</ion-option>
+      <!-- <ion-option [value]="Pending">Pending</ion-option> -->
+      <ion-option [value]="Approved">Approved</ion-option>
+      <ion-option [value]="Rejected">Rejected</ion-option>
+
     </ion-select>
   </ion-item>
 
   <ion-item>
-    <button ion-button item-end (click)="SearchClaimsData(ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
+    <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
   </ion-item>
+  <!-- <ion-item>
+    <button ion-button item-end (click)="SearchClaimsData('All','All','All',ddlClaimTypes.value,ddlStatus.value,'All')">Search</button>
+  </ion-item> -->
 
-  <ion-item *ngFor="let userdetail of userdetails" class="fuha">
-    <ion-label text-wrap>Name: {{userdetail.FULLNAME}}</ion-label>
 
-  </ion-item>
+  <div *ngIf="FinanceLogin">
+    <ion-item *ngFor="let userdetail of userdetails" class="fuha">
+      <ion-label>Name : {{userdetail.FULLNAME}}</ion-label>
 
-  <ion-item *ngFor="let userdetail of userdetails" class="fuha">
+    </ion-item>
+    <ion-item *ngFor="let userdetail of userdetails" class="fuha">
 
-    <ion-label text-wrap>Department: {{userdetail.DEPARTMENT}}</ion-label>
-  </ion-item>
+      <ion-label>Department : {{userdetail.DEPARTMENT}}</ion-label>
+    </ion-item>
 
-  <ion-item *ngFor="let userdetail of userdetails" class="fuha1">
-    <ion-label text-wrap>Designation: {{userdetail.DESIGNATION}}</ion-label>
+    <ion-item *ngFor="let userdetail of userdetails" class="fuha">
+      <ion-label>Designation : {{userdetail.DESIGNATION}} </ion-label>
+    </ion-item>
+    <ion-item *ngFor="let userdetail of userdetails" class="fuha">
 
-  </ion-item>
+      <ion-label>Month : {{this.month}}</ion-label>
 
+    </ion-item>
+
+  </div>
 
   <ion-list>
     <ion-item>
-      <table class="Tabler list">
+      <table class="Tabler list ">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1" *ngIf="!FinanceLogin">Name</th>
+          <th class="lgl1" *ngIf="!FinanceLogin">Department</th>
+          <th class="lgl1" *ngIf="!FinanceLogin">Month</th>
 
           <th class="lgl1">Claim Type</th>
           <th class="lgl1">Date</th>
-          <th class="lgl1" style="width:120px">Status</th>
-          <th class="lgl1">Stage</th>
-          <th class="lgl1">Amount(RM)</th>
+          <th class="lgl1">Status</th>
+          <!-- <th class="lgl1">STAGE</th> -->
+          <th class="lgl1 tblBrRight" style="width:110px">Amount(RM)</th>
           <th class="lgl1 tblBrRight" style="width:120px">Action</th>
-
-
         </tr>
 
-        <tr class="col7" *ngFor="let claimhistorydetail of userClaimhistorydetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' } ; let i=index">
-          <!-- <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td> -->
-          <td class="lgl1" reshead="No."> {{ 10 * (page - 1) + i+1 }}</td>
-          <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIMTYPE}}</td>
+        <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
+          <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+          <td class="lgl1 getHeader" reshead="Name" *ngIf="!FinanceLogin">{{claimhistorydetail.FULLNAME}}</td>
+          <td class="lgl1 getHeader" reshead="Department" *ngIf="!FinanceLogin">{{claimhistorydetail.DEPARTMENT}}</td>
+          <td class="lgl1 getHeader" reshead="Month" *ngIf="!FinanceLogin">{{claimhistorydetail.MONTH}}</td>
+
+          <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIM_TYPE}}</td>
           <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
           <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
-          <td class="lgl1 getHeader" reshead="Stage">{{claimhistorydetail.STAGE}}</td>
-          <td class="lgl1 getHeader" reshead="Amount">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+          <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
+          <td class="lgl1 getHeader" reshead="Amount(RM)">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
           <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID,claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)">
               <ion-icon name="md-eye"></ion-icon>
             </button>
-            <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1 && claimhistorydetail.PROFILE_LEVEL!=0" (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID, claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,2)">
+            <!-- <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1 && claimhistorydetail.PROFILE_LEVEL!=0" (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID, claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,2)">
               <ion-icon name="md-create"></ion-icon>
             </button>
             <button ion-button item-end [disabled]="claimhistorydetail.PROFILE_LEVEL!=1" (click)="DeleteClaimRequest(claimhistorydetail.CLAIM_REQUEST_GUID,claimhistorydetail.CLAIM_TYPE_GUID)">
               <ion-icon name="md-close"></ion-icon>
-            </button>
+            </button> -->
           </td>
         </tr>
+
+
       </table>
       <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
       </pagination-controls>
     </ion-item>
   </ion-list>
-
-  <!-- Popup for Export to Excel Starts-->
-  <div class="blackcontainer" *ngIf="ExportExcelClicked">
-  </div>
-  <div class="popup4" padding *ngIf="ExportExcelClicked">
-    <ion-card>
-      <ion-card-header class="icTitle headerColor-white ">
-
-        <div class="icHeaderText">EXPORT TO EXCEL</div>
-
-        <button class="btnR" (click)="CloseExportExcel()">
-          <ion-icon name="md-close"></ion-icon>
-        </button>
-
-      </ion-card-header>
-      <ion-list>
-        <div style="width:100%; display:inline-table !important;">
-        
-          <ion-card>
-            <div>
-              <ion-list>
-                <ion-item *ngFor="let ExcelColumn of ExcelColumns">
-                  <ion-label>{{ExcelColumn.Columns}}</ion-label>
-                  <ion-checkbox color="secondary" checked="false" (ionChange)="SelectColumn($event, ExcelColumn)" item-end></ion-checkbox>
-                </ion-item>
-              </ion-list>
-            </div>
-          </ion-card>
-        </div>
-      </ion-list>
-      <div class="btn">
-        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="SubmitExportExcel()">{{"SUBMIT" | translate}}</button>
-      </div>
-    </ion-card>
-    
-  </div>
-  <!-- Popup for Export to Excel End-->
 
 
 </ion-content>

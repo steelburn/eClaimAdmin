@@ -40,6 +40,7 @@ import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
 import { AllClaimListPage } from '../pages/all-claim-list/all-claim-list';
+import { AllClaimhistoryPage } from '../pages/allclaimhistory/claimhistory';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
@@ -116,7 +117,7 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ConferenceApp,
     AccountPage,
     LoginPage,
-    AllClaimListPage, MedicalclaimPage,
+    AllClaimListPage,    MedicalclaimPage,AllClaimhistoryPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
@@ -210,7 +211,8 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
         { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
         { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
         { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
-        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },
+        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },        
+        { component: AllClaimhistoryPage, name: 'AllClaimhistoryPage', segment: 'AllClaimhistoryPage' },        
 
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
@@ -237,7 +239,7 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     SetupPage,
     ModulesetupPage, DeviceSetupPage,
     MedicalclaimPage,
-    TravelclaimPage,
+    TravelclaimPage,AllClaimhistoryPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
