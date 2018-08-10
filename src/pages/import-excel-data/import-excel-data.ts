@@ -16,6 +16,7 @@ import { UserQualification_Model } from '../../models/user_qualification_model';
 import { UserRole_Model } from '../../models/user_role_model';
 import { Main_Attendance_Model } from '../../models/main_attendance_model';
 import { Device_Raw_Data_Model } from '../../models/device_raw_data_model';
+import { Leave_Raw_Data_Model } from '../../models/leave_raw_data_model';
 
 import * as constants from '../../config/constants';
 // import * as constants from '../../app/config/constants';
@@ -24,6 +25,7 @@ import * as XLSX from 'xlsx';
 import { UUID } from 'angular2-uuid';
 import { Constants } from './../util/constants';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
+import moment from 'moment';
 
 
 /**
@@ -41,6 +43,8 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 })
 export class ImportExcelDataPage {
   @ViewChild('fileInputAttendance') fileInputAttendance: ElementRef;
+  @ViewChild('fileInputLeave') fileInputLeave: ElementRef;
+
   // test_model: test_model = new test_model();  
 
   test_model: SocProject_Model = new SocProject_Model();
@@ -1466,8 +1470,153 @@ export class ImportExcelDataPage {
       });
   }
 
+  TempArray: any [] = []; AttendanceArray: any[]= [];
   Insert_User_Attendance() {
+    this.TempArray = this.attendance_data.sort((n1,n2) => n1.UserID - n2.UserID || +new Date(n1.Att_Time) - +new Date(n2.Att_Time))
+    console.table(this.TempArray);
+    let CurUserId: string = ""; let PrevUserId: string = ""; let CurTime: string = ""; let PrevTime: string = ""; let CurDevID: string = ""; let PrevDevID: string = ""; let jsonStr = '';
+    let CurDate: string; let PrevDate: string;
 
+    for(var item in this.TempArray){
+      CurUserId = ""; CurTime = ""; CurDevID = ""; CurDate = "";
+      
+      CurUserId = this.TempArray[item]["UserID"]; CurTime = this.TempArray[item]["Att_Time"]; CurDevID = this.TempArray[item]["Dev_ID"];
+      CurDate = this.TempArray[item]["Att_Time"].substring(0,10);
+      
+      if(item == "0"){
+        jsonStr += '{"UserID":"' + this.TempArray[item]["UserID"] + '", ';  
+        if(CurDevID == "1"){
+          if(this.TempArray[item]["Att_Time"] != ""){
+            jsonStr += '"In_Time":"' + this.TempArray[item]["Att_Time"] + '", ';
+            jsonStr += '"Out_Time":"' + "NA" + '"}';
+          }
+          else{
+            jsonStr += '"In_Time":"' + "NA" + '", ';
+            jsonStr += '"Out_Time":"' + this.TempArray[item]["Att_Time"] + '"}';
+          }          
+        }         
+      }
+      else{
+        if(CurUserId == PrevUserId){
+          if(CurDate == PrevDate){
+
+          }
+        }
+        else{
+          jsonStr += '{"UserID":"' + this.TempArray[item]["UserID"] + '", ';
+        }
+      }
+
+      
+      // this.AttendanceArray.push(JSON.parse(jsonStr))
+
+      PrevUserId = ""; PrevTime = ""; PrevDevID = ""; PrevDate = "";
+      PrevUserId = this.TempArray[item]["UserID"]; PrevTime = this.TempArray[item]["Att_Time"]; PrevDevID = this.TempArray[item]["Dev_ID"];
+      PrevDate = this.TempArray[item]["Att_Time"].substring(0,10);
+      // this.AttendanceArray.push({User_Id: this.TempArray[item]["UserID"], })
+      
+    }
   }
+
+  //  For main_attendance
+  chooseFile_main_leave: boolean = false;
+  arrayBuffer_main_leave: any;
+  file_main_leave: File;
+
+  Leave_Raw_Data_Model: Leave_Raw_Data_Model = new Leave_Raw_Data_Model();  
+  main_leave_data: any[]; 
+
+  main_leave(event: any) {
+    this.chooseFile_main_leave = true;
+    this.file_main_leave = event.target.files[0];
+  }
+  
+  Final_leave_data: any [] = []; leave_Url: string = ""; ctr: any = 0;
+  LeaveUpload_click(){
+    this.ctr = 0;
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
+
+    this.leave_Url = constants.DREAMFACTORY_TABLE_URL + '/user_leave_raw_data?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let fileReader = new FileReader();
+
+    fileReader.onload = (e) => {
+      this.arrayBuffer_main_leave = fileReader.result;
+      var data = new Uint8Array(this.arrayBuffer_main_leave);
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+      // var workbook = XLSX.read(bstr, { type: "binary" });
+      var workbook = XLSX.read(bstr, { type: "binary", cellDates: true, cellNF: false, cellText: false });
+      // zero for first sheet
+      var first_sheet_name = workbook.SheetNames[0];
+      var worksheet = workbook.Sheets[first_sheet_name];
+      this.main_leave_data = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+
+      this.Final_leave_data = this.main_leave_data.filter((thing: any, index: any, self: any) =>
+            index === self.findIndex((t: any) => (
+              t.LEAVE_ID === thing.LEAVE_ID
+            ))
+          )
+          
+      this.Final_leave_data.forEach(element => {        
+        //Check duplicate & insert record to db---------------------------------
+        this.duplicateCheck_leave_raw_data(element);                
+        //----------------------------------------------------------------------
+      });
+    }
+    fileReader.readAsArrayBuffer(this.file_main_leave);
+  }
+
+  duplicateCheck_leave_raw_data(checkData: any){
+    this.ctr = this.ctr +1;
+    this.apiMng.getApiModel('user_leave_raw_data', 'filter=LEAVE_ID=' + checkData.LEAVE_ID)
+    .subscribe(data => {
+      let checkDataFromDB = data["resource"];
+      if (checkDataFromDB.length == 0) {
+        this.Leave_Raw_Data_Model.STAFF_ID = checkData.STAFF_ID;
+        this.Leave_Raw_Data_Model.TITLE = checkData.TITLE;
+        this.Leave_Raw_Data_Model.START_DATE = moment(checkData.START_DATE).format('YYYY-MM-DD HH:mm') ;
+        this.Leave_Raw_Data_Model.END_DATE = moment(checkData.END_DATE).format('YYYY-MM-DD HH:mm');
+        this.Leave_Raw_Data_Model.LEAVE_ID = checkData.LEAVE_ID;
+        this.Leave_Raw_Data_Model.HALF_DAY_DATE = checkData.HALF_DAY_DATE;
+
+        this.Leave_Raw_Data_Model.CREATION_TS = new Date().toISOString();
+        this.Leave_Raw_Data_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+        this.Leave_Raw_Data_Model.UPDATE_TS = new Date().toISOString();
+        this.Leave_Raw_Data_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+        var queryHeaders = new Headers();
+        queryHeaders.append('Content-Type', 'application/json');
+        queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+        let options = new RequestOptions({ headers: queryHeaders });
+        return new Promise((resolve, reject) => {
+          this.http.post(this.leave_Url, this.Leave_Raw_Data_Model.toJson(true), options)
+            .map((response) => {
+              return response;
+            }).subscribe((response) => {
+              resolve(response.json());
+
+              this.fileInputLeave.nativeElement.value = '';
+              this.chooseFile_main_leave = false;
+            })
+        })
+      }
+      else {
+        this.fileInputLeave.nativeElement.value = '';
+        this.chooseFile_main_attendance = false;
+        return;
+      }
+    })
+    if(this.Final_leave_data.length == this.ctr){
+      this.fileInputLeave.nativeElement.value = '';
+      this.chooseFile_main_attendance = false; 
+      this.loading.dismissAll();
+      return;
+    }
+  }
+
 
 }
