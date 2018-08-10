@@ -1639,8 +1639,7 @@ importedSaveAs(blob, this.download_file_name);
             index === self.findIndex((t: any) => (
               t.LEAVE_ID === thing.LEAVE_ID
             ))
-          )
-          
+          )          
       this.Final_leave_data.forEach(element => {        
         //Check duplicate & insert record to db---------------------------------
         this.duplicateCheck_leave_raw_data(element);                
