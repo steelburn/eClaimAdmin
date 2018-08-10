@@ -209,54 +209,54 @@ export class AccountPage {
     }
   }
 
-  ngAfterViewInit() {
-    this.getUsername();
-  }
+  // ngAfterViewInit() {
+  //   this.getUsername();
+  // }
 
-  updatePicture() {
-    console.log('Clicked to update picture');
-  }
+  // updatePicture() {
+  //   console.log('Clicked to update picture');
+  // }
 
   // Present an alert with the current username populated
   // clicking OK will update the username and display it
   // clicking Cancel will close the alert and do nothing
-  changeUsername() {
-    let alert = this.alertCtrl.create({
-      title: 'Change Username',
-      buttons: [
-        'Cancel'
-      ]
-    });
-    alert.addInput({
-      name: 'username',
-      value: this.username,
-      placeholder: 'username'
-    });
-    alert.addButton({
-      text: 'Ok',
-      handler: (data: any) => {
-        this.userData.setUsername(data.username);
-        this.getUsername();
-      }
-    });
+  // changeUsername() {
+  //   let alert = this.alertCtrl.create({
+  //     title: 'Change Username',
+  //     buttons: [
+  //       'Cancel'
+  //     ]
+  //   });
+  //   alert.addInput({
+  //     name: 'username',
+  //     value: this.username,
+  //     placeholder: 'username'
+  //   });
+  //   alert.addButton({
+  //     text: 'Ok',
+  //     handler: (data: any) => {
+  //       this.userData.setUsername(data.username);
+  //       this.getUsername();
+  //     }
+  //   });
 
-    alert.present();
-  }
+  //   alert.present();
+  // }
 
-  getUsername() {
-    this.userData.getUsername().then((username) => {
-      this.username = username;
-    });
-  }
+  // getUsername() {
+  //   this.userData.getUsername().then((username) => {
+  //     this.username = username;
+  //   });
+  // }
 
-  changePassword() {
-    console.log('Clicked to change password');
-  }
+  // changePassword() {
+  //   console.log('Clicked to change password');
+  // }
 
-  logout() {
-    this.userData.logout();
-    this.nav.setRoot('LoginPage');
-  }
+  // logout() {
+  //   this.userData.logout();
+  //   this.nav.setRoot('LoginPage');
+  // }
 
   loading: Loading;
   USER_GUID_FOR_UPDATE: any; view_user_details: any;
@@ -1289,6 +1289,26 @@ export class AccountPage {
   }
 
   fileName1: string; ProfileImage: any; imageGUID: any; uploadFileName: string; chooseFile: boolean = false; newImage: boolean = true; ImageUploadValidation: boolean = false;
+  private ProfileImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      this.Userform.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.ProfileImage = event.target.result;
+        this.Profile_Image_Display = event.target.result
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.newImage = false;
+    this.onFileChange(e);
+    this.ImageUploadValidation = false;
+  }
 
   onFileChange(event: any) {
     const reader = new FileReader();

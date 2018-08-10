@@ -26,7 +26,8 @@ import { ClaimtasklistPage } from '../claimtasklist/claimtasklist';
   templateUrl: 'claimapprovertasklist.html', providers: [BaseHttpService]
 })
 export class ClaimapprovertasklistPage {
-
+  ddlEmp:any='All';
+  ddlClaim:any='All';
   baseResourceUrl: string;
   claimrequestdetails: any[];
   claimrequestdetails1: any[];
@@ -71,6 +72,7 @@ export class ClaimapprovertasklistPage {
     else {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       this.buttonText = "Approve";
+      this.FinanceLogin = false;
     }
     // this.Pending = navParams.get("Pending");
     this.BindEmployeesbyDepartment();
@@ -337,7 +339,7 @@ export class ClaimapprovertasklistPage {
   }
 
 
-  SearchClaimsData(ddlEmployee: string, ddlClaimTypes: string, ddlyear: string) {
+  SearchClaimsData() {
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       if (this.loginUserRole === "Finance Admin") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS!=Pending)AND(PROFILE_LEVEL>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -347,9 +349,9 @@ export class ClaimapprovertasklistPage {
       }
     }
     else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' + ddlyear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(ASSIGNED_TO=' + localStorage.getItem("g_USER_GUID") + ')AND(STATUS=Pending)AND(PROFILE_LEVEL=1)AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-    this.BindData(ddlEmployee, ddlClaimTypes);
+    this.BindData(this.ddlEmp, this.ddlClaim);
   }
 
 
