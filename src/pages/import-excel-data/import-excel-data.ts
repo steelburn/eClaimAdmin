@@ -2149,14 +2149,15 @@ export class ImportExcelDataPage {
       console.log(this.user_template_data.length)
 
       this.user_template_data.forEach(element => {
-        this.duplicateCheck_user_main(element);
+        if (element.STAFF_ID != "*")
+          this.duplicateCheck_user_main(element);
         // this.duplicateCheck_user_info(element);
         // this.duplicateCheck_user_address(element);
         // this.duplicateCheck_user_company(element);
         // this.duplicateCheck_user_contact(element);
         // this.duplicateCheck_user_qualification(element);
         // this.duplicateCheck_user_role(element);
-       
+
       });
     }
     fileReader.readAsArrayBuffer(this.file_user_template);
