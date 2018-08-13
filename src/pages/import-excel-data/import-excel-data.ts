@@ -2605,7 +2605,7 @@ export class ImportExcelDataPage {
     console.log(url)
     return this.http.get(url, options)
       .map(res => res.blob())
-  }
+  } 
 
   download_soc() {
     this.downloadFile_service_soc().subscribe(blob => {
