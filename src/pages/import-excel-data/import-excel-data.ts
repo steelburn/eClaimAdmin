@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Loading, LoadingController, DateTime } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
 import { DatePipe } from '@angular/common'
 import { test_model } from '../../models/testmodel';
 import { SocCustomer_Model } from '../../models/soc_customer_model';
@@ -29,7 +29,6 @@ import { UUID } from 'angular2-uuid';
 import { Constants } from './../util/constants';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import moment from 'moment';
-
 import { Observable } from 'rxjs/Rx';
 // import {Observable} from 'rxjs/Observable';
 import { saveAs as importedSaveAs } from "file-saver";
@@ -58,11 +57,9 @@ import { saveAs as importedSaveAs } from "file-saver";
 })
 
 export class ImportExcelDataPage {
-
   t_bank: any;
   t_designation: any;
   t_department: any;
-
 
   @ViewChild('fileInputAttendance') fileInputAttendance: ElementRef;
   @ViewChild('fileInputLeave') fileInputLeave: ElementRef;
@@ -1393,7 +1390,7 @@ export class ImportExcelDataPage {
 
   attendance_Url: string = "";
   attendance_click() {
-    let CurInTime: any; let PrevInTime: any; let OutTime: any;
+    // this.Get_Device_GUID();
 
     this.attendance_Url = constants.DREAMFACTORY_TABLE_URL + '/device_raw_data?&api_key=' + constants.DREAMFACTORY_API_KEY;
     let fileReader = new FileReader();
@@ -1416,8 +1413,7 @@ export class ImportExcelDataPage {
         //----------------------------------------------------------------------
       });
     }
-    fileReader.readAsArrayBuffer(this.file_main_attendance);    
-    // this.Insert_User_Attendance();
+    fileReader.readAsArrayBuffer(this.file_main_attendance);
   }
 
   duplicateCheck_device_raw_data(checkData: any) {
@@ -1462,7 +1458,6 @@ export class ImportExcelDataPage {
         }
       })
   }
-
 
   // user_template uploading start
   // ------------------------
@@ -2479,65 +2474,6 @@ export class ImportExcelDataPage {
         this.SOC_Template_Model.UPDATE_TS = new Date().toISOString();;
         this.SOC_Template_Model.UPDATE_USER_GUID = 'sva_test';
 
-  Templates_ngModel: any;
-  download_file_name: string = "";
-
-  downloadFile_service(): Observable<Blob> {
-    if (this.Templates_ngModel == "Bank") {
-      this.download_file_name = "Bank.xlsx";
-    }
-    if (this.Templates_ngModel == "Designation") {
-      this.download_file_name = "Designation.xlsx";
-    }
-    if (this.Templates_ngModel == "Department") {
-      this.download_file_name = "Department.xlsx";
-    }
-    if (this.Templates_ngModel == "Mileage") {
-      this.download_file_name = "Mileage.xlsx";
-    }
-    if (this.Templates_ngModel == "Payment Type") {
-      this.download_file_name = "Payment_type.xlsx";
-    }
-    if (this.Templates_ngModel == "Qualification") {
-      this.download_file_name = "Qualification.xlsx";
-    }
-    if (this.Templates_ngModel == "Customer") {
-      this.download_file_name = "User_Template.xlsx";
-    }
-    if (this.Templates_ngModel == "SOC") {
-      this.download_file_name = "SOC_Registration.xlsx";
-    }
-    if (this.Templates_ngModel == "Country") {
-      this.download_file_name = "User_Template.xlsx";
-    }
-    if (this.Templates_ngModel == "State") {
-      this.download_file_name = "State.xlsx";
-    }
-    if (this.Templates_ngModel == "Templates") {
-      this.download_file_name = "User_Template.xlsx";
-    }
-    const url = 'http://api.zen.com.my/api/v2/files/Templates/' + this.download_file_name + '?api_key=' + constants.DREAMFACTORY_API_KEY;
-    let options = new RequestOptions({ responseType: ResponseContentType.Blob });
-    console.log(url)
-    return this.http.get(url, options)
-      .map(res => res.blob())
-    // .catch(this.handleError)
-    // .then((response) => {
-    //   resolve(response)
-    //   }).catch(err => {
-    //   errorHandler.checkError(context, err)
-    //   reject(err)
-    //   })
-    //   })responseType: ResponseContentType.Blob ,
-  }
-
-  download() {
-    this.downloadFile_service().subscribe(blob => {
-      importedSaveAs(blob, this.download_file_name);
-    })
-  }
-
-
         if (checkDataFromDB.length == 0) {
 
           this.SOC_Template_Model.SOC_GUID = UUID.UUID();
@@ -2833,6 +2769,5 @@ export class ImportExcelDataPage {
       return;
     }
   }
-
 
 }
