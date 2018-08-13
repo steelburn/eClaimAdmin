@@ -133,4 +133,26 @@
     </ion-item>
   </div>
 
+  <!-- user_template -->
+  <div style="width:48%; display:inline-table !important;">
+    <ion-item>
+      <h3>To user_template</h3>
+      <input type="file" style="display: inline-block;" (change)="user_templa($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button color="primary500" class="btn btn-info" (click)="user_template_click()" [disabled]="!chooseFile_user_template">Upload</button>
+      <button ion-button color="primary500" class="btn btn-info" (click)="download_user()" >Download Template</button>
+      <!-- [disabled]="!downloadFile_user_template" -->
+    </ion-item>
+  </div>
+
+   <!-- soc_template -->
+  <div style="width:48%; display:inline-table !important;">
+    <ion-item>
+      <h3>To soc_template</h3>
+      <input type="file" style="display: inline-block;" (change)="soc_templa($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button color="primary500" class="btn btn-info" (click)="soc_template_click()" [disabled]="!chooseFile_soc_template">Upload</button>
+      <button ion-button color="primary500" class="btn btn-info" value="Bank" (click)="download_soc()">Download Template</button>
+      <!-- [disabled]="!downloadFile_soc_template" -->
+    </ion-item>
+  </div>
+
 </ion-content>
