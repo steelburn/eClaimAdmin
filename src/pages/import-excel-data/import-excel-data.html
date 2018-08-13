@@ -130,7 +130,7 @@
       <h3>To main_attendance</h3>
       <input type="file" #fileInputAttendance style="display: inline-block;" (change)="main_attendance($event)" placeholder="Upload file" accept=".xlsx">
       <button ion-button color="primary500" class="btn btn-info" (click)="attendance_click()" [disabled]="!chooseFile_main_attendance">Upload</button>
-      <button ion-button color="primary500" style="display: none;" class="btn btn-info" (click)="Insert_User_Attendance()">Migrate</button>
+      <button ion-button color="primary500" class="btn btn-info" (click)="Insert_User_Attendance()">Migrate</button>
     </ion-item>
   </div>
   <div style="width:48%; display:inline-table !important;">
