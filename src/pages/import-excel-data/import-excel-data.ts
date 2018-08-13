@@ -59,6 +59,11 @@ import { saveAs as importedSaveAs } from "file-saver";
 
 export class ImportExcelDataPage {
 
+  t_bank: any;
+  t_designation: any;
+  t_department: any;
+
+
   @ViewChild('fileInputAttendance') fileInputAttendance: ElementRef;
   @ViewChild('fileInputLeave') fileInputLeave: ElementRef;
 
@@ -276,17 +281,14 @@ export class ImportExcelDataPage {
         // return new Promise((resolve, reject) => {
         //   this.http.post(this.baseResourceurl_Excel, this.test_model.toJson(true), options)
         //     .map((response) => {
-        //       // alert('Imported successfully')
         //       return response;
 
         //     }).subscribe((response) => {
         //       resolve(response.json());
-        //       // alert('Import Failed')
         //     })
         // })
 
       });
-      // alert('Imported successfully')
     }
     fileReader.readAsArrayBuffer(this.file);
 
@@ -1461,6 +1463,1021 @@ export class ImportExcelDataPage {
       })
   }
 
+
+  // user_template uploading start
+  // ------------------------
+  // update_bank(bank_main: Main_Template_Model): Observable<any> {
+  // 	var queryHeaders = new Headers();
+  // 	queryHeaders.append('Content-Type', 'application/json');
+  // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+  // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+  // 	let options = new RequestOptions({ headers: queryHeaders });
+  // 	return this.httpService.http.patch(this.user_main_template_Url, bank_main.toJson(true), options)
+  // 		.map((response) => {
+  // 			return response;
+  // 		});
+  // }
+  // get_bank(params?: URLSearchParams): Observable<BankSetup_Model[]> {
+  // 	var queryHeaders = new Headers();
+  // 	queryHeaders.append('Content-Type', 'application/json');
+  // 	//queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+  // 	queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+  // 	return this.httpService.http
+  // 		.get(this.baseResourceUrl, { search: params, headers: queryHeaders })
+  // 		.map((response) => {
+  // 			let banks: Array<BankSetup_Model> = [];
+
+  // 			// result.resource.forEach((bank) => {
+  // 			//  	banks.push(BankSetup_Model.fromJson(bank));
+  // 			//  });
+  // 			return banks;
+  // 		}).catch(this.handleError);
+  // };
+  // GetTenant_GUID(Tenant_company_guid: string) {
+  //   let TableURL = this.BaseTableURL + "tenant_company" + '?filter=(TENANT_COMPANY_GUID=' + Tenant_company_guid + ')&' + this.Key_Param;
+  //   return new Promise((resolve) => {
+  //     this.http
+  //       .get(TableURL)
+  //       .map(res => res.json())
+  //       .subscribe(data => {
+  //         this.tenants = data["resource"];
+  //         //this.varTenant_Guid = this.tenants
+  //         resolve(this.tenants[0].TENANT_GUID);
+  //       });
+  //   });
+  // }
+
+  GetBank_Id(checkData: any) {
+    return new Promise((resolve, reject) => {
+      this.apiMng.getApiModel('main_bank', 'filter=NAME=' + checkData)
+        .map((response) => {
+          return response;
+        })
+        .subscribe(response => {
+          let checkDataFromDB = response["resource"];
+          console.log(checkDataFromDB);
+          this.Info_Template_Model.BANK_GUID = checkDataFromDB[0]["BANK_GUID"];
+          console.log(this.Info_Template_Model.BANK_GUID);
+          this.t_bank = checkDataFromDB[0]["BANK_GUID"];
+          console.log(this.t_bank)
+          resolve(this.t_bank);
+        })
+    })
+  }
+
+  GetDesignation_Id(checkData: any) {
+    return new Promise((resolve, reject) => {
+      this.apiMng.getApiModel('main_designation', 'filter=NAME=' + checkData)
+        .map((response) => {
+          return response;
+        })
+        .subscribe(response => {
+          let checkDataFromDB = response["resource"];
+          console.log(checkDataFromDB);
+          this.Info_Template_Model.DESIGNATION_GUID = checkDataFromDB[0]["DESIGNATION_GUID"];
+          console.log(this.Info_Template_Model.DESIGNATION_GUID);
+          this.t_designation = checkDataFromDB[0]["DESIGNATION_GUID"];
+          console.log(this.t_designation)
+          resolve(this.t_designation);
+        })
+    })
+  }
+
+  GetDepartment_Id(checkData: any) {
+    return new Promise((resolve, reject) => {
+      this.apiMng.getApiModel('main_department', 'filter=NAME=' + checkData)
+        .map((response) => {
+          return response;
+        })
+        .subscribe(response => {
+          let checkDataFromDB = response["resource"];
+          console.log(checkDataFromDB);
+          this.Info_Template_Model.DEPT_GUID = checkDataFromDB[0]["DEPARTMENT_GUID"];
+          console.log(this.Info_Template_Model.DESIGNATION_GUID);
+          this.t_department = checkDataFromDB[0]["DEPARTMENT_GUID"];
+          console.log(this.t_department)
+          resolve(this.t_department);
+        })
+    })
+  }
+
+  // Get_GUID(table_name: string, filter_field_name: string, filter_field_value: string): string {
+  //   let GUID: string = "";
+  //   this.apiMng.getApiModel(table_name, 'filter=' + filter_field_name + '=' + filter_field_value)
+  //     .subscribe(data => {
+  //       let checkDataFromDB = data["resource"];
+  //       GUID = checkDataFromDB[0]["BANK_GUID"];
+  //     })
+  //   return GUID;
+  // }
+
+
+
+
+  //duplicate check for user_main_template
+  duplicateCheck_user_main(checkData: any) {
+    // var Bank_GUID = this.Get_GUID("main_bank", "NAME", checkData.BANK_NAME);
+    // this.Get_GUID("main_bank", "NAME", checkData.BANK_NAME);
+
+    alert('entered in main');
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('user_main', 'filter=EMAIL=' + checkData.EMAIL)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        this.Main_Template_Model.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+        this.Main_Template_Model.STAFF_ID = checkData.STAFF_ID;
+        this.Main_Template_Model.LOGIN_ID = checkData.LOGIN_ID;
+        this.Main_Template_Model.PASSWORD = checkData.PASSWORD;
+        this.Main_Template_Model.EMAIL = checkData.EMAIL;
+        this.Main_Template_Model.ACTIVATION_FLAG = checkData.ACTIVATION_FLAG;
+        this.Main_Template_Model.IS_TENANT_ADMIN = checkData.IS_TENANT_ADMIN;
+
+        this.Main_Template_Model.CREATION_TS = new Date().toISOString();
+        this.Main_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Main_Template_Model.UPDATE_TS = new Date().toISOString();
+        this.Main_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+
+        if (checkDataFromDB.length == 0) {
+
+          this.Main_Template_Model.USER_GUID = UUID.UUID();
+          //  localStorage.setItem('t_USER_GUID',  this.Main_Template_Model.USER_GUID);
+          alert('inserted in main');
+          console.log(this.Main_Template_Model);
+          console.table(this.Main_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.user_main_template_Url, this.Main_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_info(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.Main_Template_Model.USER_GUID = checkDataFromDB[0]["USER_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.user_main_template_Url, this.Main_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_info(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+
+
+  //duplicate check for user_info_template
+  duplicateCheck_user_info(checkData: any) {
+    alert('entered in info');
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('user_info', 'filter=FULLNAME=' + checkData.FULLNAME)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        // this.Info_Template_Model.USER_INFO_GUID = checkData.USER_INFO_GUID;
+        // this.Info_Template_Model.USER_GUID =  this.Main_Template_Model.USER_GUID;
+        this.Info_Template_Model.USER_GUID = this.Main_Template_Model.USER_GUID;
+        this.Info_Template_Model.FULLNAME = checkData.FULLNAME;
+        this.Info_Template_Model.NICKNAME = checkData.NICKNAME;
+        this.Info_Template_Model.SALUTATION = checkData.SALUTATION;
+        this.Info_Template_Model.MANAGER_USER_GUID = localStorage.getItem("g_USER_GUID");
+        this.Info_Template_Model.PERSONAL_ID_TYPE = checkData.PERSONAL_ID_TYPE;
+        this.Info_Template_Model.PERSONAL_ID = checkData.PERSONAL_ID;
+        this.Info_Template_Model.DOB = checkData.DOB;
+        this.Info_Template_Model.GENDER = (checkData.GENDER = "MALE" ? 1 : 0).toString();
+        this.Info_Template_Model.JOIN_DATE = checkData.JOIN_DATE;
+
+        this.Info_Template_Model.MARITAL_STATUS = (checkData.MARITAL_STATUS = "SINGLE" ? 0 : 1).toString();
+        this.Info_Template_Model.BRANCH = checkData.BRANCH;
+        this.Info_Template_Model.EMPLOYEE_TYPE = checkData.EMPLOYEE_TYPE;
+        this.Info_Template_Model.APPROVER1 = checkData.APPROVER1;
+        this.Info_Template_Model.APPROVER2 = checkData.APPROVER2;
+        this.Info_Template_Model.EMPLOYEE_STATUS = (checkData.EMPLOYEE_STATUS = "PROBATION" ? 0 : (checkData.EMPLOYEE_STATUS = "CONFIRMED" ? 1 : 2)).toString();
+        // this.Info_Template_Model.DEPT_GUID = localStorage.getItem("g_USER_GUID");
+        // this.Info_Template_Model.DESIGNATION_GUID = localStorage.getItem("g_USER_GUID");
+        this.Info_Template_Model.RESIGNATION_DATE = checkData.RESIGNATION_DATE;
+        this.Info_Template_Model.TENANT_COMPANY_GUID = localStorage.getItem("g_USER_GUID");
+        this.Info_Template_Model.CONFIRMATION_DATE = checkData.CONFIRMATION_DATE;
+        this.Info_Template_Model.TENANT_COMPANY_SITE_GUID = localStorage.getItem("g_USER_GUID");
+        this.Info_Template_Model.EMG_CONTACT_NAME_1 = checkData.EMG_CONTACT_NAME_1;
+        this.Info_Template_Model.EMG_RELATIONSHIP_1 = checkData.EMG_RELATIONSHIP_1;
+        this.Info_Template_Model.EMG_CONTACT_NUMBER_1 = checkData.EMG_CONTACT_NUMBER_1;
+        this.Info_Template_Model.EMG_CONTACT_NAME_2 = checkData.EMG_CONTACT_NAME_2;
+        this.Info_Template_Model.EMG_RELATIONSHIP_2 = checkData.EMG_RELATIONSHIP_2;
+        this.Info_Template_Model.EMG_CONTACT_NUMBER_2 = checkData.EMG_CONTACT_NUMBER_2;
+        this.Info_Template_Model.PR_EPF_NUMBER = checkData.PR_EPF_NUMBER;
+        this.Info_Template_Model.PR_INCOMETAX_NUMBER = checkData.PR_INCOMETAX_NUMBER;
+        this.Info_Template_Model.PR_ACCOUNT_NUMBER = checkData.PR_ACCOUNT_NUMBER;
+        this.Info_Template_Model.ATTACHMENT_ID = checkData.ATTACHMENT_ID;
+
+        this.Info_Template_Model.CREATION_TS = new Date().toISOString();
+        this.Info_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Info_Template_Model.UPDATE_TS = new Date().toISOString();
+        this.Info_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+        let val = this.GetBank_Id(checkData.BANK_NAME);
+        val.then((res) => {
+          this.Info_Template_Model.BANK_GUID = res.toString();
+          console.log(this.t_bank)
+          console.log(this.Info_Template_Model.BANK_GUID);
+
+          let val = this.GetDesignation_Id(checkData.DESIGNATION_NAME);
+          val.then((res) => {
+            this.Info_Template_Model.DESIGNATION_GUID = res.toString();
+            console.log(this.t_designation)
+            console.log(this.Info_Template_Model.DESIGNATION_GUID);
+
+            let val = this.GetDepartment_Id(checkData.DEPT_NAME);
+            val.then((res) => {
+              this.Info_Template_Model.DEPT_GUID = res.toString();
+              console.log(this.t_department)
+              console.log(this.Info_Template_Model.DEPT_GUID);
+
+              if (checkDataFromDB.length == 0) {
+
+                this.Info_Template_Model.USER_INFO_GUID = UUID.UUID();
+                console.log(this.Info_Template_Model);
+                alert('inserted in info');
+                var queryHeaders = new Headers();
+                queryHeaders.append('Content-Type', 'application/json');
+                queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+                let options = new RequestOptions({ headers: queryHeaders });
+                return new Promise((resolve, reject) => {
+                  this.http.post(this.user_info_template_Url, this.Info_Template_Model.toJson(true), options)
+                    .map((response) => {
+                      return response;
+                    }).subscribe((response) => {
+                      if (response.status == 200) {
+                        console.log(this.Info_Template_Model);
+                        this.duplicateCheck_user_address(checkData);
+                      }
+                      resolve(response.json());
+                    })
+                })
+              }
+              else {
+                this.Info_Template_Model.USER_INFO_GUID = checkDataFromDB[0]["USER_INFO_GUID"];
+
+                var queryHeaders = new Headers();
+                queryHeaders.append('Content-Type', 'application/json');
+                queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+                let options = new RequestOptions({ headers: queryHeaders });
+                return new Promise((resolve, reject) => {
+                  this.http.patch(this.user_info_template_Url, this.Info_Template_Model.toJson(true), options)
+                    .map((response) => {
+                      return response;
+                    }).subscribe((response) => {
+                      if (response.status == 200) {
+                        this.duplicateCheck_user_address(checkData);
+                      }
+                      resolve(response.json());
+                    })
+                })
+                // return
+              }
+            })
+          });
+        });
+      });
+    // val.catch((err) => {
+    //   // This is never called
+    //   console.log(err);
+    // });
+  }
+
+  //duplicate check for user_address_template
+  duplicateCheck_user_address(checkData: any) {
+    alert('entered in address');
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('user_address', 'filter=USER_ADDRESS1=' + checkData.USER_ADDRESS1)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        // this.Address_Template_Model.USER_ADDRESS_GUID = checkData.USER_ADDRESS_GUID;
+        this.Address_Template_Model.USER_GUID = this.Main_Template_Model.USER_GUID;
+        this.Address_Template_Model.ADDRESS_TYPE = checkData.ADDRESS_TYPE;
+        this.Address_Template_Model.USER_ADDRESS1 = checkData.USER_ADDRESS1;
+        this.Address_Template_Model.USER_ADDRESS2 = checkData.USER_ADDRESS2;
+        this.Address_Template_Model.USER_ADDRESS3 = checkData.USER_ADDRESS3;
+        this.Address_Template_Model.POST_CODE = checkData.POST_CODE;
+        this.Address_Template_Model.COUNTRY_GUID = checkData.COUNTRY_GUID;
+        this.Address_Template_Model.STATE_GUID = checkData.STATE_GUID;
+
+        this.Address_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.Address_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Address_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.Address_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+
+        if (checkDataFromDB.length == 0) {
+
+          this.Address_Template_Model.USER_ADDRESS_GUID = UUID.UUID();
+          alert('inserted in address');
+          console.log(this.Address_Template_Model);
+          console.table(this.Address_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.user_address_template_Url, this.Address_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_company(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.Address_Template_Model.USER_ADDRESS_GUID = checkDataFromDB[0]["USER_ADDRESS_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.user_address_template_Url, this.Address_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_company(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+
+  //duplicate check for user_company_template
+  duplicateCheck_user_company(checkData: any) {
+    alert('entered in company');
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('user_company', 'filter=COMPANY_CONTACT_NO=' + checkData.COMPANY_CONTACT_NO)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        // this.Company_Template_Model.USER_COMPANY_GUID = checkData.USER_COMPANY_GUID;
+        this.Company_Template_Model.USER_GUID = this.Main_Template_Model.USER_GUID;
+        this.Company_Template_Model.TENANT_COMPANY_SITE_GUID = checkData.TENANT_COMPANY_SITE_GUID;
+        this.Company_Template_Model.COMPANY_CONTACT_NO = checkData.COMPANY_CONTACT_NO;
+
+        this.Company_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.Company_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Company_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.Company_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+        if (checkDataFromDB.length == 0) {
+
+          this.Company_Template_Model.USER_COMPANY_GUID = UUID.UUID();
+          alert('inserted in company');
+          console.log(this.Company_Template_Model);
+          console.table(this.Company_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.user_company_template_Url, this.Company_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_contact(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.Company_Template_Model.USER_COMPANY_GUID = checkDataFromDB[0]["USER_COMPANY_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.user_company_template_Url, this.Company_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_contact(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+
+  //duplicate check for user_contact_template
+  duplicateCheck_user_contact(checkData: any) {
+    alert('entered in contact');
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('user_contact', 'filter=CONTACT_NO=' + checkData.CONTACT_NO)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        // this.Contact_Template_Model.CONTACT_INFO_GUID = checkData.CONTACT_INFO_GUID;
+        this.Contact_Template_Model.USER_GUID = this.Main_Template_Model.USER_GUID;
+        this.Contact_Template_Model.TYPE = checkData.TYPE;
+        this.Contact_Template_Model.CONTACT_NO = checkData.CONTACT_NO;
+        this.Contact_Template_Model.DESCRIPTION = checkData.DESCRIPTION;
+        this.Contact_Template_Model.REMARKS = checkData.REMARKS;
+
+        this.Contact_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.Contact_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Contact_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.Contact_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+        if (checkDataFromDB.length == 0) {
+
+          this.Contact_Template_Model.CONTACT_INFO_GUID = UUID.UUID();
+          alert('inserted in contact');
+          console.log(this.Contact_Template_Model);
+          console.table(this.Contact_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.user_contact_template_Url, this.Contact_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_qualification(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.Contact_Template_Model.CONTACT_INFO_GUID = checkDataFromDB[0]["CONTACT_INFO_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.user_contact_template_Url, this.Contact_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_qualification(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+
+  //duplicate check for user_qualification_template
+  duplicateCheck_user_qualification(checkData: any) {
+    alert('entered in quaLIFI');
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('user_qualification', 'filter=HIGHEST_QUALIFICATION=' + checkData.HIGHEST_QUALIFICATION)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        // this.Qualification_Template_Model.USER_QUALIFICATION_GUID = checkData.USER_QUALIFICATION_GUID;
+        this.Qualification_Template_Model.QUALIFICATION_GUID = checkData.QUALIFICATION_GUID;
+        this.Qualification_Template_Model.USER_GUID = this.Main_Template_Model.USER_GUID;
+        this.Qualification_Template_Model.HIGHEST_QUALIFICATION = checkData.HIGHEST_QUALIFICATION;
+        this.Qualification_Template_Model.MAJOR = checkData.MAJOR;
+        this.Qualification_Template_Model.UNIVERSITY = checkData.UNIVERSITY;
+        this.Qualification_Template_Model.YEAR = checkData.YEAR;
+        this.Qualification_Template_Model.ATTACHMENT = checkData.ATTACHMENT;
+
+        this.Qualification_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.Qualification_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Qualification_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.Qualification_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+        if (checkDataFromDB.length == 0) {
+
+          this.Qualification_Template_Model.USER_QUALIFICATION_GUID = UUID.UUID();
+          alert('inserted in qualification');
+          console.log(this.Qualification_Template_Model);
+          console.table(this.Qualification_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.user_qualification_template_Url, this.Qualification_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_role(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.Qualification_Template_Model.USER_QUALIFICATION_GUID = checkDataFromDB[0]["USER_QUALIFICATION_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.user_qualification_template_Url, this.Qualification_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_user_role(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+
+  //duplicate check for user_role_template
+  duplicateCheck_user_role(checkData: any) {
+    alert('entered in role');
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('user_role', 'filter=ROLE_GUID=' + checkData.ROLE_GUID)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        // this.Role_Template_Model.USER_ROLE_GUID = checkData.USER_ROLE_GUID;
+        this.Role_Template_Model.USER_GUID = this.Main_Template_Model.USER_GUID;
+        this.Role_Template_Model.ROLE_GUID = checkData.ROLE_GUID;
+        this.Role_Template_Model.ACTIVATION_FLAG = checkData.ACTIVATION_FLAG;
+
+        this.Role_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.Role_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Role_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.Role_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+        if (checkDataFromDB.length == 0) {
+
+          this.Role_Template_Model.USER_ROLE_GUID = UUID.UUID();
+          alert('inserted in role');
+          console.log(this.Role_Template_Model);
+          console.table(this.Role_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.user_role_template_Url, this.Role_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.Role_Template_Model.USER_ROLE_GUID = checkDataFromDB[0]["USER_ROLE_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.user_role_template_Url, this.Role_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+
+  // For user_role
+  chooseFile_user_template: boolean = false;
+  arrayBuffer_user_template: any;
+  file_user_template: File;
+  user_main_template_Url: any;
+  user_info_template_Url: any;
+  user_address_template_Url: any;
+  user_company_template_Url: any;
+  user_contact_template_Url: any;
+  user_qualification_template_Url: any;
+  user_role_template_Url: any;
+
+  Main_Template_Model: UserMain_Model = new UserMain_Model();
+  Info_Template_Model: UserInfo_Model = new UserInfo_Model();
+  Address_Template_Model: UserAddress_Model = new UserAddress_Model();
+  Company_Template_Model: UserCompany_Model = new UserCompany_Model();
+  Contact_Template_Model: UserContact_Model = new UserContact_Model();
+  Qualification_Template_Model: UserQualification_Model = new UserQualification_Model();
+  Role_Template_Model: UserRole_Model = new UserRole_Model();
+  user_template_data: any[];
+
+  user_templa(event: any) {
+    this.chooseFile_user_template = true;
+    this.file_user_template = event.target.files[0];
+  }
+
+  user_template_click() {
+    this.user_main_template_Url = constants.DREAMFACTORY_TABLE_URL + '/user_main?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.user_info_template_Url = constants.DREAMFACTORY_TABLE_URL + '/user_info?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.user_address_template_Url = constants.DREAMFACTORY_TABLE_URL + '/user_address?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.user_company_template_Url = constants.DREAMFACTORY_TABLE_URL + '/user_company?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.user_contact_template_Url = constants.DREAMFACTORY_TABLE_URL + '/user_contact?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.user_qualification_template_Url = constants.DREAMFACTORY_TABLE_URL + '/user_qualification?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.user_role_template_Url = constants.DREAMFACTORY_TABLE_URL + '/user_role?&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      this.arrayBuffer_user_template = fileReader.result;
+      var data = new Uint8Array(this.arrayBuffer_user_template);
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+      var workbook = XLSX.read(bstr, { type: "binary" });
+      // zero for first sheet
+      var first_sheet_name = workbook.SheetNames[0];
+      var worksheet = workbook.Sheets[first_sheet_name];
+      // console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
+
+      this.user_template_data = XLSX.utils.sheet_to_json(worksheet, { raw: true })
+      console.log(this.user_template_data)
+      console.log(this.user_template_data.length)
+
+      this.user_template_data.forEach(element => {
+        this.duplicateCheck_user_main(element);
+        // this.duplicateCheck_user_info(element);
+        // this.duplicateCheck_user_address(element);
+        // this.duplicateCheck_user_company(element);
+        // this.duplicateCheck_user_contact(element);
+        // this.duplicateCheck_user_qualification(element);
+        // this.duplicateCheck_user_role(element);
+       
+      });
+    }
+    fileReader.readAsArrayBuffer(this.file_user_template);
+    // localStorage.removeItem("t_USER_GUID");
+  }
+
+  // User_trmplate end
+  // -------------------
+
+
+  // For SOC
+  chooseFile_soc_template: boolean = false;
+  arrayBuffer_soc_template: any;
+  file_soc_template: File;
+  customer_template_Url: any;
+  customer_location_template_Url: any;
+  project_template_Url: any;
+  soc_template_Url: any;
+
+  Customer_Template_Model: SocCustomer_Model = new SocCustomer_Model();
+  CustomerLocation_Template_Model: SocCustomerLocation_Model = new SocCustomerLocation_Model();
+  Project_Template_Model: SocProject_Model = new SocProject_Model();
+  SOC_Template_Model: SocMain_Model = new SocMain_Model();
+  soc_template_data: any[];
+
+  soc_templa(event: any) {
+    this.chooseFile_soc_template = true;
+    this.file_soc_template = event.target.files[0];
+  }
+
+  soc_template_click() {
+    this.customer_template_Url = constants.DREAMFACTORY_TABLE_URL + '/main_customer?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.customer_location_template_Url = constants.DREAMFACTORY_TABLE_URL + '/main_customer_location?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.project_template_Url = constants.DREAMFACTORY_TABLE_URL + '/main_project?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.soc_template_Url = constants.DREAMFACTORY_TABLE_URL + '/soc_main?&api_key=' + constants.DREAMFACTORY_API_KEY;
+
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      this.arrayBuffer_soc_template = fileReader.result;
+      var data = new Uint8Array(this.arrayBuffer_soc_template);
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+      var workbook = XLSX.read(bstr, { type: "binary" });
+      // zero for first sheet
+      var first_sheet_name = workbook.SheetNames[0];
+      var worksheet = workbook.Sheets[first_sheet_name];
+      // console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
+
+      this.soc_template_data = XLSX.utils.sheet_to_json(worksheet, { raw: true })
+      console.log(this.soc_template_data)
+      console.log(this.soc_template_data.length)
+
+      this.soc_template_data.forEach(element => {
+        this.duplicateCheck_customer(element);
+        //  this.duplicateCheck_customer_location(element);
+        //  this.duplicateCheck_project(element);
+        //  this.duplicateCheck_soc(element);       
+
+      });
+    }
+    fileReader.readAsArrayBuffer(this.file_soc_template);
+    //  localStorage.removeItem("t_CUSTOMER_GUID");
+    //  localStorage.removeItem("t_CUSTOMER_LOCATION_GUID");
+    //  localStorage.removeItem("t_PROJECT_GUID");
+  }
+
+  // SOC end
+  // -------------------
+
+  //code for inserting data into customer start
+  checkData: any
+  duplicateCheck_customer(checkData: any) {
+    alert('Entered in main_customer');
+    // localStorage.removeItem("t_CUSTOMER_GUID");
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('main_customer', 'filter=CUSTOMER_GUID=' + checkData.CUSTOMER_GUID)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        // this.Customer_Template_Model.CUSTOMER_GUID = checkData.CUSTOMER_GUID;
+        this.Customer_Template_Model.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+        this.Customer_Template_Model.NAME = checkData.NAME;
+        this.Customer_Template_Model.DESCRIPTION = checkData.DESCRIPTION;
+        this.Customer_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.Customer_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Customer_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.Customer_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+        if (checkDataFromDB.length == 0) {
+
+          this.Customer_Template_Model.CUSTOMER_GUID = UUID.UUID();
+          //  localStorage.setItem("t_CUSTOMER_GUID",  this.Customer_Template_Model.CUSTOMER_GUID);
+          alert('inserted records in main_customer');
+          console.log(this.Customer_Template_Model);
+          console.table(this.Customer_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.customer_template_Url, this.Customer_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_customer_location(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.Customer_Template_Model.CUSTOMER_GUID = checkDataFromDB[0]["CUSTOMER_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.customer_template_Url, this.Customer_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+  //code for inserting data into customer end
+
+  //code for inserting data into customer location start
+
+  duplicateCheck_customer_location(checkData: any) {
+    alert('Entered in main_customer_location');
+    // localStorage.removeItem("t_CUSTOMER_LOCATION_GUID");
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('main_customer_location', 'filter=CUSTOMER_LOCATION_GUID=' + checkData.CUSTOMER_LOCATION_GUID)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+
+        // this.CustomerLocation_Template_Model.CUSTOMER_GUID =  localStorage.getItem("t_CUSTOMER_GUID");
+        this.CustomerLocation_Template_Model.CUSTOMER_GUID = this.Customer_Template_Model.CUSTOMER_GUID;
+        // this.CustomerLocation_Template_Model.CUSTOMER_LOCATION_GUID = checkData.CUSTOMER_LOCATION_GUID;
+        this.CustomerLocation_Template_Model.NAME = checkData.NAME;
+        this.CustomerLocation_Template_Model.DESCRIPTION = checkData.DESCRIPTION;
+        this.CustomerLocation_Template_Model.REGISTRATION_NO = checkData.REGISTRATION_NO;
+        this.CustomerLocation_Template_Model.ADDRESS1 = 'NA';
+        this.CustomerLocation_Template_Model.ADDRESS2 = checkData.ADDRESS2;
+        this.CustomerLocation_Template_Model.ADDRESS3 = checkData.ADDRESS3;
+        this.CustomerLocation_Template_Model.CONTACT_PERSON = 'NA';
+        this.CustomerLocation_Template_Model.CONTACT_PERSON_MOBILE_NO = 'NA';
+        this.CustomerLocation_Template_Model.CONTACT_NO1 = checkData.CONTACT_NO1;
+        this.CustomerLocation_Template_Model.CONTACT_NO2 = checkData.CONTACT_NO2;
+        this.CustomerLocation_Template_Model.EMAIL = 'NA';
+        this.CustomerLocation_Template_Model.DIVISION = checkData.DIVISION;
+
+
+        this.CustomerLocation_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.CustomerLocation_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.CustomerLocation_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.CustomerLocation_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+        if (checkDataFromDB.length == 0) {
+
+          this.CustomerLocation_Template_Model.CUSTOMER_LOCATION_GUID = UUID.UUID();
+          //  localStorage.setItem("t_CUSTOMER_LOCATION_GUID",  this.CustomerLocation_Template_Model.CUSTOMER_LOCATION_GUID);
+          alert('inserted records in main_customer_location');
+          alert('customer guid is in location' + this.CustomerLocation_Template_Model.CUSTOMER_GUID);
+
+          console.log(this.CustomerLocation_Template_Model);
+          console.table(this.CustomerLocation_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.customer_location_template_Url, this.CustomerLocation_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_project(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.CustomerLocation_Template_Model.CUSTOMER_LOCATION_GUID = checkDataFromDB[0]["CUSTOMER_LOCATION_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.customer_location_template_Url, this.CustomerLocation_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+  //code for inserting data into customer location end
+
+  //code for inserting data into project start
+
+  duplicateCheck_project(checkData: any) {
+    alert('entered in main_project');
+    // localStorage.removeItem("t_PROJECT_GUID");
+    // localStorage.removeItem("t_CUSTOMER_LOCATION_GUID");
+    //  console.table(checkData);
+    //  console.log(checkData);
+    this.apiMng.getApiModel('main_project', 'filter=PROJECT_GUID=' + checkData.PROJECT_GUID)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+        // this.Project_Template_Model.PROJECT_GUID = checkData.PROJECT_GUID;
+        this.Project_Template_Model.NAME = checkData.NAME;
+        // this.Project_Template_Model.CUSTOMER_GUID = localStorage.getItem("t_CUSTOMER_GUID");
+        this.Project_Template_Model.CUSTOMER_GUID = this.CustomerLocation_Template_Model.CUSTOMER_GUID;
+        // this.Project_Template_Model.CUSTOMER_LOCATION_GUID = localStorage.getItem("t_CUSTOMER_LOCATION_GUID");
+        this.Project_Template_Model.CUSTOMER_LOCATION_GUID = this.CustomerLocation_Template_Model.CUSTOMER_LOCATION_GUID;
+        this.Project_Template_Model.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+        this.Project_Template_Model.ACTIVATION_FLAG = '1';
+        this.Project_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.Project_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.Project_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.Project_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
+        if (checkDataFromDB.length == 0) {
+
+          this.Project_Template_Model.PROJECT_GUID = UUID.UUID();
+          //  localStorage.setItem("t_PROJECT_GUID",  this.Project_Template_Model.PROJECT_GUID);
+          alert('inserted recoreds in project');
+          alert('customer guid is' + this.Project_Template_Model.CUSTOMER_GUID + 'location_guid is' + this.Project_Template_Model.CUSTOMER_LOCATION_GUID);
+          console.log(this.Project_Template_Model);
+          console.table(this.Project_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.project_template_Url, this.Project_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                if (response.status == 200) {
+                  this.duplicateCheck_soc(checkData);
+                }
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.Project_Template_Model.PROJECT_GUID = checkDataFromDB[0]["PROJECT_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.project_template_Url, this.Project_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+  //code for inserting data into project end
+
+  //code for inserting data into soc start
+
+  duplicateCheck_soc(checkData: any) {
+    alert('entered in soc');
+
+    console.table(checkData);
+    console.log(checkData);
+    this.apiMng.getApiModel('soc_main', 'filter=SOC_GUID=' + checkData.SOC_GUID)
+      .subscribe(data => {
+        let checkDataFromDB = data["resource"];
+        console.log(checkDataFromDB);
+        // this.SOC_Template_Model.SOC_GUID = checkData.SOC_GUID;
+        this.SOC_Template_Model.SOC_NO = checkData.SOC_NO;
+        // this.SOC_Template_Model.PROJECT_GUID =  localStorage.getItem("t_PROJECT_GUID");
+        this.SOC_Template_Model.PROJECT_GUID = this.Project_Template_Model.PROJECT_GUID;
+        this.SOC_Template_Model.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+        this.SOC_Template_Model.ACTIVATION_FLAG = checkData.ACTIVATION_FLAG;
+
+        this.SOC_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.SOC_Template_Model.CREATION_USER_GUID = 'sva_test';
+        this.SOC_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.SOC_Template_Model.UPDATE_USER_GUID = 'sva_test';
+
   Templates_ngModel: any;
   download_file_name: string = "";
 
@@ -1519,6 +2536,81 @@ export class ImportExcelDataPage {
     })
   }
 
+
+        if (checkDataFromDB.length == 0) {
+
+          this.SOC_Template_Model.SOC_GUID = UUID.UUID();
+          alert('inserted records in soc');
+          alert('project guid is' + this.SOC_Template_Model.PROJECT_GUID);
+          console.log(this.SOC_Template_Model);
+          console.table(this.SOC_Template_Model);
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.post(this.soc_template_Url, this.SOC_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                resolve(response.json());
+              })
+          })
+        }
+        else {
+
+          this.SOC_Template_Model.SOC_GUID = checkDataFromDB[0]["SOC_GUID"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          return new Promise((resolve, reject) => {
+            this.http.patch(this.soc_template_Url, this.SOC_Template_Model.toJson(true), options)
+              .map((response) => {
+                return response;
+              }).subscribe((response) => {
+                resolve(response.json());
+              })
+          })
+          // return
+        }
+      })
+  }
+  //code for inserting data into soc end
+
+
+
+  Templates_ngModel: any;
+  download_file_name: string = "";
+
+  downloadFile_service_user(): Observable<Blob> {
+    const url = 'http://api.zen.com.my/api/v2/files/Templates/User_Template.xlsx' + this.download_file_name + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+    let options = new RequestOptions({ responseType: ResponseContentType.Blob });
+    console.log(url)
+    return this.http.get(url, options)
+      .map(res => res.blob())
+  }
+
+  download_user() {
+    this.downloadFile_service_user().subscribe(blob => {
+      importedSaveAs(blob, this.download_file_name);
+    })
+  }
+
+  downloadFile_service_soc(): Observable<Blob> {
+    const url = 'http://api.zen.com.my/api/v2/files/Templates/SOC.xlsx' + this.download_file_name + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+    let options = new RequestOptions({ responseType: ResponseContentType.Blob });
+    console.log(url)
+    return this.http.get(url, options)
+      .map(res => res.blob())
+  }
+
+  download_soc() {
+    this.downloadFile_service_soc().subscribe(blob => {
+      importedSaveAs(blob, this.download_file_name);
+    })
+  }
 
   devices: any;
   Get_Device_GUID() {
