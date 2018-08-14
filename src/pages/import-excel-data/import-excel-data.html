@@ -155,6 +155,17 @@
     </ion-item>
   </div>
 
+   <!-- customer_template -->
+   <div style="width:48%; display:inline-table !important;">
+    <ion-item>
+      <h3>Customer</h3>
+      <input type="file" style="display: inline-block;" (change)="customer_templa($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button color="primary500" class="btn btn-info" (click)="customer_template_click()" [disabled]="!chooseFile_customer_template">Upload</button>
+      <button ion-button color="primary500" class="btn btn-info" value="Bank" (click)="download_customer()">Download Template</button>
+      <!-- [disabled]="!downloadFile_soc_template" -->
+    </ion-item>
+  </div>
+
   <!-- soc_template -->
   <div style="width:48%; display:inline-table !important;">
     <ion-item>
