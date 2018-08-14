@@ -1311,7 +1311,7 @@ export class ImportExcelDataPage {
     this.strPrevAttendance_GUID = ""; this.Prev_UserId = ""; this.Prev_Attendance_Date = ""; this.Prev_Dev_ID = "";
 
     this.chooseFile_main_attendance = true;
-    this.file_main_attendance = event.target.files[0];    
+    this.file_main_attendance = event.target.files[0];
   }
 
 
@@ -1406,13 +1406,20 @@ export class ImportExcelDataPage {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       this.attendance_data = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+
+      // this.TempArray = this.attendance_data.filter((thing: any, index: any, self: any) =>
+      //   index === self.findIndex((t: any) => (
+      //     t.LEAVE_ID === thing.LEAVE_ID
+      //   ))
+      // )
+
       this.TempArray = this.attendance_data.sort((n1, n2) => n1.UserID - n2.UserID || + new Date(n1.Att_Time) - +new Date(n2.Att_Time));
 
       this.TempArray.forEach(element => {
         //Check duplicate & insert record to db---------------------------------
         this.duplicateCheck_device_raw_data(element);
-        //----------------------------------------------------------------------
-      });
+        //----------------------------------------------------------------------        
+      }); this.duplicateAttendance_data_New();
     }
     fileReader.readAsArrayBuffer(this.file_main_attendance);
   }
@@ -1447,7 +1454,7 @@ export class ImportExcelDataPage {
               }).subscribe((response) => {
                 if (response.status == 200) {
                   //Insert record to attandance_main table---------------
-                  this.duplicateAttendance_data(checkData);
+                  // this.duplicateAttendance_data(checkData);
                   //-----------------------------------------------------
                 }
                 resolve(response.json());
@@ -1460,12 +1467,12 @@ export class ImportExcelDataPage {
         else {
           this.fileInputAttendance.nativeElement.value = '';
           this.chooseFile_main_attendance = false;
-          return;
+          // return;
         }
       })
   }
 
-  strPrevAttendance_GUID: string = ""; Prev_UserId: string = ""; Prev_Attendance_Date: string = ""; Prev_Dev_ID: string = "";
+  strPrevAttendance_GUID: string = ""; Prev_UserId: string = ""; Prev_Attendance_Date: string = ""; Prev_Dev_ID: string = ""; strPrevInTime: string = "";
   duplicateAttendance_data(checkData: any) {
     let val = this.GetUser_Id(checkData.UserID);
     val.then((res) => {
@@ -1487,7 +1494,7 @@ export class ImportExcelDataPage {
       this.User_Attendance_Main_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
       //Check if any record in same Dev_ID , Att_Time for UserID then insert else update
-      
+
       if (this.User_Attendance_Main_Model.USER_GUID == this.Prev_UserId) {
         if (checkData.Att_Time.substring(0, 10) == this.Prev_Attendance_Date) {
           if (checkData.Dev_ID == this.Prev_Dev_ID) {
@@ -1496,19 +1503,73 @@ export class ImportExcelDataPage {
           }
           else {
             //Update
-            this.UpdateAttRecord();            
+            this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = this.strPrevAttendance_GUID;
+            this.UpdateAttRecord();
           }
         }
       }
       else {
         //Insert
         this.InsertAttRecord();
-      }      
+      }
 
       this.strPrevAttendance_GUID = this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID;
       this.Prev_UserId = this.User_Attendance_Main_Model.USER_GUID;
       this.Prev_Attendance_Date = this.User_Attendance_Main_Model.ATTENDANCE_DATE.substring(0, 10);
       this.Prev_Dev_ID = checkData.Dev_ID;
+    });
+  }
+
+  duplicateAttendance_data_New() {
+    this.TempArray.forEach(element => {
+      let val = this.GetUser_Id(element.UserID);
+      val.then((res) => {
+        this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = UUID.UUID();
+        this.User_Attendance_Main_Model.USER_GUID = res.toString();
+        this.User_Attendance_Main_Model.ATTENDANCE_DATE = element.Att_Time;
+        if (element.Dev_ID == "1") {
+          this.User_Attendance_Main_Model.IN_TS = element.Att_Time;
+        }
+        else {
+          this.User_Attendance_Main_Model.OUT_TS = element.Att_Time;
+        }
+        this.User_Attendance_Main_Model.WORKING_HOURS = null;
+        this.User_Attendance_Main_Model.OVERTIME_FLAG = null;
+
+        this.User_Attendance_Main_Model.CREATION_TS = new Date().toISOString();
+        this.User_Attendance_Main_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+        this.User_Attendance_Main_Model.UPDATE_TS = new Date().toISOString();
+        this.User_Attendance_Main_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+        //Check if any record in same Dev_ID , Att_Time for UserID then insert else update
+        alert(element.UserID +', '+ this.User_Attendance_Main_Model.ATTENDANCE_DATE + ', '+ element.Dev_ID);
+        if (this.User_Attendance_Main_Model.USER_GUID == this.Prev_UserId) {
+          if (element.Att_Time.substring(0, 10) == this.Prev_Attendance_Date) {
+            if (element.Dev_ID == this.Prev_Dev_ID) {              
+              //Insert
+              this.InsertAttRecord();              
+            }
+            else {
+              //Update
+              this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = this.strPrevAttendance_GUID;
+              this.User_Attendance_Main_Model.IN_TS = this.strPrevInTime;
+              
+              this.UpdateAttRecord();
+              this.strPrevAttendance_GUID = ""; this.Prev_UserId = ""; this.Prev_Attendance_Date = ""; this.Prev_Dev_ID = "";              
+            }
+          }
+        }
+        else {
+          //Insert
+          this.InsertAttRecord();          
+        }
+
+        this.strPrevAttendance_GUID = this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID;
+        this.Prev_UserId = this.User_Attendance_Main_Model.USER_GUID;
+        this.Prev_Attendance_Date = this.User_Attendance_Main_Model.ATTENDANCE_DATE.substring(0, 10);
+        this.Prev_Dev_ID = element.Dev_ID;
+        this.strPrevInTime = this.User_Attendance_Main_Model.IN_TS;
+      });
     });
   }
 
@@ -2735,8 +2796,6 @@ export class ImportExcelDataPage {
   }
 
   UpdateAttRecord() {
-    this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = this.strPrevAttendance_GUID;
-
     var queryHeaders = new Headers();
     queryHeaders.append('Content-Type', 'application/json');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
@@ -2811,33 +2870,36 @@ export class ImportExcelDataPage {
       .subscribe(data => {
         let checkDataFromDB = data["resource"];
         if (checkDataFromDB.length == 0) {
-          this.Leave_Raw_Data_Model.STAFF_ID = checkData.STAFF_ID;
-          this.Leave_Raw_Data_Model.TITLE = checkData.TITLE;
-          this.Leave_Raw_Data_Model.START_DATE = moment(checkData.START_DATE).format('YYYY-MM-DD');
-          this.Leave_Raw_Data_Model.END_DATE = moment(checkData.END_DATE).format('YYYY-MM-DD');
-          this.Leave_Raw_Data_Model.LEAVE_ID = checkData.LEAVE_ID;
-          this.Leave_Raw_Data_Model.HALF_DAY_DATE = checkData.HALF_DAY_DATE;
+          if (checkData.TITLE.substring(0, 14) != "PUBLIC HOLIDAY") {
+            this.Leave_Raw_Data_Model.STAFF_ID = checkData.STAFF_ID;
+            this.Leave_Raw_Data_Model.TITLE = checkData.TITLE;
+            this.Leave_Raw_Data_Model.START_DATE = moment(checkData.START_DATE).format('YYYY-MM-DD');
+            this.Leave_Raw_Data_Model.END_DATE = moment(checkData.END_DATE).format('YYYY-MM-DD');
+            this.Leave_Raw_Data_Model.LEAVE_ID = checkData.LEAVE_ID;
+            this.Leave_Raw_Data_Model.HALF_DAY_DATE = checkData.HALF_DAY_DATE;
+            this.Leave_Raw_Data_Model.SESSION = checkData.SESSION;
 
-          this.Leave_Raw_Data_Model.CREATION_TS = new Date().toISOString();
-          this.Leave_Raw_Data_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-          this.Leave_Raw_Data_Model.UPDATE_TS = new Date().toISOString();
-          this.Leave_Raw_Data_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+            this.Leave_Raw_Data_Model.CREATION_TS = new Date().toISOString();
+            this.Leave_Raw_Data_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+            this.Leave_Raw_Data_Model.UPDATE_TS = new Date().toISOString();
+            this.Leave_Raw_Data_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
-          var queryHeaders = new Headers();
-          queryHeaders.append('Content-Type', 'application/json');
-          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-          let options = new RequestOptions({ headers: queryHeaders });
-          return new Promise((resolve, reject) => {
-            this.http.post(this.leave_Url, this.Leave_Raw_Data_Model.toJson(true), options)
-              .map((response) => {
-                return response;
-              }).subscribe((response) => {
-                resolve(response.json());
+            var queryHeaders = new Headers();
+            queryHeaders.append('Content-Type', 'application/json');
+            queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+            let options = new RequestOptions({ headers: queryHeaders });
+            return new Promise((resolve, reject) => {
+              this.http.post(this.leave_Url, this.Leave_Raw_Data_Model.toJson(true), options)
+                .map((response) => {
+                  return response;
+                }).subscribe((response) => {
+                  resolve(response.json());
 
-                this.fileInputLeave.nativeElement.value = '';
-                this.chooseFile_main_leave = false;
-              })
-          })
+                  this.fileInputLeave.nativeElement.value = '';
+                  this.chooseFile_main_leave = false;
+                })
+            })
+          }
         }
         else {
           this.fileInputLeave.nativeElement.value = '';
@@ -2852,5 +2914,6 @@ export class ImportExcelDataPage {
       return;
     }
   }
+
 
 }
