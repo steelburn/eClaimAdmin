@@ -57,6 +57,7 @@ import { saveAs as importedSaveAs } from "file-saver";
 })
 
 export class ImportExcelDataPage {
+  t_user: any;
   t_bank: any;
   t_designation: any;
   t_department: any;
@@ -82,7 +83,6 @@ export class ImportExcelDataPage {
 
   constructor(private apiMng: ApiManagerProvider, public datepipe: DatePipe, public navCtrl: NavController, public navParams: NavParams, public http: Http, private loadingCtrl: LoadingController) {
     this.Get_Device_GUID();
-
   }
 
   ionViewDidLoad() {
@@ -1309,8 +1309,10 @@ export class ImportExcelDataPage {
   main_attendance_data: any[]; attendance_data: any[];
 
   main_attendance(event: any) {
+    this.strPrevAttendance_GUID = ""; this.Prev_UserId = ""; this.Prev_Attendance_Date = ""; this.Prev_Dev_ID = "";
+
     this.chooseFile_main_attendance = true;
-    this.file_main_attendance = event.target.files[0];
+    this.file_main_attendance = event.target.files[0];    
   }
 
 
@@ -1391,8 +1393,6 @@ export class ImportExcelDataPage {
 
   attendance_Url: string = "";
   attendance_click() {
-    // this.Get_Device_GUID();
-
     this.attendance_Url = constants.DREAMFACTORY_TABLE_URL + '/device_raw_data?&api_key=' + constants.DREAMFACTORY_API_KEY;
     let fileReader = new FileReader();
 
@@ -1407,8 +1407,9 @@ export class ImportExcelDataPage {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       this.attendance_data = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      this.TempArray = this.attendance_data.sort((n1, n2) => n1.UserID - n2.UserID || + new Date(n1.Att_Time) - +new Date(n2.Att_Time));
 
-      this.attendance_data.forEach(element => {
+      this.TempArray.forEach(element => {
         //Check duplicate & insert record to db---------------------------------
         this.duplicateCheck_device_raw_data(element);
         //----------------------------------------------------------------------
@@ -1445,6 +1446,11 @@ export class ImportExcelDataPage {
               .map((response) => {
                 return response;
               }).subscribe((response) => {
+                if (response.status == 200) {
+                  //Insert record to attandance_main table---------------
+                  this.duplicateAttendance_data(checkData);
+                  //-----------------------------------------------------
+                }
                 resolve(response.json());
 
                 this.fileInputAttendance.nativeElement.value = '';
@@ -1458,6 +1464,69 @@ export class ImportExcelDataPage {
           return;
         }
       })
+  }
+
+  strPrevAttendance_GUID: string = ""; Prev_UserId: string = ""; Prev_Attendance_Date: string = ""; Prev_Dev_ID: string = "";
+  duplicateAttendance_data(checkData: any) {
+    let val = this.GetUser_Id(checkData.UserID);
+    val.then((res) => {
+      this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = UUID.UUID();
+      this.User_Attendance_Main_Model.USER_GUID = res.toString();
+      this.User_Attendance_Main_Model.ATTENDANCE_DATE = checkData.Att_Time;
+      if (checkData.Dev_ID == "1") {
+        this.User_Attendance_Main_Model.IN_TS = checkData.Att_Time;
+      }
+      else {
+        this.User_Attendance_Main_Model.OUT_TS = checkData.Att_Time;
+      }
+      this.User_Attendance_Main_Model.WORKING_HOURS = null;
+      this.User_Attendance_Main_Model.OVERTIME_FLAG = null;
+
+      this.User_Attendance_Main_Model.CREATION_TS = new Date().toISOString();
+      this.User_Attendance_Main_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.User_Attendance_Main_Model.UPDATE_TS = new Date().toISOString();
+      this.User_Attendance_Main_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+      //Check if any record in same Dev_ID , Att_Time for UserID then insert else update
+      
+      if (this.User_Attendance_Main_Model.USER_GUID == this.Prev_UserId) {
+        if (checkData.Att_Time.substring(0, 10) == this.Prev_Attendance_Date) {
+          if (checkData.Dev_ID == this.Prev_Dev_ID) {
+            //Insert
+            this.InsertAttRecord();
+          }
+          else {
+            //Update
+            this.UpdateAttRecord();            
+          }
+        }
+      }
+      else {
+        //Insert
+        this.InsertAttRecord();
+      }      
+
+      this.strPrevAttendance_GUID = this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID;
+      this.Prev_UserId = this.User_Attendance_Main_Model.USER_GUID;
+      this.Prev_Attendance_Date = this.User_Attendance_Main_Model.ATTENDANCE_DATE.substring(0, 10);
+      this.Prev_Dev_ID = checkData.Dev_ID;
+    });
+  }
+
+  GetUser_Id(STAFF_ID: any) {
+    return new Promise((resolve, reject) => {
+      this.apiMng.getApiModel('user_main', 'filter=STAFF_ID=' + STAFF_ID)
+        .map((response) => {
+          return response;
+        })
+        .subscribe(response => {
+          let checkDataFromDB = response["resource"];
+          this.User_Attendance_Main_Model.USER_GUID = checkDataFromDB[0]["USER_GUID"];
+          this.t_user = checkDataFromDB[0]["USER_GUID"];
+
+          resolve(this.t_user);
+        })
+    })
   }
 
   // user_template uploading start
@@ -2513,7 +2582,7 @@ export class ImportExcelDataPage {
     console.log(url)
     return this.http.get(url, options)
       .map(res => res.blob())
-  } 
+  }
 
   download_soc() {
     this.downloadFile_service_soc().subscribe(blob => {
@@ -2540,7 +2609,6 @@ export class ImportExcelDataPage {
   User_Attendance_Main_Model = new User_Attendance_Main_Model();
 
   Insert_User_Attendance() {
-
     // this.TempArray = this.attendance_data.sort((n1,n2) => n1.UserID - n2.UserID || +new Date(n1.Att_Time) - +new Date(n2.Att_Time))
     // console.table(this.TempArray);
     // let CurUserId: string = ""; let PrevUserId: string = ""; let CurTime: string = ""; let PrevTime: string = ""; let CurDevID: string = ""; let PrevDevID: string = ""; let jsonStr = '';
@@ -2585,31 +2653,41 @@ export class ImportExcelDataPage {
     //   // this.AttendanceArray.push({User_Id: this.TempArray[item]["UserID"], })
 
     // }
-    
+
+
+
+
+
     // let url = constants.DREAMFACTORY_TABLE_URL + "/view_attendance?filter=(CREATION_TS=" + new Date().toISOString().substring(0,10) + ")&api_key=" + constants.DREAMFACTORY_API_KEY;
-    let url = constants.DREAMFACTORY_TABLE_URL + "/view_attendance?api_key=" + constants.DREAMFACTORY_API_KEY;
-    this.http
-      .get(url)
-      .map(res => res.json())
-      .subscribe(data => {
-        for (var item in data["resource"]) {
-          //Insert data to user_attendance_main
-          this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = UUID.UUID();
-            this.User_Attendance_Main_Model.USER_GUID = data["resource"][item]["USER_GUID"];
-            this.User_Attendance_Main_Model.ATTENDANCE_DATE = data["resource"][item]["RECORD_DATE"];
-            this.User_Attendance_Main_Model.IN_TS = data["resource"][item]["IN_TIME"];
-            this.User_Attendance_Main_Model.OUT_TS = data["resource"][item]["OUT_TIME"];
-            this.User_Attendance_Main_Model.WORKING_HOURS = null;
-            this.User_Attendance_Main_Model.OVERTIME_FLAG = null;
+    // let url = constants.DREAMFACTORY_TABLE_URL + "/view_attendance?api_key=" + constants.DREAMFACTORY_API_KEY;
+    // this.http
+    //   .get(url)
+    //   .map(res => res.json())
+    //   .subscribe(data => {
+    //     for (var item in data["resource"]) {
+    //       //Insert data to user_attendance_main
+    //       this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = UUID.UUID();
+    //         this.User_Attendance_Main_Model.USER_GUID = data["resource"][item]["USER_GUID"];
+    //         this.User_Attendance_Main_Model.ATTENDANCE_DATE = data["resource"][item]["RECORD_DATE"];
+    //         this.User_Attendance_Main_Model.IN_TS = data["resource"][item]["IN_TIME"];
+    //         this.User_Attendance_Main_Model.OUT_TS = data["resource"][item]["OUT_TIME"];
+    //         this.User_Attendance_Main_Model.WORKING_HOURS = null;
+    //         this.User_Attendance_Main_Model.OVERTIME_FLAG = null;
 
-            this.User_Attendance_Main_Model.CREATION_TS = new Date().toISOString();
-            this.User_Attendance_Main_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-            this.User_Attendance_Main_Model.UPDATE_TS = new Date().toISOString();
-            this.User_Attendance_Main_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    //         this.User_Attendance_Main_Model.CREATION_TS = new Date().toISOString();
+    //         this.User_Attendance_Main_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    //         this.User_Attendance_Main_Model.UPDATE_TS = new Date().toISOString();
+    //         this.User_Attendance_Main_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
-            this.InsertAttRecord();
-        }
-      });
+    //         this.InsertAttRecord();
+    //     }
+    //   });
+
+
+
+
+    this.TempArray = this.attendance_data.sort((n1, n2) => n1.UserID - n2.UserID || +new Date(n1.Att_Time) - +new Date(n2.Att_Time));
+
   }
 
   attendance_main_Url: string = constants.DREAMFACTORY_TABLE_URL + '/user_attendance_main?&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -2628,20 +2706,25 @@ export class ImportExcelDataPage {
     });
   }
 
-  duplicateAttendance_data(checkData: any) {
-    this.Leave_Raw_Data_Model.STAFF_ID = checkData.STAFF_ID;
-    this.Leave_Raw_Data_Model.TITLE = checkData.TITLE;
-    this.Leave_Raw_Data_Model.START_DATE = moment(checkData.START_DATE).format('YYYY-MM-DD');
-    this.Leave_Raw_Data_Model.END_DATE = moment(checkData.END_DATE).format('YYYY-MM-DD');
-    this.Leave_Raw_Data_Model.LEAVE_ID = checkData.LEAVE_ID;
-    this.Leave_Raw_Data_Model.HALF_DAY_DATE = checkData.HALF_DAY_DATE;
+  UpdateAttRecord() {
+    this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = this.strPrevAttendance_GUID;
 
-    this.Leave_Raw_Data_Model.CREATION_TS = new Date().toISOString();
-    this.Leave_Raw_Data_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-    this.Leave_Raw_Data_Model.UPDATE_TS = new Date().toISOString();
-    this.Leave_Raw_Data_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    var queryHeaders = new Headers();
+    queryHeaders.append('Content-Type', 'application/json');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    let options = new RequestOptions({ headers: queryHeaders });
+    return new Promise((resolve, reject) => {
+      this.http.patch(this.attendance_main_Url, this.User_Attendance_Main_Model.toJson(true), options)
+        .map((response) => {
+          return response;
+        }).subscribe((response) => {
+          if (response.status == 200) {
+            // this.duplicateCheck_user_address(checkData);
+          }
+          resolve(response.json());
+        })
+    })
   }
-
 
   //  For main_attendance
   chooseFile_main_leave: boolean = false;
