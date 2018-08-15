@@ -51,7 +51,7 @@ export class TravelclaimPage {
   public Travel_From_ngModel: any;
   public Travel_Destination_ngModel: any;
   public Travel_Distance_ngModel: any;
-  public Travel_Mode_ngModel: any;
+  public Travel_Mode_ngModel: any = 'car';
   public Travel_Amount_ngModel: any;
   Project_Lookup_ngModel: any;
   Travel_Customer_ngModel: any;
@@ -101,6 +101,8 @@ export class TravelclaimPage {
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID');
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
+    
+   
     // if (this.isFormEdit)
     // this.GetDataforEdit();
     if (this.isFormEdit) {
@@ -112,7 +114,12 @@ export class TravelclaimPage {
       this.LoadCustomers();
       this.LoadProjects();
       this.LoadVehicles();
-      this.LoadPayments();
+      this.LoadPayments();     
+      this.onTravelTypeSelect('Local');
+      this.Travel_Type_ngModel = 'Local';
+      this.Travel_Mode_ngModel = 'Car';
+      
+
     }
     this.Travelform = fb.group({
       avatar1: null,
@@ -134,7 +141,8 @@ export class TravelclaimPage {
       meal_allowance: '',
       attachment_GUID: '',
       //travel_amount: ['', Validators.required],
-      claim_amount: ['', Validators.required]
+      claim_amount: ['', Validators.required],
+     
     });
 
   }
@@ -293,6 +301,13 @@ export class TravelclaimPage {
     this.api.getApiModel('main_mileage', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.vehicles = data["resource"];
+        if(!this.isFormEdit){
+          this.vehicles.forEach(element => {
+            if(element.CATEGORY === 'Car'){
+              this.onVehicleSelect(element);
+            }
+          }); 
+        }
       })
   }
 
