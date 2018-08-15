@@ -1699,6 +1699,7 @@ export class ImportExcelDataPage {
 
 
         if (checkDataFromDB.length == 0) {
+          alert('main inserting record');
 
           this.Main_Template_Model.USER_GUID = UUID.UUID();
           //  localStorage.setItem('t_USER_GUID',  this.Main_Template_Model.USER_GUID);
@@ -1723,6 +1724,7 @@ export class ImportExcelDataPage {
         else {
 
           this.Main_Template_Model.USER_GUID = checkDataFromDB[0]["USER_GUID"];
+          alert('main updating record');
 
           var queryHeaders = new Headers();
           queryHeaders.append('Content-Type', 'application/json');
@@ -1814,6 +1816,8 @@ export class ImportExcelDataPage {
               console.log(this.Info_Template_Model.DEPT_GUID);
 
               if (checkDataFromDB.length == 0) {
+                alert('info inserting record');
+
 
                 this.Info_Template_Model.USER_INFO_GUID = UUID.UUID();
                 console.log(this.Info_Template_Model);               
@@ -1836,6 +1840,8 @@ export class ImportExcelDataPage {
               }
               else {
                 this.Info_Template_Model.USER_INFO_GUID = checkDataFromDB[0]["USER_INFO_GUID"];
+                alert('info updating record');
+
 
                 var queryHeaders = new Headers();
                 queryHeaders.append('Content-Type', 'application/json');
@@ -1884,6 +1890,8 @@ export class ImportExcelDataPage {
 
 
         if (checkDataFromDB.length == 0) {
+          alert('addtess inserting record');
+
 
           this.Address_Template_Model.USER_ADDRESS_GUID = UUID.UUID();         
           console.log(this.Address_Template_Model);
@@ -1907,6 +1915,8 @@ export class ImportExcelDataPage {
         else {
 
           this.Address_Template_Model.USER_ADDRESS_GUID = checkDataFromDB[0]["USER_ADDRESS_GUID"];
+          alert('address updating record');
+
 
           var queryHeaders = new Headers();
           queryHeaders.append('Content-Type', 'application/json');
@@ -1946,6 +1956,8 @@ export class ImportExcelDataPage {
         this.Company_Template_Model.UPDATE_USER_GUID = 'sva_test';
 
         if (checkDataFromDB.length == 0) {
+          alert('company inserting record');
+
 
           this.Company_Template_Model.USER_COMPANY_GUID = UUID.UUID();         
           console.log(this.Company_Template_Model);
@@ -1969,6 +1981,8 @@ export class ImportExcelDataPage {
         else {
 
           this.Company_Template_Model.USER_COMPANY_GUID = checkDataFromDB[0]["USER_COMPANY_GUID"];
+          alert('company updating record');
+
 
           var queryHeaders = new Headers();
           queryHeaders.append('Content-Type', 'application/json');
@@ -2010,6 +2024,8 @@ export class ImportExcelDataPage {
         this.Contact_Template_Model.UPDATE_USER_GUID = 'sva_test';
 
         if (checkDataFromDB.length == 0) {
+          alert('contact inserting record');
+
 
           this.Contact_Template_Model.CONTACT_INFO_GUID = UUID.UUID();        
           console.log(this.Contact_Template_Model);
@@ -2033,6 +2049,8 @@ export class ImportExcelDataPage {
         else {
 
           this.Contact_Template_Model.CONTACT_INFO_GUID = checkDataFromDB[0]["CONTACT_INFO_GUID"];
+          alert('contact updating record');
+
 
           var queryHeaders = new Headers();
           queryHeaders.append('Content-Type', 'application/json');
@@ -2056,7 +2074,7 @@ export class ImportExcelDataPage {
 
   //duplicate check for user_qualification_template
   duplicateCheck_user_qualification(checkData: any) {   
-    this.apiMng.getApiModel('user_qualification', 'filter=USER_GUID=' + checkData.USER_GUID)
+    this.apiMng.getApiModel('user_qualification', 'filter=MAJOR=' + checkData.MAJOR)
       .subscribe(data => {
         let checkDataFromDB = data["resource"];
         console.log(checkDataFromDB);
@@ -2082,6 +2100,8 @@ export class ImportExcelDataPage {
           console.log(this.Qualification_Template_Model.HIGHEST_QUALIFICATION);
 
         if (checkDataFromDB.length == 0) {
+          alert('qualification inserting record');
+
 
           this.Qualification_Template_Model.USER_QUALIFICATION_GUID = UUID.UUID();         
           console.log(this.Qualification_Template_Model);
@@ -2105,6 +2125,8 @@ export class ImportExcelDataPage {
         else {
 
           this.Qualification_Template_Model.USER_QUALIFICATION_GUID = checkDataFromDB[0]["USER_QUALIFICATION_GUID"];
+          alert('qualificationupdating  record');
+
 
           var queryHeaders = new Headers();
           queryHeaders.append('Content-Type', 'application/json');
@@ -2139,9 +2161,9 @@ export class ImportExcelDataPage {
         this.Role_Template_Model.ROLE_GUID = checkData.ROLE_GUID;
         this.Role_Template_Model.ACTIVATION_FLAG = checkData.ACTIVATION_FLAG;
 
-        this.Role_Template_Model.CREATION_TS = new Date().toISOString();;
+        this.Role_Template_Model.CREATION_TS = new Date().toISOString();
         this.Role_Template_Model.CREATION_USER_GUID = 'sva_test';
-        this.Role_Template_Model.UPDATE_TS = new Date().toISOString();;
+        this.Role_Template_Model.UPDATE_TS = new Date().toISOString();
         this.Role_Template_Model.UPDATE_USER_GUID = 'sva_test';
 
         let val = this.GetRole_Id(checkData.NAME);
@@ -2151,6 +2173,8 @@ export class ImportExcelDataPage {
           console.log(this.Role_Template_Model.ROLE_GUID);
 
         if (checkDataFromDB.length == 0) {
+          alert('role inserting record');
+
 
           this.Role_Template_Model.USER_ROLE_GUID = UUID.UUID();          
           console.log(this.Role_Template_Model);
@@ -2171,6 +2195,8 @@ export class ImportExcelDataPage {
         else {
 
           this.Role_Template_Model.USER_ROLE_GUID = checkDataFromDB[0]["USER_ROLE_GUID"];
+          alert('role updating record');
+
 
           var queryHeaders = new Headers();
           queryHeaders.append('Content-Type', 'application/json');
@@ -2307,6 +2333,7 @@ export class ImportExcelDataPage {
       console.log(this.customer_template_data.length)
 
       this.customer_template_data.forEach(element => {
+        if (element.CustomerName != "*")
         this.duplicateCheck_customer(element);
         //  this.duplicateCheck_customer_location(element);
         //  this.duplicateCheck_project(element);
@@ -2502,6 +2529,7 @@ export class ImportExcelDataPage {
       console.log(this.soc_template_data.length)
 
       this.soc_template_data.forEach(element => {
+        if (element.SOC_NO!= "*")
         // this.duplicateCheck_customer(element);
         //  this.duplicateCheck_customer_location(element);
          this.duplicateCheck_project(element);
@@ -2666,6 +2694,20 @@ export class ImportExcelDataPage {
 
   download_soc() {
     this.downloadFile_service_soc().subscribe(blob => {
+      importedSaveAs(blob, this.download_file_name);
+    })
+  }
+
+  downloadFile_service_customer(): Observable<Blob> {
+    const url = 'http://api.zen.com.my/api/v2/files/Templates/Customer.xlsx' + this.download_file_name + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+    let options = new RequestOptions({ responseType: ResponseContentType.Blob });
+    console.log(url)
+    return this.http.get(url, options)
+      .map(res => res.blob())
+  }
+
+  download_customer() {
+    this.downloadFile_service_customer().subscribe(blob => {
       importedSaveAs(blob, this.download_file_name);
     })
   }
