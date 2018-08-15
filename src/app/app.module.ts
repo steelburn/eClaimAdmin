@@ -40,6 +40,7 @@ import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
 import { ApproverTaskListPage } from '../pages/approver-task-list/approver-task-list';
 import { AllClaimListPage } from '../pages/all-claim-list/all-claim-list';
+import { AllClaimhistoryPage } from '../pages/allclaimhistory/claimhistory';
 
 import { CountrysetupPage } from '../pages/countrysetup/countrysetup';
 import { StatesetupPage } from '../pages/statesetup/statesetup';
@@ -108,12 +109,15 @@ import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data';
 // import { Ng2PaginationModule } from 'ng2-pagination';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Transfer, TransferObject } from '@ionic-native/transfer';
+// import { Transfer } from "../providers/file-transfer";
+
 @NgModule({
   declarations: [
     ConferenceApp,
     AccountPage,
     LoginPage,
-    AllClaimListPage, MedicalclaimPage,
+    AllClaimListPage,    MedicalclaimPage,AllClaimhistoryPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
@@ -172,7 +176,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage,
     ClaimReportUserPage,
-    ClaimReportPrintPage
+    ClaimReportPrintPage,
+   
   ],
 
   imports: [
@@ -206,7 +211,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
         { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
         { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
         { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
-        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },
+        { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },        
+        { component: AllClaimhistoryPage, name: 'AllClaimhistoryPage', segment: 'AllClaimhistoryPage' },        
 
         { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
         { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
@@ -233,7 +239,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SetupPage,
     ModulesetupPage, DeviceSetupPage,
     MedicalclaimPage,
-    TravelclaimPage,
+    TravelclaimPage,AllClaimhistoryPage,
     PrintclaimPage,
     GiftclaimPage,
     OvertimeclaimPage,
@@ -303,6 +309,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UserData, DatePipe, DecimalPipe,
     //  InAppBrowser,
     //  SplashScreen, StatusBar, 
+
+    // TransferObject,
+    // Transfer,
+
     Services,
 
     Camera,
@@ -312,7 +322,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FileTransfer,
     //FileUploadOptions,
     FileTransferObject,
-    ApiManagerProvider, ProfileManagerProvider
+    ApiManagerProvider,Transfer
   ]
 })
 export class AppModule { }
