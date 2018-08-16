@@ -2746,16 +2746,16 @@ export class ImportExcelDataPage {
   }
 
   downloadFile_service_soc(): Observable<Blob> {
-    const url = 'http://api.zen.com.my/api/v2/files/Templates/SOC.xlsx' + this.download_file_name + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+    const url = 'http://api.zen.com.my/api/v2/files/Templates/SOC.xlsx?api_key=' + constants.DREAMFACTORY_API_KEY;
     let options = new RequestOptions({ responseType: ResponseContentType.Blob });
     console.log(url)
     return this.http.get(url, options)
       .map(res => res.blob())
   }
 
-  download_soc() {
+  download_soc(soc: any) {
     this.downloadFile_service_soc().subscribe(blob => {
-      importedSaveAs(blob, this.download_file_name);
+      importedSaveAs(blob, soc);
     })
   }
 
@@ -2767,9 +2767,9 @@ export class ImportExcelDataPage {
       .map(res => res.blob())
   }
 
-  download_customer() {
+  download_customer(customer:any) {
     this.downloadFile_service_customer().subscribe(blob => {
-      importedSaveAs(blob, this.download_file_name);
+      importedSaveAs(blob, customer);
     })
   }
 

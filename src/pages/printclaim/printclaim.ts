@@ -370,6 +370,10 @@ export class PrintclaimPage {
   }
 
   submitAction(formValues: any) {
+    if (this.Customer_GUID === undefined || this.Soc_GUID === undefined) {
+      alert('Please select "project" or "customer" to continue.');
+      return;
+    }
     if (this.isFormEdit) {
       this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
         .subscribe(data => {

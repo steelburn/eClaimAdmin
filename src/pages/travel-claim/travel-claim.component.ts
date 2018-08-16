@@ -142,6 +142,7 @@ export class TravelclaimPage {
       attachment_GUID: '',
       //travel_amount: ['', Validators.required],
       claim_amount: ['', Validators.required],
+      from_id: '', to_id: ''
      
     });
 
@@ -220,6 +221,8 @@ export class TravelclaimPage {
 
               this.Travel_From_ngModel = this.claimRequestData[0].FROM;
               this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
+              this.DestinationPlaceID = this.claimRequestData[0].to_place_id; 
+              this.OriginPlaceID = this.claimRequestData[0].from_place_id;
               this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
               this.LoadClaimDetails();
               this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
@@ -235,7 +238,8 @@ export class TravelclaimPage {
                   this.isPublicTransport = true;
                 if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
                   {
-                    this.Travel_Mode_ngModel = element.CATEGORY
+                    this.Travel_Mode_ngModel = element.CATEGORY;
+                    this.VehicleRate = element.RATE_PER_UNIT;
                     // this.onVehicleSelect(element)
                   }
                 }
@@ -448,7 +452,7 @@ export class TravelclaimPage {
 
   // Search project start:
 
-  searchProject(searchString: any) {
+  searchProject(searchString: any) { 
     let val = searchString.target.value;
     if (!val || !val.trim()) {
       this.projects = this.storeProjects;
@@ -764,7 +768,8 @@ export class TravelclaimPage {
         formValues.attachment_GUID = this.imageGUID;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
         formValues.PayType = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
-
+        formValues.from_id = this.OriginPlaceID; 
+        formValues.to_id = this.DestinationPlaceID; 
 
         this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         this.MainClaimSaved = true;
@@ -773,7 +778,7 @@ export class TravelclaimPage {
         this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
           .subscribe(data => {
             this.claimRequestData = data;
-            this.claimRequestData["resource"][0].STATUS = 'Pending';
+           // this.claimRequestData["resource"][0].STATUS = 'Pending';
 
             this.claimRequestData["resource"][0].MILEAGE_GUID = this.VehicleId;
             this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.start_DT;
