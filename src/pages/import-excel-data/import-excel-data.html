@@ -161,7 +161,7 @@
       <h3>Customer</h3>
       <input type="file" style="display: inline-block;" (change)="customer_templa($event)" placeholder="Upload file" accept=".xlsx">
       <button ion-button color="primary500" class="btn btn-info" (click)="customer_template_click()" [disabled]="!chooseFile_customer_template">Upload</button>
-      <button ion-button color="primary500" class="btn btn-info" value="Bank" (click)="download_customer()">Download Template</button>
+      <button ion-button color="primary500" class="btn btn-info" value="Bank" (click)="download_customer('Customer')">Download Template</button>
       <!-- [disabled]="!downloadFile_soc_template" -->
     </ion-item>
   </div>
@@ -172,7 +172,7 @@
       <h3>SOC</h3>
       <input type="file" style="display: inline-block;" (change)="soc_templa($event)" placeholder="Upload file" accept=".xlsx">
       <button ion-button color="primary500" class="btn btn-info" (click)="soc_template_click()" [disabled]="!chooseFile_soc_template">Upload</button>
-      <button ion-button color="primary500" class="btn btn-info" value="Bank" (click)="download_soc()">Download Template</button>
+      <button ion-button color="primary500" class="btn btn-info"  (click)="download_soc('SOooC')">Download Template</button>
       <!-- [disabled]="!downloadFile_soc_template" -->
     </ion-item>
   </div>
