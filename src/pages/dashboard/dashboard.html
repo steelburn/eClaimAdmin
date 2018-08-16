@@ -66,10 +66,10 @@
 </ion-card>
 
 <!-- *ngIf="IsFinanceExecutive" -->
-<ion-card  class="round4" *ngIf="IsFinanceExecutive"  (click)="Finance_Executive_Click()" color="war">
+<ion-card  class="round4" *ngIf="IsFinanceExecutive"  (click)="Finance_Executive_Click()" color="war3">
     <div class="icondash">
-        <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
-        <h2 class="dashhead">Pending Finance Approval</h2>
+        <ion-icon name="eye" color="light" style="float: left; "></ion-icon>
+        <h2 class="dashhead">Pending Finance Verification</h2>
         <div text-right class="wordash">
             <h1>RM {{FinanceExecLevel_PendAmt}}</h1>
             <h3># this month: {{FinanceExecLevel_PendCount}}</h3>
@@ -82,9 +82,9 @@
 
 </ion-card>
 <!-- *ngIf="IsFinanceManager" -->
-<ion-card  class="round30" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war">
+<ion-card  class="round30" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war2">
     <div class="icondash">
-        <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
+        <ion-icon name="filing" color="light" style="float: left; "></ion-icon>
         <h2 class="dashhead">Pending Finance Payment</h2>
         <div text-right class="wordash">
             <h1>RM {{FinanceMgrLevel_PendAmt}}</h1>
@@ -97,7 +97,7 @@
 
 </ion-card>
 
-  <ion-card (click)="Rejected_Click()" class="round2" color="danger">
+  <ion-card (click)="Rejected_Click()" class="round2" color="mac">
       <div class="icondash">
           <ion-icon name="close-circle" color="light" style="float: left; "></ion-icon>
           <h2 class="dashhead">Rejected</h2>

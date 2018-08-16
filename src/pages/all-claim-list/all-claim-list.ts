@@ -38,158 +38,51 @@ import { ExcelService } from '../../providers/excel.service';
   templateUrl: 'all-claim-list.html', providers: [BaseHttpService, ExcelService]
 })
 export class AllClaimListPage {
-  userClaimhistorydetails: any[];
-  userClaimhistorydetails1: any[];
-  claimTypeList: any[];
-  yearsList: any[] = [];
+  claimhistorydetails: any[];
+  claimhistorydetails1: any[];
   userdetails: any;
-  currentYear: number = new Date().getFullYear();
-  prevYear: number = new Date().getFullYear();
-  //claimrefguid:any;
-  //userguid:any;
-  //month:any;
+  claimrefguid: any;
+  userguid: any;
+  month: any;
   baseResourceUrl: string;
   baseResourceUrl1: string;
   searchboxValue: string;
-  Pending: any; Rejected: any; Approved: any; Paid: any;
+  FinanceLogin: boolean = false;
+  loginUserRole: string;
   public page: number = 1;
-  constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
-    //  this.claimrefguid=navParams.get("claimRefGuid");
-    //  this.userguid=navParams.get("userGuid");
-    //  this.month=navParams.get("Month");
-    //alert(this.userguid);
-    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log(this.baseResourceUrl);
+  deptList: any[];
+  employeeList: any[] = [];
+  employeeList1: any[] = [];
+  claimTypeList: any[];
+  yearsList: any[] = [];
+  currentYear: number = new Date().getFullYear();
 
-    // this.onSearchInput();
-    this.BindYears();
-    this.BindClaimTypes();
+  constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+    this.claimrefguid = navParams.get("claimRefGuid");
+    this.userguid = navParams.get("userGuid");
+    this.month = navParams.get("Month");
+    this.loginUserRole = localStorage.getItem("g_ROLE_NAME");
 
-    this.Rejected = navParams.get("Rejected");
-    this.Pending = navParams.get("Pending");
-    this.Approved = navParams.get("Approved");
-    this.Paid = navParams.get("Paid");
+    if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
+      this.FinanceLogin = true;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
-    this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid;
-    if (this.searchboxValue != undefined) {
-      this.onSearchInput();
-    }
-    else { this.BindData(); }
-
-    this.getuserDetails();
-
-    this.excelService = excelService;
-  }
-
-  ExcelData: any[] = [];
-  BindData() {
-    this.http
-      .get(this.baseResourceUrl)
-      .map(res => res.json())
-      .subscribe(data => {
-        this.userClaimhistorydetails1 = data["resource"];
-        let key: any;
-        this.userClaimhistorydetails1.forEach(element => {
-          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
-
-          if (element.STATUS === 'Rejected') {
-            element.STAGE_GUID = null;
-          }
-          else {
-            key = element.PROFILE_LEVEL;
-          }
-
-          switch (key) {
-            case 1: element.STAGE_GUID = 'Superior'; break;
-            case 2: element.STAGE_GUID = 'Finance Executive'; break;
-            case 3:
-            case -1: element.STAGE_GUID = 'Finance & Admin'; break;
-          }
-        });
-        this.userClaimhistorydetails = this.userClaimhistorydetails1;
-        // for (var item in data["resource"]) {
-        //   this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
-        // }
-      });
-
-  }
-
-  onSearchInput() {
-    // alert('hi')    
-    // this.searchboxValue='hi';
-
-    // debugger;
-
-    let val = this.searchboxValue;
-    // alert(this.searchboxValue)
-    if (val && val.trim() != '') {
-
-      // Lakshman June-13,2018
-      this.http
-        .get(this.baseResourceUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.userClaimhistorydetails1 = data["resource"];
-          //this.userClaimhistorydetails1 = this.userClaimhistorydetails;
-          this.userClaimhistorydetails1.forEach(element => {
-            switch (element.PROFILE_LEVEL) {
-              case 1: element.STAGE_GUID = 'Superior'; break;
-              case 2: element.STAGE_GUID = 'Finance Executive'; break;
-              case 3:
-              case -1: element.STAGE_GUID = 'Finance & Admin'; break;
-              // case 4: element.STAGE_GUID = 'Finance Manager'; break;
-              // case 5: element.STAGE_GUID = 'Finance & Admin'; break;
-            }
-          });
-          this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
-            let claimtype: number;
-            let status: number;
-            let stage: number;
-            let amount: number;
-            let date: number;
-            // console.log(item);
-            if (item.CLAIMTYPE != null) { claimtype = item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase()) }
-            if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
-            if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
-            if (item.STAGE != null) { stage = item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase()) }
-            if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
-            return (
-              (claimtype > -1)
-              || (date > -1)
-              || (status > -1)
-              || (stage > -1)
-              || (amount > -1)
-            );
-          })
-        });
-      // Lakshman June-13,2018
-
-      // this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
-      //   let claimtype: number;
-      //   let status: number;
-      //   let stage: number;
-      //   let amount: number;
-      //   let date: number;
-      //   // console.log(item);
-      //   if (item.CLAIM_TYPE != null) { claimtype = item.CLAIMTYPE.toLowerCase().indexOf(val.toLowerCase()) }
-      //   if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
-      //   if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
-      //   if (item.STAGE != null) { stage = item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase()) }
-      //   if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
-      //   return (
-      //     (claimtype > -1)
-      //     || (date > -1)
-      //     || (status > -1)
-      //     || (stage > -1)
-      //     || (amount > -1)
-      //   );
-      // })
     }
     else {
-      this.userClaimhistorydetails = this.userClaimhistorydetails1;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=1)AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
+    this.BindDepartment();
+    this.BindEmployeesbyDepartment("All");
+    this.BindClaimTypes();
+    this.BindYears();
+    this.BindData("All", "All", "All", "All", "All");
+    if (this.FinanceLogin) {
+      this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID=' + this.userguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.getuserDetails();
+    }
+
+    this.excelService = excelService;
   }
 
   getuserDetails() {
@@ -197,25 +90,71 @@ export class AllClaimListPage {
       .get(this.baseResourceUrl1)
       .map(res => res.json())
       .subscribe(data => {
-        //alert(JSON.stringify(data));
         this.userdetails = data["resource"];
-        //alert(this.userdetails);
       });
   };
 
-  BindClaimTypes() {
+  ExcelData: any[] = [];
+  BindData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlClaimTypes: string, ddlStatus: string) {
     this.http
-      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_type?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.claimTypeList = data["resource"];
+        this.claimhistorydetails = data["resource"];
+        if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
+          this.claimhistorydetails.forEach(element => {
+            element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+            if (element.STATUS.toString() === "Approved" && element.PROFILE_LEVEL.toString() === "3") { element.STATUS = "Paid"; }
+          });
+        }
+        this.claimhistorydetails1 = this.claimhistorydetails;
+        if (this.claimhistorydetails.length != 0) {
+          if (ddlDept.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.DEPARTMENT_GUID.toString() === ddlDept.toString()) }
+          if (ddlEmployee.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
+          if (ddlmonth.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
+          if (ddlClaimTypes.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
+          if (ddlStatus.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
+
+        }
+        for (var item in data["resource"]) {
+          this.ExcelData.push({ Name: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPARTMENT"], Month: data["resource"][item]["MONTH"], ClaimType: data["resource"][item]["CLAIM_TYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
+        }
       });
   }
+  onSearchInput() {
+    // alert('hi')
+    let val = this.searchboxValue;
+    if (val && val.trim() != '') {
+      this.claimhistorydetails = this.claimhistorydetails1.filter((item) => {
+        let claimtype: number;
+        let status: number;
+        let amount: number;
+        let date: number;
 
-  BindYears() {
-    for (let i = 2016; i <= new Date().getFullYear(); i++) {
-      this.yearsList.push(i);
+        if (item.CLAIM_TYPE != null) { claimtype = item.CLAIM_TYPE.toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.TRAVEL_DATE != null) { date = item.TRAVEL_DATE.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        return (
+          (claimtype > -1)
+          || (date > -1)
+          || (status > -1)
+          || (amount > -1)
+        );
+      })
     }
+    else {
+      this.claimhistorydetails = this.claimhistorydetails1;
+    }
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ClaimhistorydetailPage');
+  }
+
+  ExportToExcel() {
+    // this.excelService.exportAsExcelFile(this.claimhistorydetails,'Data');
+    this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
   }
 
   claimRequestGUID: string; level: string; designation: string;
@@ -244,189 +183,69 @@ export class AllClaimListPage {
       approver_GUID: localStorage.getItem('g_USER_GUID')
     });
   }
-
   editPage(claimType: any) {
     this.navCtrl.push(claimType, {
       isFormEdit: 'true',
       cr_GUID: this.claimRequestGUID
     });
   }
-
-  DeleteClaimRequest(claimReqGuid: any) {
-    let alert1 = this.alertCtrl.create({
-      title: 'Confirm delete claim',
-      message: 'Are you sure you want to delete this claim?',
-      buttons: [
-        {
-          text: 'No',
-          handler: () => {
-            return
-          }
-        },
-        {
-          text: 'Yes',
-          handler: () => {
-            this.api.deleteApiModel('main_claim_request', claimReqGuid).subscribe(() => {
-              this.BindData();
-              alert('Claim has been deleted successfully.');
-            });
-          }
-        }
-      ]
-    })
-    alert1.present();
+  BindClaimTypes() {
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_claim_type?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.claimTypeList = data["resource"];
+      });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserclaimslistPage');
-  }
-
-  ExportExcelClicked: boolean = false; ExcelColumns: any[] = [];
-  ExportToExcel() {
-    this.ExportExcelClicked = true;
-    this.ExcelColumns = [];
-    this.ExcelColumns.push({ Columns: 'Claim Type' });
-    this.ExcelColumns.push({ Columns: 'Date' });
-    this.ExcelColumns.push({ Columns: 'Status' });
-    this.ExcelColumns.push({ Columns: 'Stage' });
-    this.ExcelColumns.push({ Columns: 'Amount(RM)' });
-  }
-
-  CloseExportExcel() {
-    this.ExportExcelClicked = false;
-    this.checked.length = 0;
-  }
-
-  checked: any[] = [];
-  SelectColumn(e: any, SelectedColumn: any) {
-    if (e.checked == true) {
-      this.checked.push(SelectedColumn);
-    } else {
-      let index = this.RemoveCheckedFromArray(SelectedColumn);
-      this.checked.splice(index, 1);
+  BindYears() {
+    for (let i = 2016; i <= new Date().getFullYear(); i++) {
+      this.yearsList.push(i);
     }
   }
 
-  RemoveCheckedFromArray(checkbox: String) {
-    return this.checked.findIndex((category) => {
-      return category === checkbox;
-    })
+  BindDepartment() {
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_department?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.deptList = data["resource"];
+      });
+    //console.log(this.deptList);
   }
 
-  SubmitExportExcel() {
-    this.ExcelData = [];
-    if (this.checked.length > 0) {
-      for (var item in this.userClaimhistorydetails) {
-        if (this.checked.length > 0) {
-          let ctr: number = 0;
-          let jsonStr = '';
-          for (var chkItem in this.checked) {
-            ctr = ctr + 1;
-            switch (this.checked[chkItem]["Columns"]) {
-              case "Claim Type":
-                if (this.checked.length == 1) {
-                  jsonStr += '{"ClaimType":"' + this.userClaimhistorydetails[item]["CLAIMTYPE"] + '"';
-                }
-                else {
-                  jsonStr += '{"ClaimType":"' + this.userClaimhistorydetails[item]["CLAIMTYPE"] + '",';
-                }
-                break;
-              case "Date":
-                if (jsonStr.length > 0) {
-                  if (ctr == this.checked.length) {
-                    jsonStr += '"Date":"' + this.userClaimhistorydetails[item]["TRAVEL_DATE"] + '"';
-                  }
-                  else {
-                    jsonStr += '"Date":"' + this.userClaimhistorydetails[item]["TRAVEL_DATE"] + '",';
-                  }
-                }
-                else {
-                  if (this.checked.length == 1) {
-                    jsonStr += '{"Date":"' + this.userClaimhistorydetails[item]["TRAVEL_DATE"] + '"';
-                  }
-                  else {
-                    jsonStr += '{"Date":"' + this.userClaimhistorydetails[item]["TRAVEL_DATE"] + '",';
-                  }
-                }
-                break;
-              case "Status":
-                if (jsonStr.length > 0) {
-                  if (ctr == this.checked.length) {
-                    jsonStr += '"Status":"' + this.userClaimhistorydetails[item]["STATUS"] + '"';
-                  }
-                  else {
-                    jsonStr += '"Status":"' + this.userClaimhistorydetails[item]["STATUS"] + '",';
-                  }
-                }
-                else {
-                  if (this.checked.length == 1) {
-                    jsonStr += '{"Status":"' + this.userClaimhistorydetails[item]["STATUS"] + '"';
-                  }
-                  else {
-                    jsonStr += '{"Status":"' + this.userClaimhistorydetails[item]["STATUS"] + '",';
-                  }
-                }
-                break;
-              case "Stage":
-                if (jsonStr.length > 0) {
-                  if (ctr == this.checked.length) {
-                    jsonStr += '"Stage":"' + this.userClaimhistorydetails[item]["STAGE"] + '"';
-                  }
-                  else {
-                    jsonStr += '"Stage":"' + this.userClaimhistorydetails[item]["STAGE"] + '",';
-                  }
-                }
-                else {
-                  if (this.checked.length == 1) {
-                    jsonStr += '{"Stage":"' + this.userClaimhistorydetails[item]["STAGE"] + '"';
-                  }
-                  else {
-                    jsonStr += '{"Stage":"' + this.userClaimhistorydetails[item]["STAGE"] + '",';
-                  }
-                }
-                break;
-              case "Amount(RM)":
-                if (jsonStr.length > 0) {
-                  if (ctr == this.checked.length) {
-                    jsonStr += '"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '"';
-                  }
-                  else {
-                    jsonStr += '"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '",';
-                  }
-                }
-                else {
-                  if (this.checked.length == 1) {
-                    jsonStr += '{"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '"';
-                  }
-                  else {
-                    jsonStr += '{"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '",';
-                  }
-                }
-                break;
-            }
-            if (ctr == this.checked.length) {
-              jsonStr += '}';
-            }
-          }
-          this.ExcelData.push(JSON.parse(jsonStr));
+  BindEmployeesbyDepartment(dept: string) {
+    //alert(dept);
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display_new?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.employeeList1 = data["resource"];
+        this.employeeList = this.employeeList1;
+        if (dept !== "All") {
+          this.employeeList = this.employeeList1.filter(s => s.DEPT_GUID.toString() === dept.toString());
         }
+      });
+
+  }
+
+  SearchClaimsData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
+    if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
+      if (this.loginUserRole === "Finance Admin") {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
       }
-      this.excelService.exportAsExcelFile(this.ExcelData, 'Data');
+      else {
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      }
+
     }
     else {
-      alert('Please select one item.');
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=1)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
+    this.BindData(ddlDept, ddlEmployee, ddlmonth, ddlClaimTypes, ddlStatus);
+
   }
 
-  SearchClaimsData(ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
-    this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.BindData();
-    if (this.userClaimhistorydetails.length != 0) {
-      if (ddlmonth.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
-      if (ddlStatus.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
-      if (ddlClaimTypes.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
-
-    }
-  }
 
 }
+

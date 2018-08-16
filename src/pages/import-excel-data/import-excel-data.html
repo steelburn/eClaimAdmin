@@ -14,93 +14,166 @@
 
 
 <ion-content padding>
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To main_customer</h3>
-      <input type="file" style="display: inline-block;" (change)="main_customer($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="main_customer_click()" [disabled]="!chooseFile_main_customer">Upload</button>
-    </ion-item>
-  </div>
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To main_project</h3>
-      <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="Upload()" [disabled]="!chooseFile_incomingfile">Upload</button>
-    </ion-item>
-  </div>
+  <div style="display: none;">
+    <div style="width:48%; display:inline-table !important;">
+      <div style="width:78%; display:inline-table !important;">
+        <ion-item>
+          <h3>Templates</h3>
+          <ion-select [(ngModel)]="Templates_ngModel" placeholder="{{'Please select template'}}">
+            <ion-option [value]="Bank">Bank</ion-option>
+            <ion-option [value]="Designation">Designation</ion-option>
+            <ion-option [value]="Department">Department</ion-option>
+            <ion-option [value]="Mileage">Mileage</ion-option>
+            <ion-option [value]="PaymentType">Payment Type</ion-option>
+            <ion-option [value]="Qualification">Qualification</ion-option>
+            <ion-option [value]="Customer">Customer</ion-option>
+            <ion-option [value]="SOC">SOC</ion-option>
+            <ion-option [value]="Country">Country</ion-option>
+            <ion-option [value]="State">State</ion-option>
+            <ion-option [value]="User_Templates">Templates</ion-option>
+          </ion-select>
+        </ion-item>
+      </div>
+      <div style="width:20%; display:inline-table !important;">
+        <ion-item>
+          <button ion-fab mini (click)="download()" title="Download templates">
+            <ion-icon name="download"></ion-icon>
+          </button>
+        </ion-item>
+      </div>
+    </div>
 
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To main_customer_location</h3>
-      <input type="file" style="display: inline-block;" (change)="main_customer_location($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="main_customer_location_click()" [disabled]="!chooseFile_main_customer_location">Upload</button>
-    </ion-item>
-  </div>
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To soc_main</h3>
-      <input type="file" style="display: inline-block;" (change)="soc_main($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="soc_main_click()" [disabled]="!chooseFile_soc_main">Upload</button>
-    </ion-item>
-  </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To main_customer</h3>
+        <input type="file" style="display: inline-block;" (change)="main_customer($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="main_customer_click()" [disabled]="!chooseFile_main_customer">Upload</button>
+      </ion-item>
+    </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To main_project</h3>
+        <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="Upload()" [disabled]="!chooseFile_incomingfile">Upload</button>
+      </ion-item>
+    </div>
 
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To user_main</h3>
-      <input type="file" style="display: inline-block;" (change)="user_main($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="user_main_click()" [disabled]="!chooseFile_user_main">Upload</button>
-    </ion-item>
-  </div>
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To user_info</h3>
-      <input type="file" style="display: inline-block;" (change)="user_info($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="user_info_click()" [disabled]="!chooseFile_user_info">Upload</button>
-    </ion-item>
-  </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To main_customer_location</h3>
+        <input type="file" style="display: inline-block;" (change)="main_customer_location($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="main_customer_location_click()" [disabled]="!chooseFile_main_customer_location">Upload</button>
+      </ion-item>
+    </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To soc_main</h3>
+        <input type="file" style="display: inline-block;" (change)="soc_main($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="soc_main_click()" [disabled]="!chooseFile_soc_main">Upload</button>
+      </ion-item>
+    </div>
 
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To user_address</h3>
-      <input type="file" style="display: inline-block;" (change)="user_address($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="user_address_click()" [disabled]="!chooseFile_user_address">Upload</button>
-    </ion-item>
-  </div>
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To user_company</h3>
-      <input type="file" style="display: inline-block;" (change)="user_company($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="user_company_click()" [disabled]="!chooseFile_user_company">Upload</button>
-    </ion-item>
-  </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To user_main</h3>
+        <input type="file" style="display: inline-block;" (change)="user_main($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="user_main_click()" [disabled]="!chooseFile_user_main">Upload</button>
+      </ion-item>
+    </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To user_info</h3>
+        <input type="file" style="display: inline-block;" (change)="user_info($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="user_info_click()" [disabled]="!chooseFile_user_info">Upload</button>
+      </ion-item>
+    </div>
 
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To user_contact</h3>
-      <input type="file" style="display: inline-block;" (change)="user_contact($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="user_contact_click()" [disabled]="!chooseFile_user_contact">Upload</button>
-    </ion-item>
-  </div>
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To user_qualification</h3>
-      <input type="file" style="display: inline-block;" (change)="user_qualification($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="user_qualification_click()" [disabled]="!chooseFile_user_qualification">Upload</button>
-    </ion-item>
-  </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To user_address</h3>
+        <input type="file" style="display: inline-block;" (change)="user_address($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="user_address_click()" [disabled]="!chooseFile_user_address">Upload</button>
+      </ion-item>
+    </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To user_company</h3>
+        <input type="file" style="display: inline-block;" (change)="user_company($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="user_company_click()" [disabled]="!chooseFile_user_company">Upload</button>
+      </ion-item>
+    </div>
 
-  <div style="width:48%; display:inline-table !important;">
-    <ion-item>
-      <h3>To user_role</h3>
-      <input type="file" style="display: inline-block;" (change)="user_role($event)" placeholder="Upload file" accept=".xlsx">
-      <button ion-button color="primary500" class="btn btn-info" (click)="user_role_click()" [disabled]="!chooseFile_user_role">Upload</button>
-    </ion-item>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To user_contact</h3>
+        <input type="file" style="display: inline-block;" (change)="user_contact($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="user_contact_click()" [disabled]="!chooseFile_user_contact">Upload</button>
+      </ion-item>
+    </div>
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To user_qualification</h3>
+        <input type="file" style="display: inline-block;" (change)="user_qualification($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="user_qualification_click()" [disabled]="!chooseFile_user_qualification">Upload</button>
+      </ion-item>
+    </div>
+
+    <div style="width:48%; display:inline-table !important;">
+      <ion-item>
+        <h3>To user_role</h3>
+        <input type="file" style="display: inline-block;" (change)="user_role($event)" placeholder="Upload file" accept=".xlsx">
+        <button ion-button color="primary500" class="btn btn-info" (click)="user_role_click()" [disabled]="!chooseFile_user_role">Upload</button>
+      </ion-item>
+    </div>
   </div>
   <div style="width:48%; display:inline-table !important;">
     <ion-item>
-      <h3>To main_attendance</h3>
-      <input type="file" #fileInputAttendance style="display: inline-block;" (change)="main_attendance($event)" placeholder="Upload file" accept=".xlsx">
+      <h3>Attendance</h3>
+      <input type="file" #fileInputAttendance style="display: inline-block;" (change)="main_attendance($event)" placeholder="Upload file"
+        accept=".xlsx">
       <button ion-button color="primary500" class="btn btn-info" (click)="attendance_click()" [disabled]="!chooseFile_main_attendance">Upload</button>
+      <button ion-button color="primary500" class="btn btn-info" (click)="Insert_User_Attendance()" style="display: none;">Migrate</button>
+    </ion-item>
+  </div>
+  <div style="width:48%; display:inline-table !important;">
+    <ion-item>
+      <h3>Leave Calender</h3>
+      <input type="file" #fileInputLeave style="display: inline-block;" (change)="main_leave($event)" placeholder="Upload file"
+        accept=".xlsx, .xls">
+      <button ion-button color="primary500" class="btn btn-info" (click)="LeaveUpload_click()" [disabled]="!chooseFile_main_leave">Upload</button>
+    </ion-item>
+  </div>
+
+  <!-- user_template -->
+  <div style="width:48%; display:inline-table !important;">
+    <ion-item>
+      <h3>User</h3>
+      <input type="file" style="display: inline-block;" (change)="user_templa($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button color="primary500" class="btn btn-info" (click)="user_template_click()" [disabled]="!chooseFile_user_template">Upload</button>
+      <button ion-button color="primary500" class="btn btn-info" (click)="download_user()">Download Template</button>
+      <!-- [disabled]="!downloadFile_user_template" -->
+    </ion-item>
+  </div>
+
+   <!-- customer_template -->
+   <div style="width:48%; display:inline-table !important;">
+    <ion-item>
+      <h3>Customer</h3>
+      <input type="file" style="display: inline-block;" (change)="customer_templa($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button color="primary500" class="btn btn-info" (click)="customer_template_click()" [disabled]="!chooseFile_customer_template">Upload</button>
+      <button ion-button color="primary500" class="btn btn-info" value="Bank" (click)="download_customer('Customer')">Download Template</button>
+      <!-- [disabled]="!downloadFile_soc_template" -->
+    </ion-item>
+  </div>
+
+  <!-- soc_template -->
+  <div style="width:48%; display:inline-table !important;">
+    <ion-item>
+      <h3>SOC</h3>
+      <input type="file" style="display: inline-block;" (change)="soc_templa($event)" placeholder="Upload file" accept=".xlsx">
+      <button ion-button color="primary500" class="btn btn-info" (click)="soc_template_click()" [disabled]="!chooseFile_soc_template">Upload</button>
+      <button ion-button color="primary500" class="btn btn-info"  (click)="download_soc('SOooC')">Download Template</button>
+      <!-- [disabled]="!downloadFile_soc_template" -->
     </ion-item>
   </div>
 
