@@ -97,6 +97,7 @@ export class TravelclaimPage {
   claimRequestData: any;
 
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID');

@@ -442,4 +442,11 @@ export class ProfileManagerProvider {
 
     })
   }
+
+  CheckSessionOut(){
+    if (localStorage.getItem("g_USER_GUID") === null) {
+      alert('Your session is timedout. Please login now.');
+      this.navCtrl.setRoot('LoginPage');
+    }
+  }
 }
