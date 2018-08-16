@@ -35,4 +35,8 @@ npm install -g corsproxy
 npm i ngx-pagination
 npm install ngx-pagination --save
 
+#plugin to download the file
+npm install file-saver --save
+npm install @types/file-saver --save
+
 ```

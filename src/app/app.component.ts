@@ -15,6 +15,7 @@ import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
 import { UserData } from '../providers/user-data';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
+import { AllClaimhistoryPage } from '../pages/allclaimhistory/claimhistory';
 
 
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
@@ -136,7 +137,7 @@ export class ConferenceApp {
     public translate: TranslateService, public http: Http
   ) {
     // debugger;
-    this.blnLogin = false; //localStorage.removeItem("g_ROLE_NAME");
+    this.blnLogin = false; 
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -161,7 +162,8 @@ export class ConferenceApp {
     this.userData.logout();
     this.enableMenu(false);
 
-    this.menu.enable(false, 'loggedInMenu');
+    // this.menu.enable(false, 'loggedInMenu');
+    this.menu.enable(false, 'loggedInMenu_User');    
   }
 
   openPage(page: PageInterface) {
@@ -199,8 +201,7 @@ export class ConferenceApp {
     // this.MenuService.EventListener();
     // debugger;    
 
-    this.events.subscribe('user:login', () => {      
-
+    this.events.subscribe('user:login', () => {
       this.enableMenu(true);
     });
 
@@ -209,11 +210,15 @@ export class ConferenceApp {
     });
 
     this.events.subscribe('user:logout', () => {
-      this.enableMenu(false);
+        this.enableMenu(false);            
     });
   }
 
-  enableMenu(loggedIn: boolean) {
+  enableMenu(loggedIn: boolean) {    
+    if(localStorage.getItem("g_USER_GUID") != null){
+      loggedIn = true;
+    }
+    // alert(loggedIn);
     // debugger;
     //Get all the roles and menus for that particular user.-------------------------------------------------------   
     // let url: string; this.Menu_Array = []; let Role_Name: string = "";
@@ -269,6 +274,7 @@ export class ConferenceApp {
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu');
+          // this.menu.enable(loggedIn, 'loggedInMenu_User');          
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
@@ -298,10 +304,12 @@ export class ConferenceApp {
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+
             { title: 'All Claim List', name: 'AllClaimListPage', component: AllClaimListPage, icon: 'ios-paper-outline' },
             { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
             { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
           
+
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
