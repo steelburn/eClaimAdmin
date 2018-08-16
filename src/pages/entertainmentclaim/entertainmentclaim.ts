@@ -82,6 +82,7 @@ export class EntertainmentclaimPage {
   claimRequestData: any;
 
   constructor(public numberPipe: DecimalPipe, public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -399,6 +400,10 @@ export class EntertainmentclaimPage {
   }
 
   submitAction(formValues: any) {
+    if (this.Customer_GUID === undefined || this.Soc_GUID === undefined) {
+      alert('Please select "project" or "customer" to continue.');
+      return;
+    }
     //let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     // let claimRequestDataModel: MainClaimRequestModel = new MainClaimRequestModel();    
     if (this.isFormEdit) {
