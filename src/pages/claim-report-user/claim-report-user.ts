@@ -29,6 +29,7 @@ export class ClaimReportUserPage {
   empData: any;
   baseResourceUrlSummery: string;
   claimsListSummery: any[];
+  claimsSocSummery: any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private alertCtrl: AlertController) {
     this.loginUserGuid = localStorage.getItem("g_USER_GUID");
@@ -54,6 +55,7 @@ export class ClaimReportUserPage {
           this.claimsList = data["resource"];
           this.claimsListPrint = this.claimsList;
           this.claimsList.forEach(element => {
+
             if (element.TYPE === 'TRV') {
               element.RowNum = "1";
               this.claimsListPrintTemp.push(element);
@@ -97,6 +99,7 @@ export class ClaimReportUserPage {
           });
         });
       this.BindSummeryData();
+      this.GetSocSummeryData();
     }
     let alert1 = this.alertCtrl.create({
       title: 'Print Report',
@@ -154,6 +157,15 @@ export class ClaimReportUserPage {
       .subscribe(data => {
         this.claimsListSummery = data["resource"];
       });
+  }
+
+  GetSocSummeryData() {
+    this.http
+    .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_soc_summery?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.claimsSocSummery = data["resource"];
+    });
   }
 
   printToCart(printSectionId: any) {
