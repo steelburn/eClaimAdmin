@@ -46,36 +46,37 @@
   <form [formGroup]="Travelform">
 
     <ion-item class="fuha">
-      <ion-label floating color="primary500">{{ "START_DT_LABEL" | translate }}</ion-label>
+      <ion-label floating color="primary500"> <span style="color:red">*</span>{{ "START_DT_LABEL" | translate }}</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="start_DT" [(ngModel)]="Start_DT_ngModel"
         displayFormat="DD/MM/YYYY HH:mm"></ion-datetime>
     </ion-item>
 
 
     <ion-item class="fuha">
-      <ion-label floating color="primary500">{{ "END_DT_LABEL" | translate }}</ion-label>
+      <ion-label floating color="primary500"> <span style="color:red">*</span> {{ "END_DT_LABEL" | translate }}</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT"
         [(ngModel)]="End_DT_ngModel"></ion-datetime>
     </ion-item>
 
 
     <ion-item class="fuha">
-      <ion-label floating color="primary500">{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
+      <ion-label floating color="primary500"> <span style="color:red">*</span>{{ "TRAVEL_TYPE_LABEL" | translate }}</ion-label>
       <ion-select [(ngModel)]="Travel_Type_ngModel" formControlName="travelType">
 
-        <ion-option (ionSelect)="onTravelTypeSelect('Local')">Local</ion-option>
+        <ion-option (ionSelect)="onTravelTypeSelect('Local')" selected>Local</ion-option>
         <ion-option (ionSelect)="onTravelTypeSelect('Outstation')">Outstation</ion-option>
       </ion-select>
+      <!-- (ionSelect)="onTravelTypeSelect('Local')" -->
     </ion-item>
 
 
 
     <ion-item class="fuha">
 
-      <ion-label floating color="primary500">{{ "TRAVEL_MODE_LABEL" | translate }}</ion-label>
+      <ion-label floating color="primary500"> <span style="color:red">*</span> {{ "TRAVEL_MODE_LABEL" | translate }}</ion-label>
       <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType">
         <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
-        <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="onVehicleSelect(vehicle)">{{vehicle.CATEGORY}}</ion-option>
+        <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="onVehicleSelect(vehicle)" >{{vehicle.CATEGORY}}</ion-option>
       </ion-select>
     </ion-item>
 
@@ -90,13 +91,13 @@
 
 
     <ion-item text-wrap>
-      <ion-label floating color="primary500"> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
+      <ion-label floating color="primary500"> <span style="color:red">*</span> {{ "ORIGIN_PLACE_LABEL" | translate }} </ion-label>
       <ion-textarea [disabled]="true" (click)="AddLookupClick()" [(ngModel)]="Travel_From_ngModel" type="text" formControlName="origin"></ion-textarea>
 
     </ion-item>
 
     <ion-item text-wrap>
-      <ion-label floating color="primary500"> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>
+        <ion-label floating color="primary500"> <span style="color:red">*</span> {{ "DESTINATION_PLACE_LABEL" | translate }} </ion-label>       
       <ion-textarea [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination"></ion-textarea>
     </ion-item>
 
@@ -113,7 +114,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating color="primary500"> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
+      <ion-label floating color="primary500"> <span style="color:red">*</span> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
       <ion-input type="text" formControlName="description" [(ngModel)]="Travel_Description_ngModel"></ion-input>
     </ion-item>
 
