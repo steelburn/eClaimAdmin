@@ -107,6 +107,7 @@
           <th class="lgl1">Date</th>
           <th class="lgl1" style="width:120px">Status</th>
           <th class="lgl1">Stage</th>
+          <th class="lgl1">Remarks</th>
           <th class="lgl1">Amount(RM)</th>
           <th class="lgl1 tblBrRight" style="width:120px">Action</th>
 
@@ -120,6 +121,8 @@
           <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
           <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
           <td class="lgl1 getHeader" reshead="Stage">{{claimhistorydetail.STAGE}}</td>
+          <td class="lgl1 getHeader" reshead="Stage" *ngIf="claimhistorydetail.PROFILE_LEVEL==0">{{claimhistorydetail.REMARKS}}</td>
+          <td class="lgl1 getHeader" reshead="Stage"*ngIf="claimhistorydetail.PROFILE_LEVEL!=0"></td>
           <td class="lgl1 getHeader" reshead="Amount">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
           <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID,claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)">
