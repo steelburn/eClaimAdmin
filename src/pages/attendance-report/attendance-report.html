@@ -17,13 +17,6 @@
 
 
 <ion-content padding>
-  <ion-item class="fuha">
-    <ion-label>User Name:</ion-label>
-    <ion-select interface="popover" #ddlUserName>
-      <ion-option [value]="All" [selected]="true">All</ion-option>
-      <ion-option *ngFor="let emp of employeeList" [value]="emp.STAFF_ID">{{emp.FULLNAME}}</ion-option>
-    </ion-select>
-  </ion-item>
 
   <ion-item class="fuha">
     <ion-label> Month :</ion-label>
@@ -45,10 +38,19 @@
   </ion-item>
 
 
-  <ion-item class="fuha1">
+  <ion-item class="fuha">
     <ion-label>Year:</ion-label>
     <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
       <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <ion-item class="fuha1">
+    <ion-label>User Name:</ion-label>
+    <ion-select interface="popover" #ddlUserName>
+      <ion-option [value]="All" [selected]="true">All</ion-option>
+      <ion-option *ngFor="let emp of employeeList" [value]="emp.STAFF_ID">{{emp.FULLNAME}}</ion-option>
     </ion-select>
   </ion-item>
 
