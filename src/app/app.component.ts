@@ -27,6 +27,9 @@ import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-cl
 import { ClaimReportUserPage } from '../pages/claim-report-user/claim-report-user';
 import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { ClaimReportPrintPage } from '../pages/claim-report-print/claim-report-print';
+import { LeaveReportPage } from '../pages/leave-report/leave-report';
+import { AttendanceReportPage } from '../pages/attendance-report/attendance-report';
+
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -301,8 +304,12 @@ export class ConferenceApp {
             { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'All Finance Task History', name: 'AllClaimhistoryPage', component: AllClaimhistoryPage, icon: 'ios-clipboard-outline' },
-            { title: 'All Claim List', name: 'AllClaimListPage', component: AllClaimListPage, icon: 'ios-paper-outline' }
+
+            { title: 'All Claim List', name: 'AllClaimListPage', component: AllClaimListPage, icon: 'ios-paper-outline' },
+            { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
+            { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
+          
+
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -411,8 +418,11 @@ export class ConferenceApp {
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
 
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
-            { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' }
+            { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' },
          
+            { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
+            { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
+          
 
           ];
 
@@ -479,8 +489,12 @@ export class ConferenceApp {
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
 
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
-            { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' }
+            { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' },
 
+            { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
+            { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
+          
+            
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {

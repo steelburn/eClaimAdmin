@@ -128,6 +128,7 @@
           <th class="lgl1">Status</th>
           <!-- <th class="lgl1">STAGE</th> -->
           <th class="lgl1 tblBrRight" style="width:110px">Amount(RM)</th>
+          <th class="lgl1 tblBrRight" style="width:120px">Action</th>
         </tr>
 
         <tr class="col7" *ngFor="let claimhistorydetail of claimhistorydetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
@@ -141,6 +142,12 @@
           <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
           <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
           <td class="lgl1 getHeader" reshead="Amount(RM)">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+          <td class="lgl1 getHeader fColor" reshead="Action">
+            <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID,claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL_MAIN, claimhistorydetail.CLAIM_TYPE_GUID,1)">
+              <ion-icon name="md-eye"></ion-icon>
+            </button>
+          </td>
+        
         </tr>
 
 

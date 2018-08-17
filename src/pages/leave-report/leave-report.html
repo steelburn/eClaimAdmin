@@ -1,0 +1,106 @@
+<!--
+  Generated template for the LeaveReportPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Leave Report</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-item class="fuha">
+      <ion-label>User Name:</ion-label>
+      <ion-select interface="popover" #ddlUserName>
+        <ion-option [value]="All" [selected]="true">All</ion-option>
+        <ion-option *ngFor="let emp of employeeList" [value]="emp.STAFF_ID">{{emp.FULLNAME}}</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item class="fuha">
+      <ion-label>Leave Type:</ion-label>
+      <ion-select interface="popover" #ddlLeaveType>
+        <ion-option [value]="All" [selected]="true">All</ion-option>
+        <ion-option [value]="ANNUAL">ANNUAL LEAVE</ion-option>
+        <ion-option [value]="COMPASSIONATE">COMPASSIONATE LEAVE</ion-option>
+        <ion-option [value]="EMERGENCY">EMERGENCY LEAVE</ion-option>
+        <ion-option [value]="HOSPITALISATION">HOSPITALISATION LEAVE	</ion-option>
+        <ion-option [value]="MARRIAGE">MARRIAGE LEAVE</ion-option>
+        <ion-option [value]="MATERNITY">MATERNITY LEAVE</ion-option>
+        <ion-option [value]="MEDICAL">MEDICAL LEAVE</ion-option>
+        <ion-option [value]="PATERNITY">PATERNITY LEAVE</ion-option>
+        <ion-option [value]="REPLACEMENT">REPLACEMENT LEAVE</ion-option>
+        <ion-option [value]="UNPAID">UNPAID LEAVE</ion-option>
+        <ion-option [value]="WORK">WORK FROM HOME</ion-option>
+        <ion-option [value]="TRAINING">TRAINING</ion-option>
+        <ion-option [value]="OUTSTATION">OUTSTATION</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item class="fuha">
+      <ion-label> Month :</ion-label>
+      <ion-select interface="popover" #ddlmonth>
+        <ion-option [value]="All" [selected]="true">All</ion-option>
+        <ion-option value="1">Jan</ion-option>
+        <ion-option value="2">Feb</ion-option>
+        <ion-option value="3">Mar</ion-option>
+        <ion-option value="4">Apr</ion-option>
+        <ion-option value="5">May</ion-option>
+        <ion-option value="6">Jun</ion-option>
+        <ion-option value="7">Jul</ion-option>
+        <ion-option value="8">Aug</ion-option>
+        <ion-option value="9">Sep</ion-option>
+        <ion-option value="10">Oct</ion-option>
+        <ion-option value="11">Nov</ion-option>
+        <ion-option value="12">Dec</ion-option>
+      </ion-select>
+    </ion-item>
+  
+  
+    <ion-item class="fuha">
+      <ion-label>Year:</ion-label>
+      <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
+        <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <button ion-button item-end (click)="BindData(ddlUserName.value,ddlLeaveType.value,ddlmonth.value)">Search</button>
+    </ion-item>
+  
+    <ion-list>
+      <ion-item>
+        <table class="Tabler list">
+          <tr class="linedsg TColor">
+            <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+            <th class="lgl1">User Name</th>
+            <th class="lgl1">Leave Type</th>
+            <th class="lgl1">Start Date</th>
+            <th class="lgl1">End Date</th>
+            <th class="lgl1">Half Day Date</th>
+            <th class="lgl1">Session</th>  
+          </tr>
+  
+          <tr class="col7" *ngFor="let item of leaveData | paginate:{itemsPerPage: 20, currentPage:page, id: 'i' }; let i=index">
+            <td class="lgl1" reshead="No."> {{ 20 * (page - 1) + i+1 }}</td>
+            <td class="lgl1 getHeader" reshead="Claim Type">{{item.NAME}}</td>
+            <td class="lgl1 getHeader" reshead="Date">{{item.LEAVE_TYPE}}</td>
+            <td class="lgl1 getHeader" reshead="Status">{{item.START_DATE | date: 'dd/MM/yyyy'}}</td>
+            <td class="lgl1 getHeader" reshead="Stage">{{item.END_DATE | date: 'dd/MM/yyyy'}}</td>
+            <td class="lgl1 getHeader" reshead="Stage" *ngIf="item.HALF_DAY_DATE!='NA'">{{item.HALF_DAY_DATE | date: 'dd/MM/yyyy'}}</td>
+            <td class="lgl1 getHeader" reshead="Stage" *ngIf="item.HALF_DAY_DATE=='NA'"></td>
+            <td class="lgl1 getHeader" reshead="Amount" *ngIf="item.HALF_DAY_DATE!='NA'">{{item.SESSION}}</td>
+            <td class="lgl1 getHeader" reshead="Amount" *ngIf="item.HALF_DAY_DATE=='NA'"></td>
+          </tr>
+        </table>
+        <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="20" directionLinks="true" autoHide="true">
+        </pagination-controls>
+      </ion-item>
+    </ion-list>
+  
+</ion-content>
