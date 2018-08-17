@@ -6,7 +6,10 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar  color="primary200">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
     <ion-title>Attendance Report</ion-title>
   </ion-navbar>
 
@@ -42,7 +45,7 @@
   </ion-item>
 
 
-  <ion-item class="fuha">
+  <ion-item class="fuha1">
     <ion-label>Year:</ion-label>
     <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
       <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
@@ -59,18 +62,18 @@
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
           <th class="lgl1">User Name</th>
-          <th class="lgl1">Date</th>
-          <th class="lgl1">In Time</th>
-          <th class="lgl1">Out Time</th>
-          <th class="lgl1">Working Hours</th>  
+          <th class="lgl1" style="width:180px">Date</th>
+          <th class="lgl1" style="width:180px">In Time</th>
+          <th class="lgl1" style="width:190px">Out Time</th>
+          <th class="lgl1 tblBrRight"  style="width:120px">Working Hours</th>  
         </tr>
 
         <tr class="col7" *ngFor="let item of attendanceData | paginate:{itemsPerPage: 20, currentPage:page, id: 'i' }; let i=index">
           <td class="lgl1" reshead="No."> {{ 20 * (page - 1) + i+1 }}</td>
-          <td class="lgl1 getHeader" reshead="Claim Type">{{item.FULLNAME}}</td>
+          <td class="lgl1 getHeader" reshead="Claim Type" text-wrap>{{item.FULLNAME}}</td>
           <td class="lgl1 getHeader" reshead="Date">{{item.ATTENDANCE_DATE | date: 'dd/MM/yyyy'}}</td>
-          <td class="lgl1 getHeader" reshead="Status">{{item.IN_TS | date: 'HH:MM:SS'}}</td>
-          <td class="lgl1 getHeader" reshead="Stage">{{item.OUT_TS | date: 'HH:MM:SS'}}</td>
+          <td class="lgl1 getHeader" reshead="Status">{{item.IN_TS | date: 'HH:MM'}}</td>
+          <td class="lgl1 getHeader" reshead="Stage">{{item.OUT_TS | date: 'HH:MM'}}</td>
           <td class="lgl1 getHeader" reshead="Stage" *ngIf="item.HALF_DAY_DATE!='NA'">{{item.WORKING_HOURS}}</td>
         </tr>
       </table>
