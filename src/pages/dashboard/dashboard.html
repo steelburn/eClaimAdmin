@@ -49,10 +49,10 @@
 
   <div class="clear"></div>
  <!-- *ngIf="IsApprover" -->
- <ion-card  class="round30" *ngIf="IsApprover" (click)="Approver_Click()" color="war">
+ <ion-card  class="round30" *ngIf="IsApprover" (click)="Approver_Click()" color="war1">
     <div class="icondash">
         <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
-        <h2 class="dashhead">Pending Yours Approval</h2>
+        <h2 class="dashhead">Pending Your Approval</h2>
         <div text-right class="wordash">
             <h1>RM {{ApproverLevel_PendAmount}}</h1>
             <h3># this month: {{ApproverLevel_PendCount}}</h3>
@@ -144,7 +144,7 @@
 
   </ion-card>
 
-  <ion-card  class="round2" (click)="Paid_Click()" color="primary">
+  <ion-card  class="round2" (click)="Paid_Click()" color="primary200">
       <div class="icondash">
           <h2 class="dashhead">Paid</h2>
         <ion-icon name="logo-usd" color="light" style="float: left; "></ion-icon>
