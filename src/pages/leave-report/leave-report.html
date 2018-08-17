@@ -91,7 +91,7 @@
           </tr>
   
           <tr class="col7" *ngFor="let item of leaveData | paginate:{itemsPerPage: 20, currentPage:page, id: 'i' }; let i=index">
-            <td class="lgl1" reshead="No."> {{ 20 * (page - 1) + i+1 }}</td>
+            <td class="lgl1 getHeader" reshead="No."> {{ 20 * (page - 1) + i+1 }}</td>
             <td class="lgl1 getHeader" reshead="Name" text-wrap>{{item.NAME}}</td>
             <td class="lgl1 getHeader" reshead="Leave Type">{{item.LEAVE_TYPE}}</td>
             <td class="lgl1 getHeader" reshead="Start Date">{{item.START_DATE | date: 'dd/MM/yyyy'}}</td>

@@ -17,13 +17,6 @@
 
 
 <ion-content padding>
-  <ion-item class="fuha">
-    <ion-label>User Name:</ion-label>
-    <ion-select interface="popover" #ddlUserName>
-      <ion-option [value]="All" [selected]="true">All</ion-option>
-      <ion-option *ngFor="let emp of employeeList" [value]="emp.STAFF_ID">{{emp.FULLNAME}}</ion-option>
-    </ion-select>
-  </ion-item>
 
   <ion-item class="fuha">
     <ion-label> Month :</ion-label>
@@ -45,10 +38,19 @@
   </ion-item>
 
 
-  <ion-item class="fuha1">
+  <ion-item class="fuha">
     <ion-label>Year:</ion-label>
     <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
       <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <ion-item class="fuha1">
+    <ion-label>User Name:</ion-label>
+    <ion-select interface="popover" #ddlUserName>
+      <ion-option [value]="All" [selected]="true">All</ion-option>
+      <ion-option *ngFor="let emp of employeeList" [value]="emp.STAFF_ID">{{emp.FULLNAME}}</ion-option>
     </ion-select>
   </ion-item>
 
@@ -65,16 +67,16 @@
           <th class="lgl1" style="width:180px">Date</th>
           <th class="lgl1" style="width:180px">In Time</th>
           <th class="lgl1" style="width:190px">Out Time</th>
-          <th class="lgl1 tblBrRight"  style="width:120px">Working Hours</th>  
+          <th class="lgl1 tblBrRight"  style="width:120px">Hours Logged</th>  
         </tr>
 
         <tr class="col7" *ngFor="let item of attendanceData | paginate:{itemsPerPage: 20, currentPage:page, id: 'i' }; let i=index">
-          <td class="lgl1" reshead="No."> {{ 20 * (page - 1) + i+1 }}</td>
-          <td class="lgl1 getHeader" reshead="Claim Type" text-wrap>{{item.FULLNAME}}</td>
+          <td class="lgl1 getHeader" reshead="No."> {{ 20 * (page - 1) + i+1 }}</td>
+          <td class="lgl1 getHeader" reshead="Name" text-wrap>{{item.FULLNAME}}</td>
           <td class="lgl1 getHeader" reshead="Date">{{item.ATTENDANCE_DATE | date: 'dd/MM/yyyy'}}</td>
-          <td class="lgl1 getHeader" reshead="Status">{{item.IN_TS | date: 'HH:MM'}}</td>
-          <td class="lgl1 getHeader" reshead="Stage">{{item.OUT_TS | date: 'HH:MM'}}</td>
-          <td class="lgl1 getHeader" reshead="Stage" *ngIf="item.HALF_DAY_DATE!='NA'">{{item.WORKING_HOURS}}</td>
+          <td class="lgl1 getHeader" reshead="In">{{item.IN_TS | date: 'HH:MM'}}</td>
+          <td class="lgl1 getHeader" reshead="Out">{{item.OUT_TS | date: 'HH:MM'}}</td>
+          <td class="lgl1 getHeader" reshead="Hours Logged" *ngIf="item.HALF_DAY_DATE!='NA'">{{item.WORKING_HOURS}}</td>
         </tr>
       </table>
       <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="20" directionLinks="true" autoHide="true">
