@@ -145,40 +145,67 @@
       </tr>
     </table>
     <br />
-    <table width="50%" border="0" bgcolor="#cccccc" style="font-size: 8pt !important;">
-      <tr style="color:#ffffff;">
-        <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
-        <td align="right" bgcolor="#002060">Amount (RM)</td>
-      </tr>
-      <tr *ngFor="let claim of claimsListSummery">
-        <td align="left" bgcolor="#ffffff">&nbsp;</td>
-        <td align="left" bgcolor="#ffffff">{{claim.TRAVEL}}</td>
-        <td align="left" bgcolor="#ffffff">{{claim.MILEAGE}} </td>
-        <td align="left" colspan="3" bgcolor="#ffffff">{{claim.SHORTFORM}} </td>
-        <!-- <td  align="left" bgcolor="#ffffff">&nbsp;</td> -->
-        <td align="right" bgcolor="#ffffff">{{claim.AMOUNT| number:'1.2-2'}}</td>
-      </tr>
-      <tr>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">
-          <em>TOTAL CLAIM AMOUNT</em>
-        </td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td colspan="2" align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="right" bgcolor="#B3CCEC">
-          <em>{{totalClaimAmount | number:'1.2-2'}}</em>
-        </td>
-      </tr>
 
-    </table>
-    <br />
-    <table width="50%" border="0" bgcolor="#cccccc" style="font-size: 8pt !important;">
-      <tr *ngFor="let i of claimsSocSummery">
-        <td align="left" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.SOC}}</td>
-        <td align="right" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.AMOUNT | number:'1.2-2'}}</td>
-      </tr>
-    </table>
+    <table width="100%">
+      <tr>
+      <td width="50%">
+        <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
+          <tr style="color:#ffffff;">
+            <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
+            <td align="right" bgcolor="#002060">Amount (RM)</td>
+          </tr>
+          <tr *ngFor="let claim of claimsListSummery">
+            <td align="left" bgcolor="#ffffff">&nbsp;</td>
+            <td align="left" bgcolor="#ffffff">{{claim.TRAVEL}}</td>
+            <td align="left" bgcolor="#ffffff">{{claim.MILEAGE}} </td>
+            <td align="left" colspan="3" bgcolor="#ffffff">{{claim.SHORTFORM}} </td>
+            <td align="right" bgcolor="#ffffff">{{claim.AMOUNT| number:'1.2-2'}}</td>
+          </tr>
+          <tr>
+            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+            <td align="left" bgcolor="#B3CCEC">
+              <em>TOTAL CLAIM AMOUNT</em>
+            </td>
+            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+            <td colspan="2" align="left" bgcolor="#B3CCEC">&nbsp;</td>
+            <td align="right" bgcolor="#B3CCEC">
+              <em>{{totalClaimAmount | number:'1.2-2'}}</em>
+            </td>
+          </tr>
+    
+        </table>
+     </td>
+     <td></td>
+     <td width="50%">
+        <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
+
+            <tr style="color:#ffffff;">
+                <td align="center" bgcolor="#002060">SOC / Customer Name</td>
+                <td align="right" bgcolor="#002060">Amount (RM)</td>
+              </tr>
+
+          <tr *ngFor="let i of claimsSocSummery">
+            <td align="left" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.SOC}}</td>
+            <td align="right" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.AMOUNT | number:'1.2-2'}}</td>
+          </tr>
+
+          <tr>
+       <td align="left" bgcolor="#B3CCEC">
+              <em>TOTAL CLAIM AMOUNT</em>
+            </td>
+        
+
+            <td align="right" bgcolor="#B3CCEC">
+              <em>{{totalClaimAmount | number:'1.2-2'}}</em>
+            </td>
+          </tr>
+        </table>
+
+   </td>
+   </tr>
+   </table>
+
 
 
   </body>
