@@ -42,6 +42,8 @@ export class ClaimReportUserPage {
     console.log('ionViewDidLoad ClaimReportUserPage');
   }
 
+
+ 
   BindData(printSectionId: any, item: string) {
     if (this.loginUserGuid !== undefined) {
       this.totalClaimAmount = 0;
