@@ -359,7 +359,7 @@ export class MiscellaneousClaimPage {
   }
 
   submitAction(formValues: any) {
-    if (this.Customer_GUID === undefined || this.Soc_GUID === undefined) {
+    if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
     }
