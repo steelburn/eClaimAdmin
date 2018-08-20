@@ -165,7 +165,6 @@ export class ProfileManagerProvider {
       this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
       this.mainClaimReq.STAGE = this.previousStage;
       this.mainClaimReq.PROFILE_LEVEL = 0;
-
     }
     if (this.checkMultipleLength === 1)
       this.UpdateProfileInfo(this.mainClaimReq);
@@ -174,9 +173,11 @@ export class ProfileManagerProvider {
     //alert('Claim action submitted successfully.')
 
     // This is for Approval Send email to User and next approver
-    this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS, this.level);
-
-
+    // this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS, this.level);
+    
+    if(this.mainClaimReq.STATUS == 'Rejected'){
+      this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID);
+    }
   }
 
   ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any, checkBoxLength: number) {
@@ -362,8 +363,11 @@ export class ProfileManagerProvider {
     this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
       var postClaimMain = response.json();
       if (claimReqMainRef.STATUS != 'Draft')
-        this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID);
-      localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
+      
+        // this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID);        
+        this.api.sendEmail_New(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID, this.formValues.origin, this.formValues.destination, this.formValues.description, claimReqMainRef.SOC_GUID, claimReqMainRef.CUSTOMER_GUID);
+      
+        localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
       // this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
       //this.MainClaimSaved = true;
       if (this.formValues.uuid === undefined) {
