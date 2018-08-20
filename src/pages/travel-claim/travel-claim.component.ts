@@ -730,10 +730,11 @@ export class TravelclaimPage {
     })
   }
 
-  validateDate() {
-    let today = Date.parse(new Date().toISOString())
-    let start = Date.parse(this.Start_DT_ngModel)
-    let end = Date.parse(this.End_DT_ngModel)
+ 
+  validateDate(startDate: any, endDate: any) {   
+    let today =moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    let start = startDate; 
+    let end = endDate; 
     if (start > end || today < start) {
       alert('The Date Range is not valid.')
       return false;
@@ -757,7 +758,11 @@ export class TravelclaimPage {
   }
 
   submitAction(formValues: any) {
-    if (this.validateDate()) {
+    if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
+      alert('Please select "project" or "customer" to continue.');
+      return;
+    }
+    if (this.validateDate(this.Start_DT_ngModel, this.End_DT_ngModel)) {
       if (!this.isFormSubmitted) {
         this.isFormSubmitted = true;
         formValues.uuid = this.claimRequestGUID = UUID.UUID();
