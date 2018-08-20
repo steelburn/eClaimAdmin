@@ -350,6 +350,8 @@ export class ProfileManagerProvider {
     claimReqMainRef.ATTACHMENT_ID = this.formValues.attachment_GUID;
     claimReqMainRef.TRAVEL_TYPE = this.formValues.travelType === 'Outstation' ? '1' : '0';
     claimReqMainRef.claim_method_guid = this.formValues.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.formValues.PayType;
+    claimReqMainRef.from_place_id = this.formValues.from_id;
+    claimReqMainRef.to_place_id = this.formValues.to_id;
 
 
     if (this.isCustomer) {
@@ -443,5 +445,12 @@ export class ProfileManagerProvider {
       //   })
 
     })
+  }
+
+  CheckSessionOut(){
+    if (localStorage.getItem("g_USER_GUID") === null) {
+      alert('Your session is timedout. Please login now.');
+      this.navCtrl.setRoot('LoginPage');
+    }
   }
 }

@@ -153,6 +153,7 @@ export class OvertimeclaimPage {
   }
 
   constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
+    this.profileMng.CheckSessionOut();
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -307,10 +308,14 @@ export class OvertimeclaimPage {
     });
   }
 
-  validateDate() {
-    let today = Date.parse(new Date().toISOString())
-    let start = Date.parse(this.Start_DT_ngModel)
-    let end = Date.parse(this.End_DT_ngModel)
+  
+  validateDate(startDate: any, endDate: any) {    
+    let today =moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    let start = startDate; 
+    let end = endDate; 
+    // let today = Date.parse(new Date().toISOString())
+    // let start = Date.parse(this.Start_DT_ngModel)
+    // let end = Date.parse(this.End_DT_ngModel)
     if (start > end || today < start) {
       alert('The date range is not valid.')
       return false;
@@ -324,7 +329,11 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
-    if (this.validateDate()) {
+    if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
+      alert('Please select "project" or "customer" to continue.');
+      return;
+    }
+    if (this.validateDate(this.Start_DT_ngModel, this.End_DT_ngModel)) {
       if (this.isFormEdit) {
         this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
           .subscribe(data => {
