@@ -48,8 +48,9 @@ export class ClaimReportUserPage {
     if (this.loginUserGuid !== undefined) {
       this.totalClaimAmount = 0;
       this.claimsListPrintTemp = [];
-      this.month = item.split('-')[0];
-      this.year = item.split('-')[1];
+      this.month = item.split(' ')[0].substring(0,3);
+      alert(this.month);
+      this.year = item.split(' ')[1];
       this.http
         .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
         .map(res => res.json())
@@ -196,7 +197,7 @@ export class ClaimReportUserPage {
           this.monthsData = data["resource"];
           this.monthsData.forEach(element => {
             if (i <= 12 && ((element.year == currentYear && element.MONTHNUM <= currentMonth) || (element.year == currentYear - 1 && element.MONTHNUM > currentMonth))) {
-              let item = element.month + '-' + element.year;
+              let item = element.MONTH_NAME + ' ' + element.year;
               this.monthsList.push(item);
               i++;
             }
