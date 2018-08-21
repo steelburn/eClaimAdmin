@@ -6,7 +6,11 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary200">
+
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
     <ion-title>Leave Report</ion-title>
   </ion-navbar>
 
@@ -79,23 +83,21 @@
           <tr class="linedsg TColor">
             <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
             <th class="lgl1">User Name</th>
-            <th class="lgl1">Leave Type</th>
-            <th class="lgl1">Start Date</th>
-            <th class="lgl1">End Date</th>
-            <th class="lgl1">Half Day Date</th>
-            <th class="lgl1">Session</th>  
+            <th class="lgl1"style="width:190px">Leave Type</th>
+            <th class="lgl1"style="width:128px">Start Date</th>
+            <th class="lgl1"style="width:128px">End Date</th>
+            <th class="lgl1 tblBrRight" style="width:128px">Half Day</th>
+
           </tr>
   
           <tr class="col7" *ngFor="let item of leaveData | paginate:{itemsPerPage: 20, currentPage:page, id: 'i' }; let i=index">
-            <td class="lgl1" reshead="No."> {{ 20 * (page - 1) + i+1 }}</td>
-            <td class="lgl1 getHeader" reshead="Claim Type">{{item.NAME}}</td>
-            <td class="lgl1 getHeader" reshead="Date">{{item.LEAVE_TYPE}}</td>
-            <td class="lgl1 getHeader" reshead="Status">{{item.START_DATE | date: 'dd/MM/yyyy'}}</td>
-            <td class="lgl1 getHeader" reshead="Stage">{{item.END_DATE | date: 'dd/MM/yyyy'}}</td>
-            <td class="lgl1 getHeader" reshead="Stage" *ngIf="item.HALF_DAY_DATE!='NA'">{{item.HALF_DAY_DATE | date: 'dd/MM/yyyy'}}</td>
-            <td class="lgl1 getHeader" reshead="Stage" *ngIf="item.HALF_DAY_DATE=='NA'"></td>
-            <td class="lgl1 getHeader" reshead="Amount" *ngIf="item.HALF_DAY_DATE!='NA'">{{item.SESSION}}</td>
-            <td class="lgl1 getHeader" reshead="Amount" *ngIf="item.HALF_DAY_DATE=='NA'"></td>
+            <td class="lgl1 getHeader" reshead="No."> {{ 20 * (page - 1) + i+1 }}</td>
+            <td class="lgl1 getHeader" reshead="Name" text-wrap>{{item.NAME}}</td>
+            <td class="lgl1 getHeader" reshead="Leave Type">{{item.LEAVE_TYPE}}</td>
+            <td class="lgl1 getHeader" reshead="Start Date">{{item.START_DATE | date: 'dd/MM/yyyy'}}</td>
+            <td class="lgl1 getHeader" reshead="End Date">{{item.END_DATE | date: 'dd/MM/yyyy'}}</td>
+            <td class="lgl1 getHeader" reshead="Half Day"><span *ngIf="item.HALF_DAY_DATE!='NA'">{{item.SESSION}}@{{item.HALF_DAY_DATE | date: 'dd/MM/yyyy'}}</span></td>
+
           </tr>
         </table>
         <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="20" directionLinks="true" autoHide="true">

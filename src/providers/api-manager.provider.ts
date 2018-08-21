@@ -54,7 +54,7 @@ export class ApiManagerProvider {
 
           let Approver1_name: string; let Approver1_email: string
           Approver1_name = email_details[0]["APPROVER1_NAME"]; Approver1_email = email_details[0]["APPROVER1_EMAIL"];
-          let ename = email_details[0]["APPLIER_NAME"];          
+          let ename = email_details[0]["APPLIER_NAME"];
           let assignedTo = email_details[0]["APPROVER1_NAME"];
 
           //Get the Total Claim Amount and Status----------------------
@@ -163,7 +163,126 @@ export class ApiManagerProvider {
     //---------------------------------------------------------------
   }
 
-  EmailNextApprover(CLAIM_REQUEST_GUID: string, ASSIGNED_TO: string, claimStatus: string, Level: any) {    
+  sendEmail_New(ClaimType_GUID: string, startDate: string, endDate: string, CreatedDate: string, ClaimDate: string, CLAIM_REQUEST_GUID: string, OriginPlace: string, Destination: string, Description: string, Soc_GUID: any, Customer_GUID: any) {
+    let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_details?filter=USER_GUID=' + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http
+      .get(url)
+      .map(res => res.json())
+      .subscribe(data => {
+        let email_details = data["resource"];
+        if (email_details.length > 0) {
+          let name: string; let email: string
+          name = email_details[0]["APPLIER_NAME"]; email = email_details[0]["APPLIER_EMAIL"];
+
+          let Approver1_name: string; let Approver1_email: string
+          Approver1_name = email_details[0]["APPROVER1_NAME"]; Approver1_email = email_details[0]["APPROVER1_EMAIL"];
+          let ename = email_details[0]["APPLIER_NAME"];
+          let assignedTo = email_details[0]["APPROVER1_NAME"];
+
+          //Get the Soc No, Project Name And Customer Name------------------------
+          let Project_OR_Customer_Name: string = "";
+          let Soc_No: string = "";
+          let Proj_Cust_url: string = "";
+
+          if (Soc_GUID != null) {
+            Proj_Cust_url = constants.DREAMFACTORY_TABLE_URL + '/view_soc_project?filter=SOC_GUID=' + Soc_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+          }
+          if (Customer_GUID != null) {
+            Proj_Cust_url = constants.DREAMFACTORY_TABLE_URL + '/main_customer?filter=CUSTOMER_GUID=' + Customer_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+          }
+
+          this.http
+            .get(Proj_Cust_url)
+            .map(res => res.json())
+            .subscribe(data => {
+              let project_customer_details = data["resource"];
+              if (project_customer_details.length > 0) {
+                if (Soc_GUID != null) {
+                  Project_OR_Customer_Name = project_customer_details[0]["NAME"] + ' / ' + project_customer_details[0]["SOC_NO"];
+                  Soc_No = project_customer_details[0]["SOC_NO"];
+                }
+                if (Customer_GUID != null) {
+                  Project_OR_Customer_Name = project_customer_details[0]["NAME"];
+                }
+
+                //Get the Total Claim Amount and Status----------------------
+                let ClaimAmt: string = "0.00"; let Status: string = "";
+                let url_Amt_Status = constants.DREAMFACTORY_TABLE_URL + '/main_claim_request?filter=(CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + ')AND(CLAIM_TYPE_GUID = ' + ClaimType_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+                this.http
+                  .get(url_Amt_Status)
+                  .map(res => res.json())
+                  .subscribe(data => {
+                    let Amt_Status_details = data["resource"];
+                    if (Amt_Status_details.length > 0) {
+                      ClaimAmt = this.numberPipe.transform(Amt_Status_details[0]["CLAIM_AMOUNT"], '1.2-2');
+                      Status = Amt_Status_details[0]["STATUS"];
+
+                      var queryHeaders = new Headers();
+                      queryHeaders.append('Content-Type', 'application/json');
+                      queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+                      queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+                      let options = new RequestOptions({ headers: queryHeaders });
+                      let claimType: string = "";
+                      let strSubjectApplier: string = ""; let strSubjectApprover: string; let strBody_html: string;
+
+                      //For Cliam Type-------------------------------------------------
+                      let url_claim_type = constants.DREAMFACTORY_TABLE_URL + "/main_claim_type?filter=(CLAIM_TYPE_GUID=" + ClaimType_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+                      this.http
+                        .get(url_claim_type)
+                        .map(res => res.json())
+                        .subscribe(data => {
+                          let claimType_details = data["resource"];
+                          if (claimType_details.length > 0) {
+                            claimType = claimType_details[0]["NAME"];
+
+                            strSubjectApprover = "New Claim Application";
+                            if (claimType == "Entertainment Claim" || claimType == "Printing Cliam" || claimType == "Gift Claim" || claimType == "Miscellaneous Claim") {
+                              strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; text-align: left; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0 30px;"><DIV style="FONT-SIZE: 24px; COLOR: black; PADDING-BOTTOM: 10px; TEXT-ALIGN: left; PADDING-TOP: 10px; PADDING-RIGHT: 20px"><B>New Claim Application</B></DIV></DIV><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; padding:11px 30px">There is a new claim application waiting for your approval. <hr><div style="FONT-SIZE: 16px; TEXT-ALIGN: left; "><B>Claim Details :</B></div><BR/><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">Employee</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Applied Date</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(startDate).format('YYYY-MM-DD') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Date </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(endDate).format('YYYY-MM-DD') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Type</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + claimType + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Project / Customer / SOC</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Project_OR_Customer_Name + ' </TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Description</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + Description + '</TD></TR><TR><TD style="TEXT-ALIGN: left"></TD><TD></TD><TD style="TEXT-ALIGN: left" colSpan=2><button style="background:#0492C2;padding:10px;"><a href="http://autobuild.zeontech.com.my/eclaim/#/login" style="color:white; text-decoration: none;">Open eClaim</a></button></TD></TR></TBODY></TABLE><HR><DIV style="TEXT-ALIGN: left; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
+                            }
+                            else if (claimType == "Travel Claim") {
+                              strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; text-align: left; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0 30px;"><DIV style="FONT-SIZE: 24px; COLOR: black; PADDING-BOTTOM: 10px; TEXT-ALIGN: left; PADDING-TOP: 10px; PADDING-RIGHT: 20px"><B>New Claim Application</B></DIV></DIV><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; padding:11px 30px">There is a new claim application waiting for your approval.<hr><div style="FONT-SIZE: 16px; TEXT-ALIGN: left; "><B>Claim Details :</B></div><BR /><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">Employee</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Applied Date</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(CreatedDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Date </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + startDate.substring(0, 16) + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Type</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + claimType + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Project / Customer / SOC</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Project_OR_Customer_Name + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Origin</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + OriginPlace + ' </TD></TR><TR><TD style="TEXT-ALIGN: left">Destination</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Destination + ' </TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Description</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Description + ' </TD></TR><TR><TD style="TEXT-ALIGN: left"></TD><TD></TD><TD style="TEXT-ALIGN: left" colSpan=2><button style="background:#0492C2;padding:10px;"><a href="http://autobuild.zeontech.com.my/eclaim/#/login" style="color:white; text-decoration: none;">Open eClaim</a></button></TD></TR></TBODY></TABLE><HR><DIV style="TEXT-ALIGN: left; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
+                            }
+                            else {
+                              strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; text-align: left; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0 30px;"><DIV style="FONT-SIZE: 24px; COLOR: black; PADDING-BOTTOM: 10px; TEXT-ALIGN: left; PADDING-TOP: 10px; PADDING-RIGHT: 20px"><B>New Claim Application</B></DIV></DIV><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; padding:11px 30px">There is a new claim application waiting for your approval. <hr><div style="FONT-SIZE: 16px; TEXT-ALIGN: left; "><B>Claim Details :</B></div><BR/><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">Employee</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Applied Date</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + this.datepipe.transform(CreatedDate, 'dd/MM/yyyy HH:mm') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Start Date Time</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2>' + startDate.substring(0, 16) + '</TD></TR><TR><TD style="TEXT-ALIGN: left">End Date Time </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2>&nbsp;' + endDate.substring(0, 16) + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Type</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + claimType + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Project / Customer / SOC</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Project_OR_Customer_Name + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Description</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + Description + ' </TD></TR><TR><TD style="TEXT-ALIGN: left"></TD><TD></TD><TD style="TEXT-ALIGN: left" colSpan=2><button style="background:#0492C2;padding:10px;"><a href="http://autobuild.zeontech.com.my/eclaim/#/ClaimapprovertasklistPage" style="color:white; text-decoration: none;">Open eClaim</a></button></TD></TR></TBODY></TABLE><HR><DIV style="TEXT-ALIGN: left; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>';
+                            }
+                            let body1 = {
+                              "template": "",
+                              "template_id": 0,
+                              "to": [
+                                {
+                                  "name": Approver1_name,
+                                  "email": Approver1_email
+                                }
+                              ],
+                              "subject": strSubjectApprover,
+                              "body_text": "",
+                              "body_html": strBody_html,
+                              "from_name": "eClaim",
+                              "from_email": "balasingh73@gmail.com",
+                              "reply_to_name": "",
+                              "reply_to_email": ""
+                            };
+
+                            //Send Email For Approver 1-------------------------------------------
+                            this.http.post(this.emailUrl, body1, options)
+                              .map(res => res.json())
+                              .subscribe(() => {
+                              });
+                            //---------------------------------------------------------
+                          }
+                        });
+                    }
+                  });
+                //-----------------------------------------------------------
+              }
+            });
+          //----------------------------------------------------------------------
+        }
+      });
+    //---------------------------------------------------------------
+  }
+
+  EmailNextApprover(CLAIM_REQUEST_GUID: string, ASSIGNED_TO: string, claimStatus: string, Level: any) {
     let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_approver?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(url)
@@ -284,9 +403,9 @@ export class ApiManagerProvider {
                       "name": Approver_name,
                       "email": Approver_email
                     }
-                  ],                  
+                  ],
                   "subject": strSubjectApprover,
-                  "body_text": "",                  
+                  "body_text": "",
                   "body_html": strBody_html,
                   "from_name": "eClaim",
                   "from_email": "balasingh73@gmail.com",
@@ -311,6 +430,88 @@ export class ApiManagerProvider {
             });
         }
       });
+  }
+
+  EmailNextApprover_New(CLAIM_REQUEST_GUID: string) {
+    let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_details_new?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http
+      .get(url)
+      .map(res => res.json())
+      .subscribe(data => {
+        let email_details = data["resource"];
+        if (email_details.length > 0) {
+          let name: string = ""; let email: string = ""; let Project_OR_Customer_Name: string = ""; let ClaimAmt: string = "0.00";
+          let Status: string = ""; let claimType: string = ""; let startDate: string = ""; let endDate: string = ""; let Description: string = "";
+          let OriginPlace: string = ""; let Destination: string = "";
+
+          name = email_details[0]["APPLIER_NAME"]; email = email_details[0]["APPLIER_EMAIL"];
+          let ename = email_details[0]["APPLIER_NAME"];
+          if (email_details[0]["SOC_NO"] != null) {
+            Project_OR_Customer_Name = email_details[0]["PROJECT_NAME"] + ' / ' + email_details[0]["SOC_NO"];
+          }
+          if (email_details[0]["CUSTOMER_NAME"] != null) {
+            Project_OR_Customer_Name = email_details[0]["CUSTOMER_NAME"];
+          }
+
+          OriginPlace = email_details[0]["ORIGIN"];
+          Destination = email_details[0]["DESTINATION"];
+
+          ClaimAmt = this.numberPipe.transform(email_details[0]["CLAIM_AMOUNT"], '1.2-2');
+          Status = email_details[0]["STATUS"];
+
+          claimType = email_details[0]["CLAIM_TYPE"];
+          Description = email_details[0]["DESCRIPTION"];
+
+          var queryHeaders = new Headers();
+          queryHeaders.append('Content-Type', 'application/json');
+          queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+          let options = new RequestOptions({ headers: queryHeaders });
+          let strSubjectApplier: string = ""; let strBody_html: string;
+
+          if (Status == "Rejected") {
+            strSubjectApplier = "Your Claim is Rejected!!!";
+          }
+          else {
+            strSubjectApplier = "Your Claim is Approved!!!";
+          }
+
+          if (claimType == "Entertainment Claim" || claimType == "Printing Cliam" || claimType == "Gift Claim" || claimType == "Miscellaneous Claim") {
+            strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; text-align: left; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0 30px;"><DIV style="FONT-SIZE: 24px; COLOR: black; PADDING-BOTTOM: 10px; TEXT-ALIGN: left; PADDING-TOP: 10px; PADDING-RIGHT: 20px"><B>Your Claim is Rejected!!!</B></DIV></DIV><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; padding:11px 30px">Your Claim is Rejected by your superior.<hr><div style="FONT-SIZE: 16px; TEXT-ALIGN: left; "><B>Claim Details :</B></div><BR/><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">Employee</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Applied Date</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(startDate).format('YYYY-MM-DD') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Date </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(endDate).format('YYYY-MM-DD') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Type</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + claimType + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Project / Customer / SOC</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Project_OR_Customer_Name + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Description</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + Description + ' </TD></TR><TR><TD style="TEXT-ALIGN: left"></TD><TD></TD><TD style="TEXT-ALIGN: left" colSpan=2><button style="background:#0492C2;padding:10px;"><a href="http://autobuild.zeontech.com.my/eclaim/#/" style="color:white; text-decoration: none;">Open eClaim</a></button></TD></TR></TBODY></TABLE><HR><DIV style="TEXT-ALIGN: left; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>'
+          }
+          else if (claimType == "Travel Claim") {
+            strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; text-align: left; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0 30px;"><DIV style="FONT-SIZE: 24px; COLOR: black; PADDING-BOTTOM: 10px; TEXT-ALIGN: left; PADDING-TOP: 10px; PADDING-RIGHT: 20px"><B>Your Claim is Rejected!!!</B></DIV></DIV><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; padding:11px 30px">Your Claim is Rejected by your superior.<hr><div style="FONT-SIZE: 16px; TEXT-ALIGN: left; "><B>Claim Details :</B></div><BR/><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">Employee</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Applied Date</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(startDate).format('YYYY-MM-DD') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Date </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(endDate).format('YYYY-MM-DD') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Type</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + claimType + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Project / Customer / SOC</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Project_OR_Customer_Name + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Origin</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + OriginPlace + ' </TD></TR><TR><TD style="TEXT-ALIGN: left">Destination</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Destination + ' </TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Description</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + Description + ' </TD></TR><TR><TD style="TEXT-ALIGN: left"></TD><TD></TD><TD style="TEXT-ALIGN: left" colSpan=2><button style="background:#0492C2;padding:10px;"><a href="http://autobuild.zeontech.com.my/eclaim/#/ClaimapprovertasklistPage" style="color:white; text-decoration: none;">Open eClaim</a></button></TD></TR></TBODY></TABLE><HR><DIV style="TEXT-ALIGN: left; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>'
+          }
+          else {
+            strBody_html = '<HTML><HEAD><META name=GENERATOR content="MSHTML 10.00.9200.17606"></HEAD><BODY><DIV style="FONT-FAMILY: Century Gothic"><DIV style="MIN-WIDTH: 500px"><BR><DIV style="PADDING-BOTTOM: 10px; text-align: left; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png"></DIV><DIV style="MARGIN: 0 30px;"><DIV style="FONT-SIZE: 24px; COLOR: black; PADDING-BOTTOM: 10px; TEXT-ALIGN: left; PADDING-TOP: 10px; PADDING-RIGHT: 20px"><B>Your Claim is Rejected!!!</B></DIV></DIV><DIV style="FONT-SIZE: 12px; TEXT-ALIGN: left; padding:11px 30px">Your Claim is Rejected by your superior.<hr><div style="FONT-SIZE: 16px; TEXT-ALIGN: left; "><B>Claim Details :</B></div><BR/><TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;"><TBODY><TR><TD style="TEXT-ALIGN: left">Employee</TD><TD>:</TD><TD colSpan=2> ' + ename + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Applied Date</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(startDate).format('YYYY-MM-DD') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Date </TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + moment(endDate).format('YYYY-MM-DD') + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Type</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + claimType + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Project / Customer / SOC</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Project_OR_Customer_Name + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Origin</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + OriginPlace + ' </TD></TR><TR><TD style="TEXT-ALIGN: left">Destination</TD><TD>:</TD><TD style="TEXT-ALIGN: left" colSpan=2> ' + Destination + ' </TD></TR><TR><TD style="TEXT-ALIGN: left">Claim Amount</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2> RM ' + ClaimAmt + '</TD></TR><TR><TD style="TEXT-ALIGN: left">Description</TD><TD>: </TD><TD style="TEXT-ALIGN: left" colSpan=2>' + Description + ' </TD></TR><TR><TD style="TEXT-ALIGN: left"></TD><TD></TD><TD style="TEXT-ALIGN: left" colSpan=2><button style="background:#0492C2;padding:10px;"><a href="http://autobuild.zeontech.com.my/eclaim/#/ClaimapprovertasklistPage" style="color:white; text-decoration: none;">Open eClaim</a></button></TD></TR></TBODY></TABLE><HR><DIV style="TEXT-ALIGN: left; PADDING-TOP: 20px">Thank you.</DIV></DIV></DIV></DIV></BODY></HTML>'
+          }
+          let body1 = {
+            "template": "",
+            "template_id": 0,
+            "to": [
+              {
+                "name": strSubjectApplier,
+                "email": email
+              }
+            ],
+            "subject": strSubjectApplier,
+            "body_text": "",
+            "body_html": strBody_html,
+            "from_name": "eClaim",
+            "from_email": "balasingh73@gmail.com",
+            "reply_to_name": "",
+            "reply_to_email": ""
+          };
+
+          //Send Email For Applier 1-------------------------------------------
+          this.http.post(this.emailUrl, body1, options)
+            .map(res => res.json())
+            .subscribe(() => {
+            });
+          //-------------------------------------------------------------------
+        }
+      });
+    //-------------------------------------------------------------------------
   }
 
 

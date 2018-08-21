@@ -730,10 +730,11 @@ export class TravelclaimPage {
     })
   }
 
-  validateDate() {
-    let today = Date.parse(new Date().toISOString())
-    let start = Date.parse(this.Start_DT_ngModel)
-    let end = Date.parse(this.End_DT_ngModel)
+ 
+  validateDate(startDate: any, endDate: any) {   
+    let today =moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    let start = startDate; 
+    let end = endDate; 
     if (start > end || today < start) {
       alert('The Date Range is not valid.')
       return false;
@@ -757,7 +758,11 @@ export class TravelclaimPage {
   }
 
   submitAction(formValues: any) {
-    if (this.validateDate()) {
+    if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
+      alert('Please select "project" or "customer" to continue.');
+      return;
+    }
+    if (this.validateDate(this.Start_DT_ngModel, this.End_DT_ngModel)) {
       if (!this.isFormSubmitted) {
         this.isFormSubmitted = true;
         formValues.uuid = this.claimRequestGUID = UUID.UUID();
@@ -769,8 +774,10 @@ export class TravelclaimPage {
         formValues.attachment_GUID = this.imageGUID;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
         formValues.PayType = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
+
         formValues.from_id = this.OriginPlaceID; 
         formValues.to_id = this.DestinationPlaceID; 
+
 
         this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         this.MainClaimSaved = true;
@@ -816,7 +823,8 @@ export class TravelclaimPage {
               if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
                 
                 // Send Email------------------------------------------------
-                this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
+                // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
+                this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
                 // ----------------------------------------------------------
               }
 
