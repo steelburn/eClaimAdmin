@@ -142,6 +142,7 @@ export class GiftclaimPage {
   }
 
   constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -415,6 +416,10 @@ export class GiftclaimPage {
   }
 
   submitAction(formValues: any) {
+    if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
+      alert('Please select "project" or "customer" to continue.');
+      return;
+    }
     // alert(JSON.parse(formValues) )     
     if (this.isFormEdit) {
       this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
@@ -446,7 +451,8 @@ export class GiftclaimPage {
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";
-            this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+            // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+            this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //-----------------------------------------------------------
             alert('Claim details updated successfully.');
             this.navCtrl.push(UserclaimslistPage);
