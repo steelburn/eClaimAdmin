@@ -150,6 +150,7 @@ export class EntertainmentclaimPage {
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
                         this.Customer_Lookup_ngModel = element.NAME
+                        this.Customer_GUID = element.CUSTOMER_GUID                       
                       }
                     });
                 }
@@ -161,6 +162,7 @@ export class EntertainmentclaimPage {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
                         this.Project_Lookup_ngModel = element.project_name
                         this.Entertainment_SOC_No_ngModel = element.soc
+                        this.Soc_GUID = element.SOC_GUID
                       }
                     });
                 }
@@ -421,7 +423,7 @@ export class EntertainmentclaimPage {
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
             this.claimRequestData["resource"][0].STATUS = 'Pending'
-          }
+          }         
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
             this.claimRequestData["resource"][0].SOC_GUID = null;
