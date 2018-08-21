@@ -416,7 +416,7 @@ export class GiftclaimPage {
   }
 
   submitAction(formValues: any) {
-    if (this.Customer_GUID === undefined || this.Soc_GUID === undefined) {
+    if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
     }
@@ -451,7 +451,8 @@ export class GiftclaimPage {
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";
-            this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+            // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+            this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //-----------------------------------------------------------
             alert('Claim details updated successfully.');
             this.navCtrl.push(UserclaimslistPage);
