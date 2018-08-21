@@ -540,6 +540,18 @@ button.item.item-block.item-md{
  
 //overwrite default css
 
+.item-md .item-button {
+    padding: 0 1.1em;
+    height: 25px;
+    font-size: 1.2rem;
+}
+
+.item-ios .item-button {
+ padding: 0 1.1em;
+    height: 25px;
+    font-size: 1.2rem;
+}
+
 .popover-md .popover-content {
     width: auto;
 }
