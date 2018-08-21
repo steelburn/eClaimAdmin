@@ -69,19 +69,19 @@
         <ion-item>
             <table class="Tabler list ">
                 <tr class="linedsg TColor">
-                    <th class="tblBrLeft" style="width:50px">
+                    <th class="tblBrLeft" style="width:60px">
                         <ion-item>
                             <ion-checkbox item-end (ionChange)="checkAllCheckBoxes($event)"></ion-checkbox>
                         </ion-item>
                     </th>
-                    <th style="width:50px">No.</th>
-                    <th *ngIf="!FinanceLogin">Name</th>
-                    <th>Claim Type</th>
-                    <th>Date</th>
-                    <th style="width:68px">Status</th>
-                    <th>Stage</th>
-                    <th style="width:110px">Amount(RM)</th>
-                    <th class="tblBrRight" style="width:80px">Action</th>
+                    <th style="width:42px;text-align: left;">No.</th>
+                    <th *ngIf="!FinanceLogin" style="text-align: left;">Name</th>
+                    <th style="width:135px;text-align: left;">Claim Type</th>
+                    <th style="width:120px; text-align: left;">Date</th>
+                    <th style="width:95px;text-align: left;">Status</th>
+                    <th style="width:150px;text-align: left;">Stage</th>
+                    <th style="width:112px;text-align: right;">Amount(RM)</th>
+                    <th class="tblBrRight" style="width:68px">Action</th>
 
                 </tr>
 
@@ -94,7 +94,7 @@
                     </td>
                     <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
                     <td class="lgl1 getHeader" *ngIf="!FinanceLogin" reshead="Name" text-wrap>{{claimrequestdetail.FULLNAME}}</td>
-                    <td class="lgl1 getHeader" reshead="Claim Type">{{claimrequestdetail.CLAIMTYPE}}</td>
+                    <td class="lgl1 getHeader" reshead="Claim Type" >{{claimrequestdetail.CLAIMTYPE}}</td>
                     <td class="lgl1 getHeader" reshead="Date">{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                     <td class="lgl1 getHeader" reshead="Status">{{claimrequestdetail.STATUS}}</td>
                     <td class="lgl1 getHeader" reshead="Stage">{{claimrequestdetail.STAGE}}</td>
