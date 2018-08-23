@@ -13,13 +13,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-item class="fuha" *ngIf="!FinanceLogin">
-        <ion-label>User Name :</ion-label>
-        <ion-select interface="popover" [(ngModel)]="ddlEmp" #ddlEmployee>
-            <ion-option [value]="All" [selected]="true">All</ion-option>
-            <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
-        </ion-select>
-    </ion-item>
+
     <ion-item class="fuha">
         <ion-label>Claim Type:</ion-label>
         <ion-select interface="popover" [(ngModel)]="ddlClaim" #ddlClaimTypes>
@@ -33,17 +27,14 @@
             <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
         </ion-select>
     </ion-item>
-    <!-- <ion-item class="fuha">
-        <ion-label>Status:</ion-label>
-        <ion-select interface="popover" #ddlStatus>
-            <ion-option [value]="All" [selected]="true">All</ion-option>
-            <ion-option [value]="Paid">Paid</ion-option>
-            <ion-option [value]="Pending">Pending</ion-option>
-            <ion-option [value]="Approved">Approved</ion-option>
-            <ion-option [value]="Rejected">Rejected</ion-option>
 
+    <ion-item class="fuha1" *ngIf="!FinanceLogin">
+        <ion-label>User Name :</ion-label>
+        <ion-select interface="popover" [(ngModel)]="ddlEmp" #ddlEmployee>
+            <ion-option [value]="All" [selected]="true">All</ion-option>
+            <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
         </ion-select>
-    </ion-item> -->
+    </ion-item>
 
     <ion-item>
 
