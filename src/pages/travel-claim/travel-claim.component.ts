@@ -199,6 +199,7 @@ export class TravelclaimPage {
                   this.storeCustomers.forEach(element => {
                     if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
                       this.Customer_Lookup_ngModel = element.NAME
+                      this.Customer_GUID = element.CUSTOMER_GUID
                     }
                   });
               }
@@ -210,6 +211,7 @@ export class TravelclaimPage {
                     if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
                       this.Project_Lookup_ngModel = element.project_name
                       this.Travel_SOC_No_ngModel = element.soc
+                      this.Soc_GUID = element.SOC_GUID
                     }
                   });
               }
@@ -808,6 +810,9 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
               this.claimRequestData["resource"][0].STATUS = 'Pending'
             }
+            else{
+              this.claimRequestData["resource"][0].STATUS = 'Pending';
+            }
 
             if (this.isCustomer) {
               this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
@@ -820,13 +825,13 @@ export class TravelclaimPage {
 
             this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
               // if (isClaim && modelJSON.STATUS != 'Draft')
-              if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
+              // if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
                 
                 // Send Email------------------------------------------------
                 // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
                 this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
                 // ----------------------------------------------------------
-              }
+              //}
 
               alert('Claim details updated successfully.');
               this.navCtrl.push(UserclaimslistPage);
