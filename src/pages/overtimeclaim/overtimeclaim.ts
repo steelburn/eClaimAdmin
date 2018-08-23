@@ -124,6 +124,7 @@ export class OvertimeclaimPage {
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
                         this.Customer_Lookup_ngModel = element.NAME
+                        this.Customer_GUID = element.CUSTOMER_GUID
                       }
                     });
                 }
@@ -135,6 +136,7 @@ export class OvertimeclaimPage {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
                         this.Project_Lookup_ngModel = element.project_name
                         this.OT_SOC_No_ngModel = element.soc
+                        this.Soc_GUID = element.SOC_GUID
                       }
                     });
                 }
