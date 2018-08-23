@@ -60,7 +60,7 @@ export class DashboardPage {
   baseResource_RoleUrl: string;
   roleBasedData: any;
 
-  ApproverLevel_PendAmount: any; ApproverLevel_PendAmount_Year: any;
+  ApproverLevel_PendAmount:any; ApproverLevel_PendAmount_Year: any;
   ApproverLevel_PendCount: any; ApproverLevel_PendCount_Year: any;
 
   FinanceExecLevel_PendAmt: any; FinanceExecLevel_PendAmt_Year: any;
@@ -187,7 +187,7 @@ export class DashboardPage {
         .map(res => res.json())
         .subscribe((response: any) => {
           let role_result = response["resource"];
-          console.log(role_result);
+          // console.log(role_result);
           this.role_name = role_result[0]["ROLE_NAME"];
           // if (role_result!=null) {
           //   this.role_name = role_result[0]["ROLE_NAME"];
@@ -605,14 +605,16 @@ export class DashboardPage {
         // console.table( this.roleBasedData);
         // console.log( this.roleBasedData.length);
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
-          this.ApproverLevel_PendAmount = this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel, '1.2-2');
-          this.ApproverLevel_PendCount = this.numberPipe.transform(this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel, '1.2-2');
+          this.ApproverLevel_PendAmount =  this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel, '1.2-2');
+          // this.ApproverLevel_PendAmount = this.ApproverLevel_PendAmount.toString()
+          // this.ApproverLevel_PendAmount = this.numberPipe.transform(this.ApproverLevel_PendAmount, '1.2-2');
+          this.ApproverLevel_PendCount = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel;
 
           // this.FinanceExecLevel_PendAmt = this.roleBasedData.PendingAmount_Fe_FinalLevel;
           // this.FinanceExecLevel_PendCount = this.roleBasedData.PendingCount_Fe_FinalLevel;
 
           this.FinanceMgrLevel_PendAmt = this.numberPipe.transform(this.roleBasedData.PendingAmount_Fm_MgrLevel, '1.2-2');
-          this.FinanceMgrLevel_PendCount = this.numberPipe.transform(this.roleBasedData.PendingCount_Fm_MgrLevel, '1.2-2');
+          this.FinanceMgrLevel_PendCount = this.roleBasedData.PendingCount_Fm_MgrLevel;
 
         }
         else {
@@ -641,13 +643,13 @@ export class DashboardPage {
         // console.log( this.roleBasedData.length);
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
           this.ApproverLevel_PendAmount_Year = this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel_Year, '1.2-2');
-          this.ApproverLevel_PendCount_Year = this.numberPipe.transform(this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel_Year, '1.2-2');
+          this.ApproverLevel_PendCount_Year = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel_Year;
 
           // this.FinanceExecLevel_PendAmt_Year = this.roleBasedData.PendingAmount_Fe_FinalLevel_Year;
           // this.FinanceExecLevel_PendCount_Year = this.roleBasedData.PendingCount_Fe_FinalLevel_Year;
 
           this.FinanceMgrLevel_PendAmt_Year = this.numberPipe.transform(this.roleBasedData.PendingAmount_Fm_MgrLevel_Year, '1.2-2');
-          this.FinanceMgrLevel_PendCount_Year = this.numberPipe.transform(this.roleBasedData.PendingCount_Fm_MgrLevel_Year, '1.2-2');
+          this.FinanceMgrLevel_PendCount_Year = this.roleBasedData.PendingCount_Fm_MgrLevel_Year;
         }
         else {
           this.ApproverLevel_PendAmount_Year = "0.00";
@@ -675,7 +677,7 @@ export class DashboardPage {
 
           // this.numberPipe.transform(this.Rejected_Claim_Amount, '1.2-2');  
           this.FinanceExecLevel_PendAmt = this.numberPipe.transform(FeRoleData.PendingAmount_Fe_FinalLevel, '1.2-2');
-          this.FinanceExecLevel_PendCount = this.numberPipe.transform(FeRoleData.PendingCount_Fe_FinalLevel, '1.2-2');
+          this.FinanceExecLevel_PendCount = FeRoleData.PendingCount_Fe_FinalLevel;
 
         }
         else {
@@ -697,7 +699,7 @@ export class DashboardPage {
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
 
           this.FinanceExecLevel_PendAmt_Year = this.numberPipe.transform(FeRoleData_year.PendingAmount_Fe_FinalLevel_year, '1.2-2');
-          this.FinanceExecLevel_PendCount_Year = this.numberPipe.transform(FeRoleData_year.PendingCount_Fe_FinalLevel_year, '1.2-2');
+          this.FinanceExecLevel_PendCount_Year =FeRoleData_year.PendingCount_Fe_FinalLevel_year;
         }
         else {
           this.FinanceExecLevel_PendAmt_Year = "0.00";
