@@ -165,7 +165,6 @@ export class ProfileManagerProvider {
       this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
       this.mainClaimReq.STAGE = this.previousStage;
       this.mainClaimReq.PROFILE_LEVEL = 0;
-
     }
     if (this.checkMultipleLength === 1)
       this.UpdateProfileInfo(this.mainClaimReq);
@@ -174,10 +173,55 @@ export class ProfileManagerProvider {
     //alert('Claim action submitted successfully.')
 
     // This is for Approval Send email to User and next approver
-    this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS, this.level);
-
-
+    // this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS, this.level);
+    
+    if(this.mainClaimReq.STATUS == 'Rejected'){
+      this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID);
+    }
   }
+
+  // SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any, level: any) {
+
+  //   this.api.postData('claim_work_flow_history', claimRef.toJson(true)).subscribe((response) => {
+  //     //this.api.sendEmail();
+  //   })
+  //   this.processProfileJSON(profile_Json, level)
+  //   this.mainClaimReq.STAGE = this.stage;
+  //   this.mainClaimReq.ASSIGNED_TO = this.assignedTo;
+  //   this.mainClaimReq.PROFILE_LEVEL = this.level;
+  //   this.mainClaimReq.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+  //   if (this.level === 2)
+  //     this.mainClaimReq.STAGE = 'Finance';
+  //   if (this.level === '-1') {
+  //     this.mainClaimReq.STATUS = 'Paid';
+  //     this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+  //     this.mainClaimReq.STAGE = this.previousStage;
+  //   }
+  //   if (this.level === '3') {
+  //     this.mainClaimReq.STATUS = 'Approved';
+  //     this.mainClaimReq.STAGE = 'Finance';
+  //   }
+
+  //   if (this.level === '0' || this.isRemarksAccepted === false) {
+  //     this.mainClaimReq.STATUS = 'Rejected';
+  //     this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
+  //     //  this.mainClaimReq.STAGE = this.previousStage;
+  //     this.mainClaimReq.PROFILE_LEVEL = 0;
+  //   }   
+   
+  //   if (this.checkMultipleLength === 1)
+  //     this.UpdateProfileInfo(this.mainClaimReq);
+  //   else
+  //     this.UpdateProfileInfoForMultiple(this.mainClaimReq);
+  //   //alert('Claim action submitted successfully.')
+
+  //   // This is for Approval Send email to User and next approver
+  //   // this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS, this.level);
+    
+  //   if(this.mainClaimReq.STATUS == 'Rejected'){
+  //     this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID);
+  //   }
+  // }
 
   ProcessProfileMng(remarks: any, approverGUID: any, level: any, claimRequestGUID: any, isRemarksAccepted: any, checkBoxLength: number) {
     //debugger
@@ -342,13 +386,22 @@ export class ProfileManagerProvider {
     claimReqMainRef.DISTANCE_KM = this.formValues.distance;
     claimReqMainRef.DESCRIPTION = this.formValues.description;
     claimReqMainRef.ASSIGNED_TO = this.assignedTo;
-    claimReqMainRef.PROFILE_LEVEL = this.profileLevel;
+    claimReqMainRef.PROFILE_LEVEL = parseInt(this.profileLevel);
     claimReqMainRef.PROFILE_JSON = this.profileJSON;
     claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
+    // claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Draft' : 'Pending';
+    // if (claimReqMainRef.PROFILE_LEVEL === 1) {
+    //   claimReqMainRef.STAGE = 'Superior';
+    // }
+    // else if (claimReqMainRef.PROFILE_LEVEL === 2 || claimReqMainRef.PROFILE_LEVEL === 3) {
+    //   claimReqMainRef.STAGE = 'Finance'
+    // }
     claimReqMainRef.STAGE = this.stage;
     claimReqMainRef.ATTACHMENT_ID = this.formValues.attachment_GUID;
     claimReqMainRef.TRAVEL_TYPE = this.formValues.travelType === 'Outstation' ? '1' : '0';
     claimReqMainRef.claim_method_guid = this.formValues.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.formValues.PayType;
+    claimReqMainRef.from_place_id = this.formValues.from_id;
+    claimReqMainRef.to_place_id = this.formValues.to_id;
 
 
     if (this.isCustomer) {
@@ -362,8 +415,11 @@ export class ProfileManagerProvider {
     this.api.postData('main_claim_request', claimReqMainRef.toJson(true)).subscribe((response) => {
       var postClaimMain = response.json();
       if (claimReqMainRef.STATUS != 'Draft')
-        this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID);
-      localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
+      
+        // this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID);        
+        this.api.sendEmail_New(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID, this.formValues.origin, this.formValues.destination, this.formValues.description, claimReqMainRef.SOC_GUID, claimReqMainRef.CUSTOMER_GUID);
+      
+        localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
       // this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
       //this.MainClaimSaved = true;
       if (this.formValues.uuid === undefined) {
@@ -439,5 +495,12 @@ export class ProfileManagerProvider {
       //   })
 
     })
+  }
+
+  CheckSessionOut(){
+    if (localStorage.getItem("g_USER_GUID") === null) {
+      alert('Your session is timedout. Please login now.');
+      this.navCtrl.setRoot('LoginPage');
+    }
   }
 }

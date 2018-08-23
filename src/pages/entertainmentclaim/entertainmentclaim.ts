@@ -82,6 +82,7 @@ export class EntertainmentclaimPage {
   claimRequestData: any;
 
   constructor(public numberPipe: DecimalPipe, public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
@@ -149,6 +150,7 @@ export class EntertainmentclaimPage {
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
                         this.Customer_Lookup_ngModel = element.NAME
+                        this.Customer_GUID = element.CUSTOMER_GUID                       
                       }
                     });
                 }
@@ -160,6 +162,7 @@ export class EntertainmentclaimPage {
                       if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
                         this.Project_Lookup_ngModel = element.project_name
                         this.Entertainment_SOC_No_ngModel = element.soc
+                        this.Soc_GUID = element.SOC_GUID
                       }
                     });
                 }
@@ -399,6 +402,10 @@ export class EntertainmentclaimPage {
   }
 
   submitAction(formValues: any) {
+    if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
+      alert('Please select "project" or "customer" to continue.');
+      return;
+    }
     //let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     // let claimRequestDataModel: MainClaimRequestModel = new MainClaimRequestModel();    
     if (this.isFormEdit) {
@@ -416,7 +423,7 @@ export class EntertainmentclaimPage {
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
             this.claimRequestData["resource"][0].STATUS = 'Pending'
-          }
+          }         
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
             this.claimRequestData["resource"][0].SOC_GUID = null;
@@ -431,7 +438,8 @@ export class EntertainmentclaimPage {
             //Send Email------------------------------------------------
             let start_DT: string = "";
             let end_DT: string = "";
-            this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+            // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+            this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //----------------------------------------------------------            
             alert('Claim details updated successfully.');
             this.navCtrl.push(UserclaimslistPage);

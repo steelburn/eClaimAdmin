@@ -90,6 +90,9 @@ import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-claim-report';
 import { ClaimReportUserPage } from '../pages/claim-report-user/claim-report-user';
 import { ClaimReportPrintPage } from '../pages/claim-report-print/claim-report-print';
+import { LeaveReportPage } from '../pages/leave-report/leave-report';
+import { AttendanceReportPage } from '../pages/attendance-report/attendance-report';
+
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
@@ -177,7 +180,9 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     DashboardPage, ImportExcelDataPage,
     ClaimReportUserPage,
     ClaimReportPrintPage,
-   
+    LeaveReportPage,
+    AttendanceReportPage
+
   ],
 
   imports: [
@@ -221,8 +226,11 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
         { component: ClaimhistorydetailPage, name: 'ClaimhistorydetailPage', segment: 'ClaimhistorydetailPage' },
         { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
         { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' },
-        { component: ClaimReportUserPage, name: 'ClaimReportUserPage', segment: 'ClaimReportUserPage' }
-
+        { component: ClaimReportUserPage, name: 'ClaimReportUserPage', segment: 'ClaimReportUserPage' },
+        { component: LeaveReportPage, name: 'LeaveReportPage', segment: 'LeaveReportPage' },
+        { component: AttendanceReportPage, name: 'AttendanceReportPage', segment: 'AttendanceReportPage' },
+        { component: ClaimReportPrintPage, name: 'ClaimReportPrintPage', segment: 'ClaimReportPrintPage' }
+        
       ]
     }),
     IonicStorageModule.forRoot()
@@ -299,9 +307,9 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ChangePasswordPage,
     DashboardPage, ImportExcelDataPage,
     ClaimReportUserPage,
-    ClaimReportPrintPage
-
-
+    ClaimReportPrintPage,
+    LeaveReportPage,
+    AttendanceReportPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

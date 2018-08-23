@@ -10,13 +10,13 @@
 
 
   <body style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;">
-    <table width="100%" border="0" bgcolor="#cccccc"  style="font-size: 8pt !important;">
+    <table width="100%" border="0" bgcolor="#cccccc" style="font-size: 8pt !important;">
       <tr bgcolor="#002060" style="background-color:#002060;">
         <td align="center" valign="middle" bgcolor="#002060" colspan="4" style="border-right: none">
-          <h2 style="color:#FFFFFF;">CLAIM REPORT</h2>
+          <h2 style="color:#FFFFFF;margin:0; padding:0;">CLAIM REPORT</h2>
         </td>
         <td colspan="3" valign="middle" align="center" bgcolor="#002060" colspan=3 style="border-left: none">
-          <h2 style="color:#ffffff;">{{month}} {{year}}</h2>
+          <h2 style="color:#ffffff;margin:0; padding:0;">{{month}} {{year}}</h2>
         </td>
       </tr>
       <tr *ngFor="let item of empData">
@@ -40,12 +40,12 @@
 
       <tr style="color:#ffffff;">
         <th align="center" bgcolor="#002060" style="width: 5%;">Claim Date</th>
-        <th align="center" bgcolor="#002060"   style="width: 3%;">Type</th>
-        <th align="center" bgcolor="#002060"  style="width: auto;">Details</th>
-        <th align="center" bgcolor="#002060"  style="width: 3%;">Mode</th>
+        <th align="center" bgcolor="#002060" style="width: 3%;">Type</th>
+        <th align="center" bgcolor="#002060" style="width: auto;">Details</th>
+        <th align="center" bgcolor="#002060" style="width: 3%;">Mode</th>
         <th align="center" bgcolor="#002060" style="width: 20%;">From</th>
         <th align="center" bgcolor="#002060" style="width: 20%;">To</th>
-        <th align="center" bgcolor="#002060" style="width: 5%;" >Amount (RM)</th>
+        <th align="center" bgcolor="#002060" style="width: 5%;">Amount (RM)</th>
       </tr>
 
       <!-- Odd number styling-->
@@ -97,7 +97,7 @@
         <td align="left" valign="top" bgcolor="#ffffff">
           <span *ngIf="claim.RowNum==1">{{claim.to}}</span>
         </td>
-        <td align="right"  valign="top" bgcolor="#ffffff">
+        <td align="right" valign="top" bgcolor="#ffffff">
           <span *ngIf="claim.RowNum==1">
             {{claim.MILEAGE_AMOUNT | number:'1.2-2'}}
           </span>
@@ -132,38 +132,81 @@
       <tr>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC" colspan="2"><em>TOTAL CLAIM AMOUNT</em></td>
+        <td align="left" bgcolor="#B3CCEC" colspan="2">
+          <em>TOTAL CLAIM AMOUNT</em>
+        </td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
         <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
 
-        <td align="right" bgcolor="#B3CCEC"><em>{{totalClaimAmount | number:'1.2-2'}}</em></td>
+        <td align="right" bgcolor="#B3CCEC">
+          <em>{{totalClaimAmount | number:'1.2-2'}}</em>
+        </td>
 
       </tr>
     </table>
-<br />
-    <table width="100%" border="0" bgcolor="#cccccc" style="font-size: 8pt !important;">
-      <tr style="color:#ffffff;">
-        <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
-        <td align="right" bgcolor="#002060">Amount (RM)</td>
-      </tr>
-      <tr *ngFor="let claim of claimsListSummery">
-        <td align="left" bgcolor="#ffffff">&nbsp;</td>
-        <td align="left" bgcolor="#ffffff">{{claim.TRAVEL}}</td>
-        <td align="left" bgcolor="#ffffff">{{claim.MILEAGE}} </td>
-        <td align="left" colspan="3" bgcolor="#ffffff">{{claim.SHORTFORM}} </td>
-        <!-- <td  align="left" bgcolor="#ffffff">&nbsp;</td> -->
-        <td align="right" bgcolor="#ffffff">{{claim.AMOUNT| number:'1.2-2'}}</td>
-      </tr>
+    <br />
+
+    <table width="100%">
       <tr>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="left" bgcolor="#B3CCEC"><em>TOTAL CLAIM AMOUNT</em></td>
-        <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td colspan="2" align="left" bgcolor="#B3CCEC">&nbsp;</td>
-        <td align="right" bgcolor="#B3CCEC"><em>{{totalClaimAmount | number:'1.2-2'}}</em></td>
-      </tr>
+      <td width="50%" valign="top">
+        <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
+          <tr style="color:#ffffff;">
+            <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
+            <td align="right" bgcolor="#002060">Amount (RM)</td>
+          </tr>
+          <tr *ngFor="let claim of claimsListSummery">
+            <td align="left" bgcolor="#ffffff">&nbsp;</td>
+            <td align="left" bgcolor="#ffffff">{{claim.TRAVEL}}</td>
+            <td align="left" bgcolor="#ffffff">{{claim.MILEAGE}} </td>
+            <td align="left" colspan="3" bgcolor="#ffffff">{{claim.SHORTFORM}} </td>
+            <td align="right" bgcolor="#ffffff">{{claim.AMOUNT| number:'1.2-2'}}</td>
+          </tr>
+          <tr>
+            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+            <td align="left" bgcolor="#B3CCEC">
+              <em>TOTAL CLAIM AMOUNT</em>
+            </td>
+            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+            <td colspan="2" align="left" bgcolor="#B3CCEC">&nbsp;</td>
+            <td align="right" bgcolor="#B3CCEC">
+              <em>{{totalClaimAmount | number:'1.2-2'}}</em>
+            </td>
+          </tr>
+    
+        </table>
+     </td>
+     <td></td>
+     <td width="50%">
+        <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
 
-    </table>
+            <tr style="color:#ffffff;">
+                <td align="center" bgcolor="#002060">SOC / Customer Name</td>
+                <td align="right" bgcolor="#002060">Amount (RM)</td>
+              </tr>
+
+          <tr *ngFor="let i of claimsSocSummery">
+            <td align="left" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.SOC}}</td>
+            <td align="right" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.AMOUNT | number:'1.2-2'}}</td>
+          </tr>
+
+          <tr>
+       <td align="left" bgcolor="#B3CCEC">
+              <em>TOTAL CLAIM AMOUNT</em>
+            </td>
+        
+
+            <td align="right" bgcolor="#B3CCEC">
+              <em>{{totalClaimAmount | number:'1.2-2'}}</em>
+            </td>
+          </tr>
+        </table>
+
+   </td>
+   </tr>
+   </table>
+
+
 
   </body>
 </ion-content>
