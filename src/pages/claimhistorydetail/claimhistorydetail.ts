@@ -108,12 +108,28 @@ export class ClaimhistorydetailPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimhistorydetails = data["resource"];
-        if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
+        let key: any;
+        
           this.claimhistorydetails.forEach(element => {
             element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+            if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
             if (element.STATUS.toString() === "Approved" && element.PROFILE_LEVEL.toString() === "3") { element.STATUS = "Paid"; }
+            }
+            if (element.REQ_STATUS === 'Rejected') {
+              element.STAGE_GUID = null;
+            }
+            else {
+              key = element.PROFILE_LEVEL_MAIN;
+            }
+  
+            switch (key) {
+              case 1: element.STAGE_GUID = 'Superior'; break;
+              case 2: element.STAGE_GUID = 'Finance Executive'; break;
+              case 3:
+              case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+            }
+
           });
-        }
         this.claimhistorydetails1 = this.claimhistorydetails;
         if (this.claimhistorydetails.length != 0) {
           if (ddlDept.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.DEPARTMENT_GUID.toString() === ddlDept.toString()) }
