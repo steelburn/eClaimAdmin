@@ -14,6 +14,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 })
 export class TravelClaimViewPage {
   totalClaimAmount: number = 0;
+  remarks: any;
   claimRequestData: any[];
   claimDetailsData: any[];
   tollParkLookupClicked = false;
@@ -65,6 +66,7 @@ export class TravelClaimViewPage {
           }
           this.TravelType = element.TRAVEL_TYPE === '0' ? 'Local' : 'Outstation';
           this.totalClaimAmount = element.CLAIM_AMOUNT;
+          this.remarks = element.REMARKS;
         });
         //  this.totalClaimAmount += tollorParkAmount;
       })
