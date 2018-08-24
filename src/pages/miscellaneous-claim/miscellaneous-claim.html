@@ -29,12 +29,12 @@
         </div>
         <div *ngSwitchCase="'seg_project'">
          
-          <ion-item text-wrap>
+          <ion-item text-wrap style="width:80%;display: inline-block;">
             <ion-label color="primary500" floating> {{ "PROJECT_NAME_LABEL" | translate }} </ion-label>
             <ion-textarea (click)="ProjectLookup()" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Project_Lookup_ngModel" [ngModelOptions]="{standalone: true}"
               type="text"></ion-textarea>
           </ion-item>
-          <ion-item>
+          <ion-item style="width:19%;display: inline-block;">
             <ion-label floating>{{ "SOC_NUMBER_LABEL" | translate }}</ion-label>
             <ion-input [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="Miscellaneous_SOC_No_ngModel" [ngModelOptions]="{standalone: true}"
               type="text" disabled="true"></ion-input>
