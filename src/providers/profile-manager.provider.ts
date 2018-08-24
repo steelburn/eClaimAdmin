@@ -175,9 +175,12 @@ export class ProfileManagerProvider {
     // This is for Approval Send email to User and next approver
     // this.api.EmailNextApprover(this.mainClaimReq.CLAIM_REQUEST_GUID, this.mainClaimReq.ASSIGNED_TO, claimRef.STATUS, this.level);
     
-    if(this.mainClaimReq.STATUS == 'Rejected'){
-      this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID);
-    }
+    // if(this.mainClaimReq.STATUS == 'Rejected'){
+    //   this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID);
+    // }
+    
+    //If approver approve or reject applier will get the mail notification--------------
+    this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID);
   }
 
   // SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any, level: any) {
@@ -417,6 +420,8 @@ export class ProfileManagerProvider {
       if (claimReqMainRef.STATUS != 'Draft')
       
         // this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID);        
+        
+        //Superior will get mail notification--------------------
         this.api.sendEmail_New(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID, this.formValues.origin, this.formValues.destination, this.formValues.description, claimReqMainRef.SOC_GUID, claimReqMainRef.CUSTOMER_GUID);
       
         localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
