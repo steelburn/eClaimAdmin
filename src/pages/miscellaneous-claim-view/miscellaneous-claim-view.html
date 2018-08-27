@@ -43,7 +43,7 @@
 
     <ion-item>
         <ion-label> {{ "STATUS_LABEL" | translate }} : </ion-label>
-        <ion-label> {{ claim.STATUS }} at {{approverDesignation}}</ion-label>
+        <ion-label> {{ claim.STATUS }}</ion-label>
     </ion-item>
 
     <ion-item *ngIf="claim.PROFILE_LEVEL!=1">
@@ -52,7 +52,7 @@
     </ion-item>
 
     <ion-item *ngIf="claim.PROFILE_LEVEL===1">
-        <ion-label stacked> {{ "STAGE_LABEL" | translate }}: </ion-label>
+        <ion-label> {{ "STAGE_LABEL" | translate }}: </ion-label>
         <ion-label>Superior</ion-label>
     </ion-item>
 
@@ -66,7 +66,10 @@
         <ion-label text-wrap> {{ claim.DESCRIPTION }} </ion-label>
     </ion-item>
 
-
+    <ion-item *ngIf="claim.REMARKS!==null && claim.PROFILE_LEVEL==0">
+        <ion-label> {{ "REMARK_LABEL" | translate }} : </ion-label>
+        <ion-label text-wrap> {{ claim.REMARKS }} </ion-label>
+    </ion-item>
 
     <ion-item>
         <!-- <button ion-button outline item-start icon-left (click)="DisplayImage(claim.ATTACHMENT_ID)" *ngIf="claim.ATTACHMENT_ID!==null">
