@@ -15,6 +15,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 export class OvertimeClaimViewPage {
 
   totalClaimAmount:number=0;
+  remarks: any;
   claimRequestData: any[];
   Approver_GUID: any;
   claimRequestGUID: any;
@@ -58,6 +59,7 @@ export class OvertimeClaimViewPage {
         if (element.ATTACHMENT_ID !== null)
         element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
+        this.remarks = element.REMARKS;
       });
     })
 }

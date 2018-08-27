@@ -16,6 +16,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 export class GiftClaimViewPage {
 
   totalClaimAmount: number = 0;
+  remarks: any;
   claimRequestData: any[];
   Remarks_NgModel: any;
   claimRequestGUID: any;
@@ -48,6 +49,7 @@ export class GiftClaimViewPage {
           this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID);
         }
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
+        this.remarks = element.REMARKS;
       });
     })
   }

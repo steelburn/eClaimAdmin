@@ -13,6 +13,7 @@ import { MiscellaneousClaimPage } from '../miscellaneous-claim/miscellaneous-cla
 export class MiscellaneousClaimViewPage {
   claimRequestData: any[];
   totalClaimAmount: number = 0;
+  remarks: any;
   Approver_GUID: any; level: any;
   claimRequestGUID: any;
   ToggleNgModel: any;
@@ -57,6 +58,7 @@ export class MiscellaneousClaimViewPage {
       element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
    
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
+        this.remarks = element.REMARKS;
       });
     })
 }  
