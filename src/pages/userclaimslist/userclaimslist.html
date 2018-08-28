@@ -81,34 +81,35 @@
     <button ion-button item-end (click)="SearchClaimsData(ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
   </ion-item>
 
-  <ion-item *ngFor="let userdetail of userdetails" class="fuha">
-    <ion-label text-wrap>Name: {{userdetail.FULLNAME}}</ion-label>
 
-  </ion-item>
 
   <ion-item *ngFor="let userdetail of userdetails" class="fuha">
 
     <ion-label text-wrap>Department: {{userdetail.DEPARTMENT}}</ion-label>
   </ion-item>
 
-  <ion-item *ngFor="let userdetail of userdetails" class="fuha1">
+  <ion-item *ngFor="let userdetail of userdetails" class="fuha">
     <ion-label text-wrap>Designation: {{userdetail.DESIGNATION}}</ion-label>
 
   </ion-item>
+  <ion-item *ngFor="let userdetail of userdetails" class="fuha1">
+    <ion-label text-wrap>Name: {{userdetail.FULLNAME}}</ion-label>
 
+  </ion-item>
 
   <ion-list>
     <ion-item>
       <table class="Tabler list">
         <tr class="linedsg TColor">
-          <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+          <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
 
-          <th class="lgl1">Claim Type</th>
-          <th class="lgl1">Date</th>
-          <th class="lgl1" style="width:120px">Status</th>
-          <th class="lgl1">Stage</th>
-          <th class="lgl1">Amount(RM)</th>
-          <th class="lgl1 tblBrRight" style="width:120px">Action</th>
+          <th class="lgl1"  style="width:120px">Claim Type</th>
+          <th class="lgl1"  style="width:100px">Date</th>
+          <th class="lgl1" style="width:90px">Status</th>
+          <th class="lgl1" style="width:140px">Stage</th>
+          <th class="lgl1" style="width:140px">Remarks</th>
+          <th class="lgl1"  style="width:96px">Amount(RM)</th>
+          <th class="lgl1 tblBrRight" style="width:125px">Action</th>
 
 
         </tr>
@@ -119,7 +120,9 @@
           <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIMTYPE}}</td>
           <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
           <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
-          <td class="lgl1 getHeader" reshead="Stage">{{claimhistorydetail.STAGE}}</td>
+          <td class="lgl1 getHeader" reshead="Stage" text-wrap>{{claimhistorydetail.STAGE}}</td>
+          <td class="lgl1 getHeader" reshead="Remarks" *ngIf="claimhistorydetail.PROFILE_LEVEL==0"  text-wrap>{{claimhistorydetail.REMARKS}}</td>
+          <td class="lgl1 getHeader" reshead="Remarks"*ngIf="claimhistorydetail.PROFILE_LEVEL!=0"></td>
           <td class="lgl1 getHeader" reshead="Amount">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
           <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID,claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL, claimhistorydetail.CLAIM_TYPE_GUID,1)">

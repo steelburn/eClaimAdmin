@@ -23,6 +23,7 @@ export class ClaimReportPage {
   public page: number = 1;
   baseResourceUrl: string;
   baseResourceUrlSummery: string;
+  baseResourceUrlSocSummery: string;
   claimsList: any[];
   claimsListPrint: any[];
   claimsListPrintTemp: any[] = [];
@@ -36,6 +37,7 @@ export class ClaimReportPage {
   todayDate: Date = new Date();
   month: any;
   year: any;
+  claimsSocSummery: any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
@@ -56,8 +58,22 @@ export class ClaimReportPage {
         this.claimsList = this.claimsListPrint;
         this.claimsList.forEach(element => {
           element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+          //  alert(element.SOC_GUID);
 
+          // if (element.SOC_GUID != null && this.claimsSocSummery.find(e => e.SOC_GUID == element.SOC_GUID) === undefined) {
+          //   this.claimsSocSummery.push([{ "SOC_GUID": element.SOC_GUID, "SOC": element.SOC, "Total": element.Total }]);
+          // }
+          // else if (element.CUSTOMER_GUID != null && this.claimsSocSummery.find(e => e.SOC_GUID == element.CUSTOMER_GUID) === undefined) {
+          //   this.claimsSocSummery.push([{ "SOC_GUID": element.CUSTOMER_GUID, "SOC": element.CUSTOMER_NAME, "Total": element.Total }]);
+          // }
+          // else {
+          //   if (element.SOC_GUID != null)
+          //     this.claimsSocSummery.find(e => e.SOC_GUID === element.SOC_GUID).Total += element.Total;
+          //   else
+          //     this.claimsSocSummery.find(e => e.SOC_GUID === element.CUSTOMER_GUID).Total += element.Total;
+          // }
         });
+        //console.log(this.claimsSocSummery);
         this.claimsListPrint.forEach(element => {
           if (element.TYPE === 'TRV') {
             element.RowNum = "1";
@@ -167,7 +183,7 @@ export class ClaimReportPage {
 
           this.totalClaimAmount = this.totalClaimAmount + element.Total;
         });
-        console.log(this.claimsListPrintTemp);
+        //console.log(this.claimsListPrintTemp);
       });
   }
 
@@ -210,6 +226,14 @@ export class ClaimReportPage {
       });
 
   }
+  GetSocSummeryData() {
+    this.http
+    .get(this.baseResourceUrlSocSummery)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.claimsSocSummery = data["resource"];
+    });
+  }
 
 
   // BindClaimTypes() {
@@ -230,11 +254,12 @@ export class ClaimReportPage {
     this.month = month;
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResourceUrlSummery = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summery?filter=(DEPARTMENT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-
+    this.baseResourceUrlSocSummery = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_soc_summery?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     //this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?api_key=' + constants.DREAMFACTORY_API_KEY;
     this.BindEmpDetails(emp);
     this.BindData();
     this.BindSummeryData();
+    this.GetSocSummeryData();
     // if (claimType == "58c59b56-289e-31a2-f708-138e81a9c823")
     //   this.travelClaimType = true;
     // else

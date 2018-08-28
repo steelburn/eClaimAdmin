@@ -8,6 +8,15 @@ import * as constants from '../../app/config/constants';
 import { BaseHttpService } from '../../services/base-http';
 import { ExcelService } from '../../providers/excel.service';
 
+
+import { TravelClaimViewPage } from '../travel-claim-view/travel-claim-view.component';
+import { EntertainmentClaimViewPage } from '../entertainment-claim-view/entertainment-claim-view';
+import { OvertimeClaimViewPage } from '../overtime-claim-view/overtime-claim-view';
+import { PrintClaimViewPage } from '../print-claim-view/print-claim-view';
+import { GiftClaimViewPage } from '../gift-claim-view/gift-claim-view';
+import { MiscellaneousClaimViewPage } from '../miscellaneous-claim-view/miscellaneous-claim-view';
+
+
 /**
  * Generated class for the ClaimhistorydetailPage page.
  *
@@ -60,10 +69,10 @@ export class ClaimhistorydetailPage {
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       this.FinanceLogin = true;
       if (this.loginUserRole === "Finance Admin") {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
       }
       else {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;
       }
 
     }
@@ -99,12 +108,28 @@ export class ClaimhistorydetailPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimhistorydetails = data["resource"];
-        if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
+        let key: any;
+        
           this.claimhistorydetails.forEach(element => {
             element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+            if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
             if (element.STATUS.toString() === "Approved" && element.PROFILE_LEVEL.toString() === "3") { element.STATUS = "Paid"; }
+            }
+            if (element.REQ_STATUS === 'Rejected') {
+              element.STAGE_GUID = null;
+            }
+            else {
+              key = element.PROFILE_LEVEL_MAIN;
+            }
+  
+            switch (key) {
+              case 1: element.STAGE_GUID = 'Superior'; break;
+              case 2: element.STAGE_GUID = 'Finance Executive'; break;
+              case 3:
+              case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+            }
+
           });
-        }
         this.claimhistorydetails1 = this.claimhistorydetails;
         if (this.claimhistorydetails.length != 0) {
           if (ddlDept.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.DEPARTMENT_GUID.toString() === ddlDept.toString()) }
@@ -245,6 +270,34 @@ export class ClaimhistorydetailPage {
       let index = this.RemoveCheckedFromArray(SelectedColumn);
       this.checked.splice(index, 1);
     }
+  }
+
+
+  
+  claimRequestGUID: string; level: string; designation: string;
+
+  ClaimNavigation(designation: string, claimRequestGUID: string, level: string, claimType: any, navType: number) {
+    this.claimRequestGUID = claimRequestGUID;
+    this.level = level;
+    this.designation = designation;
+    switch (claimType) {
+      case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': this.pushPage(GiftClaimViewPage); break;
+      case '37067b3d-1bf4-33a3-2b60-3ca40baf589a': this.pushPage(OvertimeClaimViewPage); break;
+      case '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86': this.pushPage(MiscellaneousClaimViewPage);  break;
+      case '58c59b56-289e-31a2-f708-138e81a9c823': this.pushPage(TravelClaimViewPage);  break;
+      case 'd9567482-033a-6d92-3246-f33043155746': this.pushPage(PrintClaimViewPage); break;
+      case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': this.pushPage(EntertainmentClaimViewPage); break;
+    }
+  }
+
+  pushPage(claimType: any) {
+    this.navCtrl.push(claimType, {
+      isApprover: false,
+      approverDesignation: this.designation,
+      cr_GUID: this.claimRequestGUID,
+      level_no: this.level,
+      approver_GUID: localStorage.getItem('g_USER_GUID')
+    });
   }
 
   RemoveCheckedFromArray(checkbox: String) {

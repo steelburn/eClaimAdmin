@@ -103,8 +103,10 @@
   "EPF_NUMBER": "EPF Number",
   "INCOME_TAX_NUMBER": "Income Tax Number",
   "BANK_NAME": "Bank Name",
-  "ACCOUNT_NUMBER": "Account Number",
+  "ACCOUNT_NUMBER": "Account Number",  
   
+  "DEVICE_SETUP_HEADING": "Device Setup",
+  "DEVICE_NAME": "Device Name",
 
   "DESIGNATION_SETUP_HEADING": "Designation Setup",
   "DESIGNATION_NAME": "Title",

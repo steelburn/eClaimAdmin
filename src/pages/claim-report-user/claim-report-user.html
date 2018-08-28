@@ -19,7 +19,17 @@
 
 
 <ion-content padding>
-  <ion-list>
+
+    <ion-card  class="round2" *ngFor="let item of monthsList; let i=index" (click)="BindData('printSectionId',item)" color="primary200">
+          <ion-row>
+            <ion-col class="icondash">   
+            <ion-icon name="print" color="light"></ion-icon>
+            </ion-col>
+            <ion-col>  <h2 style="    font-size: 20pt;
+              padding-top: 6pt;">{{item}}</h2></ion-col>
+          </ion-row>
+    </ion-card>
+  <!-- <ion-list>
     <ion-item>
       <table class="Tabler ">
         <tr class="linedsg TColor">
@@ -40,10 +50,10 @@
         </tr>
       </table>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
 
 <div id="printSectionId" hidden>
-  <page-claim-report-print [claimsListPrint]="claimsListPrintTemp" [claimsListSummery]="claimsListSummery" [empData]="empData" [year]="year" [month]="month" [totalClaimAmount]="totalClaimAmount"></page-claim-report-print>
+  <page-claim-report-print [claimsListPrint]="claimsListPrintTemp" [claimsListSummery]="claimsListSummery" [empData]="empData" [year]="year" [month]="month" [totalClaimAmount]="totalClaimAmount" [claimsSocSummery]="claimsSocSummery"></page-claim-report-print>
 </div>
 

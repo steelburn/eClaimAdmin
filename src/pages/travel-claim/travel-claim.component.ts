@@ -97,6 +97,7 @@ export class TravelclaimPage {
   claimRequestData: any;
 
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID');
@@ -142,6 +143,7 @@ export class TravelclaimPage {
       attachment_GUID: '',
       //travel_amount: ['', Validators.required],
       claim_amount: ['', Validators.required],
+      from_id: '', to_id: ''
      
     });
 
@@ -197,6 +199,7 @@ export class TravelclaimPage {
                   this.storeCustomers.forEach(element => {
                     if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
                       this.Customer_Lookup_ngModel = element.NAME
+                      this.Customer_GUID = element.CUSTOMER_GUID
                     }
                   });
               }
@@ -208,6 +211,7 @@ export class TravelclaimPage {
                     if (element.SOC_GUID === this.claimRequestData[0].SOC_GUID) {
                       this.Project_Lookup_ngModel = element.project_name
                       this.Travel_SOC_No_ngModel = element.soc
+                      this.Soc_GUID = element.SOC_GUID
                     }
                   });
               }
@@ -220,6 +224,8 @@ export class TravelclaimPage {
 
               this.Travel_From_ngModel = this.claimRequestData[0].FROM;
               this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
+              this.DestinationPlaceID = this.claimRequestData[0].to_place_id; 
+              this.OriginPlaceID = this.claimRequestData[0].from_place_id;
               this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
               this.LoadClaimDetails();
               this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
@@ -235,7 +241,8 @@ export class TravelclaimPage {
                   this.isPublicTransport = true;
                 if (element.MILEAGE_GUID === this.claimRequestData[0].MILEAGE_GUID) {
                   {
-                    this.Travel_Mode_ngModel = element.CATEGORY
+                    this.Travel_Mode_ngModel = element.CATEGORY;
+                    this.VehicleRate = element.RATE_PER_UNIT;
                     // this.onVehicleSelect(element)
                   }
                 }
@@ -448,7 +455,7 @@ export class TravelclaimPage {
 
   // Search project start:
 
-  searchProject(searchString: any) {
+  searchProject(searchString: any) { 
     let val = searchString.target.value;
     if (!val || !val.trim()) {
       this.projects = this.storeProjects;
@@ -725,10 +732,11 @@ export class TravelclaimPage {
     })
   }
 
-  validateDate() {
-    let today = Date.parse(new Date().toISOString())
-    let start = Date.parse(this.Start_DT_ngModel)
-    let end = Date.parse(this.End_DT_ngModel)
+ 
+  validateDate(startDate: any, endDate: any) {   
+    let today =moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    let start = startDate; 
+    let end = endDate; 
     if (start > end || today < start) {
       alert('The Date Range is not valid.')
       return false;
@@ -752,7 +760,11 @@ export class TravelclaimPage {
   }
 
   submitAction(formValues: any) {
-    if (this.validateDate()) {
+    if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
+      alert('Please select "project" or "customer" to continue.');
+      return;
+    }
+    if (this.validateDate(this.Start_DT_ngModel, this.End_DT_ngModel)) {
       if (!this.isFormSubmitted) {
         this.isFormSubmitted = true;
         formValues.uuid = this.claimRequestGUID = UUID.UUID();
@@ -765,6 +777,10 @@ export class TravelclaimPage {
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
         formValues.PayType = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
 
+        formValues.from_id = this.OriginPlaceID; 
+        formValues.to_id = this.DestinationPlaceID; 
+
+
         this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         this.MainClaimSaved = true;
       }
@@ -772,7 +788,7 @@ export class TravelclaimPage {
         this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
           .subscribe(data => {
             this.claimRequestData = data;
-            this.claimRequestData["resource"][0].STATUS = 'Pending';
+           // this.claimRequestData["resource"][0].STATUS = 'Pending';
 
             this.claimRequestData["resource"][0].MILEAGE_GUID = this.VehicleId;
             this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.start_DT;
@@ -794,6 +810,9 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
               this.claimRequestData["resource"][0].STATUS = 'Pending'
             }
+            else{
+              this.claimRequestData["resource"][0].STATUS = 'Pending';
+            }
 
             if (this.isCustomer) {
               this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
@@ -806,13 +825,13 @@ export class TravelclaimPage {
 
             this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
               // if (isClaim && modelJSON.STATUS != 'Draft')
-              if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
+              // if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
                 
                 // Send Email------------------------------------------------
                 // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
                 this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
                 // ----------------------------------------------------------
-              }
+              //}
 
               alert('Claim details updated successfully.');
               this.navCtrl.push(UserclaimslistPage);
