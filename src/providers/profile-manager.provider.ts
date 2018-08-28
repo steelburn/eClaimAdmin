@@ -180,7 +180,7 @@ export class ProfileManagerProvider {
     // }
     
     //If approver approve or reject applier will get the mail notification--------------
-    this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID);
+    this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID, claimRef.REMARKS, this.mainClaimReq.STATUS);
   }
 
   // SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any, level: any) {
