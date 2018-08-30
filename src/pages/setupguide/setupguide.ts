@@ -296,7 +296,7 @@ export class SetupguidePage {
   AddDesignation() {
     if (this.Designation_Name_ngModel != undefined && this.Designation_Name_ngModel.trim() != "") {
       //if (this.Designation_Desc_ngModel != undefined && this.Designation_Desc_ngModel.trim() != "") {
-      
+
       if (this.DesignationSaveFlag == false) {
         this.Designation.push({ DESIGNATION_GUID: UUID.UUID(), DESIGNATION_NAME: this.titlecasePipe.transform(this.Designation_Name_ngModel.trim()), DESIGNATION_DESC: this.Designation_Desc_ngModel });
       }
@@ -321,10 +321,10 @@ export class SetupguidePage {
     }
   }
 
-  AddDepartment() {    
+  AddDepartment() {
     if (this.Department_Name_ngModel != undefined && this.Department_Name_ngModel.trim() != "") {
       //if (this.Department_Desc_ngModel != undefined && this.Department_Desc_ngModel.trim() != "") {
-      
+
       if (this.DepartmentSaveFlag == false) {
         this.Department.push({ DEPARTMENT_GUID: UUID.UUID(), DEPARTMENT_NAME: this.titlecasePipe.transform(this.Department_Name_ngModel.trim()), DEPARTMENT_DESC: this.Department_Desc_ngModel });
       }
@@ -463,7 +463,7 @@ export class SetupguidePage {
 
   BindControls() {
     let Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_tenant_setup_guide' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')and(USER_GUID=' + localStorage.getItem('g_USER_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    
+
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
     });
@@ -689,13 +689,24 @@ export class SetupguidePage {
     this.userinfo_entry.FULLNAME = this.titlecasePipe.transform(this.ContactPerson_ngModel.trim());
     //NICKNAME
     //SALUTATION
-    this.userinfo_entry.MANAGER_USER_GUID = this.userinfo_entry.USER_INFO_GUID;
-    this.userinfo_entry.PERSONAL_ID_TYPE = "";
-    this.userinfo_entry.PERSONAL_ID = "";
-    this.userinfo_entry.DOB = "";
-    this.userinfo_entry.GENDER = "1";
-    this.userinfo_entry.JOIN_DATE = "";
-    this.userinfo_entry.MARITAL_STATUS = "0";
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.userinfo_entry.MANAGER_USER_GUID = this.userinfo_entry.USER_INFO_GUID;
+      this.userinfo_entry.PERSONAL_ID_TYPE = "";
+      this.userinfo_entry.PERSONAL_ID = "";
+      this.userinfo_entry.DOB = "";
+      this.userinfo_entry.GENDER = "1";
+      this.userinfo_entry.JOIN_DATE = "";
+      this.userinfo_entry.MARITAL_STATUS = "0";
+    }
+    else {
+      this.userinfo_entry.MANAGER_USER_GUID = this.userinfo_entry.USER_INFO_GUID;
+      this.userinfo_entry.PERSONAL_ID_TYPE = this.tenants[0]["PERSONAL_ID_TYPE"];
+      this.userinfo_entry.PERSONAL_ID = this.tenants[0]["PERSONAL_ID"];
+      this.userinfo_entry.DOB = this.tenants[0]["DOB"];
+      this.userinfo_entry.GENDER = this.tenants[0]["GENDER"];
+      this.userinfo_entry.JOIN_DATE = this.tenants[0]["JOIN_DATE"];
+      this.userinfo_entry.MARITAL_STATUS = this.tenants[0]["MARITAL_STATUS"];
+    }
 
     for (var item in this.Branches) {
       if (this.Branches[item]["ISHQ"] == true) {
@@ -703,40 +714,70 @@ export class SetupguidePage {
         this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[item]["BRANCH_GUID"];
       }
     }
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      this.userinfo_entry.EMPLOYEE_TYPE = "";
+      this.userinfo_entry.ATTACHMENT_ID = "";
 
-    this.userinfo_entry.EMPLOYEE_TYPE = "";
-    this.userinfo_entry.ATTACHMENT_ID = "";
+      this.userinfo_entry.APPROVER1 = null;
+      this.userinfo_entry.APPROVER2 = null;
+      this.userinfo_entry.EMPLOYEE_STATUS = "0";
 
-    // this.userinfo_entry.APPROVER1 = this.User_Approver1_ngModel.trim();
-    // this.userinfo_entry.APPROVER2 = this.User_Approver2_ngModel.trim();
-    this.userinfo_entry.EMPLOYEE_STATUS = "0";
+      this.userinfo_entry.RESIGNATION_DATE = "";
+
+      // this.userinfo_entry.TENANT_COMPANY_GUID = UUID.UUID();
+      this.userinfo_entry.CONFIRMATION_DATE = "";
+
+      //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[0]["BRANCH_GUID"];
+
+      this.userinfo_entry.CREATION_TS = new Date().toISOString();
+      this.userinfo_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.userinfo_entry.UPDATE_TS = new Date().toISOString();
+      this.userinfo_entry.UPDATE_USER_GUID = "";
+
+      // this.userinfo_entry.POST_CODE
+      // this.userinfo_entry.COUNTRY_GUID
+      // this.userinfo_entry.STATE_GUID
+      this.userinfo_entry.EMG_CONTACT_NAME_1 = "";
+      this.userinfo_entry.EMG_RELATIONSHIP_1 = "";
+      this.userinfo_entry.EMG_CONTACT_NUMBER_1 = "";
+      this.userinfo_entry.EMG_CONTACT_NAME_2 = "";
+      this.userinfo_entry.EMG_RELATIONSHIP_2 = "";
+      this.userinfo_entry.EMG_CONTACT_NUMBER_2 = "";
+      this.userinfo_entry.PR_EPF_NUMBER = "";
+      this.userinfo_entry.PR_INCOMETAX_NUMBER = "";
+      this.userinfo_entry.BANK_GUID = ""; //---------------------Required-----------------------------------
+      this.userinfo_entry.PR_ACCOUNT_NUMBER = "";
+    }
+    else {
+      this.userinfo_entry.EMPLOYEE_TYPE = this.tenants[0]["EMPLOYEE_TYPE"];
+      this.userinfo_entry.ATTACHMENT_ID = this.tenants[0]["ATTACHMENT_ID"];
+
+      this.userinfo_entry.APPROVER1 = null;
+      this.userinfo_entry.APPROVER2 = null;
+      this.userinfo_entry.EMPLOYEE_STATUS = this.tenants[0]["EMPLOYEE_STATUS"];
+
+      this.userinfo_entry.RESIGNATION_DATE = this.tenants[0]["RESIGNATION_DATE"];
+      this.userinfo_entry.CONFIRMATION_DATE = this.tenants[0]["CONFIRMATION_DATE"];
+
+      this.userinfo_entry.CREATION_TS = this.tenants[0]["CREATION_TS"];
+      this.userinfo_entry.CREATION_USER_GUID = this.tenants[0]["CREATION_USER_GUID"];
+      this.userinfo_entry.UPDATE_TS = new Date().toISOString();
+      this.userinfo_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+
+      this.userinfo_entry.EMG_CONTACT_NAME_1 = this.tenants[0]["EMG_CONTACT_NAME_1"];
+      this.userinfo_entry.EMG_RELATIONSHIP_1 = this.tenants[0]["EMG_RELATIONSHIP_1"];
+      this.userinfo_entry.EMG_CONTACT_NUMBER_1 = this.tenants[0]["EMG_CONTACT_NUMBER_1"];
+      this.userinfo_entry.EMG_CONTACT_NAME_2 = this.tenants[0]["EMG_CONTACT_NAME_2"];
+      this.userinfo_entry.EMG_RELATIONSHIP_2 = this.tenants[0]["EMG_RELATIONSHIP_2"];
+      this.userinfo_entry.EMG_CONTACT_NUMBER_2 = this.tenants[0]["EMG_CONTACT_NUMBER_2"];
+      this.userinfo_entry.PR_EPF_NUMBER = this.tenants[0]["PR_EPF_NUMBER"];
+      this.userinfo_entry.PR_INCOMETAX_NUMBER = this.tenants[0]["PR_INCOMETAX_NUMBER"];
+      this.userinfo_entry.BANK_GUID = this.tenants[0]["BANK_GUID"];
+      this.userinfo_entry.PR_ACCOUNT_NUMBER = this.tenants[0]["PR_ACCOUNT_NUMBER"];
+    }
+
     this.userinfo_entry.DEPT_GUID = this.Department[0]["DEPARTMENT_GUID"];
     this.userinfo_entry.DESIGNATION_GUID = this.Designation[0]["DESIGNATION_GUID"];
-    this.userinfo_entry.RESIGNATION_DATE = "";
-
-    // this.userinfo_entry.TENANT_COMPANY_GUID = UUID.UUID();
-    this.userinfo_entry.CONFIRMATION_DATE = "";
-
-    //this.userinfo_entry.TENANT_COMPANY_SITE_GUID = this.Branches[0]["BRANCH_GUID"];
-
-    this.userinfo_entry.CREATION_TS = new Date().toISOString();
-    this.userinfo_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-    this.userinfo_entry.UPDATE_TS = new Date().toISOString();
-    this.userinfo_entry.UPDATE_USER_GUID = "";
-
-    // this.userinfo_entry.POST_CODE
-    // this.userinfo_entry.COUNTRY_GUID
-    // this.userinfo_entry.STATE_GUID
-    this.userinfo_entry.EMG_CONTACT_NAME_1 = "";
-    this.userinfo_entry.EMG_RELATIONSHIP_1 = "";
-    this.userinfo_entry.EMG_CONTACT_NUMBER_1 = "";
-    this.userinfo_entry.EMG_CONTACT_NAME_2 = "";
-    this.userinfo_entry.EMG_RELATIONSHIP_2 = "";
-    this.userinfo_entry.EMG_CONTACT_NUMBER_2 = "";
-    this.userinfo_entry.PR_EPF_NUMBER = "";
-    this.userinfo_entry.PR_INCOMETAX_NUMBER = "";
-    this.userinfo_entry.BANK_GUID = ""; //---------------------Required-----------------------------------
-    this.userinfo_entry.PR_ACCOUNT_NUMBER = "";
 
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       this.userservice.save_user_info(this.userinfo_entry)
@@ -899,7 +940,7 @@ export class SetupguidePage {
             }
           })
       }
-      
+
       this.InsertDepartment();
     }
     else {
@@ -952,7 +993,7 @@ export class SetupguidePage {
     }
   }
 
-  InsertDepartment() {    
+  InsertDepartment() {
     if (localStorage.getItem("g_USER_GUID") == "sva") {
       for (var item in this.Department) {
         this.department_entry.DEPARTMENT_GUID = this.Department[item]["DEPARTMENT_GUID"];
@@ -1067,6 +1108,4 @@ export class SetupguidePage {
           });
     }
   }
-
-  
 }
