@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
-;
+
 
 @Injectable()
 export class BankSetup_Service {
