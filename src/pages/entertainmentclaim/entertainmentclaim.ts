@@ -402,6 +402,8 @@ export class EntertainmentclaimPage {
   }
 
   submitAction(formValues: any) {
+    if(this.apiMng.isClaimExpired(formValues))
+    return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
@@ -415,8 +417,8 @@ export class EntertainmentclaimPage {
           this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
           this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
           this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
-          // this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
-          this.claimRequestData["resource"][0].TRAVEL_DATE = moment(this.claimRequestData.TRAVEL_DATE).format('YYYY-MM-DDTHH:mm');
+          this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+          //this.claimRequestData["resource"][0].TRAVEL_DATE = moment(this.claimRequestData.TRAVEL_DATE).format('YYYY-MM-DDTHH:mm');
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;

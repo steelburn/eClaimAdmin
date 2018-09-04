@@ -331,6 +331,9 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
+    formValues.travel_date = formValues.start_DT;
+    if(this.apiMng.isClaimExpired(formValues))
+    return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
@@ -376,7 +379,7 @@ export class OvertimeclaimPage {
       }
       else {
         formValues.claimTypeGUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
-        formValues.travel_date = formValues.start_DT;
+        
         formValues.attachment_GUID = this.imageGUID;
         this.travelAmount = this.claimAmount;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;

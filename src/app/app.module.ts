@@ -103,11 +103,11 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../pages/miscellaneous-claim-view/miscellaneous-claim-view';
 import { ApiManagerProvider } from '../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
-
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
-
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { SettingsPage } from '../pages/settings/settings';
+
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data';
 // import { Ng2PaginationModule } from 'ng2-pagination';
@@ -181,7 +181,8 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ClaimReportUserPage,
     ClaimReportPrintPage,
     LeaveReportPage,
-    AttendanceReportPage
+    AttendanceReportPage,
+    SettingsPage
 
   ],
 
@@ -309,7 +310,9 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ClaimReportUserPage,
     ClaimReportPrintPage,
     LeaveReportPage,
-    AttendanceReportPage
+    AttendanceReportPage,
+
+    SettingsPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
