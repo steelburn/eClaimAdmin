@@ -712,13 +712,14 @@ export class ApiManagerProvider {
 
   isClaimExpired(formValues: any) {
     let myDate = new Date(formValues.travel_date);
-    let travelMonth: number = myDate.getMonth();
-    let currentMonth: number = new Date().getMonth();
-    let travelDate: number = myDate.getDate();
 
-    let longBack = (travelMonth + 1) < currentMonth;
-    let previous = (((travelMonth) === currentMonth) && travelDate > 7);
-    if (longBack || previous) {
+    let travelMonth:number = myDate.getMonth();
+    let currentMonth:number = new Date().getMonth();
+    let travelDate:number = myDate.getDate();
+
+   let longBack = (travelMonth + 1) < currentMonth;
+   let previous = (((travelMonth ) === currentMonth) && travelDate > 7);
+         if ( longBack || previous)  {
       alert('Claim has expired.')
       return true;
     }
