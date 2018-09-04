@@ -24,6 +24,7 @@ import { MiscellaneousClaimPage } from '../miscellaneous-claim/miscellaneous-cla
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
 import { ExcelService } from '../../providers/excel.service';
+import * as Settings from '../../dbSettings/companySettings'
 
 /**
  * Generated class for the UserclaimslistPage page.
@@ -94,7 +95,8 @@ export class UserclaimslistPage {
         this.userClaimhistorydetails1.forEach(element => {
           element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
 
-          if (element.STATUS === 'Rejected') {
+          // if (element.STATUS === 'Rejected') {
+          if (element.STATUS === Settings.StatusConstants.REJECTED) {
             element.STAGE_GUID = null;
           }
           else {
@@ -102,10 +104,13 @@ export class UserclaimslistPage {
           }
 
           switch (key) {
-            case 1: element.STAGE_GUID = 'Superior'; break;
-            case 2: element.STAGE_GUID = 'Finance Executive'; break;
+            // case 1: element.STAGE_GUID = 'Superior'; break;
+            case 1: element.STAGE_GUID = Settings.StageConstants.SUPERIOR; break;
+            // case 2: element.STAGE_GUID = 'Finance Executive'; break;
+            case 2: element.STAGE_GUID = Settings.StageConstants.FINANCE_EXECUTIVE; break;
             case 3:
-            case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+            // case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+            case -1: element.STAGE_GUID = Settings.StageConstants.FINANCE_ADMIN; break;
           }
         });
         this.userClaimhistorydetails = this.userClaimhistorydetails1;
@@ -141,10 +146,13 @@ export class UserclaimslistPage {
           //this.userClaimhistorydetails1 = this.userClaimhistorydetails;
           this.userClaimhistorydetails1.forEach(element => {
             switch (element.PROFILE_LEVEL) {
-              case 1: element.STAGE_GUID = 'Superior'; break;
-              case 2: element.STAGE_GUID = 'Finance Executive'; break;
+              // case 1: element.STAGE_GUID = 'Superior'; break;
+              case 1: element.STAGE_GUID = Settings.StageConstants.SUPERIOR; break;
+              // case 2: element.STAGE_GUID = 'Finance Executive'; break;
+              case 2: element.STAGE_GUID = Settings.StageConstants.FINANCE_EXECUTIVE; break;
               case 3:
-              case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+              // case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+              case -1: element.STAGE_GUID = Settings.StageConstants.FINANCE_ADMIN; break;
               // case 4: element.STAGE_GUID = 'Finance Manager'; break;
               // case 5: element.STAGE_GUID = 'Finance & Admin'; break;
             }
@@ -231,13 +239,19 @@ export class UserclaimslistPage {
     this.level = level;
     this.designation = designation;
     switch (claimType) {
-      case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': if (navType === 1) this.pushPage(GiftClaimViewPage); else this.editPage(GiftclaimPage); break;
-      case '37067b3d-1bf4-33a3-2b60-3ca40baf589a': if (navType === 1) this.pushPage(OvertimeClaimViewPage); else this.editPage(OvertimeclaimPage); break;
-      case '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86': if (navType === 1) this.pushPage(MiscellaneousClaimViewPage); else this.editPage(MiscellaneousClaimPage); break;
+      // case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': if (navType === 1) this.pushPage(GiftClaimViewPage); else this.editPage(GiftclaimPage); break;
+      case Settings.ClaimTypeGuidConstants.GIFT_CLAIM: if (navType === 1) this.pushPage(GiftClaimViewPage); else this.editPage(GiftclaimPage); break;
+      // case '37067b3d-1bf4-33a3-2b60-3ca40baf589a': if (navType === 1) this.pushPage(OvertimeClaimViewPage); else this.editPage(OvertimeclaimPage); break;
+      case Settings.ClaimTypeGuidConstants.OVERTIME_CLAIM: if (navType === 1) this.pushPage(OvertimeClaimViewPage); else this.editPage(OvertimeclaimPage); break;
+      // case '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86': if (navType === 1) this.pushPage(MiscellaneousClaimViewPage); else this.editPage(MiscellaneousClaimPage); break;
+      case Settings.ClaimTypeGuidConstants.MISCELLANIOUS_CLAIM: if (navType === 1) this.pushPage(MiscellaneousClaimViewPage); else this.editPage(MiscellaneousClaimPage); break;
 
-      case '58c59b56-289e-31a2-f708-138e81a9c823': if (navType === 1) this.pushPage(TravelClaimViewPage); else this.editPage(TravelclaimPage); break;
-      case 'd9567482-033a-6d92-3246-f33043155746': if (navType === 1) this.pushPage(PrintClaimViewPage); else this.editPage(PrintclaimPage); break;
-      case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': if (navType === 1) this.pushPage(EntertainmentClaimViewPage); else this.editPage(EntertainmentclaimPage); break;
+      // case '58c59b56-289e-31a2-f708-138e81a9c823': if (navType === 1) this.pushPage(TravelClaimViewPage); else this.editPage(TravelclaimPage); break;
+      case Settings.ClaimTypeGuidConstants.TRAVEL_CLAIM: if (navType === 1) this.pushPage(TravelClaimViewPage); else this.editPage(TravelclaimPage); break;
+      // case 'd9567482-033a-6d92-3246-f33043155746': if (navType === 1) this.pushPage(PrintClaimViewPage); else this.editPage(PrintclaimPage); break;
+      case Settings.ClaimTypeGuidConstants.PRINT_CLAIM: if (navType === 1) this.pushPage(PrintClaimViewPage); else this.editPage(PrintclaimPage); break;
+      // case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': if (navType === 1) this.pushPage(EntertainmentClaimViewPage); else this.editPage(EntertainmentclaimPage); break;
+      case Settings.ClaimTypeGuidConstants.ENTERTAINMENT_CLAIM: if (navType === 1) this.pushPage(EntertainmentClaimViewPage); else this.editPage(EntertainmentclaimPage); break;
     }
   }
 
