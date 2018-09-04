@@ -710,20 +710,37 @@ export class ApiManagerProvider {
     }
   }
 
+  // isClaimExpired(formValues: any) {
+  //   let myDate = new Date(formValues.travel_date);
+  //   let travelMonth:number = myDate.getMonth();
+  //   let currentMonth:number = new Date().getMonth();
+  //   let travelDate:number = myDate.getDate();
+
+  //  let longBack = (travelMonth + 1) < currentMonth;
+  //  let previous = (((travelMonth ) === currentMonth) && travelDate > 7);
+  //        if ( longBack || previous)  {
+  //     alert('Claim has expired.')
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
   isClaimExpired(formValues: any) {
     let myDate = new Date(formValues.travel_date);
 
-    let travelMonth:number = myDate.getMonth();
-    let currentMonth:number = new Date().getMonth();
-    let travelDate:number = myDate.getDate();
+    let travelMonth: number = myDate.getMonth();
+    let currentMonth: number = new Date().getMonth();
+    let currentDate: number = new Date().getDate();
+    let longBack = (travelMonth + 1) < currentMonth;
+    let previous = travelMonth === (currentMonth - 1) && currentDate > 7
+    let current = (travelMonth === currentMonth);
+    if (current)
+      return false;
+    if (longBack || previous) {
 
-   let longBack = (travelMonth + 1) < currentMonth;
-   let previous = (((travelMonth ) === currentMonth) && travelDate > 7);
-         if ( longBack || previous)  {
       alert('Claim has expired.')
       return true;
     }
     return false;
   }
-
 }
