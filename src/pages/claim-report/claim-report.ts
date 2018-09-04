@@ -56,25 +56,13 @@ export class ClaimReportPage {
       .subscribe(data => {
         this.claimsListPrint = data["resource"];
         this.claimsList = this.claimsListPrint;
-        this.claimsList.forEach(element => {
-          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
-          //  alert(element.SOC_GUID);
+        this.totalClaimAmount = 0;
+        // this.claimsList.forEach(element => {
 
-          // if (element.SOC_GUID != null && this.claimsSocSummery.find(e => e.SOC_GUID == element.SOC_GUID) === undefined) {
-          //   this.claimsSocSummery.push([{ "SOC_GUID": element.SOC_GUID, "SOC": element.SOC, "Total": element.Total }]);
-          // }
-          // else if (element.CUSTOMER_GUID != null && this.claimsSocSummery.find(e => e.SOC_GUID == element.CUSTOMER_GUID) === undefined) {
-          //   this.claimsSocSummery.push([{ "SOC_GUID": element.CUSTOMER_GUID, "SOC": element.CUSTOMER_NAME, "Total": element.Total }]);
-          // }
-          // else {
-          //   if (element.SOC_GUID != null)
-          //     this.claimsSocSummery.find(e => e.SOC_GUID === element.SOC_GUID).Total += element.Total;
-          //   else
-          //     this.claimsSocSummery.find(e => e.SOC_GUID === element.CUSTOMER_GUID).Total += element.Total;
-          // }
-        });
+        // });
         //console.log(this.claimsSocSummery);
         this.claimsListPrint.forEach(element => {
+          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
           if (element.TYPE === 'TRV') {
             element.RowNum = "1";
             this.claimsListPrintTemp.push(element);
@@ -114,76 +102,8 @@ export class ClaimReportPage {
             this.claimsListPrintTemp.push(myClonedObject);
           }
 
-          // if (element.Type == 'TRV') {
-          //   this.claimsListPrintTemp.push(element);
-          //   for (let i = 1; i <= 6; i++) {
-          //     element.TRAVEL_DATE = '';
-          //     element.TYPE = '';
-          //     element.PROJECT_NAME = '';
-          //     element.SOC = '';
-          //     element.CUSTOMER_NAME = '';
-          //     element.MODE = '';
-          //     element.from = '';
-          //     element.to = '';
-          //     element.MILEAGE_AMOUNT = '';
-          //     if (i != 1)
-          //       element.DESCRIPTION = '';
-          //     if (i != 2) {
-          //     element.DISTANCE_KM = '';
-          //       element.RATE_PER_UNIT = '';
-          //     }
-          //     if (i != 3)
-          //       element.TollAmount = 0;
-          //     if (i != 4)
-          //       element.ParkingAmount = 0;
-          //     if (i != 5)
-          //       element.MealAmount = 0;
-          //     if (i != 6)
-          //       element.AccAmount = 0;
-          //     this.claimsListPrintTemp.push(element);
-          //   }
-          // }
-          // else if (element.Type == 'OT') {
-          //   this.claimsListPrintTemp.push(element);
-          //   for (let i = 1; i <= 3; i++) {
-          //     element.TRAVEL_DATE = '';
-          //     element.TYPE = '';
-          //     element.PROJECT_NAME = '';
-          //     element.SOC = '';
-          //     element.CUSTOMER_NAME = '';
-          //     element.MODE = '';
-          //     element.from = '';
-          //     element.to = '';
-          //     element.MILEAGE_AMOUNT = '';
-          //     if (i != 1)
-          //       element.DESCRIPTION = '';
-          //     if (i != 2)
-          //       element.START_TS = '';
-          //     if (i != 3)
-          //       element.END_TS = '';
-          //     this.claimsListPrintTemp.push(element);
-          //   }
-          // }
-          // else {
-          //   this.claimsListPrintTemp.push(element);
-          //   element.TRAVEL_DATE = '';
-          //   element.TYPE = '';
-          //   element.PROJECT_NAME = '';
-          //   element.SOC = '';
-          //   element.CUSTOMER_NAME = '';
-          //   element.MODE = '';
-          //   element.from = '';
-          //   element.to = '';
-          //   element.MILEAGE_AMOUNT = '';
-          //   element.START_TS = '';
-          //   element.END_TS = '';
-          //   this.claimsListPrintTemp.push(element);
-          // }
-
-
           this.totalClaimAmount = this.totalClaimAmount + element.Total;
         });
-        //console.log(this.claimsListPrintTemp);
       });
   }
 
@@ -228,11 +148,11 @@ export class ClaimReportPage {
   }
   GetSocSummeryData() {
     this.http
-    .get(this.baseResourceUrlSocSummery)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.claimsSocSummery = data["resource"];
-    });
+      .get(this.baseResourceUrlSocSummery)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.claimsSocSummery = data["resource"];
+      });
   }
 
 
