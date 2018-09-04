@@ -152,6 +152,7 @@
   "ORIGIN_PLACE_LABEL": "Origin Place",
   "DESTINATION_PLACE_LABEL": "Destination Place",
   "DESCRIPTION_LABEL": "Description",
+  "REMARK_LABEL": "Remarks",
   "CLAIM_AMOUNT_LABEL": "Claim Amount",
   "ATTACHMENT_LABEL": "Attachment",
   "CURRENCY_NAME_LABEL": "(RM)",
