@@ -109,12 +109,10 @@
             <p># YTD: {{RejectedClaimCount_year}}</p>
           </div>
         </div>
-
-
   </ion-card>
 
 
-  <ion-card (click)="Pending_Click()" class="round2" color="war">
+  <!-- <ion-card (click)="Pending_Click()" class="round2" color="war">
       <div class="icondash">
           <h2 class="dashhead">Pending</h2>
           <ion-icon name="alert" color="light" style="float: left;color:gray; "></ion-icon>
@@ -125,9 +123,31 @@
             <p># YTD: {{PendingClaimCount_year}}</p>
           </div>
         </div>
-
-
-  </ion-card>
+  </ion-card> -->
+  <ion-card (click)="Pending_Click()" class="round2" color="war">
+    <div class="icondash">
+        <h2 class="dashhead">Pending at Superior</h2>
+        <ion-icon name="alert" color="light" style="float: left;color:gray; "></ion-icon>
+        <div text-right class="wordash">
+          <h1>RM {{Pending_Claim_Amount_Superior}}</h1>
+          <h3># this month: {{Pending_Claim_Count_Superior}}</h3>
+         <p>Amount YTD: RM {{PendingClaimAmount_year_Superior}}</p>
+          <p># YTD: {{PendingClaimCount_year_Superior}}</p>
+        </div>
+      </div>
+</ion-card>
+<ion-card (click)="Pending_Click()" class="round2" color="war1">
+  <div class="icondash">
+      <h2 class="dashhead">Pending at Finance</h2>
+      <ion-icon name="alert" color="light" style="float: left;color:gray; "></ion-icon>
+      <div text-right class="wordash">
+        <h1>RM {{Pending_Claim_Amount_Finance}}</h1>
+        <h3># this month: {{Pending_Claim_Count_Finance}}</h3>
+       <p>Amount YTD: RM {{PendingClaimAmount_year_Finance}}</p>
+        <p># YTD: {{PendingClaimCount_year_Finance}}</p>
+      </div>
+    </div>
+</ion-card>
   
   <ion-card  (click)="Approved_Click()" class="round2" color="primary500">
       <div class="icondash">
