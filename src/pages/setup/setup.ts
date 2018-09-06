@@ -30,6 +30,8 @@ import { SetupguidePage } from '../setupguide/setupguide';
 import { UUID } from 'angular2-uuid';
 
 import { LoginPage } from '../login/login';
+import { SettingsPage } from '../settings/settings';
+import { CompanysettingsPage } from '../companysettings/companysettings';
 
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -360,6 +362,14 @@ export class SetupPage {
     this.COMPANYNAME_ngModel_Add = "";
 
     this.NAME_ngModel_Edit = "";
+  }
+
+  goToSettings() {
+    this.navCtrl.push(SettingsPage);
+  }
+
+  goToCompanySettings(){
+    this.navCtrl.push(CompanysettingsPage);
   }
 
 }

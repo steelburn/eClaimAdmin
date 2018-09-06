@@ -208,7 +208,7 @@ export class BranchsetupPage {
           this.tenant_company_entry.TENANT_COMPANY_GUID = UUID.UUID();
           this.tenant_company_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
           this.tenant_company_entry.NAME = this.COMPANYNAME_ngModel_Add.trim();
-          //this.tenant_company_entry.REGISTRATION_NO = this.REGISTRATION_NUM_ngModel_Add.trim();
+          this.tenant_company_entry.REGISTRATION_NO = null;
           this.tenant_company_entry.ACTIVATION_FLAG = "1";
 
           this.tenant_company_entry.CREATION_TS = new Date().toISOString();
@@ -224,7 +224,6 @@ export class BranchsetupPage {
             })
         }
       });
-    //console.log('Bijay Kumar'.replace(' ', '')); 
   }
 
   Save_Tenant_Company_Site() {
@@ -251,7 +250,7 @@ export class BranchsetupPage {
             this.UpdateHQ();
           }
           else {
-            alert('Company & Site Registered successfully');
+            alert('Company & Site registered successfully');
             this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         }

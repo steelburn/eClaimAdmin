@@ -103,16 +103,18 @@ import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../pages/miscellaneous-claim-view/miscellaneous-claim-view';
 import { ApiManagerProvider } from '../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
-
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
-
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { SettingsPage } from '../pages/settings/settings';
+import { CompanysettingsPage } from '../pages/companysettings/companysettings';
+
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data';
 // import { Ng2PaginationModule } from 'ng2-pagination';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
+import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 // import { Transfer } from "../providers/file-transfer";
 
 @NgModule({
@@ -181,7 +183,9 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ClaimReportUserPage,
     ClaimReportPrintPage,
     LeaveReportPage,
-    AttendanceReportPage
+    AttendanceReportPage,
+    SettingsPage,
+    CompanysettingsPage
 
   ],
 
@@ -309,7 +313,10 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ClaimReportUserPage,
     ClaimReportPrintPage,
     LeaveReportPage,
-    AttendanceReportPage
+    AttendanceReportPage,
+
+    SettingsPage,
+    CompanysettingsPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
