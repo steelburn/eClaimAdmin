@@ -92,6 +92,10 @@ import { ClaimReportUserPage } from '../pages/claim-report-user/claim-report-use
 import { ClaimReportPrintPage } from '../pages/claim-report-print/claim-report-print';
 import { LeaveReportPage } from '../pages/leave-report/leave-report';
 import { AttendanceReportPage } from '../pages/attendance-report/attendance-report';
+import { FinancePaymentTasklistPage } from '../pages/finance-payment-tasklist/finance-payment-tasklist';
+import { CommonTasklistPage } from '../pages/common-tasklist/common-tasklist';
+import { PaymentHistoryPage } from '../pages/payment-history/payment-history';
+import { CommonHistorylistPage } from '../pages/common-historylist/common-historylist';
 
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
@@ -182,8 +186,11 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ClaimReportPrintPage,
     LeaveReportPage,
     AttendanceReportPage,
-    SettingsPage
-
+    SettingsPage,
+    FinancePaymentTasklistPage,
+    CommonTasklistPage,
+    PaymentHistoryPage,
+    CommonHistorylistPage
   ],
 
   imports: [
@@ -230,7 +237,11 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
         { component: ClaimReportUserPage, name: 'ClaimReportUserPage', segment: 'ClaimReportUserPage' },
         { component: LeaveReportPage, name: 'LeaveReportPage', segment: 'LeaveReportPage' },
         { component: AttendanceReportPage, name: 'AttendanceReportPage', segment: 'AttendanceReportPage' },
-        { component: ClaimReportPrintPage, name: 'ClaimReportPrintPage', segment: 'ClaimReportPrintPage' }
+        { component: ClaimReportPrintPage, name: 'ClaimReportPrintPage', segment: 'ClaimReportPrintPage' },
+        { component: FinancePaymentTasklistPage, name: 'FinancePaymentTasklistPage', segment: 'FinancePaymentTasklistPage' },
+        { component: CommonTasklistPage, name: 'CommonTasklistPage', segment: 'CommonTasklistPage' },
+        { component: PaymentHistoryPage, name: 'PaymentHistoryPage', segment: 'PaymentHistoryPage' },
+        { component: CommonHistorylistPage, name: 'CommonHistorylistPage', segment: 'CommonHistorylistPage' }
         
       ]
     }),
@@ -311,8 +322,11 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ClaimReportPrintPage,
     LeaveReportPage,
     AttendanceReportPage,
-
-    SettingsPage
+    FinancePaymentTasklistPage,
+    CommonTasklistPage,
+    SettingsPage,
+    PaymentHistoryPage,
+    CommonHistorylistPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
