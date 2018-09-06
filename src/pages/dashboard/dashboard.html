@@ -69,7 +69,7 @@
 <ion-card  class="round4" *ngIf="IsFinanceExecutive"  (click)="Finance_Executive_Click()" color="war3">
     <div class="icondash">
         <ion-icon name="eye" color="light" style="float: left; "></ion-icon>
-        <h2 class="dashhead">Pending Finance Validation</h2>
+        <h2 class="dashhead">Pending Your Validation</h2>
         <div text-right class="wordash">
             <h1>RM {{FinanceExecLevel_PendAmt}}</h1>
             <h3># this month: {{FinanceExecLevel_PendCount}}</h3>
@@ -85,7 +85,7 @@
 <ion-card  class="round30" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war2">
     <div class="icondash">
         <ion-icon name="filing" color="light" style="float: left; "></ion-icon>
-        <h2 class="dashhead">Pending Finance Payment</h2>
+        <h2 class="dashhead">Pending Your Payment</h2>
         <div text-right class="wordash">
             <h1>RM {{FinanceMgrLevel_PendAmt}}</h1>
             <h3># this month: {{FinanceMgrLevel_PendCount}}</h3>
