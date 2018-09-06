@@ -32,7 +32,7 @@
           <th class="lgl1">{{ 'DEVICE_NAME' | translate }}</th>
           <th class="lgl1">{{ 'Role' | translate }}</th>
           <th class="lgl1">{{ 'Status' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:105px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let device of devices | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">
