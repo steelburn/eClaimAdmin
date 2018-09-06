@@ -46,8 +46,6 @@ export class ClaimReportUserPage {
  
   BindData(printSectionId: any, item: string) {
     if (this.loginUserGuid !== undefined) {
-      this.totalClaimAmount = 0;
-      this.claimsListPrintTemp = [];
       this.month = item.split(' ')[0].substring(0,3);
       //alert(this.month);
       this.year = item.split(' ')[1];
@@ -56,6 +54,8 @@ export class ClaimReportUserPage {
         .map(res => res.json())
         .subscribe(data => {
           this.claimsList = data["resource"];
+          this.totalClaimAmount = 0;
+          this.claimsListPrintTemp = [];
           this.claimsListPrint = this.claimsList;
           this.totalClaimAmount = 0;
           this.claimsList.forEach(element => {
