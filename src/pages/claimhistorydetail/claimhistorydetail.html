@@ -125,7 +125,8 @@
 
           <th class="lgl1">Claim Type</th>
           <th class="lgl1" style="width:120px">Date</th>
-          <th class="lgl1"style="width:100px">Status</th>
+          <th class="lgl1"style="width:120px">Approver Status</th>
+          <th class="lgl1"style="width:100px">Claim Status</th>
           <!-- <th class="lgl1">STAGE</th> -->
           <th class="lgl1" style="width:90px">Amount(RM)</th>
           <th class="lgl1 tblBrRight" style="width:60px">Action</th>
@@ -139,7 +140,8 @@
 
           <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIM_TYPE}}</td>
           <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
-          <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
+          <td class="lgl1 getHeader" reshead="Approver Status">{{claimhistorydetail.STATUS}}</td>
+          <td class="lgl1 getHeader" reshead="Claim Status">{{claimhistorydetail.REQ_STATUS}}</td>
           <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
           <td class="lgl1 getHeader" reshead="Amount(RM)">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
           <td class="lgl1 getHeader fColor" reshead="Action">
