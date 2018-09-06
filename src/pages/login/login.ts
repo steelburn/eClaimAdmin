@@ -105,7 +105,10 @@ export class LoginPage {
                     localStorage.removeItem("g_ROLE_NAME");
                   }
                 });
-              //----------------------------------------------------------------------------------
+
+              //Get company settings details----------------------------------------------------------------------------------
+              this.GetCompanySettings(localStorage.getItem("g_TENANT_GUID"));
+              //--------------------------------------------------------------------------------------------------------------
               //navigate to app.component page
               this.userData.login(this.login.username);
             }
@@ -411,7 +414,8 @@ export class LoginPage {
                       this.navCtrl.setRoot(DashboardPage);
                     }
                     // this.loading.dismissAll();
-                    //Get the role of that particular user----------------------------------------------
+
+                    //Get the role of that particular user---------------------------------------------------------------------------
                     let role_url: string = "";
                     role_url = this.baseResource_Url + "view_role_display?filter=(USER_GUID=" + res[0]["USER_GUID"] + ')and(ROLE_PRIORITY_LEVEL=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
                     this.http
@@ -431,7 +435,11 @@ export class LoginPage {
                           localStorage.removeItem("g_ROLE_NAME");
                         }
                       });
-                    //----------------------------------------------------------------------------------
+
+                    //Get company settings details----------------------------------------------------------------------------------
+                    this.GetCompanySettings(localStorage.getItem("g_TENANT_GUID"));
+                    //--------------------------------------------------------------------------------------------------------------
+
                     //navigate to app.component page
                     this.userData.login(this.login.username);
                     // this.loading.dismissAll();
@@ -457,6 +465,47 @@ export class LoginPage {
         });
       // this.loading.dismissAll();
     }
-
   }
+
+  KeyNameValue: any[] = []; KeyNameValueList: any;
+  GetCompanySettings(STR_TENANT_GUID: string) {
+    localStorage.removeItem("cs_date_format");
+    localStorage.removeItem("cs_default_currency");
+    localStorage.removeItem("cs_email_logo");
+    localStorage.removeItem("cs_default_country");
+    localStorage.removeItem("cs_max_claim_amt");
+    localStorage.removeItem("cs_min_claim_amt");
+    localStorage.removeItem("cs_claim_cutOff_date");
+    localStorage.removeItem("cs_year_start_month");
+    localStorage.removeItem("cs_year_end_month");
+    localStorage.removeItem("cs_approval_cutoff_date");
+    localStorage.removeItem("cs_default_payment_type");
+    localStorage.removeItem("cs_default_language");
+    
+    this.KeyNameValue = [];
+    let url: string = "";
+    url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/permission_keys' + '?filter=(TENANT_GUID=' + STR_TENANT_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http
+      .get(url)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.KeyNameValueList = data.resource;
+        for (var item in this.KeyNameValueList) {
+          // this.KeyNameValue.push({ PERMISSION_KEY_GUID: this.KeyNameValueList[item]["PERMISSION_KEY_GUID"], KEY_NAME: this.KeyNameValueList[item]["KEY_NAME"], KEY_VALUE: this.KeyNameValueList[item]["KEY_VALUE"] });
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "date_format") { localStorage.setItem("cs_date_format", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_currency") { localStorage.setItem("cs_default_currency", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "email_logo") { localStorage.setItem("cs_email_logo", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_country") { localStorage.setItem("cs_default_country", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "max_claim_amt") { localStorage.setItem("cs_max_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "min_claim_amt") { localStorage.setItem("cs_min_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "claim_cutOff_date") { localStorage.setItem("cs_claim_cutOff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "year_start_month") { localStorage.setItem("cs_year_start_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "year_end_month") { localStorage.setItem("cs_year_end_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "approval_cutoff_date") { localStorage.setItem("cs_approval_cutoff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_payment_type") { localStorage.setItem("cs_default_payment_type", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_language") { localStorage.setItem("cs_default_language", this.KeyNameValueList[item]["KEY_VALUE"]); }
+        }
+      });
+  }
+
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TitleCasePipe } from '@angular/common';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
@@ -12,8 +12,8 @@ import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
-import { Item } from 'ionic-angular/components/item/item';
-import { Flags } from '@ionic-native/file';
+// import { Item } from 'ionic-angular/components/item/item';
+// import { Flags } from '@ionic-native/file';
 
 /**
  * Generated class for the CompanysettingsPage page.
@@ -55,7 +55,7 @@ export class CompanysettingsPage {
       this.CompanySettingsform = fb.group({
         DateFormat: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         Currency: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
-        EmailLogo: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        // EmailLogo: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         Country: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         MaxClaimAmt: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         MinClaimAmt: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
@@ -65,6 +65,8 @@ export class CompanysettingsPage {
         ApprovalCutoffDate: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         PaymentType: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         Language: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        avatar1: null,
+        avatar: null,
       });
     }
   }
@@ -112,7 +114,9 @@ export class CompanysettingsPage {
           this.KeyNameValue.push({ PERMISSION_KEY_GUID: this.FormControls[item]["PERMISSION_KEY_GUID"], KEY_NAME: this.FormControls[item]["KEY_NAME"], KEY_VALUE: this.FormControls[item]["KEY_VALUE"] });
           if (this.FormControls[item]["KEY_NAME"] == "date_format") { this.DateFormat_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "default_currency") { this.Currency_ngModel = this.FormControls[item]["KEY_VALUE"]; }
-          if (this.FormControls[item]["KEY_NAME"] == "email_logo") { this.EmailLogo_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          // if (this.FormControls[item]["KEY_NAME"] == "email_logo") { this.EmailLogo_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          this.isImage = true;
+          if (this.FormControls[item]["KEY_NAME"] == "email_logo") { this.EmailImage = 'http://api.zen.com.my/api/v2/files/eclaim/' + this.FormControls[item]["KEY_VALUE"] + '?api_key=' + constants.DREAMFACTORY_API_KEY; this.imageGUID = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "default_country") { this.Country_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "max_claim_amt") { this.MaxClaimAmt_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "min_claim_amt") { this.MinClaimAmt_ngModel = this.FormControls[item]["KEY_VALUE"]; }
@@ -137,7 +141,7 @@ export class CompanysettingsPage {
       this.KeyNameValue = [];
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "date_format", KEY_VALUE: formValues.DateFormat.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_currency", KEY_VALUE: formValues.Currency.trim() });
-      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_logo", KEY_VALUE: formValues.EmailLogo.trim() });
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_logo", KEY_VALUE: this.imageGUID });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_country", KEY_VALUE: formValues.Country.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "max_claim_amt", KEY_VALUE: formValues.MaxClaimAmt.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "min_claim_amt", KEY_VALUE: formValues.MinClaimAmt.trim() });
@@ -157,7 +161,7 @@ export class CompanysettingsPage {
       this.KeyNameValue.forEach(element => {
         if (element.KEY_NAME == "date_format") { element.KEY_VALUE = formValues.DateFormat.trim(); }
         if (element.KEY_NAME == "default_currency") { element.KEY_VALUE = formValues.Currency.trim(); }
-        if (element.KEY_NAME == "email_logo") { element.KEY_VALUE = formValues.EmailLogo.trim(); }
+        if (element.KEY_NAME == "email_logo") { element.KEY_VALUE = this.imageGUID; }
         if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim(); }
         if (element.KEY_NAME == "max_claim_amt") { element.KEY_VALUE = formValues.MaxClaimAmt.trim(); }
         if (element.KEY_NAME == "min_claim_amt") { element.KEY_VALUE = formValues.MinClaimAmt.trim(); }
@@ -206,12 +210,105 @@ export class CompanysettingsPage {
           });
       }
     });
-    if (this.blnDataInsert == true) {
-      alert('Submitted successfully');
-    }
-    if (this.blnDataUpdate == true) {
-      alert('Updated successfully');
-    }
+    // if (this.blnDataInsert == true) {
+    alert('Submitted successfully');
+    // }
+    // if (this.blnDataUpdate == true) {
+    //   alert('Updated successfully');
+    // }
     this.BindControls();
+    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+  }
+
+  fileName1: string;
+  EmailImage: any;
+  fileList: FileList;
+  imageGUID: any;
+  uploadFileName: string;
+  chooseFile: boolean = false;
+  newImage: boolean = true;
+  ImageUploadValidation: boolean = false;
+
+  private EmailImageDisplay(e: any, fileChoose: string): void {
+    let reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      this.CompanySettingsform.get(fileChoose).setValue(file);
+      if (fileChoose === 'avatar1')
+        this.fileName1 = file.name;
+
+      reader.onload = (event: any) => {
+        this.EmailImage = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    this.imageGUID = this.uploadFileName;
+    this.chooseFile = true;
+    this.newImage = false;
+    this.onFileChange(e);
+    this.ImageUploadValidation = false;
+    this.saveIm();
+  }
+
+  isImage: boolean = false;
+  selectedImage: any = null;
+
+  onFileChange(event: any, ) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      if (file.type === 'image/jpeg' || file.type === 'image/png')
+        this.isImage = true;
+      else
+        this.isImage = false;
+      this.CompanySettingsform.get('avatar').setValue(file);
+      this.uploadFileName = file.name;
+
+      reader.onload = () => {
+        this.CompanySettingsform.get('avatar').setValue({
+          filename: file.name,
+          filetype: file.type,
+          value: reader.result.split(',')[1]
+        });
+      };
+    }
+  }
+
+  uniqueName: any;
+  saveIm() {
+    let uploadImage = this.UploadImage();
+    uploadImage.then(() => {
+      this.imageGUID = this.uniqueName;
+      this.chooseFile = false;
+      this.ImageUploadValidation = true;
+    })
+  }
+
+  CloudFilePath: string;
+  UploadImage() {
+    this.CloudFilePath = 'eclaim/'
+    this.uniqueName = new Date().toISOString() + this.uploadFileName;
+
+    const queryHeaders = new Headers();
+    queryHeaders.append('filename', this.uploadFileName);
+    queryHeaders.append('Content-Type', 'multipart/form-data');
+    queryHeaders.append('fileKey', 'file');
+    queryHeaders.append('chunkedMode', 'false');
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    const options = new RequestOptions({ headers: queryHeaders });
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+    });
+    this.loading.present();
+
+    return new Promise((resolve) => {
+      this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.CompanySettingsform.get('avatar').value, options)
+        .map((response) => {
+          this.loading.dismissAll()
+          return response;
+        }).subscribe((response) => {
+          resolve(response.json());
+        })
+    })
   }
 }
