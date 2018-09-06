@@ -193,7 +193,7 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
     FinancePaymentTasklistPage,
     CommonTasklistPage,
     PaymentHistoryPage,
-    CommonHistorylistPage
+    CommonHistorylistPage,
 
     CompanysettingsPage
 
@@ -334,7 +334,7 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
     CommonTasklistPage,
    
     PaymentHistoryPage,
-    CommonHistorylistPage
+    CommonHistorylistPage,
 
 
     SettingsPage,
