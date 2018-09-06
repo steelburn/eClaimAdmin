@@ -30,7 +30,7 @@
                     <th class="lgl1">{{ 'MANAGEMENT_URL' | translate }}</th>
 
                     <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-                    <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
+                    <th class="lgl1 tblBrRight" style="width:105px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let cashcard of cashcards | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden] = "button_View_Disable">

@@ -45,6 +45,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
 import { AllClaimListPage } from '../pages/all-claim-list/all-claim-list';
+import * as Settings from '../dbSettings/companySettings'
 
 // import { MenuService } from '../providers/menu.service'
 
@@ -345,7 +346,8 @@ export class ConferenceApp {
         }
 
         //For Team Member, Home, Change Password, Sign Out
-        else if (res.toString() == "Team Member") {
+        // else if (res.toString() == "Team Member") {
+        else if (res.toString() == Settings.UserRoleConstants.TEAM_MEMBER) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
           this.blnReport_loggedInMenu_User = true;
@@ -397,7 +399,8 @@ export class ConferenceApp {
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
-        else if (res.toString() == "Finance Executive") {
+        // else if (res.toString() == "Finance Executive") {
+        else if (res.toString() == Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -463,7 +466,8 @@ export class ConferenceApp {
         }
 
         //For Team Member, Home, Change Password, Sign Out
-        else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
+        // else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
+        else if (res.toString() == Settings.UserRoleConstants.FINANCE_ADMIN || res.toString() == Settings.UserRoleConstants.FINANCE_MANAGER) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -531,7 +535,8 @@ export class ConferenceApp {
         }
 
         //For Manage Customer
-        else if (res.toString() == "Manage Customer") {
+        // else if (res.toString() == "Manage Customer") {
+        else if (res.toString() == Settings.UserRoleConstants.MANAGE_CUSTOMER) {
           this.appPages_User = [
 
             { title: 'Superior', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' }
@@ -575,7 +580,8 @@ export class ConferenceApp {
         }
 
         //For Team Lead
-        else if (res.toString() == "Team Lead") {
+        // else if (res.toString() == "Team Lead") {
+        else if (res.toString() == Settings.UserRoleConstants.TEAM_LEAD) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;

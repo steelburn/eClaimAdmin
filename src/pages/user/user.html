@@ -24,16 +24,16 @@
 
                     <th class="lgl1 tblBrLeft" style="width:40px">No.</th>
                     <th class="lgl1">{{ 'NAME' | translate }}</th>
-                    <th class="lgl1">{{ 'Staff ID' | translate }}</th>
+                    <th class="lgl1" style="width:65px">{{ 'Staff ID' | translate }}</th>
                     <th class="lgl1">{{ 'COMPANY' | translate }}</th>
                     <th class="lgl1">{{ 'DEPARTMENT' | translate }}</th>
                     <th class="lgl1">{{ 'DESIGNATION' | translate }}</th>
                     <th class="lgl1">{{ 'EMAIL' | translate }}</th>
 
-                    <th class="lgl1">{{ 'Joining Date' | translate }}</th>
-                    <th class="lgl1">{{ 'STATUS' | translate }}</th>
+                    <th class="lgl1"style="width:85px">{{ 'Joining Date' | translate }}</th>
+                    <th class="lgl1" style="width:85px">{{ 'STATUS' | translate }}</th>
 
-                    <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
+                    <th class="lgl1 tblBrRight" style="width:100px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let user of userview | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">

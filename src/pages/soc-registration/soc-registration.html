@@ -25,11 +25,11 @@
       <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
-          <th class="lgl1" style="width:220px">{{ 'SOC_NUMBER' | translate }}</th>
+          <th class="lgl1" style="width:150px">{{ 'SOC_NUMBER' | translate }}</th>
           <th class="lgl1">{{ 'PROJECT_NAME' | translate }}</th>
           <th class="lgl1">{{ 'CUSTOMER_NAME' | translate }}</th>
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:105px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let soc of socs | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">
