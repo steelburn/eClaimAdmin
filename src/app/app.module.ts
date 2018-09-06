@@ -111,12 +111,14 @@ import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { SettingsPage } from '../pages/settings/settings';
+import { CompanysettingsPage } from '../pages/companysettings/companysettings';
 
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data';
 // import { Ng2PaginationModule } from 'ng2-pagination';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
+import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 // import { Transfer } from "../providers/file-transfer";
 
 @NgModule({
@@ -187,10 +189,15 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     LeaveReportPage,
     AttendanceReportPage,
     SettingsPage,
+
     FinancePaymentTasklistPage,
     CommonTasklistPage,
     PaymentHistoryPage,
     CommonHistorylistPage
+
+    CompanysettingsPage
+
+
   ],
 
   imports: [
@@ -322,11 +329,17 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
     ClaimReportPrintPage,
     LeaveReportPage,
     AttendanceReportPage,
+
     FinancePaymentTasklistPage,
     CommonTasklistPage,
-    SettingsPage,
+   
     PaymentHistoryPage,
     CommonHistorylistPage
+
+
+    SettingsPage,
+    CompanysettingsPage
+
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

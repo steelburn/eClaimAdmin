@@ -193,6 +193,16 @@ z-index: 9999;
     min-height: 80px;
   }
 
+  .round33 {
+    float: left;
+    width: calc(33% - 7px) ;
+    margin: 5px !important;
+
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
+
   .round3 {
     float: left;
     width: calc(50% - 10px);
@@ -575,7 +585,7 @@ ion-toggle.toggle.toggle-md{
 }
 
 ion-toggle.toggle.toggle-md.tog{
-    padding-left: 123px !important;
+    padding-left:0px !important;
     padding-right: 0px !important;
 }
 ion-toggle.toggle.toggle-md.yui{

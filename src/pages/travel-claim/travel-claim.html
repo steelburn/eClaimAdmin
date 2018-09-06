@@ -46,14 +46,14 @@
   <form [formGroup]="Travelform">
 
     <ion-item class="fuha">
-      <ion-label floating color="primary500"> <span style="color:red">*</span>{{ "START_DT_LABEL" | translate }}</ion-label>
+      <ion-label floating color="primary500"> <span style="color:red">*</span>Departure</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="start_DT" [(ngModel)]="Start_DT_ngModel"
         displayFormat="DD/MM/YYYY HH:mm"></ion-datetime>
     </ion-item>
 
 
     <ion-item class="fuha">
-      <ion-label floating color="primary500"> <span style="color:red">*</span> {{ "END_DT_LABEL" | translate }}</ion-label>
+      <ion-label floating color="primary500"> <span style="color:red">*</span>Arrival</ion-label>
       <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm" formControlName="end_DT"
         [(ngModel)]="End_DT_ngModel"></ion-datetime>
     </ion-item>
