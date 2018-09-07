@@ -30,10 +30,18 @@
               <ion-input type="text" formControlName="Currency" [(ngModel)]="Currency_ngModel" required placeholder="{{'Pleae fill default currency'}}"></ion-input>
             </ion-item>
 
-            <ion-item>
+            <!-- <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Email Logo' | translate }}</ion-label>
               <ion-input type="text" formControlName="EmailLogo" [(ngModel)]="EmailLogo_ngModel" required placeholder="{{'Please add logo'}}"></ion-input>
+            </ion-item> -->
+
+            <ion-item>
+              <ion-label id="email_image" stacked>{{ 'Email Logo' | translate }}</ion-label>
+              <ion-input type="file" id="avatar1" (change)="EmailImageDisplay($event, 'avatar1')" #fileInput1></ion-input>              
             </ion-item>
+            <div *ngIf="isImage">
+              <img src="{{EmailImage}}" style="width: 20%">
+            </div>
 
             <ion-item class="text">
                 <ion-label stacked>
