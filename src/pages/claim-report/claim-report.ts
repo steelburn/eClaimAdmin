@@ -49,7 +49,6 @@ export class ClaimReportPage {
 
   BindData() {
     this.totalClaimAmount = 0;
-    this.claimsListPrintTemp = [];
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -57,6 +56,7 @@ export class ClaimReportPage {
         this.claimsListPrint = data["resource"];
         this.claimsList = this.claimsListPrint;
         this.totalClaimAmount = 0;
+        this.claimsListPrintTemp = [];
         // this.claimsList.forEach(element => {
 
         // });

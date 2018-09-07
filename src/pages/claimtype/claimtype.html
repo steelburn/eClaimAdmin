@@ -26,7 +26,7 @@
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
           <th class="lgl1">{{ 'CLAIM_NAME' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:105px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let claimtype of claimtypes | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">

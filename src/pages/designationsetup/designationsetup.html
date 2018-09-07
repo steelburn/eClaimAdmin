@@ -33,7 +33,7 @@
           <th class="lgl1">{{ 'DESIGNATION_NAME' | translate }}</th>
  <!-- <th class="lgl1" style="display: none;">{{ 'DESIGNATION_DESCRIPTION' | translate }}</th>
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th> -->
-          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:105px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let designation of designations | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">

@@ -28,7 +28,7 @@
           <th class="lgl1">{{ 'DEPARTMENT_CLAIM_TITLE' | translate }}</th>
     
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:90px">{{ 'ACTION' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:105px">{{ 'ACTION' | translate }}</th>
         </tr>
 
         <tr class="col7" *ngFor="let department of departments | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden] = "button_View_Disable">
