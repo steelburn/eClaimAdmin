@@ -181,7 +181,7 @@ export class CompanysettingsPage {
         if (element.KEY_NAME == "default_country"){
           for (var item in this.Countrys) {
             if (this.Countrys[item]["COUNTRY_GUID"] == formValues.Country.trim()) {
-              if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + this.Countrys[item]["NAME"]; }
+              if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + this.CountryCodes[0]["alpha2Code"]; }
             }
           }
         }
