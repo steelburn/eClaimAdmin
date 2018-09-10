@@ -63,8 +63,12 @@
         <form [formGroup]="Countryform">
           <ion-item>
             <ion-label stacked>{{ 'COUNTRY_NAME' | translate }}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" required placeholder="{{'Please fill in the category of the country'}}"></ion-input>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" required placeholder="{{'Please fill country name'}}"></ion-input>
           </ion-item>
+          <!-- <ion-item>
+            <ion-label stacked>{{ 'Country Code' | translate }}</ion-label>
+            <ion-input type="text" formControlName="CODE" [(ngModel)]="CODE_ngModel_Add" required placeholder="{{'Please fill country code'}}"></ion-input>
+          </ion-item> -->
 
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Countryform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>

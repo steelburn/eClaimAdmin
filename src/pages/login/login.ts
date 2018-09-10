@@ -207,6 +207,7 @@ export class LoginPage {
 
   emailUrl: string = 'http://api.zen.com.my/api/v2/zenmail?api_key=' + constants.DREAMFACTORY_API_KEY;
   sendEmail(strName: string, strEmail: string, strPassword: string) {
+    let ImgageSrc: string = "http://api.zen.com.my/api/v2/files/eclaim/" + localStorage.getItem("cs_email_logo") + "?api_key=" + constants.DREAMFACTORY_API_KEY;
     let name: string; let email: string
     name = strName; email = strEmail;
     var queryHeaders = new Headers();
@@ -236,7 +237,8 @@ export class LoginPage {
         '<DIV style="MIN-WIDTH: 500px">' +
         '<BR>' +
         '<DIV style="PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px">' +
-        '<IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png">' +
+        // '<IMG style="WIDTH: 130px" alt=zen2.png src="http://zentranet.zen.com.my/_catalogs/masterpage/Layout/images/zen2.png">' +
+        '<IMG style="WIDTH: 130px" alt=zen2.png src=' + ImgageSrc + '>' +
         '</DIV>' +
         '<DIV style="MARGIN: 0px 100px; BACKGROUND-COLOR: #ec008c">' +
         '<DIV style="TEXT-ALIGN: center; FONT-SIZE: 30px; COLOR: white; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px">' +
@@ -481,7 +483,7 @@ export class LoginPage {
     localStorage.removeItem("cs_approval_cutoff_date");
     localStorage.removeItem("cs_default_payment_type");
     localStorage.removeItem("cs_default_language");
-    
+
     this.KeyNameValue = [];
     let url: string = "";
     url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/permission_keys' + '?filter=(TENANT_GUID=' + STR_TENANT_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -490,19 +492,36 @@ export class LoginPage {
       .map(res => res.json())
       .subscribe(data => {
         this.KeyNameValueList = data.resource;
-        for (var item in this.KeyNameValueList) {
-          // this.KeyNameValue.push({ PERMISSION_KEY_GUID: this.KeyNameValueList[item]["PERMISSION_KEY_GUID"], KEY_NAME: this.KeyNameValueList[item]["KEY_NAME"], KEY_VALUE: this.KeyNameValueList[item]["KEY_VALUE"] });
+        for (var item in this.KeyNameValueList) {          
           if (this.KeyNameValueList[item]["KEY_NAME"] == "date_format") { localStorage.setItem("cs_date_format", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "default_currency") { localStorage.setItem("cs_default_currency", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "email_logo") { localStorage.setItem("cs_email_logo", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_country") { localStorage.setItem("cs_default_country", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          // if (this.KeyNameValueList[item]["KEY_NAME"] == "default_country") { localStorage.setItem("cs_default_country", this.KeyNameValueList[item]["KEY_VALUE"]); }
+
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_country") {
+            var StartIndex = this.KeyNameValueList[item]["KEY_VALUE"].indexOf(",");
+            var EndIndex = this.KeyNameValueList[item]["KEY_VALUE"].length - (StartIndex + 1);
+            var KeyValue = this.KeyNameValueList[item]["KEY_VALUE"].substr(StartIndex + 1, EndIndex);
+                        
+            localStorage.setItem("cs_default_country", KeyValue); 
+          }
+
           if (this.KeyNameValueList[item]["KEY_NAME"] == "max_claim_amt") { localStorage.setItem("cs_max_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "min_claim_amt") { localStorage.setItem("cs_min_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "claim_cutOff_date") { localStorage.setItem("cs_claim_cutOff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "year_start_month") { localStorage.setItem("cs_year_start_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "year_end_month") { localStorage.setItem("cs_year_end_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "approval_cutoff_date") { localStorage.setItem("cs_approval_cutoff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_payment_type") { localStorage.setItem("cs_default_payment_type", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          // if (this.KeyNameValueList[item]["KEY_NAME"] == "default_payment_type") { localStorage.setItem("cs_default_payment_type", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_payment_type") {
+            var StartIndex_1 = this.KeyNameValueList[item]["KEY_VALUE"].indexOf(",");
+            var EndIndex_1 = this.KeyNameValueList[item]["KEY_VALUE"].length - (StartIndex_1 + 1);
+            var KeyValue_1 = this.KeyNameValueList[item]["KEY_VALUE"].substr(StartIndex_1 + 1, EndIndex_1);
+
+            localStorage.setItem("cs_default_payment_type", KeyValue_1);
+          }
+
           if (this.KeyNameValueList[item]["KEY_NAME"] == "default_language") { localStorage.setItem("cs_default_language", this.KeyNameValueList[item]["KEY_VALUE"]); }
         }
       });
