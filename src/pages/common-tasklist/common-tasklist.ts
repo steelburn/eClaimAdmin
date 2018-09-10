@@ -65,13 +65,12 @@ export class CommonTasklistPage implements OnInit {
   }
 
   BindData(ddlDept: string, ddlEmployee: string, ddlmonth: string) {
-    this.claimTaskLists = this.claimTaskLists1 = [];
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
         this.claimTaskListTotal = data["resource"];
-
+        this.claimTaskLists = this.claimTaskLists1 = [];
         this.claimTaskListTotal.forEach(element => {
           if (this.claimTaskLists1.length === 0 || (this.claimTaskLists1.length > 0 && this.claimTaskLists1.find(e => e.CLAIM_REF_GUID == element.CLAIM_REF_GUID) === undefined)) {
             this.claimTaskLists1.push(element);
