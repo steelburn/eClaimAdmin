@@ -760,6 +760,9 @@ export class TravelclaimPage {
   }
 
   submitAction(formValues: any) {
+    formValues.travel_date = formValues.start_DT;
+    if(this.api.isClaimExpired(formValues))
+    return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
@@ -768,7 +771,7 @@ export class TravelclaimPage {
       if (!this.isFormSubmitted) {
         this.isFormSubmitted = true;
         formValues.uuid = this.claimRequestGUID = UUID.UUID();
-        formValues.travel_date = formValues.start_DT
+        // formValues.travel_date = formValues.start_DT
         formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
         formValues.meal_allowance = this.allowanceGUID;
         formValues.distance = this.Travel_Distance_ngModel;

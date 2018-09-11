@@ -7,9 +7,9 @@
 <ion-header>
 
   <ion-navbar color="primary200">
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
 
     <ion-title>
       <b>Setup</b>
@@ -19,21 +19,33 @@
 </ion-header>
 <div class="popup123">
   <div class="bgpop"></div>
-  <div class="PopUpwarn"><div class="poptext">Sorry, this page cannot be viewed in this screen size. <br>Please use desktop browser to view the page. </div></div>
+  <div class="PopUpwarn">
+    <div class="poptext">Sorry, this page cannot be viewed in this screen size. <br>Please use desktop browser to view the
+      page. </div>
+  </div>
 </div>
 <ion-content padding style="background: #eeeeee;">
   <ion-card class="round1" (click)="goToSetupGuide()">
     <ion-card-header class="icon">
-      <ion-icon name="ios-cog"  color="primary500" class="iconf"></ion-icon>
+      <ion-icon name="ios-cog" color="primary500" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Setup Guide
     </ion-card-content>
   </ion-card>
 
+  <ion-card class="round1" (click)="goToBranchsetup()">
+    <ion-card-header class="icon">
+      <ion-icon name="ios-briefcase" color="primary500" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+      Tenant Company
+    </ion-card-content>
+  </ion-card>
+
   <ion-card class="round1" (click)="goToBanksetup()">
     <ion-card-header class="icon">
-      <ion-icon name="logo-usd"  color="primary" class="iconf"></ion-icon>
+      <ion-icon name="logo-usd" color="primary" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Bank
@@ -42,7 +54,7 @@
 
   <ion-card class="round1" (click)="goToCashcardsetup()">
     <ion-card-header class="icon">
-      <ion-icon name="cash"  color="secondary400" class="iconf"></ion-icon>
+      <ion-icon name="cash" color="secondary400" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Cash Card
@@ -60,7 +72,7 @@
 
   <ion-card class="round1" (click)="goToDesignationsetup()">
     <ion-card-header class="icon">
-      <ion-icon name="person"  color="primary" class="iconf"></ion-icon>
+      <ion-icon name="person" color="primary" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Designation
@@ -69,7 +81,7 @@
 
   <ion-card class="round1" (click)="goToDepartmentsetup()">
     <ion-card-header class="icon">
-      <ion-icon name="git-pull-request"  color="secondary400" class="iconf"></ion-icon>
+      <ion-icon name="git-pull-request" color="secondary400" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Department
@@ -78,7 +90,7 @@
 
   <ion-card class="round1" (click)="goToMileagesetup()">
     <ion-card-header class="icon">
-      <ion-icon name="car"  color="secondary400" class="iconf"></ion-icon>
+      <ion-icon name="car" color="secondary400" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Mileage
@@ -87,7 +99,7 @@
 
   <ion-card class="round1" (click)="goToPaymenttypesetup()">
     <ion-card-header class="icon">
-      <ion-icon name="list-box"  color="primary500" class="iconf"></ion-icon>
+      <ion-icon name="list-box" color="primary500" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Payment Type
@@ -97,7 +109,7 @@
 
   <ion-card class="round1" (click)="goToQualificationsetup()">
     <ion-card-header class="icon">
-      <ion-icon name="medal"  color="primary" class="iconf"></ion-icon>
+      <ion-icon name="medal" color="primary" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Qualification
@@ -106,7 +118,7 @@
 
   <ion-card class="round1" (click)="goToUser()">
     <ion-card-header class="icon">
-      <ion-icon name="people"  color="secondary400" class="iconf"></ion-icon>
+      <ion-icon name="people" color="secondary400" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       User Registration
@@ -115,7 +127,7 @@
 
   <ion-card class="round1" (click)="goToCustomer()">
     <ion-card-header class="icon">
-      <ion-icon name="man"  color="primary500" class="iconf"></ion-icon>
+      <ion-icon name="man" color="primary500" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Customer Registration
@@ -124,34 +136,25 @@
 
   <ion-card class="round1" (click)="goToSOC()">
     <ion-card-header class="icon">
-      <ion-icon name="md-clipboard"  color="primary" class="iconf"></ion-icon>
+      <ion-icon name="md-clipboard" color="primary" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
-      SOC/Project 
+      SOC/Project
     </ion-card-content>
   </ion-card>
 
-  <!-- <ion-card class="round1" (click)="goToBranchsetup()">
-    <ion-card-header class="icon">
-      <ion-icon name="ios-briefcase" class="iconf"></ion-icon>
-    </ion-card-header>
-    <ion-card-content class="Subtitle">
-      TENANT COMPANY & SITE
-    </ion-card-content>
-  </ion-card> -->
-
   <ion-card class="round1" (click)="goToCountrysetup()">
     <ion-card-header class="icon">
-      <ion-icon name="ios-pin"  color="primary500" class="iconf"></ion-icon>
+      <ion-icon name="ios-pin" color="primary500" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
-      Country 
+      Country
     </ion-card-content>
   </ion-card>
 
   <ion-card class="round1" (click)="goToStatesetup()">
     <ion-card-header class="icon">
-      <ion-icon name="ios-pin-outline"  color="primary" class="iconf"></ion-icon>
+      <ion-icon name="ios-pin-outline" color="primary" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       State
@@ -160,7 +163,7 @@
 
   <ion-card class="round1" (click)="goToDevicesetup()">
     <ion-card-header class="icon">
-      <ion-icon name="ios-finger-print-outline" color="primary" class="iconf"></ion-icon>
+      <ion-icon name="ios-finger-print-outline" color="primary500" class="iconf"></ion-icon>
     </ion-card-header>
     <ion-card-content class="Subtitle">
       Attendance Device
@@ -168,12 +171,30 @@
   </ion-card>
 
   <ion-card class="round1" (click)="goToImport_Excel_Data_setup()">
-      <ion-card-header class="icon">
-        <ion-icon name="ios-stats-outline"  color="primary" class="iconf"></ion-icon>
-      </ion-card-header>
-      <ion-card-content class="Subtitle">
-        Import Data
-      </ion-card-content>
-    </ion-card>
+    <ion-card-header class="icon">
+      <ion-icon name="ios-stats-outline" color="primary" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+      Import Data
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="round1" (click)="goToSettings()" style="display:none;">
+    <ion-card-header class="icon">
+      <ion-icon name="settings" color="primary500" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+      Settings
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="round1" (click)="goToCompanySettings()">
+    <ion-card-header class="icon">
+      <ion-icon name="settings" color="primary500" class="iconf"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="Subtitle">
+      Company Settings
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>

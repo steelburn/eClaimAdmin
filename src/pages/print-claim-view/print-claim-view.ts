@@ -15,6 +15,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 })
 export class PrintClaimViewPage {
   totalClaimAmount:number=0;
+  remarks: any;
   claimRequestData: any[];
   Remarks_NgModel: any;
   ToggleNgModel: any;
@@ -59,6 +60,7 @@ export class PrintClaimViewPage {
           this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
       }         
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
+        this.remarks = element.REMARKS;
       });
     })
 }

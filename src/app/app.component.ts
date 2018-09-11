@@ -29,6 +29,10 @@ import { ClaimReportPage } from '../pages/claim-report/claim-report';
 import { ClaimReportPrintPage } from '../pages/claim-report-print/claim-report-print';
 import { LeaveReportPage } from '../pages/leave-report/leave-report';
 import { AttendanceReportPage } from '../pages/attendance-report/attendance-report';
+import { FinancePaymentTasklistPage } from '../pages/finance-payment-tasklist/finance-payment-tasklist';
+import { CommonTasklistPage } from '../pages/common-tasklist/common-tasklist';
+import { PaymentHistoryPage } from '../pages/payment-history/payment-history';
+import { CommonHistorylistPage } from '../pages/common-historylist/common-historylist';
 
 
 import { TranslateService } from '@ngx-translate/core';
@@ -41,6 +45,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../app/config/constants';
 import { AllClaimListPage } from '../pages/all-claim-list/all-claim-list';
+import * as Settings from '../dbSettings/companySettings'
 
 // import { MenuService } from '../providers/menu.service'
 
@@ -101,7 +106,7 @@ export class ConferenceApp {
   reportPages: PageInterface[] = [
     { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
     { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
-    { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+    { title: 'Superior History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
     { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
   ];
 
@@ -130,14 +135,14 @@ export class ConferenceApp {
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
-//    public confData: ConferenceData,
+    //    public confData: ConferenceData,
     public storage: Storage,
     // statusbar: StatusBar,
     // splashScreen: SplashScreen, 
     public translate: TranslateService, public http: Http
   ) {
     // debugger;
-    this.blnLogin = false; 
+    this.blnLogin = false;
     this.translateToEnglish();
     this.translate.setDefaultLang('en'); //Fallback language
 
@@ -145,11 +150,11 @@ export class ConferenceApp {
     });
 
     translate.setDefaultLang('en');
-//    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
+    //    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
 
     // Check if the user has already seen the tutorial
     // load the conference data
-//    confData.load();
+    //    confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
@@ -163,7 +168,7 @@ export class ConferenceApp {
     this.enableMenu(false);
 
     // this.menu.enable(false, 'loggedInMenu');
-    this.menu.enable(false, 'loggedInMenu_User');    
+    this.menu.enable(false, 'loggedInMenu_User');
   }
 
   openPage(page: PageInterface) {
@@ -210,12 +215,12 @@ export class ConferenceApp {
     });
 
     this.events.subscribe('user:logout', () => {
-        this.enableMenu(false);            
+      this.enableMenu(false);
     });
   }
 
-  enableMenu(loggedIn: boolean) {    
-    if(localStorage.getItem("g_USER_GUID") != null){
+  enableMenu(loggedIn: boolean) {
+    if (localStorage.getItem("g_USER_GUID") != null) {
       loggedIn = true;
     }
     // alert(loggedIn);
@@ -249,7 +254,7 @@ export class ConferenceApp {
 
     // this.menu.enable(loggedIn, 'loggedInMenu');
     // this.menu.enable(!loggedIn, 'loggedOutMenu');
-    
+
     if (localStorage.length > 0) {
       this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
       this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL");
@@ -279,7 +284,7 @@ export class ConferenceApp {
         }
 
         //For Tenant Admin, Remove Admin Setup
-        else if (localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {          
+        else if (localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -288,8 +293,9 @@ export class ConferenceApp {
 
           this.blnSetup_loggedInMenu_User = true;
           this.appPages_User = [
-            { title: 'Approver Task ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Finance Task ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+            { title: 'Superior ', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Validation ', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+            { title: 'Payment ', name: 'FinancePaymentTasklistPage', component: FinancePaymentTasklistPage, icon: 'md-clipboard' },
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -301,14 +307,17 @@ export class ConferenceApp {
           ];
           this.reportPages = [
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
-            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
-            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'Validation History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
+            { title: 'Payment History', name: 'PaymentHistoryPage', component: PaymentHistoryPage, icon: 'md-list-box' },
+            { title: 'Superior History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
+            { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
+            { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' },
 
             { title: 'All Claim List', name: 'AllClaimListPage', component: AllClaimListPage, icon: 'ios-paper-outline' },
             { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
             { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
-          
+
 
           ];
 
@@ -337,7 +346,8 @@ export class ConferenceApp {
         }
 
         //For Team Member, Home, Change Password, Sign Out
-        else if (res.toString() == "Team Member") {
+        // else if (res.toString() == "Team Member") {
+        else if (res.toString() == Settings.UserRoleConstants.TEAM_MEMBER) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
           this.blnReport_loggedInMenu_User = true;
@@ -389,7 +399,8 @@ export class ConferenceApp {
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
-        else if (res.toString() == "Finance Executive") {
+        // else if (res.toString() == "Finance Executive") {
+        else if (res.toString() == Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -399,7 +410,9 @@ export class ConferenceApp {
           this.blnSetup_loggedInMenu_User = true;
 
           this.appPages_User = [
-            { title: 'Finance Tasks', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' }
+            { title: 'Validation', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+            { title: 'Payment ', name: 'FinancePaymentTasklistPage', component: FinancePaymentTasklistPage, icon: 'md-clipboard' },
+
           ];
 
           this.claimPages = [
@@ -414,15 +427,17 @@ export class ConferenceApp {
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
 
-            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
+            { title: 'Validation History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
+            { title: 'Payment History', name: 'PaymentHistoryPage', component: PaymentHistoryPage, icon: 'md-list-box' },
+
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
 
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
             { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' },
-         
+
             { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
             { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
-          
+
 
           ];
 
@@ -451,7 +466,8 @@ export class ConferenceApp {
         }
 
         //For Team Member, Home, Change Password, Sign Out
-        else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
+        // else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
+        else if (res.toString() == Settings.UserRoleConstants.FINANCE_ADMIN || res.toString() == Settings.UserRoleConstants.FINANCE_MANAGER) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -461,8 +477,10 @@ export class ConferenceApp {
           this.blnSetup_loggedInMenu_User = true;
 
           this.appPages_User = [
-            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            { title: 'Finance Tasks', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' }
+            { title: 'Superior', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Validation', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
+            { title: 'Payment ', name: 'FinancePaymentTasklistPage', component: FinancePaymentTasklistPage, icon: 'md-clipboard' },
+
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -483,9 +501,10 @@ export class ConferenceApp {
 
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'Superior History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
 
-            { title: 'Finance Task History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
+            { title: 'Validation History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
+            { title: 'Payment History', name: 'PaymentHistoryPage', component: PaymentHistoryPage, icon: 'md-list-box' },
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
 
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
@@ -493,8 +512,8 @@ export class ConferenceApp {
 
             { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
             { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
-          
-            
+
+
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -516,10 +535,11 @@ export class ConferenceApp {
         }
 
         //For Manage Customer
-        else if (res.toString() == "Manage Customer") {
+        // else if (res.toString() == "Manage Customer") {
+        else if (res.toString() == Settings.UserRoleConstants.MANAGE_CUSTOMER) {
           this.appPages_User = [
 
-            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' }
+            { title: 'Superior', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' }
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -531,10 +551,10 @@ export class ConferenceApp {
           ];
 
           this.reportPages = [
-            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'Superior History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
-         
+
           ];
 
           this.setupsPages = [
@@ -560,7 +580,8 @@ export class ConferenceApp {
         }
 
         //For Team Lead
-        else if (res.toString() == "Team Lead") {
+        // else if (res.toString() == "Team Lead") {
+        else if (res.toString() == Settings.UserRoleConstants.TEAM_LEAD) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -570,7 +591,7 @@ export class ConferenceApp {
           this.blnSetup_loggedInMenu_User = false;
 
           this.appPages_User = [
-            { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
+            { title: 'Superior', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
           ];
 
           this.claimPages = [
@@ -584,7 +605,7 @@ export class ConferenceApp {
 
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'Superior History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
           ];
 
@@ -624,7 +645,7 @@ export class ConferenceApp {
 
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-            { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
+            { title: 'Superior History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
 
           ];

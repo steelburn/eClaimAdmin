@@ -4,8 +4,9 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title *ngIf="FinanceLogin">Finance Task</ion-title>
-        <ion-title *ngIf="!FinanceLogin">Approver Task</ion-title>
+        <ion-title *ngIf="FinanceLogin && role=='Payment'">Payment Details</ion-title>
+        <ion-title *ngIf="FinanceLogin && role=='Validation'">Validation Details</ion-title>
+        <ion-title *ngIf="!FinanceLogin">Superior Task Details</ion-title>
     </ion-navbar>
     <ion-toolbar no-border-top color="primary200">
         <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
@@ -76,16 +77,16 @@
 
                 </tr>
 
-                <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
+                <tr class="col7" *ngFor="let claimrequestdetail of claimrequestdetails; let i=index">
                     <td class="lgl1">
                         <ion-item>
                             <ion-checkbox item-end [checked]="selectAll" [disabled]="claimrequestdetail.STATUS=='Paid'" (ionChange)="getCheckboxValue($event,claimrequestdetail.CLAIM_REQUEST_GUID,claimrequestdetail.PROFILE_LEVEL,claimrequestdetail.STATUS)">
                             </ion-checkbox>
                         </ion-item>
                     </td>
-                    <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
+                    <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
                     <td class="lgl1 getHeader" *ngIf="!FinanceLogin" reshead="Name" text-wrap>{{claimrequestdetail.FULLNAME}}</td>
-                    <td class="lgl1 getHeader" reshead="Claim Type" >{{claimrequestdetail.CLAIMTYPE}}</td>
+                    <td class="lgl1 getHeader" reshead="Claim Type">{{claimrequestdetail.CLAIMTYPE}}</td>
                     <td class="lgl1 getHeader" reshead="Date">{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                     <td class="lgl1 getHeader" reshead="Status">{{claimrequestdetail.STATUS}}</td>
                     <td class="lgl1 getHeader" reshead="Stage">{{claimrequestdetail.STAGE}}</td>
@@ -96,10 +97,12 @@
                         </button>
                     </td>
                 </tr>
-
+                <tr class="col7">
+                    <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount(RM) : {{totalClaimAmount | number:'1.2-2'}}</td>
+                </tr>
             </table>
-            <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
-            </pagination-controls>
+            <!-- <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+            </pagination-controls> -->
         </ion-item>
 
     </ion-list>

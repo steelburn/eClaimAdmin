@@ -16,7 +16,9 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 export class EntertainmentClaimViewPage {
 
   totalClaimAmount:number=0; 
+  remarks: any;
   claimRequestData: any[];
+
   Remarks_NgModel: any;
   claimRequestGUID: any;
   ToggleNgModel: any;
@@ -61,7 +63,8 @@ export class EntertainmentClaimViewPage {
         if (element.ATTACHMENT_ID !== null) { 
           this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
       }      
-        this.totalClaimAmount = element.MILEAGE_AMOUNT;       
+        this.totalClaimAmount = element.MILEAGE_AMOUNT;   
+        this.remarks = element.REMARKS;    
       });
     })
 }

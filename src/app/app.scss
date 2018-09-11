@@ -15,6 +15,9 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+
+
+
 .profilepic{
     width: 140px;
 height: 140px;
@@ -183,6 +186,16 @@ z-index: 9999;
   .round2 {
     float: left;
     width: calc(25% - 10px) ;
+    margin: 5px !important;
+
+    cursor: pointer;
+    border-radius: 5px;
+    min-height: 80px;
+  }
+
+  .round33 {
+    float: left;
+    width: calc(33% - 7px) ;
     margin: 5px !important;
 
     cursor: pointer;
@@ -496,17 +509,13 @@ ion-item.item.item-block.item-md.item-checkbox {
 }
 
 button.item.item-block.item-md {
-    font-size: 14px !important;
+    font-size: 13px !important;
 }
 
 page-user input.text-input.text-input-md.ng-dirty.ng-valid.ng-touched{
     color: black !important;
 }
 
-button.item.item-block.item-md{
-    font-size: 1.3rem;
-
-}
 
 .LeftMenu{
     max-width: 150px;
@@ -576,7 +585,7 @@ ion-toggle.toggle.toggle-md{
 }
 
 ion-toggle.toggle.toggle-md.tog{
-    padding-left: 123px !important;
+    padding-left:0px !important;
     padding-right: 0px !important;
 }
 ion-toggle.toggle.toggle-md.yui{
