@@ -70,6 +70,8 @@ export class CompanysettingsPage {
         Language: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
         avatar1: null,
         avatar: null,
+        EmailSchedule: [null, Validators.required],
+        EmailTime: [null, Validators.required],
       });
     }
   }
@@ -103,8 +105,10 @@ export class CompanysettingsPage {
   DateFormat_ngModel: any; Currency_ngModel: any; EmailLogo_ngModel: any; Country_ngModel: any;
   MaxClaimAmt_ngModel: any; MinClaimAmt_ngModel: any; ClaimCuttoffDate_ngModel: any; YearStartMonth_ngModel: any;
   YearEndMonth_ngModel: any; ApprovalCutoffDate_ngModel: any; PaymentType_ngModel: any; Language_ngModel: any;
+  Email_Schedule_ngModel: any; Email_Time_ngModel: any;
 
   BindControls() {
+    this.Add_Form = true;
     this.KeyNameValue = [];
     let url: string = "";
     url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/permission_keys' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -129,16 +133,18 @@ export class CompanysettingsPage {
           if (this.FormControls[item]["KEY_NAME"] == "max_claim_amt") { this.MaxClaimAmt_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "min_claim_amt") { this.MinClaimAmt_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "claim_cutOff_date") { this.ClaimCuttoffDate_ngModel = this.FormControls[item]["KEY_VALUE"]; }
-          if (this.FormControls[item]["KEY_NAME"] == "year_start_month") { this.YearStartMonth_ngModel = this.FormControls[item]["KEY_VALUE"]; }
-          if (this.FormControls[item]["KEY_NAME"] == "year_end_month") { this.YearEndMonth_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "month_start") { this.YearStartMonth_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "month_end") { this.YearEndMonth_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "approval_cutoff_date") { this.ApprovalCutoffDate_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "default_payment_type") {
             var charNo_1 = this.FormControls[item]["KEY_VALUE"].indexOf(",");
-            var curKeyNameValue_1 = this.FormControls[item]["KEY_VALUE"].substring(0, charNo_1);  
+            var curKeyNameValue_1 = this.FormControls[item]["KEY_VALUE"].substring(0, charNo_1);
             // this.PaymentType_ngModel = this.FormControls[item]["KEY_VALUE"];          
             this.PaymentType_ngModel = curKeyNameValue_1;
           }
           if (this.FormControls[item]["KEY_NAME"] == "default_language") { this.Language_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "email_schedule") { this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "email_time") { this.Email_Time_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           this.Add_Form = false;
         }
       });
@@ -160,11 +166,18 @@ export class CompanysettingsPage {
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "max_claim_amt", KEY_VALUE: formValues.MaxClaimAmt.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "min_claim_amt", KEY_VALUE: formValues.MinClaimAmt.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "claim_cutOff_date", KEY_VALUE: formValues.ClaimCutOffDate.trim() });
-      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "year_start_month", KEY_VALUE: formValues.YearStartMonth.trim() });
-      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "year_end_month", KEY_VALUE: formValues.YearEndMonth.trim() });
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "month_start", KEY_VALUE: formValues.YearStartMonth.trim() });
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "month_end", KEY_VALUE: formValues.YearEndMonth.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "approval_cutoff_date", KEY_VALUE: formValues.ApprovalCutoffDate.trim() });
-      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_payment_type", KEY_VALUE: formValues.PaymentType.trim() });
+      // this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_payment_type", KEY_VALUE: formValues.PaymentType.trim() });
+      for (var item in this.PaymentTypes) {
+        if (this.PaymentTypes[item]["PAYMENT_TYPE_GUID"] == formValues.PaymentType.trim()) {
+          this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_payment_type", KEY_VALUE: formValues.PaymentType.trim() + ',' + this.PaymentTypes[item]["NAME"] });
+        }
+      }
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_language", KEY_VALUE: formValues.Language.trim() });
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_schedule", KEY_VALUE: formValues.EmailSchedule.trim() });
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_time", KEY_VALUE: formValues.EmailTime.trim() });
 
       this.Settings_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
       this.Settings_Entry.CREATION_TS = new Date().toISOString();
@@ -178,10 +191,15 @@ export class CompanysettingsPage {
         if (element.KEY_NAME == "email_logo") { element.KEY_VALUE = this.imageGUID; }
         // if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + this.CountryCodes[0]["alpha2Code"]; }
 
-        if (element.KEY_NAME == "default_country"){
+        if (element.KEY_NAME == "default_country") {
           for (var item in this.Countrys) {
             if (this.Countrys[item]["COUNTRY_GUID"] == formValues.Country.trim()) {
-              if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + this.CountryCodes[0]["alpha2Code"]; }
+              if (this.CountryCodes != undefined) {
+                if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + this.CountryCodes[0]["alpha2Code"]; }
+              }
+            }
+            else {
+              if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + localStorage.getItem("cs_default_country"); }
             }
           }
         }
@@ -189,21 +207,23 @@ export class CompanysettingsPage {
         if (element.KEY_NAME == "max_claim_amt") { element.KEY_VALUE = formValues.MaxClaimAmt.trim(); }
         if (element.KEY_NAME == "min_claim_amt") { element.KEY_VALUE = formValues.MinClaimAmt.trim(); }
         if (element.KEY_NAME == "claim_cutOff_date") { element.KEY_VALUE = formValues.ClaimCutOffDate.trim(); }
-        if (element.KEY_NAME == "year_start_month") { element.KEY_VALUE = formValues.YearStartMonth.trim(); }
-        if (element.KEY_NAME == "year_end_month") { element.KEY_VALUE = formValues.YearEndMonth.trim(); }
+        if (element.KEY_NAME == "month_start") { element.KEY_VALUE = formValues.YearStartMonth.trim(); }
+        if (element.KEY_NAME == "month_end") { element.KEY_VALUE = formValues.YearEndMonth.trim(); }
         if (element.KEY_NAME == "approval_cutoff_date") { element.KEY_VALUE = formValues.ApprovalCutoffDate.trim(); }
         // if (element.KEY_NAME == "default_payment_type") { element.KEY_VALUE = formValues.PaymentType.trim(); }
-        
-        if (element.KEY_NAME == "default_payment_type"){
+
+        if (element.KEY_NAME == "default_payment_type") {
           for (var item in this.PaymentTypes) {
-            if (this.PaymentTypes[item]["PAYMENT_TYPE_GUID"] == formValues.PaymentType.trim()) {              
+            if (this.PaymentTypes[item]["PAYMENT_TYPE_GUID"] == formValues.PaymentType.trim()) {
               if (element.KEY_NAME == "default_payment_type") { element.KEY_VALUE = formValues.PaymentType.trim() + ',' + this.PaymentTypes[item]["NAME"]; }
             }
           }
         }
 
         if (element.KEY_NAME == "default_language") { element.KEY_VALUE = formValues.Language.trim(); }
-        
+        if (element.KEY_NAME == "email_schedule") { element.KEY_VALUE = formValues.EmailSchedule.trim(); }
+        if (element.KEY_NAME == "email_time") { element.KEY_VALUE = formValues.EmailTime.trim(); }
+
         this.Settings_Entry.CREATION_USER_GUID = this.FormControls[0]["CREATION_USER_GUID"];
         this.Settings_Entry.CREATION_TS = this.FormControls[0]["CREATION_TS"];
         this.Settings_Entry.UPDATE_TS = new Date().toISOString();
@@ -344,7 +364,6 @@ export class CompanysettingsPage {
     })
   }
 
-  
   onCountrySelect() {
     for (var item in this.Countrys) {
       if (this.Countrys[item]["COUNTRY_GUID"] == this.Country_ngModel) {
