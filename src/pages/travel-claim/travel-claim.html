@@ -83,7 +83,7 @@
 
     <ion-item *ngIf="isPublicTransport">
       <ion-label fixed>{{ 'PAY_BY_LABEL' | translate }}</ion-label>
-      <ion-select [(ngModel)]="PayType" placeholder="Cash" formControlName="PayType">
+      <ion-select [(ngModel)]="PayType" formControlName="PayType">
         <ion-option *ngFor="let item of paymentTypes" (ionSelect)="onPaySelect(item)" value={{item.PAYMENT_TYPE_GUID}}>{{ item.NAME}}</ion-option>
       </ion-select>
     </ion-item>
