@@ -25,37 +25,44 @@
               <ion-input type="text" formControlName="DateFormat" [(ngModel)]="DateFormat_ngModel" required placeholder="{{'Please fill date format'}}"></ion-input>
             </ion-item>
 
+            <ion-item class="text">
+              <ion-label stacked>
+                <span style="color:red">*</span>{{ 'Default Country' | translate }}</ion-label>
+              <ion-select formControlName="Country" [(ngModel)]="Country_ngModel" placeholder="{{'Please fill country'}}"
+                (ionChange)="onCountrySelect($event)">
+                <ion-option *ngFor="let Country of Countrys" [value]="Country.COUNTRY_GUID">{{Country.NAME}}</ion-option>
+              </ion-select>
+            </ion-item>
+
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Default Currency' | translate }}</ion-label>
               <ion-input type="text" formControlName="Currency" [(ngModel)]="Currency_ngModel" required placeholder="{{'Pleae fill default currency'}}"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Email Logo' | translate }}</ion-label>
-              <ion-input type="text" formControlName="EmailLogo" [(ngModel)]="EmailLogo_ngModel" required placeholder="{{'Please add logo'}}"></ion-input>
+              <ion-label id="email_image" stacked>{{ 'Email Logo' | translate }}</ion-label>
+              <ion-input type="file" id="avatar1" (change)="EmailImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
             </ion-item>
-
-            <ion-item class="text">
-                <ion-label stacked>
-                    <span style="color:red">*</span>{{ 'Default Country' | translate }}</ion-label>
-                <ion-select formControlName="Country" [(ngModel)]="Country_ngModel" placeholder="{{'Please fill country'}}">
-                    <ion-option *ngFor="let Country of Countrys" [value]="Country.COUNTRY_GUID">{{Country.NAME}}</ion-option>
-                </ion-select>
-            </ion-item>
+            <div *ngIf="isImage">
+              <img src="{{EmailImage}}" style="width: 20%">
+            </div>
 
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Max Claim Amount' | translate }}</ion-label>
-              <ion-input type="number" formControlName="MaxClaimAmt" [(ngModel)]="MaxClaimAmt_ngModel" required placeholder="{{'Please fill max claim amount'}}"></ion-input>              
+              <ion-input type="number" formControlName="MaxClaimAmt" [(ngModel)]="MaxClaimAmt_ngModel" required
+                placeholder="{{'Please fill max claim amount'}}"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Min Claim Amount' | translate }}</ion-label>
-              <ion-input type="number" formControlName="MinClaimAmt" [(ngModel)]="MinClaimAmt_ngModel" required placeholder="{{'Please fill min claim amount'}}"></ion-input>
+              <ion-input type="number" formControlName="MinClaimAmt" [(ngModel)]="MinClaimAmt_ngModel" required
+                placeholder="{{'Please fill min claim amount'}}"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Claim Cut-off date' | translate }}</ion-label>
-              <ion-input type="number" formControlName="ClaimCutOffDate" [(ngModel)]="ClaimCuttoffDate_ngModel" required placeholder="{{'Please fill Claim Cutoff date'}}"></ion-input>
+              <ion-input type="number" formControlName="ClaimCutOffDate" [(ngModel)]="ClaimCuttoffDate_ngModel"
+                required placeholder="{{'Please fill Claim Cutoff date'}}"></ion-input>
               <!-- <ion-select formControlName="ClaimCutOffDate" [(ngModel)]="ClaimCuttoffDate_ngModel" placeholder="{{'Please select Claim Cutoff date'}}">
                 <ion-option [value]="0">1</ion-option>
                 <ion-option [value]="1">2</ion-option>
@@ -90,34 +97,52 @@
 
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Financial Year Start Month' | translate }}</ion-label>
-              <ion-input type="number" formControlName="YearStartMonth" [(ngModel)]="YearStartMonth_ngModel" required placeholder="{{'Please fill financial year start month'}}"></ion-input>
+              <ion-input type="number" formControlName="YearStartMonth" [(ngModel)]="YearStartMonth_ngModel" required
+                placeholder="{{'Please fill financial year start month'}}"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Financial Year End Month' | translate }}</ion-label>
-              <ion-input type="number" formControlName="YearEndMonth" [(ngModel)]="YearEndMonth_ngModel" required placeholder="{{'Please fill financial year start month'}}"></ion-input>
+              <ion-input type="number" formControlName="YearEndMonth" [(ngModel)]="YearEndMonth_ngModel" required
+                placeholder="{{'Please fill financial year start month'}}"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Approval cut-off date' | translate }}</ion-label>
-              <ion-input type="number" formControlName="ApprovalCutoffDate" [(ngModel)]="ApprovalCutoffDate_ngModel" required placeholder="{{'Approval cut-off date'}}"></ion-input>
+              <ion-input type="number" formControlName="ApprovalCutoffDate" [(ngModel)]="ApprovalCutoffDate_ngModel"
+                required placeholder="{{'Approval cut-off date'}}"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Default Payment Type' | translate }}</ion-label>
-              <!-- <ion-input type="text" formControlName="PaymentType" [(ngModel)]="PaymentType_ngModel" required placeholder="{{'Please fill payment type'}}"></ion-input> -->
               <ion-select formControlName="PaymentType" [(ngModel)]="PaymentType_ngModel" placeholder="{{'Please select payment type'}}">
-                  <ion-option *ngFor="let PaymentType of PaymentTypes" [value]="PaymentType.PAYMENT_TYPE_GUID">{{PaymentType.NAME}}</ion-option>
+                <ion-option *ngFor="let PaymentType of PaymentTypes" [value]="PaymentType.PAYMENT_TYPE_GUID">{{PaymentType.NAME}}</ion-option>
               </ion-select>
             </ion-item>
 
             <ion-item>
               <ion-label stacked><span style="color:red">*</span>{{ 'Default Language' | translate }}</ion-label>
-              <ion-input type="text" formControlName="Language" [(ngModel)]="Language_ngModel" required placeholder="{{'Please fill language'}}"></ion-input>              
+              <ion-input type="text" formControlName="Language" [(ngModel)]="Language_ngModel" required placeholder="{{'Please fill language'}}"></ion-input>
+            </ion-item>
+
+            <ion-item class="fuha">
+              <ion-label stacked><span style="color:red">*</span>{{ 'Email Schedule' | translate }}</ion-label>
+              <ion-select formControlName="EmailSchedule" [(ngModel)]="Email_Schedule_ngModel" placeholder="{{'Please select'}}">
+                <ion-option [value]="Daily">Daily</ion-option>
+                <ion-option [value]="Weekly">Weekly</ion-option>
+                <ion-option [value]="Monthly">Monthly</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item class="fuha">
+              <ion-label stacked><span style="color:red">*</span>{{ 'Schedule Time' | translate }}</ion-label>
+              <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="EmailTime" [(ngModel)]="Email_Time_ngModel"
+                displayFormat="HH:mm"></ion-datetime>
             </ion-item>
 
             <div class="btn">
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!CompanySettingsform.valid" (click)="Save(CompanySettingsform.value)">{{"SUBMIT"
+              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!CompanySettingsform.valid"
+                (click)="Save(CompanySettingsform.value)">{{"SUBMIT"
                 | translate}}</button>
             </div>
           </form>
