@@ -17,7 +17,7 @@
     <ion-item>
       <p>{{ "CLAIM_TYPE_LABEL" | translate }} : {{item.CLAIMTYPE}}</p>
       <p>{{ "CLAIM_DATE_LABEL" | translate }}: {{item.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</p>
-      <p>{{ "CLAIM_AMOUNT_LABEL" | translate }}{{ "CURRENCY_NAME_LABEL" | translate }}: {{item.CLAIM_AMOUNT | number:'1.2-2'}}</p>
+      <p>{{ "CLAIM_AMOUNT_LABEL" | translate }}{{ currency }}: {{item.CLAIM_AMOUNT | number:'1.2-2'}}</p>
       <button ion-button item-end (click)='viewClaim(item.CLAIM_REQUEST_GUID, item.PROFILE_LEVEL, item.CLAIM_TYPE_GUID)'>
         <ion-icon name="md-eye"></ion-icon>
       </button>

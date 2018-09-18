@@ -41,6 +41,8 @@ export class PrintclaimPage {
   travelAmount: any;
   validDate = new Date().toISOString();
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
+
   public Print_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;
   Project_Lookup_ngModel: any;
@@ -374,7 +376,7 @@ export class PrintclaimPage {
   }
 
   submitAction(formValues: any) {
-    if(this.apiMng.isClaimExpired(formValues))
+    if(this.apiMng.isClaimExpired(formValues.travel_date,false))
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');

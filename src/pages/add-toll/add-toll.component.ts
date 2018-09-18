@@ -29,6 +29,8 @@ export class AddTollPage {
   ClaimDetailGuid:any;claimDetailsData:any;
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
+  currency = localStorage.getItem("cs_default_currency");
+
 
   constructor(public numberPipe: DecimalPipe, fb: FormBuilder, public api: ApiManagerProvider, private loadingCtrl: LoadingController, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');

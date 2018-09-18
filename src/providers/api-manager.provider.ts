@@ -729,22 +729,53 @@ export class ApiManagerProvider {
   //   return false;
   // }
 
-  isClaimExpired(formValues: any) {
-    let myDate = new Date(formValues.travel_date);
+  // isClaimExpired(formValues: any) {
+  //   let myDate = new Date(formValues.travel_date);
 
+  //   let travelMonth: number = myDate.getMonth();
+  //   let currentMonth: number = new Date().getMonth();
+  //   let currentDate: number = new Date().getDate();
+  //   let longBack = (travelMonth + 1) < currentMonth;
+  //   let previous = travelMonth === (currentMonth - 1) && currentDate > 7
+  //   let current = (travelMonth === currentMonth);
+  //   if (current)
+  //     return false;
+  //   if (longBack || previous) {
+
+  //     alert('Claim has expired.')
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  userClaimCutoffDate: number = parseInt(localStorage.getItem("cs_claim_cutOff_date"));
+  approverCutoffDate: number = parseInt(localStorage.getItem("cs_approval_cutoff_date"));
+
+  isClaimExpired(formValues: any, isApprover: boolean) {
+    let claimExpiry: any;
+    if (isApprover) {
+      claimExpiry = this.approverCutoffDate;
+    }
+    else {
+      claimExpiry = this.userClaimCutoffDate;
+    }
+    let myDate = new Date(formValues.travel_date);
     let travelMonth: number = myDate.getMonth();
     let currentMonth: number = new Date().getMonth();
     let currentDate: number = new Date().getDate();
     let longBack = (travelMonth + 1) < currentMonth;
-    let previous = travelMonth === (currentMonth - 1) && currentDate > 7
+    let previous = travelMonth === (currentMonth - 1) && currentDate > claimExpiry;
     let current = (travelMonth === currentMonth);
     if (current)
       return false;
     if (longBack || previous) {
-
-      alert('Claim has expired.')
+      if (isApprover)
+        alert('The date to approve the claim has expired.');
+      else
+        alert('The date to apply the claim has expired.')
       return true;
     }
     return false;
   }
+
 }
