@@ -33,7 +33,7 @@
 
             <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'" class="fuha">
               <p>Optional for Touch 'n Go</p>
-              <ion-label floating color="primary500"> <span style="color:red">*</span> {{ 'AMOUNT_LABEL' | translate  }}{{ 'CURRENCY_NAME_LABEL' | translate}}</ion-label>
+              <ion-label floating color="primary500"> <span style="color:red">*</span> {{ 'AMOUNT_LABEL' | translate  }}{{ currency }}</ion-label>
               <ion-input (change)='getCurrency($event.target.value)' [ngModelOptions]="{standalone: true}" 
               [(ngModel)]="Amount" type="text"></ion-input>
             </ion-item>           

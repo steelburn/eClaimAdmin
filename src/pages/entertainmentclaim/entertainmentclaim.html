@@ -46,7 +46,7 @@
     </ion-item>
 
     <ion-item class="fuha">
-      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ currency }}</ion-label>
       <ion-input type="text" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Entertainment_Amount_ngModel"></ion-input>
     </ion-item>
 
