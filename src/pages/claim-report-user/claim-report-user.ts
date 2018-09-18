@@ -46,17 +46,18 @@ export class ClaimReportUserPage {
  
   BindData(printSectionId: any, item: string) {
     if (this.loginUserGuid !== undefined) {
-      this.totalClaimAmount = 0;
-      this.claimsListPrintTemp = [];
       this.month = item.split(' ')[0].substring(0,3);
-      alert(this.month);
+      //alert(this.month);
       this.year = item.split(' ')[1];
       this.http
         .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
         .map(res => res.json())
         .subscribe(data => {
           this.claimsList = data["resource"];
+          this.totalClaimAmount = 0;
+          this.claimsListPrintTemp = [];
           this.claimsListPrint = this.claimsList;
+          this.totalClaimAmount = 0;
           this.claimsList.forEach(element => {
 
             if (element.TYPE === 'TRV') {

@@ -40,7 +40,8 @@ export class CountrysetupPage {
   public exist_record_details: any;
 
   //Set the Model Name for Add------------------------------------------
-  public NAME_ngModel_Add: any;
+  public NAME_ngModel_Add: any; 
+  // public CODE_ngModel_Add: any;
   //---------------------------------------------------------------------
 
   Add_Form: boolean = false; Edit_Form: boolean = false; HeaderText: string = "";
@@ -137,6 +138,7 @@ export class CountrysetupPage {
       //----------------------------------------
       this.Countryform = fb.group({
         NAME: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
+        // CODE: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
       });
     }
   }
