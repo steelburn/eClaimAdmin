@@ -104,7 +104,7 @@ export class TravelclaimPage {
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID');
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
-    
+    //this.PayType=;
    
     // if (this.isFormEdit)
     // this.GetDataforEdit();
@@ -288,6 +288,7 @@ export class TravelclaimPage {
     this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.paymentTypes = data["resource"];
+        this.PayType=this.paymentTypes.filter(s=>s.NAME==localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
       }
       );
   }
@@ -588,6 +589,8 @@ export class TravelclaimPage {
     this.PublicTransValue = true;
     if (vehicle.AUTO_CALCULATE === 0) {
       this.isPublicTransport = true;
+      //alert(localStorage.getItem("cs_default_payment_type"));
+     // this.PayType="Cash"; //localStorage.getItem("cs_default_payment_type");
       if (this.isFormEdit)
         this.PublicTransValue = true;
       //this.travelAmount = undefined;

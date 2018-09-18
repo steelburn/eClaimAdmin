@@ -17,7 +17,9 @@ export const StatusConstants = {
     APPROVED: "Approved",
     PAID: "Paid",
     REJECTED: "Rejected",
-    PENDING: "Pending"
+    PENDING: "Pending",
+    VALIDATED: "Validated",
+    DRAFT: "Draft"
 }
 
 export const StageConstants = {
