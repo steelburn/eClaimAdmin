@@ -141,7 +141,7 @@
           <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
           <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
           <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
-          <td class="lgl1 getHeader" reshead="Amount(RM)">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
+          <td class="lgl1 getHeader" reshead="currency">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
           <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end (click)="ClaimNavigation(claimhistorydetail.STAGE_GUID,claimhistorydetail.CLAIM_REQUEST_GUID, claimhistorydetail.PROFILE_LEVEL_MAIN, claimhistorydetail.CLAIM_TYPE_GUID,1)">
               <ion-icon name="md-eye"></ion-icon>

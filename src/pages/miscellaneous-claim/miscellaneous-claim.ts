@@ -52,6 +52,8 @@ export class MiscellaneousClaimPage {
   public stage: any;
   public profileJSON: any;
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
+
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
 
@@ -361,7 +363,7 @@ export class MiscellaneousClaimPage {
   }
 
   submitAction(formValues: any) {
-    if(this.api.isClaimExpired(formValues))
+    if(this.api.isClaimExpired(formValues.travel_date,false))
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
