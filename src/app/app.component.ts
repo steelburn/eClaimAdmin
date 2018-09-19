@@ -143,13 +143,14 @@ export class ConferenceApp {
   ) {
     // debugger;
     this.blnLogin = false;
-    this.translateToEnglish();
-    this.translate.setDefaultLang('en'); //Fallback language
+    //this.translateToEnglish();
+    // this.translateToMalay();
+    // this.translate.setDefaultLang('en'); //Fallback language
 
     platform.ready().then(() => {
     });
 
-    translate.setDefaultLang('en');
+   // translate.setDefaultLang('en');
     //    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
 
     // Check if the user has already seen the tutorial
@@ -158,7 +159,9 @@ export class ConferenceApp {
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
+     
       this.enableMenu(hasLoggedIn === true);
+     
     });
 
     //this.enableMenu(true);
@@ -208,6 +211,7 @@ export class ConferenceApp {
 
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
+     
     });
 
     this.events.subscribe('user:signup', () => {
@@ -223,7 +227,21 @@ export class ConferenceApp {
     if (localStorage.getItem("g_USER_GUID") != null) {
       loggedIn = true;
     }
-   
+
+    //alert(localStorage.getItem("cs_default_language"));
+    if(localStorage.getItem("cs_default_language")=='en')
+    {
+    this.translateToEnglish();
+    this.translate.setDefaultLang('en'); 
+    }
+    else if(localStorage.getItem("cs_default_language")=='ms')
+    {
+      this.translateToMalay();
+      this.translate.setDefaultLang('ms'); 
+    }
+    // alert(loggedIn);
+    // debugger;
+
     //Get all the roles and menus for that particular user.-------------------------------------------------------   
     // let url: string; this.Menu_Array = []; let Role_Name: string = "";
     // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
