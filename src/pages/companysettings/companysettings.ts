@@ -132,7 +132,7 @@ export class CompanysettingsPage {
           }
           if (this.FormControls[item]["KEY_NAME"] == "max_claim_amt") { this.MaxClaimAmt_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "min_claim_amt") { this.MinClaimAmt_ngModel = this.FormControls[item]["KEY_VALUE"]; }
-          if (this.FormControls[item]["KEY_NAME"] == "claim_cutOff_date") { this.ClaimCuttoffDate_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "claim_cutoff_date") { this.ClaimCuttoffDate_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "month_start") { this.YearStartMonth_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "month_end") { this.YearEndMonth_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           if (this.FormControls[item]["KEY_NAME"] == "approval_cutoff_date") { this.ApprovalCutoffDate_ngModel = this.FormControls[item]["KEY_VALUE"]; }
@@ -165,7 +165,7 @@ export class CompanysettingsPage {
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_country", KEY_VALUE: formValues.Country.trim() + ',' + this.CountryCodes[0]["alpha2Code"] });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "max_claim_amt", KEY_VALUE: formValues.MaxClaimAmt.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "min_claim_amt", KEY_VALUE: formValues.MinClaimAmt.trim() });
-      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "claim_cutOff_date", KEY_VALUE: formValues.ClaimCutOffDate.trim() });
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "claim_cutoff_date", KEY_VALUE: formValues.ClaimCutOffDate.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "month_start", KEY_VALUE: formValues.YearStartMonth.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "month_end", KEY_VALUE: formValues.YearEndMonth.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "approval_cutoff_date", KEY_VALUE: formValues.ApprovalCutoffDate.trim() });
@@ -206,7 +206,7 @@ export class CompanysettingsPage {
 
         if (element.KEY_NAME == "max_claim_amt") { element.KEY_VALUE = formValues.MaxClaimAmt.trim(); }
         if (element.KEY_NAME == "min_claim_amt") { element.KEY_VALUE = formValues.MinClaimAmt.trim(); }
-        if (element.KEY_NAME == "claim_cutOff_date") { element.KEY_VALUE = formValues.ClaimCutOffDate.trim(); }
+        if (element.KEY_NAME == "claim_cutoff_date") { element.KEY_VALUE = formValues.ClaimCutOffDate.trim(); }
         if (element.KEY_NAME == "month_start") { element.KEY_VALUE = formValues.YearStartMonth.trim(); }
         if (element.KEY_NAME == "month_end") { element.KEY_VALUE = formValues.YearEndMonth.trim(); }
         if (element.KEY_NAME == "approval_cutoff_date") { element.KEY_VALUE = formValues.ApprovalCutoffDate.trim(); }
