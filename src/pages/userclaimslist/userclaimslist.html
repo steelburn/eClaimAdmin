@@ -106,7 +106,7 @@
           <th class="lgl1"  style="width:120px">Claim Type</th>
           <th class="lgl1"  style="width:100px">Date</th>
           <th class="lgl1" style="width:90px">Status</th>
-          <th class="lgl1" style="width:140px">Stage</th>
+          <!-- <th class="lgl1" style="width:140px">Stage</th> -->
           <th class="lgl1" style="width:140px">Remarks</th>
           <th class="lgl1"  style="width:96px">Amount(RM)</th>
           <th class="lgl1 tblBrRight" style="width:125px">Action</th>
@@ -120,7 +120,7 @@
           <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIMTYPE}}</td>
           <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
           <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
-          <td class="lgl1 getHeader" reshead="Stage" text-wrap>{{claimhistorydetail.STAGE}}</td>
+          <!-- <td class="lgl1 getHeader" reshead="Stage" text-wrap>{{claimhistorydetail.STAGE}}</td> -->
           <td class="lgl1 getHeader" reshead="Remarks" *ngIf="claimhistorydetail.PROFILE_LEVEL==0"  text-wrap>{{claimhistorydetail.REMARKS}}</td>
           <td class="lgl1 getHeader" reshead="Remarks"*ngIf="claimhistorydetail.PROFILE_LEVEL!=0"></td>
           <td class="lgl1 getHeader" reshead="Amount">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>

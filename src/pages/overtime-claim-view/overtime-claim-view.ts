@@ -36,8 +36,10 @@ export class OvertimeClaimViewPage {
     this.LoadMainClaim();
   }  
 
+  travelDate: any;
   isAccepted(val: string) {
     this.isRemarksAccepted = val === 'accepted' ? true : false;
+    if (this.api.isClaimExpired(this.travelDate, true)) { return; }
     if (!this.isRemarksAccepted) {
           if (this.Remarks_NgModel === undefined) {
             alert('Please input valid remarks');
@@ -52,7 +54,8 @@ export class OvertimeClaimViewPage {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
-        element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
+        // element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
+        this.travelDate = element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
         element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
         element.END_TS = new Date(element.END_TS.replace(/-/g, "/"))
 
