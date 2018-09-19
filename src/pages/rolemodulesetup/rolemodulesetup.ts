@@ -27,7 +27,7 @@ import { RoleModuleSetup_Service } from '../../services/rolemodulesetup_service'
   templateUrl: 'rolemodulesetup.html', providers: [RoleModuleSetup_Service, BaseHttpService]
 })
 export class RolemodulesetupPage {
-  public page:number = 1;
+  public page: number = 1;
   Rolemoduleform: FormGroup;
   //For Add Module----------------------------
   ROLENAME_ngModel_Add: any;
@@ -38,7 +38,8 @@ export class RolemodulesetupPage {
 
   //------------------------------------------
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
-  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_rolemodule' + '?order=ROLE_NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
+  // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_rolemodule' + '?order=ROLE_NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_rolemodule' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   roles: any;
   modules: any;
   rolemodules: any;
@@ -143,7 +144,34 @@ export class RolemodulesetupPage {
         this.rolemodule = this.rolemodule.filter((item) => {
           return item.ROLE_GUID != ROLE_GUID;
         });
-        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+
+        this.Module_Assign_Multiple = [];
+        if (this.EditRoleModuleClicked == true) {
+          //Insert------------------------------------------------------------ 
+          for (var item in this.Module_Assign) {
+            this.RoleModule_Entry.ROLE_MODULE_GUID = UUID.UUID();
+            this.RoleModule_Entry.ROLE_GUID = this.ROLENAME_ngModel_Edit;
+            this.RoleModule_Entry.MODULE_GUID = this.Module_Assign[item]["MODULE_GUID"];
+            // this.RoleModule_Entry.CREATION_TS = new Date().toISOString();
+            // this.RoleModule_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+            this.RoleModule_Entry.UPDATE_TS = new Date().toISOString();
+            this.RoleModule_Entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+            this.RoleModule_Entry.MODULE_SLNO = (parseInt(item) + 1).toString();
+
+            this.Module_Assign_Multiple.push({ ROLE_MODULE_GUID: this.RoleModule_Entry.ROLE_MODULE_GUID, ROLE_GUID: this.RoleModule_Entry.ROLE_GUID, MODULE_GUID: this.RoleModule_Entry.MODULE_GUID, CREATION_TS: this.RoleModule_Entry.CREATION_TS, CREATION_USER_GUID: this.RoleModule_Entry.CREATION_USER_GUID, UPDATE_TS: this.RoleModule_Entry.UPDATE_TS, UPDATE_USER_GUID: this.RoleModule_Entry.UPDATE_USER_GUID, MODULE_SLNO: this.RoleModule_Entry.MODULE_SLNO });
+          }
+          this.rolemodulesetupservice.save_multiple_recocrd(this.Module_Assign_Multiple)
+            .subscribe((response) => {
+              if (response.status == 200) {
+                alert('Role Module Updated successfully'); //this.loading.dismissAll();
+                this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              }
+            });
+        }
+        else {
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        }
       });
   }
 
@@ -163,7 +191,7 @@ export class RolemodulesetupPage {
       .get(url)
       .map(res => res.json())
       .subscribe(data => {
-        this.modules = data.resource;        
+        this.modules = data.resource;
       });
   }
 
@@ -242,13 +270,14 @@ export class RolemodulesetupPage {
                 this.RoleModule_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
                 this.RoleModule_Entry.UPDATE_TS = new Date().toISOString();
                 this.RoleModule_Entry.UPDATE_USER_GUID = "";
+                this.RoleModule_Entry.MODULE_SLNO = (parseInt(item) + 1).toString();
 
-                this.Module_Assign_Multiple.push({ ROLE_MODULE_GUID: this.RoleModule_Entry.ROLE_MODULE_GUID, ROLE_GUID: this.RoleModule_Entry.ROLE_GUID, MODULE_GUID: this.RoleModule_Entry.MODULE_GUID, CREATION_TS: this.RoleModule_Entry.CREATION_TS, CREATION_USER_GUID: this.RoleModule_Entry.CREATION_USER_GUID, UPDATE_TS: this.RoleModule_Entry.UPDATE_TS, UPDATE_USER_GUID: this.RoleModule_Entry.UPDATE_USER_GUID });
+                this.Module_Assign_Multiple.push({ ROLE_MODULE_GUID: this.RoleModule_Entry.ROLE_MODULE_GUID, ROLE_GUID: this.RoleModule_Entry.ROLE_GUID, MODULE_GUID: this.RoleModule_Entry.MODULE_GUID, CREATION_TS: this.RoleModule_Entry.CREATION_TS, CREATION_USER_GUID: this.RoleModule_Entry.CREATION_USER_GUID, UPDATE_TS: this.RoleModule_Entry.UPDATE_TS, UPDATE_USER_GUID: this.RoleModule_Entry.UPDATE_USER_GUID, MODULE_SLNO: this.RoleModule_Entry.MODULE_SLNO });
               }
               this.rolemodulesetupservice.save_multiple_recocrd(this.Module_Assign_Multiple)
                 .subscribe((response) => {
                   if (response.status == 200) {
-                    alert('Role Module Saved successfully'); 
+                    alert('Role Module Saved successfully');
                     // this.loading.dismissAll();
                     this.navCtrl.setRoot(this.navCtrl.getActive().component);
                   }
@@ -290,32 +319,32 @@ export class RolemodulesetupPage {
               if (res.length == 0) {
                 //Delete all the records through role_guid--------------------------
                 this.DeleteRoleModule(localStorage.getItem('Prev_role_module_guid'));
-                this.Module_Assign_Multiple = [];
+                // this.Module_Assign_Multiple = [];
 
-                //Insert------------------------------------------------------------ 
-                for (var item in this.Module_Assign) {
-                  this.RoleModule_Entry.ROLE_MODULE_GUID = UUID.UUID();
-                  this.RoleModule_Entry.ROLE_GUID = this.ROLENAME_ngModel_Edit;
-                  this.RoleModule_Entry.MODULE_GUID = this.Module_Assign[item]["MODULE_GUID"];
-                  // this.RoleModule_Entry.CREATION_TS = new Date().toISOString();
-                  // this.RoleModule_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-                  this.RoleModule_Entry.UPDATE_TS = new Date().toISOString();
-                  this.RoleModule_Entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+                // //Insert------------------------------------------------------------ 
+                // for (var item in this.Module_Assign) {
+                //   this.RoleModule_Entry.ROLE_MODULE_GUID = UUID.UUID();
+                //   this.RoleModule_Entry.ROLE_GUID = this.ROLENAME_ngModel_Edit;
+                //   this.RoleModule_Entry.MODULE_GUID = this.Module_Assign[item]["MODULE_GUID"];
+                //   // this.RoleModule_Entry.CREATION_TS = new Date().toISOString();
+                //   // this.RoleModule_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+                //   this.RoleModule_Entry.UPDATE_TS = new Date().toISOString();
+                //   this.RoleModule_Entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
-                  this.Module_Assign_Multiple.push({ ROLE_MODULE_GUID: this.RoleModule_Entry.ROLE_MODULE_GUID, ROLE_GUID: this.RoleModule_Entry.ROLE_GUID, MODULE_GUID: this.RoleModule_Entry.MODULE_GUID, CREATION_TS: this.RoleModule_Entry.CREATION_TS, CREATION_USER_GUID: this.RoleModule_Entry.CREATION_USER_GUID, UPDATE_TS: this.RoleModule_Entry.UPDATE_TS, UPDATE_USER_GUID: this.RoleModule_Entry.UPDATE_USER_GUID });
-                }
-                this.rolemodulesetupservice.save_multiple_recocrd(this.Module_Assign_Multiple)
-                  .subscribe((response) => {
-                    if (response.status == 200) {
-                      alert('Role Module Updated successfully'); //this.loading.dismissAll();
-                      this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                    }
-                  });
+                //   this.Module_Assign_Multiple.push({ ROLE_MODULE_GUID: this.RoleModule_Entry.ROLE_MODULE_GUID, ROLE_GUID: this.RoleModule_Entry.ROLE_GUID, MODULE_GUID: this.RoleModule_Entry.MODULE_GUID, CREATION_TS: this.RoleModule_Entry.CREATION_TS, CREATION_USER_GUID: this.RoleModule_Entry.CREATION_USER_GUID, UPDATE_TS: this.RoleModule_Entry.UPDATE_TS, UPDATE_USER_GUID: this.RoleModule_Entry.UPDATE_USER_GUID });
+                // }
+                // this.rolemodulesetupservice.save_multiple_recocrd(this.Module_Assign_Multiple)
+                //   .subscribe((response) => {
+                //     if (response.status == 200) {
+                //       alert('Role Module Updated successfully'); //this.loading.dismissAll();
+                //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                //     }
+                //   });
               }
               else {
                 console.log("Records Found");
                 // this.loading.dismissAll();
-                alert("This Role Already Exist !!");                
+                alert("This Role Already Exist !!");
               }
             },
             err => {
@@ -326,28 +355,28 @@ export class RolemodulesetupPage {
       else {
         //Delete all the records through role_guid-----------
         this.DeleteRoleModule(localStorage.getItem('Prev_role_module_guid'));
-        this.Module_Assign_Multiple = [];
+        // this.Module_Assign_Multiple = [];
 
         //Insert------------------------------------------------------------
-        for (var itemA in this.Module_Assign) {
-          this.RoleModule_Entry.ROLE_MODULE_GUID = UUID.UUID();
-          this.RoleModule_Entry.ROLE_GUID = localStorage.getItem('Prev_role_module_guid');
-          this.RoleModule_Entry.MODULE_GUID = this.Module_Assign[itemA]["MODULE_GUID"];
-          this.RoleModule_Entry.CREATION_TS = new Date().toISOString();
-          this.RoleModule_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-          this.RoleModule_Entry.UPDATE_TS = new Date().toISOString();
-          this.RoleModule_Entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+        // for (var itemA in this.Module_Assign) {
+        //   this.RoleModule_Entry.ROLE_MODULE_GUID = UUID.UUID();
+        //   this.RoleModule_Entry.ROLE_GUID = localStorage.getItem('Prev_role_module_guid');
+        //   this.RoleModule_Entry.MODULE_GUID = this.Module_Assign[itemA]["MODULE_GUID"];
+        //   this.RoleModule_Entry.CREATION_TS = new Date().toISOString();
+        //   this.RoleModule_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+        //   this.RoleModule_Entry.UPDATE_TS = new Date().toISOString();
+        //   this.RoleModule_Entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
-          this.Module_Assign_Multiple.push({ ROLE_MODULE_GUID: this.RoleModule_Entry.ROLE_MODULE_GUID, ROLE_GUID: this.RoleModule_Entry.ROLE_GUID, MODULE_GUID: this.RoleModule_Entry.MODULE_GUID, CREATION_TS: this.RoleModule_Entry.CREATION_TS, CREATION_USER_GUID: this.RoleModule_Entry.CREATION_USER_GUID, UPDATE_TS: this.RoleModule_Entry.UPDATE_TS, UPDATE_USER_GUID: this.RoleModule_Entry.UPDATE_USER_GUID });
-        }
-        this.rolemodulesetupservice.save_multiple_recocrd(this.Module_Assign_Multiple)
-          .subscribe((response) => {
-            if (response.status == 200) {
-              alert('Role Module Updated successfully'); 
-              //this.loading.dismissAll();
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            }
-          });
+        //   this.Module_Assign_Multiple.push({ ROLE_MODULE_GUID: this.RoleModule_Entry.ROLE_MODULE_GUID, ROLE_GUID: this.RoleModule_Entry.ROLE_GUID, MODULE_GUID: this.RoleModule_Entry.MODULE_GUID, CREATION_TS: this.RoleModule_Entry.CREATION_TS, CREATION_USER_GUID: this.RoleModule_Entry.CREATION_USER_GUID, UPDATE_TS: this.RoleModule_Entry.UPDATE_TS, UPDATE_USER_GUID: this.RoleModule_Entry.UPDATE_USER_GUID });
+        // }
+        // this.rolemodulesetupservice.save_multiple_recocrd(this.Module_Assign_Multiple)
+        //   .subscribe((response) => {
+        //     if (response.status == 200) {
+        //       alert('Role Module Updated successfully');
+        //       //this.loading.dismissAll();
+        //       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        //     }
+        //   });
       }
     }
   }
@@ -386,7 +415,7 @@ export class RolemodulesetupPage {
 
           //Bind all the data to model--------------------
           this.RoleModule_Entry.CREATION_TS = this.Module_Assign_Edit[item]["CREATION_TS"];
-          this.RoleModule_Entry.CREATION_USER_GUID = this.Module_Assign_Edit[item]["CREATION_USER_GUID"];          
+          this.RoleModule_Entry.CREATION_USER_GUID = this.Module_Assign_Edit[item]["CREATION_USER_GUID"];
         }
         this.loading.dismissAll();
       });
