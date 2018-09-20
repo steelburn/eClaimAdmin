@@ -70,6 +70,8 @@ export class TravelclaimPage {
   currentItems: any;
   public MainClaimSaved: boolean = false;
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
+
   DestinationPlaceID: string;
   OriginPlaceID: string;
   CloudFilePath: string;
@@ -111,7 +113,7 @@ export class TravelclaimPage {
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID');
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
-    
+    //this.PayType=;
    
     // if (this.isFormEdit)
     // this.GetDataforEdit();
@@ -314,6 +316,7 @@ export class TravelclaimPage {
     this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.paymentTypes = data["resource"];
+        this.PayType=this.paymentTypes.filter(s=>s.NAME==localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
       }
       );
   }
@@ -391,7 +394,7 @@ export class TravelclaimPage {
         DistKm = DistKm.replace(',', '')
         this.Travel_Distance_ngModel = destination = DistKm.substring(0, DistKm.length - 2)
         this.Travel_Distance_ngModel = this.numberPipe.transform(this.Travel_Distance_ngModel, '1.2-2');
-        this.Travel_Mode_ngModel = this.vehicleCategory;
+        // this.Travel_Mode_ngModel = this.vehicleCategory;
         if (!this.isPublicTransport)
           this.travelAmount = destination * this.VehicleRate, -2;
         this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
@@ -468,10 +471,13 @@ export class TravelclaimPage {
 
   searchLocation(key: any) {
     let val = key.target.value;
-    val = val.replace(/ /g, '');
+    //val = val.replace(/ /g, '');
     if (!val || !val.trim()) {
       this.currentItems = [];
       return;
+    }
+    else{
+      val = val.replace(/ /g, '');
     }
     // var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=500&components=country:MY&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -611,6 +617,8 @@ export class TravelclaimPage {
     this.PublicTransValue = true;
     if (vehicle.AUTO_CALCULATE === 0) {
       this.isPublicTransport = true;
+      //alert(localStorage.getItem("cs_default_payment_type"));
+     // this.PayType="Cash"; //localStorage.getItem("cs_default_payment_type");
       if (this.isFormEdit)
         this.PublicTransValue = true;
       //this.travelAmount = undefined;
@@ -817,7 +825,7 @@ export class TravelclaimPage {
     }
 
     formValues.travel_date = formValues.start_DT;
-    if(this.api.isClaimExpired(formValues))
+    if(this.api.isClaimExpired(formValues.travel_date,false))
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');

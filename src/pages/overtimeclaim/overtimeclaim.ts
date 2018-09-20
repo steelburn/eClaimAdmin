@@ -57,6 +57,7 @@ export class OvertimeclaimPage {
   Soc_GUID: any;
   TenantGUID: any;
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
 
   userGUID: any;
   public socGUID: any;
@@ -361,7 +362,7 @@ export class OvertimeclaimPage {
       this.OT_Amount_ngModel = this.OT_Amount_ngModel;
     }
     formValues.travel_date = formValues.start_DT;
-    if(this.apiMng.isClaimExpired(formValues))
+    if(this.apiMng.isClaimExpired(formValues.travel_date,false))
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');

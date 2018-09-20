@@ -52,6 +52,8 @@ export class MiscellaneousClaimPage {
   public stage: any;
   public profileJSON: any;
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
+
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
   min_claim_amount:any;min_claim:any;
@@ -382,6 +384,7 @@ export class MiscellaneousClaimPage {
   }
 
   submitAction(formValues: any) {
+
     let amount = Number(formValues.claimAmount);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Miscellaneous_Amount_ngModel = null;
@@ -390,7 +393,9 @@ export class MiscellaneousClaimPage {
     else {
       this.Miscellaneous_Amount_ngModel = this.Miscellaneous_Amount_ngModel;
     }
-    if(this.api.isClaimExpired(formValues))
+  
+    if(this.api.isClaimExpired(formValues.travel_date,false))
+
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');

@@ -19,6 +19,7 @@ export class ApproverTaskListPage {
   claimrefguid: any;
   claimRequestGUID: string;
   level: string;
+  currency = localStorage.getItem("cs_default_currency");
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {

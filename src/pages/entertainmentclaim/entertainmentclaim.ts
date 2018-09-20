@@ -59,6 +59,7 @@ export class EntertainmentclaimPage {
   Entertainment_Date_ngModel: any;
   Entertainment_Description_ngModel: any;
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
 
   public socGUID: any;
   public AddTravelClicked: boolean = false;
@@ -448,6 +449,7 @@ export class EntertainmentclaimPage {
   }
 
   submitAction(formValues: any) {
+
     let amount = Number(formValues.claim_amount);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Entertainment_Amount_ngModel = null;
@@ -459,6 +461,7 @@ export class EntertainmentclaimPage {
     }
     if (this.apiMng.isClaimExpired(formValues))
       return;
+
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;

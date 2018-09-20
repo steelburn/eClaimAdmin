@@ -34,6 +34,8 @@ export class GiftclaimPage {
   public projects: any[];
   items: string[];
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
+
 
   public Gift_SOC_No_ngModel: any;
   public Gift_ProjectName_ngModel: any;
@@ -440,6 +442,7 @@ export class GiftclaimPage {
   }
 
   submitAction(formValues: any) {
+
     let amount = Number(formValues.claim_amount);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Gift_Amount_ngModel = null;
@@ -449,7 +452,9 @@ export class GiftclaimPage {
       this.Gift_Amount_ngModel = this.Gift_Amount_ngModel;
     }
     
-    if(this.apiMng.isClaimExpired(formValues))
+   
+    if(this.apiMng.isClaimExpired(formValues.travel_date,false))
+
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');

@@ -37,8 +37,10 @@ export class TravelClaimViewPage {
     this.approverDesignation = this.navParams.get("approverDesignation");
   }
 
+  travelDate: any;
   isAccepted(val: string) {
     this.isRemarksAccepted = val === 'accepted' ? true : false;
+    if (this.api.isClaimExpired(this.travelDate, true)) { return; }
     if (!this.isRemarksAccepted) {
       if (this.Remarks_NgModel === undefined) {
         alert('Please enter valid remarks');
@@ -58,7 +60,8 @@ export class TravelClaimViewPage {
         this.claimRequestData = res['resource'];
         this.claimRequestData.forEach(element => {
 
-          element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
+          // element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
+          this.travelDate = element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
           element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
           element.END_TS = new Date(element.END_TS.replace(/-/g, "/"))
           if (element.ATTACHMENT_ID !== null) {
