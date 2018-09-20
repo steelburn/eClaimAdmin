@@ -24,11 +24,13 @@ export class AddTollPage {
   MA_SELECT: any;
    loading: Loading;
   TenantGUID: any;
-  paymentTypes: any; DetailsForm: FormGroup; ClaimMainGUID: any; 
+  paymentTypes: any[]; DetailsForm: FormGroup; ClaimMainGUID: any; 
   ClaimMethodGUID: any; ClaimMethodName: any;
   ClaimDetailGuid:any;claimDetailsData:any;
   ImageUploadValidation:boolean=false;
   chooseFile: boolean = false;
+  currency = localStorage.getItem("cs_default_currency");
+
 
   constructor(public numberPipe: DecimalPipe, fb: FormBuilder, public api: ApiManagerProvider, private loadingCtrl: LoadingController, public translate: TranslateService, public http: Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
@@ -74,6 +76,7 @@ export class AddTollPage {
     this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.paymentTypes = data["resource"];
+        this.PayType=this.paymentTypes.filter(s=>s.NAME==localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
       }
       );
   }

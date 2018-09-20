@@ -42,7 +42,12 @@ export class ClaimhistorydetailPage {
   FinanceLogin: boolean = false;
   loginUserRole: string;
   public page: number = 1;
+
+  currency = localStorage.getItem("cs_default_currency")
+
+
   role: any;
+
   deptList: any[];
   employeeList: any[] = [];
   employeeList1: any[] = [];

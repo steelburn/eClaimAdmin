@@ -46,6 +46,7 @@
     </ion-item>
 
     <ion-item class="fuha">
+
       <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
       <ion-input type="text"  (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Entertainment_Amount_ngModel">
       </ion-input>
@@ -53,6 +54,7 @@
   <!-- <ion-item *ngIf="!Entertainmentform.controls.claim_amount.valid  && (Entertainmentform.controls.claim_amount.dirty)">
     <p style="color: red; text-align:right;margin-right: 34%;">Amount is {{min_claim_amount}} - {{max_claim_amount}} RM.</p>
 </ion-item> -->
+
 
     <ion-item>
       <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>

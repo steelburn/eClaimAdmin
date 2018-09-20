@@ -477,12 +477,14 @@ export class LoginPage {
     localStorage.removeItem("cs_default_country");
     localStorage.removeItem("cs_max_claim_amt");
     localStorage.removeItem("cs_min_claim_amt");
-    localStorage.removeItem("cs_claim_cutOff_date");
+    localStorage.removeItem("cs_claim_cutoff_date");
     localStorage.removeItem("cs_year_start_month");
     localStorage.removeItem("cs_year_end_month");
     localStorage.removeItem("cs_approval_cutoff_date");
     localStorage.removeItem("cs_default_payment_type");
     localStorage.removeItem("cs_default_language");
+    localStorage.removeItem("cs_email_schedule");
+    localStorage.removeItem("cs_email_time");
 
     this.KeyNameValue = [];
     let url: string = "";
@@ -508,9 +510,9 @@ export class LoginPage {
 
           if (this.KeyNameValueList[item]["KEY_NAME"] == "max_claim_amt") { localStorage.setItem("cs_max_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "min_claim_amt") { localStorage.setItem("cs_min_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          if (this.KeyNameValueList[item]["KEY_NAME"] == "claim_cutOff_date") { localStorage.setItem("cs_claim_cutOff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          if (this.KeyNameValueList[item]["KEY_NAME"] == "year_start_month") { localStorage.setItem("cs_year_start_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          if (this.KeyNameValueList[item]["KEY_NAME"] == "year_end_month") { localStorage.setItem("cs_year_end_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "claim_cutoff_date") { localStorage.setItem("cs_claim_cutoff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "month_start") { localStorage.setItem("cs_year_start_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "month_end") { localStorage.setItem("cs_year_end_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "approval_cutoff_date") { localStorage.setItem("cs_approval_cutoff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
           // if (this.KeyNameValueList[item]["KEY_NAME"] == "default_payment_type") { localStorage.setItem("cs_default_payment_type", this.KeyNameValueList[item]["KEY_VALUE"]); }
           
@@ -523,6 +525,8 @@ export class LoginPage {
           }
 
           if (this.KeyNameValueList[item]["KEY_NAME"] == "default_language") { localStorage.setItem("cs_default_language", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "email_schedule") { localStorage.setItem("cs_email_schedule", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "email_time") { localStorage.setItem("cs_email_time", this.KeyNameValueList[item]["KEY_VALUE"]); }
         }
       });
   }
