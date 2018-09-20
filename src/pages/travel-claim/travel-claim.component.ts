@@ -797,27 +797,12 @@ export class TravelclaimPage {
   valueChange(value:any){
 
   }
-  submitAction(formValues: any) {
-  //  this.getCurrency(this.travelAmountNgmodel);
-  // alert(this.totalClaimAmount);
-  // alert(this.travelAmountNgmodel);
-  let amount = Number(this.totalClaimAmount);
-  // alert(amount);
-  // alert(this.min_claim_amount);
-  // alert(this.max_claim_amount);
+  submitAction(formValues: any) {  
+  let amount = Number(this.totalClaimAmount);  
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.travelAmountNgmodel = null;
-      this.totalClaimAmount=0;
-      // if (!this.isPublicTransport)
-      // {
-      //   this.travelAmountNgmodel = null;
-      // this.totalClaimAmount=0;
-      // }
-      alert("Toatl claim amount should be "+ this.min_claim_amount +"-"+this.max_claim_amount  +" RM.");
-      // this.valueChange(this.travelAmountNgmodel);
-      // formValues.claim_amount="";
-      // this.isPublicTransport = true;
-      // this.getCurrency(this.travelAmountNgmodel);
+      this.totalClaimAmount=0;     
+      alert("Toatl claim amount should be RM "+ this.min_claim_amount +" - "+this.max_claim_amount  +" ");      
       return;
     }
     else {
