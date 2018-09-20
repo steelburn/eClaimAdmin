@@ -459,7 +459,7 @@ export class EntertainmentclaimPage {
     else {
       this.Entertainment_Amount_ngModel = this.Entertainment_Amount_ngModel;
     }
-    if (this.apiMng.isClaimExpired(formValues))
+    if(this.apiMng.isClaimExpired(formValues.travel_date,false))
       return;
 
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
