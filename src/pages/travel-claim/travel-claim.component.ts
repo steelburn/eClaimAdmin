@@ -88,7 +88,8 @@ export class TravelclaimPage {
   PublicTransValue: boolean = false;
   chooseFile: boolean = false;
   ImageUploadValidation: boolean = false;
-
+  min_claim_amount:any;min_claim:any;
+  max_claim_amount:any;max_claim:any;
   /********FORM EDIT VARIABLES***********/
   vehicleCategory: any;
   isPublicTransport: boolean = false;
@@ -97,6 +98,14 @@ export class TravelclaimPage {
   claimRequestData: any;
 
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    
+    // Lakshman
+    this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
+    this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+    this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // Lakshman
+
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
@@ -153,7 +162,7 @@ export class TravelclaimPage {
     amount = Number(amount);
     if (amount > 99999) {
       alert('Amount should not exceed RM99999.')
-      this.travelAmountNgmodel = null;
+      // this.travelAmountNgmodel = null;
       this.travelAmount = 0;
       this.totalClaimAmount = 0;
     }
@@ -163,6 +172,25 @@ export class TravelclaimPage {
       this.totalClaimAmount = amount;
     }
   }
+
+  // Lakshman
+  // getCurrency(amount: number) {
+  //   amount = Number(amount);
+  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
+  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
+  //     // this.travelAmountNgmodel = null
+  //     // this.claimAmount = 0;
+  //         this.travelAmount = 0;
+  //     this.totalClaimAmount = 0;
+  //   } 
+  //   else {
+  //     // this.claimAmount = amount;
+  //     this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
+  //     this.travelAmount = amount;
+  //     this.totalClaimAmount = amount;
+  //   }
+  // } 
+  // Lakshman
 
   totalClaimAmount: number;
   ionViewWillEnter() {
@@ -758,8 +786,36 @@ export class TravelclaimPage {
     if (value === 'Local') this.isTravelLocal = true;
     else this.isTravelLocal = false;
   }
+  valueChange(value:any){
 
+  }
   submitAction(formValues: any) {
+  //  this.getCurrency(this.travelAmountNgmodel);
+  // alert(this.totalClaimAmount);
+  // alert(this.travelAmountNgmodel);
+  let amount = Number(this.totalClaimAmount);
+  // alert(amount);
+  // alert(this.min_claim_amount);
+  // alert(this.max_claim_amount);
+    if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+      this.travelAmountNgmodel = null;
+      this.totalClaimAmount=0;
+      // if (!this.isPublicTransport)
+      // {
+      //   this.travelAmountNgmodel = null;
+      // this.totalClaimAmount=0;
+      // }
+      alert("Toatl claim amount should be "+ this.min_claim_amount +"-"+this.max_claim_amount  +" RM.");
+      // this.valueChange(this.travelAmountNgmodel);
+      // formValues.claim_amount="";
+      // this.isPublicTransport = true;
+      // this.getCurrency(this.travelAmountNgmodel);
+      return;
+    }
+    else {
+      this.travelAmountNgmodel = this.travelAmountNgmodel;
+    }
+
     formValues.travel_date = formValues.start_DT;
     if(this.api.isClaimExpired(formValues))
     return;

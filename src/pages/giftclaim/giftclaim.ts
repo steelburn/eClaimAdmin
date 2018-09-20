@@ -73,7 +73,8 @@ export class GiftclaimPage {
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
- 
+  min_claim_amount:any;min_claim:any;
+  max_claim_amount:any;max_claim:any;
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -134,7 +135,7 @@ export class GiftclaimPage {
     amount = Number(amount);
     if (amount > 99999) {
       alert('Amount should not exceed RM 9,9999.00.')
-      this.Gift_Amount_ngModel = null
+      // this.Gift_Amount_ngModel = null
       this.claimAmount = 0;
     }
     else {
@@ -142,8 +143,29 @@ export class GiftclaimPage {
       this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
     }
   }
+  
+  // Lakshman
+  // getCurrency(amount: number) {
+  //   amount = Number(amount);
+  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
+  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
+  //     this.Gift_Amount_ngModel = null
+  //     this.claimAmount = 0;
+  //   } 
+  //   else {
+  //     this.claimAmount = amount;
+  //     this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+  //   }
+  // } 
+  // Lakshman
 
   constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public translate: TranslateService, public navParams: NavParams, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    // Lakshman
+    this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
+    this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+    this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
@@ -418,6 +440,15 @@ export class GiftclaimPage {
   }
 
   submitAction(formValues: any) {
+    let amount = Number(formValues.claim_amount);
+    if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+      this.Gift_Amount_ngModel = null;
+      return;
+    }
+    else {
+      this.Gift_Amount_ngModel = this.Gift_Amount_ngModel;
+    }
+    
     if(this.apiMng.isClaimExpired(formValues))
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
