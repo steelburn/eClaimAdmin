@@ -80,7 +80,8 @@ export class OvertimeclaimPage {
   isCustomer: boolean = false;
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
-
+  min_claim_amount:any;min_claim:any;
+  max_claim_amount:any;max_claim:any;
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
@@ -91,7 +92,7 @@ export class OvertimeclaimPage {
     amount = Number(amount);
     if (amount > 99999) {
       alert('Amount should not exceed RM 9,9999.00.')
-      this.OT_Amount_ngModel = null
+      // this.OT_Amount_ngModel = null
       this.claimAmount = 0;
     }
     else {
@@ -99,6 +100,20 @@ export class OvertimeclaimPage {
       this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
     }
   }
+  // Lakshman
+  // getCurrency(amount: number) {
+  //   amount = Number(amount);
+  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
+  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
+  //     this.OT_Amount_ngModel = null
+  //     this.claimAmount = 0;
+  //   } 
+  //   else {
+  //     this.claimAmount = amount;
+  //     this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+  //   }
+  // } 
+  // Lakshman
 
   imageURLEdit: any = null
   GetDataforEdit() {
@@ -156,6 +171,12 @@ export class OvertimeclaimPage {
   }
 
   constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
+     // Lakshman
+     this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
+     this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+     this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+     this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+     // Lakshman
     this.profileMng.CheckSessionOut();
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
@@ -332,6 +353,14 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
+    let amount = Number(formValues.claim_amount);
+    if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+      this.OT_Amount_ngModel = null;
+      return;
+    }
+    else {
+      this.OT_Amount_ngModel = this.OT_Amount_ngModel;
+    }
     formValues.travel_date = formValues.start_DT;
     if(this.apiMng.isClaimExpired(formValues.travel_date,false))
     return;

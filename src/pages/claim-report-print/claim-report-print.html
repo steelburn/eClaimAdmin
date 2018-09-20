@@ -154,7 +154,7 @@
             <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
             <td align="right" bgcolor="#002060">Amount (RM)</td>
           </tr>
-          <tr *ngFor="let claim of claimsListSummery">
+          <tr *ngFor="let claim of claimsListSummary">
             <td align="left" bgcolor="#ffffff">&nbsp;</td>
             <td align="left" bgcolor="#ffffff">{{claim.TRAVEL}}</td>
             <td align="left" bgcolor="#ffffff">{{claim.MILEAGE}} </td>
@@ -185,7 +185,7 @@
                 <td align="right" bgcolor="#002060">Amount (RM)</td>
               </tr>
 
-          <tr *ngFor="let i of claimsSocSummery">
+          <tr *ngFor="let i of claimsSocSummary">
             <td align="left" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.SOC}}</td>
             <td align="right" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.AMOUNT | number:'1.2-2'}}</td>
           </tr>
