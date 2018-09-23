@@ -146,7 +146,17 @@ export class ConferenceApp {
     //this.translateToEnglish();
     // this.translateToMalay();
     // this.translate.setDefaultLang('en'); //Fallback language
-
+    alert(localStorage.getItem("cs_default_language"));
+    if(localStorage.getItem("cs_default_language")=='en')
+    {
+    this.translateToEnglish();
+    this.translate.setDefaultLang('en'); 
+    }
+    else if(localStorage.getItem("cs_default_language")=='ms')
+    {
+      this.translateToMalay();
+      this.translate.setDefaultLang('ms'); 
+    }
     platform.ready().then(() => {
     });
 
@@ -229,16 +239,16 @@ export class ConferenceApp {
     }
 
     //alert(localStorage.getItem("cs_default_language"));
-    if(localStorage.getItem("cs_default_language")=='en')
-    {
-    this.translateToEnglish();
-    this.translate.setDefaultLang('en'); 
-    }
-    else if(localStorage.getItem("cs_default_language")=='ms')
-    {
-      this.translateToMalay();
-      this.translate.setDefaultLang('ms'); 
-    }
+    // if(localStorage.getItem("cs_default_language")=='en')
+    // {
+    // this.translateToEnglish();
+    // this.translate.setDefaultLang('en'); 
+    // }
+    // else if(localStorage.getItem("cs_default_language")=='ms')
+    // {
+    //   this.translateToMalay();
+    //   this.translate.setDefaultLang('ms'); 
+    // }
     // alert(loggedIn);
     // debugger;
 
