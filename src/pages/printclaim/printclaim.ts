@@ -67,7 +67,8 @@ export class PrintclaimPage {
   public profileJSON: any;
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
-
+  min_claim_amount:any;min_claim:any;
+  max_claim_amount:any;max_claim:any;
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
@@ -78,7 +79,7 @@ export class PrintclaimPage {
     amount = Number(amount);
     if (amount > 99999) {
       alert('Amount should not exceed RM 9,9999.00.')
-      this.Printing_Amount_ngModel = null
+      // this.Printing_Amount_ngModel = null
       this.claimAmount = 0;
     }
     else {
@@ -86,6 +87,20 @@ export class PrintclaimPage {
       this.Printing_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
     }
   }
+  // Lakshman
+  // getCurrency(amount: number) {
+  //   amount = Number(amount);
+  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
+  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
+  //     this.Printing_Amount_ngModel = null
+  //     this.claimAmount = 0;
+  //   } 
+  //   else {
+  //     this.claimAmount = amount;
+  //     this.Printing_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+  //   }
+  // } 
+  // Lakshman
 
  
   imageURLEdit: any = null
@@ -140,6 +155,12 @@ export class PrintclaimPage {
   }
 
   constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    // Lakshman
+    this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
+    this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+    this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
@@ -376,7 +397,18 @@ export class PrintclaimPage {
   }
 
   submitAction(formValues: any) {
+
+    let amount = Number(formValues.claim_amount);
+    if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+      this.Printing_Amount_ngModel = null;
+      return;
+    }
+    else {
+      this.Printing_Amount_ngModel = this.Printing_Amount_ngModel;
+    }
+   
     if(this.apiMng.isClaimExpired(formValues.travel_date,false))
+
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');

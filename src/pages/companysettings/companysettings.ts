@@ -127,6 +127,7 @@ export class CompanysettingsPage {
           if (this.FormControls[item]["KEY_NAME"] == "default_country") {
             var charNo = this.FormControls[item]["KEY_VALUE"].indexOf(",");
             var curKeyNameValue = this.FormControls[item]["KEY_VALUE"].substring(0, charNo);
+            localStorage.setItem("temp_country_code", this.FormControls[item]["KEY_VALUE"].substr(charNo + 1, (this.FormControls[item]["KEY_VALUE"].length) - charNo));
             // this.Country_ngModel = this.FormControls[item]["KEY_VALUE"];
             this.Country_ngModel = curKeyNameValue;
           }
@@ -143,7 +144,10 @@ export class CompanysettingsPage {
             this.PaymentType_ngModel = curKeyNameValue_1;
           }
           if (this.FormControls[item]["KEY_NAME"] == "default_language") { this.Language_ngModel = this.FormControls[item]["KEY_VALUE"]; }
-          if (this.FormControls[item]["KEY_NAME"] == "email_schedule") { this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "email_schedule") { 
+            // this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"]; 
+            this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"].split(",");            
+          }
           if (this.FormControls[item]["KEY_NAME"] == "email_time") { this.Email_Time_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           this.Add_Form = false;
         }
@@ -176,7 +180,24 @@ export class CompanysettingsPage {
         }
       }
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_language", KEY_VALUE: formValues.Language.trim() });
-      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_schedule", KEY_VALUE: formValues.EmailSchedule.trim() });
+      var ctr = 0; var scheduler_val = "";
+      for (var ScheduleVal of this.Email_Schedule_ngModel) {
+        if (this.Email_Schedule_ngModel.length > 1) {
+          if (ctr == 0) {
+            scheduler_val = ScheduleVal;
+          }
+          else {
+            scheduler_val = scheduler_val + ',' + ScheduleVal;
+          }
+        }
+        else {
+          scheduler_val = ScheduleVal;
+        }
+        ctr = ctr + 1;
+      }
+
+      // this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_schedule", KEY_VALUE: formValues.EmailSchedule.trim() });
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_schedule", KEY_VALUE: scheduler_val });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_time", KEY_VALUE: formValues.EmailTime.trim() });
 
       this.Settings_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
@@ -197,9 +218,9 @@ export class CompanysettingsPage {
               if (this.CountryCodes != undefined) {
                 if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + this.CountryCodes[0]["alpha2Code"]; }
               }
-            }
-            else {
-              if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + localStorage.getItem("cs_default_country"); }
+              else {
+                if (element.KEY_NAME == "default_country") { element.KEY_VALUE = formValues.Country.trim() + ',' + localStorage.getItem("temp_country_code"); }
+              }
             }
           }
         }
@@ -221,7 +242,25 @@ export class CompanysettingsPage {
         }
 
         if (element.KEY_NAME == "default_language") { element.KEY_VALUE = formValues.Language.trim(); }
-        if (element.KEY_NAME == "email_schedule") { element.KEY_VALUE = formValues.EmailSchedule.trim(); }
+
+        if (element.KEY_NAME == "email_schedule") {
+          var ctr = 0;
+          for (var ScheduleVal of this.Email_Schedule_ngModel) {
+            if (this.Email_Schedule_ngModel.length > 1) {
+              if (ctr == 0) {
+                element.KEY_VALUE = ScheduleVal;
+              }
+              else {
+                element.KEY_VALUE = element.KEY_VALUE + ',' + ScheduleVal
+              }
+            }
+            else {
+              element.KEY_VALUE = ScheduleVal
+            }
+            ctr = ctr + 1;
+          }
+          // element.KEY_VALUE = formValues.EmailSchedule.trim(); 
+        }
         if (element.KEY_NAME == "email_time") { element.KEY_VALUE = formValues.EmailTime.trim(); }
 
         this.Settings_Entry.CREATION_USER_GUID = this.FormControls[0]["CREATION_USER_GUID"];
