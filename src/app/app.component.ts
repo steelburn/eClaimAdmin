@@ -143,13 +143,24 @@ export class ConferenceApp {
   ) {
     // debugger;
     this.blnLogin = false;
+    //this.translateToEnglish();
+    // this.translateToMalay();
+    // this.translate.setDefaultLang('en'); //Fallback language
+   // alert(localStorage.getItem("cs_default_language"));
+    if(localStorage.getItem("cs_default_language")=='en')
+    {
     this.translateToEnglish();
-    this.translate.setDefaultLang('en'); //Fallback language
-
+    this.translate.setDefaultLang('en'); 
+    }
+    else if(localStorage.getItem("cs_default_language")=='ms')
+    {
+      this.translateToMalay();
+      this.translate.setDefaultLang('ms'); 
+    }
     platform.ready().then(() => {
     });
 
-    translate.setDefaultLang('en');
+   // translate.setDefaultLang('en');
     //    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
 
     // Check if the user has already seen the tutorial
@@ -158,7 +169,9 @@ export class ConferenceApp {
 
     // decide which menu items should be hidden by current login status stored in local storage    
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
+     
       this.enableMenu(hasLoggedIn === true);
+     
     });
 
     //this.enableMenu(true);
@@ -208,6 +221,7 @@ export class ConferenceApp {
 
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
+     
     });
 
     this.events.subscribe('user:signup', () => {
@@ -223,8 +237,21 @@ export class ConferenceApp {
     if (localStorage.getItem("g_USER_GUID") != null) {
       loggedIn = true;
     }
+
+    //alert(localStorage.getItem("cs_default_language"));
+    // if(localStorage.getItem("cs_default_language")=='en')
+    // {
+    // this.translateToEnglish();
+    // this.translate.setDefaultLang('en'); 
+    // }
+    // else if(localStorage.getItem("cs_default_language")=='ms')
+    // {
+    //   this.translateToMalay();
+    //   this.translate.setDefaultLang('ms'); 
+    // }
     // alert(loggedIn);
     // debugger;
+
     //Get all the roles and menus for that particular user.-------------------------------------------------------   
     // let url: string; this.Menu_Array = []; let Role_Name: string = "";
     // url = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -252,8 +279,7 @@ export class ConferenceApp {
     //   });
     // ---------------------------------------------------------------------------------------------------------------------------------   
 
-    // this.menu.enable(loggedIn, 'loggedInMenu');
-    // this.menu.enable(!loggedIn, 'loggedOutMenu');
+    
 
     if (localStorage.length > 0) {
       this.blnLogin = true; this.USER_NAME_LABEL = localStorage.getItem("g_FULLNAME");
@@ -273,13 +299,11 @@ export class ConferenceApp {
           ];
 
           this.setupsPages = [
-            // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
             { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
             { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
           ];
 
-          this.menu.enable(loggedIn, 'loggedInMenu');
-          // this.menu.enable(loggedIn, 'loggedInMenu_User');          
+          this.menu.enable(loggedIn, 'loggedInMenu');          
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
@@ -317,8 +341,6 @@ export class ConferenceApp {
             { title: 'All Claim List', name: 'AllClaimListPage', component: AllClaimListPage, icon: 'ios-paper-outline' },
             { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
             { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
-
-
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -336,9 +358,7 @@ export class ConferenceApp {
           }
 
           this.setupsPages = [
-            // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
             { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
-            // { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
           ];
 
           this.menu.enable(loggedIn, 'loggedInMenu_User');
@@ -346,7 +366,6 @@ export class ConferenceApp {
         }
 
         //For Team Member, Home, Change Password, Sign Out
-        // else if (res.toString() == "Team Member") {
         else if (res.toString() == Settings.UserRoleConstants.TEAM_MEMBER) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
@@ -370,7 +389,6 @@ export class ConferenceApp {
           ];
 
           this.reportPages = [
-            // { title: 'Approver Task History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
           ];
@@ -399,20 +417,17 @@ export class ConferenceApp {
           this.menu.enable(!loggedIn, 'loggedOutMenu');
         }
 
-        // else if (res.toString() == "Finance Executive") {
         else if (res.toString() == Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
           this.blnReport_loggedInMenu_User = true;
           this.blnAccount_loggedInMenu_User = true;
-
           this.blnSetup_loggedInMenu_User = true;
 
           this.appPages_User = [
             { title: 'Validation', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
             { title: 'Payment ', name: 'FinancePaymentTasklistPage', component: FinancePaymentTasklistPage, icon: 'md-clipboard' },
-
           ];
 
           this.claimPages = [
@@ -426,25 +441,17 @@ export class ConferenceApp {
 
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
-
             { title: 'Validation History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Payment History', name: 'PaymentHistoryPage', component: PaymentHistoryPage, icon: 'md-list-box' },
-
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
-
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
             { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' },
-
             { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
             { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
-
-
           ];
 
           this.setupsPages = [
-            // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
             { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
-            // { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -466,21 +473,18 @@ export class ConferenceApp {
         }
 
         //For Team Member, Home, Change Password, Sign Out
-        // else if (res.toString() == "Finance Admin" || res.toString() == "Finance Manager") {
         else if (res.toString() == Settings.UserRoleConstants.FINANCE_ADMIN || res.toString() == Settings.UserRoleConstants.FINANCE_MANAGER) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
           this.blnReport_loggedInMenu_User = true;
           this.blnAccount_loggedInMenu_User = true;
-
           this.blnSetup_loggedInMenu_User = true;
 
           this.appPages_User = [
             { title: 'Superior', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
             { title: 'Validation', name: 'ClaimtasklistPage', component: ClaimtasklistPage, icon: 'md-clipboard' },
             { title: 'Payment ', name: 'FinancePaymentTasklistPage', component: FinancePaymentTasklistPage, icon: 'md-clipboard' },
-
           ];
           this.claimPages = [
             { title: 'Travel Claim', name: 'TravelclaimPage', component: TravelclaimPage, icon: 'car' },
@@ -493,27 +497,20 @@ export class ConferenceApp {
 
           if (res.toString() == "Finance Admin") {
             this.setupsPages = [
-              // { title: 'Manage Customer', name: 'CustomerSetupPage', component: CustomerSetupPage, icon: 'man' },
               { title: 'Setup', name: 'SetupPage', component: SetupPage, icon: 'settings' },
-              // { title: 'Admin Setup', name: 'AdminsetupPage', component: AdminsetupPage, icon: 'cog' }
             ];
           }
 
           this.reportPages = [
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'Superior History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
-
             { title: 'Validation History', name: 'ClaimhistoryPage', component: ClaimhistoryPage, icon: 'md-list-box' },
             { title: 'Payment History', name: 'PaymentHistoryPage', component: PaymentHistoryPage, icon: 'md-list-box' },
             { title: 'Monthly Claim Report', name: 'MonthlyClaimReportPage', component: MonthlyClaimReportPage, icon: 'ios-paper-outline' },
-
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' },
             { title: 'User Claim Reports', name: 'ClaimReportPage', component: ClaimReportPage, icon: 'md-paper' },
-
             { title: 'Leave Report', name: 'LeaveReportPage', component: LeaveReportPage, icon: 'ios-clipboard-outline' },
             { title: 'Attendance Report', name: 'AttendanceReportPage', component: AttendanceReportPage, icon: 'ios-paper-outline' }
-
-
           ];
 
           if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -535,10 +532,8 @@ export class ConferenceApp {
         }
 
         //For Manage Customer
-        // else if (res.toString() == "Manage Customer") {
         else if (res.toString() == Settings.UserRoleConstants.MANAGE_CUSTOMER) {
           this.appPages_User = [
-
             { title: 'Superior', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' }
           ];
           this.claimPages = [
@@ -554,7 +549,6 @@ export class ConferenceApp {
             { title: 'Superior History', name: 'ClaimhistorydetailPage', component: ClaimhistorydetailPage, icon: 'ios-list-box-outline' },
             { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' },
             { title: 'My Claim Reports', name: 'ClaimReportUserPage', component: ClaimReportUserPage, icon: 'ios-paper-outline' }
-
           ];
 
           this.setupsPages = [
@@ -580,14 +574,12 @@ export class ConferenceApp {
         }
 
         //For Team Lead
-        // else if (res.toString() == "Team Lead") {
         else if (res.toString() == Settings.UserRoleConstants.TEAM_LEAD) {
           this.blnDashboard_loggedInMenu_User = true;
           this.blnTasks_loggedInMenu_User = true;
           this.blnClaims_loggedInMenu_User = true;
           this.blnReport_loggedInMenu_User = true;
           this.blnAccount_loggedInMenu_User = true;
-
           this.blnSetup_loggedInMenu_User = false;
 
           this.appPages_User = [
@@ -631,7 +623,6 @@ export class ConferenceApp {
         else {
           this.appPages_User = [
             { title: 'Approver Tasks', name: 'ClaimapprovertasklistPage', component: ClaimapprovertasklistPage, icon: 'checkbox-outline' },
-            // { title: 'My Claim History', name: 'UserclaimslistPage', component: UserclaimslistPage, icon: 'ios-clipboard-outline' }
           ];
 
           this.claimPages = [
@@ -676,37 +667,6 @@ export class ConferenceApp {
     else {
       this.blnLogin = false;
     }
-
-
-
-
-
-    //For Super admin, All menu should display
-    // if (localStorage.length > 0) {
-    //   if (localStorage.getItem("g_USER_GUID") == "sva") {
-    //     this.menu.enable(loggedIn, 'loggedInMenu');
-    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
-    //   }
-    //   //For user, distinct menu should display
-    //   else if (localStorage.getItem("g_IS_TENANT_ADMIN") != "1") {
-    //     // this.appPages_User = [
-    //     //   { title: 'HOME', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 0, icon: 'apps' },
-    //     //   { title: 'APPROVER TASK', name: 'ApproverTaskListPage', component: TabsPage, tabComponent: ApproverTaskListPage, index: 3, icon: 'checkbox-outline' },
-    //     // ];
-    //     this.appPages_User = this.Menu_Array;
-
-    //     this.menu.enable(loggedIn, 'loggedInMenu_User');
-    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
-    //   }
-    //   else {
-    //     this.menu.enable(loggedIn, 'loggedInMenu');
-    //     this.menu.enable(!loggedIn, 'loggedOutMenu');
-    //   }
-    // }
-    // else {
-    //   this.menu.enable(loggedIn, 'loggedInMenu');
-    //   this.menu.enable(!loggedIn, 'loggedOutMenu');
-    // }
   }
 
   isActive(page: PageInterface) {
@@ -728,7 +688,6 @@ export class ConferenceApp {
   }
 
   public translateToMalayClicked: boolean = false;
-
   public translateToEnglishClicked: boolean = true;
 
   public translateToEnglish() {
@@ -744,7 +703,6 @@ export class ConferenceApp {
   }
 
   GetUser_Role(user_guid: string) {
-    // debugger;
     let TableURL = this.baseResource_Url + "view_user_role_menu?filter=USER_GUID=" + user_guid + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     return new Promise((resolve) => {
       this.http
@@ -753,7 +711,7 @@ export class ConferenceApp {
         .subscribe(data => {
           let roles = data["resource"];
           if (data["resource"].length > 0) {
-            resolve(roles[0]["ROLE_NAME"]); //localStorage.setItem("g_ROLE_NAME",roles[0]["ROLE_NAME"]);
+            resolve(roles[0]["ROLE_NAME"]); 
           }
           else {
             resolve("NA");

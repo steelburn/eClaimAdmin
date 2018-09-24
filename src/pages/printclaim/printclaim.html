@@ -51,11 +51,13 @@
     </ion-item>
 
     <ion-item class="fuha">
-      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ currency }}</ion-label>
       <!-- <ion-label> {{travelAmount | number}} </ion-label> -->
       <ion-input type="text" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Printing_Amount_ngModel"></ion-input>
     </ion-item>
-
+    <!-- <ion-item *ngIf="!Printform.controls.claim_amount.valid  && (Printform.controls.claim_amount.dirty)">
+      <p style="color: red; text-align:right;margin-right: 34%;">Amount is {{min_claim_amount}} - {{max_claim_amount}} RM.</p>
+  </ion-item> -->
     <ion-item>
       <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
       <ion-input type="text" formControlName="description" [(ngModel)]="Printing_Description_ngModel"></ion-input>
@@ -81,6 +83,9 @@
     <div class="btn">
       <button ion-button color="primary500" (click)='submitAction(Printform.value)' [disabled]="(Printform.valid && !ImageUploadValidation) || !Printform.valid">{{ 'SUBMIT'}}</button>
     </div>   
+    <ion-item *ngIf="!Printform.controls.claim_amount.valid  && (Printform.controls.claim_amount.dirty)">
+      <p style="color: red; text-align:right;margin-right: 34%;">Claim amount should be RM {{min_claim_amount}} - {{max_claim_amount}}</p>
+  </ion-item>
   </form>
 
   <div class="popup2" padding *ngIf="displayImage">

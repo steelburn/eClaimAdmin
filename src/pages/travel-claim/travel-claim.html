@@ -83,7 +83,7 @@
 
     <ion-item *ngIf="isPublicTransport">
       <ion-label fixed>{{ 'PAY_BY_LABEL' | translate }}</ion-label>
-      <ion-select [(ngModel)]="PayType" placeholder="Cash" formControlName="PayType">
+      <ion-select [(ngModel)]="PayType" formControlName="PayType">
         <ion-option *ngFor="let item of paymentTypes" (ionSelect)="onPaySelect(item)" value={{item.PAYMENT_TYPE_GUID}}>{{ item.NAME}}</ion-option>
       </ion-select>
     </ion-item>
@@ -108,10 +108,13 @@
 
 
     <ion-item class="fuha">
-      <ion-label floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+      <ion-label floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ currency }}</ion-label>
       <ion-input (change)='getCurrency($event.target.value)' [disabled]="!isPublicTransport" [(ngModel)]="travelAmountNgmodel"
-        type="text" formControlName="claim_amount"></ion-input>
+        type="text" formControlName="claim_amount" (ngModelChange)="valueChange($event)"></ion-input>
     </ion-item>
+    <!-- <ion-item *ngIf="!Travelform.controls.claim_amount.valid  && (Travelform.controls.claim_amount.dirty)">
+      <p style="color: red; text-align:right;margin-right: 34%;">Amount is {{min_claim_amount}} - {{max_claim_amount}} RM.</p>
+  </ion-item> -->
 
     <ion-item>
       <ion-label floating color="primary500"> <span style="color:red">*</span> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
@@ -159,6 +162,7 @@
       <button *ngIf="!imageOptional" ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="(Travelform.valid && !PublicTransValue) || !Travelform.valid" >{{ "NEXT_BUTTON" | translate }}</button>
       <button *ngIf="imageOptional" ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "NEXT_BUTTON" | translate }}</button>
     </div>
+   
     <div class="btn" *ngIf="isFormSubmitted">
       <button ion-button outline item-end icon-left (click)="TollParkLookup()">
         <ion-icon name="eye"></ion-icon>
@@ -166,7 +170,9 @@
         <button *ngIf="imageOptional" ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "SUBMIT_BUTTON" | translate }}</button>
       <button *ngIf="!imageOptional" ion-button color="primary" (click)='submitAction(Travelform.value)' [disabled]="!Travelform.valid">{{ "SUBMIT_BUTTON" | translate }}</button>
     </div>
-
+    <!-- <div *ngIf="!Travelform.controls.claim_amount.valid  && (Travelform.controls.claim_amount.dirty)">
+      <p style="color: red; text-align:right;margin-right: 34%;">Toatl claim amount should be  {{min_claim_amount}} - {{max_claim_amount}} RM.</p>
+  </div> -->
    
   </form>
 

@@ -52,15 +52,24 @@ export class MiscellaneousClaimPage {
   public stage: any;
   public profileJSON: any;
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
+
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
-
+  min_claim_amount:any;min_claim:any;
+  max_claim_amount:any;max_claim:any;
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
 
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, fb: FormBuilder, private loadingCtrl: LoadingController, private service: Services, public navCtrl: NavController, public http: Http, public navParams: NavParams, public api: ApiManagerProvider) {
+     // Lakshman
+     this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
+     this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+     this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+     this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+     // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
@@ -89,7 +98,7 @@ export class MiscellaneousClaimPage {
     amount = Number(amount);
     if (amount > 99999) {
       alert('Amount should not exceed RM 9,9999.00.')
-      this.Miscellaneous_Amount_ngModel = null
+      // this.Miscellaneous_Amount_ngModel = null
       this.claimAmount = 0;
     }
     else {
@@ -97,6 +106,20 @@ export class MiscellaneousClaimPage {
       this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
     }
   }
+  // Lakshman
+  // getCurrency(amount: number) {
+  //   amount = Number(amount);
+  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
+  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
+  //     this.Miscellaneous_Amount_ngModel = null
+  //     this.claimAmount = 0;
+  //   } 
+  //   else {
+  //     this.claimAmount = amount;
+  //     this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+  //   }
+  // } 
+  // Lakshman
 
   // getCurrency(amount: number) {
   //   this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
@@ -361,7 +384,18 @@ export class MiscellaneousClaimPage {
   }
 
   submitAction(formValues: any) {
-    if(this.api.isClaimExpired(formValues))
+
+    let amount = Number(formValues.claimAmount);
+    if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+      this.Miscellaneous_Amount_ngModel = null;
+      return;
+    }
+    else {
+      this.Miscellaneous_Amount_ngModel = this.Miscellaneous_Amount_ngModel;
+    }
+  
+    if(this.api.isClaimExpired(formValues.travel_date,false))
+
     return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');

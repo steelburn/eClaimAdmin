@@ -60,10 +60,13 @@
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ currency }}</ion-label>
       <ion-input (change)='getCurrency($event.target.value)' type="text" formControlName="claim_amount" 
       [(ngModel)]="OT_Amount_ngModel"></ion-input>
     </ion-item>
+    <!-- <ion-item *ngIf="!OTform.controls.claim_amount.valid  && (OTform.controls.claim_amount.dirty)">
+      <p style="color: red; text-align:left;">Amount is {{min_claim_amount}} - {{max_claim_amount}} RM.</p>
+  </ion-item> -->
 
     <ion-item>
       <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
@@ -73,6 +76,9 @@
     <div class="btn">     
       <button ion-button color="primary500" (click)='submitAction(OTform.value)' [disabled]= "!OTform.valid">{{ 'SUBMIT'}}</button>     
    </div>   
+   <ion-item *ngIf="!OTform.controls.claim_amount.valid  && (OTform.controls.claim_amount.dirty)">
+    <p style="color: red; text-align:right;margin-right: 34%;">Claim amount should be RM {{min_claim_amount}} - {{max_claim_amount}}</p>
+</ion-item>
   </form>
 
   <div class="blackcontainer" *ngIf="AddLookupClicked">
