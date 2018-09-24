@@ -78,9 +78,9 @@ export class PrintclaimPage {
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 9,9999.00.')
+      // alert('Amount should not exceed RM 9,9999.00.')
       // this.Printing_Amount_ngModel = null
-      this.claimAmount = 0;
+      // this.claimAmount = 0;
     }
     else {
       this.claimAmount = amount;
@@ -398,7 +398,16 @@ export class PrintclaimPage {
 
   submitAction(formValues: any) {
 
-    let amount = Number(formValues.claim_amount);
+    // let amount = Number(formValues.claim_amount);
+    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+    //   this.Printing_Amount_ngModel = null;
+    //   return;
+    // }
+    // else {
+    //   this.Printing_Amount_ngModel = this.Printing_Amount_ngModel;
+    // }
+    let x = this.Printing_Amount_ngModel.split(",").join("");
+    let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Printing_Amount_ngModel = null;
       return;
@@ -406,7 +415,6 @@ export class PrintclaimPage {
     else {
       this.Printing_Amount_ngModel = this.Printing_Amount_ngModel;
     }
-   
     if(this.apiMng.isClaimExpired(formValues.travel_date,false))
 
     return;

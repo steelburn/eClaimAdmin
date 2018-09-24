@@ -91,9 +91,9 @@ export class OvertimeclaimPage {
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 9,9999.00.')
+      // alert('Amount should not exceed RM 9,9999.00.')
       // this.OT_Amount_ngModel = null
-      this.claimAmount = 0;
+      // this.claimAmount = 0;
     }
     else {
       this.claimAmount = amount;
@@ -353,7 +353,16 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
-    let amount = Number(formValues.claim_amount);
+    // let amount = Number(formValues.claim_amount);
+    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+    //   this.OT_Amount_ngModel = null;
+    //   return;
+    // }
+    // else {
+    //   this.OT_Amount_ngModel = this.OT_Amount_ngModel;
+    // }
+    let x = this.OT_Amount_ngModel.split(",").join("");
+    let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.OT_Amount_ngModel = null;
       return;
