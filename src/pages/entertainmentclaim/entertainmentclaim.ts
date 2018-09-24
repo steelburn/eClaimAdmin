@@ -77,6 +77,7 @@ export class EntertainmentclaimPage {
   chooseFile: boolean = false;
   min_claim_amount: any; min_claim: any;
   max_claim_amount: any; max_claim: any;
+  Amount_valid:boolean = false;
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
@@ -86,12 +87,14 @@ export class EntertainmentclaimPage {
   constructor(public numberPipe: DecimalPipe, public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
 
     // Lakshman
+    this.Amount_valid=false;
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
     this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
     this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
     this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
     let currency=localStorage.getItem("cs_default_currency");
     // alert(currency);
+    this.Amount_valid=false;
     // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
@@ -129,9 +132,9 @@ export class EntertainmentclaimPage {
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 99,999.00.')
-      // this.Entertainment_Amount_ngModel = null
-      this.claimAmount = 0;
+      // alert('Amount should not exceed RM 99,999.00.')
+      // // this.Entertainment_Amount_ngModel = null
+      // this.claimAmount = 0;
     }
     else {
       this.claimAmount = amount;
@@ -451,15 +454,22 @@ export class EntertainmentclaimPage {
   }
 
   submitAction(formValues: any) {
-
-    let amount = Number(formValues.claim_amount);
+    let x = this.Entertainment_Amount_ngModel.split(",").join("");
+    let  amount=Number(x);
+    // let amount = Number(formValues.claim_amount);
+    // alert(formValues.claim_amount)
+    // // alert(this.Travel_Amount_ngModel)
+    // alert(amount)
+    // alert(this.min_claim_amount+' - '+this.max_claim_amount)
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Entertainment_Amount_ngModel = null;
+      // this.Amount_valid=true;
       // alert("Toatl claim amount should be "+ this.min_claim_amount +"-"+this.max_claim_amount  +" RM.");
       return;
     }
     else {
       this.Entertainment_Amount_ngModel = this.Entertainment_Amount_ngModel;
+      // this.Amount_valid=false;
     }
     if(this.apiMng.isClaimExpired(formValues.travel_date,false))
       return;
@@ -502,7 +512,8 @@ export class EntertainmentclaimPage {
             let start_DT: string = "";
             let end_DT: string = "";
             // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
-            this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
+            //Commented By bijay on 24/09/2018 as per scheduler implemented
+            // this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //----------------------------------------------------------            
             alert('Claim details updated successfully.');
             this.navCtrl.push(UserclaimslistPage);

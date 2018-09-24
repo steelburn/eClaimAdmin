@@ -97,9 +97,9 @@ export class MiscellaneousClaimPage {
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 9,9999.00.')
-      // this.Miscellaneous_Amount_ngModel = null
-      this.claimAmount = 0;
+      // alert('Amount should not exceed RM 9,9999.00.')
+      // // this.Miscellaneous_Amount_ngModel = null
+      // this.claimAmount = 0;
     }
     else {
       this.claimAmount = amount;
@@ -385,7 +385,16 @@ export class MiscellaneousClaimPage {
 
   submitAction(formValues: any) {
 
-    let amount = Number(formValues.claimAmount);
+    // let amount = Number(formValues.claimAmount);
+    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+    //   this.Miscellaneous_Amount_ngModel = null;
+    //   return;
+    // }
+    // else {
+    //   this.Miscellaneous_Amount_ngModel = this.Miscellaneous_Amount_ngModel;
+    // }
+    let x = this.Miscellaneous_Amount_ngModel.split(",").join("");
+    let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Miscellaneous_Amount_ngModel = null;
       return;
@@ -393,7 +402,6 @@ export class MiscellaneousClaimPage {
     else {
       this.Miscellaneous_Amount_ngModel = this.Miscellaneous_Amount_ngModel;
     }
-  
     if(this.api.isClaimExpired(formValues.travel_date,false))
 
     return;
@@ -431,7 +439,8 @@ export class MiscellaneousClaimPage {
             let end_DT: string = "";
 
             // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
-            this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
+            //Commented By bijay on 24/09/2018 as per scheduler implemented
+            // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //----------------------------------------------------------
             
             alert('Claim details updated successfully.')
