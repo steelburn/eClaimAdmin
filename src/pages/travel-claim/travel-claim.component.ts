@@ -358,11 +358,11 @@ export class TravelclaimPage {
           if (element.ATTACHMENT_ID !== null)
              element.ATTACHMENT_ID = this.api.getImageUrl(element.ATTACHMENT_ID);    
             //this.imageURLEdit = this.api.getImageUrl(element.ATTACHMENT_ID);
-          this.tollParkAmount += element.AMOUNT;
+          this.tollParkAmount += this.roundNumber(element.AMOUNT,12);
         });
         if (this.isFormSubmitted) {
-          this.tollParkAmount = this.tollParkAmount === undefined ? 0 : this.tollParkAmount;
-          this.totalClaimAmount = this.travelAmount + this.tollParkAmount;
+          this.tollParkAmount = this.tollParkAmount === undefined ? 0 : this.tollParkAmount;          
+          this.totalClaimAmount = this.travelAmount + this.tollParkAmount;          
 
           this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
             .subscribe(data => {
@@ -377,6 +377,11 @@ export class TravelclaimPage {
         resolve(this.tollParkAmount);
       })
     });
+  }
+
+  roundNumber(number: any, decimals: any) {
+    var newnumber = new Number(number + '').toFixed(parseInt(decimals));
+    return parseFloat(newnumber);
   }
 
   GetDistance() {
@@ -396,11 +401,14 @@ export class TravelclaimPage {
         this.Travel_Distance_ngModel = this.numberPipe.transform(this.Travel_Distance_ngModel, '1.2-2');
         // this.Travel_Mode_ngModel = this.vehicleCategory;
         if (!this.isPublicTransport)
-          this.travelAmount = destination * this.VehicleRate, -2;
-        this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
+        //Added by bijay on 24/09/2018
+          this.travelAmount = this.roundNumber(destination * this.VehicleRate,2);
+        // this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
+        this.travelAmountNgmodel = this.travelAmount;
         this.travelAmount = this.travelAmount === undefined ? 0 : this.travelAmount;
         this.tollParkAmount = this.tollParkAmount === undefined ? 0 : this.tollParkAmount;
-        this.totalClaimAmount = this.travelAmount + this.tollParkAmount;
+        //Added by bijay on 24/09/2018
+        this.totalClaimAmount = this.roundNumber(this.travelAmount + this.tollParkAmount,2);
       }
       else
         alert('Please select Valid Origin & Destination Places');
@@ -881,7 +889,8 @@ export class TravelclaimPage {
                 
                 // Send Email------------------------------------------------
                 // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
-                this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
+                //Commented By bijay on 24/09/2018 as per scheduler implemented
+                // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
                 // ----------------------------------------------------------
               //}
 

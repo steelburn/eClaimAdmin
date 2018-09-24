@@ -180,7 +180,8 @@ export class ProfileManagerProvider {
     // }
     
     //If approver approve or reject applier will get the mail notification--------------
-    this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID, claimRef.REMARKS, this.mainClaimReq.STATUS);
+    //Commented By bijay on 24/09/2018 as per scheduler implemented
+    // this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID, claimRef.REMARKS, this.mainClaimReq.STATUS);
   }
 
   // SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any, level: any) {
@@ -422,7 +423,8 @@ export class ProfileManagerProvider {
         // this.api.sendEmail(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID);        
         
         //Superior will get mail notification--------------------
-        this.api.sendEmail_New(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID, this.formValues.origin, this.formValues.destination, this.formValues.description, claimReqMainRef.SOC_GUID, claimReqMainRef.CUSTOMER_GUID);
+        //Commented By bijay on 24/09/2018 as per scheduler implemented
+        // this.api.sendEmail_New(this.formValues.claimTypeGUID, this.formValues.start_DT, this.formValues.end_DT, new Date().toISOString(), this.formValues.travel_date, claimReqMainRef.CLAIM_REQUEST_GUID, this.formValues.origin, this.formValues.destination, this.formValues.description, claimReqMainRef.SOC_GUID, claimReqMainRef.CUSTOMER_GUID);
       
         localStorage.setItem("g_CR_GUID", postClaimMain["resource"][0].CLAIM_REQUEST_GUID);
       // this.ClaimRequestMain = postClaimMain["resource"][0].CLAIM_REQUEST_GUID;
