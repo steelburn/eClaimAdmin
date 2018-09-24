@@ -751,7 +751,8 @@ export class ApiManagerProvider {
   userClaimCutoffDate: number = parseInt(localStorage.getItem("cs_claim_cutOff_date"));
   approverCutoffDate: number = parseInt(localStorage.getItem("cs_approval_cutoff_date"));
 
-  isClaimExpired(formValues: any, isApprover: boolean) {
+  isClaimExpired(travelDate: any, isApprover: boolean) {
+ 
     let claimExpiry: any;
     if (isApprover) {
       claimExpiry = this.approverCutoffDate;
@@ -759,7 +760,7 @@ export class ApiManagerProvider {
     else {
       claimExpiry = this.userClaimCutoffDate;
     }
-    let myDate = new Date(formValues.travel_date);
+    let myDate = new Date(travelDate);
     let travelMonth: number = myDate.getMonth();
     let currentMonth: number = new Date().getMonth();
     let currentDate: number = new Date().getDate();
