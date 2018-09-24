@@ -146,10 +146,11 @@ export class ConferenceApp {
     //this.translateToEnglish();
     // this.translateToMalay();
     // this.translate.setDefaultLang('en'); //Fallback language
-
+   // alert(localStorage.getItem("cs_default_language"));
+   
     platform.ready().then(() => {
     });
-
+    this.TranslateLanguage();
    // translate.setDefaultLang('en');
     //    platform.ready().then(() => { statusbar.styleDefault(); splashScreen.hide(); });
 
@@ -223,12 +224,8 @@ export class ConferenceApp {
     });
   }
 
-  enableMenu(loggedIn: boolean) {
-    if (localStorage.getItem("g_USER_GUID") != null) {
-      loggedIn = true;
-    }
-
-    //alert(localStorage.getItem("cs_default_language"));
+  TranslateLanguage()
+  {
     if(localStorage.getItem("cs_default_language")=='en')
     {
     this.translateToEnglish();
@@ -239,6 +236,24 @@ export class ConferenceApp {
       this.translateToMalay();
       this.translate.setDefaultLang('ms'); 
     }
+  }
+
+  enableMenu(loggedIn: boolean) {
+    if (localStorage.getItem("g_USER_GUID") != null) {
+      loggedIn = true;
+    }
+   // this.TranslateLanguage();
+    //alert(localStorage.getItem("cs_default_language"));
+    // if(localStorage.getItem("cs_default_language")=='en')
+    // {
+    // this.translateToEnglish();
+    // this.translate.setDefaultLang('en'); 
+    // }
+    // else if(localStorage.getItem("cs_default_language")=='ms')
+    // {
+    //   this.translateToMalay();
+    //   this.translate.setDefaultLang('ms'); 
+    // }
     // alert(loggedIn);
     // debugger;
 
@@ -276,6 +291,7 @@ export class ConferenceApp {
       this.IMAGE_URL = localStorage.getItem("g_IMAGE_URL");
       let val = this.GetUser_Role(localStorage.getItem("g_USER_GUID"));
       val.then((res) => {
+        this.TranslateLanguage();
         this.blnDashboard_loggedInMenu_User = true;
         this.blnTasks_loggedInMenu_User = true;
         this.blnClaims_loggedInMenu_User = true;
