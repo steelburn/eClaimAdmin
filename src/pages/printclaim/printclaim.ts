@@ -25,7 +25,7 @@ import moment from 'moment';
 export class PrintclaimPage {
 
   uploadFileName: string;
-  loading : Loading;
+  loading: Loading;
   CloudFilePath: string;
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -67,20 +67,20 @@ export class PrintclaimPage {
   public profileJSON: any;
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
-  min_claim_amount:any;min_claim:any;
-  max_claim_amount:any;max_claim:any;
+  min_claim_amount: any; min_claim: any;
+  max_claim_amount: any; max_claim: any;
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
-
+  rejectedLevel: any;
   claimAmount: number = 0;
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 9,9999.00.')
+      // alert('Amount should not exceed RM 9,9999.00.')
       // this.Printing_Amount_ngModel = null
-      this.claimAmount = 0;
+      // this.claimAmount = 0;
     }
     else {
       this.claimAmount = amount;
@@ -102,7 +102,7 @@ export class PrintclaimPage {
   // } 
   // Lakshman
 
- 
+
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -114,10 +114,10 @@ export class PrintclaimPage {
 
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
-                this.claimRequestData = data["resource"];             
+                this.claimRequestData = data["resource"];
                 // this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null) 
-                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID); 
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT
                 this.Printing_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
@@ -156,10 +156,10 @@ export class PrintclaimPage {
 
   constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
     // Lakshman
-    this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
-    this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
-    this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
-    this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
+    this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
+    this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
     // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
@@ -167,8 +167,14 @@ export class PrintclaimPage {
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     if (this.isFormEdit) {
-      this.profileMng.initiateLevels('1');
-      this.GetDataforEdit();
+      this.apiMng.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
+        this.claimRequestData = res['resource'];
+        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+        this.profileMng.initiateLevels(this.rejectedLevel);
+        this.GetDataforEdit();
+      })
+
+
     }
 
     else {
@@ -314,10 +320,10 @@ export class PrintclaimPage {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      if(file.type==='image/jpeg')
-      this.isImage = true;
+      if (file.type === 'image/jpeg')
+        this.isImage = true;
       else
-      this.isImage = false;
+        this.isImage = false;
       this.Printform.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       reader.onload = () => {
@@ -386,8 +392,7 @@ export class PrintclaimPage {
 
     return new Promise((resolve) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Printform.get('avatar').value, options)
-        .map((response) => 
-        {
+        .map((response) => {
           this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
@@ -398,7 +403,16 @@ export class PrintclaimPage {
 
   submitAction(formValues: any) {
 
-    let amount = Number(formValues.claim_amount);
+    // let amount = Number(formValues.claim_amount);
+    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+    //   this.Printing_Amount_ngModel = null;
+    //   return;
+    // }
+    // else {
+    //   this.Printing_Amount_ngModel = this.Printing_Amount_ngModel;
+    // }
+    let x = this.Printing_Amount_ngModel.split(",").join("");
+    let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Printing_Amount_ngModel = null;
       return;
@@ -406,10 +420,10 @@ export class PrintclaimPage {
     else {
       this.Printing_Amount_ngModel = this.Printing_Amount_ngModel;
     }
-   
-    if(this.apiMng.isClaimExpired(formValues.travel_date,false))
 
-    return;
+    if (this.apiMng.isClaimExpired(formValues.travel_date, false))
+
+      return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
@@ -424,7 +438,7 @@ export class PrintclaimPage {
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
             this.claimRequestData["resource"][0].STATUS = 'Pending'
@@ -448,7 +462,8 @@ export class PrintclaimPage {
             let start_DT: string = "";
             let end_DT: string = "";
             // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
-            this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
+            //Commented By bijay on 24/09/2018 as per scheduler implemented
+            // this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //----------------------------------------------------------
             alert('Claim details updated successfully.');
             this.navCtrl.push(UserclaimslistPage);

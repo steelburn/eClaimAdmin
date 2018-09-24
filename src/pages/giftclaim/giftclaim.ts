@@ -35,6 +35,7 @@ export class GiftclaimPage {
   items: string[];
   claimFor: string = 'seg_project';
   currency = localStorage.getItem("cs_default_currency");
+  rejectedLevel: any;
 
 
   public Gift_SOC_No_ngModel: any;
@@ -136,9 +137,9 @@ export class GiftclaimPage {
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 9,9999.00.')
+      // alert('Amount should not exceed RM 9,9999.00.')
       // this.Gift_Amount_ngModel = null
-      this.claimAmount = 0;
+      // this.claimAmount = 0;
     }
     else {
       this.claimAmount = amount;
@@ -174,8 +175,12 @@ export class GiftclaimPage {
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     if (this.isFormEdit) {
-      this.profileMng.initiateLevels('1');
-      this.GetDataforEdit();
+      this.apiMng.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
+        this.claimRequestData = res['resource'];
+        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+        this.profileMng.initiateLevels(this.rejectedLevel);
+        this.GetDataforEdit();
+      })
     }
 
     else {
@@ -443,15 +448,23 @@ export class GiftclaimPage {
 
   submitAction(formValues: any) {
 
-    let amount = Number(formValues.claim_amount);
+    // let amount = Number(formValues.claim_amount);
+    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+    //   this.Gift_Amount_ngModel = null;
+    //   return;
+    // }
+    // else {
+    //   this.Gift_Amount_ngModel = this.Gift_Amount_ngModel;
+    // }
+    let x = this.Gift_Amount_ngModel.split(",").join("");
+    let  amount=Number(x);    
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
-      this.Gift_Amount_ngModel = null;
+      this.Gift_Amount_ngModel = null;    
       return;
     }
     else {
       this.Gift_Amount_ngModel = this.Gift_Amount_ngModel;
     }
-    
    
     if(this.apiMng.isClaimExpired(formValues.travel_date,false))
 
@@ -471,7 +484,7 @@ export class GiftclaimPage {
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
             this.claimRequestData["resource"][0].STATUS = 'Pending'
@@ -492,7 +505,8 @@ export class GiftclaimPage {
             let start_DT: string = "";
             let end_DT: string = "";
             // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
-            this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
+            //Commented By bijay on 24/09/2018 as per scheduler implemented
+            // this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //-----------------------------------------------------------
             alert('Claim details updated successfully.');
             this.navCtrl.push(UserclaimslistPage);
