@@ -18,6 +18,7 @@ import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
+import { resolveDefinition } from '@angular/core/src/view/util';
 
 /**
  * Generated class for the CustomerSetupPage page.
@@ -565,7 +566,70 @@ export class CustomerSetupPage {
     });
   }
 
-  ClearControls() {
+  CustomerActivation(CUSTOMER_GUID: any, Activation_Flag: any) {
+    //Here get all the customer details and update
+    this.GetCustomerDetails(CUSTOMER_GUID);
+
+    let strTitle: string;
+    if (Activation_Flag == true) {
+      strTitle = "Do you want to deactivate ?";
+    }
+    else {
+      strTitle = "Do you want to activate ?";
+    }
+
+    let alert = this.alertCtrl.create({
+      title: 'Activation Confirmation',
+      message: strTitle,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.customers.ACTIVE_FLAG = Activation_Flag;
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('OK clicked');
+
+            if (Activation_Flag == true) {
+              this.customers.ACTIVE_FLAG = false; this.customer_entry.ACTIVE_FLAG = "D";
+            }
+            else {
+              this.customers.ACTIVE_FLAG = true; this.customer_entry.ACTIVE_FLAG = "A";
+            }
+
+            this.socservice.update_customer(this.customer_entry)
+              .subscribe((response) => {
+                if (response.status == 200) {
+                  // this.navCtrl.setRoot(this.navCtrl.getActive().component);                  
+                }
+              });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  GetCustomerDetails(CUSTOMER_GUID: any){
+    let CustomerActivationUrl = this.baseResource_Url + "main_customer?filter=(CUSTOMER_GUID=" + CUSTOMER_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http.get(CustomerActivationUrl)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.customer_details = data["resource"];
+          this.SetEntityForCustomerUpdate();
+          this.customer_entry.NAME = this.customer_details[0]["NAME"];
+          this.customer_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+        });
+  }
+
+  ClearControls(CUSTOMER_GUID:any) {
     this.Tenant_Add_ngModel = "";
     this.CUSTOMER_NAME_ngModel_Add = "";
     this.LOCATION_NAME_ngModel_Add = "";
