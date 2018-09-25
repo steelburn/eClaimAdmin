@@ -83,7 +83,7 @@
       <button ion-button color="primary500" (click)='submitAction(Entertainmentform.value)' [disabled]="(Entertainmentform.valid && !ImageUploadValidation) || !Entertainmentform.valid">{{ 'SUBMIT'}}</button>
     </div>
     <ion-item *ngIf="!Entertainmentform.controls.claim_amount.valid  && (Entertainmentform.controls.claim_amount.dirty)">
-      <p style="color: red; text-align:right;margin-right: 34%;">Claim amount should be RM {{min_claim_amount}} - {{max_claim_amount}}</p>
+      <p style="color: red; text-align:right;margin-right: 34%;">Claim amount should be {{currency}} {{min_claim_amount}} - {{max_claim_amount}}</p>
   </ion-item>
   <!-- <ion-item *ngIf="!Entertainmentform.valid">
     <p style="color: red; text-align:right;margin-right: 34%;">Claim amount should be {{min_claim_amount}} - {{max_claim_amount}} RM.</p>

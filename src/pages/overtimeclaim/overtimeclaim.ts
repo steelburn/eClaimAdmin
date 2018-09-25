@@ -86,6 +86,7 @@ export class OvertimeclaimPage {
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
+  rejectedLevel: any;
 
   claimAmount: number = 0;
   getCurrency(amount: number) {
@@ -176,14 +177,20 @@ export class OvertimeclaimPage {
      this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
      this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
      this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+     let currency = localStorage.getItem("cs_default_currency");
      // Lakshman
     this.profileMng.CheckSessionOut();
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     if (this.isFormEdit) {
-      this.profileMng.initiateLevels('1');
-      this.GetDataforEdit();
+      this.apiMng.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
+        this.claimRequestData = res['resource'];
+        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+        this.profileMng.initiateLevels(this.rejectedLevel);
+        this.GetDataforEdit();
+      })
+
     }
 
     else {
@@ -353,14 +360,7 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
-    // let amount = Number(formValues.claim_amount);
-    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
-    //   this.OT_Amount_ngModel = null;
-    //   return;
-    // }
-    // else {
-    //   this.OT_Amount_ngModel = this.OT_Amount_ngModel;
-    // }
+    
     let x = this.OT_Amount_ngModel.split(",").join("");
     let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
@@ -390,7 +390,7 @@ export class OvertimeclaimPage {
             this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
             this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
             if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-              this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
               this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
               this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
               this.claimRequestData["resource"][0].STATUS = 'Pending'

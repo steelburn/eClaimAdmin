@@ -98,6 +98,7 @@ export class TravelclaimPage {
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
+  rejectedLevel: any;
 
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
     
@@ -106,6 +107,7 @@ export class TravelclaimPage {
     this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
     this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
     this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
 
     this.profileMng.CheckSessionOut();
@@ -118,9 +120,14 @@ export class TravelclaimPage {
     // if (this.isFormEdit)
     // this.GetDataforEdit();
     if (this.isFormEdit) {
-      this.profileMng.initiateLevels('1');
-      this.GetDataforEdit();
-      this.MainClaimSaved = true;
+      this.api.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
+        this.claimRequestData = res['resource'];
+        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+        this.profileMng.initiateLevels(this.rejectedLevel);
+        this.GetDataforEdit();
+        this.MainClaimSaved = true;
+      })
+     
     }
     else {
       this.LoadCustomers();
@@ -810,7 +817,7 @@ export class TravelclaimPage {
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.travelAmountNgmodel = null;
       this.totalClaimAmount=0;     
-      alert("Toatl claim amount should be RM "+ this.min_claim_amount +" - "+this.max_claim_amount  +" ");      
+      alert("Claim amount should be " +   this.currency +" "   + this.min_claim_amount +" - "+this.max_claim_amount  +" ");      
       return;
     }
     else {
@@ -865,7 +872,7 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
             this.claimRequestData["resource"][0].claim_method_guid = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
             if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-              this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+              this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
               this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
               this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
               this.claimRequestData["resource"][0].STATUS = 'Pending'
