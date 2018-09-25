@@ -177,6 +177,7 @@ export class OvertimeclaimPage {
      this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
      this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
      this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+     let currency = localStorage.getItem("cs_default_currency");
      // Lakshman
     this.profileMng.CheckSessionOut();
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
@@ -359,14 +360,7 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
-    // let amount = Number(formValues.claim_amount);
-    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
-    //   this.OT_Amount_ngModel = null;
-    //   return;
-    // }
-    // else {
-    //   this.OT_Amount_ngModel = this.OT_Amount_ngModel;
-    // }
+    
     let x = this.OT_Amount_ngModel.split(",").join("");
     let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {

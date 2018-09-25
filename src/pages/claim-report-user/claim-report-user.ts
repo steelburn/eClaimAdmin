@@ -53,13 +53,13 @@ export class ClaimReportUserPage {
         .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
         .map(res => res.json())
         .subscribe(data => {
-          this.claimsList = data["resource"];
+          this.claimsListPrint = data["resource"];
           this.totalClaimAmount = 0;
           this.claimsListPrintTemp = [];
-          this.claimsListPrint = this.claimsList;
+          this.claimsList = this.claimsListPrint;
           this.totalClaimAmount = 0;
-          this.claimsList.forEach(element => {
-
+          this.claimsListPrint.forEach(element => {
+            element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
             if (element.TYPE === 'TRV') {
               element.RowNum = "1";
               this.claimsListPrintTemp.push(element);
