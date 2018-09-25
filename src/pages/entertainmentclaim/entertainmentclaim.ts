@@ -34,6 +34,7 @@ export class EntertainmentclaimPage {
   travel_date: any;
   TenantGUID: any;
   mainClaimReq: MainClaimRequestModel = new MainClaimRequestModel();
+  rejectedLevel: any;
 
   storeProjects: any[];
   public projects: any[];
@@ -92,7 +93,7 @@ export class EntertainmentclaimPage {
     this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
     this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
     this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
-    let currency=localStorage.getItem("cs_default_currency");
+    let currency = localStorage.getItem("cs_default_currency");
     // alert(currency);
     this.Amount_valid=false;
     // Lakshman
@@ -102,8 +103,12 @@ export class EntertainmentclaimPage {
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     if (this.isFormEdit) {
-      this.profileMng.initiateLevels('1');
-      this.GetDataforEdit();
+      this.apiMng.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
+        this.claimRequestData = res['resource'];
+        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+        this.profileMng.initiateLevels(this.rejectedLevel);
+        this.GetDataforEdit();
+      })
     }
 
     else {
@@ -471,7 +476,7 @@ export class EntertainmentclaimPage {
       this.Entertainment_Amount_ngModel = this.Entertainment_Amount_ngModel;
       // this.Amount_valid=false;
     }
-    if(this.apiMng.isClaimExpired(formValues.travel_date,false))
+    if (this.apiMng.isClaimExpired(formValues.travel_date, false))
       return;
 
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
@@ -492,7 +497,7 @@ export class EntertainmentclaimPage {
           //this.claimRequestData["resource"][0].TRAVEL_DATE = moment(this.claimRequestData.TRAVEL_DATE).format('YYYY-MM-DDTHH:mm');
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
             this.claimRequestData["resource"][0].STATUS = 'Pending'

@@ -35,6 +35,7 @@ export class GiftclaimPage {
   items: string[];
   claimFor: string = 'seg_project';
   currency = localStorage.getItem("cs_default_currency");
+  rejectedLevel: any;
 
 
   public Gift_SOC_No_ngModel: any;
@@ -174,8 +175,12 @@ export class GiftclaimPage {
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     if (this.isFormEdit) {
-      this.profileMng.initiateLevels('1');
-      this.GetDataforEdit();
+      this.apiMng.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
+        this.claimRequestData = res['resource'];
+        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+        this.profileMng.initiateLevels(this.rejectedLevel);
+        this.GetDataforEdit();
+      })
     }
 
     else {
@@ -479,7 +484,7 @@ export class GiftclaimPage {
           this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
             this.claimRequestData["resource"][0].STATUS = 'Pending'
