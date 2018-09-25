@@ -107,6 +107,7 @@ export class TravelclaimPage {
     this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
     this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
     this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
 
     this.profileMng.CheckSessionOut();
@@ -816,7 +817,7 @@ export class TravelclaimPage {
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.travelAmountNgmodel = null;
       this.totalClaimAmount=0;     
-      alert("Toatl claim amount should be RM "+ this.min_claim_amount +" - "+this.max_claim_amount  +" ");      
+      alert("Claim amount should be " +   this.currency +" "   + this.min_claim_amount +" - "+this.max_claim_amount  +" ");      
       return;
     }
     else {
