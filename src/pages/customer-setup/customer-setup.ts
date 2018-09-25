@@ -627,9 +627,9 @@ export class CustomerSetupPage {
           this.customer_entry.NAME = this.customer_details[0]["NAME"];
           this.customer_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
         });
-  }
+  } 
 
-  ClearControls(CUSTOMER_GUID:any) {
+  ClearControls() {
     this.Tenant_Add_ngModel = "";
     this.CUSTOMER_NAME_ngModel_Add = "";
     this.LOCATION_NAME_ngModel_Add = "";
