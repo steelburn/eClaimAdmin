@@ -8,6 +8,7 @@ export class SocCustomer_Model {
         public CREATION_USER_GUID: string = null,
         public UPDATE_TS: string = null,
         public UPDATE_USER_GUID: string = null,
+        public ACTIVE_FLAG: string = null,
     ) { }
 
     static fromJson(json: any) {
@@ -21,6 +22,7 @@ export class SocCustomer_Model {
             json.CREATION_USER_GUID,
             json.UPDATE_TS,
             json.UPDATE_USER_GUID,
+            json.ACTIVE_FLAG,
         );
     }
 
@@ -34,6 +36,7 @@ export class SocCustomer_Model {
             CREATION_USER_GUID: this.CREATION_USER_GUID,
             UPDATE_TS: this.UPDATE_TS,
             UPDATE_USER_GUID: this.UPDATE_USER_GUID,
+            ACTIVE_FLAG: this.ACTIVE_FLAG,
         };
         return stringify ? JSON.stringify({ resource: [doc] }) : doc;
     }
