@@ -70,6 +70,7 @@ export class MiscellaneousClaimPage {
      this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
      this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
      this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+     let currency = localStorage.getItem("cs_default_currency");
      // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
@@ -390,15 +391,7 @@ export class MiscellaneousClaimPage {
   }
 
   submitAction(formValues: any) {
-
-    // let amount = Number(formValues.claimAmount);
-    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
-    //   this.Miscellaneous_Amount_ngModel = null;
-    //   return;
-    // }
-    // else {
-    //   this.Miscellaneous_Amount_ngModel = this.Miscellaneous_Amount_ngModel;
-    // }
+   
     let x = this.Miscellaneous_Amount_ngModel.split(",").join("");
     let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
