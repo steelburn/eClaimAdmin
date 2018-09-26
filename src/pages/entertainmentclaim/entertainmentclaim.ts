@@ -254,14 +254,20 @@ export class EntertainmentclaimPage {
   }
 
   LoadProjects() {
-    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       });
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('view_customer', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVE_FLAG=A)')
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -461,9 +467,9 @@ export class EntertainmentclaimPage {
 
   submitAction(formValues: any) {
     let x = this.Entertainment_Amount_ngModel.split(",").join("");
-    let  amount=Number(x);   
+    let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
-      this.Entertainment_Amount_ngModel = null;      
+      this.Entertainment_Amount_ngModel = null;
       return;
     }
     else {

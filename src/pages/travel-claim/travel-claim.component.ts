@@ -333,14 +333,20 @@ export class TravelclaimPage {
   }
 
   LoadProjects() {
-    this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.api.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.api.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID +')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       })
   }
 
   LoadCustomers() {
-    this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    
+    // Added by Bijay on 25/09/2018
+    this.api.getApiModel('view_customer', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVE_FLAG=A)')
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
