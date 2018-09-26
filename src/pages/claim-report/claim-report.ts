@@ -20,7 +20,7 @@ import * as constants from '../../app/config/constants';
   templateUrl: 'claim-report.html',
 })
 export class ClaimReportPage {
-  public page: number = 1;
+  page: number = 1;
   baseResourceUrl: string;
   baseResourceUrlSummary: string;
   baseResourceUrlSocSummary: string;
@@ -38,7 +38,7 @@ export class ClaimReportPage {
   month: any;
   year: any;
   claimsSocSummary: any[];
-
+  btnSearch:boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     // this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -104,6 +104,7 @@ export class ClaimReportPage {
 
           this.totalClaimAmount = this.totalClaimAmount + element.Total;
         });
+        this.btnSearch=true;
       });
   }
 
@@ -113,6 +114,7 @@ export class ClaimReportPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimsListSummary = data["resource"];
+        this.btnSearch=true;
       });
   }
 
@@ -122,6 +124,7 @@ export class ClaimReportPage {
       .map(res => res.json())
       .subscribe(data => {
         this.deptList = data["resource"];
+        this.btnSearch=true;
       });
     //console.log(this.deptList);
   }
@@ -133,6 +136,7 @@ export class ClaimReportPage {
       .map(res => res.json())
       .subscribe(data => {
         this.empData = data["resource"];
+        this.btnSearch=true;
       });
   }
 
@@ -152,6 +156,7 @@ export class ClaimReportPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimsSocSummary = data["resource"];
+        this.btnSearch=true;
       });
   }
 
@@ -170,6 +175,7 @@ export class ClaimReportPage {
     // alert(emp);
     // alert(month);
     // alert(claimType);
+    this.btnSearch=false;
     this.year = new Date().getFullYear();
     this.month = month;
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -190,6 +196,7 @@ export class ClaimReportPage {
     // else
     //   this.overTimeClaim = false;
     //console.log(this.baseResourceUrl);
+  
   }
 
   ionViewDidLoad() {

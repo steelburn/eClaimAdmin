@@ -14,7 +14,7 @@
     <ion-title>My Claim History</ion-title>
 
   </ion-navbar>
-
+  <!-- [disabled]="! isValid" (click)="SearchClick()" [disabled]="btnSearch"-->
   <ion-toolbar no-border-top color="primary200">
     <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
   </ion-toolbar>
@@ -78,7 +78,7 @@
   </ion-item>
 
   <ion-item>
-    <button ion-button item-end (click)="SearchClaimsData(ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
+    <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
   </ion-item>
 
 

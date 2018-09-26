@@ -38,7 +38,7 @@ export class CommonTasklistPage implements OnInit {
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?filter=(ASSIGNED_TO='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
   public page: number = 1;
-
+  btnSearch: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
     // if (this.loginUserRole === "Finance Admin") {
     //   this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(STATUS=Approved)AND(PROFILE_LEVEL=3)AND(YEAR=' + this.currentYear + ')AND(EMAIL=' + localStorage.getItem("g_EMAIL").toString().split('@')[1] + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -86,6 +86,7 @@ export class CommonTasklistPage implements OnInit {
           if (ddlmonth.toString() !== "All") { this.claimTaskLists = this.claimTaskLists.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
 
         }
+        this.btnSearch = true;
       });
   }
 
@@ -155,6 +156,7 @@ export class CommonTasklistPage implements OnInit {
   }
 
   SearchClaimsData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlYear: number) {
+    this.btnSearch = false;
     if (this.role == "Payment") {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(STATUS=Approved)AND(PROFILE_LEVEL=3)AND(YEAR=' + ddlYear + ')AND(EMAIL=' + localStorage.getItem("g_EMAIL").toString().split('@')[1] + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }

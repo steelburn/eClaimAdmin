@@ -87,7 +87,7 @@
   </ion-item>
 
   <ion-item>
-    <button ion-button item-end (click)="SearchClaimsData()">Search</button>
+    <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData()">Search</button>
   </ion-item>
   <!-- <ion-item>
     <button ion-button item-end (click)="SearchClaimsData('All','All','All',ddlClaimTypes.value,ddlStatus.value,'All')">Search</button>

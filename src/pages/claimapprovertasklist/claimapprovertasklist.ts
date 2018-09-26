@@ -52,6 +52,7 @@ export class ClaimapprovertasklistPage {
   claimTypeList: any[];
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
+  btnSearch: boolean = false;
   // Pending: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
@@ -94,9 +95,10 @@ export class ClaimapprovertasklistPage {
       // }
       // else { this.BindData(); }
     }
+   
   }
   BindData(ddlEmployee?: string, ddlClaimTypes?: string) {
-
+  
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -128,6 +130,7 @@ export class ClaimapprovertasklistPage {
           if (ddlClaimTypes.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
         }
         this.FindTotalAmount();
+        this.btnSearch = true;
       });
 
   }
@@ -360,6 +363,7 @@ export class ClaimapprovertasklistPage {
 
 
   SearchClaimsData() {
+    this.btnSearch = false;
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       if (this.role == "Payment") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(STATUS=Approved)AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
