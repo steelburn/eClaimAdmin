@@ -40,11 +40,11 @@
     <ion-item>
 
         <span item-end *ngIf="FinanceLogin; else loggedOut">
-            <button ion-button (click)="SearchClaimsData()">Search</button>
+            <button ion-button [disabled]="!btnSearch" (click)="SearchClaimsData()">Search</button>
         </span>
 
         <ng-template #loggedOut item-end>
-            <button ion-button (click)="SearchClaimsData()">Search</button>
+            <button ion-button [disabled]="!btnSearch" (click)="SearchClaimsData()">Search</button>
         </ng-template>
         <!-- <span *ngIf="!FinanceLogin">
            
