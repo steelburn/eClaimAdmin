@@ -22,7 +22,7 @@ export class LeaveReportPage {
   employeeList:any[];
   yearsList:any[]=[];
  page: number = 1;
-
+ btnSearch:boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
     this.BindYears();
@@ -35,6 +35,7 @@ export class LeaveReportPage {
   }
 
   BindData(ddlUserName:string ,ddlLeaveType:string,ddlmonth:string) {
+   
     this.http
       .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_leave_data?filter=(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
       .map(res => res.json())
@@ -48,8 +49,10 @@ export class LeaveReportPage {
            }
           if (ddlUserName.toString() !== "All") { this.leaveData = this.leaveData.filter(s => s.STAFF_ID.toString() === ddlUserName.toString()) }
     
-        }
+        }   
+        this.btnSearch=true;     
       });
+     
   }
 
   BindEmployees() {

@@ -80,8 +80,12 @@ export class MiscellaneousClaimPage {
     if (this.isFormEdit) {
       this.api.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
         this.claimRequestData = res['resource'];
-        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
-        this.profileMng.initiateLevels(this.rejectedLevel);
+        if (this.claimRequestData.length > 0) {
+          this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+          this.profileMng.initiateLevels(this.rejectedLevel);
+        }
+        else
+          this.profileMng.initiateLevels('1');
         this.GetDataforEdit();
       })
 

@@ -74,7 +74,7 @@
     </ion-item>
   
     <ion-item>
-      <button ion-button item-end (click)="BindData(ddlUserName.value,ddlLeaveType.value,ddlmonth.value)">Search</button>
+      <button ion-button item-end  [disabled]="!btnSearch" (click)="BindData(ddlUserName.value,ddlLeaveType.value,ddlmonth.value)">Search</button>
     </ion-item>
   
     <ion-list>

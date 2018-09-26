@@ -36,6 +36,7 @@ export class CommonHistorylistPage implements OnInit {
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
   loginUserRole: string;
+  btnSearch:boolean = false;
   // claimhistoryTotal: any[];
 
   // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -79,7 +80,9 @@ export class CommonHistorylistPage implements OnInit {
         // for (var item in data["resource"]) {
         //   this.ExcelData.push({ Employee: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPT"], Month: data["resource"][item]["MONTH"], ApprovedAmt: data["resource"][item]["APPROVEDAMOUNT"], RejectedAmount: data["resource"][item]["REJECTEDAMOUNT"] });
         // }
+        this.btnSearch=true;
       });
+
   }
 
   onSearchInput() {
@@ -159,6 +162,7 @@ export class CommonHistorylistPage implements OnInit {
   }
 
   SearchClaimsData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlYear: number) {
+    this.btnSearch=false;
     if (this.role == "Payment") {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(PROFILE_LEVEL=3)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
@@ -166,7 +170,7 @@ export class CommonHistorylistPage implements OnInit {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(PROFILE_LEVEL=2)AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     this.BindData(ddlDept, ddlEmployee, ddlmonth);
-
+   
   }
 
   ExportExcelClicked: boolean = false; ExcelColumns: any[] = [];

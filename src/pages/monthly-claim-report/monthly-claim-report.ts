@@ -41,6 +41,7 @@ export class MonthlyClaimReportPage {
   currentYear: number = new Date().getFullYear();
   prevYear: number = new Date().getFullYear();
   public page: number = 1;
+  btnSearch:boolean = false;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?filter=(ASSIGNED_TO='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_monthly_claim_report?filter=(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -148,16 +149,21 @@ export class MonthlyClaimReportPage {
             this.grandTotal = this.grandTotal + element.AMOUNT;
           });
         }
-        else
-          this.grandTotal = 0;
+        else    { 
+          this.grandTotal = 0;    
+        }            
+          this.btnSearch=true;
       });
+      
   }
 
   SearchClaimsData(ddlDept: string, ddlEmployee: string, ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
+    this.btnSearch=false;
     this.grandTotal = 0;
     if (this.prevYear !== ddlYear) {
       this.BindData();
       this.prevYear = ddlYear;
+      
     }
     else { this.claimList = this.claimListTotal; }
     // debugger
@@ -234,6 +240,8 @@ export class MonthlyClaimReportPage {
     // this.claimList = this.claimList.concat(this.claimListTotal.filter(s => s.DEPT_GUID === deptArry[0]));
     // this.claimList = this.claimList.concat(this.claimListTotal.filter(s => s.DEPT_GUID === deptArry[1]));
     //this.claimList.push(this.claimListTotal.filter(s=>s.DEPT_GUID===ddlEmployee[0]));
+    
+    this.btnSearch=true;
   }
 
   printToCart(printSectionId: any) {
