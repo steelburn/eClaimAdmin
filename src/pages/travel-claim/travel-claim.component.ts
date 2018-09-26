@@ -123,7 +123,7 @@ export class TravelclaimPage {
       this.api.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
         this.claimRequestData = res['resource'];
         if (this.claimRequestData.length > 0) {
-        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+          this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
           this.profileMng.initiateLevels(this.rejectedLevel);
         }
         else
@@ -885,7 +885,10 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
               this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
               this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-              this.claimRequestData["resource"][0].STATUS = 'Pending'
+              if (this.rejectedLevel === 3)
+                this.claimRequestData["resource"][0].STATUS = 'Approved';
+              else
+                this.claimRequestData["resource"][0].STATUS = 'Pending';
             }
             else {
               this.claimRequestData["resource"][0].STATUS = 'Pending';

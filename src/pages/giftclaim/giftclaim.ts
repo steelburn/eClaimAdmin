@@ -497,7 +497,10 @@ export class GiftclaimPage {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-            this.claimRequestData["resource"][0].STATUS = 'Pending'
+            if (this.rejectedLevel === 3)
+              this.claimRequestData["resource"][0].STATUS = 'Approved';
+            else
+              this.claimRequestData["resource"][0].STATUS = 'Pending';
           }
 
           if (this.isCustomer) {
