@@ -77,7 +77,7 @@
     </ion-item>
 
     <ion-item>
-        <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
+        <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
         <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
     </ion-item>
 

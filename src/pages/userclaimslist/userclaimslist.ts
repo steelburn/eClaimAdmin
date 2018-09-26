@@ -54,6 +54,7 @@ export class UserclaimslistPage {
   searchboxValue: string;
   Pending: any; Rejected: any; Approved: any; Paid: any;
   public page: number = 1;
+  btnSearch:boolean = false;
   constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     //  this.claimrefguid=navParams.get("claimRefGuid");
@@ -123,10 +124,10 @@ export class UserclaimslistPage {
         // for (var item in data["resource"]) {
         //   this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
         // }
+        this.btnSearch=true;
       });
-
   }
-
+  
   onSearchInput() {
     // alert('hi')    
     // this.searchboxValue='hi';
@@ -200,9 +201,11 @@ export class UserclaimslistPage {
       //     || (amount > -1)
       //   );
       // })
+     
     }
     else {
       this.userClaimhistorydetails = this.userClaimhistorydetails1;
+     
     }
   }
 
@@ -439,6 +442,7 @@ export class UserclaimslistPage {
   }
 
   SearchClaimsData(ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
+    this.btnSearch=false;
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.BindData(ddlmonth,ddlClaimTypes,ddlStatus);
   }
