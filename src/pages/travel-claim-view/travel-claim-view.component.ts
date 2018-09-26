@@ -13,7 +13,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
   templateUrl: 'travel-claim-view.html',
 })
 export class TravelClaimViewPage {
-  totalClaimAmount: number = 0;
+ // totalClaimAmount: number = 0;
   remarks: any;
   claimRequestData: any[];
   claimDetailsData: any[];
@@ -73,7 +73,7 @@ export class TravelClaimViewPage {
             this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID);
           }
           this.TravelType = element.TRAVEL_TYPE === '0' ? 'Local' : 'Outstation';
-          this.totalClaimAmount = element.CLAIM_AMOUNT;
+         // this.totalClaimAmount = element.CLAIM_AMOUNT;
           this.remarks = element.REMARKS;
         });
         //  this.totalClaimAmount += tollorParkAmount;
@@ -114,9 +114,9 @@ export class TravelClaimViewPage {
   }
 
   displayImage: any
-  // CloseDisplayImage() {
-  //   this.displayImage = false;
-  // }
+  CloseDisplayImage() {
+    this.displayImage = false;
+  }
 
   // imageURL: string;
   // DisplayImage(val: any) {
