@@ -227,14 +227,20 @@ export class PrintclaimPage {
   }
 
   LoadProjects() {
-    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       })
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('view_customer', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVE_FLAG=A)')
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -418,7 +424,7 @@ export class PrintclaimPage {
   submitAction(formValues: any) {
 
     let x = this.Printing_Amount_ngModel.split(",").join("");
-    let  amount=Number(x);   
+    let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Printing_Amount_ngModel = null;
       alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " "); 
@@ -448,7 +454,10 @@ export class PrintclaimPage {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-            this.claimRequestData["resource"][0].STATUS = 'Pending'
+            if (this.rejectedLevel === 3)
+              this.claimRequestData["resource"][0].STATUS = 'Approved';
+            else
+              this.claimRequestData["resource"][0].STATUS = 'Pending';
           }
 
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;

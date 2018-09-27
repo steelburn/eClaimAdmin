@@ -51,7 +51,8 @@ export class LoginPage {
       else {
         let url: string;
         //CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex)
-        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        //Changed code by Bijay on 25/09/2018
+        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex) + ')and(ACTIVATION_FLAG=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
         //url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         this.http
           .get(url)
