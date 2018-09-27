@@ -18,6 +18,7 @@ import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
 //import { ExcelService } from '../../providers/excel.service';
+import * as Settings from '../../dbSettings/companySettings';
 
 @IonicPage()
 @Component({
@@ -90,8 +91,16 @@ export class EntertainmentclaimPage {
     // Lakshman
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
     this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    // this.min_claim_amount =null;
+    if(this.min_claim_amount==null){
+      this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+    }
     this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
     this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // this.max_claim_amount =null;
+    if(this.max_claim_amount==null){
+      this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+    }
     let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
     this.profileMng.CheckSessionOut();
@@ -464,6 +473,7 @@ export class EntertainmentclaimPage {
     let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Entertainment_Amount_ngModel = null;      
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " ");
       return;
     }
     else {

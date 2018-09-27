@@ -13,7 +13,7 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
-
+import * as Settings from '../../dbSettings/companySettings';
 
 @IonicPage()
 @Component({
@@ -65,12 +65,20 @@ export class MiscellaneousClaimPage {
   claimRequestData: any;
 
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, fb: FormBuilder, private loadingCtrl: LoadingController, private service: Services, public navCtrl: NavController, public http: Http, public navParams: NavParams, public api: ApiManagerProvider) {
-     // Lakshman
-     this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
-     this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
-     this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
-     this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
-     let currency = localStorage.getItem("cs_default_currency");
+    // Lakshman
+    this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
+    this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    // this.min_claim_amount =null;
+    if(this.min_claim_amount==null){
+     this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+   }
+   this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+   this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // this.max_claim_amount =null;
+    if(this.max_claim_amount==null){
+     this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+   }
+    let currency = localStorage.getItem("cs_default_currency");
      // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
@@ -400,6 +408,7 @@ export class MiscellaneousClaimPage {
     let  amount=Number(x);   
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Miscellaneous_Amount_ngModel = null;
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " "); 
       return;
     }
     else {
