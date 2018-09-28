@@ -327,7 +327,10 @@ export class TravelclaimPage {
     this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.paymentTypes = data["resource"];
-        this.PayType = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
+      //  this.PayType = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
+        let paymentType: any = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0];
+        this.PayType = paymentType.PAYMENT_TYPE_GUID;
+        this.onPaySelect(paymentType);
       }
       );
   }
