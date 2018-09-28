@@ -56,7 +56,7 @@ declare var cordova: any;
 })
 export class UserPage {
   //selectedValue: number;
-  public page:number = 1;
+  public page: number = 1;
   fileName1: string;
   fileName2: string;
   fileName3: string;
@@ -784,7 +784,7 @@ export class UserPage {
     else {
       TableURL_User = this.BaseTableURL + ViewName + '?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&' + this.Key_Param;
     }
-    console.log(TableURL_User);
+    // console.log(TableURL_User);
     this.http
       .get(TableURL_User)
       .map(res => res.json())
@@ -1408,7 +1408,8 @@ export class UserPage {
         this.usermain_entry.PASSWORD = this.User_Password_Edit_ngModel.trim();
       }
       this.usermain_entry.EMAIL = this.User_Email_Edit_ngModel.trim();
-      this.usermain_entry.ACTIVATION_FLAG = 1;
+      // this.usermain_entry.ACTIVATION_FLAG = 1;
+      this.usermain_entry.ACTIVATION_FLAG = this.view_user_details[0]["ACTIVATION_FLAG"];
 
       this.usermain_entry.CREATION_TS = this.view_user_details[0]["CREATION_TS"];
       this.usermain_entry.CREATION_USER_GUID = this.view_user_details[0]["CREATION_USER_GUID"];
@@ -2609,5 +2610,77 @@ export class UserPage {
           resolve(response.json());
         })
     })
+  }
+
+  UserActivation(USER_GUID: any, Activation_Flag: any) {
+    //Here get all the customer details and update
+    this.GetUserMain(USER_GUID);
+
+    let strTitle: string;
+    if (Activation_Flag == true) {
+      strTitle = "Do you want to deactivate ?";
+    }
+    else {
+      strTitle = "Do you want to activate ?";
+    }
+
+    let alert = this.alertCtrl.create({
+      title: 'Activation Confirmation',
+      message: strTitle,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('OK clicked');
+
+            if (Activation_Flag == true) {
+              this.usermain_entry.ACTIVATION_FLAG = 0;
+            }
+            else {
+              this.usermain_entry.ACTIVATION_FLAG = 1;
+            }
+
+            this.userservice.update_user_main(this.usermain_entry)
+              .subscribe((response) => {
+                if (response.status == 200) {
+                  this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                }
+              });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  GetUserMain(USER_GUID: any) {
+    let UserActivationUrl = this.baseResourceUrl2_URL + "user_main?filter=(USER_GUID=" + USER_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http.get(UserActivationUrl)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.view_user_details = data["resource"];
+
+          this.usermain_entry.USER_GUID = USER_GUID;
+          this.usermain_entry.TENANT_GUID = this.view_user_details[0]["TENANT_GUID"];
+          this.usermain_entry.STAFF_ID = this.view_user_details[0]["STAFF_ID"];
+          this.usermain_entry.LOGIN_ID = this.view_user_details[0]["LOGIN_ID"]
+          this.usermain_entry.PASSWORD = this.view_user_details[0]["PASSWORD"]
+          this.usermain_entry.EMAIL = this.view_user_details[0]["EMAIL"]
+          // this.usermain_entry.ACTIVATION_FLAG = 1;
+          this.usermain_entry.CREATION_TS = this.view_user_details[0]["CREATION_TS"];
+          this.usermain_entry.CREATION_USER_GUID = this.view_user_details[0]["CREATION_USER_GUID"];
+          this.usermain_entry.UPDATE_TS = new Date().toISOString();
+          this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+          this.usermain_entry.IS_TENANT_ADMIN = this.view_user_details[0]["IS_TENANT_ADMIN"];
+        });
   }
 }

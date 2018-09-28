@@ -65,7 +65,7 @@
       </ion-select>
   </ion-item>
   <ion-item>
-      <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlYear.value)">Search</button>
+      <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlYear.value)">Search</button>
   </ion-item>
   <ion-list>
       <ion-item>
