@@ -35,6 +35,13 @@ export class DashboardPage {
   years: any; years_data: any;
   Rejected_Claim_Count = 0; Rejected_Claim_Amount = '0.00';
   Pending_Claim_Count = 0; Pending_Claim_Amount = '0.00';
+
+  Pending_Claim_Count_Superior=0; Pending_Claim_Amount_Superior = '0.00';
+  Pending_Claim_Count_Finance=0;  Pending_Claim_Amount_Finance = '0.00';
+
+  PendingClaimCount_year_Superior: any;PendingClaimAmount_year_Superior: any;
+  PendingClaimCount_year_Finance: any;PendingClaimAmount_year_Finance: any;
+
   Approved_Claim_Count = 0; Approved_Claim_Amount = '0.00';
   baseResourceUrl_Card: any; Year_Card: any;
   RejectedClaimCount_year: any; PendingClaimCount_year: any; ApprovedClaimCount_year: any;
@@ -272,7 +279,7 @@ export class DashboardPage {
               // var text =this.numberPipe.transform(sum,'1.2-2'),
               // var text = this.numberPipe.transform(sum, '1.2-2'),          
               textX = Math.round((width - ctx.measureText(text).width) / 2),
-              textY = height / 1.9;
+              textY = height / 2;
             // this.chart1 = true;
           }
           else {
@@ -310,7 +317,7 @@ export class DashboardPage {
               // var text =this.numberPipe.transform(sum,'1.2-2'),
               // var text = this.numberPipe.transform(sum, '1.2-2'),          
               textX = Math.round((width - ctx.measureText(text).width) / 2),
-              textY = height / 1.9;
+              textY = height / 2;
             // this.chart2 = true;
           }
           else {
@@ -330,11 +337,11 @@ export class DashboardPage {
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
-  public doughnutChartLabels: Array<string> = ['Approved', 'Pending', 'Rejected', 'Paid'];
+  public doughnutChartLabels: Array<string> = ['Validated', 'Approved', 'Pending','Rejected', 'Paid'];
   public doughnutChartData: Array<number> = [];
 
   public doughnutChartType: string = 'doughnut';
-  public doughnutChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "red", "rgb(90, 165, 90)"] }];
+  public doughnutChartColors: any[] = [{ backgroundColor: ["#008000", "orange","yellow", "red", "rgb(90, 165, 90)"] }];
 
   public chartClicked(e: any): void {
     console.log(e);
@@ -349,6 +356,9 @@ export class DashboardPage {
     cutoutPercentage: 70,
     responsive: true,
     // centerText: true,
+    // rotation: 0.75 * Math.PI, 
+    // circumference: 1.5 * Math.PI, 
+    // cutoutPercentage: 80,
     legend: {
       display: true,
       position: 'bottom'
@@ -359,21 +369,29 @@ export class DashboardPage {
       fontSize: 20,
       fontColor: 'green'
     },
-    // pieceLabel: {
-    //   mode: 'value',
-    //   overlap: true,
-    //   fontColor: ['white', 'blue', 'yellow','black'],
-    //  // fontStyle: 'bold'
-    // //  indexLabelPlacement: "outside", 
+  //   pieceLabel: {
+  //     mode: 'value',
+  //     overlap: true,
+  //     fontColor: ['white', 'blue', 'yellow','black'],
+  //    // fontStyle: 'bold'
+  //   //  indexLabelPlacement: "outside", 
+  //   // mode: 'value'
+  // //   mode: 'label',
+  // //   overlap: true,
+  // //   fontColor: ['Red', 'blue', 'yellow','black'],
+  // //  fontStyle: 'bold',
+  // // //  indexLabelPlacement: "outside", 
+  // //   // arc: true,
+  // //   position: 'outside'
+  //   },
+    // elements: {
+    //   center: {
+    //     text: 'Desktop',
+    //     color: '#36A2EB', //Default black
+    //     fontStyle: 'Helvetica', //Default Arial
+    //     sidePadding: 15 //Default 20 (as a percentage)
+    //   }
     // },
-    elements: {
-      center: {
-        text: 'Desktop',
-        color: '#36A2EB', //Default black
-        fontStyle: 'Helvetica', //Default Arial
-        sidePadding: 15 //Default 20 (as a percentage)
-      }
-    },
     tooltips: {
       enabled: true,
       callbacks: {
@@ -387,10 +405,10 @@ export class DashboardPage {
   }
 
   // ClaimAmountChart
-  public claimAmountLabels: Array<string> = ['Approved', 'Pending', 'Rejected', 'Paid'];
+  public claimAmountLabels: Array<string> = ['Validated', 'Approved','Pending', 'Rejected', 'Paid'];
   public claimAmountData: Array<number> = [];
   public claimAmountChartType: string = 'doughnut';
-  public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "red", "rgb(90, 165, 90)"] }];
+  public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange","yellow","red", "rgb(90, 165, 90)"] }];
   public claimAmountClicked(e: any): void {
     console.log(e);
   }
@@ -784,11 +802,13 @@ export class DashboardPage {
           // this.chart1 = true;
           // this.chart2 = true;
           var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
-          var pending = parseInt(this.claimrequestdetails.PendingReqCount);
+         // var pending = parseInt(this.claimrequestdetails.PendingReqCount);
+          var pending_Finance = parseInt(this.claimrequestdetails.PendingReqCount_Finance);
+          var pending_Superior = parseInt(this.claimrequestdetails.PendingReqCount_Superior);
           var rejected = parseInt(this.claimrequestdetails.RejectedReqCount);
           var paid = parseInt(this.claimrequestdetails.PaidReqCount);
 
-          this.doughnutChartData = [approve, pending, rejected, paid];
+          this.doughnutChartData = [approve, pending_Finance,pending_Superior, rejected, paid];
 
           if (this.claimrequestdetails.ApprovedClaimAmount !== null && this.claimrequestdetails.ApprovedClaimAmount !== undefined) {
             var approveAmount = parseFloat(this.claimrequestdetails.ApprovedClaimAmount).toFixed(2);
@@ -796,14 +816,26 @@ export class DashboardPage {
           }
           else { approveAmount = '0.00' }
 
-          if (this.claimrequestdetails.PendingClaimAmount !== null && this.claimrequestdetails.PendingClaimAmount !== undefined) {
-            var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
-            // pendingAmount=this.format(pendingAmount);
-            // this.numberPipe.transform(amount, '1.2-2');
-            // pendingAmount = this.numberPipe.transform(pendingAmount, '1.2-2');
-            //  alert(pendingAmount)
+          // if (this.claimrequestdetails.PendingClaimAmount !== null && this.claimrequestdetails.PendingClaimAmount !== undefined) {
+          //   var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
+          //   // pendingAmount=this.format(pendingAmount);
+          //   // this.numberPipe.transform(amount, '1.2-2');
+          //   // pendingAmount = this.numberPipe.transform(pendingAmount, '1.2-2');
+          //   //  alert(pendingAmount)
+          // }
+          // else { pendingAmount = '0.00' }
+          // Superior
+          if (this.claimrequestdetails.PendingClaimAmount_Superior !== null && this.claimrequestdetails.PendingClaimAmount_Superior !== undefined) {
+            var pendingAmount_Superior = parseFloat(this.claimrequestdetails.PendingClaimAmount_Superior).toFixed(2);
+            
           }
-          else { pendingAmount = '0.00' }
+          else { pendingAmount_Superior = '0.00' }
+          // Finance
+          if (this.claimrequestdetails.PendingClaimAmount_Finance !== null && this.claimrequestdetails.PendingClaimAmount_Finance !== undefined) {
+            var pendingAmount_Finance = parseFloat(this.claimrequestdetails.PendingClaimAmount_Finance).toFixed(2);
+           
+          }
+          else { pendingAmount_Finance = '0.00' }
 
           if (this.claimrequestdetails.RejectedClaimAmount !== null && this.claimrequestdetails.RejectedClaimAmount !== undefined) {
             var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
@@ -821,7 +853,7 @@ export class DashboardPage {
           // var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
           // var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
 
-          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
+          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount_Finance), parseFloat(pendingAmount_Superior), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
 
           // console.log(this.claimAmountData)
 
@@ -829,8 +861,10 @@ export class DashboardPage {
           this.Rejected_Claim_Count = this.claimrequestdetails.RejectedReqCount;
           this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
           this.Approved_Claim_Count = this.claimrequestdetails.ApprovedReqCount;
-
           this.PaidReqCount = this.claimrequestdetails.PaidReqCount;
+
+          this.Pending_Claim_Count_Superior = this.claimrequestdetails.PendingReqCount_Superior;
+          this.Pending_Claim_Count_Finance = this.claimrequestdetails.PendingReqCount_Finance;
 
           if (this.claimrequestdetails.RejectedClaimAmount != null) {
             this.Rejected_Claim_Amount = this.claimrequestdetails.RejectedClaimAmount.toFixed(2).toString();
@@ -843,6 +877,18 @@ export class DashboardPage {
             this.Pending_Claim_Amount = this.numberPipe.transform(this.Pending_Claim_Amount, '1.2-2');
           }
           else this.Pending_Claim_Amount = '0.00';
+          // Superior
+          if (this.claimrequestdetails.PendingClaimAmount_Superior != null) {
+            this.Pending_Claim_Amount_Superior = this.claimrequestdetails.PendingClaimAmount_Superior.toFixed(2).toString();
+            this.Pending_Claim_Amount_Superior = this.numberPipe.transform(this.Pending_Claim_Amount_Superior, '1.2-2');
+          }
+          else this.Pending_Claim_Amount_Superior = '0.00';
+          // Finance
+          if (this.claimrequestdetails.PendingClaimAmount_Finance != null) {
+            this.Pending_Claim_Amount_Finance = this.claimrequestdetails.PendingClaimAmount_Finance.toFixed(2).toString();
+            this.Pending_Claim_Amount_Finance = this.numberPipe.transform(this.Pending_Claim_Amount_Finance, '1.2-2');
+          }
+          else this.Pending_Claim_Amount_Finance = '0.00';
 
           if (this.claimrequestdetails.ApprovedClaimAmount != null) {
             this.Approved_Claim_Amount = this.claimrequestdetails.ApprovedClaimAmount.toFixed(2).toString();
@@ -856,7 +902,7 @@ export class DashboardPage {
           }
           else this.PaidClaimAmount = '0.00';
 
-          if (approve == 0 && pending == 0 && rejected == 0 && paid == 0) {
+          if (approve == 0 && pending_Finance == 0 && pending_Superior == 0 && rejected == 0 && paid == 0) {
             // alert('hi1')
             this.chart1 = false;
             this.chart2 = false;
@@ -875,16 +921,20 @@ export class DashboardPage {
           this.chart1 = false;
           this.chart2 = false;
           approve = 0;
-          pending = 0;
+          // pending = 0;
+          pending_Finance == 0 ; pending_Superior == 0 
           rejected = 0;
           paid = 0;
-          this.doughnutChartData = [approve, pending, rejected, paid];
-          pendingAmount = '0.00';
+          this.doughnutChartData = [approve, pending_Finance,pending_Superior, rejected, paid];
+          // pendingAmount = '0.00';
+          pendingAmount_Finance = '0.00';
+          pendingAmount_Superior = '0.00';
           rejectedAmount = '0.00';
           approveAmount = '0.00';
           PaidClaimAmount = '0.00';
 
-          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
+
+          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount_Finance), parseFloat(pendingAmount_Superior), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
 
           // this.doughnutChartLabels = data.label;
           // this.claimAmountLabels = data.label;
@@ -895,11 +945,15 @@ export class DashboardPage {
           this.Pending_Claim_Count = 0;
           this.Approved_Claim_Count = 0;
           this.PaidReqCount = 0;
+          this.Pending_Claim_Count_Finance = 0;
+          this.Pending_Claim_Count_Superior = 0;
 
           this.Rejected_Claim_Amount = '0.00';
           this.Pending_Claim_Amount = '0.00';
           this.Approved_Claim_Amount = '0.00';
           this.PaidClaimAmount = '0.00';
+          this.Pending_Claim_Amount_Finance = '0.00';
+          this.Pending_Claim_Amount_Superior = '0.00';
           //
         }
       });
@@ -928,6 +982,18 @@ export class DashboardPage {
             this.PendingClaimCount_year;
           else
             this.PendingClaimCount_year = '0';
+            // Superior
+            this.PendingClaimCount_year_Superior = this.Year_Card[0]["PendingClaimCount_year_superior"];
+            if (this.PendingClaimCount_year_Superior != null && this.PendingClaimCount_year_Superior != undefined)
+              this.PendingClaimCount_year_Superior;
+            else
+              this.PendingClaimCount_year_Superior = '0';
+              // Finance
+              this.PendingClaimCount_year_Finance = this.Year_Card[0]["PendingClaimCount_year_finance"];
+              if (this.PendingClaimCount_year_Finance != null && this.PendingClaimCount_year_Finance != undefined)
+                this.PendingClaimCount_year_Finance;
+              else
+                this.PendingClaimCount_year_Finance = '0';
 
           this.ApprovedClaimCount_year = this.Year_Card[0]["ApprovedClaimCount_year"];
           if (this.ApprovedClaimCount_year != null && this.ApprovedClaimCount_year != undefined)
@@ -952,6 +1018,18 @@ export class DashboardPage {
             this.PendingClaimAmount_year = this.numberPipe.transform(this.PendingClaimAmount_year, '1.2-2');
           else
             this.PendingClaimAmount_year = '0.00';
+          // Superior
+            this.PendingClaimAmount_year_Superior = this.Year_Card[0]["PendingClaimAmount_year_superior"];
+          if (this.PendingClaimAmount_year_Superior != null && this.PendingClaimAmount_year_Superior != undefined)
+            this.PendingClaimAmount_year_Superior = this.numberPipe.transform(this.PendingClaimAmount_year_Superior, '1.2-2');
+          else
+            this.PendingClaimAmount_year_Superior = '0.00';
+            // Finance
+            this.PendingClaimAmount_year_Finance = this.Year_Card[0]["PendingClaimAmount_year_finance"];
+          if (this.PendingClaimAmount_year_Finance != null && this.PendingClaimAmount_year_Finance != undefined)
+            this.PendingClaimAmount_year_Finance = this.numberPipe.transform(this.PendingClaimAmount_year_Finance, '1.2-2');
+          else
+            this.PendingClaimAmount_year_Finance = '0.00';
 
           this.ApprovedClaimAmount_year = this.Year_Card[0]["ApprovedClaimAmount_year"];
           if (this.ApprovedClaimAmount_year != null && this.ApprovedClaimAmount_year != undefined)
@@ -970,11 +1048,15 @@ export class DashboardPage {
           this.PendingClaimCount_year = '0';
           this.ApprovedClaimCount_year = '0';
           this.PaidClaimCount_year = '0';
+          this.PendingClaimCount_year_Finance = '0';
+          this.PendingClaimCount_year_Superior = '0';
 
           this.RejectedClaimAmount_year = '0.00';
           this.PendingClaimAmount_year = '0.00';
           this.ApprovedClaimAmount_year = '0.00';
           this.PaidClaimAmount_year = '0.00';
+          this.PendingClaimAmount_year_Finance = '0.00';
+          this.PendingClaimAmount_year_Superior = '0.00';
         }
 
 
@@ -1009,11 +1091,15 @@ export class DashboardPage {
   Pending_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
   }
+  Validated_Click()
+  {
+    this.navCtrl.setRoot('UserclaimslistPage', { Validated: "Validated" });
+  }
   Approved_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
   }
   Paid_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Paid" });
+    this.navCtrl.setRoot('UserclaimslistPage', { Paid: "Paid" });
   }
   Approver_Click() {
     this.navCtrl.setRoot('ClaimapprovertasklistPage');
@@ -1022,7 +1108,7 @@ export class DashboardPage {
     this.navCtrl.setRoot('ClaimtasklistPage');
   }
   Finance_Manager_Click() {
-    this.navCtrl.setRoot('ClaimtasklistPage');
+    this.navCtrl.setRoot('FinancePaymentTasklistPage');
   }
 
 }

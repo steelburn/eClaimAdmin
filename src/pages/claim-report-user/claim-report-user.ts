@@ -27,9 +27,9 @@ export class ClaimReportUserPage {
   month: string;
   year: string;
   empData: any;
-  baseResourceUrlSummery: string;
-  claimsListSummery: any[];
-  claimsSocSummery: any[];
+  baseResourceUrlSummary: string;
+  claimsListSummary: any[];
+  claimsSocSummary: any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private alertCtrl: AlertController) {
     this.loginUserGuid = localStorage.getItem("g_USER_GUID");
@@ -46,19 +46,20 @@ export class ClaimReportUserPage {
  
   BindData(printSectionId: any, item: string) {
     if (this.loginUserGuid !== undefined) {
-      this.totalClaimAmount = 0;
-      this.claimsListPrintTemp = [];
       this.month = item.split(' ')[0].substring(0,3);
-      alert(this.month);
+      //alert(this.month);
       this.year = item.split(' ')[1];
       this.http
         .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
         .map(res => res.json())
         .subscribe(data => {
-          this.claimsList = data["resource"];
-          this.claimsListPrint = this.claimsList;
-          this.claimsList.forEach(element => {
-
+          this.claimsListPrint = data["resource"];
+          this.totalClaimAmount = 0;
+          this.claimsListPrintTemp = [];
+          this.claimsList = this.claimsListPrint;
+          this.totalClaimAmount = 0;
+          this.claimsListPrint.forEach(element => {
+            element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
             if (element.TYPE === 'TRV') {
               element.RowNum = "1";
               this.claimsListPrintTemp.push(element);
@@ -101,8 +102,8 @@ export class ClaimReportUserPage {
             this.totalClaimAmount = this.totalClaimAmount + element.Total;
           });
         });
-      this.BindSummeryData();
-      this.GetSocSummeryData();
+      this.BindSummaryData();
+      this.GetSocSummaryData();
     }
     let alert1 = this.alertCtrl.create({
       title: 'Print Report',
@@ -153,21 +154,21 @@ export class ClaimReportUserPage {
       });
   }
 
-  BindSummeryData() {
+  BindSummaryData() {
     this.http
-      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summery?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summary?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
       .map(res => res.json())
       .subscribe(data => {
-        this.claimsListSummery = data["resource"];
+        this.claimsListSummary = data["resource"];
       });
   }
 
-  GetSocSummeryData() {
+  GetSocSummaryData() {
     this.http
-    .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_soc_summery?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
+    .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_soc_summary?filter=(USER_GUID=' + this.loginUserGuid + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
     .map(res => res.json())
     .subscribe(data => {
-      this.claimsSocSummery = data["resource"];
+      this.claimsSocSummary = data["resource"];
     });
   }
 

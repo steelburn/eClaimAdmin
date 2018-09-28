@@ -13,7 +13,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
   templateUrl: 'travel-claim-view.html',
 })
 export class TravelClaimViewPage {
-  totalClaimAmount: number = 0;
+ // totalClaimAmount: number = 0;
   remarks: any;
   claimRequestData: any[];
   claimDetailsData: any[];
@@ -40,15 +40,20 @@ export class TravelClaimViewPage {
   travelDate: any;
   isAccepted(val: string) {
     this.isRemarksAccepted = val === 'accepted' ? true : false;
-    if (this.api.isClaimExpired(this.travelDate, true)) { return; }
-    if (!this.isRemarksAccepted) {
-      if (this.Remarks_NgModel === undefined) {
-        alert('Please enter valid remarks');
-        return;
-      }
-    }
-    this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted, 1);
-  }
+    if (this.claimRequestGUID !== undefined || this.claimRequestGUID !== null) {
+      this.api.getApiModel('claim_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS="Rejected")')
+        .subscribe(data => {
+          if (data["resource"].length <= 0)
+            if (this.api.isClaimExpired(this.travelDate, true)) { return; }
+          if (!this.isRemarksAccepted) {
+            if (this.Remarks_NgModel === undefined) {
+              alert('Please enter valid remarks');
+              return;
+            }
+          }
+          this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted, 1);
+        })
+    } }
 
   imageURL: any;
   isImage: boolean = false;
@@ -68,7 +73,7 @@ export class TravelClaimViewPage {
             this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID);
           }
           this.TravelType = element.TRAVEL_TYPE === '0' ? 'Local' : 'Outstation';
-          this.totalClaimAmount = element.CLAIM_AMOUNT;
+         // this.totalClaimAmount = element.CLAIM_AMOUNT;
           this.remarks = element.REMARKS;
         });
         //  this.totalClaimAmount += tollorParkAmount;
@@ -109,9 +114,9 @@ export class TravelClaimViewPage {
   }
 
   displayImage: any
-  // CloseDisplayImage() {
-  //   this.displayImage = false;
-  // }
+  CloseDisplayImage() {
+    this.displayImage = false;
+  }
 
   // imageURL: string;
   // DisplayImage(val: any) {

@@ -42,7 +42,11 @@ export class ClaimhistorydetailPage {
   FinanceLogin: boolean = false;
   loginUserRole: string;
   public page: number = 1;
+  btnSearch:boolean = false;
   currency = localStorage.getItem("cs_default_currency")
+
+
+  role: any;
 
   deptList: any[];
   employeeList: any[] = [];
@@ -56,6 +60,7 @@ export class ClaimhistorydetailPage {
     this.claimrefguid = navParams.get("claimRefGuid");
     this.userguid = navParams.get("userGuid");
     this.month = navParams.get("Month");
+    this.role = navParams.get("role");
     this.loginUserRole = localStorage.getItem("g_ROLE_NAME");
     // let ddlDept:any;
     //     alert(ddlDept.value)
@@ -69,7 +74,7 @@ export class ClaimhistorydetailPage {
 
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       this.FinanceLogin = true;
-      if (this.loginUserRole === "Finance Admin") {
+      if (this.role == "Payment") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
       }
       else {
@@ -143,6 +148,7 @@ export class ClaimhistorydetailPage {
         // for (var item in data["resource"]) {
         //   this.ExcelData.push({ Name: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPARTMENT"], Month: data["resource"][item]["MONTH"], ClaimType: data["resource"][item]["CLAIM_TYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
         // }
+        this.btnSearch=true;
       });
   }
   onSearchInput() {
@@ -226,8 +232,9 @@ export class ClaimhistorydetailPage {
   }
 
   SearchClaimsData() {
+    this.btnSearch=false;
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
-      if (this.loginUserRole === "Finance Admin") {
+      if (this.role == "Payment") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
       }
       else {
@@ -239,7 +246,6 @@ export class ClaimhistorydetailPage {
       this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=1)AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
     this.BindData(this.ddlDep, this.ddlName, this.ddlMon, this.ddlClaim, this.ddlSta);
-
   }
 
   ExportExcelClicked: boolean = false; ExcelColumns: any[] = [];

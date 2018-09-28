@@ -25,19 +25,29 @@
       <table class="Tabler list">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">{{ 'NO' | translate }}</th>
-          <th class="lgl1" style="width:220px">{{ 'SOC_NUMBER' | translate }}</th>
+          <th class="lgl1" style="width:150px">{{ 'SOC_NUMBER' | translate }}</th>
           <th class="lgl1">{{ 'PROJECT_NAME' | translate }}</th>
           <th class="lgl1">{{ 'CUSTOMER_NAME' | translate }}</th>
           <th class="lgl1" *ngIf="AdminLogin">{{ 'Tenant' | translate }}</th>
-          <th class="lgl1 tblBrRight" style="width:80px">{{ 'ACTION' | translate }}</th>
+          <th class="lgl1">{{ 'Active Flag' | translate }}</th>
+          <th class="lgl1 tblBrRight" style="width:105px">{{ 'ACTION' | translate }}</th>
         </tr>
 
-        <tr class="col7" *ngFor="let soc of socs | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index" [hidden]="button_View_Disable">
+        <tr class="col7" *ngFor="let soc of socs | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index"
+          [hidden]="button_View_Disable">
           <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1 getHeader" reshead="Soc Number">{{soc.soc}}</td>
           <td class="lgl1 getHeader" reshead="Project Name" text-wrap>{{soc.project_name}}</td>
           <td class="lgl1 getHeader" reshead="Customer Name" text-wrap>{{soc.customer_name}}</td>
           <td class="lgl1 getHeader" *ngIf="AdminLogin" reshead="Tenant">{{soc.TENANT_ACCOUNT_NAME}}</td>
+
+          <td class="lgl1 getHeader" reshead="Active Flag">
+            <ion-item>
+              <ion-toggle *ngIf="soc.ACTIVATION_FLAG==1" checked=true (ionChange)="ProjectMainActivation(soc.PROJECT_GUID, true)"></ion-toggle>
+              <ion-toggle *ngIf="soc.ACTIVATION_FLAG==0" checked=false (ionChange)="ProjectMainActivation(soc.PROJECT_GUID, false)"></ion-toggle>
+            </ion-item>
+          </td>
+
           <td class="lgl1 getHeader fColor" reshead="Action">
             <!-- <button ion-button item-end (click)="EditClick(soc.TENANT_GUID)">
               <ion-icon name="md-create"></ion-icon>
@@ -45,6 +55,7 @@
             <button ion-button item-end (click)="DeleteClick(soc.TENANT_GUID)">
               <ion-icon name="md-close"></ion-icon>
             </button> -->
+
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(soc.SOC_GUID)" title="Edit">
               <ion-icon name="md-create"></ion-icon>
             </button>
@@ -55,7 +66,8 @@
         </tr>
 
       </table>
-      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true"
+        autoHide="true">
       </pagination-controls>
     </ion-item>
   </ion-list>
@@ -162,7 +174,8 @@
               [readonly]="Readonly()"></ion-input>
             <button ion-button outline item-end icon-left (click)="CustomerLookup()">
               <ion-icon name="eye"></ion-icon>
-              {{ "CUSTOMER LOOKUP" | translate }} </button>
+              {{ "CUSTOMER LOOKUP" | translate }}
+            </button>
           </ion-item>
 
           <div class="btn">

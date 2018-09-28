@@ -10,8 +10,9 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title *ngIf="FinanceLogin">Finance Task History Details</ion-title>
-    <ion-title *ngIf="!FinanceLogin">Approver Task History</ion-title>
+    <ion-title *ngIf="FinanceLogin && role=='Payment'">Payment History Details</ion-title>
+    <ion-title *ngIf="FinanceLogin && role=='Validation'">Validation History Details</ion-title>
+    <ion-title *ngIf="!FinanceLogin">Superior History</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top color="primary200">
     <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
@@ -86,7 +87,7 @@
   </ion-item>
 
   <ion-item>
-    <button ion-button item-end (click)="SearchClaimsData()">Search</button>
+    <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData()">Search</button>
   </ion-item>
   <!-- <ion-item>
     <button ion-button item-end (click)="SearchClaimsData('All','All','All',ddlClaimTypes.value,ddlStatus.value,'All')">Search</button>
@@ -125,7 +126,8 @@
 
           <th class="lgl1">Claim Type</th>
           <th class="lgl1" style="width:120px">Date</th>
-          <th class="lgl1"style="width:100px">Status</th>
+          <th class="lgl1"style="width:120px">Status</th>
+          <th class="lgl1"style="width:100px">Remarks</th>
           <!-- <th class="lgl1">STAGE</th> -->
           <th class="lgl1" style="width:90px">Amount(RM)</th>
           <th class="lgl1 tblBrRight" style="width:60px">Action</th>
@@ -140,6 +142,7 @@
           <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIM_TYPE}}</td>
           <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
           <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
+          <td class="lgl1 getHeader" reshead="Remarks" text-wrap>{{claimhistorydetail.REMARKS}}</td>
           <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
           <td class="lgl1 getHeader" reshead="currency">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
           <td class="lgl1 getHeader fColor" reshead="Action">

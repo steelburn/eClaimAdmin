@@ -24,7 +24,7 @@ export class AddTollPage {
   MA_SELECT: any;
    loading: Loading;
   TenantGUID: any;
-  paymentTypes: any; DetailsForm: FormGroup; ClaimMainGUID: any; 
+  paymentTypes: any[]; DetailsForm: FormGroup; ClaimMainGUID: any; 
   ClaimMethodGUID: any; ClaimMethodName: any;
   ClaimDetailGuid:any;claimDetailsData:any;
   ImageUploadValidation:boolean=false;
@@ -76,6 +76,7 @@ export class AddTollPage {
     this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.paymentTypes = data["resource"];
+        this.PayType=this.paymentTypes.filter(s=>s.NAME==localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
       }
       );
   }

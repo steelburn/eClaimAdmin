@@ -27,7 +27,8 @@
           <th class="lgl1">Module Name</th>
           <th class="lgl1">Description</th>
           <th class="lgl1">Page Name</th>
-          <th class="lgl1 tblBrRight" style="width:90px">Action</th>
+          <th class="lgl1">Menu Header</th>
+          <th class="lgl1 tblBrRight" style="width:105px">Action</th>
         </tr>
 
         <tr class="col7" *ngFor="let module of Module_New | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
@@ -35,6 +36,7 @@
           <td class="lgl1">{{module.MODULE_NAME}}</td>
           <td class="lgl1">{{module.DESCRIPTION}}</td>
           <td class="lgl1" text-wrap>{{module.PAGE_NAME}}</td>
+          <td class="lgl1" text-wrap>{{module.MENU_HEADER}}</td>
           <td class="lgl1 fColor">
             <button ion-button item-end (click)="EditClick(module.MODULE_GUID)">
               <ion-icon name="md-create"></ion-icon>
@@ -45,7 +47,8 @@
           </td>
         </tr>
       </table>
-      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true"
+        autoHide="true">
       </pagination-controls>
     </ion-item>
   </ion-list>
@@ -78,13 +81,25 @@
 
           <ion-item>
             <ion-label stacked>{{"Page Name"}}</ion-label>
-            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Add" placeholder="{{'Please fill the Page'}}" multiple="true">
+            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Add" placeholder="{{'Please fill the Page'}}"
+              multiple="true">
               <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
+          <ion-item>
+            <ion-label stacked>{{ 'Menu Header' | translate }}</ion-label>
+            <ion-select formControlName="MENU_HEADER" [(ngModel)]="Menu_Header_ngModel_Add" placeholder="{{'Please select menu header'}}">
+              <ion-option [value]="Tasks">Tasks</ion-option>
+              <ion-option [value]="Claims">Claims</ion-option>
+              <ion-option [value]="Reports">Reports</ion-option>
+              <ion-option [value]="Account">Account</ion-option>
+            </ion-select>
+          </ion-item>
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Save()">{{"SUBMIT"
+              | translate}}</button>
           </div>
         </form>
 
@@ -122,13 +137,25 @@
 
           <ion-item>
             <ion-label stacked>{{"Page Name"}}</ion-label>
-            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Edit" placeholder="{{'Please fill the Page'}}" multiple="true">
+            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Edit" placeholder="{{'Please fill the Page'}}"
+              multiple="true">
               <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
+          <ion-item>
+            <ion-label stacked>{{ 'Menu Header' | translate }}</ion-label>
+            <ion-select formControlName="MENU_HEADER" [(ngModel)]="Menu_Header_ngModel_Edit" placeholder="{{'Please select menu header'}}">
+              <ion-option [value]="Tasks">Tasks</ion-option>
+              <ion-option [value]="Claims">Claims</ion-option>
+              <ion-option [value]="Reports">Reports</ion-option>
+              <ion-option [value]="Account">Account</ion-option>
+            </ion-select>
+          </ion-item>
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT"
+              | translate}}</button>
           </div>
         </form>
         <!-- [disabled]="!Moduleform.valid" -->

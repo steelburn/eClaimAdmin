@@ -293,7 +293,7 @@ export class SocRegistrationPage {
   storeCustomers: any[];
 
   LoadCustomers() {
-    let CustomerUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_customer' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let CustomerUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_customer' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')AND(ACTIVE_FLAG=A)&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(CustomerUrl)
       .map(res => res.json())
@@ -682,6 +682,7 @@ export class SocRegistrationPage {
     this.project_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.project_entry.UPDATE_TS = new Date().toISOString();
     this.project_entry.UPDATE_USER_GUID = "";
+    this.project_entry.ACTIVATION_FLAG = "1";
   }
 
   SetEntityForProjectUpdate() {
@@ -691,6 +692,7 @@ export class SocRegistrationPage {
     this.project_entry.CREATION_USER_GUID = this.soc_details_main[0]["CREATION_USER_GUID"];
     this.project_entry.UPDATE_TS = new Date().toISOString();
     this.project_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.project_entry.ACTIVATION_FLAG = this.soc_details_main[0]["ACTIVATION_FLAG"];
   }
 
   SetCommonEntityForProjectAddUpdate() {
@@ -707,7 +709,7 @@ export class SocRegistrationPage {
     }
 
     //this.project_entry.TENANT_GUID = this.customer_entry.TENANT_GUID;
-    this.project_entry.ACTIVATION_FLAG = "1";
+    // this.project_entry.ACTIVATION_FLAG = "1";
     // this.project_entry.CREATION_TS = new Date().toISOString();
     // this.project_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     // this.project_entry.UPDATE_TS = new Date().toISOString();
@@ -855,6 +857,71 @@ export class SocRegistrationPage {
     // this.DIVISION_ngModel_Add = "";
 
     this.Customer_GUID = "";
+  }
+
+  ProjectMainActivation(PROJECT_GUID: any, Activation_Flag: any) {
+    //Here get all the customer details and update
+    this.GetProjectDetails(PROJECT_GUID);
+
+    let strTitle: string;
+    if (Activation_Flag == true) {
+      strTitle = "Do you want to deactivate ?";
+    }
+    else {
+      strTitle = "Do you want to activate ?";
+    }
+
+    let alert = this.alertCtrl.create({
+      title: 'Activation Confirmation',
+      message: strTitle,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            // this.socs.ACTIVATION_FLAG = Activation_Flag;
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('OK clicked');
+
+            if (Activation_Flag == true) {
+              this.project_entry.ACTIVATION_FLAG = "0";
+            }
+            else {              
+              this.project_entry.ACTIVATION_FLAG = "1";
+            }           
+
+            this.socservice.update_project(this.project_entry)
+              .subscribe((response) => {
+                if (response.status == 200) {
+                  this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                }
+              });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  GetProjectDetails(PROJECT_GUID: any){
+    let ProjectActivationUrl = this.baseResource_Url + "main_project?filter=(PROJECT_GUID=" + PROJECT_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.http.get(ProjectActivationUrl)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.soc_details_main = data["resource"];
+          this.SetEntityForProjectUpdate();
+          this.project_entry.NAME = this.soc_details_main[0]["NAME"];
+          this.project_entry.CUSTOMER_GUID = this.soc_details_main[0]["CUSTOMER_GUID"];
+          this.project_entry.CUSTOMER_LOCATION_GUID = this.soc_details_main[0]["CUSTOMER_LOCATION_GUID"];
+          this.project_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");          
+        });
   }
 }
 

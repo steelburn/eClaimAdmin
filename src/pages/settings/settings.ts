@@ -157,12 +157,12 @@ export class SettingsPage {
     this.loading.present();
 
     let view_url: string = "";
-    view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/permission_keys' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+    view_url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/permission_keys' + '?order=KEY_NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
       .get(view_url)
       .map(res => res.json())
       .subscribe(data => {
-        this.setting_details_new = this.settings = this.setting_details_new = data.resource;
+        this.setting_details_new = this.settings = data.resource;
 
         this.loading.dismissAll();
       });
@@ -272,8 +272,10 @@ export class SettingsPage {
   }
 
   SetCommonEntityForAddUpdate() {
-    this.setting_entry.KEY_NAME = this.titlecasePipe.transform(this.KEY_NAME_ngModel_Add.trim());
-    this.setting_entry.KEY_VALUE = this.titlecasePipe.transform(this.KEY_VALUE_ngModel_Add.trim());
+    // this.setting_entry.KEY_NAME = this.titlecasePipe.transform(this.KEY_NAME_ngModel_Add.trim());
+    // this.setting_entry.KEY_VALUE = this.titlecasePipe.transform(this.KEY_VALUE_ngModel_Add.trim());
+    this.setting_entry.KEY_NAME = this.KEY_NAME_ngModel_Add.trim();
+    this.setting_entry.KEY_VALUE = this.KEY_VALUE_ngModel_Add.trim();
     this.setting_entry.SHIFT_GUID = null;
     this.setting_entry.DEVICE_GUID = null;
     this.setting_entry.ROLE_GUID = null;

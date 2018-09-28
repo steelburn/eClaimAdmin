@@ -20,14 +20,14 @@ import * as constants from '../../app/config/constants';
   templateUrl: 'claim-report.html',
 })
 export class ClaimReportPage {
-  public page: number = 1;
+  page: number = 1;
   baseResourceUrl: string;
-  baseResourceUrlSummery: string;
-  baseResourceUrlSocSummery: string;
+  baseResourceUrlSummary: string;
+  baseResourceUrlSocSummary: string;
   claimsList: any[];
   claimsListPrint: any[];
   claimsListPrintTemp: any[] = [];
-  claimsListSummery: any[];
+  claimsListSummary: any[];
   deptList: any[];
   employeeList: any[];
   empData: any;
@@ -37,8 +37,8 @@ export class ClaimReportPage {
   todayDate: Date = new Date();
   month: any;
   year: any;
-  claimsSocSummery: any[];
-
+  claimsSocSummary: any[];
+  btnSearch:boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     // this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -49,32 +49,20 @@ export class ClaimReportPage {
 
   BindData() {
     this.totalClaimAmount = 0;
-    this.claimsListPrintTemp = [];
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
         this.claimsListPrint = data["resource"];
         this.claimsList = this.claimsListPrint;
-        this.claimsList.forEach(element => {
-          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
-          //  alert(element.SOC_GUID);
+        this.totalClaimAmount = 0;
+        this.claimsListPrintTemp = [];
+        // this.claimsList.forEach(element => {
 
-          // if (element.SOC_GUID != null && this.claimsSocSummery.find(e => e.SOC_GUID == element.SOC_GUID) === undefined) {
-          //   this.claimsSocSummery.push([{ "SOC_GUID": element.SOC_GUID, "SOC": element.SOC, "Total": element.Total }]);
-          // }
-          // else if (element.CUSTOMER_GUID != null && this.claimsSocSummery.find(e => e.SOC_GUID == element.CUSTOMER_GUID) === undefined) {
-          //   this.claimsSocSummery.push([{ "SOC_GUID": element.CUSTOMER_GUID, "SOC": element.CUSTOMER_NAME, "Total": element.Total }]);
-          // }
-          // else {
-          //   if (element.SOC_GUID != null)
-          //     this.claimsSocSummery.find(e => e.SOC_GUID === element.SOC_GUID).Total += element.Total;
-          //   else
-          //     this.claimsSocSummery.find(e => e.SOC_GUID === element.CUSTOMER_GUID).Total += element.Total;
-          // }
-        });
-        //console.log(this.claimsSocSummery);
+        // });
+        //console.log(this.claimsSocSummary);
         this.claimsListPrint.forEach(element => {
+          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
           if (element.TYPE === 'TRV') {
             element.RowNum = "1";
             this.claimsListPrintTemp.push(element);
@@ -114,85 +102,19 @@ export class ClaimReportPage {
             this.claimsListPrintTemp.push(myClonedObject);
           }
 
-          // if (element.Type == 'TRV') {
-          //   this.claimsListPrintTemp.push(element);
-          //   for (let i = 1; i <= 6; i++) {
-          //     element.TRAVEL_DATE = '';
-          //     element.TYPE = '';
-          //     element.PROJECT_NAME = '';
-          //     element.SOC = '';
-          //     element.CUSTOMER_NAME = '';
-          //     element.MODE = '';
-          //     element.from = '';
-          //     element.to = '';
-          //     element.MILEAGE_AMOUNT = '';
-          //     if (i != 1)
-          //       element.DESCRIPTION = '';
-          //     if (i != 2) {
-          //     element.DISTANCE_KM = '';
-          //       element.RATE_PER_UNIT = '';
-          //     }
-          //     if (i != 3)
-          //       element.TollAmount = 0;
-          //     if (i != 4)
-          //       element.ParkingAmount = 0;
-          //     if (i != 5)
-          //       element.MealAmount = 0;
-          //     if (i != 6)
-          //       element.AccAmount = 0;
-          //     this.claimsListPrintTemp.push(element);
-          //   }
-          // }
-          // else if (element.Type == 'OT') {
-          //   this.claimsListPrintTemp.push(element);
-          //   for (let i = 1; i <= 3; i++) {
-          //     element.TRAVEL_DATE = '';
-          //     element.TYPE = '';
-          //     element.PROJECT_NAME = '';
-          //     element.SOC = '';
-          //     element.CUSTOMER_NAME = '';
-          //     element.MODE = '';
-          //     element.from = '';
-          //     element.to = '';
-          //     element.MILEAGE_AMOUNT = '';
-          //     if (i != 1)
-          //       element.DESCRIPTION = '';
-          //     if (i != 2)
-          //       element.START_TS = '';
-          //     if (i != 3)
-          //       element.END_TS = '';
-          //     this.claimsListPrintTemp.push(element);
-          //   }
-          // }
-          // else {
-          //   this.claimsListPrintTemp.push(element);
-          //   element.TRAVEL_DATE = '';
-          //   element.TYPE = '';
-          //   element.PROJECT_NAME = '';
-          //   element.SOC = '';
-          //   element.CUSTOMER_NAME = '';
-          //   element.MODE = '';
-          //   element.from = '';
-          //   element.to = '';
-          //   element.MILEAGE_AMOUNT = '';
-          //   element.START_TS = '';
-          //   element.END_TS = '';
-          //   this.claimsListPrintTemp.push(element);
-          // }
-
-
           this.totalClaimAmount = this.totalClaimAmount + element.Total;
         });
-        //console.log(this.claimsListPrintTemp);
+        this.btnSearch=true;
       });
   }
 
-  BindSummeryData() {
+  BindSummaryData() {
     this.http
-      .get(this.baseResourceUrlSummery)
+      .get(this.baseResourceUrlSummary)
       .map(res => res.json())
       .subscribe(data => {
-        this.claimsListSummery = data["resource"];
+        this.claimsListSummary = data["resource"];
+        this.btnSearch=true;
       });
   }
 
@@ -202,6 +124,7 @@ export class ClaimReportPage {
       .map(res => res.json())
       .subscribe(data => {
         this.deptList = data["resource"];
+        this.btnSearch=true;
       });
     //console.log(this.deptList);
   }
@@ -213,6 +136,7 @@ export class ClaimReportPage {
       .map(res => res.json())
       .subscribe(data => {
         this.empData = data["resource"];
+        this.btnSearch=true;
       });
   }
 
@@ -226,13 +150,14 @@ export class ClaimReportPage {
       });
 
   }
-  GetSocSummeryData() {
+  GetSocSummaryData() {
     this.http
-    .get(this.baseResourceUrlSocSummery)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.claimsSocSummery = data["resource"];
-    });
+      .get(this.baseResourceUrlSocSummary)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.claimsSocSummary = data["resource"];
+        this.btnSearch=true;
+      });
   }
 
 
@@ -250,16 +175,17 @@ export class ClaimReportPage {
     // alert(emp);
     // alert(month);
     // alert(claimType);
+    this.btnSearch=false;
     this.year = new Date().getFullYear();
     this.month = month;
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.baseResourceUrlSummery = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summery?filter=(DEPARTMENT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.baseResourceUrlSocSummery = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_soc_summery?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrlSummary = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summary?filter=(DEPARTMENT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResourceUrlSocSummary = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_soc_summary?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     //this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?api_key=' + constants.DREAMFACTORY_API_KEY;
     this.BindEmpDetails(emp);
     this.BindData();
-    this.BindSummeryData();
-    this.GetSocSummeryData();
+    this.BindSummaryData();
+    this.GetSocSummaryData();
     // if (claimType == "58c59b56-289e-31a2-f708-138e81a9c823")
     //   this.travelClaimType = true;
     // else
@@ -270,6 +196,7 @@ export class ClaimReportPage {
     // else
     //   this.overTimeClaim = false;
     //console.log(this.baseResourceUrl);
+  
   }
 
   ionViewDidLoad() {
