@@ -337,7 +337,7 @@ export class DashboardPage {
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
-  public doughnutChartLabels: Array<string> = ['Approved', 'Pending at Finance', 'Pending at Superior','Rejected', 'Paid'];
+  public doughnutChartLabels: Array<string> = ['Validated', 'Approved', 'Pending','Rejected', 'Paid'];
   public doughnutChartData: Array<number> = [];
 
   public doughnutChartType: string = 'doughnut';
@@ -405,7 +405,7 @@ export class DashboardPage {
   }
 
   // ClaimAmountChart
-  public claimAmountLabels: Array<string> = ['Approved', 'Pending at Finance','Pending at Superior', 'Rejected', 'Paid'];
+  public claimAmountLabels: Array<string> = ['Validated', 'Approved','Pending', 'Rejected', 'Paid'];
   public claimAmountData: Array<number> = [];
   public claimAmountChartType: string = 'doughnut';
   public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange","yellow","red", "rgb(90, 165, 90)"] }];
@@ -1091,11 +1091,15 @@ export class DashboardPage {
   Pending_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
   }
+  Validated_Click()
+  {
+    this.navCtrl.setRoot('UserclaimslistPage', { Validated: "Validated" });
+  }
   Approved_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
   }
   Paid_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Paid" });
+    this.navCtrl.setRoot('UserclaimslistPage', { Paid: "Paid" });
   }
   Approver_Click() {
     this.navCtrl.setRoot('ClaimapprovertasklistPage');
@@ -1104,7 +1108,7 @@ export class DashboardPage {
     this.navCtrl.setRoot('ClaimtasklistPage');
   }
   Finance_Manager_Click() {
-    this.navCtrl.setRoot('ClaimtasklistPage');
+    this.navCtrl.setRoot('FinancePaymentTasklistPage');
   }
 
 }
