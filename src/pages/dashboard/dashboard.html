@@ -125,9 +125,10 @@
         </div>
   </ion-card> -->
 
-  <ion-card  (click)="Approved_Click()" class="round33" color="primary500">
+  <ion-card  (click)="Validated_Click()" class="round33" color="primary500">
       <div class="icondash">
-          <h2 class="dashhead">Approved</h2>
+          <!-- <h2 class="dashhead">Approved</h2> -->
+          <h2 class="dashhead">Validated</h2>
         <ion-icon name="checkmark-circle-outline" color="light" style="float: left; "></ion-icon>
         <div text-right class="wordash">
           <h1>RM {{Approved_Claim_Amount}}</h1>
@@ -154,7 +155,8 @@
   </ion-card>
   <ion-card (click)="Pending_Click()" class="round30" color="war">
     <div class="icondash">
-        <h2 class="dashhead">Pending Superior Approval</h2>
+        <!-- <h2 class="dashhead">Pending Superior Approval</h2> -->
+        <h2 class="dashhead">Pending</h2>
         <ion-icon name="alert" color="light" style="float: left;color:gray; "></ion-icon>
         <div text-right class="wordash">
           <h1>RM {{Pending_Claim_Amount_Superior}}</h1>
@@ -164,9 +166,10 @@
         </div>
       </div>
 </ion-card>
-<ion-card (click)="Pending_Click()" class="round30" color="war4">
+<ion-card (click)="Approved_Click()" class="round30" color="war4">
   <div class="icondash">
-      <h2 class="dashhead">Pending Finance Validation</h2>
+      <!-- <h2 class="dashhead">Pending Finance Validation</h2> -->
+      <h2 class="dashhead">Approved</h2>
       <ion-icon name="eye" color="light" style="float: left; "></ion-icon>
       <div text-right class="wordash">
         <h1>RM {{Pending_Claim_Amount_Finance}}</h1>

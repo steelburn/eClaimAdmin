@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams,Loading, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
@@ -13,7 +13,7 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
-
+import * as Settings from '../../dbSettings/companySettings';
 
 @IonicPage()
 @Component({
@@ -23,7 +23,7 @@ import moment from 'moment';
 export class MiscellaneousClaimPage {
   uploadFileName: string;
   @ViewChild('fileInput') fileInput: ElementRef;
-  loading : Loading; MiscellaneousForm: FormGroup;
+  loading: Loading; MiscellaneousForm: FormGroup;
   //claimFor: any;
   Customer_Lookup_ngModel: any;
   Project_Lookup_ngModel: any;
@@ -57,21 +57,29 @@ export class MiscellaneousClaimPage {
 
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
-  min_claim_amount:any;min_claim:any;
-  max_claim_amount:any;max_claim:any;
+  min_claim_amount: any; min_claim: any;
+  max_claim_amount: any; max_claim: any;
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
 
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, fb: FormBuilder, private loadingCtrl: LoadingController, private service: Services, public navCtrl: NavController, public http: Http, public navParams: NavParams, public api: ApiManagerProvider) {
-     // Lakshman
-     this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
-     this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
-     this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
-     this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
-     let currency = localStorage.getItem("cs_default_currency");
-     // Lakshman
+    // Lakshman
+    this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
+    this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    // this.min_claim_amount =null;
+    if(this.min_claim_amount==null){
+     this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+   }
+   this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+   this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // this.max_claim_amount =null;
+    if(this.max_claim_amount==null){
+     this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+   }    
+    let currency = localStorage.getItem("cs_default_currency");
+    // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
@@ -136,7 +144,7 @@ export class MiscellaneousClaimPage {
   //   this.Miscellaneous_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
   // }
 
-  
+
   imageURLEdit: any = null
   GetDataforEdit() {
     this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -150,10 +158,10 @@ export class MiscellaneousClaimPage {
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
 
-              
+
                 // this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null) 
-                this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID); 
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                  this.imageURLEdit = this.api.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
                 //this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
 
@@ -227,14 +235,20 @@ export class MiscellaneousClaimPage {
   }
 
   LoadProjects() {
-    this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.api.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.api.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       });
   }
 
   LoadCustomers() {
-    this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.api.getApiModel('view_customer', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVE_FLAG=A)')
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -303,10 +317,10 @@ export class MiscellaneousClaimPage {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      if(file.type==='image/jpeg')
-      this.isImage = true;
+      if (file.type === 'image/jpeg')
+        this.isImage = true;
       else
-      this.isImage = false;
+        this.isImage = false;
       this.MiscellaneousForm.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       reader.onload = () => {
@@ -374,8 +388,7 @@ export class MiscellaneousClaimPage {
     this.loading.present();
     return new Promise((resolve, reject) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.MiscellaneousForm.get('avatar').value, options)
-        .map((response) => 
-        {
+        .map((response) => {
           this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
@@ -395,19 +408,19 @@ export class MiscellaneousClaimPage {
   }
 
   submitAction(formValues: any) {
-   
     let x = this.Miscellaneous_Amount_ngModel.split(",").join("");
-    let  amount=Number(x);   
+    let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Miscellaneous_Amount_ngModel = null;
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " "); 
       return;
     }
     else {
       this.Miscellaneous_Amount_ngModel = this.Miscellaneous_Amount_ngModel;
     }
-    if(this.api.isClaimExpired(formValues.travel_date,false))
-
-    return;
+    
+    if (this.api.isClaimExpired(formValues.travel_date, false))
+      return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
@@ -425,8 +438,10 @@ export class MiscellaneousClaimPage {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-            this.claimRequestData["resource"][0].STATUS = 'Pending'
-          }
+            if (this.rejectedLevel === 3)
+            this.claimRequestData["resource"][0].STATUS = 'Approved';
+          else
+            this.claimRequestData["resource"][0].STATUS = 'Pending';          }
 
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
@@ -445,7 +460,7 @@ export class MiscellaneousClaimPage {
             //Commented By bijay on 24/09/2018 as per scheduler implemented
             // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //----------------------------------------------------------
-            
+
             alert('Claim details updated successfully.')
             this.navCtrl.push(UserclaimslistPage);
           });

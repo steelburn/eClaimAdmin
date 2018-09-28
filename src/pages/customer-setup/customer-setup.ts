@@ -399,6 +399,7 @@ export class CustomerSetupPage {
     this.customer_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
     this.customer_entry.UPDATE_TS = new Date().toISOString();
     this.customer_entry.UPDATE_USER_GUID = "";
+    this.customer_entry.ACTIVE_FLAG = "A";
   }
 
   SetEntityForCustomerUpdate() {
@@ -407,6 +408,7 @@ export class CustomerSetupPage {
     this.customer_entry.CREATION_USER_GUID = this.customer_details[0]["CREATION_USER_GUID"];
     this.customer_entry.UPDATE_TS = new Date().toISOString();
     this.customer_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.customer_entry.ACTIVE_FLAG = this.customer_details[0]["ACTIVE_FLAG"];
   }
 
   SetCommonEntityForCustomerAddUpdate() {
@@ -606,7 +608,7 @@ export class CustomerSetupPage {
             this.socservice.update_customer(this.customer_entry)
               .subscribe((response) => {
                 if (response.status == 200) {
-                  // this.navCtrl.setRoot(this.navCtrl.getActive().component);                  
+                  this.navCtrl.setRoot(this.navCtrl.getActive().component);                  
                 }
               });
           }

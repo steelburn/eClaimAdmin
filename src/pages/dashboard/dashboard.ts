@@ -8,6 +8,7 @@ import { Http } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { DecimalPipe } from "@angular/common";
+import * as Settings from '../../dbSettings/companySettings';
 
 /**
  * Generated class for the DashboardPage page.
@@ -116,18 +117,18 @@ export class DashboardPage {
       this.loginUserRole = res.toString();
       console.log(this.loginUserRole);
 
-      if (this.loginUserRole === "Team Lead" || this.loginUserRole === "Division Head" || this.loginUserRole === "HOD") {
+      if (this.loginUserRole === Settings.UserRoleConstants.TEAM_LEAD || this.loginUserRole === Settings.UserRoleConstants.DIVISION_HEAD || this.loginUserRole === Settings.UserRoleConstants.HOD) {
         this.IsApprover = true;
       }
 
       // Finance Executive
-      if (this.loginUserRole === "Finance Executive") {
+      if (this.loginUserRole === Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
         this.IsFinanceExecutive = true;
         // this.GetData_FeRole();
         // this.GetData_FeRole_Year();       
       }
 
-      if (this.loginUserRole === "Finance Manager" || this.loginUserRole === "Finance Admin") {
+      if (this.loginUserRole === Settings.UserRoleConstants.FINANCE_MANAGER || this.loginUserRole === Settings.UserRoleConstants.FINANCE_ADMIN) {
         this.IsFinanceManager = true;
         this.IsApprover = true;
       }
@@ -337,7 +338,7 @@ export class DashboardPage {
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
-  public doughnutChartLabels: Array<string> = ['Approved', 'Pending at Finance', 'Pending at Superior','Rejected', 'Paid'];
+  public doughnutChartLabels: Array<string> = ['Validated', 'Approved', 'Pending','Rejected', 'Paid'];
   public doughnutChartData: Array<number> = [];
 
   public doughnutChartType: string = 'doughnut';
@@ -405,7 +406,7 @@ export class DashboardPage {
   }
 
   // ClaimAmountChart
-  public claimAmountLabels: Array<string> = ['Approved', 'Pending at Finance','Pending at Superior', 'Rejected', 'Paid'];
+  public claimAmountLabels: Array<string> = ['Validated', 'Approved','Pending', 'Rejected', 'Paid'];
   public claimAmountData: Array<number> = [];
   public claimAmountChartType: string = 'doughnut';
   public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange","yellow","red", "rgb(90, 165, 90)"] }];
@@ -1086,16 +1087,20 @@ export class DashboardPage {
 
   }
   Rejected_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Rejected: "Rejected" });
+    this.navCtrl.setRoot('UserclaimslistPage', { Rejected: Settings.StatusConstants.REJECTED });
   }
   Pending_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Pending: "Pending" });
+    this.navCtrl.setRoot('UserclaimslistPage', { Pending: Settings.StatusConstants.PENDING });
+  }
+  Validated_Click()
+  {
+    this.navCtrl.setRoot('UserclaimslistPage', { Validated: Settings.StatusConstants.VALIDATED });
   }
   Approved_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Approved" });
+    this.navCtrl.setRoot('UserclaimslistPage', { Approved: Settings.StatusConstants.APPROVED });
   }
   Paid_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved: "Paid" });
+    this.navCtrl.setRoot('UserclaimslistPage', { Paid: Settings.StatusConstants.PAID });
   }
   Approver_Click() {
     this.navCtrl.setRoot('ClaimapprovertasklistPage');
@@ -1104,7 +1109,7 @@ export class DashboardPage {
     this.navCtrl.setRoot('ClaimtasklistPage');
   }
   Finance_Manager_Click() {
-    this.navCtrl.setRoot('ClaimtasklistPage');
+    this.navCtrl.setRoot('FinancePaymentTasklistPage');
   }
 
 }

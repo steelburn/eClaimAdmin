@@ -85,6 +85,8 @@ export class ProfileManagerProvider {
                 this.managerInfo = res["resource"]
                 this.managerInfo.forEach(userElm => {
                     this.stage = userElm.DEPT_GUID;
+                    localStorage.setItem('edit_superior', this.assignedTo)
+                    localStorage.setItem('edit_stage', this.stage)
                     if (this.isRequester) {
                         this.proceedNext();
                     }
@@ -392,8 +394,10 @@ export class ProfileManagerProvider {
         claimReqMainRef.ASSIGNED_TO = this.assignedTo;
         claimReqMainRef.PROFILE_LEVEL = parseInt(this.profileLevel);
         claimReqMainRef.PROFILE_JSON = this.profileJSON;
-        claimReqMainRef.STATUS = 'Pending';
-        //claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
+        if (this.profileLevel === 3)
+            claimReqMainRef.STATUS = 'Approved';
+        else
+            claimReqMainRef.STATUS = 'Pending';        //claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
         // claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Draft' : 'Pending';
         // if (claimReqMainRef.PROFILE_LEVEL === 1) {
         //   claimReqMainRef.STAGE = 'Superior';
