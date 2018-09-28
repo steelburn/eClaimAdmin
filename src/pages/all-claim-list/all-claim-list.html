@@ -10,8 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title *ngIf="FinanceLogin">Finance Task History Details</ion-title>
-    <ion-title *ngIf="!FinanceLogin">Approver Task History</ion-title>
+    <ion-title *ngIf="FinanceLogin">All Claims List</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top color="primary200">
     <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
