@@ -52,7 +52,7 @@ export class UserclaimslistPage {
   baseResourceUrl: string;
   baseResourceUrl1: string;
   searchboxValue: string;
-  Pending: any; Rejected: any; Approved: any; Paid: any;
+  Pending: any; Rejected: any; Approved: any; Paid: any;Validated:any;
   public page: number = 1;
   btnSearch:boolean = false;
   constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
@@ -72,9 +72,10 @@ export class UserclaimslistPage {
     this.Rejected = navParams.get("Rejected");
     this.Pending = navParams.get("Pending");
     this.Approved = navParams.get("Approved");
+    this.Validated = navParams.get("Validated");
     this.Paid = navParams.get("Paid");
 
-    this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid;
+    this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid || this.Validated;
     if (this.searchboxValue != undefined) {
       this.onSearchInput();
     }
