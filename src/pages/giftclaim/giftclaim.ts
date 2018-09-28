@@ -16,6 +16,7 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
+import * as Settings from '../../dbSettings/companySettings';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,7 @@ import moment from 'moment';
 export class GiftclaimPage {
   Giftform: FormGroup;
   uploadFileName: string;
-  loading : Loading;
+  loading: Loading;
   CloudFilePath: string;
   @ViewChild('fileInput') fileInput: ElementRef;
   customers: any[];
@@ -76,8 +77,8 @@ export class GiftclaimPage {
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
-  min_claim_amount:any;min_claim:any;
-  max_claim_amount:any;max_claim:any;
+  min_claim_amount: any; min_claim: any;
+  max_claim_amount: any; max_claim: any;
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -89,10 +90,10 @@ export class GiftclaimPage {
 
             this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
               .subscribe(data => {
-                this.claimRequestData = data["resource"];             
+                this.claimRequestData = data["resource"];
                 // this.imageURLEdit = this.claimRequestData[0].ATTACHMENT_ID;
-                if (this.claimRequestData[0].ATTACHMENT_ID !== null) 
-                this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID); 
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
@@ -146,7 +147,7 @@ export class GiftclaimPage {
       this.Gift_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
     }
   }
-  
+
   // Lakshman
   // getCurrency(amount: number) {
   //   amount = Number(amount);
@@ -166,8 +167,16 @@ export class GiftclaimPage {
     // Lakshman
     this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
     this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    // this.min_claim_amount =null;
+    if(this.min_claim_amount==null){
+      this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+    }
     this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
     this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    //  this.max_claim_amount =null;
+     if(this.max_claim_amount==null){
+      this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+    }
     let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
     this.profileMng.CheckSessionOut();
@@ -222,10 +231,10 @@ export class GiftclaimPage {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      if(file.type==='image/jpeg')
-      this.isImage = true;
+      if (file.type === 'image/jpeg')
+        this.isImage = true;
       else
-      this.isImage = false;
+        this.isImage = false;
       this.Giftform.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       reader.onload = () => {
@@ -293,8 +302,7 @@ export class GiftclaimPage {
     const options = new RequestOptions({ headers: queryHeaders });
     return new Promise((resolve) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Giftform.get('avatar').value, options)
-        .map((response) => 
-        {
+        .map((response) => {
           this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
@@ -310,14 +318,20 @@ export class GiftclaimPage {
   }
 
   LoadProjects() {
-    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       });
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('view_customer', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVE_FLAG=A)')
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -452,28 +466,20 @@ export class GiftclaimPage {
   }
 
   submitAction(formValues: any) {
-
-    // let amount = Number(formValues.claim_amount);
-    // if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
-    //   this.Gift_Amount_ngModel = null;
-    //   return;
-    // }
-    // else {
-    //   this.Gift_Amount_ngModel = this.Gift_Amount_ngModel;
-    // }
     let x = this.Gift_Amount_ngModel.split(",").join("");
-    let  amount=Number(x);    
+    let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
-      this.Gift_Amount_ngModel = null;    
+      this.Gift_Amount_ngModel = null;   
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " "); 
       return;
     }
     else {
       this.Gift_Amount_ngModel = this.Gift_Amount_ngModel;
     }
-   
-    if(this.apiMng.isClaimExpired(formValues.travel_date,false))
 
-    return;
+    if (this.apiMng.isClaimExpired(formValues.travel_date, false))
+
+      return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
@@ -492,7 +498,10 @@ export class GiftclaimPage {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-            this.claimRequestData["resource"][0].STATUS = 'Pending'
+            if (this.rejectedLevel === 3)
+              this.claimRequestData["resource"][0].STATUS = 'Approved';
+            else
+              this.claimRequestData["resource"][0].STATUS = 'Pending';
           }
 
           if (this.isCustomer) {

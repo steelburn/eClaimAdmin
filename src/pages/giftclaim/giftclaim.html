@@ -85,9 +85,9 @@
     <div class="btn">
       <button ion-button color="primary500" (click)='submitAction(Giftform.value)' [disabled]="(Giftform.valid && !ImageUploadValidation) || !Giftform.valid">{{ 'SUBMIT'}}</button>
     </div>
-    <ion-item *ngIf="!Giftform.controls.claim_amount.valid  && (Giftform.controls.claim_amount.dirty)">
+    <!-- <ion-item *ngIf="!Giftform.controls.claim_amount.valid  && (Giftform.controls.claim_amount.dirty)">
       <p style="color: red; text-align:right;margin-right: 34%;">Claim amount should be {{currency}} {{min_claim_amount}} - {{max_claim_amount}}</p>
-  </ion-item>
+  </ion-item> -->
   </form>
 
   <div class="popup2" padding *ngIf="displayImage">

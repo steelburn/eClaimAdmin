@@ -15,7 +15,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
-
+import * as Settings from '../../dbSettings/companySettings';
 @IonicPage()
 @Component({
   selector: 'page-overtimeclaim',
@@ -80,8 +80,8 @@ export class OvertimeclaimPage {
   isCustomer: boolean = false;
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
-  min_claim_amount:any;min_claim:any;
-  max_claim_amount:any;max_claim:any;
+  min_claim_amount: any; min_claim: any;
+  max_claim_amount: any; max_claim: any;
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
@@ -175,10 +175,19 @@ export class OvertimeclaimPage {
      // Lakshman
      this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
      this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
-     this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
-     this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    //  this.min_claim_amount =null;
+     if(this.min_claim_amount==null){
+      this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+    }
+    this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+    this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    //  this.max_claim_amount =null;
+     if(this.max_claim_amount==null){
+      this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+    }
      let currency = localStorage.getItem("cs_default_currency");
      // Lakshman
+
     this.profileMng.CheckSessionOut();
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
@@ -212,7 +221,7 @@ export class OvertimeclaimPage {
       claim_amount: ['', Validators.required],
       attachment_GUID: '', claimTypeGUID: '',
     });
-  }  
+  }
 
   imageGUID: any;
 
@@ -236,14 +245,20 @@ export class OvertimeclaimPage {
   }
 
   LoadProjects() {
-    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       });
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('view_customer', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVE_FLAG=A)')
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -343,11 +358,11 @@ export class OvertimeclaimPage {
     });
   }
 
-  
-  validateDate(startDate: any, endDate: any) {    
-    let today =moment(new Date()).format('YYYY-MM-DDTHH:mm');
-    let start = startDate; 
-    let end = endDate; 
+
+  validateDate(startDate: any, endDate: any) {
+    let today = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    let start = startDate;
+    let end = endDate;
     // let today = Date.parse(new Date().toISOString())
     // let start = Date.parse(this.Start_DT_ngModel)
     // let end = Date.parse(this.End_DT_ngModel)
@@ -356,7 +371,7 @@ export class OvertimeclaimPage {
       return false;
     }
     return true;
-  }  
+  }
 
   allowanceGUID: any;
   onAllowanceSelect(allowance: any) {
@@ -364,19 +379,19 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
-    
     let x = this.OT_Amount_ngModel.split(",").join("");
-    let  amount=Number(x);   
+    let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.OT_Amount_ngModel = null;
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " "); 
       return;
     }
     else {
       this.OT_Amount_ngModel = this.OT_Amount_ngModel;
     }
     formValues.travel_date = formValues.start_DT;
-    if(this.apiMng.isClaimExpired(formValues.travel_date,false))
-    return;
+    if (this.apiMng.isClaimExpired(formValues.travel_date, false))
+      return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
@@ -397,7 +412,10 @@ export class OvertimeclaimPage {
               this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
               this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
               this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-              this.claimRequestData["resource"][0].STATUS = 'Pending'
+              if (this.rejectedLevel === 3)
+                this.claimRequestData["resource"][0].STATUS = 'Approved';
+              else
+                this.claimRequestData["resource"][0].STATUS = 'Pending';
             }
             //this.claimRequestData[0].claim_amount= formValues.claim_amount;
             if (this.isCustomer) {
@@ -423,7 +441,7 @@ export class OvertimeclaimPage {
       }
       else {
         formValues.claimTypeGUID = '37067b3d-1bf4-33a3-2b60-3ca40baf589a';
-        
+
         formValues.attachment_GUID = this.imageGUID;
         this.travelAmount = this.claimAmount;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;

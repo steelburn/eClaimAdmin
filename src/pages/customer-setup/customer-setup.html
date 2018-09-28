@@ -45,8 +45,10 @@
           <td class="lgl1 getHeader" reshead="Email." text-wrap>{{customer.EMAIL}}</td>
           <td class="lgl1 getHeader" reshead="Mobile No." text-wrap>{{customer.CONTACT_PERSON_MOBILE_NO}}</td>
           <td class="lgl1 getHeader" reshead="Active Flag">
-            <ion-toggle *ngIf="customer.ACTIVE_FLAG=='A'" checked=true (ionChange)="CustomerActivation(customer.CUSTOMER_GUID, true)"></ion-toggle>
-            <ion-toggle *ngIf="customer.ACTIVE_FLAG=='D'" checked=false (ionChange)="CustomerActivation(customer.CUSTOMER_GUID, false)"></ion-toggle>
+            <ion-item>
+              <ion-toggle *ngIf="customer.ACTIVE_FLAG=='A'" checked=true (ionChange)="CustomerActivation(customer.CUSTOMER_GUID, true)"></ion-toggle>
+              <ion-toggle *ngIf="customer.ACTIVE_FLAG=='D'" checked=false (ionChange)="CustomerActivation(customer.CUSTOMER_GUID, false)"></ion-toggle>
+            </ion-item>
           </td>
           <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end [disabled]="button_Edit_Disable" (click)="EditClick(customer.CUSTOMER_GUID, customer.CUSTOMER_LOCATION_GUID)"
