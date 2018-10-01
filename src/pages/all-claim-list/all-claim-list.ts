@@ -24,6 +24,7 @@ import { MiscellaneousClaimPage } from '../miscellaneous-claim/miscellaneous-cla
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
 import { ExcelService } from '../../providers/excel.service';
+import * as Settings from '../../dbSettings/companySettings'
 
 /**
  * Generated class for the UserclaimslistPage page.
