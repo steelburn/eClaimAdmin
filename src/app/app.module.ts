@@ -112,6 +112,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { SettingsPage } from '../pages/settings/settings';
 import { CompanysettingsPage } from '../pages/companysettings/companysettings';
+import { DbmaintenancePage } from '../pages/dbmaintenance/dbmaintenance';
 
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data';
@@ -195,7 +196,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
     PaymentHistoryPage,
     CommonHistorylistPage,
 
-    CompanysettingsPage
+    CompanysettingsPage,
+    DbmaintenancePage
 
 
   ],
@@ -338,7 +340,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
 
 
     SettingsPage,
-    CompanysettingsPage
+    CompanysettingsPage,
+    DbmaintenancePage
 
   ],
   providers: [
