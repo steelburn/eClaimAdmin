@@ -32,6 +32,7 @@ import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
 import { SettingsPage } from '../settings/settings';
 import { CompanysettingsPage } from '../companysettings/companysettings';
+import { DbmaintenancePage } from '../dbmaintenance/dbmaintenance';
 
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -370,6 +371,10 @@ export class SetupPage {
 
   goToCompanySettings(){
     this.navCtrl.push(CompanysettingsPage);
+  }
+
+  goToDBMaintenance(){
+    this.navCtrl.push(DbmaintenancePage);
   }
 
 }
