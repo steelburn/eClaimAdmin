@@ -20,6 +20,8 @@ import { GiftClaimViewPage } from '../gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../miscellaneous-claim-view/miscellaneous-claim-view';
 import { ClaimtasklistPage } from '../claimtasklist/claimtasklist';
 import { LoginPage } from '../login/login';
+import * as Settings from '../../dbSettings/companySettings'
+
 
 @IonicPage()
 @Component({
@@ -95,10 +97,10 @@ export class ClaimapprovertasklistPage {
       // }
       // else { this.BindData(); }
     }
-   
+
   }
   BindData(ddlEmployee?: string, ddlClaimTypes?: string) {
-  
+
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
@@ -110,6 +112,13 @@ export class ClaimapprovertasklistPage {
         this.claimrequestdetails.forEach(element => {
           element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
 
+          if (this.FinanceLogin) {
+            // For Status changing
+            if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+              element.STATUS = Settings.StatusConstants.APPROVED
+            else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+              element.STATUS = Settings.StatusConstants.VALIDATED
+          }
           if (element.STATUS === 'Rejected') {
             element.STAGE_GUID = null;
           }
@@ -136,7 +145,7 @@ export class ClaimapprovertasklistPage {
   }
 
   FindTotalAmount() {
-    this.totalClaimAmount=0;
+    this.totalClaimAmount = 0;
     this.claimrequestdetails.forEach(element => {
       this.totalClaimAmount = this.totalClaimAmount + element.CLAIM_AMOUNT;
     });
