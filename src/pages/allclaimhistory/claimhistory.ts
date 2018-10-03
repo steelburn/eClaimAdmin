@@ -12,6 +12,8 @@ import { BaseHttpService } from '../../services/base-http';
 import { AllClaimListPage } from '../all-claim-list/all-claim-list';
 
 import { ExcelService } from '../../providers/excel.service';
+import * as Settings from '../../dbSettings/companySettings'
+
 
 // import { Observable } from 'rxjs/Observable';
 // import { Subject }    from 'rxjs/Subject';

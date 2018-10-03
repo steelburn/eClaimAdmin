@@ -16,6 +16,7 @@ import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
+import * as Settings from '../../dbSettings/companySettings';
 
 @IonicPage()
 @Component({
@@ -156,10 +157,18 @@ export class PrintclaimPage {
 
   constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
     // Lakshman
-    this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
-    this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
-    this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
-    this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
+    this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    // this.min_claim_amount =null;
+    if(this.min_claim_amount==null){
+     this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+   }
+   this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
+   this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // this.max_claim_amount =null;
+    if(this.max_claim_amount==null){
+     this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+   }
     let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
     this.profileMng.CheckSessionOut();
@@ -418,6 +427,7 @@ export class PrintclaimPage {
     let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Printing_Amount_ngModel = null;
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " "); 
       return;
     }
     else {
@@ -444,7 +454,10 @@ export class PrintclaimPage {
             this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-            this.claimRequestData["resource"][0].STATUS = 'Pending'
+            if (this.rejectedLevel === 3)
+              this.claimRequestData["resource"][0].STATUS = 'Approved';
+            else
+              this.claimRequestData["resource"][0].STATUS = 'Pending';
           }
 
           //this.claimRequestData[0].claim_amount= formValues.claim_amount;

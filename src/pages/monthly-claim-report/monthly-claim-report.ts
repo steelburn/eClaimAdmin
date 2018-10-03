@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 
 import { ExcelService } from '../../providers/excel.service';
+import * as Settings from '../../dbSettings/companySettings'
 
 
 /**
@@ -147,6 +148,11 @@ export class MonthlyClaimReportPage {
         if (this.claimList.length !== 0) {
           this.claimList.forEach(element => {
             this.grandTotal = this.grandTotal + element.AMOUNT;
+
+          //   if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+          //   element.STATUS = Settings.StatusConstants.APPROVED
+          // else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+          //   element.STATUS = Settings.StatusConstants.VALIDATED
           });
         }
         else    { 

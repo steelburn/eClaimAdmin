@@ -19,6 +19,7 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { DecimalPipe } from '@angular/common';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
+import * as Settings from '../../dbSettings/companySettings';
 
 @IonicPage()
 @Component({
@@ -105,8 +106,16 @@ export class TravelclaimPage {
     // Lakshman
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
     this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    // this.min_claim_amount =null;
+    if(this.min_claim_amount==null){
+      this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+    }
     this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
     this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // this.max_claim_amount =null;
+    if(this.max_claim_amount==null){
+      this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+    }
     let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
 
@@ -123,7 +132,7 @@ export class TravelclaimPage {
       this.api.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
         this.claimRequestData = res['resource'];
         if (this.claimRequestData.length > 0) {
-        this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+          this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
           this.profileMng.initiateLevels(this.rejectedLevel);
         }
         else
@@ -327,7 +336,10 @@ export class TravelclaimPage {
     this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.paymentTypes = data["resource"];
-        this.PayType = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
+      //  this.PayType = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
+        let paymentType: any = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0];
+        this.PayType = paymentType.PAYMENT_TYPE_GUID;
+        this.onPaySelect(paymentType);
       }
       );
   }
@@ -885,7 +897,10 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
               this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
               this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-              this.claimRequestData["resource"][0].STATUS = 'Pending'
+              if (this.rejectedLevel === 3)
+                this.claimRequestData["resource"][0].STATUS = 'Approved';
+              else
+                this.claimRequestData["resource"][0].STATUS = 'Pending';
             }
             else {
               this.claimRequestData["resource"][0].STATUS = 'Pending';

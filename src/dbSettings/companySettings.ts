@@ -55,3 +55,17 @@ export const ClaimPayTypeGuidConstants = {
     CASH: 'f74c3366-0437-51ec-91cc-d3fad23b061c',
     TOUCH_GO: 'cda1dcfb-170a-1f93-a6c6-6ba96879452f'
 }
+
+
+export const ProfileLevels = {
+    ONE: '1',
+    TWO: '2',
+    THREE: '3',
+    ZERO: '0',
+    MINUSONE:'-1'
+}
+export const ClaimAmountConstants = {
+    MIN_CLAIM_AMOUNT: 0,
+    MAX_CLAIM_AMOUNT: 9999
+
+}
