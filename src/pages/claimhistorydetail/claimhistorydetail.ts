@@ -15,6 +15,7 @@ import { OvertimeClaimViewPage } from '../overtime-claim-view/overtime-claim-vie
 import { PrintClaimViewPage } from '../print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../miscellaneous-claim-view/miscellaneous-claim-view';
+import * as Settings from '../../dbSettings/companySettings'
 
 
 /**
@@ -42,7 +43,7 @@ export class ClaimhistorydetailPage {
   FinanceLogin: boolean = false;
   loginUserRole: string;
   public page: number = 1;
-  btnSearch:boolean = false;
+  btnSearch: boolean = false;
   currency = localStorage.getItem("cs_default_currency")
 
 
@@ -115,27 +116,33 @@ export class ClaimhistorydetailPage {
       .subscribe(data => {
         this.claimhistorydetails = data["resource"];
         let key: any;
-        
-          this.claimhistorydetails.forEach(element => {
-            element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
-            if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
-            if (element.STATUS.toString() === "Approved" && element.PROFILE_LEVEL.toString() === "3") { element.STATUS = "Paid"; }
-            }
-            if (element.REQ_STATUS === 'Rejected') {
-              element.STAGE_GUID = null;
-            }
-            else {
-              key = element.PROFILE_LEVEL_MAIN;
-            }
-  
-            switch (key) {
-              case 1: element.STAGE_GUID = 'Superior'; break;
-              case 2: element.STAGE_GUID = 'Finance Executive'; break;
-              case 3:
-              case -1: element.STAGE_GUID = 'Finance & Admin'; break;
-            }
 
-          });
+        this.claimhistorydetails.forEach(element => {
+          element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+          // if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
+          //   if (element.STATUS.toString() === "Approved" && element.PROFILE_LEVEL.toString() === "3") { element.STATUS = "Paid"; }
+          // }
+          if (this.FinanceLogin) {
+            if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.APPROVED)
+              element.STATUS = Settings.StatusConstants.VALIDATED
+            else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+              element.STATUS = Settings.StatusConstants.PAID
+          }
+          if (element.REQ_STATUS === 'Rejected') {
+            element.STAGE_GUID = null;
+          }
+          else {
+            key = element.PROFILE_LEVEL_MAIN;
+          }
+
+          switch (key) {
+            case 1: element.STAGE_GUID = 'Superior'; break;
+            case 2: element.STAGE_GUID = 'Finance Executive'; break;
+            case 3:
+            case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+          }
+
+        });
         this.claimhistorydetails1 = this.claimhistorydetails;
         if (this.claimhistorydetails.length != 0) {
           if (ddlDept.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.DEPARTMENT_GUID.toString() === ddlDept.toString()) }
@@ -148,7 +155,7 @@ export class ClaimhistorydetailPage {
         // for (var item in data["resource"]) {
         //   this.ExcelData.push({ Name: data["resource"][item]["FULLNAME"], Department: data["resource"][item]["DEPARTMENT"], Month: data["resource"][item]["MONTH"], ClaimType: data["resource"][item]["CLAIM_TYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
         // }
-        this.btnSearch=true;
+        this.btnSearch = true;
       });
   }
   onSearchInput() {
@@ -173,9 +180,9 @@ export class ClaimhistorydetailPage {
         if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
         return (
           (dept > -1)
-         || (user > -1)
-         || (month > -1)
-         || (claimtype > -1)
+          || (user > -1)
+          || (month > -1)
+          || (claimtype > -1)
           || (date > -1)
           || (status > -1)
           || (amount > -1)
@@ -232,7 +239,7 @@ export class ClaimhistorydetailPage {
   }
 
   SearchClaimsData() {
-    this.btnSearch=false;
+    this.btnSearch = false;
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       if (this.role == "Payment") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -280,7 +287,7 @@ export class ClaimhistorydetailPage {
   }
 
 
-  
+
   claimRequestGUID: string; level: string; designation: string;
 
   ClaimNavigation(designation: string, claimRequestGUID: string, level: string, claimType: any, navType: number) {
@@ -290,8 +297,8 @@ export class ClaimhistorydetailPage {
     switch (claimType) {
       case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': this.pushPage(GiftClaimViewPage); break;
       case '37067b3d-1bf4-33a3-2b60-3ca40baf589a': this.pushPage(OvertimeClaimViewPage); break;
-      case '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86': this.pushPage(MiscellaneousClaimViewPage);  break;
-      case '58c59b56-289e-31a2-f708-138e81a9c823': this.pushPage(TravelClaimViewPage);  break;
+      case '84b3cee2-9f9d-ccb9-89a1-1e70cef19f86': this.pushPage(MiscellaneousClaimViewPage); break;
+      case '58c59b56-289e-31a2-f708-138e81a9c823': this.pushPage(TravelClaimViewPage); break;
       case 'd9567482-033a-6d92-3246-f33043155746': this.pushPage(PrintClaimViewPage); break;
       case 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1': this.pushPage(EntertainmentClaimViewPage); break;
     }
