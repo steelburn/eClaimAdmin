@@ -93,9 +93,9 @@
     </ion-item>
 
     <div class="btn" *ngIf="isApprover">
-        <button ion-button outline item-start (click)="isAccepted('accepted')">
+        <button ion-button outline item-start (click)="isAccepted('accepted')" [disabled]="isActionTaken">
             {{ "ACCEPT_BUTTON" | translate }} </button>
-        <button ion-button outline item-start (click)="isAccepted('rejected')">
+        <button ion-button outline item-start (click)="isAccepted('rejected')" [disabled]="isActionTaken">
             {{ "REJECT_BUTTON" | translate }} </button>
 
     </div>
