@@ -52,7 +52,7 @@
         <span *ngIf="FinanceLogin">
         </span> -->
         <span item-end>
-            <button ion-button (click)="approveClaims()">{{buttonText}}</button>
+            <button ion-button (click)="approveClaims()" [disabled]="!approveButtonEnabled">{{buttonText}}</button>
         </span>
     </ion-item>
 
