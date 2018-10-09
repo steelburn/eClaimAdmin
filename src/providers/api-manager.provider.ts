@@ -13,6 +13,8 @@ export class ApiManagerProvider {
   emailUrl: string = 'http://api.zen.com.my/api/v2/zenmail?api_key=' + constants.DREAMFACTORY_API_KEY;
   claimDetailsData: any[];
   result: any[];
+  userClaimCutoffDate: number; 
+  approverCutoffDate: number;
 
   constructor(public numberPipe: DecimalPipe, public http: Http, public toastCtrl: ToastController, public datepipe: DatePipe) { }
 
@@ -748,11 +750,11 @@ export class ApiManagerProvider {
   //   return false;
   // }
 
-  userClaimCutoffDate: number = parseInt(localStorage.getItem("cs_claim_cutOff_date"));
-  approverCutoffDate: number = parseInt(localStorage.getItem("cs_approval_cutoff_date"));
 
   isClaimExpired(travelDate: any, isApprover: boolean) {
- 
+    this.userClaimCutoffDate = parseInt(localStorage.getItem("cs_claim_cutoff_date"));
+    this.approverCutoffDate =  parseInt(localStorage.getItem("cs_approval_cutoff_date"));
+
     let claimExpiry: any;
     if (isApprover) {
       claimExpiry = this.approverCutoffDate;
