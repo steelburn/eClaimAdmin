@@ -166,7 +166,7 @@ export class ProfileManagerProvider {
         if (this.level === '0' || this.isRemarksAccepted === false) {
             this.mainClaimReq.STATUS = 'Rejected';
             this.mainClaimReq.ASSIGNED_TO = this.previousAssignedTo;
-            this.mainClaimReq.STAGE = this.previousStage;
+            this.mainClaimReq.PREVIOUS_LEVEL = level;
             this.mainClaimReq.PROFILE_LEVEL = 0;
         }
         if (this.checkMultipleLength === 1)
