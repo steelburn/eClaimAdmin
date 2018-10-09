@@ -237,7 +237,9 @@ export class ClaimapprovertasklistPage {
   }
 
   count: number = 0;
+  approveButtonEnabled: boolean = true;
   approveClaims() {
+    this.approveButtonEnabled = false;
     //console.table(this.claimrequestdetails);
     this.count = 0;
     //debugger;
@@ -302,7 +304,8 @@ export class ClaimapprovertasklistPage {
 
     }
     else {
-      alert("Please select the claim(s) which you want to approve.")
+      alert("Please select the claim(s) which you want to approve.");
+      this.approveButtonEnabled = true;
     }
   }
 
