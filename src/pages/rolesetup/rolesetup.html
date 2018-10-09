@@ -9,7 +9,9 @@
   <ion-navbar color="primary200">
     <ion-title>Role Setup</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
@@ -85,7 +87,7 @@
   <!-- add Roleform start-->
   <div class="blackcontainer" *ngIf="AddRoleClicked">
   </div>
-  <div class="popup1" padding *ngIf="AddRoleClicked">
+  <div class="popup4" padding *ngIf="AddRoleClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
@@ -150,7 +152,7 @@
   <!-- edit Role form start-->
   <div class="blackcontainer" *ngIf="EditRoleClicked">
   </div>
-  <div class="popup" padding *ngIf="EditRoleClicked">
+  <div class="popup4" padding *ngIf="EditRoleClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
         <div class="icHeaderText">UPDATE ROLE</div>

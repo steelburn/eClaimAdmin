@@ -134,6 +134,7 @@ export class RolemodulesetupPage {
 
           Previous_ROLE_GUID = data.resource[itemA]["ROLE_GUID"];
         }
+        this.stores = this.Role_Module;
         this.loading.dismissAll();
       });
   }
@@ -454,5 +455,36 @@ export class RolemodulesetupPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RolemodulesetupPage');
+  }
+
+  stores: any[];
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.Role_Module = this.stores;
+      return;
+    }
+    this.Role_Module = this.filter({
+      ROLE_NAME: val,
+      MODULE_NAME: val
+    });
+  }
+
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
   }
 }
