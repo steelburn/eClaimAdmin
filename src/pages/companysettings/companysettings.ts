@@ -72,6 +72,7 @@ export class CompanysettingsPage {
         avatar: null,
         EmailSchedule: [null, Validators.required],
         EmailTime: [null, Validators.required],
+        Version: [null, Validators.required]
       });
     }
   }
@@ -105,7 +106,7 @@ export class CompanysettingsPage {
   DateFormat_ngModel: any; Currency_ngModel: any; EmailLogo_ngModel: any; Country_ngModel: any;
   MaxClaimAmt_ngModel: any; MinClaimAmt_ngModel: any; ClaimCuttoffDate_ngModel: any; YearStartMonth_ngModel: any;
   YearEndMonth_ngModel: any; ApprovalCutoffDate_ngModel: any; PaymentType_ngModel: any; Language_ngModel: any;
-  Email_Schedule_ngModel: any; Email_Time_ngModel: any;
+  Email_Schedule_ngModel: any; Email_Time_ngModel: any; Version_ngModel: any;
 
   BindControls() {
     this.Add_Form = true;
@@ -144,11 +145,12 @@ export class CompanysettingsPage {
             this.PaymentType_ngModel = curKeyNameValue_1;
           }
           if (this.FormControls[item]["KEY_NAME"] == "default_language") { this.Language_ngModel = this.FormControls[item]["KEY_VALUE"]; }
-          if (this.FormControls[item]["KEY_NAME"] == "email_schedule") { 
+          if (this.FormControls[item]["KEY_NAME"] == "email_schedule") {
             // this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"]; 
-            this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"].split(",");            
+            this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"].split(",");
           }
           if (this.FormControls[item]["KEY_NAME"] == "email_time") { this.Email_Time_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "version") { this.Version_ngModel = this.FormControls[item]["KEY_VALUE"]; }
           this.Add_Form = false;
         }
       });
@@ -199,6 +201,7 @@ export class CompanysettingsPage {
       // this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_schedule", KEY_VALUE: formValues.EmailSchedule.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_schedule", KEY_VALUE: scheduler_val });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_time", KEY_VALUE: formValues.EmailTime.trim() });
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "version", KEY_VALUE: formValues.version.trim() });
 
       this.Settings_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
       this.Settings_Entry.CREATION_TS = new Date().toISOString();
@@ -206,6 +209,7 @@ export class CompanysettingsPage {
       this.Settings_Entry.UPDATE_USER_GUID = null;
     }
     else {
+      // this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "version", KEY_VALUE: formValues.Version.trim() });
       this.KeyNameValue.forEach(element => {
         if (element.KEY_NAME == "date_format") { element.KEY_VALUE = formValues.DateFormat.trim(); }
         if (element.KEY_NAME == "default_currency") { element.KEY_VALUE = formValues.Currency.trim(); }
@@ -262,6 +266,7 @@ export class CompanysettingsPage {
           // element.KEY_VALUE = formValues.EmailSchedule.trim(); 
         }
         if (element.KEY_NAME == "email_time") { element.KEY_VALUE = formValues.EmailTime.trim(); }
+        if (element.KEY_NAME == "version") { element.KEY_VALUE = formValues.Version.trim(); }
 
         this.Settings_Entry.CREATION_USER_GUID = this.FormControls[0]["CREATION_USER_GUID"];
         this.Settings_Entry.CREATION_TS = this.FormControls[0]["CREATION_TS"];
@@ -299,6 +304,15 @@ export class CompanysettingsPage {
               this.blnDataUpdate = true; this.blnDataInsert = false;
             }
           });
+
+        // if (this.Settings_Entry.KEY_NAME == "version") {
+        //   this.settingservice.save(this.Settings_Entry, "permission_keys")
+        //     .subscribe((response) => {
+        //       if (response.status == 200) {
+        //         this.blnDataInsert = true; this.blnDataUpdate = false;
+        //       }
+        //     });
+        // }
       }
     });
     // if (this.blnDataInsert == true) {

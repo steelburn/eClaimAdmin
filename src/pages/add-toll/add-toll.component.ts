@@ -103,10 +103,10 @@ export class AddTollPage {
         alert('Please select meal allowance.')
         return;
       }
-      if (this.Description === undefined) {
-        alert('Please enter valid description.')
-        return;
-      }
+      // if (this.Description === undefined) {
+      //   alert('Please enter valid description.')
+      //   return;
+      // }
     }
     else {
       if (this.claimAmount === undefined || this.claimAmount <= 0 || this.claimAmount === null) {

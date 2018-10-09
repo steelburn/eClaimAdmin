@@ -27,6 +27,7 @@ export class TravelClaimViewPage {
   level: any;
   approverDesignation: any;
   // totalAmount: number = 0;
+  isActionTaken: boolean = false;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
     this.isApprover = this.navParams.get("isApprover");
@@ -39,6 +40,7 @@ export class TravelClaimViewPage {
 
   travelDate: any;
   isAccepted(val: string) {
+    this.isActionTaken = true;
     this.isRemarksAccepted = val === 'accepted' ? true : false;
     if (this.claimRequestGUID !== undefined || this.claimRequestGUID !== null) {
       this.api.getApiModel('claim_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS="Rejected")')
@@ -48,6 +50,7 @@ export class TravelClaimViewPage {
           if (!this.isRemarksAccepted) {
             if (this.Remarks_NgModel === undefined) {
               alert('Please enter valid remarks');
+              this.isActionTaken = false;
               return;
             }
           }
