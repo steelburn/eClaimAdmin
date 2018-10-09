@@ -9,6 +9,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { App } from 'ionic-angular';
 import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist';
 import moment from 'moment';
+import { SwitchView } from '@angular/common/src/directives/ng_switch';
 
 
 
@@ -184,6 +185,16 @@ export class ProfileManagerProvider {
         //If approver approve or reject applier will get the mail notification--------------
         //Commented By bijay on 24/09/2018 as per scheduler implemented
         // this.api.EmailNextApprover_New(this.mainClaimReq.CLAIM_REQUEST_GUID, claimRef.REMARKS, this.mainClaimReq.STATUS);
+
+        //If approver reject applier will get the mail notification Added By bijay on 09/10/2018--------------
+        if (this.level === '0' || this.isRemarksAccepted === false) {
+            let RejectedByStatus: string = "";
+            if (this.level == '2') { RejectedByStatus = "Superior Rejected."; }
+            if (this.level == '3') { RejectedByStatus = "Finance Rejected."; }
+            if (this.level == '4') { RejectedByStatus = "Payment Rejected."; }
+
+            this.api.EmailReject(this.mainClaimReq.CLAIM_REQUEST_GUID, claimRef.REMARKS, this.mainClaimReq.STATUS, RejectedByStatus);
+        }
     }
 
     // SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any, level: any) {

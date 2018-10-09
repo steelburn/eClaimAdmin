@@ -10,6 +10,10 @@
     <ion-title>Page Setup</ion-title>
   </ion-navbar>
 
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>
+
 </ion-header>
 
 
@@ -23,9 +27,10 @@
       <table class="Tabler">
         <tr class="linedsg TColor">
           <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
-          <th class="lgl1">Page Name</th>
+          <th class="lgl1">Name</th>
           <th class="lgl1">Description</th>
           <th class="lgl1">URL</th>
+          <th class="lgl1">Application Page Name</th>
           <th class="lgl1 tblBrRight" style="width:105px">Action</th>
 
         </tr>
@@ -35,6 +40,7 @@
           <td class="lgl1">{{page.NAME}}</td>
           <td class="lgl1">{{page.DESCRIPTION}}</td>
           <td class="lgl1">{{page.URL}}</td>
+          <td class="lgl1">{{page.CODE_PAGE_NAME}}</td>
 
           <td class="lgl1 fColor">
             <button ion-button item-end (click)="EditClick(page.PAGE_GUID)"><ion-icon name="md-create"></ion-icon></button>
@@ -53,7 +59,7 @@
   <!-- add Pageform start-->
   <div class="blackcontainer" *ngIf="AddPageClicked">
   </div>
-  <div class="popup" padding *ngIf="AddPageClicked">
+  <div class="popup4" padding *ngIf="AddPageClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
@@ -80,6 +86,11 @@
             <ion-label stacked>{{"URL"}}</ion-label>
             <ion-input type="text" formControlName="URL" [(ngModel)]="URL_ngModel_Add" placeholder="{{'Please fill in the URL of the page'}}"></ion-input>
           </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{"Application Page"}}</ion-label>
+            <ion-input type="text" formControlName="APPLICATION_PAGE" [(ngModel)]="APPLICATION_PAGE_ngModel_Add" placeholder="{{'Please fill in the application page'}}"></ion-input>
+          </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Pageform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
           </div>
@@ -95,7 +106,7 @@
    <!-- Edit page form start-->
    <div class="blackcontainer" *ngIf="EditPageClicked">
   </div>
-  <div class="popup" padding *ngIf="EditPageClicked">
+  <div class="popup4" padding *ngIf="EditPageClicked">
 
       <ion-card>
           <ion-card-header class="icTitle headerColor-white ">
@@ -120,6 +131,11 @@
                   <ion-item>
                       <ion-label stacked>{{"URL"}}</ion-label>
                       <ion-input type="text" formControlName="URL" [(ngModel)]="URL_ngModel_Edit" placeholder="{{'Please fill in the URL of the page'}}"></ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label stacked>{{"Application Page"}}</ion-label>
+                    <ion-input type="text" formControlName="APPLICATION_PAGE" [(ngModel)]="APPLICATION_PAGE_ngModel_Edit" placeholder="{{'Please fill in the application page'}}"></ion-input>
                   </ion-item>
 
                   <div class="btn">
