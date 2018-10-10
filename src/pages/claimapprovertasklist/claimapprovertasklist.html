@@ -72,7 +72,7 @@
                     <th style="width:120px; text-align: left;">Date</th>
                     <th style="width:95px;text-align: left;">Status</th>
                     <th style="width:150px;text-align: left;">Stage</th>
-                    <th style="width:112px;text-align: right;">Amount(RM)</th>
+                    <th style="width:112px;text-align: right;">Amount({{currency }})</th>
                     <th class="tblBrRight" style="width:68px">Action</th>
 
                 </tr>
@@ -98,7 +98,7 @@
                     </td>
                 </tr>
                 <tr class="col7">
-                    <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount(RM) : {{totalClaimAmount | number:'1.2-2'}}</td>
+                    <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount({{currency }}) : {{totalClaimAmount | number:'1.2-2'}}</td>
                 </tr>
             </table>
             <!-- <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
