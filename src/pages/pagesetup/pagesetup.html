@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="primary200">
-    <ion-title>Page Setup</ion-title>
+    <ion-title>{{ "PAGE_SETUP" | translate }}</ion-title>
   </ion-navbar>
 
   <ion-toolbar no-border-top color="primary200">
@@ -64,7 +64,7 @@
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">REGISTER NEW PAGE</div>
+        <div class="icHeaderText">{{ "REGISTER_NEW_PAGE" | translate }}</div>
         <button class="btnR" (click)="ClosePageClick()">
           <ion-icon name="md-close"></ion-icon> 
         </button>
@@ -73,17 +73,17 @@
 
           <form [formGroup]="Pageform">
           <ion-item>
-            <ion-label stacked>{{"Name"}}</ion-label>
+            <ion-label stacked>{{ "NAME" | translate }}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the page'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"Description"}}</ion-label>
+            <ion-label stacked>{{ "DESCRIPTION" | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"URL"}}</ion-label>
+            <ion-label stacked>{{ "URL" | translate }}{{"URL"}}</ion-label>
             <ion-input type="text" formControlName="URL" [(ngModel)]="URL_ngModel_Add" placeholder="{{'Please fill in the URL of the page'}}"></ion-input>
           </ion-item>
 

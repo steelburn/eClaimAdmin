@@ -4,9 +4,9 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title *ngIf="FinanceLogin && role=='Payment'">Payment Details</ion-title>
-        <ion-title *ngIf="FinanceLogin && role=='Validation'">Validation Details</ion-title>
-        <ion-title *ngIf="!FinanceLogin">Superior Task Details</ion-title>
+        <ion-title *ngIf="FinanceLogin && role=='Payment'">{{ "PAYMENT_DETAILS" | translate }}</ion-title>
+        <ion-title *ngIf="FinanceLogin && role=='Validation'">{{ "VALIDATION_DETAILS" | translate }}</ion-title>
+        <ion-title *ngIf="!FinanceLogin">{{ "SUPERIOR_TASK_DETAILS" | translate }}</ion-title>
     </ion-navbar>
     <ion-toolbar no-border-top color="primary200">
         <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)"></ion-searchbar>
@@ -16,21 +16,21 @@
 <ion-content padding>
 
     <ion-item class="fuha">
-        <ion-label>Claim Type:</ion-label>
+        <ion-label>{{ "CLAIM_TYPE" | translate }}</ion-label>
         <ion-select interface="popover" [(ngModel)]="ddlClaim" #ddlClaimTypes>
             <ion-option [value]="All" [selected]="true">All</ion-option>
             <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item class="fuha" *ngIf="!FinanceLogin">
-        <ion-label>Year:</ion-label>
+        <ion-label>{{ "YEAR" | translate }}</ion-label>
         <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
             <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item class="fuha1" *ngIf="!FinanceLogin">
-        <ion-label>User Name :</ion-label>
+        <ion-label>{{ "CLAIM_USER_NAME" | translate }}</ion-label>
         <ion-select interface="popover" [(ngModel)]="ddlEmp" #ddlEmployee>
             <ion-option [value]="All" [selected]="true">All</ion-option>
             <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
@@ -40,11 +40,11 @@
     <ion-item>
 
         <span item-end *ngIf="FinanceLogin; else loggedOut">
-            <button ion-button [disabled]="!btnSearch" (click)="SearchClaimsData()">Search</button>
+            <button ion-button [disabled]="!btnSearch" (click)="SearchClaimsData()">{{ "SEARCH" | translate }}</button>
         </span>
 
         <ng-template #loggedOut item-end>
-            <button ion-button [disabled]="!btnSearch" (click)="SearchClaimsData()">Search</button>
+            <button ion-button [disabled]="!btnSearch" (click)="SearchClaimsData()">{{ "SEARCH" | translate }}</button>
         </ng-template>
         <!-- <span *ngIf="!FinanceLogin">
            
@@ -53,6 +53,7 @@
         </span> -->
         <span item-end>
             <button ion-button (click)="approveClaims()" [disabled]="!approveButtonEnabled">{{buttonText}}</button>
+            <button ion-button (click)="approveClaims()">{{ "BUTTON_TEXT" | translate }}</button>
         </span>
     </ion-item>
 

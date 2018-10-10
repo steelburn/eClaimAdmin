@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="primary200">
-    <ion-title>Module Setup</ion-title>
+    <ion-title>{{ "MODULE_SETUP" | translate }}</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top color="primary200">
     <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
@@ -66,7 +66,7 @@
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">REGISTER NEW MODULE</div>
+        <div class="icHeaderText">{{ "REGISTER_MODULE" | translate }}</div>
         <button class="btnR" (click)="CloseModuleClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
@@ -74,17 +74,17 @@
       <ion-list>
         <form [formGroup]="Moduleform">
           <ion-item>
-            <ion-label stacked>{{"Module Name"}}</ion-label>
+            <ion-label stacked>{{ "MODULE_NAME" | translate }}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the module'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"Description"}}</ion-label>
+            <ion-label stacked>{{ "DESCRIPTION" | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"Page Name"}}</ion-label>
+            <ion-label stacked>{{ "PAGE_NAME" | translate }}</ion-label>
             <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Add" placeholder="{{'Please fill the Page'}}"
               multiple="true">
               <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
@@ -92,7 +92,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{ 'Menu Header' | translate }}</ion-label>
+            <ion-label stacked>{{ "MENU_HEADER" | translate }}</ion-label>
             <ion-select formControlName="MENU_HEADER" [(ngModel)]="Menu_Header_ngModel_Add" placeholder="{{'Please select menu header'}}" (ionChange)="DisplaySlNo()" interface="popover">
               <ion-option [value]="Dashboard">Dashboard</ion-option>
               <ion-option [value]="Tasks">Tasks</ion-option>
@@ -104,7 +104,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{ 'Menu Icon' | translate }}</ion-label>
+            <ion-label stacked>{{ "MENU_ICON" | translate }}</ion-label>
             <ion-select formControlName="MENU_ICON" [(ngModel)]="Menu_Icon_ngModel_Add" placeholder="{{'Please select menu icon'}}" interface="popover">
               <ion-option [value]="albums">albums</ion-option>
               <ion-option [value]="apps">apps</ion-option>
@@ -158,7 +158,7 @@
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">UPDATE MODULE</div>
+        <div class="icHeaderText">{{ "UPDATE_MODULE" | translate }}</div>
         <button class="btnR" (click)="CloseModuleClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
@@ -166,17 +166,17 @@
       <ion-list>
         <form [formGroup]="Moduleform">
           <ion-item>
-            <ion-label stacked>{{"Module Name"}}</ion-label>
+            <ion-label stacked>{{ "MODULE_NAME" | translate }}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" placeholder="{{'Please fill in the name of the module'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"Description"}}</ion-label>
+            <ion-label stacked>{{ "DESCRIPTION" | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Edit" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"Page Name"}}</ion-label>
+            <ion-label stacked>{{ "PAGE_NAME" | translate }}</ion-label>
             <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Edit" placeholder="{{'Please fill the Page'}}"
               multiple="true">
               <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
@@ -184,7 +184,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{ 'Menu Header' | translate }}</ion-label>
+            <ion-label stacked>{{ "MENU_HEADER" | translate }}</ion-label>
             <ion-select formControlName="MENU_HEADER" [(ngModel)]="Menu_Header_ngModel_Edit" placeholder="{{'Please select menu header'}}" (ionChange)="DisplaySlNo()" interface="popover">
               <ion-option [value]="Dashboard">Dashboard</ion-option>
               <ion-option [value]="Tasks">Tasks</ion-option>
@@ -196,7 +196,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{ 'Menu Icon' | translate }}</ion-label>
+            <ion-label stacked>{{ "MENU_ICON" | translate }}</ion-label>
             <ion-select formControlName="MENU_ICON" [(ngModel)]="Menu_Icon_ngModel_Edit" placeholder="{{'Please select menu icon'}}" interface="popover">
               <ion-option [value]="albums">albums</ion-option>
               <ion-option [value]="apps">apps</ion-option>
