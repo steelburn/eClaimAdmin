@@ -72,7 +72,7 @@ export class TravelclaimPage {
   currentItems: any;
   public MainClaimSaved: boolean = false;
   claimFor: string = 'seg_project';
-  currency = localStorage.getItem("cs_default_currency");
+  //currency = localStorage.getItem("cs_default_currency");
 
   DestinationPlaceID: string;
   OriginPlaceID: string;
