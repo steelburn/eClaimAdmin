@@ -52,8 +52,9 @@ export class UserclaimslistPage {
   baseResourceUrl: string;
   baseResourceUrl1: string;
   searchboxValue: string;
-  Pending: any; Rejected: any; Approved: any; Paid: any;
+  Pending: any; Rejected: any; Approved: any; Paid: any;Validated:any;
   public page: number = 1;
+  btnSearch: boolean = false;
   constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     //  this.claimrefguid=navParams.get("claimRefGuid");
@@ -71,13 +72,14 @@ export class UserclaimslistPage {
     this.Rejected = navParams.get("Rejected");
     this.Pending = navParams.get("Pending");
     this.Approved = navParams.get("Approved");
+    this.Validated = navParams.get("Validated");
     this.Paid = navParams.get("Paid");
 
-    this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid;
+    this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid || this.Validated;
     if (this.searchboxValue != undefined) {
       this.onSearchInput();
     }
-    else { this.BindData('All','All','All'); }
+    else { this.BindData('All', 'All', 'All'); }
 
     this.getuserDetails();
 
@@ -95,6 +97,11 @@ export class UserclaimslistPage {
         this.userClaimhistorydetails1.forEach(element => {
           element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
 
+          // For Status changing
+          if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO)
+            element.STATUS = Settings.StatusConstants.APPROVED
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE)
+            element.STATUS = Settings.StatusConstants.VALIDATED
           // if (element.STATUS === 'Rejected') {
           if (element.STATUS === Settings.StatusConstants.REJECTED) {
             element.STAGE_GUID = null;
@@ -118,13 +125,13 @@ export class UserclaimslistPage {
           if (ddlmonth.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
           if (ddlStatus.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
           if (ddlClaimTypes.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
-    
+
         }
         // for (var item in data["resource"]) {
         //   this.ExcelData.push({ ClaimType: data["resource"][item]["CLAIMTYPE"], Date: data["resource"][item]["TRAVEL_DATE"], Status: data["resource"][item]["STATUS"], Stage: data["resource"][item]["STAGE"], Amount: data["resource"][item]["CLAIM_AMOUNT"] });
         // }
+        this.btnSearch = true;
       });
-
   }
 
   onSearchInput() {
@@ -145,6 +152,11 @@ export class UserclaimslistPage {
           this.userClaimhistorydetails1 = data["resource"];
           //this.userClaimhistorydetails1 = this.userClaimhistorydetails;
           this.userClaimhistorydetails1.forEach(element => {
+            if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+            element.STATUS = Settings.StatusConstants.APPROVED
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+            element.STATUS = Settings.StatusConstants.VALIDATED
+              
             switch (element.PROFILE_LEVEL) {
               // case 1: element.STAGE_GUID = 'Superior'; break;
               case 1: element.STAGE_GUID = Settings.StageConstants.SUPERIOR; break;
@@ -200,9 +212,11 @@ export class UserclaimslistPage {
       //     || (amount > -1)
       //   );
       // })
+
     }
     else {
       this.userClaimhistorydetails = this.userClaimhistorydetails1;
+
     }
   }
 
@@ -287,7 +301,7 @@ export class UserclaimslistPage {
           text: 'Yes',
           handler: () => {
             this.api.deleteApiModel('main_claim_request', claimReqGuid).subscribe(() => {
-              this.BindData('All','All','All');
+              this.BindData('All', 'All', 'All');
               alert('Claim has been deleted successfully.');
             });
           }
@@ -439,8 +453,9 @@ export class UserclaimslistPage {
   }
 
   SearchClaimsData(ddlmonth: string, ddlClaimTypes: string, ddlStatus: string, ddlYear: number) {
+    this.btnSearch = false;
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(YEAR=' + ddlYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.BindData(ddlmonth,ddlClaimTypes,ddlStatus);
+    this.BindData(ddlmonth, ddlClaimTypes, ddlStatus);
   }
 
 }

@@ -16,50 +16,50 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class ClaimReportPrintPage {
 
   @Input() claimsListPrint: any[];
-  @Input() claimsListSummery: any[];
+  @Input() claimsListSummary: any[];
   @Input() empData: any;
   @Input() year: any;
   @Input() month: any;
   @Input() totalClaimAmount: number;
-  @Input() claimsSocSummery: any[];
+  @Input() claimsSocSummary: any[];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-   // this.getSocSummery();
+   // this.getSocSummary();
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClaimReportPrintPage');
   }
   // ionViewWillEnter()
   // {
-  //   this.getSocSummery();
+  //   this.getSocSummary();
   // }
 
   // ngOnInit()
   // {
-  //   this.getSocSummery();
+  //   this.getSocSummary();
   // }
   // ngAfterContentInit()
   // {
-  //   this.getSocSummery();
+  //   this.getSocSummary();
   // }
   // ngAfterViewInit()
   // {
-  //   this.getSocSummery();
+  //   this.getSocSummary();
   // }
-  // getSocSummery() {
+  // getSocSummary() {
   //   if (this.claimsListPrint.length != 0) {
   //     this.claimsListPrint.forEach(element => {
 
-  //       if (element.SOC_GUID != null && this.claimsSocSummery.find(e => e.SOC_GUID == element.SOC_GUID) === undefined) {
-  //         this.claimsSocSummery.push([{ "SOC_GUID": element.SOC_GUID, "SOC": element.SOC, "Total": element.Total }]);
+  //       if (element.SOC_GUID != null && this.claimsSocSummary.find(e => e.SOC_GUID == element.SOC_GUID) === undefined) {
+  //         this.claimsSocSummary.push([{ "SOC_GUID": element.SOC_GUID, "SOC": element.SOC, "Total": element.Total }]);
   //       }
-  //       else if (element.CUSTOMER_GUID != null && this.claimsSocSummery.find(e => e.SOC_GUID == element.CUSTOMER_GUID) === undefined) {
-  //         this.claimsSocSummery.push([{ "SOC_GUID": element.CUSTOMER_GUID, "SOC": element.CUSTOMER_NAME, "Total": element.Total }]);
+  //       else if (element.CUSTOMER_GUID != null && this.claimsSocSummary.find(e => e.SOC_GUID == element.CUSTOMER_GUID) === undefined) {
+  //         this.claimsSocSummary.push([{ "SOC_GUID": element.CUSTOMER_GUID, "SOC": element.CUSTOMER_NAME, "Total": element.Total }]);
   //       }
   //       else {
   //         if (element.SOC_GUID != null)
-  //           this.claimsSocSummery.find(e => e.SOC_GUID === element.SOC_GUID).Total += element.Total;
+  //           this.claimsSocSummary.find(e => e.SOC_GUID === element.SOC_GUID).Total += element.Total;
   //         else
-  //           this.claimsSocSummery.find(e => e.SOC_GUID === element.CUSTOMER_GUID).Total += element.Total;
+  //           this.claimsSocSummary.find(e => e.SOC_GUID === element.CUSTOMER_GUID).Total += element.Total;
   //       }
   //     });
   //   }

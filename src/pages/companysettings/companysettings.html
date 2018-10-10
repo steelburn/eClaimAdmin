@@ -127,10 +127,42 @@
 
             <ion-item class="fuha">
               <ion-label stacked><span style="color:red">*</span>{{ 'Email Schedule' | translate }}</ion-label>
-              <ion-select formControlName="EmailSchedule" [(ngModel)]="Email_Schedule_ngModel" placeholder="{{'Please select'}}">
-                <ion-option [value]="Daily">Daily</ion-option>
+              <ion-select formControlName="EmailSchedule" [(ngModel)]="Email_Schedule_ngModel" placeholder="{{'Please select'}}" multiple="true">
+                <!-- <ion-option [value]="Daily">Daily</ion-option>
                 <ion-option [value]="Weekly">Weekly</ion-option>
-                <ion-option [value]="Monthly">Monthly</ion-option>
+                <ion-option [value]="Monthly">Monthly</ion-option> -->
+
+                <ion-option [value]="1">1</ion-option>
+                <ion-option [value]="2">2</ion-option>
+                <ion-option [value]="3">3</ion-option>
+                <ion-option [value]="4">4</ion-option>
+                <ion-option [value]="5">5</ion-option>
+                <ion-option [value]="6">6</ion-option>
+                <ion-option [value]="7">7</ion-option>
+                <ion-option [value]="8">8</ion-option>
+                <ion-option [value]="9">9</ion-option>
+                <ion-option [value]="10">10</ion-option>
+                <ion-option [value]="11">11</ion-option>
+                <ion-option [value]="12">12</ion-option>
+                <ion-option [value]="13">13</ion-option>
+                <ion-option [value]="14">14</ion-option>
+                <ion-option [value]="15">15</ion-option>
+                <ion-option [value]="16">16</ion-option>
+                <ion-option [value]="17">17</ion-option>
+                <ion-option [value]="18">18</ion-option>
+                <ion-option [value]="19">19</ion-option>
+                <ion-option [value]="20">20</ion-option>
+                <ion-option [value]="21">21</ion-option>
+                <ion-option [value]="22">22</ion-option>
+                <ion-option [value]="23">23</ion-option>
+                <ion-option [value]="24">24</ion-option>
+                <ion-option [value]="25">25</ion-option>
+                <ion-option [value]="26">26</ion-option>
+                <ion-option [value]="27">27</ion-option>
+                <ion-option [value]="28">28</ion-option>
+                <ion-option [value]="29">29</ion-option>
+                <ion-option [value]="30">30</ion-option>
+                <ion-option [value]="31">31</ion-option>
               </ion-select>
             </ion-item>
 
@@ -138,6 +170,11 @@
               <ion-label stacked><span style="color:red">*</span>{{ 'Schedule Time' | translate }}</ion-label>
               <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="EmailTime" [(ngModel)]="Email_Time_ngModel"
                 displayFormat="HH:mm"></ion-datetime>
+            </ion-item>
+
+            <ion-item [hidden]="!isVisibleToSVA">
+              <ion-label stacked><span style="color:red">*</span>{{ 'Version' | translate }}</ion-label>
+              <ion-input type="text" formControlName="Version" [(ngModel)]="Version_ngModel" required placeholder="{{'Please fill version'}}"></ion-input>
             </ion-item>
 
             <div class="btn">

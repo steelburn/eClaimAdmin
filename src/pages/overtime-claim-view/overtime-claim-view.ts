@@ -26,6 +26,7 @@ export class OvertimeClaimViewPage {
   isRemarksAccepted: boolean =false;
   level: any;
   approverDesignation: any;
+  isActionTaken: boolean = false;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {    
     this.isApprover = this.navParams.get("isApprover");
@@ -36,23 +37,33 @@ export class OvertimeClaimViewPage {
     this.LoadMainClaim();
   }  
 
+  travelDate: any;
   isAccepted(val: string) {
+    this.isActionTaken = true;
     this.isRemarksAccepted = val === 'accepted' ? true : false;
-    if (!this.isRemarksAccepted) {
-          if (this.Remarks_NgModel === undefined) {
-            alert('Please input valid remarks');
-            return;
+    if (this.claimRequestGUID !== undefined || this.claimRequestGUID !== null) {
+      this.api.getApiModel('claim_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS="Rejected")')
+        .subscribe(data => {
+          if (data["resource"].length <= 0)
+            if (this.api.isClaimExpired(this.travelDate, true)) { return; }
+          if (!this.isRemarksAccepted) {
+            if (this.Remarks_NgModel === undefined) {
+              alert('Please enter valid remarks');
+              this.isActionTaken = false;
+              return;
+            }
           }
-        }
-        this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted,1);
-     
+          this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted, 1);
+        })
+    } 
   }
 
   LoadMainClaim() {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
-        element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
+        // element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
+        this.travelDate = element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
         element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
         element.END_TS = new Date(element.END_TS.replace(/-/g, "/"))
 

@@ -71,13 +71,14 @@
             <ion-option [value]="Paid">Paid</ion-option>
             <ion-option [value]="Pending">Pending</ion-option>
             <ion-option [value]="Approved">Approved</ion-option>
+            <!-- <ion-option [value]="Validated">Validated</ion-option> -->
             <ion-option [value]="Rejected">Rejected</ion-option>
 
         </ion-select>
     </ion-item>
 
     <ion-item>
-        <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
+        <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlClaimTypes.value,ddlStatus.value,ddlYear.value)">Search</button>
         <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
     </ion-item>
 

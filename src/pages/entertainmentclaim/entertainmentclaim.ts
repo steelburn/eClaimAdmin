@@ -18,6 +18,7 @@ import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
 //import { ExcelService } from '../../providers/excel.service';
+import * as Settings from '../../dbSettings/companySettings';
 
 @IonicPage()
 @Component({
@@ -28,12 +29,13 @@ export class EntertainmentclaimPage {
 
   Entertainmentform: FormGroup;
   uploadFileName: string;
-  loading : Loading;
+  loading: Loading;
   CloudFilePath: string;
   @ViewChild('fileInput') fileInput: ElementRef;
   travel_date: any;
   TenantGUID: any;
   mainClaimReq: MainClaimRequestModel = new MainClaimRequestModel();
+  rejectedLevel: any;
 
   storeProjects: any[];
   public projects: any[];
@@ -59,6 +61,7 @@ export class EntertainmentclaimPage {
   Entertainment_Date_ngModel: any;
   Entertainment_Description_ngModel: any;
   claimFor: string = 'seg_project';
+  currency = localStorage.getItem("cs_default_currency");
 
   public socGUID: any;
   public AddTravelClicked: boolean = false;
@@ -74,22 +77,48 @@ export class EntertainmentclaimPage {
   ClaimRequestMainId: any;
   ImageUploadValidation: boolean = false;
   chooseFile: boolean = false;
-
-
+  min_claim_amount: any; min_claim: any;
+  max_claim_amount: any; max_claim: any;
+  // Amount_valid:boolean = false;
   /********FORM EDIT VARIABLES***********/
   isFormEdit: boolean = false;
   claimRequestGUID: any;
   claimRequestData: any;
+  // cdRef: any;
 
   constructor(public numberPipe: DecimalPipe, public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+
+    // Lakshman
+    this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
+    this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    // this.min_claim_amount =null;
+    if(this.min_claim_amount==null){
+      this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+    }
+    this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
+    this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    // this.max_claim_amount =null;
+    if(this.max_claim_amount==null){
+      this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+    }
+    let currency = localStorage.getItem("cs_default_currency");
+    // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     if (this.isFormEdit) {
-      this.profileMng.initiateLevels('1');
-      this.GetDataforEdit();
+      this.apiMng.getApiModel('view_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS=Rejected)').subscribe(res => {
+        this.claimRequestData = res['resource'];
+        if (this.claimRequestData.length > 0) {
+          this.rejectedLevel = this.claimRequestData[0]['PROFILE_LEVEL'];
+          this.profileMng.initiateLevels(this.rejectedLevel);
+        }
+        else
+          this.profileMng.initiateLevels('1');
+        this.GetDataforEdit();
+      })
     }
 
     else {
@@ -107,21 +136,54 @@ export class EntertainmentclaimPage {
       attachment_GUID: ''
     });
   }
+  // change(value:any){
+  //   //manually launch change detection
+  //   this.cdRef.detectChanges();
+  //   this.Entertainment_Amount_ngModel = value >= this.min_claim_amount && value <=this.max_claim_amount ;
+
+  // }
 
   claimAmount: number = 0;
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
-      alert('Amount should not exceed RM 99,999.00.')
-      this.Entertainment_Amount_ngModel = null
-      this.claimAmount = 0;
+      // alert('Amount should not exceed RM 99,999.00.')
+      // // this.Entertainment_Amount_ngModel = null
+      // this.claimAmount = 0;
     }
     else {
       this.claimAmount = amount;
       this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
     }
-  } 
- 
+  }
+
+  // Lakshman
+  // getCurrency(amount: number) {
+  //   amount = Number(amount);
+  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
+  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
+  //     // this.Entertainment_Amount_ngModel = null
+  //     this.claimAmount = 0;
+  //   } 
+  //   else {
+  //     this.claimAmount = amount;
+  //     this.Entertainment_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
+  //   }
+  // } 
+  // Lakshman
+
+  // Validate_claimAmount() {
+  //   if (this.Entertainment_Amount_ngModel < this.min_claim_amount || this.Entertainment_Amount_ngModel > this.max_claim_amount) {
+  //     this.Entertainment_Amount_ngModel = null;
+  //     // return false;
+  //     this.Entertainmentform.valid === false;
+
+  //   }
+  //   else {
+  //     this.Entertainment_Amount_ngModel = this.Entertainment_Amount_ngModel;
+  //     // return true;
+  //   }
+  // }
   imageURLEdit: any = null
   GetDataforEdit() {
     this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
@@ -135,12 +197,18 @@ export class EntertainmentclaimPage {
               .subscribe(data => {
                 this.claimRequestData = data["resource"];
 
-                  // this.imageURLEdit =this.claimRequestData[0].ATTACHMENT_ID;
-                  if (this.claimRequestData[0].ATTACHMENT_ID !== null) 
-                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID); 
+                // this.imageURLEdit =this.claimRequestData[0].ATTACHMENT_ID;
+                if (this.claimRequestData[0].ATTACHMENT_ID !== null)
+                  this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
                 this.ImageUploadValidation = true;
                 this.claimAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
+                // if(this.Entertainment_Amount_ngModel <=this.min_claim_amount && this.Entertainment_Amount_ngModel <=this.max_claim_amount)
+                // {
+                //   alert('Amount range is '+ this.min_claim_amount+ '-' +  this.min_claim_amount);
+                //   return false;
+                // }else{
                 this.Entertainment_Amount_ngModel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
+                // }
                 // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)               
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
@@ -150,7 +218,7 @@ export class EntertainmentclaimPage {
                     this.storeCustomers.forEach(element => {
                       if (element.CUSTOMER_GUID === this.claimRequestData[0].CUSTOMER_GUID) {
                         this.Customer_Lookup_ngModel = element.NAME
-                        this.Customer_GUID = element.CUSTOMER_GUID                       
+                        this.Customer_GUID = element.CUSTOMER_GUID
                       }
                     });
                 }
@@ -195,14 +263,20 @@ export class EntertainmentclaimPage {
   }
 
   LoadProjects() {
-    this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
+
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       });
   }
 
   LoadCustomers() {
-    this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    // this.apiMng.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
+    
+    // Added by Bijay on 25/09/2018
+    this.apiMng.getApiModel('view_customer', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVE_FLAG=A)')
       .subscribe(data => {
         this.storeCustomers = this.customers = data["resource"];
       })
@@ -307,15 +381,15 @@ export class EntertainmentclaimPage {
   onFileChange(event: any, ) {
     const reader = new FileReader();
 
-    
+
 
 
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      if(file.type==='image/jpeg')
-      this.isImage = true;
+      if (file.type === 'image/jpeg')
+        this.isImage = true;
       else
-      this.isImage = false;
+        this.isImage = false;
       this.Entertainmentform.get('avatar').setValue(file);
       this.uploadFileName = file.name;
       //this.uniqueName = file.name;
@@ -346,7 +420,7 @@ export class EntertainmentclaimPage {
         this.ProfileImage = event.target.result;
       }
       reader.readAsDataURL(e.target.files[0]);
-    }    
+    }
     this.imageGUID = this.uploadFileName;
     // this.imageGUID = this.uniqueName
     this.chooseFile = true;
@@ -385,8 +459,7 @@ export class EntertainmentclaimPage {
 
     return new Promise((resolve) => {
       this.http.post('http://api.zen.com.my/api/v2/files/' + this.CloudFilePath + this.uniqueName, this.Entertainmentform.get('avatar').value, options)
-        .map((response) => 
-        {
+        .map((response) => {
           this.loading.dismissAll()
           return response;
         }).subscribe((response) => {
@@ -402,8 +475,19 @@ export class EntertainmentclaimPage {
   }
 
   submitAction(formValues: any) {
-    if(this.apiMng.isClaimExpired(formValues))
-    return;
+    let x = this.Entertainment_Amount_ngModel.split(",").join("");
+    let amount = Number(x);
+    if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
+      this.Entertainment_Amount_ngModel = null;      
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " ");
+      return;
+    }
+    else {
+      this.Entertainment_Amount_ngModel = this.Entertainment_Amount_ngModel;
+    }
+    if (this.apiMng.isClaimExpired(formValues.travel_date, false))
+      return;
+
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
@@ -411,6 +495,7 @@ export class EntertainmentclaimPage {
     //let claimReqMainRef: ClaimReqMain_Model = new ClaimReqMain_Model();
     // let claimRequestDataModel: MainClaimRequestModel = new MainClaimRequestModel();    
     if (this.isFormEdit) {
+
       this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
         .subscribe(data => {
           this.claimRequestData = data;
@@ -421,11 +506,13 @@ export class EntertainmentclaimPage {
           //this.claimRequestData["resource"][0].TRAVEL_DATE = moment(this.claimRequestData.TRAVEL_DATE).format('YYYY-MM-DDTHH:mm');
           this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
           if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-            this.claimRequestData["resource"][0].PROFILE_LEVEL = 1;
+            this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-            this.claimRequestData["resource"][0].STATUS = 'Pending'
-          }         
+            if (this.rejectedLevel === 3)
+            this.claimRequestData["resource"][0].STATUS = 'Approved';
+          else
+            this.claimRequestData["resource"][0].STATUS = 'Pending';          }
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
             this.claimRequestData["resource"][0].SOC_GUID = null;
@@ -441,7 +528,8 @@ export class EntertainmentclaimPage {
             let start_DT: string = "";
             let end_DT: string = "";
             // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
-            this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
+            //Commented By bijay on 24/09/2018 as per scheduler implemented
+            // this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
             //----------------------------------------------------------            
             alert('Claim details updated successfully.');
             this.navCtrl.push(UserclaimslistPage);
@@ -449,6 +537,7 @@ export class EntertainmentclaimPage {
         })
     }
     else {
+
       formValues.claimTypeGUID = 'f3217ecc-19d7-903a-6c56-78fdbd7bbcf1';
       formValues.attachment_GUID = this.imageGUID;
       //formValues.attachment_GUID =  this.uniqueName ;

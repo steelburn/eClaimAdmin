@@ -51,7 +51,8 @@ export class LoginPage {
       else {
         let url: string;
         //CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex)
-        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex) + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+        //Changed code by Bijay on 25/09/2018
+        url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + CryptoJS.SHA256(this.login.password.trim()).toString(CryptoJS.enc.Hex) + ')and(ACTIVATION_FLAG=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
         //url = this.baseResource_Url + "vw_login?filter=(LOGIN_ID=" + this.login.username + ')and(PASSWORD=' + this.login.password + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
         this.http
           .get(url)
@@ -477,7 +478,7 @@ export class LoginPage {
     localStorage.removeItem("cs_default_country");
     localStorage.removeItem("cs_max_claim_amt");
     localStorage.removeItem("cs_min_claim_amt");
-    localStorage.removeItem("cs_claim_cutOff_date");
+    localStorage.removeItem("cs_claim_cutoff_date");
     localStorage.removeItem("cs_year_start_month");
     localStorage.removeItem("cs_year_end_month");
     localStorage.removeItem("cs_approval_cutoff_date");
@@ -510,7 +511,7 @@ export class LoginPage {
 
           if (this.KeyNameValueList[item]["KEY_NAME"] == "max_claim_amt") { localStorage.setItem("cs_max_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "min_claim_amt") { localStorage.setItem("cs_min_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          if (this.KeyNameValueList[item]["KEY_NAME"] == "claim_cutOff_date") { localStorage.setItem("cs_claim_cutOff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "claim_cutoff_date") { localStorage.setItem("cs_claim_cutoff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "month_start") { localStorage.setItem("cs_year_start_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "month_end") { localStorage.setItem("cs_year_end_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "approval_cutoff_date") { localStorage.setItem("cs_approval_cutoff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }

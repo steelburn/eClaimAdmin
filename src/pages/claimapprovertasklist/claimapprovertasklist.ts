@@ -20,6 +20,8 @@ import { GiftClaimViewPage } from '../gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../miscellaneous-claim-view/miscellaneous-claim-view';
 import { ClaimtasklistPage } from '../claimtasklist/claimtasklist';
 import { LoginPage } from '../login/login';
+import * as Settings from '../../dbSettings/companySettings'
+
 
 @IonicPage()
 @Component({
@@ -52,6 +54,7 @@ export class ClaimapprovertasklistPage {
   claimTypeList: any[];
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
+  btnSearch: boolean = false;
   // Pending: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
@@ -94,6 +97,7 @@ export class ClaimapprovertasklistPage {
       // }
       // else { this.BindData(); }
     }
+
   }
   BindData(ddlEmployee?: string, ddlClaimTypes?: string) {
 
@@ -108,6 +112,13 @@ export class ClaimapprovertasklistPage {
         this.claimrequestdetails.forEach(element => {
           element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
 
+          if (this.FinanceLogin) {
+            // For Status changing
+            if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+              element.STATUS = Settings.StatusConstants.APPROVED
+            else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+              element.STATUS = Settings.StatusConstants.VALIDATED
+          }
           if (element.STATUS === 'Rejected') {
             element.STAGE_GUID = null;
           }
@@ -128,12 +139,13 @@ export class ClaimapprovertasklistPage {
           if (ddlClaimTypes.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
         }
         this.FindTotalAmount();
+        this.btnSearch = true;
       });
 
   }
 
   FindTotalAmount() {
-    this.totalClaimAmount=0;
+    this.totalClaimAmount = 0;
     this.claimrequestdetails.forEach(element => {
       this.totalClaimAmount = this.totalClaimAmount + element.CLAIM_AMOUNT;
     });
@@ -225,7 +237,9 @@ export class ClaimapprovertasklistPage {
   }
 
   count: number = 0;
+  approveButtonEnabled: boolean = true;
   approveClaims() {
+    this.approveButtonEnabled = false;
     //console.table(this.claimrequestdetails);
     this.count = 0;
     //debugger;
@@ -290,7 +304,8 @@ export class ClaimapprovertasklistPage {
 
     }
     else {
-      alert("Please select the claim(s) which you want to approve.")
+      alert("Please select the claim(s) which you want to approve.");
+      this.approveButtonEnabled = true;
     }
   }
 
@@ -360,6 +375,7 @@ export class ClaimapprovertasklistPage {
 
 
   SearchClaimsData() {
+    this.btnSearch = false;
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       if (this.role == "Payment") {
         this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(STATUS=Approved)AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;

@@ -17,6 +17,7 @@ import { CountrysetupPage } from '../countrysetup/countrysetup';
 import { StatesetupPage } from '../statesetup/statesetup';
 import { ImportExcelDataPage } from '../import-excel-data/import-excel-data';
 import { DeviceSetupPage } from '../device-setup/device-setup';
+import { RolemodulesetupPage } from '../rolemodulesetup/rolemodulesetup';
 
 import { TenantCompanySetup_Model } from '../../models/tenantcompanysetup_model';
 import { TenantCompanySiteSetup_Model } from '../../models/tenantcompanysitesetup_model';
@@ -32,6 +33,7 @@ import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
 import { SettingsPage } from '../settings/settings';
 import { CompanysettingsPage } from '../companysettings/companysettings';
+import { DbmaintenancePage } from '../dbmaintenance/dbmaintenance';
 
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -370,6 +372,14 @@ export class SetupPage {
 
   goToCompanySettings(){
     this.navCtrl.push(CompanysettingsPage);
+  }
+
+  goToDBMaintenance(){
+    this.navCtrl.push(DbmaintenancePage);
+  }
+
+  goToRoleModulesetup() {
+    this.navCtrl.push(RolemodulesetupPage)
   }
 
 }

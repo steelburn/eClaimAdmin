@@ -64,7 +64,7 @@
 
 
   <ion-item>
-    <button ion-button item-end (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value)">Search</button>
+    <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value)">Search</button>
     <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
   </ion-item>
   <ion-list>
@@ -108,6 +108,6 @@
   </ion-list>
 </ion-content>
 <div id="printSectionId" hidden>
-  <page-claim-report-print [claimsListPrint]="claimsListPrintTemp" [claimsListSummery]="claimsListSummery" [empData]="empData" [year]="year" [month]="month" [totalClaimAmount]="totalClaimAmount" [claimsSocSummery]="claimsSocSummery"></page-claim-report-print>
+  <page-claim-report-print [claimsListPrint]="claimsListPrintTemp" [claimsListSummary]="claimsListSummary" [empData]="empData" [year]="year" [month]="month" [totalClaimAmount]="totalClaimAmount" [claimsSocSummary]="claimsSocSummary"></page-claim-report-print>
 
 </div>

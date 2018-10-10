@@ -48,9 +48,12 @@
     </ion-item>
 
     <ion-item class="fuha">
-      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ "CURRENCY_NAME_LABEL" | translate }}</ion-label>
+      <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ currency }}</ion-label>
       <ion-input type="text" (change)='getCurrency($event.target.value)' formControlName="claim_amount" [(ngModel)]="Gift_Amount_ngModel"></ion-input>
     </ion-item>
+    <!-- <ion-item *ngIf="!Giftform.controls.claim_amount.valid  && (Giftform.controls.claim_amount.dirty)">
+      <p style="color: red; text-align:right;margin-right: 34%;">Amount is {{min_claim_amount}} - {{max_claim_amount}} RM.</p>
+  </ion-item> -->
 
     <ion-item class="fuha1">
       <ion-label color="primary500" floating> {{ "DESCRIPTION_LABEL" | translate }} </ion-label>
@@ -82,6 +85,9 @@
     <div class="btn">
       <button ion-button color="primary500" (click)='submitAction(Giftform.value)' [disabled]="(Giftform.valid && !ImageUploadValidation) || !Giftform.valid">{{ 'SUBMIT'}}</button>
     </div>
+    <!-- <ion-item *ngIf="!Giftform.controls.claim_amount.valid  && (Giftform.controls.claim_amount.dirty)">
+      <p style="color: red; text-align:right;margin-right: 34%;">Claim amount should be {{currency}} {{min_claim_amount}} - {{max_claim_amount}}</p>
+  </ion-item> -->
   </form>
 
   <div class="popup2" padding *ngIf="displayImage">

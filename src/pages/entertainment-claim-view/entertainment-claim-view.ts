@@ -28,6 +28,7 @@ export class EntertainmentClaimViewPage {
   isRemarksAccepted: any;
   level: any;
   approverDesignation: any;
+  isActionTaken: boolean = false;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
   
@@ -40,16 +41,25 @@ export class EntertainmentClaimViewPage {
     this.LoadMainClaim();
   } 
 
+  travelDate: any;
   isAccepted(val: string) {
+    this.isActionTaken = true;
     this.isRemarksAccepted = val === 'accepted' ? true : false;
-    if (!this.isRemarksAccepted) {
-          if (this.Remarks_NgModel === undefined) {
-            alert('Please enter valid remarks');
-            return;
+    if (this.claimRequestGUID !== undefined || this.claimRequestGUID !== null) {
+      this.api.getApiModel('claim_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS="Rejected")')
+        .subscribe(data => {
+          if (data["resource"].length <= 0)
+            if (this.api.isClaimExpired(this.travelDate, true)) { return; }
+          if (!this.isRemarksAccepted) {
+            if (this.Remarks_NgModel === undefined) {
+              alert('Please enter valid remarks');
+              this.isActionTaken = false;
+              return;
+            }
           }
-        }
-        this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted,1);
-     
+          this.profileMngProvider.ProcessProfileMng(this.Remarks_NgModel, this.Approver_GUID, this.level, this.claimRequestGUID, this.isRemarksAccepted, 1);
+        })
+    }
   } 
  
   isImage: boolean = false;
@@ -57,7 +67,8 @@ export class EntertainmentClaimViewPage {
     this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
       this.claimRequestData = res['resource'];
       this.claimRequestData.forEach(element => {
-        element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+        // element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
+        this.travelDate = element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
         element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
 
         if (element.ATTACHMENT_ID !== null) { 

@@ -7,7 +7,10 @@ export class ModuleSetup_Model {
 		public CREATION_TS: string = null,
 		public CREATION_USER_GUID: string = null,
 		public UPDATE_TS: string = null,
-		public UPDATE_USER_GUID: string = null
+		public UPDATE_USER_GUID: string = null,
+		public MENU_HEADER: string = null,
+		public MENU_ICON: string = null,
+		public MENU_SL_NO: string = null
 	) { }
 
 
@@ -21,7 +24,10 @@ export class ModuleSetup_Model {
 			json.CREATION_TS,
 			json.CREATION_USER_GUID,
 			json.UPDATE_TS,
-			json.UPDATE_USER_GUID
+			json.UPDATE_USER_GUID,
+			json.MENU_HEADER,
+			json.MENU_ICON,
+			json.MENU_SL_NO
 		);
 	}
 
@@ -34,7 +40,10 @@ export class ModuleSetup_Model {
 			CREATION_TS: this.CREATION_TS,
 			CREATION_USER_GUID: this.CREATION_USER_GUID,
 			UPDATE_TS: this.UPDATE_TS,
-			UPDATE_USER_GUID: this.UPDATE_USER_GUID
+			UPDATE_USER_GUID: this.UPDATE_USER_GUID,
+			MENU_HEADER: this.MENU_HEADER,
+			MENU_ICON: this.MENU_ICON,
+			MENU_SL_NO: this.MENU_SL_NO
 		};
 		return stringify ? JSON.stringify({ resource: [doc] }) : doc;
 	}

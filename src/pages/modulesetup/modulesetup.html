@@ -9,7 +9,9 @@
   <ion-navbar color="primary200">
     <ion-title>Module Setup</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
@@ -27,6 +29,8 @@
           <th class="lgl1">Module Name</th>
           <th class="lgl1">Description</th>
           <th class="lgl1">Page Name</th>
+          <th class="lgl1">Menu Header</th>
+          <th class="lgl1">Menu Sl. No</th>
           <th class="lgl1 tblBrRight" style="width:105px">Action</th>
         </tr>
 
@@ -35,6 +39,8 @@
           <td class="lgl1">{{module.MODULE_NAME}}</td>
           <td class="lgl1">{{module.DESCRIPTION}}</td>
           <td class="lgl1" text-wrap>{{module.PAGE_NAME}}</td>
+          <td class="lgl1" text-wrap>{{module.MENU_HEADER}}</td>
+          <td class="lgl1" text-wrap>{{module.MENU_SL_NO}}</td>
           <td class="lgl1 fColor">
             <button ion-button item-end (click)="EditClick(module.MODULE_GUID)">
               <ion-icon name="md-create"></ion-icon>
@@ -45,7 +51,8 @@
           </td>
         </tr>
       </table>
-      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true"
+        autoHide="true">
       </pagination-controls>
     </ion-item>
   </ion-list>
@@ -54,7 +61,7 @@
   <!-- add MODULEFORM start-->
   <div class="blackcontainer" *ngIf="AddModuleClicked">
   </div>
-  <div class="popup" padding *ngIf="AddModuleClicked">
+  <div class="popup4" padding *ngIf="AddModuleClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
@@ -78,13 +85,61 @@
 
           <ion-item>
             <ion-label stacked>{{"Page Name"}}</ion-label>
-            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Add" placeholder="{{'Please fill the Page'}}" multiple="true">
+            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Add" placeholder="{{'Please fill the Page'}}"
+              multiple="true">
               <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
+          <ion-item>
+            <ion-label stacked>{{ 'Menu Header' | translate }}</ion-label>
+            <ion-select formControlName="MENU_HEADER" [(ngModel)]="Menu_Header_ngModel_Add" placeholder="{{'Please select menu header'}}" (ionChange)="DisplaySlNo()" interface="popover">
+              <ion-option [value]="Dashboard">Dashboard</ion-option>
+              <ion-option [value]="Tasks">Tasks</ion-option>
+              <ion-option [value]="Claims">Claims</ion-option>
+              <ion-option [value]="Reports">Reports</ion-option>
+              <ion-option [value]="Account">Account</ion-option>
+              <ion-option [value]="Settings">Settings</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{ 'Menu Icon' | translate }}</ion-label>
+            <ion-select formControlName="MENU_ICON" [(ngModel)]="Menu_Icon_ngModel_Add" placeholder="{{'Please select menu icon'}}" interface="popover">
+              <ion-option [value]="albums">albums</ion-option>
+              <ion-option [value]="apps">apps</ion-option>
+              <ion-option [value]="basket">basket</ion-option>
+              <ion-option [value]="cafe">cafe</ion-option>
+              <ion-option [value]="car">car</ion-option>
+              <ion-option [value]="checkbox_outline">checkbox-outline</ion-option>
+              <ion-option [value]="cog">cog</ion-option>
+              <ion-option [value]="ios_clipboard_outline">ios-clipboard-outline</ion-option>
+              <ion-option [value]="ios_list_box_outline">ios-list-box-outline</ion-option>
+              <ion-option [value]="ios_paper_outline">ios-paper-outline</ion-option>
+              <ion-option [value]="key">key</ion-option>
+              <ion-option [value]="log_in">log-in</ion-option>
+              <ion-option [value]="log_out">log-out</ion-option>
+              <ion-option [value]="man">man</ion-option>
+              <ion-option [value]="md_clipboard">md-clipboard</ion-option>
+              <ion-option [value]="md_list_box">md-list-box</ion-option>
+              <ion-option [value]="md_paper">md-paper</ion-option>
+              <ion-option [value]="person">person</ion-option>
+              <ion-option [value]="person-add">person-add</ion-option>
+              <ion-option [value]="print">print</ion-option>
+              <ion-option [value]="settings">settings</ion-option>
+              <ion-option [value]="stopwatch">stopwatch</ion-option>
+              <ion-option [value]="unlock">unlock</ion-option>
+            </ion-select>
+          </ion-item>  
+          
+          <ion-item>
+            <ion-label stacked>{{"Sl. No"}}</ion-label>
+            <ion-input type="text" formControlName="MENU_SL_NO" [(ngModel)]="SlNo_ngModel_Add" placeholder="{{'Please fill in the sl no'}}"></ion-input>
+          </ion-item>
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Save()">{{"SUBMIT"
+              | translate}}</button>
           </div>
         </form>
 
@@ -98,7 +153,7 @@
   <!-- edit MODULEFORM start-->
   <div class="blackcontainer" *ngIf="EditModuleClicked">
   </div>
-  <div class="popup" padding *ngIf="EditModuleClicked">
+  <div class="popup4" padding *ngIf="EditModuleClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
@@ -122,13 +177,61 @@
 
           <ion-item>
             <ion-label stacked>{{"Page Name"}}</ion-label>
-            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Edit" placeholder="{{'Please fill the Page'}}" multiple="true">
+            <ion-select formControlName="PAGE" [(ngModel)]="PAGE_ngModel_Edit" placeholder="{{'Please fill the Page'}}"
+              multiple="true">
               <ion-option *ngFor="let page of pages" [value]="page.PAGE_GUID">{{page.NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
+          <ion-item>
+            <ion-label stacked>{{ 'Menu Header' | translate }}</ion-label>
+            <ion-select formControlName="MENU_HEADER" [(ngModel)]="Menu_Header_ngModel_Edit" placeholder="{{'Please select menu header'}}" (ionChange)="DisplaySlNo()" interface="popover">
+              <ion-option [value]="Dashboard">Dashboard</ion-option>
+              <ion-option [value]="Tasks">Tasks</ion-option>
+              <ion-option [value]="Claims">Claims</ion-option>
+              <ion-option [value]="Reports">Reports</ion-option>
+              <ion-option [value]="Account">Account</ion-option>
+              <ion-option [value]="Settings">Settings</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>{{ 'Menu Icon' | translate }}</ion-label>
+            <ion-select formControlName="MENU_ICON" [(ngModel)]="Menu_Icon_ngModel_Edit" placeholder="{{'Please select menu icon'}}" interface="popover">
+              <ion-option [value]="albums">albums</ion-option>
+              <ion-option [value]="apps">apps</ion-option>
+              <ion-option [value]="basket">basket</ion-option>
+              <ion-option [value]="cafe">cafe</ion-option>
+              <ion-option [value]="car">car</ion-option>
+              <ion-option [value]="checkbox_outline">checkbox-outline</ion-option>
+              <ion-option [value]="cog">cog</ion-option>
+              <ion-option [value]="ios_clipboard_outline">ios-clipboard-outline</ion-option>
+              <ion-option [value]="ios_list_box_outline">ios-list-box-outline</ion-option>
+              <ion-option [value]="ios_paper_outline">ios-paper-outline</ion-option>
+              <ion-option [value]="key">key</ion-option>
+              <ion-option [value]="log_in">log-in</ion-option>
+              <ion-option [value]="log_out">log-out</ion-option>
+              <ion-option [value]="man">man</ion-option>
+              <ion-option [value]="md_clipboard">md-clipboard</ion-option>
+              <ion-option [value]="md_list_box">md-list-box</ion-option>
+              <ion-option [value]="md_paper">md-paper</ion-option>
+              <ion-option [value]="person">person</ion-option>
+              <ion-option [value]="person-add">person-add</ion-option>
+              <ion-option [value]="print">print</ion-option>
+              <ion-option [value]="settings">settings</ion-option>
+              <ion-option [value]="stopwatch">stopwatch</ion-option>
+              <ion-option [value]="unlock">unlock</ion-option>
+            </ion-select>
+          </ion-item>  
+          
+          <ion-item>
+            <ion-label stacked>{{"Sl. No"}}</ion-label>
+            <ion-input type="text" formControlName="MENU_SL_NO" [(ngModel)]="SlNo_ngModel_Edit" placeholder="{{'Please fill in the sl no'}}"></ion-input>
+          </ion-item>
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Moduleform.valid" (click)="Update(module_details.MODULE_GUID)">{{"SUBMIT"
+              | translate}}</button>
           </div>
         </form>
         <!-- [disabled]="!Moduleform.valid" -->
