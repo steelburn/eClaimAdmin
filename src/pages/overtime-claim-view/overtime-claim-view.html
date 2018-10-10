@@ -55,7 +55,7 @@
 
     <ion-item>
         <ion-label> {{ "CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
-        <ion-label> {{ this.totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+        <ion-label> {{currency}} {{totalClaimAmount | number:'1.2-2'}} </ion-label>
     </ion-item>
     <ion-item>
         <ion-label> {{ "STATUS_LABEL" | translate }} : </ion-label>

@@ -27,7 +27,7 @@ import { LoginPage } from '../login/login';
 export class PagesetupPage {
   page_entry: PageSetup_Model = new PageSetup_Model();
   Pageform: FormGroup;
-  public p:number = 1;
+  public p: number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_rolepage' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
@@ -44,12 +44,14 @@ export class PagesetupPage {
   public NAME_ngModel_Add: any;
   public DESCRIPTION_ngModel_Add: any;
   public URL_ngModel_Add: any;
+  public APPLICATION_PAGE_ngModel_Add: any;
   //---------------------------------------------------------------------
 
   //Set the Model Name for edit------------------------------------------
   public NAME_ngModel_Edit: any;
   public DESCRIPTION_ngModel_Edit: any;
   public URL_ngModel_Edit: any;
+  public APPLICATION_PAGE_ngModel_Edit: any;
   //---------------------------------------------------------------------
 
   public AddPageClick() {
@@ -81,6 +83,7 @@ export class PagesetupPage {
 
         this.DESCRIPTION_ngModel_Edit = self.page_details.DESCRIPTION;
         this.URL_ngModel_Edit = self.page_details.URL;
+        this.APPLICATION_PAGE_ngModel_Edit = self.page_details.CODE_PAGE_NAME;
       });
   }
 
@@ -130,7 +133,7 @@ export class PagesetupPage {
         .get(this.baseResourceUrl)
         .map(res => res.json())
         .subscribe(data => {
-          this.pages = data.resource;
+          this.pages = this.stores = data.resource;
           this.loading.dismissAll();
         });
 
@@ -138,7 +141,8 @@ export class PagesetupPage {
         NAME: ["", Validators.required],
         DESCRIPTION: [null],
         //URL: [null, Validators.compose([Validators.pattern('^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$'), Validators.required])],          
-        URL: [null, Validators.compose([Validators.pattern('^(..\\/){0,1}[a-zA-Z0-9\\/\\-]+\\/[a-zA-Z]{2,20}[\\/]{0,1}$'), Validators.required])],
+        URL: [null, Validators.compose([Validators.pattern('^(..\\/){0,1}[a-zA-Z0-9\\/\\-]+\\/[a-zA-Z]{2,50}[\\/]{0,1}$'), Validators.required])],
+        APPLICATION_PAGE: ["", Validators.required],
       });
     }
   }
@@ -171,6 +175,7 @@ export class PagesetupPage {
                 this.page_entry.NAME = this.NAME_ngModel_Add.trim();
                 this.page_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Add.trim();
                 this.page_entry.URL = this.URL_ngModel_Add.trim();
+                this.page_entry.CODE_PAGE_NAME = this.APPLICATION_PAGE_ngModel_Add.trim();
 
                 this.page_entry.PAGE_GUID = UUID.UUID();
                 this.page_entry.CREATION_TS = new Date().toISOString();
@@ -206,6 +211,7 @@ export class PagesetupPage {
       if (this.page_entry.NAME == null) { this.page_entry.NAME = this.NAME_ngModel_Edit; }
       if (this.page_entry.DESCRIPTION == null) { this.page_entry.DESCRIPTION = this.DESCRIPTION_ngModel_Edit; }
       if (this.page_entry.URL == null) { this.page_entry.URL = this.URL_ngModel_Edit; }
+      if (this.page_entry.CODE_PAGE_NAME == null) { this.page_entry.CODE_PAGE_NAME = this.APPLICATION_PAGE_ngModel_Edit; }
 
       this.page_entry.CREATION_TS = this.page_details.CREATION_TS;
       this.page_entry.CREATION_USER_GUID = this.page_details.CREATION_USER_GUID;
@@ -270,6 +276,38 @@ export class PagesetupPage {
     }
   }
 
+  stores: any[];
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.pages = this.stores;
+      return;
+    }
+    this.pages = this.filter({
+      NAME: val,
+      DESCRIPTION: val,
+      URL: val,
+      CODE_PAGE_NAME: val
+    });
+  }
+
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
+  }
 
   ClearControls() {
     this.NAME_ngModel_Add = "";

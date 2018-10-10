@@ -48,6 +48,7 @@ export class ClaimapprovertasklistPage {
   totalClaimAmount: number = 0;
   public page: number = 1;
   FinanceLogin: boolean = false;
+  currency = localStorage.getItem("cs_default_currency")
 
   deptList: any[];
   employeeList: any[];
@@ -237,7 +238,9 @@ export class ClaimapprovertasklistPage {
   }
 
   count: number = 0;
+  approveButtonEnabled: boolean = true;
   approveClaims() {
+    this.approveButtonEnabled = false;
     //console.table(this.claimrequestdetails);
     this.count = 0;
     //debugger;
@@ -302,7 +305,8 @@ export class ClaimapprovertasklistPage {
 
     }
     else {
-      alert("Please select the claim(s) which you want to approve.")
+      alert("Please select the claim(s) which you want to approve.");
+      this.approveButtonEnabled = true;
     }
   }
 

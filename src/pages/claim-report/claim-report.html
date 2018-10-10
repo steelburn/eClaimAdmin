@@ -83,7 +83,7 @@
           <th class="lgl1">To</th>
 
 
-          <th class="lgl1 tblBrRight" style="width:130px;">Total Amount(RM)</th>
+          <th class="lgl1 tblBrRight" style="width:130px;">Total Amount({{currency }})</th>
         </tr>
 
         <tr class="col7" *ngFor="let claim of claimsList | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
@@ -99,7 +99,7 @@
         </tr>
 
         <tr class="col7">
-          <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount(RM) : {{totalClaimAmount | number:'1.2-2'}}</td>
+          <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount({{currency }}) : {{totalClaimAmount | number:'1.2-2'}}</td>
         </tr>
       </table>
       <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">

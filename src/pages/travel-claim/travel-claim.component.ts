@@ -42,6 +42,7 @@ export class TravelclaimPage {
   public profileLevel: any;
   public stage: any;
   public profileJSON: any;
+  currency = localStorage.getItem("cs_default_currency")
 
   public Travel_Date_ngModel: any;
   public Travel_Description_ngModel: any;
