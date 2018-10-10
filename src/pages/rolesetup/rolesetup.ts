@@ -175,7 +175,7 @@ export class RolesetupPage {
         .get(this.baseResourceUrl)
         .map(res => res.json())
         .subscribe(data => {
-          this.roles = data.resource;
+          this.roles = this.stores = data.resource;
           this.loading.dismissAll();
         });
 
@@ -335,6 +335,37 @@ export class RolesetupPage {
           });
       }
     }
+  }
+
+  stores: any[];
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.roles = this.stores;
+      return;
+    }
+    this.roles = this.filter({
+      NAME: val,
+      DESCRIPTION: val
+    });
+  }
+
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
   }
 
   ClearControls() {
