@@ -77,7 +77,7 @@ export class RolemodulesetupPage {
 
   loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private rolemodulesetupservice: RoleModuleSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
+    // if (localStorage.getItem("g_USER_GUID") == "sva") {
       //Display Grid------------------------------------
       this.DisplayGrid();
 
@@ -90,11 +90,11 @@ export class RolemodulesetupPage {
       this.Rolemoduleform = fb.group({
         ROLENAME: ["", Validators.required],
       });
-    }
-    else {
-      alert("Sorry !! This is for only Super Admin.");
-      this.navCtrl.push(LoginPage);
-    }
+    // }
+    // else {
+    //   alert("Sorry !! This is for only Super Admin.");
+    //   this.navCtrl.setRoot(LoginPage);
+    // }
   }
 
   DisplayGrid() {
