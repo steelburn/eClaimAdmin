@@ -55,6 +55,7 @@ export class UserclaimslistPage {
   Pending: any; Rejected: any; Approved: any; Paid: any;Validated:any;
   public page: number = 1;
   btnSearch: boolean = false;
+  currency = localStorage.getItem("cs_default_currency")
   constructor(private excelService: ExcelService, private api: ApiManagerProvider, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     //  this.claimrefguid=navParams.get("claimRefGuid");
@@ -323,7 +324,7 @@ export class UserclaimslistPage {
     this.ExcelColumns.push({ Columns: 'Date' });
     this.ExcelColumns.push({ Columns: 'Status' });
     this.ExcelColumns.push({ Columns: 'Stage' });
-    this.ExcelColumns.push({ Columns: 'Amount(RM)' });
+    this.ExcelColumns.push({ Columns: 'Amount('+this.currency+')' });
   }
 
   CloseExportExcel() {
@@ -419,7 +420,7 @@ export class UserclaimslistPage {
                   }
                 }
                 break;
-              case "Amount(RM)":
+              case "Amount("+this.currency+")":
                 if (jsonStr.length > 0) {
                   if (ctr == this.checked.length) {
                     jsonStr += '"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '"';

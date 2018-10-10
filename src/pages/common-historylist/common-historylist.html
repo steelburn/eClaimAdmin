@@ -80,9 +80,9 @@
                   <th class="lgl1">Month
                   </th>
                   <!-- <th class="lgl1">Status</th> -->
-                  <th class="lgl1" *ngIf="role=='Validation'">Validated(RM)</th>
-                  <th class="lgl1" *ngIf="role=='Payment'">Approved(RM)</th>
-                  <th class="lgl1">Rejected(RM)</th>
+                  <th class="lgl1" *ngIf="role=='Validation'">Validated({{currency }})</th>
+                  <th class="lgl1" *ngIf="role=='Payment'">Approved({{currency }})</th>
+                  <th class="lgl1">Rejected({{currency }})</th>
                   <th class="lgl1 tblBrRight" style="width:60px">Action</th>
 
 

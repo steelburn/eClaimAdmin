@@ -79,8 +79,8 @@
                     <th class="lgl1">Month
                     </th>
                     <!-- <th class="lgl1">Status</th> -->
-                    <th class="lgl1">Approved Amount(RM)</th>
-                    <th class="lgl1">Rejected Amount(RM)</th>
+                    <th class="lgl1">Approved Amount({{currency }})</th>
+                    <th class="lgl1">Rejected Amount({{currency }})</th>
                     <th class="lgl1 tblBrRight" style="width:80px">Action</th>
 
 
@@ -92,9 +92,9 @@
                     <td class="lgl1 getHeader" reshead="Department">{{claimhistory.DEPT}}</td>
                     <td class="lgl1 getHeader" reshead="Month">{{claimhistory.MONTH}}</td>
                     <!-- <td class="lgl1">{{claimhistory.REQ_STATUS}}</td> -->
-                    <td class="lgl1 getHeader" reshead="Approved Amount(RM)">{{claimhistory.APPROVEDAMOUNT | number:'1.2-2'}}</td>
-                    <td class="lgl1 getHeader" reshead="Rejected Amount(RM)">{{claimhistory.REJECTEDAMOUNT | number:'1.2-2'}}</td>
-                    <td class="lgl1 getHeader fColor" reshead="Action">
+                    <td class="lgl1 getHeader" reshead="Approved Amount">{{claimhistory.APPROVEDAMOUNT | number:'1.2-2'}}</td>
+                    <td class="lgl1 getHeader" reshead="Rejected Amount">{{claimhistory.REJECTEDAMOUNT | number:'1.2-2'}}</td>
+                    <td class="lgl1 getHeader fColor" reshead="Action"> 
                         <button ion-button item-end (click)="goToClaimHistoryDetail(claimhistory.CLAIM_REF_GUID,claimhistory.USER_GUID,claimhistory.MONTH)">
                             <ion-icon name="md-eye"></ion-icon>
                         </button>
