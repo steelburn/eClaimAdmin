@@ -123,7 +123,7 @@
 
     <ion-item>
       <ion-label color="primary500" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
-      <ion-label color="primary500"> {{totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+      <ion-label color="primary500">{{currency}} {{totalClaimAmount | number:'1.2-2'}} </ion-label>
     </ion-item>  
    
     <!-- <ion-item *ngIf="isPublicTransport">
@@ -267,7 +267,7 @@
               <th class="lgl1">Payment Mode</th>
               <th class="lgl1">Description</th>
               <th class="lgl1">Receipt</th>
-              <th class="lgl1">Amount(RM)</th>
+              <th class="lgl1">Amount({{currency }})</th>
               <th class="lgl1">Action</th>
             </tr>
 
@@ -291,7 +291,7 @@
                 <!-- <a href={{imageURLEdit}} target='_blank' *ngIf="item.ATTACHMENT_ID!=null">Receipt</a> -->
               </td>
               <!-- <td class="lgl1">{{item.AMOUNT | number:'1.2-2'}}</td> -->
-              <td class="lgl1">{{item.AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+              <td class="lgl1">{{currency}} {{item.AMOUNT | number:'1.2-2'}}</td>
               <td class="lgl1 fColor">
                 <button ion-button item-end (click)="EditDetail(item.CLAIM_REQUEST_DETAIL_GUID,item.CLAIM_METHOD_GUID)">
                   <ion-icon name="md-create"></ion-icon>
@@ -303,7 +303,7 @@
             </tr>
             <tr class="col7">
 
-              <td class="lgl11" colspan="6"> {{ "TOTAL_AMOUNT_LABEL" | translate }} : {{ tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2'}}</td>
+              <td class="lgl11" colspan="6"> {{ "TOTAL_AMOUNT_LABEL" | translate }} :{{currency}} {{tollParkAmount | number:'1.2-2'}} </td>
 
             </tr>
           </table>

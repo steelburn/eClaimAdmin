@@ -22,6 +22,7 @@ export class PrintClaimViewPage {
   claimRequestGUID: any;
   Approver_GUID: any;
   isApprover: any;
+  currency = localStorage.getItem("cs_default_currency")
 
   level: any;
   isRemarksAccepted: boolean = false;

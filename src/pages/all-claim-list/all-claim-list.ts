@@ -58,6 +58,7 @@ export class AllClaimListPage {
   claimTypeList: any[];
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
+  currency = localStorage.getItem("cs_default_currency")
 
   constructor(private excelService: ExcelService, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
     this.claimrefguid = navParams.get("claimRefGuid");

@@ -28,6 +28,7 @@ export class TravelClaimViewPage {
   approverDesignation: any;
   // totalAmount: number = 0;
   isActionTaken: boolean = false;
+  currency = localStorage.getItem("cs_default_currency")
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
     this.isApprover = this.navParams.get("isApprover");
