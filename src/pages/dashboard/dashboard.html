@@ -10,9 +10,9 @@
     <ion-title>dashboard</ion-title>
   </ion-navbar> -->
   <ion-navbar color="primary200">
-     <button ion-button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button> 
+    </button>
     <ion-title>{{ "DASHBOARD_HEADING" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
@@ -20,12 +20,12 @@
 
 <ion-content padding style="background: #eeeeee;">
 
-    <div>
+  <div>
     <form [formGroup]="DashboardForm">
- 
-           
+
+
       <div>
-        <ion-item text-center  class="hid" style="background: white; border-radius: 10px;">
+        <ion-item text-center class="hid" style="background: white; border-radius: 10px;">
           <ion-label inset color="primary" text-left>Filter : </ion-label>
           <ion-select formControlName="Year" [(ngModel)]="Year_Change_ngModel" (ionChange)="Year_Changed(Year_Change_ngModel)">
             <ion-option *ngFor="let year of yeardata">{{year.MONTH}} {{year.YEAR}}</ion-option>
@@ -35,80 +35,81 @@
     </form>
   </div>
 
-  <ion-card *ngIf="chart1" class="round3" >
+  <ion-card *ngIf="chart1" class="round3">
     <ion-card-header style="background:gray;color: white;">My Claim Count</ion-card-header>
-    <canvas #mycanvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" [options]="doughnutChartOptions"
-      [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+    <canvas #mycanvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+      [options]="doughnutChartOptions" [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
   </ion-card>
 
   <ion-card *ngIf="chart2" class="round3">
-      <ion-card-header style="background:gray;color: white;">My Claim Amount(RM)</ion-card-header>
-    <canvas #claimAmount baseChart [data]="claimAmountData" [labels]="claimAmountLabels" [chartType]="claimAmountChartType" [options]="claimAmountOptions"
-      [colors]="claimAmountChartColors" (chartHover)="claimAmountHovered($event)" (chartClick)="claimAmountClicked($event)"></canvas>
+    <ion-card-header style="background:gray;color: white;">My Claim Amount(RM)</ion-card-header>
+    <canvas #claimAmount baseChart [data]="claimAmountData" [labels]="claimAmountLabels" [chartType]="claimAmountChartType"
+      [options]="claimAmountOptions" [colors]="claimAmountChartColors" (chartHover)="claimAmountHovered($event)"
+      (chartClick)="claimAmountClicked($event)"></canvas>
   </ion-card>
 
   <div class="clear"></div>
- <!-- *ngIf="IsApprover" -->
- <ion-card  class="round30" *ngIf="IsApprover" (click)="Approver_Click()" color="war1">
+  <!-- *ngIf="IsApprover" -->
+  <ion-card class="round30" *ngIf="IsApprover" (click)="Approver_Click()" color="war1">
     <div class="icondash">
-        <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
-        <h2 class="dashhead">Pending Your Approval</h2>
-        <div text-right class="wordash">
-            <h1>RM {{ApproverLevel_PendAmount}}</h1>
-            <h3># this month: {{ApproverLevel_PendCount}}</h3>
-      
-          <p>Amount YTD: RM {{ApproverLevel_PendAmount_Year}}</p>
-          <p># YTD: {{ApproverLevel_PendCount_Year}}</p>
-        </div>
+      <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
+      <h2 class="dashhead">Pending Your Approval</h2>
+      <div text-right class="wordash">
+        <h1>RM {{ApproverLevel_PendAmount}}</h1>
+        <h3># this month: {{ApproverLevel_PendCount}}</h3>
+
+        <p>Amount YTD: RM {{ApproverLevel_PendAmount_Year}}</p>
+        <p># YTD: {{ApproverLevel_PendCount_Year}}</p>
       </div>
+    </div>
 
 
-</ion-card>
+  </ion-card>
 
-<!-- *ngIf="IsFinanceExecutive" -->
-<ion-card  class="round4" *ngIf="IsFinanceExecutive"  (click)="Finance_Executive_Click()" color="war3">
+  <!-- *ngIf="IsFinanceExecutive" -->
+  <ion-card class="round4" *ngIf="IsFinanceExecutive" (click)="Finance_Executive_Click()" color="war3">
     <div class="icondash">
-        <ion-icon name="eye" color="light" style="float: left; "></ion-icon>
-        <h2 class="dashhead">Pending Your Validation</h2>
-        <div text-right class="wordash">
-            <h1>RM {{FinanceExecLevel_PendAmt}}</h1>
-            <h3># this month: {{FinanceExecLevel_PendCount}}</h3>
-      
-          <p>Amount YTD: RM {{FinanceExecLevel_PendAmt_Year}}</p>
-          <p># YTD: {{FinanceExecLevel_PendCount_Year}}</p>
-        </div>
+      <ion-icon name="eye" color="light" style="float: left; "></ion-icon>
+      <h2 class="dashhead">Pending Your Validation</h2>
+      <div text-right class="wordash">
+        <h1>RM {{FinanceExecLevel_PendAmt}}</h1>
+        <h3># this month: {{FinanceExecLevel_PendCount}}</h3>
+
+        <p>Amount YTD: RM {{FinanceExecLevel_PendAmt_Year}}</p>
+        <p># YTD: {{FinanceExecLevel_PendCount_Year}}</p>
       </div>
+    </div>
 
 
-</ion-card>
-<!-- *ngIf="IsFinanceManager" -->
-<ion-card  class="round30" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war2">
+  </ion-card>
+  <!-- *ngIf="IsFinanceManager" -->
+  <ion-card class="round30" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war2">
     <div class="icondash">
-        <ion-icon name="filing" color="light" style="float: left; "></ion-icon>
-        <h2 class="dashhead">Pending Your Payment</h2>
-        <div text-right class="wordash">
-            <h1>RM {{FinanceMgrLevel_PendAmt}}</h1>
-            <h3># this month: {{FinanceMgrLevel_PendCount}}</h3>
-      
-          <p>Amount YTD: RM {{FinanceMgrLevel_PendAmt_Year}}</p>
-          <p># YTD: {{FinanceMgrLevel_PendCount_Year}}</p>
-        </div>
-      </div>
+      <ion-icon name="filing" color="light" style="float: left; "></ion-icon>
+      <h2 class="dashhead">Pending Your Payment</h2>
+      <div text-right class="wordash">
+        <h1>RM {{FinanceMgrLevel_PendAmt}}</h1>
+        <h3># this month: {{FinanceMgrLevel_PendCount}}</h3>
 
-</ion-card>
+        <p>Amount YTD: RM {{FinanceMgrLevel_PendAmt_Year}}</p>
+        <p># YTD: {{FinanceMgrLevel_PendCount_Year}}</p>
+      </div>
+    </div>
+
+  </ion-card>
 
   <ion-card (click)="Rejected_Click()" class="round33" color="mac">
-      <div class="icondash">
-          <ion-icon name="close-circle" color="light" style="float: left; "></ion-icon>
-          <h2 class="dashhead">Rejected</h2>
-          <div text-right class="wordash">
-            <h1>RM {{Rejected_Claim_Amount}}</h1>
-            <h3># this month: {{Rejected_Claim_Count}}</h3>
-        
-            <p>Amount YTD: RM {{RejectedClaimAmount_year}}</p>
-            <p># YTD: {{RejectedClaimCount_year}}</p>
-          </div>
-        </div>
+    <div class="icondash">
+      <ion-icon name="close-circle" color="light" style="float: left; "></ion-icon>
+      <h2 class="dashhead">Rejected</h2>
+      <div text-right class="wordash">
+        <h1>RM {{Rejected_Claim_Amount}}</h1>
+        <h3># this month: {{Rejected_Claim_Count}}</h3>
+
+        <p>Amount YTD: RM {{RejectedClaimAmount_year}}</p>
+        <p># YTD: {{RejectedClaimCount_year}}</p>
+      </div>
+    </div>
   </ion-card>
 
 
@@ -125,59 +126,59 @@
         </div>
   </ion-card> -->
 
-  <ion-card  (click)="Validated_Click()" class="round33" color="primary500">
-      <div class="icondash">
-          <!-- <h2 class="dashhead">Approved</h2> -->
-          <h2 class="dashhead">Validated</h2>
-        <ion-icon name="checkmark-circle-outline" color="light" style="float: left; "></ion-icon>
-        <div text-right class="wordash">
-          <h1>RM {{Approved_Claim_Amount}}</h1>
-          <h3># this month: {{Approved_Claim_Count}}</h3>
-          <p>Amount YTD: RM {{ApprovedClaimAmount_year }}</p>
-          <p># YTD: {{ApprovedClaimCount_year}}</p>
-        </div>
+  <ion-card (click)="Validated_Click()" class="round33" color="primary500">
+    <div class="icondash">
+      <!-- <h2 class="dashhead">Approved</h2> -->
+      <h2 class="dashhead">Validated</h2>
+      <ion-icon name="checkmark-circle-outline" color="light" style="float: left; "></ion-icon>
+      <div text-right class="wordash">
+        <h1>RM {{Approved_Claim_Amount}}</h1>
+        <h3># this month: {{Approved_Claim_Count}}</h3>
+        <p>Amount YTD: RM {{ApprovedClaimAmount_year }}</p>
+        <p># YTD: {{ApprovedClaimCount_year}}</p>
       </div>
+    </div>
 
 
   </ion-card>
 
-  <ion-card  class="round33" (click)="Paid_Click()" color="primary200">
-      <div class="icondash">
-          <h2 class="dashhead">Previous month paid</h2>
-        <ion-icon name="logo-usd" color="light" style="float: left; "></ion-icon>
-        <div text-right class="wordash">
-          <h1>RM {{PaidClaimAmount}}</h1>
-          <h3># previous month: {{PaidReqCount}}</h3>
-          <p>Amount YTD: RM {{PaidClaimAmount_year}}</p>
-          <p># YTD: {{PaidClaimCount_year}}</p>
-        </div>
+  <ion-card class="round33" (click)="Paid_Click()" color="primary200">
+    <div class="icondash">
+      <h2 class="dashhead">Paid</h2>
+      <ion-icon name="logo-usd" color="light" style="float: left; "></ion-icon>
+      <div text-right class="wordash">
+        <h1>RM {{PaidClaimAmount}}</h1>
+        <h3># previous month: {{PaidReqCount}}</h3>
+        <p>Amount YTD: RM {{PaidClaimAmount_year}}</p>
+        <p># YTD: {{PaidClaimCount_year}}</p>
       </div>
+    </div>
   </ion-card>
   <ion-card (click)="Pending_Click()" class="round30" color="war">
     <div class="icondash">
-        <!-- <h2 class="dashhead">Pending Superior Approval</h2> -->
-        <h2 class="dashhead">Pending</h2>
-        <ion-icon name="alert" color="light" style="float: left;color:gray; "></ion-icon>
-        <div text-right class="wordash">
-          <h1>RM {{Pending_Claim_Amount_Superior}}</h1>
-          <h3># this month: {{Pending_Claim_Count_Superior}}</h3>
-         <p>Amount YTD: RM {{PendingClaimAmount_year_Superior}}</p>
-          <p># YTD: {{PendingClaimCount_year_Superior}}</p>
-        </div>
+      <!-- <h2 class="dashhead">Pending Superior Approval</h2> -->
+      <h2 class="dashhead">Pending</h2>
+      <ion-icon name="alert" color="light" style="float: left;color:gray; "></ion-icon>
+      <div text-right class="wordash">
+        <h1>RM {{Pending_Claim_Amount_Superior}}</h1>
+        <h3># this month: {{Pending_Claim_Count_Superior}}</h3>
+        <p>Amount YTD: RM {{PendingClaimAmount_year_Superior}}</p>
+        <p># YTD: {{PendingClaimCount_year_Superior}}</p>
       </div>
-</ion-card>
-<ion-card (click)="Approved_Click()" class="round30" color="war4">
-  <div class="icondash">
+    </div>
+  </ion-card>
+  <ion-card (click)="Approved_Click()" class="round30" color="war4">
+    <div class="icondash">
       <!-- <h2 class="dashhead">Pending Finance Validation</h2> -->
       <h2 class="dashhead">Approved</h2>
       <ion-icon name="eye" color="light" style="float: left; "></ion-icon>
       <div text-right class="wordash">
         <h1>RM {{Pending_Claim_Amount_Finance}}</h1>
         <h3># this month: {{Pending_Claim_Count_Finance}}</h3>
-       <p>Amount YTD: RM {{PendingClaimAmount_year_Finance}}</p>
+        <p>Amount YTD: RM {{PendingClaimAmount_year_Finance}}</p>
         <p># YTD: {{PendingClaimCount_year_Finance}}</p>
       </div>
     </div>
-</ion-card>
-  
+  </ion-card>
+
 </ion-content>
