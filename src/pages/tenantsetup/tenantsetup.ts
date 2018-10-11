@@ -622,35 +622,35 @@ export class TenantsetupPage {
     else {
       this.userinfo_entry.USER_INFO_GUID = this.tenant_user_details[0]["USER_INFO_GUID"];            
       this.userinfo_entry.USER_GUID = this.usermain_entry.USER_GUID;
-      this.userinfo_entry.FULLNAME = this.tenantuserdetails[0]["CONTACT_PERSON"];
+      this.userinfo_entry.FULLNAME = this.tenant_user_details[0]["FULLNAME"];
 
-      this.userinfo_entry.MANAGER_USER_GUID = this.tenantuserdetails[0]["MANAGER_USER_GUID"];
-      this.userinfo_entry.PERSONAL_ID_TYPE = this.tenantuserdetails[0]["PERSONAL_ID_TYPE"];
-      this.userinfo_entry.PERSONAL_ID = this.tenantuserdetails[0]["PERSONAL_ID"];
-      this.userinfo_entry.DOB = this.tenantuserdetails[0]["DOB"];
-      this.userinfo_entry.GENDER = this.tenantuserdetails[0]["GENDER"];
-      this.userinfo_entry.JOIN_DATE = this.tenantuserdetails[0]["JOIN_DATE"];
-      this.userinfo_entry.MARITAL_STATUS = this.tenantuserdetails[0]["MARITAL_STATUS"];
-      this.userinfo_entry.BRANCH = this.tenantuserdetails[0]["BRANCH"];
-      this.userinfo_entry.EMPLOYEE_TYPE = this.tenantuserdetails[0]["EMPLOYEE_TYPE"];
-      this.userinfo_entry.APPROVER1 = this.tenantuserdetails[0]["APPROVER1"];
-      this.userinfo_entry.APPROVER2 = this.tenantuserdetails[0]["APPROVER2"];
-      this.userinfo_entry.EMPLOYEE_STATUS = this.tenantuserdetails[0]["EMPLOYEE_STATUS"];
-      this.userinfo_entry.DEPT_GUID = this.tenantuserdetails[0]["DEPT_GUID"];
-      this.userinfo_entry.DESIGNATION_GUID = this.tenantuserdetails[0]["DESIGNATION_GUID"];
-      this.userinfo_entry.RESIGNATION_DATE = this.tenantuserdetails[0]["RESIGNATION_DATE"];      
-      this.userinfo_entry.CONFIRMATION_DATE = this.tenantuserdetails[0]["CONFIRMATION_DATE"];
-      this.userinfo_entry.EMG_CONTACT_NAME_1 = this.tenantuserdetails[0]["EMG_CONTACT_NAME_1"];
-      this.userinfo_entry.EMG_RELATIONSHIP_1 = this.tenantuserdetails[0]["EMG_RELATIONSHIP_1"];
-      this.userinfo_entry.EMG_CONTACT_NUMBER_1 = this.tenantuserdetails[0]["EMG_CONTACT_NUMBER_1"];
-      this.userinfo_entry.EMG_CONTACT_NAME_2 = this.tenantuserdetails[0]["EMG_CONTACT_NAME_2"];
-      this.userinfo_entry.EMG_RELATIONSHIP_2 = this.tenantuserdetails[0]["EMG_RELATIONSHIP_2"];
-      this.userinfo_entry.EMG_CONTACT_NUMBER_2 = this.tenantuserdetails[0]["EMG_CONTACT_NUMBER_2"];
-      this.userinfo_entry.PR_EPF_NUMBER = this.tenantuserdetails[0]["PR_EPF_NUMBER"];
-      this.userinfo_entry.PR_INCOMETAX_NUMBER = this.tenantuserdetails[0]["PR_INCOMETAX_NUMBER"];
-      this.userinfo_entry.BANK_GUID = this.tenantuserdetails[0]["BANK_GUID"];
-      this.userinfo_entry.PR_ACCOUNT_NUMBER = this.tenantuserdetails[0]["PR_ACCOUNT_NUMBER"];
-      this.userinfo_entry.ATTACHMENT_ID = this.tenantuserdetails[0]["ATTACHMENT_ID"];
+      this.userinfo_entry.MANAGER_USER_GUID = this.tenant_user_details[0]["MANAGER_USER_GUID"];
+      this.userinfo_entry.PERSONAL_ID_TYPE = this.tenant_user_details[0]["PERSONAL_ID_TYPE"];
+      this.userinfo_entry.PERSONAL_ID = this.tenant_user_details[0]["PERSONAL_ID"];
+      this.userinfo_entry.DOB = this.tenant_user_details[0]["DOB"];
+      this.userinfo_entry.GENDER = this.tenant_user_details[0]["GENDER"];
+      this.userinfo_entry.JOIN_DATE = this.tenant_user_details[0]["JOIN_DATE"];
+      this.userinfo_entry.MARITAL_STATUS = this.tenant_user_details[0]["MARITAL_STATUS"];
+      this.userinfo_entry.BRANCH = this.tenant_user_details[0]["BRANCH"];
+      this.userinfo_entry.EMPLOYEE_TYPE = this.tenant_user_details[0]["EMPLOYEE_TYPE"];
+      this.userinfo_entry.APPROVER1 = this.tenant_user_details[0]["APPROVER1"];
+      this.userinfo_entry.APPROVER2 = this.tenant_user_details[0]["APPROVER2"];
+      this.userinfo_entry.EMPLOYEE_STATUS = this.tenant_user_details[0]["EMPLOYEE_STATUS"];
+      this.userinfo_entry.DEPT_GUID = this.tenant_user_details[0]["DEPT_GUID"];
+      this.userinfo_entry.DESIGNATION_GUID = this.tenant_user_details[0]["DESIGNATION_GUID"];
+      this.userinfo_entry.RESIGNATION_DATE = this.tenant_user_details[0]["RESIGNATION_DATE"];      
+      this.userinfo_entry.CONFIRMATION_DATE = this.tenant_user_details[0]["CONFIRMATION_DATE"];
+      this.userinfo_entry.EMG_CONTACT_NAME_1 = this.tenant_user_details[0]["EMG_CONTACT_NAME_1"];
+      this.userinfo_entry.EMG_RELATIONSHIP_1 = this.tenant_user_details[0]["EMG_RELATIONSHIP_1"];
+      this.userinfo_entry.EMG_CONTACT_NUMBER_1 = this.tenant_user_details[0]["EMG_CONTACT_NUMBER_1"];
+      this.userinfo_entry.EMG_CONTACT_NAME_2 = this.tenant_user_details[0]["EMG_CONTACT_NAME_2"];
+      this.userinfo_entry.EMG_RELATIONSHIP_2 = this.tenant_user_details[0]["EMG_RELATIONSHIP_2"];
+      this.userinfo_entry.EMG_CONTACT_NUMBER_2 = this.tenant_user_details[0]["EMG_CONTACT_NUMBER_2"];
+      this.userinfo_entry.PR_EPF_NUMBER = this.tenant_user_details[0]["PR_EPF_NUMBER"];
+      this.userinfo_entry.PR_INCOMETAX_NUMBER = this.tenant_user_details[0]["PR_INCOMETAX_NUMBER"];
+      this.userinfo_entry.BANK_GUID = this.tenant_user_details[0]["BANK_GUID"];
+      this.userinfo_entry.PR_ACCOUNT_NUMBER = this.tenant_user_details[0]["PR_ACCOUNT_NUMBER"];
+      this.userinfo_entry.ATTACHMENT_ID = this.tenant_user_details[0]["ATTACHMENT_ID"];
 
       this.userinfo_entry.TENANT_COMPANY_GUID = localStorage.getItem('PREV_TENANT_COMPANY_GUID');
       this.userinfo_entry.TENANT_COMPANY_SITE_GUID = localStorage.getItem('PREV_TENANT_COMPANY_SITE_GUID');
@@ -690,15 +690,15 @@ export class TenantsetupPage {
     }
     else {
       this.useraddress_entry.USER_ADDRESS_GUID = this.tenant_user_details[0]["USER_ADDRESS_GUID"];
-      this.useraddress_entry.ADDRESS_TYPE = this.tenantuserdetails[0]["ADDRESS_TYPE"];
-      this.useraddress_entry.USER_ADDRESS1 = this.tenantuserdetails[0]["ADDRESS1"];
-      this.useraddress_entry.USER_ADDRESS2 = this.tenantuserdetails[0]["ADDRESS2"];
-      this.useraddress_entry.USER_ADDRESS3 = this.tenantuserdetails[0]["ADDRESS3"];      
+      this.useraddress_entry.ADDRESS_TYPE = this.tenant_user_details[0]["ADDRESS_TYPE"];
+      this.useraddress_entry.USER_ADDRESS1 = this.tenant_user_details[0]["ADDRESS1"];
+      this.useraddress_entry.USER_ADDRESS2 = this.tenant_user_details[0]["ADDRESS2"];
+      this.useraddress_entry.USER_ADDRESS3 = this.tenant_user_details[0]["ADDRESS3"];      
       this.useraddress_entry.USER_GUID = this.usermain_entry.USER_GUID;
 
-      this.useraddress_entry.POST_CODE = this.tenantuserdetails[0]["POST_CODE"];
-      this.useraddress_entry.COUNTRY_GUID = this.tenantuserdetails[0]["COUNTRY_GUID"];
-      this.useraddress_entry.STATE_GUID = this.tenantuserdetails[0]["STATE_GUID"];
+      this.useraddress_entry.POST_CODE = this.tenant_user_details[0]["POST_CODE"];
+      this.useraddress_entry.COUNTRY_GUID = this.tenant_user_details[0]["COUNTRY_GUID"];
+      this.useraddress_entry.STATE_GUID = this.tenant_user_details[0]["STATE_GUID"];
 
       this.useraddress_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
       this.useraddress_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
@@ -733,10 +733,10 @@ export class TenantsetupPage {
         });
     }
     else {
-      this.usercontact_entry.TYPE = this.tenantuserdetails[0]["TYPE"];    
-      this.usercontact_entry.DESCRIPTION = this.tenantuserdetails[0]["DESCRIPTION"];
-      this.usercontact_entry.REMARKS = this.tenantuserdetails[0]["REMARKS"];  
-      this.usercontact_entry.CONTACT_NO = this.tenantuserdetails[0]["CONTACT_NO"];
+      this.usercontact_entry.TYPE = this.tenant_user_details[0]["TYPE"];    
+      this.usercontact_entry.DESCRIPTION = this.tenant_user_details[0]["DESCRIPTION"];
+      this.usercontact_entry.REMARKS = this.tenant_user_details[0]["REMARKS"];  
+      this.usercontact_entry.CONTACT_NO = this.tenant_user_details[0]["CONTACT_NO"];
       this.usercontact_entry.CONTACT_INFO_GUID = this.tenant_user_details[0]["CONTACT_INFO_GUID"];
       this.usercontact_entry.USER_GUID = this.usermain_entry.USER_GUID;
       this.usercontact_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
@@ -773,7 +773,7 @@ export class TenantsetupPage {
         });
     }
     else {
-      this.usercompany_entry.COMPANY_CONTACT_NO = this.tenantuserdetails[0]["COMPANY_CONTACT_NO"];
+      this.usercompany_entry.COMPANY_CONTACT_NO = this.tenant_user_details[0]["COMPANY_CONTACT_NO"];
       this.usercompany_entry.USER_COMPANY_GUID = this.tenant_user_details[0]["USER_COMPANY_GUID"];
       this.usercompany_entry.USER_GUID = this.usermain_entry.USER_GUID;
       this.usercompany_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
