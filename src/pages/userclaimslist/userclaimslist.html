@@ -11,7 +11,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>My Claim History</ion-title>
+    <ion-title>{{ "HISTORY" | translate }}</ion-title>
 
   </ion-navbar>
   <!-- [disabled]="! isValid" (click)="SearchClick()" [disabled]="btnSearch"-->
@@ -31,7 +31,7 @@
 
 
   <ion-item class="fuha">
-    <ion-label>Claim Type:</ion-label>
+    <ion-label>{{ "CLAIM_TYPE" | translate }}</ion-label>
     <ion-select interface="popover" #ddlClaimTypes>
       <ion-option [value]="All" [selected]="true">All</ion-option>
       <ion-option *ngFor="let claimType of claimTypeList" [value]="claimType.CLAIM_TYPE_GUID">{{claimType.NAME}}</ion-option>
@@ -39,7 +39,7 @@
   </ion-item>
 
   <ion-item class="fuha">
-    <ion-label>Status:</ion-label>
+    <ion-label>{{ "LIST_STATUS" | translate }}</ion-label>
     <ion-select interface="popover" #ddlStatus>
       <ion-option [value]="All" [selected]="true">All</ion-option>
      
@@ -53,7 +53,7 @@
   </ion-item>
 
   <ion-item class="fuha">
-    <ion-label>Claim Month :</ion-label>
+    <ion-label>{{ "CLAIM_MONTH" | translate }}</ion-label>
     <ion-select interface="popover" #ddlmonth>
       <ion-option [value]="All" [selected]="true">All</ion-option>
       <ion-option value="Jan">Jan</ion-option>
@@ -73,7 +73,7 @@
 
 
   <ion-item class="fuha">
-    <ion-label>Year:</ion-label>
+    <ion-label>{{ "LIST_YEAR" | translate }}</ion-label>
     <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
       <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
     </ion-select>
@@ -110,7 +110,7 @@
           <th class="lgl1" style="width:90px">Status</th>
           <!-- <th class="lgl1" style="width:140px">Stage</th> -->
           <th class="lgl1" style="width:140px">Remarks</th>
-          <th class="lgl1"  style="width:96px">Amount(RM)</th>
+          <th class="lgl1"  style="width:96px">Amount({{currency }})</th>
           <th class="lgl1 tblBrRight" style="width:125px">Action</th>
 
 
@@ -151,7 +151,7 @@
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">EXPORT TO EXCEL</div>
+        <div class="icHeaderText">{{ "EXPORT_TO_EXCEL" | translate }}</div>
 
         <button class="btnR" (click)="CloseExportExcel()">
           <ion-icon name="md-close"></ion-icon>

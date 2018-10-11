@@ -40,8 +40,10 @@ export class DashboardPage {
   Pending_Claim_Count_Superior = 0; Pending_Claim_Amount_Superior = '0.00';
   Pending_Claim_Count_Finance = 0; Pending_Claim_Amount_Finance = '0.00';
 
-  PendingClaimCount_year_Superior: any; PendingClaimAmount_year_Superior: any;
-  PendingClaimCount_year_Finance: any; PendingClaimAmount_year_Finance: any;
+
+  PendingClaimCount_year_Superior: any;PendingClaimAmount_year_Superior: any;
+  PendingClaimCount_year_Finance: any;PendingClaimAmount_year_Finance: any;
+  currency = localStorage.getItem("cs_default_currency")
 
   Approved_Claim_Count = 0; Approved_Claim_Amount = '0.00';
   baseResourceUrl_Card: any; Year_Card: any;

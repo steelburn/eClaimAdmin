@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar color="primary200">
-        <ion-title>Tenant Setup</ion-title>
+        <ion-title>{{ "TENANAT_SETUP" | translate }}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -155,8 +155,8 @@
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
-                <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW TENANT</div>
-                <div class="icHeaderText" *ngIf="Edit_Form">UPDATE TENANT</div>
+                <div class="icHeaderText" *ngIf="Add_Form">{{ "REGISTER_NEW_TENANT" | translate }}</div>
+                <div class="icHeaderText" *ngIf="Edit_Form">{{ "UPDATE_TENANT" | translate }}</div>
 
                 <button class="btnR" (click)="CloseTenantClick()">
                     <ion-icon name="md-close"></ion-icon>
@@ -166,96 +166,91 @@
                 <form [formGroup]="Tenantform">
 
                     <div class="eClaimSubTitle1">
-                        <b>ACCOUNT DETAILS</b>
+                        <b>{{ "ACCOUNT_DETAILS" | translate }}</b>
                     </div>
                     <ion-item>
-                        <ion-label stacked>{{"Name"}}</ion-label>
-                        <ion-input type="text" formControlName="TENANT_NAME" [(ngModel)]="TENANT_NAME_ngModel_Add"
-                            placeholder="{{'Please fill in the name of the tenant'}}"></ion-input>
+
+                        <ion-label stacked>{{ "NAME" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="TENANT_NAME" [(ngModel)]="TENANT_NAME_ngModel_Add" placeholder="{{'Please fill in the name of the tenant'}}"></ion-input>
+
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Effective Date"}}</ion-label>
+                        <ion-label stacked>{{ "EFFECTIVE_DATE" | translate }}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Company Name"}}</ion-label>
-                        <ion-input type="text" formControlName="TENANT_COMPANY_NAME" [(ngModel)]="TENANT_COMPANY_NAME_ngModel_Add"
-                            placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
+
+                        <ion-label stacked>{{ "COMPANY_NAME" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="TENANT_COMPANY_NAME" [(ngModel)]="TENANT_COMPANY_NAME_ngModel_Add" placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Site Name"}}</ion-label>
-                        <ion-input type="text" formControlName="COMPANY_SITE_NAME" [(ngModel)]="COMPANY_SITE_NAME_ngModel_Add"
-                            placeholder="{{'Please fill in the site name of the company'}}"></ion-input>
+                        <ion-label stacked>{{ "SITE_NAME" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="COMPANY_SITE_NAME" [(ngModel)]="COMPANY_SITE_NAME_ngModel_Add" placeholder="{{'Please fill in the site name of the company'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Registration Number"}}</ion-label>
-                        <ion-input type="text" formControlName="REGISTRATION_NUM" [(ngModel)]="REGISTRATION_NUM_ngModel_Add"
-                            placeholder="{{'Please fill registration no'}}"></ion-input>
+                        <ion-label stacked>{{ "REGISTRATION_NO" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="REGISTRATION_NUM" [(ngModel)]="REGISTRATION_NUM_ngModel_Add" placeholder="{{'Please fill registration no'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Address 1"}}</ion-label>
-                        <ion-input type="text" formControlName="ADDRESS1" [(ngModel)]="ADDRESS1_ngModel_Add"
-                            placeholder="{{'Please fill in the Address 1'}}"></ion-input>
+                        <ion-label stacked>{{ "ADDRESS_1" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="ADDRESS1" [(ngModel)]="ADDRESS1_ngModel_Add" placeholder="{{'Please fill in the Address 1'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Address 2"}}</ion-label>
-                        <ion-input type="text" formControlName="ADDRESS2" [(ngModel)]="ADDRESS2_ngModel_Add"
-                            placeholder="{{'Please fill in the Address 2'}}"></ion-input>
+                        <ion-label stacked>{{ "ADDRESS_2" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="ADDRESS2" [(ngModel)]="ADDRESS2_ngModel_Add" placeholder="{{'Please fill in the Address 2'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Address 3"}}</ion-label>
-                        <ion-input type="text" formControlName="ADDRESS3" [(ngModel)]="ADDRESS3_ngModel_Add"
-                            placeholder="{{'Please fill in the Address 3'}}"></ion-input>
+                        <ion-label stacked>{{ "ADDRESS_3" | translate }}{{"Address 3"}}</ion-label>
+                        <ion-input type="text" formControlName="ADDRESS3" [(ngModel)]="ADDRESS3_ngModel_Add" placeholder="{{'Please fill in the Address 3'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Contact Number"}}</ion-label>
-                        <ion-input type="number" formControlName="CONTACT_NO" type="number" [(ngModel)]="CONTACTNO_ngModel_Add"
-                            placeholder="{{'Please fill contact No'}}"></ion-input>
+                        <ion-label stacked>{{ "CONTACT_NO" | translate }}</ion-label>
+                        <ion-input type="number" formControlName="CONTACT_NO" type="number" [(ngModel)]="CONTACTNO_ngModel_Add" placeholder="{{'Please fill contact No'}}"></ion-input>
+
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Email Address"}}</ion-label>
+                        <ion-label stacked>{{ "EMAIL_ADDRESS" | translate }}</ion-label>
                         <ion-input type="text" formControlName="EMAIL" [(ngModel)]="EMAIL_ngModel_Add" placeholder="{{'Please fill E-Mail'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Contact Person"}}</ion-label>
-                        <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="CONTACT_PERSON_ngModel_Add"
-                            placeholder="{{'Please fill contact person'}}"></ion-input>
+
+                        <ion-label stacked>{{ "CONTACT_PERSON" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="CONTACT_PERSON_ngModel_Add" placeholder="{{'Please fill contact person'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Contact Person Number"}}</ion-label>
-                        <ion-input type="number" formControlName="CONTACT_PERSON_NO" [(ngModel)]="CONTACT_PERSON_NO_ngModel_Add"
-                            placeholder="{{'Please fill contact person No'}}"></ion-input>
+                        <ion-label stacked>{{ "CUSTOMER_MOBILE_NO" | translate }}</ion-label>
+                        <ion-input type="number" formControlName="CONTACT_PERSON_NO" [(ngModel)]="CONTACT_PERSON_NO_ngModel_Add" placeholder="{{'Please fill contact person No'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Contact Person Email"}}</ion-label>
-                        <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="CONTACT_PERSON_EMAIL_ngModel_Add"
-                            placeholder="{{'Please fill contact person email'}}"></ion-input>
+                        <ion-label stacked>{{ "CONTACT_PERSON_EMAIL" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="CONTACT_PERSON_EMAIL_ngModel_Add" placeholder="{{'Please fill contact person email'}}"></ion-input>
+
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Website"}}</ion-label>
+                        <ion-label stacked>{{ "WEBSITE" | translate }}</ion-label>
                         <ion-input type="text" formControlName="WEBSITE" [(ngModel)]="WEBSITE_ngModel_Add" placeholder="{{'Please fill website'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Is it HQ"}}</ion-label>
+                        <ion-label stacked>{{ "IS_IT_HQ" | translate }}</ion-label>
                         <ion-toggle formControlName="ISHQ_FLAG" [(ngModel)]="ISHQ_FLAG_ngModel_Add"></ion-toggle>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Active Flag"}}</ion-label>
+                        <ion-label stacked>{{ "ACTIVE_FLAG" | translate }}</ion-label>
                         <ion-toggle formControlName="ACTIVE_FLAG" [(ngModel)]="ACTIVE_FLAG_ngModel_Add"></ion-toggle>
                     </ion-item>
 
@@ -280,7 +275,7 @@
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
 
-                <div class="icHeaderText">UPDATE TENANT</div>
+                <div class="icHeaderText">{{ "UPDATE_TENANT" | translate }}T</div>
                 <button class="btnR" (click)="CloseTenantClick()">
                     <ion-icon name="md-close"></ion-icon>
                 </button>
@@ -290,18 +285,19 @@
 
 
                     <ion-item>
-                        <ion-label stacked>{{"Name"}}</ion-label>
-                        <ion-input type="text" formControlName="COMPANY_SITE_NAME" [(ngModel)]="SITE_NAME_ngModel_Edit"
-                            placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
+
+                        <ion-label stacked>{{ "NAME" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="COMPANY_SITE_NAME" [(ngModel)]="SITE_NAME_ngModel_Edit" placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
+
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Effective Date"}}</ion-label>
+                        <ion-label stacked>{{ "EFFECTIVE_DATE" | translate }}</ion-label>
                         <ion-datetime displayFormat="DD/MM/YYYY" placeholder="{{'Please choose your effective date'}}"></ion-datetime>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>{{"Active Flag"}}</ion-label>
+                        <ion-label stacked>{{ "ACTIVE_FLAG" | translate }}</ion-label>
                         <ion-toggle></ion-toggle>
 
                     </ion-item>
@@ -326,7 +322,7 @@
 
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
-                <div class="icHeaderText">ADD USER</div>
+                <div class="icHeaderText">{{ "ADD_USER" | translate }}</div>
 
                 <button class="btnR" (click)="CloseTUserClick()">
                     <ion-icon name="md-close"></ion-icon>
@@ -398,8 +394,8 @@
         <ion-card class="cm">
             <ion-card-header class="icTitle headerColor-white ">
 
-                <div class="icHeaderText" *ngIf="Add_User_Form">ASSIGN USER</div>
-                <div class="icHeaderText" *ngIf="Edit_User_Form">UPDATE USER</div>
+                <div class="icHeaderText" *ngIf="Add_User_Form">{{ "ASSIGN_USER" | translate }}</div>
+                <div class="icHeaderText" *ngIf="Edit_User_Form">{{ "UPDATE_USER" | translate }}</div>
 
                 <button class="btnR" (click)="CloseTTUserClick()">
                     <ion-icon name="md-close"></ion-icon>
@@ -408,21 +404,21 @@
             <ion-list class="scroll">
                 <form [formGroup]="TenantUSerform">
                     <ion-item style="display: none">
-                        <ion-label stacked>User Login ID</ion-label>
-                        <ion-input type="text" formControlName="TULOGINID" [(ngModel)]="User_Loginid_ngModel_Add"
-                            placeholder="{{'Please fill in the user login ID'}}"></ion-input>
+
+                        <ion-label stacked>{{ "USER_LOGIN" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="TULOGINID" [(ngModel)]="User_Loginid_ngModel_Add" placeholder="{{'Please fill in the user login ID'}}"></ion-input>
                     </ion-item>
 
                     <ion-item style="display: none;">
-                        <ion-label stacked>Password</ion-label>
-                        <ion-input type="password" formControlName="TUPASSWORD" [(ngModel)]="User_Password_ngModel_Add"
-                            placeholder="{{'Please fill in the login password'}}"></ion-input>
+                        <ion-label stacked>{{ "PASSWORD_LABEL" | translate }}</ion-label>
+                        <ion-input type="password" formControlName="TUPASSWORD" [(ngModel)]="User_Password_ngModel_Add" placeholder="{{'Please fill in the login password'}}"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label stacked>Email</ion-label>
-                        <ion-input type="text" formControlName="TUEMAIL" [(ngModel)]="User_Email_ngModel_Add"
-                            placeholder="{{'Please fill in the email of the user'}}" (change)='onChange($event)'></ion-input>
+                        <ion-label stacked>{{ "EMAIL" | translate }}</ion-label>
+                        <ion-input type="text" formControlName="TUEMAIL" [(ngModel)]="User_Email_ngModel_Add" placeholder="{{'Please fill in the email of the user'}}"
+                            (change)='onChange($event)'></ion-input>
+
 
                     </ion-item>
 
@@ -432,7 +428,7 @@
                     </ion-item> -->
 
                     <ion-item>
-                        <ion-label stacked>{{"User Role"}}</ion-label>
+                        <ion-label stacked>{{ "USER_ROLE" | translate }}</ion-label>
                         <ion-select formControlName="TUSERROLE" [(ngModel)]="User_Role_ngModel_Add" placeholder="{{'Please fill the Role'}}">
                             <ion-option *ngFor="let role of roles" value="{{role.ROLE_GUID}}">{{role.NAME}}</ion-option>
                         </ion-select>
