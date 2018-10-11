@@ -346,7 +346,7 @@ export class UserSetup_Service {
 		// 		return response;
 		// 	});
 
-		let url_multiple = this.baseResource_Url + tablename + "?filter=(USER_GUID=" + id + ")";
+		let url_multiple = this.baseResource_Url + tablename + "?filter=(USER_GUID=" + id + ")AND(ROLE_FLAG=ADDITIONAL)";
 
 		var queryHeaders = new Headers();
 		queryHeaders.append('Content-Type', 'application/json');
