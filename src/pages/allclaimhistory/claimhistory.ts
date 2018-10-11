@@ -46,7 +46,7 @@ export class AllClaimhistoryPage {
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
   loginUserRole:string;
-  // claimhistoryTotal: any[];
+  currency = localStorage.getItem("cs_default_currency")
 
   // baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistory?filter=(TENANT_COMPANY_SITE_GUID=' + localStorage.getItem("g_TENANT_COMPANY_SITE_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResourceUrl: string;

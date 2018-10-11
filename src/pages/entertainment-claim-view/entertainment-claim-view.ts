@@ -24,7 +24,7 @@ export class EntertainmentClaimViewPage {
   ToggleNgModel: any;
   Approver_GUID: any;
   isApprover: any;
-  //isRemarksAccepted: boolean =false;
+  currency = localStorage.getItem("cs_default_currency")
   isRemarksAccepted: any;
   level: any;
   approverDesignation: any;

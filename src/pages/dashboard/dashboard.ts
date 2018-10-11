@@ -42,7 +42,7 @@ export class DashboardPage {
 
   PendingClaimCount_year_Superior: any;PendingClaimAmount_year_Superior: any;
   PendingClaimCount_year_Finance: any;PendingClaimAmount_year_Finance: any;
-
+  currency = localStorage.getItem("cs_default_currency")
   Approved_Claim_Count = 0; Approved_Claim_Amount = '0.00';
   baseResourceUrl_Card: any; Year_Card: any;
   RejectedClaimCount_year: any; PendingClaimCount_year: any; ApprovedClaimCount_year: any;

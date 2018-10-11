@@ -45,7 +45,7 @@
         <th align="center" bgcolor="#002060" style="width: 3%;">Mode</th>
         <th align="center" bgcolor="#002060" style="width: 20%;">From</th>
         <th align="center" bgcolor="#002060" style="width: 20%;">To</th>
-        <th align="center" bgcolor="#002060" style="width: 5%;">Amount (RM)</th>
+        <th align="center" bgcolor="#002060" style="width: 5%;">Amount ({{currency }})</th>
       </tr>
 
       <!-- Odd number styling-->
@@ -66,7 +66,7 @@
             {{claim.DESCRIPTION}}
           </span>
           <span *ngIf="claim.RowNum==3 && claim.TYPE==='TRV'">
-            ({{claim.DISTANCE_KM}}KM * RM{{claim.RATE_PER_UNIT| number:'1.2-2'}})
+            ({{claim.DISTANCE_KM}}KM * {{currency }}{{claim.RATE_PER_UNIT| number:'1.2-2'}})
           </span>
           <span *ngIf="claim.RowNum==4 && claim.TYPE==='TRV' && claim.TollAmount!==0">
             Toll
@@ -152,7 +152,7 @@
         <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
           <tr style="color:#ffffff;">
             <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
-            <td align="right" bgcolor="#002060">Amount (RM)</td>
+            <td align="right" bgcolor="#002060">Amount ({{currency }})</td>
           </tr>
           <tr *ngFor="let claim of claimsListSummary">
             <td align="left" bgcolor="#ffffff">&nbsp;</td>
@@ -182,7 +182,7 @@
 
             <tr style="color:#ffffff;">
                 <td align="center" bgcolor="#002060">SOC / Customer Name</td>
-                <td align="right" bgcolor="#002060">Amount (RM)</td>
+                <td align="right" bgcolor="#002060">Amount ({{currency }})</td>
               </tr>
 
           <tr *ngFor="let i of claimsSocSummary">

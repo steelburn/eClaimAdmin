@@ -23,6 +23,7 @@ export class GiftClaimViewPage {
   ToggleNgModel: any;
   Approver_GUID: any;
   isApprover: any;
+  currency = localStorage.getItem("cs_default_currency")
 
   isRemarksAccepted: boolean = false;
   level: any;
