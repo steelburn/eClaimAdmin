@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>SUB MODULE SETUP</ion-title>
+    <ion-title>{{ "SUB_MODULE" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -59,7 +59,7 @@
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">REGISTER NEW MODULE</div>
+        <div class="icHeaderText">{{ "REGISTER_MODULE" | translate}}</div>
         <button class="btnR" (click)="CloseSubModuleClick()">
           <ion-icon name="md-close"></ion-icon> 
         </button>
@@ -67,22 +67,22 @@
       <ion-list>
 
           <ion-item>
-            <ion-label stacked>{{"MODULE NAME"}}</ion-label>
+            <ion-label stacked>{{"S_MODULE_NAME" | translate}}</ion-label>
             <ion-input type="text" placeholder="{{'Please fill in the name of the module'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"SUB MODULE NAME"}}</ion-label>
+            <ion-label stacked>{{"SUB_MODULE_NAME" | translate}}</ion-label>
             <ion-input type="text" placeholder="{{'Please fill in the name of the submodule'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"DESCRIPTION"}}</ion-label>
+            <ion-label stacked>{{"S_DESCRIPTION" | translate}}</ion-label>
             <ion-input type="text" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"URL"}}</ion-label>
+            <ion-label stacked>{{"URL" | translate}}</ion-label>
             <ion-input type="text" placeholder="{{'Please fill in the URL of the module'}}"></ion-input>
           </ion-item>
           <div class="btn">

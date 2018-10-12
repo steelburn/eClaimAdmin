@@ -7,9 +7,11 @@
 <ion-header>
 
   <ion-navbar color="primary200">
-    <ion-title>Role Module Setup</ion-title>
+    <ion-title>{{ "ROLE_MODULE_SETUP" | translate }}</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
@@ -58,12 +60,12 @@
   <!-- add role module form start-->
   <div class="blackcontainer" *ngIf="AddRoleModuleClicked">
   </div>
-  <div class="popup" class="popscroll" padding *ngIf="AddRoleModuleClicked">
+  <div class="popscroll" style="top:100px;" padding *ngIf="AddRoleModuleClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">REGISTER NEW ROLE MODULE</div>
+        <div class="icHeaderText">{{ "REGISTER_ROLE_MODULE" | translate }}</div>
         <button class="btnR" (click)="CloseRoleModuleClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
@@ -73,7 +75,7 @@
 
         <form [formGroup]="Rolemoduleform">
           <ion-item>
-            <ion-label stacked>{{"Role"}}</ion-label>
+            <ion-label stacked>{{ "ROLE" | translate }}</ion-label>
             <ion-select formControlName="ROLENAME" [(ngModel)]="ROLENAME_ngModel_Add" placeholder="{{'Select Role'}}">
               <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
             </ion-select>
@@ -83,7 +85,7 @@
               <ion-card class="cb5 contentHeight3">
                 <ion-row>
                   <ion-item class="lgl1">
-                    <ion-label item-start>{{"AVAILABLE MODULES" | translate}}</ion-label>
+                    <ion-label item-start>{{"AVAILABLE_MODULES" | translate}}</ion-label>
                     <button item-end ion-button color="primary" (click)="SelectAllAvailableModule()">
                       <ion-icon name="ios-arrow-forward"></ion-icon>
                     </button>
@@ -104,7 +106,7 @@
               <ion-card>
                 <ion-row>
                   <ion-item class="lgl1">
-                    <ion-label item-start>{{"ASSIGNED MODULES" | translate}}</ion-label>
+                    <ion-label item-start>{{"ASSIGNED_MODULES" | translate}}</ion-label>
                     <button item-end ion-button color="primary" (click)="SelectAllAssignedModule()">
                       <ion-icon name="ios-arrow-back"></ion-icon>
                     </button>
@@ -135,12 +137,12 @@
   <!-- edit role module form start-->
   <div class="blackcontainer" *ngIf="EditRoleModuleClicked">
   </div>
-  <div class="popup" class="popscroll" padding *ngIf="EditRoleModuleClicked">
+  <div class="popscroll" style="top:100px;" padding *ngIf="EditRoleModuleClicked">
 
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">UPDATE ROLE MODULE</div>
+        <div class="icHeaderText">{{"UPDATE_ROLE_MODULE" | translate}}</div>
         <button class="btnR" (click)="CloseRoleModuleClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
@@ -150,7 +152,7 @@
 
         <form [formGroup]="Rolemoduleform">
           <ion-item>
-            <ion-label stacked>{{"Role"}}</ion-label>
+            <ion-label stacked>{{ "ROLE" | translate }}</ion-label>
             <ion-select formControlName="ROLENAME" [(ngModel)]="ROLENAME_ngModel_Edit" placeholder="{{'Select Role'}}">
               <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
             </ion-select>
@@ -159,7 +161,7 @@
             <ion-card class="cb5 contentHeight3">
               <ion-row>
                 <ion-item class="lgl1">
-                  <ion-label item-start>{{"AVAILABLE MODULES" | translate}}</ion-label>
+                  <ion-label item-start>{{"AVAILABLE_MODULES" | translate}}</ion-label>
                   <button item-end ion-button color="primary" (click)="SelectAllAvailableModule()">
                     <ion-icon name="ios-arrow-forward"></ion-icon>
                   </button>
@@ -180,7 +182,7 @@
             <ion-card class="cb5">
               <ion-row>
                 <ion-item class="lgl1">
-                  <ion-label item-start>{{"ASSIGNED MODULES" | translate}}</ion-label>
+                  <ion-label item-start>{{"ASSIGNED_MODULES" | translate}}</ion-label>
                   <button item-end ion-button color="primary" (click)="SelectAllAssignedModule()">
                     <ion-icon name="ios-arrow-back"></ion-icon>
                   </button>

@@ -103,7 +103,7 @@ export class AccountPage {
   public User_ACCOUNT_NUMBER_Edit_ngModel: any;
 
   //----------------ROLE DETAILS-------------------------------------
-  public ROLE_ngModel_Edit: any;
+  public ROLE_ngModel_Edit: any; ADDITIONAL_ROLE_ngModel_Edit: any;
 
   // constructor(public alertCtrl: AlertController, public nav: NavController, public userData: UserData, fb: FormBuilder) {
   constructor(private alertCtrl: AlertController, public nav: NavController, public userData: UserData, fb: FormBuilder, public viewCtrl: ViewController, public navParams: NavParams, public http: Http, private userservice: UserSetup_Service, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController, public platform: Platform, private titlecasePipe: TitleCasePipe) {
@@ -199,7 +199,8 @@ export class AccountPage {
         ACCOUNT_NUMBER: [null],
 
         //-------------------ROLE DETAILS---------------------------
-        ROLE_NAME: [null],
+        ROLE_NAME: [null], 
+        ADDITIONAL_ROLE_NAME: [null],
       });
 
       this.username_display = localStorage.getItem("g_FULLNAME");
@@ -444,7 +445,7 @@ export class AccountPage {
     //     });
 
     //------------------------Role-------------------------------
-    let CheckRole: any = [];
+    let CheckRole: any = []; let CheckAdditionalRole: any = [];
     let User_Role_url = this.baseResourceUrl2_URL + "user_role?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     this.http
@@ -453,9 +454,15 @@ export class AccountPage {
       .subscribe(data => {
         this.roles = data.resource;
         for (var itemA in this.roles) {
-          CheckRole.push(this.roles[itemA]["ROLE_GUID"]);
+          if (this.roles[itemA]["ROLE_FLAG"] == "MAIN") {
+            CheckRole.push(this.roles[itemA]["ROLE_GUID"]); localStorage.setItem("Main_Role_Guid_Temp", this.roles[itemA]["ROLE_GUID"]);
+          }
+          else {
+            CheckAdditionalRole.push(this.roles[itemA]["ROLE_GUID"]);
+          }
         }
         this.ROLE_ngModel_Edit = CheckRole;
+        this.ADDITIONAL_ROLE_ngModel_Edit = CheckAdditionalRole;
       });
   }
 
@@ -954,6 +961,7 @@ export class AccountPage {
 
       this.usermain_entry.UPDATE_TS = new Date().toISOString();
       this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.usermain_entry.IS_TENANT_ADMIN = this.view_user_details[0]["IS_TENANT_ADMIN"];
 
       this.userservice.update_user_main(this.usermain_entry)
         .subscribe((response) => {
@@ -1138,7 +1146,7 @@ export class AccountPage {
             this.Update_User_Certification();
             this.Update_User_Spouse();
             this.Update_User_Children();
-            this.Update_Role();
+            // this.Update_Role();
 
             alert('User updated successfully.');
             this.nav.setRoot(this.nav.getActive().component);

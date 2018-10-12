@@ -58,9 +58,9 @@ export class AdminsetupPage {
     this.navCtrl.push(RolesetupPage)
   }
 
-  goToRoleModulesetup() {
-    this.navCtrl.push(RolemodulesetupPage)
-  }
+  // goToRoleModulesetup() {
+  //   this.navCtrl.push(RolemodulesetupPage)
+  // }
 
   goToPagesetup() {
     this.navCtrl.push(PagesetupPage)

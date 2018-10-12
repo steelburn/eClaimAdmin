@@ -95,11 +95,30 @@ export class LoginPage {
                 .subscribe(data => {
                   let role_result = data["resource"];
                   if (role_result.length > 0) {
-                    localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
-                    localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
-                    localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
-                    localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
-                    localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
+
+                    localStorage.setItem("g_KEY_ADD", "0");
+                    localStorage.setItem("g_KEY_EDIT", "0");
+                    localStorage.setItem("g_KEY_DELETE", "0");
+                    localStorage.setItem("g_KEY_VIEW", "0");
+
+                    for (var item in role_result) {
+                      if (role_result[item]["ROLE_NAME"] == "MAIN") {
+                        localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
+                      }
+                      else {
+                        localStorage.setItem("g_ROLE_NAME", "");
+                      }
+                      if (role_result[0]["KEY_ADD"] == "1") { localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]); }
+                      if (role_result[0]["KEY_EDIT"] == "1") { localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]); }
+                      if (role_result[0]["KEY_DELETE"] == "1") { localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]); }
+                      if (role_result[0]["KEY_VIEW"] == "1") { localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]); }
+                    }
+
+                    // localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
+                    // localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
+                    // localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
+                    // localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
+                    // localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
                   }
                   else {
                     localStorage.setItem("g_KEY_VIEW", "1");
@@ -427,11 +446,30 @@ export class LoginPage {
                       .subscribe(data => {
                         let role_result = data["resource"];
                         if (role_result.length > 0) {
-                          localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
-                          localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
-                          localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
-                          localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
-                          localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
+
+                          localStorage.setItem("g_KEY_ADD", "0");
+                          localStorage.setItem("g_KEY_EDIT", "0");
+                          localStorage.setItem("g_KEY_DELETE", "0");
+                          localStorage.setItem("g_KEY_VIEW", "0");
+      
+                          for (var item in role_result) {
+                            if (role_result[item]["ROLE_NAME"] == "MAIN") {
+                              localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
+                            }
+                            else {
+                              localStorage.setItem("g_ROLE_NAME", "");
+                            }
+                            if (role_result[0]["KEY_ADD"] == "1") { localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]); }
+                            if (role_result[0]["KEY_EDIT"] == "1") { localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]); }
+                            if (role_result[0]["KEY_DELETE"] == "1") { localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]); }
+                            if (role_result[0]["KEY_VIEW"] == "1") { localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]); }
+                          }
+
+                          // localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
+                          // localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
+                          // localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
+                          // localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
+                          // localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
                         }
                         else {
                           localStorage.setItem("g_KEY_VIEW", "1");
@@ -495,7 +533,7 @@ export class LoginPage {
       .map(res => res.json())
       .subscribe(data => {
         this.KeyNameValueList = data.resource;
-        for (var item in this.KeyNameValueList) {          
+        for (var item in this.KeyNameValueList) {
           if (this.KeyNameValueList[item]["KEY_NAME"] == "date_format") { localStorage.setItem("cs_date_format", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "default_currency") { localStorage.setItem("cs_default_currency", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "email_logo") { localStorage.setItem("cs_email_logo", this.KeyNameValueList[item]["KEY_VALUE"]); }
@@ -505,8 +543,8 @@ export class LoginPage {
             var StartIndex = this.KeyNameValueList[item]["KEY_VALUE"].indexOf(",");
             var EndIndex = this.KeyNameValueList[item]["KEY_VALUE"].length - (StartIndex + 1);
             var KeyValue = this.KeyNameValueList[item]["KEY_VALUE"].substr(StartIndex + 1, EndIndex);
-                        
-            localStorage.setItem("cs_default_country", KeyValue); 
+
+            localStorage.setItem("cs_default_country", KeyValue);
           }
 
           if (this.KeyNameValueList[item]["KEY_NAME"] == "max_claim_amt") { localStorage.setItem("cs_max_claim_amt", this.KeyNameValueList[item]["KEY_VALUE"]); }
@@ -516,7 +554,7 @@ export class LoginPage {
           if (this.KeyNameValueList[item]["KEY_NAME"] == "month_end") { localStorage.setItem("cs_year_end_month", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "approval_cutoff_date") { localStorage.setItem("cs_approval_cutoff_date", this.KeyNameValueList[item]["KEY_VALUE"]); }
           // if (this.KeyNameValueList[item]["KEY_NAME"] == "default_payment_type") { localStorage.setItem("cs_default_payment_type", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          
+
           if (this.KeyNameValueList[item]["KEY_NAME"] == "default_payment_type") {
             var StartIndex_1 = this.KeyNameValueList[item]["KEY_VALUE"].indexOf(",");
             var EndIndex_1 = this.KeyNameValueList[item]["KEY_VALUE"].length - (StartIndex_1 + 1);

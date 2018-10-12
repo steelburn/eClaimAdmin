@@ -11,7 +11,7 @@
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-    <ion-title>Leave Report</ion-title>
+    <ion-title>{{ "LEAVE_REPORT" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +19,7 @@
 
 <ion-content padding>
     <ion-item class="fuha">
-      <ion-label>User Name:</ion-label>
+      <ion-label>{{ "REPORT_USER_NAME" | translate }}</ion-label>
       <ion-select interface="popover" #ddlUserName>
         <ion-option [value]="All" [selected]="true">All</ion-option>
         <ion-option *ngFor="let emp of employeeList" [value]="emp.STAFF_ID">{{emp.FULLNAME}}</ion-option>
@@ -27,7 +27,7 @@
     </ion-item>
   
     <ion-item class="fuha">
-      <ion-label>Leave Type:</ion-label>
+      <ion-label>{{ "LEAVE_TYPE" | translate }}</ion-label>
       <ion-select interface="popover" #ddlLeaveType>
         <ion-option [value]="All" [selected]="true">All</ion-option>
         <ion-option [value]="ANNUAL">ANNUAL LEAVE</ion-option>
@@ -47,7 +47,7 @@
     </ion-item>
   
     <ion-item class="fuha">
-      <ion-label> Month :</ion-label>
+      <ion-label> {{ "LIST_MONTH" | translate }}</ion-label>
       <ion-select interface="popover" #ddlmonth>
         <ion-option [value]="All" [selected]="true">All</ion-option>
         <ion-option value="1">Jan</ion-option>
@@ -67,14 +67,14 @@
   
   
     <ion-item class="fuha">
-      <ion-label>Year:</ion-label>
+      <ion-label>{{ "LIST_YEAR" | translate }}</ion-label>
       <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
         <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
       </ion-select>
     </ion-item>
   
     <ion-item>
-      <button ion-button item-end  [disabled]="!btnSearch" (click)="BindData(ddlUserName.value,ddlLeaveType.value,ddlmonth.value)">Search</button>
+      <button ion-button item-end  [disabled]="!btnSearch" (click)="BindData(ddlUserName.value,ddlLeaveType.value,ddlmonth.value)">{{ "SEARCH" | translate }}</button>
     </ion-item>
   
     <ion-list>
