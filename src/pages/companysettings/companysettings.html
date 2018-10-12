@@ -172,6 +172,11 @@
                 displayFormat="HH:mm"></ion-datetime>
             </ion-item>
 
+            <ion-item [hidden]="!isVisibleToSVA">
+              <ion-label stacked><span style="color:red">*</span>{{ 'Version' | translate }}</ion-label>
+              <ion-input type="text" formControlName="Version" [(ngModel)]="Version_ngModel" required placeholder="{{'Please fill version'}}"></ion-input>
+            </ion-item>
+
             <div class="btn">
               <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!CompanySettingsform.valid"
                 (click)="Save(CompanySettingsform.value)">{{"SUBMIT"

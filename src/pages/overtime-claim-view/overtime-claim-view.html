@@ -55,7 +55,7 @@
 
     <ion-item>
         <ion-label> {{ "CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
-        <ion-label> {{ this.totalClaimAmount | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+        <ion-label> {{currency}} {{totalClaimAmount | number:'1.2-2'}} </ion-label>
     </ion-item>
     <ion-item>
         <ion-label> {{ "STATUS_LABEL" | translate }} : </ion-label>
@@ -93,9 +93,9 @@
     </ion-item>
 
     <div class="btn" *ngIf="isApprover">
-        <button ion-button outline item-start (click)="isAccepted('accepted')">
+        <button ion-button outline item-start (click)="isAccepted('accepted')" [disabled]="isActionTaken">
             {{ "ACCEPT_BUTTON" | translate }} </button>
-        <button ion-button outline item-start (click)="isAccepted('rejected')">
+        <button ion-button outline item-start (click)="isAccepted('rejected')" [disabled]="isActionTaken">
             {{ "REJECT_BUTTON" | translate }} </button>
 
     </div>

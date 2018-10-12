@@ -39,6 +39,7 @@ export class ClaimReportPage {
   year: any;
   claimsSocSummary: any[];
   btnSearch:boolean = false;
+  currency = localStorage.getItem("cs_default_currency")
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     // this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;

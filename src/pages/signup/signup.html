@@ -40,10 +40,10 @@
 			<ion-card-content>
 					<!-- <img style="max-width:116px;max-height:42pt;"src="assets/img/Untitled-4.png"/>  -->
 					
-				<h1 style="margin-left:10pt;">Create Your Account</h1>
+				<h1 style="margin-left:10pt;">{{ "CREATE_ACCOUNT" | translate }}</h1>
 				<p></p>
 				<p></p>
-				<h2 style="margin-left:10pt;">to continute to eClaim</h2>
+				<h2 style="margin-left:10pt;">{{ "CONTINUE_ECLAIM" | translate }}</h2>
 				<br/>
 				<form #signupForm="ngForm" novalidate>
 					<ion-list no-lines>
@@ -55,22 +55,22 @@
 							
 						</ion-item>
 						<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
-							Username is required
+							{{ "USER_NAME_REQUIRED" | translate }}
 						</p>
 	
 						<ion-item>
-							<ion-label floating color="primary">Password</ion-label>
+							<ion-label floating color="primary">{{ "S_PASSWORD" | translate }}</ion-label>
 							<ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
 								</ion-input>
 	
 						</ion-item>
 						<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
-							Password is required
+							{{ "PASSWORD_REQUIRED" | translate }}
 						</p>
 					</ion-list>
 					
 					<div class="btn">
-						<button color="primary500" ion-button block  (click)="onSignup(signupForm)" type="submit">Create</button>
+						<button color="primary500" ion-button block  (click)="onSignup(signupForm)" type="submit">{{ "CREATE" | translate }}</button>
 	
 	
 					</div>

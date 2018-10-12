@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>upload</ion-title>
+    <ion-title>{{ "UPLOAD" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -21,7 +21,7 @@
 
       <div>
           <input type="file" #fileInput placeholder="Upload file..." />
-          <button type="button" (click)="upload()">Upload</button>
+          <button type="button" (click)="upload()">{{ "UPLOAD" | translate }}</button>
         </div>
       </form>
 </ion-content>

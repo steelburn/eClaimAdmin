@@ -12,7 +12,7 @@
           <ion-icon name="menu"></ion-icon>
       </button>
 
-    <ion-title>Claim Report</ion-title>
+    <ion-title>{{ "CLAIM_REPORT" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -22,7 +22,7 @@
 
   <ion-item style="width: 49%;display:inline-block;">
 
-    <ion-label>Department : </ion-label>
+    <ion-label>{{ "CLAIM_DEPARTMENT" | translate }} </ion-label>
     <ion-select interface="popover" (ionChange)="BindEmployeesbyDepartment($event)" #ddlDept>
       <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
     </ion-select>
@@ -30,9 +30,9 @@
   </ion-item>
 
   <ion-item style="width: 50%;display:inline-block;">
-    <ion-label>
+    <ion-label>{{ "CLAIM_MONTH" | translate }}
 
-      Claim Month : </ion-label>
+      </ion-label>
 
     <ion-select interface="popover" #ddlmonth>
 
@@ -53,7 +53,7 @@
 
   <ion-item style="width: 100%;display:inline-block;">
 
-    <ion-label>User Name : </ion-label>
+    <ion-label>{{ "CLAIM_USER_NAME" | translate }} </ion-label>
 
     <ion-select interface="popover" #ddlEmployee>
       <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
@@ -64,7 +64,7 @@
 
 
   <ion-item>
-    <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value)">Search</button>
+    <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value)">{{ "SEARCH" | translate }}</button>
     <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
   </ion-item>
   <ion-list>
@@ -83,7 +83,7 @@
           <th class="lgl1">To</th>
 
 
-          <th class="lgl1 tblBrRight" style="width:130px;">Total Amount(RM)</th>
+          <th class="lgl1 tblBrRight" style="width:130px;">Total Amount({{currency }})</th>
         </tr>
 
         <tr class="col7" *ngFor="let claim of claimsList | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
@@ -99,7 +99,7 @@
         </tr>
 
         <tr class="col7">
-          <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount(RM) : {{totalClaimAmount | number:'1.2-2'}}</td>
+          <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount({{currency }}) : {{totalClaimAmount | number:'1.2-2'}}</td>
         </tr>
       </table>
       <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">

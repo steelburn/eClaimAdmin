@@ -22,6 +22,7 @@ export class ClaimReportPrintPage {
   @Input() month: any;
   @Input() totalClaimAmount: number;
   @Input() claimsSocSummary: any[];
+  currency = localStorage.getItem("cs_default_currency")
   constructor(public navCtrl: NavController, public navParams: NavParams) {
    // this.getSocSummary();
   }

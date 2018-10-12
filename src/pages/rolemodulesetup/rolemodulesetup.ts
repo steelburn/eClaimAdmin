@@ -77,7 +77,7 @@ export class RolemodulesetupPage {
 
   loading: Loading;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private rolemodulesetupservice: RoleModuleSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
+    // if (localStorage.getItem("g_USER_GUID") == "sva") {
       //Display Grid------------------------------------
       this.DisplayGrid();
 
@@ -90,11 +90,11 @@ export class RolemodulesetupPage {
       this.Rolemoduleform = fb.group({
         ROLENAME: ["", Validators.required],
       });
-    }
-    else {
-      alert("Sorry !! This is for only Super Admin.");
-      this.navCtrl.push(LoginPage);
-    }
+    // }
+    // else {
+    //   alert("Sorry !! This is for only Super Admin.");
+    //   this.navCtrl.setRoot(LoginPage);
+    // }
   }
 
   DisplayGrid() {
@@ -134,6 +134,7 @@ export class RolemodulesetupPage {
 
           Previous_ROLE_GUID = data.resource[itemA]["ROLE_GUID"];
         }
+        this.stores = this.Role_Module;
         this.loading.dismissAll();
       });
   }
@@ -454,5 +455,36 @@ export class RolemodulesetupPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RolemodulesetupPage');
+  }
+
+  stores: any[];
+  search(searchString: any) {
+    let val = searchString.target.value;
+    if (!val || !val.trim()) {
+      this.Role_Module = this.stores;
+      return;
+    }
+    this.Role_Module = this.filter({
+      ROLE_NAME: val,
+      MODULE_NAME: val
+    });
+  }
+
+  filter(params?: any) {
+    if (!params) {
+      return this.stores;
+    }
+
+    return this.stores.filter((item) => {
+      for (let key in params) {
+        let field = item[key];
+        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+          return item;
+        } else if (field == params[key]) {
+          return item;
+        }
+      }
+      return null;
+    });
   }
 }

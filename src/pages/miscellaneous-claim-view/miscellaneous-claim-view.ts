@@ -21,6 +21,8 @@ export class MiscellaneousClaimViewPage {
   isRemarksAccepted: any;
   isApprover: any;
   approverDesignation: any;
+  isActionTaken: boolean = false;
+  currency = localStorage.getItem("cs_default_currency")
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.isApprover = this.navParams.get("isApprover");
@@ -33,6 +35,7 @@ export class MiscellaneousClaimViewPage {
 
   travelDate: any;
   isAccepted(val: string) {
+    this.isActionTaken = true;
     this.isRemarksAccepted = val === 'accepted' ? true : false;
     if (this.claimRequestGUID !== undefined || this.claimRequestGUID !== null) {
       this.api.getApiModel('claim_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS="Rejected")')
@@ -42,6 +45,7 @@ export class MiscellaneousClaimViewPage {
           if (!this.isRemarksAccepted) {
             if (this.Remarks_NgModel === undefined) {
               alert('Please enter valid remarks');
+              this.isActionTaken = false;
               return;
             }
           }

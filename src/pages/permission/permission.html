@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="primary200">
-    <ion-title>Permission Setting</ion-title>
+    <ion-title>{{ "PERMISSION_SETTING" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -66,14 +66,14 @@
       <ion-list>
         <form [formGroup]="Permissionform">
           <ion-item>
-            <ion-label stacked>{{"Tenant Name"}}</ion-label>
+            <ion-label stacked>{{ "PERMISSION_TENANT" | translate }}</ion-label>
             <ion-select formControlName="TENANTNAME" [(ngModel)]="TENANTNAME_ngModel_Add" placeholder="{{'Please select tenant'}}">
               <ion-option *ngFor="let tenant of tenants" [value]="tenant.TENANT_GUID">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"Modules"}}</ion-label>
+            <ion-label stacked>{{ "MODULES" | translate }}</ion-label>
             <ion-select formControlName="MODULES" [(ngModel)]="MODULES_ngModel_Add" placeholder="{{'Please select module'}}" multiple="true">
               <ion-option *ngFor="let module of modules" [value]="module.MODULE_GUID">{{module.NAME}}</ion-option>
             </ion-select>
@@ -104,14 +104,14 @@
       <ion-list>
         <form [formGroup]="Permissionform">
           <ion-item>
-            <ion-label stacked>{{"Tenant Name"}}</ion-label>
+            <ion-label stacked>{{ "PERMISSION_TENANT" | translate }}</ion-label>
             <ion-select formControlName="TENANTNAME" [(ngModel)]="TENANTNAME_ngModel_Edit" placeholder="{{'Please select tenant'}}">
               <ion-option *ngFor="let tenant of tenants" [value]="tenant.TENANT_GUID">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{"Modules"}}</ion-label>
+            <ion-label stacked>{{ "MODULES" | translate }}</ion-label>
             <ion-select formControlName="MODULES" [(ngModel)]="MODULES_ngModel_Edit" placeholder="{{'Please select module'}}" multiple="true">
               <ion-option *ngFor="let module of modules" [value]="module.MODULE_GUID">{{module.NAME}}</ion-option>
             </ion-select>

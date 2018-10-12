@@ -1,0 +1,63 @@
+<!--
+  Generated template for the DbmaintenancePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary200">
+    <ion-title>{{ "DATABASE_MAINTENANCE" | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="DBMaintenanceform">
+    <div style="width: 50%;display:inline-table !important;">
+      <ion-card class="cb5 contentHeight3">
+        <ion-row>
+          <ion-item class="lgl1">
+            <ion-label item-start>{{"TENANT_NAME" | translate}}</ion-label>        
+            <ion-select formControlName="TENANTNAME" [(ngModel)]="TENANTNAME_ngModel" placeholder="{{'Select Tenant'}}">
+              <ion-option *ngFor="let tenant of tenants" [value]="tenant.TENANT_GUID">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
+            </ion-select>    
+          </ion-item>
+        </ion-row>
+        <!-- <div>
+          <ion-list>
+            <ion-item *ngFor="let tenant of tenants">
+              <ion-label>{{tenant.TENANT_ACCOUNT_NAME}}</ion-label>
+              <ion-checkbox color="secondary" checked="false" item-end (ionChange)="SelectTenantItem($event, tenant)"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </div> -->
+      </ion-card>
+    </div>
+
+    <div style="width: 49%; height: 200px; display:inline-table !important;">
+      <ion-card>
+        <ion-row>
+          <ion-item class="lgl1">
+            <ion-label item-start>{{"TABLE NAME" | translate}}<input type="checkbox" id="1" formControlName="TABLENAME" [(ngModel)]="Table_ngModel" (change)="checkAllCheckBoxes($event)"></ion-label>
+            <!-- <ion-checkbox color="secondary" item-end (click)="checkAllCheckBoxes($event)"></ion-checkbox> -->
+            
+          </ion-item>
+        </ion-row>
+        <div>
+          <ion-list>
+            <ion-item *ngFor="let table of FilterTables">
+              <ion-label>{{table.name}}</ion-label>
+              <ion-checkbox color="secondary" [checked]="selectAll" item-end (ionChange)="SelectTableItem($event, table)"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-card>
+    </div>
+
+    <div class="btn">
+      <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!DBMaintenanceform.valid" (click)="ExportToExcel($event)">{{"DOWNLOAD" | translate}}</button>
+    </div>
+  </form>
+</ion-content>
