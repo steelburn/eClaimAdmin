@@ -33,6 +33,7 @@ export class MonthlyClaimReportPage {
   claimList: any[] = [];
   claimList1: any[] = [];
   claimListTotal: any[];
+  currency = localStorage.getItem("cs_default_currency")
 
   deptAll: boolean = true;
   empAll: boolean = true;

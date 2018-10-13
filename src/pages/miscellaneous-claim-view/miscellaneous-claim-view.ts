@@ -22,6 +22,7 @@ export class MiscellaneousClaimViewPage {
   isApprover: any;
   approverDesignation: any;
   isActionTaken: boolean = false;
+  currency = localStorage.getItem("cs_default_currency")
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.isApprover = this.navParams.get("isApprover");

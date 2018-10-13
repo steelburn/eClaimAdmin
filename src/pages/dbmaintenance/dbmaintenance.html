@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="primary200">
-    <ion-title>Database Maintenance</ion-title>
+    <ion-title>{{ "DATABASE_MAINTENANCE" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +19,7 @@
       <ion-card class="cb5 contentHeight3">
         <ion-row>
           <ion-item class="lgl1">
-            <ion-label item-start>{{"TENANT NAME" | translate}}</ion-label>        
+            <ion-label item-start>{{"TENANT_NAME" | translate}}</ion-label>        
             <ion-select formControlName="TENANTNAME" [(ngModel)]="TENANTNAME_ngModel" placeholder="{{'Select Tenant'}}">
               <ion-option *ngFor="let tenant of tenants" [value]="tenant.TENANT_GUID">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
             </ion-select>    

@@ -54,8 +54,8 @@
 
                     <td class="lgl1 getHeader" reshead="Activation">
                         <ion-item>
-                            <ion-toggle *ngIf="user.ACTIVATION_FLAG==1" checked=true (ionChange)="UserActivation(user.USER_GUID, true)"></ion-toggle>
-                            <ion-toggle *ngIf="user.ACTIVATION_FLAG==0" checked=false (ionChange)="UserActivation(user.USER_GUID, false)"></ion-toggle>
+                            <ion-toggle *ngIf="user.ACTIVATION_FLAG=='1'" checked=true (ionChange)="UserActivation(user.USER_GUID, true)"></ion-toggle>
+                            <ion-toggle *ngIf="user.ACTIVATION_FLAG=='0'" checked=false (ionChange)="UserActivation(user.USER_GUID, false)"></ion-toggle>
                         </ion-item>
                     </td>
 
@@ -592,11 +592,18 @@
                         <b>{{'Role Details' | translate}}</b>
                     </div>
 
-                    <ion-item>
+                    <ion-item class="fuha">
                         <ion-label stacked>
-                            <span style="color:red">*</span>{{"Role"}}</ion-label>
-                        <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Add" placeholder="{{'Please select role'}}"
-                            multiple="true">
+                            <span style="color:red">*</span>{{"Main Role"}}</ion-label>
+                        <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Add" placeholder="{{'Please select role'}}">
+                            <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item class="fuha">
+                        <ion-label stacked>{{"Additional Role"}}</ion-label>
+                        <ion-select formControlName="ADDITIONAL_ROLE_NAME" [(ngModel)]="ADDITIONAL_ROLE_ngModel_Add"
+                            placeholder="{{'Please select role'}}" multiple="true">
                             <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>
@@ -1142,11 +1149,18 @@
                         <b>{{'Role Details' | translate}}</b>
                     </div>
 
-                    <ion-item>
+                    <ion-item class="fuha">
                         <ion-label stacked>
-                            <span style="color:red">*</span>{{"Role"}}</ion-label>
-                        <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}"
-                            multiple="true">
+                            <span style="color:red">*</span>{{"Main Role"}}</ion-label>
+                        <ion-select formControlName="ROLE_NAME" [(ngModel)]="ROLE_ngModel_Edit" placeholder="{{'Please select role'}}">
+                            <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item class="fuha">
+                        <ion-label stacked>{{"Additional Role"}}</ion-label>
+                        <ion-select formControlName="ADDITIONAL_ROLE_NAME" [(ngModel)]="ADDITIONAL_ROLE_ngModel_Edit"
+                            placeholder="{{'Please select role'}}" multiple="true">
                             <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
                         </ion-select>
                     </ion-item>

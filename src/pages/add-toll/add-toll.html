@@ -27,7 +27,7 @@
                 <ion-label floating color="primary500">{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
                 <ion-select [ngModelOptions]="{standalone: true}" [(ngModel)]="MA_SELECT">
                     <ion-option value="NA">NA</ion-option>
-                  <ion-option *ngFor="let allowance of allowanceList" (ionSelect)="onAllowanceSelect(allowance)">{{allowance.ALLOWANCE_NAME}} - {{allowance.ALLOWANCE_AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}}</ion-option>
+                  <ion-option *ngFor="let allowance of allowanceList" (ionSelect)="onAllowanceSelect(allowance)">{{allowance.ALLOWANCE_NAME}} -{{currency}} {{allowance.ALLOWANCE_AMOUNT | number:'1.2-2'}} </ion-option>
                 </ion-select>
               </ion-item>           
 

@@ -42,6 +42,7 @@ export class TravelclaimPage {
   public profileLevel: any;
   public stage: any;
   public profileJSON: any;
+  currency = localStorage.getItem("cs_default_currency")
 
   public Roundtrip_ngModel: boolean = false;
   public trip_amount: number;
@@ -74,7 +75,7 @@ export class TravelclaimPage {
   currentItems: any;
   public MainClaimSaved: boolean = false;
   claimFor: string = 'seg_project';
-  currency = localStorage.getItem("cs_default_currency");
+  //currency = localStorage.getItem("cs_default_currency");
 
   DestinationPlaceID: string;
   OriginPlaceID: string;

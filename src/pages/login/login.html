@@ -42,7 +42,7 @@
 
 				<div class="btn">
 					<!-- <button color="primary500" ion-button block (click)="onLogin(loginForm)" type="submit">Login</button> -->
-					<button color="primary500" ion-button block (click)="AuthenticateUserFromAdServer(loginForm)" type="submit">Login</button>
+					<button color="primary500" ion-button block (click)="AuthenticateUserFromAdServer(loginForm)" type="submit">{{ "LOGIN" | translate }}</button>
 				</div>
 				<!-- <div>
 
@@ -77,12 +77,12 @@
 			<ion-list>
 				<form [formGroup]="ForgotPasswordForm">
 					<ion-item>
-						<ion-label stacked>{{ 'Email' | translate }}</ion-label>
+						<ion-label stacked>Email</ion-label>
 						<ion-input type="email" formControlName="Email_ID" [(ngModel)]="email_ngModel" required placeholder="{{'Please fill in the email'}}"></ion-input>
 					</ion-item>
 
 					<div class="btn">
-						<button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!ForgotPasswordForm.valid" (click)="SaveForgotPassword()">{{"SUBMIT" | translate}}</button>
+						<button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!ForgotPasswordForm.valid" (click)="SaveForgotPassword()">Submit</button>
 					</div>
 				</form>
 			</ion-list>

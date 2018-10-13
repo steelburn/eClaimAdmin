@@ -36,6 +36,7 @@ export class EntertainmentclaimPage {
   TenantGUID: any;
   mainClaimReq: MainClaimRequestModel = new MainClaimRequestModel();
   rejectedLevel: any;
+  currency = localStorage.getItem("cs_default_currency")
 
   storeProjects: any[];
   public projects: any[];
@@ -61,7 +62,6 @@ export class EntertainmentclaimPage {
   Entertainment_Date_ngModel: any;
   Entertainment_Description_ngModel: any;
   claimFor: string = 'seg_project';
-  currency = localStorage.getItem("cs_default_currency");
 
   public socGUID: any;
   public AddTravelClicked: boolean = false;
@@ -101,7 +101,6 @@ export class EntertainmentclaimPage {
     if(this.max_claim_amount==null){
       this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
     }
-    let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
     this.profileMng.CheckSessionOut();
     this.userGUID = localStorage.getItem('g_USER_GUID');
