@@ -44,6 +44,7 @@
   </div>
 
   <form [formGroup]="Travelform">
+   
 
     <ion-item class="fuha">
       <ion-label floating color="primary500"> <span style="color:red">*</span>Departure</ion-label>
@@ -76,7 +77,7 @@
       <ion-label floating color="primary500"> <span style="color:red">*</span> {{ "TRAVEL_MODE_LABEL" | translate }}</ion-label>
       <ion-select [(ngModel)]="Travel_Mode_ngModel" formControlName="vehicleType">
         <!-- <ion-option value="0" (ionSelect)="onVehicleSelect('Select Vehicle')">Select Vehicle</ion-option> -->
-        <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="onVehicleSelect(vehicle)" >{{vehicle.CATEGORY}}</ion-option>
+        <ion-option *ngFor="let vehicle of vehicles" (ionSelect)="onVehicleSelect(vehicle)" [value]="vehicle.CATEGORY">{{vehicle.CATEGORY}}</ion-option>
       </ion-select>
     </ion-item>
 
@@ -101,6 +102,11 @@
       <ion-textarea [disabled]="true" (click)="AddToLookupClick()" [(ngModel)]="Travel_Destination_ngModel" type="text" formControlName="destination"></ion-textarea>
     </ion-item>
 
+    <ion-item>
+      <ion-label>Roundtrip</ion-label>
+      <ion-checkbox [(ngModel)]="Roundtrip_ngModel" formControlName="Roundtrip" (ionChange)="Roundtrip_Change()"></ion-checkbox>
+    </ion-item>
+
     <ion-item class="fuha">
       <ion-label floating> {{ "DISTANCE_LABEL" | translate }} </ion-label>
       <ion-input [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance"></ion-input>
@@ -110,7 +116,7 @@
     <ion-item class="fuha">
       <ion-label floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ currency }}</ion-label>
       <ion-input (change)='getCurrency($event.target.value)' [disabled]="!isPublicTransport" [(ngModel)]="travelAmountNgmodel"
-        type="text" formControlName="claim_amount" (ngModelChange)="valueChange($event)"></ion-input>
+        type="text" formControlName="claim_amount" (ionChange)="valueChange()"></ion-input>
     </ion-item>
     <!-- <ion-item *ngIf="!Travelform.controls.claim_amount.valid  && (Travelform.controls.claim_amount.dirty)">
       <p style="color: red; text-align:right;margin-right: 34%;">Amount is {{min_claim_amount}} - {{max_claim_amount}} RM.</p>

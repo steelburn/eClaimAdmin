@@ -43,6 +43,9 @@ export class TravelclaimPage {
   public stage: any;
   public profileJSON: any;
 
+  public Roundtrip_ngModel: boolean = false;
+  public trip_amount: number;
+
   public Travel_Date_ngModel: any;
   public Travel_Description_ngModel: any;
   public Travel_SOC_No_ngModel: any;
@@ -107,14 +110,14 @@ export class TravelclaimPage {
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
     this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
     // this.min_claim_amount =null;
-    if(this.min_claim_amount==null){
-      this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+    if (this.min_claim_amount == null) {
+      this.min_claim_amount = Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
     }
     this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
     this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
     // this.max_claim_amount =null;
-    if(this.max_claim_amount==null){
-      this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+    if (this.max_claim_amount == null) {
+      this.max_claim_amount = Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
     }
     let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
@@ -174,12 +177,38 @@ export class TravelclaimPage {
       attachment_GUID: '',
       //travel_amount: ['', Validators.required],
       claim_amount: ['', Validators.required],
-      from_id: '', to_id: ''
-
+      from_id: '', to_id: '',
+      Roundtrip: ''
     });
 
   }
 
+  Roundtrip_Change() {
+
+    if (this.Travel_From_ngModel != null && this.Travel_Destination_ngModel != null && this.travelAmountNgmodel != null && this.travelAmountNgmodel != undefined) {
+      let str = new String(this.travelAmountNgmodel)
+      var str1 = str.indexOf(",");
+      if (str1 > 0) {
+        this.travelAmountNgmodel = this.travelAmountNgmodel.split(",").join("");
+      }
+      if (this.Roundtrip_ngModel) {
+        var temp_amount = 2 * Number(this.travelAmountNgmodel);
+        this.travelAmountNgmodel = this.numberPipe.transform(2 * Number(this.travelAmountNgmodel), '1.2-2');
+        this.totalClaimAmount = Number(temp_amount);
+      }
+      else {
+        // if (this.travelAmountNgmodel != null && this.travelAmountNgmodel != undefined) {
+          // if (this.travelAmountNgmodel.indexOf(",") > 0) {
+          //   this.travelAmountNgmodel = this.travelAmountNgmodel.split(",").join("");
+          // }
+          temp_amount = Number(this.travelAmountNgmodel) / 2;
+          this.travelAmountNgmodel = this.numberPipe.transform(Number(this.travelAmountNgmodel) / 2, '1.2-2');
+          this.totalClaimAmount = Number(temp_amount);
+        }
+      // }
+    }
+  }
+  
   getCurrency(amount: number) {
     amount = Number(amount);
     if (amount > 99999) {
@@ -336,7 +365,7 @@ export class TravelclaimPage {
     this.api.getApiModel('main_payment_type', 'filter=TENANT_GUID=' + this.TenantGUID)
       .subscribe(data => {
         this.paymentTypes = data["resource"];
-      //  this.PayType = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
+        //  this.PayType = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0].PAYMENT_TYPE_GUID;
         let paymentType: any = this.paymentTypes.filter(s => s.NAME == localStorage.getItem("cs_default_payment_type"))[0];
         this.PayType = paymentType.PAYMENT_TYPE_GUID;
         this.onPaySelect(paymentType);
@@ -348,7 +377,7 @@ export class TravelclaimPage {
     // this.api.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID)
 
     // Added by Bijay on 25/09/2018
-    this.api.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID +')AND(ACTIVATION_FLAG=1)')
+    this.api.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
         this.storeProjects = this.projects = data["resource"];
       })
@@ -356,7 +385,7 @@ export class TravelclaimPage {
 
   LoadCustomers() {
     // this.api.getApiModel('view_customer', 'filter=TENANT_GUID=' + this.TenantGUID)
-    
+
     // Added by Bijay on 25/09/2018
     this.api.getApiModel('view_customer', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVE_FLAG=A)')
       .subscribe(data => {
@@ -474,11 +503,17 @@ export class TravelclaimPage {
   }
 
   public AddLookupClick() {
+    //blm
+    this.Roundtrip_ngModel = false;
+    //blm
     this.AddLookupClicked = true;
     this.currentItems = null;
   }
 
   public AddToLookupClick() {
+    //blm
+    this.Roundtrip_ngModel = false;
+    //blm
     //this.AddLookupClicked = true;
     this.AddToLookupClicked = true;
     this.currentItems = null;
@@ -648,6 +683,11 @@ export class TravelclaimPage {
   }
 
   onVehicleSelect(vehicle: any) {
+    //blm    
+    this.Roundtrip_ngModel = false;
+    //blm 
+
+
     this.VehicleId = vehicle.MILEAGE_GUID;
     this.VehicleRate = vehicle.RATE_PER_UNIT;
     this.vehicleCategory = vehicle.CATEGORY;
@@ -667,6 +707,7 @@ export class TravelclaimPage {
     if (this.Travel_From_ngModel != undefined && this.Travel_Destination_ngModel != undefined) {
       this.GetDistance();
     }
+
   }
 
   allowanceGUID: any;
@@ -831,7 +872,21 @@ export class TravelclaimPage {
     if (value === 'Local') this.isTravelLocal = true;
     else this.isTravelLocal = false;
   }
+  // valueChange(value: any) {
+  // }
   valueChange(value: any) {
+    //blm
+    // if(this.travelAmountNgmodel != null && this.travelAmountNgmodel != undefined){
+    // this.trip_amount=this.travelAmountNgmodel;
+    // }
+    //this.Roundtrip_ngModel=false;
+    // if(this.travelAmountNgmodel != null && this.travelAmountNgmodel != undefined){
+    // // let  amount= Number(this.travelAmountNgmodel)
+    // // this.travelAmountNgmodel =  this.numberPipe.transform(this.travelAmountNgmodel, '1.2-2');
+    // // this.travelAmountNgmodel =this.travelAmountNgmodel ;
+    // this.totalClaimAmount =  Number(this.travelAmountNgmodel);
+    // }
+    //blm
 
   }
   submitAction(formValues: any) {
