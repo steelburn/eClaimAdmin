@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar color="primary200">
-    <ion-title>Profile Setup</ion-title>
+    <ion-title>{{ "T_PROFILE_SETUP" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -60,7 +60,7 @@
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText">REGISTER NEW PROFILE</div>
+        <div class="icHeaderText">{{ "REGISTER_NEW_PROFILE" | translate }}</div>
         <button class="btnR" (click)="CloseProfilesClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
@@ -69,11 +69,11 @@
       <ion-list>
         <form [formGroup]="Profileform">
           <ion-item>
-            <ion-label stacked>{{"Profile Name"}}</ion-label>
+            <ion-label stacked>{{ "PROFILE_NAME" | translate }}</ion-label>
             <ion-input type="text" formControlName="PROFILE_NAME" [(ngModel)]="PROFILENAME_ngModel_Add" placeholder="{{'Please fill in the profile name'}}"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>{{"XML"}}</ion-label>
+            <ion-label stacked>{{ "XML" | translate }}</ion-label>
             <ion-textarea type="text" rows="10" formControlName="PROFILE_XML" [(ngModel)]="XML_ngModel_Add" placeholder="{{'Please fill in the XML'}}"></ion-textarea>
           </ion-item>
           <div class="btn">
@@ -104,11 +104,11 @@
       <ion-list>
         <form [formGroup]="Profileform">
           <ion-item>
-            <ion-label stacked>{{"Profile Name"}}</ion-label>
+            <ion-label stacked>{{ "PROFILE_NAME" | translate }}</ion-label>
             <ion-input type="text" formControlName="PROFILE_NAME" [(ngModel)]="PROFILENAME_ngModel_Edit" placeholder="{{'Please fill in the profile name'}}"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>{{"XML"}}</ion-label>
+            <ion-label stacked>{{ "XML" | translate }}</ion-label>
             <ion-textarea type="text" rows="10" formControlName="PROFILE_XML" [(ngModel)]="XML_ngModel_Edit" placeholder="{{'Please fill in the XML'}}"></ion-textarea>
           </ion-item>
           <div class="btn">

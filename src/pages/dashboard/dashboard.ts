@@ -26,7 +26,7 @@ export class DashboardPage {
 
   baseResourceUrl: string;
   baseResourceUrl_New: string;
-  claimrequestdetails: any;paid_details:any;
+  claimrequestdetails: any; paid_details: any;
   Month_Change_ngModel: any;
   Year_Change_ngModel: any;
   month_value: any;
@@ -37,11 +37,13 @@ export class DashboardPage {
   Rejected_Claim_Count = 0; Rejected_Claim_Amount = '0.00';
   Pending_Claim_Count = 0; Pending_Claim_Amount = '0.00';
 
-  Pending_Claim_Count_Superior=0; Pending_Claim_Amount_Superior = '0.00';
-  Pending_Claim_Count_Finance=0;  Pending_Claim_Amount_Finance = '0.00';
+  Pending_Claim_Count_Superior = 0; Pending_Claim_Amount_Superior = '0.00';
+  Pending_Claim_Count_Finance = 0; Pending_Claim_Amount_Finance = '0.00';
+
 
   PendingClaimCount_year_Superior: any;PendingClaimAmount_year_Superior: any;
   PendingClaimCount_year_Finance: any;PendingClaimAmount_year_Finance: any;
+  currency = localStorage.getItem("cs_default_currency")
 
   Approved_Claim_Count = 0; Approved_Claim_Amount = '0.00';
   baseResourceUrl_Card: any; Year_Card: any;
@@ -68,7 +70,7 @@ export class DashboardPage {
   baseResource_RoleUrl: string;
   roleBasedData: any;
 
-  ApproverLevel_PendAmount:any; ApproverLevel_PendAmount_Year: any;
+  ApproverLevel_PendAmount: any; ApproverLevel_PendAmount_Year: any;
   ApproverLevel_PendCount: any; ApproverLevel_PendCount_Year: any;
 
   FinanceExecLevel_PendAmt: any; FinanceExecLevel_PendAmt_Year: any;
@@ -190,7 +192,7 @@ export class DashboardPage {
     let role_url: string = "";
     let result: any;
     // let baseResource_Url_role: string = constants.DREAMFACTORY_TABLE_URL;
-    role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')AND(ROLE_FLAG=MAIN)&api_key=' + constants.DREAMFACTORY_API_KEY;
     // console.log(role_url)
     return new Promise((resolve, reject) => {
       this.http.get(role_url)
@@ -340,11 +342,11 @@ export class DashboardPage {
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
-  public doughnutChartLabels: Array<string> = ['Validated', 'Approved', 'Pending','Rejected', 'Paid'];
+  public doughnutChartLabels: Array<string> = ['Validated', 'Approved', 'Pending', 'Rejected', 'Paid'];
   public doughnutChartData: Array<number> = [];
 
   public doughnutChartType: string = 'doughnut';
-  public doughnutChartColors: any[] = [{ backgroundColor: ["#008000", "orange","yellow", "red", "rgb(90, 165, 90)"] }];
+  public doughnutChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "yellow", "red", "rgb(90, 165, 90)"] }];
 
   public chartClicked(e: any): void {
     console.log(e);
@@ -372,21 +374,21 @@ export class DashboardPage {
       fontSize: 20,
       fontColor: 'green'
     },
-  //   pieceLabel: {
-  //     mode: 'value',
-  //     overlap: true,
-  //     fontColor: ['white', 'blue', 'yellow','black'],
-  //    // fontStyle: 'bold'
-  //   //  indexLabelPlacement: "outside", 
-  //   // mode: 'value'
-  // //   mode: 'label',
-  // //   overlap: true,
-  // //   fontColor: ['Red', 'blue', 'yellow','black'],
-  // //  fontStyle: 'bold',
-  // // //  indexLabelPlacement: "outside", 
-  // //   // arc: true,
-  // //   position: 'outside'
-  //   },
+    //   pieceLabel: {
+    //     mode: 'value',
+    //     overlap: true,
+    //     fontColor: ['white', 'blue', 'yellow','black'],
+    //    // fontStyle: 'bold'
+    //   //  indexLabelPlacement: "outside", 
+    //   // mode: 'value'
+    // //   mode: 'label',
+    // //   overlap: true,
+    // //   fontColor: ['Red', 'blue', 'yellow','black'],
+    // //  fontStyle: 'bold',
+    // // //  indexLabelPlacement: "outside", 
+    // //   // arc: true,
+    // //   position: 'outside'
+    //   },
     // elements: {
     //   center: {
     //     text: 'Desktop',
@@ -408,10 +410,10 @@ export class DashboardPage {
   }
 
   // ClaimAmountChart
-  public claimAmountLabels: Array<string> = ['Validated', 'Approved','Pending', 'Rejected', 'Paid'];
+  public claimAmountLabels: Array<string> = ['Validated', 'Approved', 'Pending', 'Rejected', 'Paid'];
   public claimAmountData: Array<number> = [];
   public claimAmountChartType: string = 'doughnut';
-  public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange","yellow","red", "rgb(90, 165, 90)"] }];
+  public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "yellow", "red", "rgb(90, 165, 90)"] }];
   public claimAmountClicked(e: any): void {
     console.log(e);
   }
@@ -635,7 +637,7 @@ export class DashboardPage {
         // console.table( this.roleBasedData);
         // console.log( this.roleBasedData.length);
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
-          this.ApproverLevel_PendAmount =  this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel, '1.2-2');
+          this.ApproverLevel_PendAmount = this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel, '1.2-2');
           // this.ApproverLevel_PendAmount = this.ApproverLevel_PendAmount.toString()
           // this.ApproverLevel_PendAmount = this.numberPipe.transform(this.ApproverLevel_PendAmount, '1.2-2');
           this.ApproverLevel_PendCount = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel;
@@ -729,7 +731,7 @@ export class DashboardPage {
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
 
           this.FinanceExecLevel_PendAmt_Year = this.numberPipe.transform(FeRoleData_year.PendingAmount_Fe_FinalLevel_year, '1.2-2');
-          this.FinanceExecLevel_PendCount_Year =FeRoleData_year.PendingCount_Fe_FinalLevel_year;
+          this.FinanceExecLevel_PendCount_Year = FeRoleData_year.PendingCount_Fe_FinalLevel_year;
         }
         else {
           this.FinanceExecLevel_PendAmt_Year = "0.00";
@@ -808,197 +810,197 @@ export class DashboardPage {
       this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       // console.log('hi ' + this.baseResourceUrl)
     }
-   
+
     this.http
       .get(this.baseResourceUrl)
       .map(res => res.json())
       .subscribe(data => {
-        
+
         this.claimrequestdetails = data["resource"][0];
         // console.log(this.claimrequestdetails);
-        let val= this.GetPaidData();
-        val.then((paid_data:any) => {
+        let val = this.GetPaidData();
+        val.then((paid_data: any) => {
           // console.log(paid_data);
-        if (data["resource"][0] != null) {
-          // this.chart1 = true;
-          // this.chart2 = true;
-          // alert(this.claimrequestdetails.ApprovedReqCount)
-          var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
-          // alert(approve)
-         // var pending = parseInt(this.claimrequestdetails.PendingReqCount);
-          var pending_Finance = parseInt(this.claimrequestdetails.PendingReqCount_Finance);
-          var pending_Superior = parseInt(this.claimrequestdetails.PendingReqCount_Superior);
-          var rejected = parseInt(this.claimrequestdetails.RejectedReqCount);
-          // var paid = parseInt(this.claimrequestdetails.PaidReqCount);
-          var paid = paid_data["PaidReqCount"];
-           paid = parseInt(paid);
-          //  console.log(paid);
+          if (data["resource"][0] != null) {
+            // this.chart1 = true;
+            // this.chart2 = true;
+            // alert(this.claimrequestdetails.ApprovedReqCount)
+            var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
+            // alert(approve)
+            // var pending = parseInt(this.claimrequestdetails.PendingReqCount);
+            var pending_Finance = parseInt(this.claimrequestdetails.PendingReqCount_Finance);
+            var pending_Superior = parseInt(this.claimrequestdetails.PendingReqCount_Superior);
+            var rejected = parseInt(this.claimrequestdetails.RejectedReqCount);
+            // var paid = parseInt(this.claimrequestdetails.PaidReqCount);
+            var paid = paid_data["PaidReqCount"];
+            paid = parseInt(paid);
+            //  console.log(paid);
 
-          this.doughnutChartData = [approve, pending_Finance,pending_Superior, rejected, paid];
+            this.doughnutChartData = [approve, pending_Finance, pending_Superior, rejected, paid];
 
-          if (this.claimrequestdetails.ApprovedClaimAmount !== null && this.claimrequestdetails.ApprovedClaimAmount !== undefined) {
-            var approveAmount = parseFloat(this.claimrequestdetails.ApprovedClaimAmount).toFixed(2);
-            // approveAmount = this.numberPipe.transform(approveAmount, '1.2-2');
+            if (this.claimrequestdetails.ApprovedClaimAmount !== null && this.claimrequestdetails.ApprovedClaimAmount !== undefined) {
+              var approveAmount = parseFloat(this.claimrequestdetails.ApprovedClaimAmount).toFixed(2);
+              // approveAmount = this.numberPipe.transform(approveAmount, '1.2-2');
+            }
+            else { approveAmount = '0.00' }
+
+            // if (this.claimrequestdetails.PendingClaimAmount !== null && this.claimrequestdetails.PendingClaimAmount !== undefined) {
+            //   var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
+            //   // pendingAmount=this.format(pendingAmount);
+            //   // this.numberPipe.transform(amount, '1.2-2');
+            //   // pendingAmount = this.numberPipe.transform(pendingAmount, '1.2-2');
+            //   //  alert(pendingAmount)
+            // }
+            // else { pendingAmount = '0.00' }
+
+            // Superior
+            if (this.claimrequestdetails.PendingClaimAmount_Superior !== null && this.claimrequestdetails.PendingClaimAmount_Superior !== undefined) {
+              var pendingAmount_Superior = parseFloat(this.claimrequestdetails.PendingClaimAmount_Superior).toFixed(2);
+
+            }
+            else { pendingAmount_Superior = '0.00' }
+            // Finance
+            if (this.claimrequestdetails.PendingClaimAmount_Finance !== null && this.claimrequestdetails.PendingClaimAmount_Finance !== undefined) {
+              var pendingAmount_Finance = parseFloat(this.claimrequestdetails.PendingClaimAmount_Finance).toFixed(2);
+
+            }
+            else { pendingAmount_Finance = '0.00' }
+
+            if (this.claimrequestdetails.RejectedClaimAmount !== null && this.claimrequestdetails.RejectedClaimAmount !== undefined) {
+              var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
+              // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
+            }
+            else { rejectedAmount = '0.00' }
+
+            // if (this.claimrequestdetails.PaidClaimAmount !== null && this.claimrequestdetails.PaidClaimAmount !== undefined) {
+            //   var PaidClaimAmount = parseFloat(this.claimrequestdetails.PaidClaimAmount).toFixed(2);
+            //   // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
+            // }
+            // else { PaidClaimAmount = '0.00' }
+            this.PaidClaimAmount = paid_data["PaidClaimAmount"];
+            if (this.PaidClaimAmount !== null && this.PaidClaimAmount !== undefined) {
+              this.PaidClaimAmount = parseFloat(this.PaidClaimAmount).toFixed(2);
+              // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
+            }
+            else { this.PaidClaimAmount = '0.00' }
+            //var approveAmount=(this.claimrequestdetails.ApprovedClaimAmount);parseFloat
+            // var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
+            // var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
+
+            this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount_Finance), parseFloat(pendingAmount_Superior), parseFloat(rejectedAmount), parseFloat(this.PaidClaimAmount)];
+
+            // console.log(this.claimAmountData)
+
+            // For Display Data In Ion-cards
+            this.Rejected_Claim_Count = this.claimrequestdetails.RejectedReqCount;
+            this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
+            this.Approved_Claim_Count = this.claimrequestdetails.ApprovedReqCount;
+            // this.PaidReqCount = this.claimrequestdetails.PaidReqCount;
+            this.PaidReqCount = paid_data["PaidReqCount"];
+            this.Pending_Claim_Count_Superior = this.claimrequestdetails.PendingReqCount_Superior;
+            this.Pending_Claim_Count_Finance = this.claimrequestdetails.PendingReqCount_Finance;
+
+            if (this.claimrequestdetails.RejectedClaimAmount != null) {
+              this.Rejected_Claim_Amount = this.claimrequestdetails.RejectedClaimAmount.toFixed(2).toString();
+              this.Rejected_Claim_Amount = this.numberPipe.transform(this.Rejected_Claim_Amount, '1.2-2');
+            }
+            else this.Rejected_Claim_Amount = '0.00';
+
+            if (this.claimrequestdetails.PendingClaimAmount != null) {
+              this.Pending_Claim_Amount = this.claimrequestdetails.PendingClaimAmount.toFixed(2).toString();
+              this.Pending_Claim_Amount = this.numberPipe.transform(this.Pending_Claim_Amount, '1.2-2');
+            }
+            else this.Pending_Claim_Amount = '0.00';
+            // Superior
+            if (this.claimrequestdetails.PendingClaimAmount_Superior != null) {
+              this.Pending_Claim_Amount_Superior = this.claimrequestdetails.PendingClaimAmount_Superior.toFixed(2).toString();
+              this.Pending_Claim_Amount_Superior = this.numberPipe.transform(this.Pending_Claim_Amount_Superior, '1.2-2');
+            }
+            else this.Pending_Claim_Amount_Superior = '0.00';
+            // Finance
+            if (this.claimrequestdetails.PendingClaimAmount_Finance != null) {
+              this.Pending_Claim_Amount_Finance = this.claimrequestdetails.PendingClaimAmount_Finance.toFixed(2).toString();
+              this.Pending_Claim_Amount_Finance = this.numberPipe.transform(this.Pending_Claim_Amount_Finance, '1.2-2');
+            }
+            else this.Pending_Claim_Amount_Finance = '0.00';
+
+            if (this.claimrequestdetails.ApprovedClaimAmount != null) {
+              this.Approved_Claim_Amount = this.claimrequestdetails.ApprovedClaimAmount.toFixed(2).toString();
+              this.Approved_Claim_Amount = this.numberPipe.transform(this.Approved_Claim_Amount, '1.2-2');
+            }
+            else this.Approved_Claim_Amount = '0.00';
+
+            // if (this.claimrequestdetails.PaidClaimAmount != null) {
+            //   this.PaidClaimAmount = this.claimrequestdetails.PaidClaimAmount.toFixed(2).toString();
+            //   this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
+            // }
+            // else this.PaidClaimAmount = '0.00';
+            this.PaidClaimAmount = paid_data["PaidClaimAmount"];
+            if (this.PaidClaimAmount != null) {
+              // this.PaidClaimAmount = this.PaidClaimAmount.toFixed(2).toString();
+              this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
+            }
+            else this.PaidClaimAmount = '0.00';
+
+            if (approve == 0 && pending_Finance == 0 && pending_Superior == 0 && rejected == 0 && paid == 0) {
+              // alert('hi1')
+              this.chart1 = false;
+              this.chart2 = false;
+            } else {
+              // alert('hi')
+              this.chart1 = true;
+              this.chart2 = true;
+              // this.doughnutChartLabels = data.label;
+              // this.claimAmountLabels = data.label;
+              // this.doughnutChartData = [approve, pending, rejected, paid];
+              // this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
+            }
           }
-          else { approveAmount = '0.00' }
 
-          // if (this.claimrequestdetails.PendingClaimAmount !== null && this.claimrequestdetails.PendingClaimAmount !== undefined) {
-          //   var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
-          //   // pendingAmount=this.format(pendingAmount);
-          //   // this.numberPipe.transform(amount, '1.2-2');
-          //   // pendingAmount = this.numberPipe.transform(pendingAmount, '1.2-2');
-          //   //  alert(pendingAmount)
-          // }
-          // else { pendingAmount = '0.00' }
-
-          // Superior
-          if (this.claimrequestdetails.PendingClaimAmount_Superior !== null && this.claimrequestdetails.PendingClaimAmount_Superior !== undefined) {
-            var pendingAmount_Superior = parseFloat(this.claimrequestdetails.PendingClaimAmount_Superior).toFixed(2);
-            
-          }
-          else { pendingAmount_Superior = '0.00' }
-          // Finance
-          if (this.claimrequestdetails.PendingClaimAmount_Finance !== null && this.claimrequestdetails.PendingClaimAmount_Finance !== undefined) {
-            var pendingAmount_Finance = parseFloat(this.claimrequestdetails.PendingClaimAmount_Finance).toFixed(2);
-           
-          }
-          else { pendingAmount_Finance = '0.00' }
-
-          if (this.claimrequestdetails.RejectedClaimAmount !== null && this.claimrequestdetails.RejectedClaimAmount !== undefined) {
-            var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
-            // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
-          }
-          else { rejectedAmount = '0.00' }
-
-          // if (this.claimrequestdetails.PaidClaimAmount !== null && this.claimrequestdetails.PaidClaimAmount !== undefined) {
-          //   var PaidClaimAmount = parseFloat(this.claimrequestdetails.PaidClaimAmount).toFixed(2);
-          //   // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
-          // }
-          // else { PaidClaimAmount = '0.00' }
-          this.PaidClaimAmount=paid_data["PaidClaimAmount"];
-          if (this.PaidClaimAmount !== null && this.PaidClaimAmount !== undefined) {
-             this.PaidClaimAmount = parseFloat(this.PaidClaimAmount).toFixed(2);
-             // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
-           }
-           else { this.PaidClaimAmount = '0.00' }
-          //var approveAmount=(this.claimrequestdetails.ApprovedClaimAmount);parseFloat
-          // var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
-          // var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
-
-          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount_Finance), parseFloat(pendingAmount_Superior), parseFloat(rejectedAmount), parseFloat(this.PaidClaimAmount)];
-
-          // console.log(this.claimAmountData)
-
-          // For Display Data In Ion-cards
-          this.Rejected_Claim_Count = this.claimrequestdetails.RejectedReqCount;
-          this.Pending_Claim_Count = this.claimrequestdetails.PendingReqCount;
-          this.Approved_Claim_Count = this.claimrequestdetails.ApprovedReqCount;
-          // this.PaidReqCount = this.claimrequestdetails.PaidReqCount;
-          this.PaidReqCount =paid_data["PaidReqCount"];
-          this.Pending_Claim_Count_Superior = this.claimrequestdetails.PendingReqCount_Superior;
-          this.Pending_Claim_Count_Finance = this.claimrequestdetails.PendingReqCount_Finance;
-
-          if (this.claimrequestdetails.RejectedClaimAmount != null) {
-            this.Rejected_Claim_Amount = this.claimrequestdetails.RejectedClaimAmount.toFixed(2).toString();
-            this.Rejected_Claim_Amount = this.numberPipe.transform(this.Rejected_Claim_Amount, '1.2-2');
-          }
-          else this.Rejected_Claim_Amount = '0.00';
-
-          if (this.claimrequestdetails.PendingClaimAmount != null) {
-            this.Pending_Claim_Amount = this.claimrequestdetails.PendingClaimAmount.toFixed(2).toString();
-            this.Pending_Claim_Amount = this.numberPipe.transform(this.Pending_Claim_Amount, '1.2-2');
-          }
-          else this.Pending_Claim_Amount = '0.00';
-          // Superior
-          if (this.claimrequestdetails.PendingClaimAmount_Superior != null) {
-            this.Pending_Claim_Amount_Superior = this.claimrequestdetails.PendingClaimAmount_Superior.toFixed(2).toString();
-            this.Pending_Claim_Amount_Superior = this.numberPipe.transform(this.Pending_Claim_Amount_Superior, '1.2-2');
-          }
-          else this.Pending_Claim_Amount_Superior = '0.00';
-          // Finance
-          if (this.claimrequestdetails.PendingClaimAmount_Finance != null) {
-            this.Pending_Claim_Amount_Finance = this.claimrequestdetails.PendingClaimAmount_Finance.toFixed(2).toString();
-            this.Pending_Claim_Amount_Finance = this.numberPipe.transform(this.Pending_Claim_Amount_Finance, '1.2-2');
-          }
-          else this.Pending_Claim_Amount_Finance = '0.00';
-
-          if (this.claimrequestdetails.ApprovedClaimAmount != null) {
-            this.Approved_Claim_Amount = this.claimrequestdetails.ApprovedClaimAmount.toFixed(2).toString();
-            this.Approved_Claim_Amount = this.numberPipe.transform(this.Approved_Claim_Amount, '1.2-2');
-          }
-          else this.Approved_Claim_Amount = '0.00';
-
-          // if (this.claimrequestdetails.PaidClaimAmount != null) {
-          //   this.PaidClaimAmount = this.claimrequestdetails.PaidClaimAmount.toFixed(2).toString();
-          //   this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
-          // }
-          // else this.PaidClaimAmount = '0.00';
-          this.PaidClaimAmount=paid_data["PaidClaimAmount"];
-          if (this.PaidClaimAmount != null) {
-            // this.PaidClaimAmount = this.PaidClaimAmount.toFixed(2).toString();
-            this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
-          }
-          else this.PaidClaimAmount = '0.00';
-          
-          if (approve == 0 && pending_Finance == 0 && pending_Superior == 0 && rejected == 0 && paid == 0) {
-            // alert('hi1')
+          else {
             this.chart1 = false;
             this.chart2 = false;
-          } else {
-            // alert('hi')
-            this.chart1 = true;
-            this.chart2 = true;
+            approve = 0;
+            // pending = 0;
+            pending_Finance == 0; pending_Superior == 0
+            rejected = 0;
+            paid = 0;
+            this.doughnutChartData = [approve, pending_Finance, pending_Superior, rejected, paid];
+            // pendingAmount = '0.00';
+            pendingAmount_Finance = '0.00';
+            pendingAmount_Superior = '0.00';
+            rejectedAmount = '0.00';
+            approveAmount = '0.00';
+            this.PaidClaimAmount = '0.00';
+
+
+            this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount_Finance), parseFloat(pendingAmount_Superior), parseFloat(rejectedAmount), parseFloat(this.PaidClaimAmount)];
+
             // this.doughnutChartLabels = data.label;
             // this.claimAmountLabels = data.label;
-            // this.doughnutChartData = [approve, pending, rejected, paid];
-            // this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
+
+
+            // For Display Data In Ion-cards
+            this.Rejected_Claim_Count = 0;
+            this.Pending_Claim_Count = 0;
+            this.Approved_Claim_Count = 0;
+            this.PaidReqCount = 0;
+            this.Pending_Claim_Count_Finance = 0;
+            this.Pending_Claim_Count_Superior = 0;
+
+            this.Rejected_Claim_Amount = '0.00';
+            this.Pending_Claim_Amount = '0.00';
+            this.Approved_Claim_Amount = '0.00';
+            this.PaidClaimAmount = '0.00';
+            this.Pending_Claim_Amount_Finance = '0.00';
+            this.Pending_Claim_Amount_Superior = '0.00';
+            //
           }
-        }
-
-        else {
-          this.chart1 = false;
-          this.chart2 = false;
-          approve = 0;
-          // pending = 0;
-          pending_Finance == 0 ; pending_Superior == 0 
-          rejected = 0;
-          paid = 0;
-          this.doughnutChartData = [approve, pending_Finance,pending_Superior, rejected, paid];
-          // pendingAmount = '0.00';
-          pendingAmount_Finance = '0.00';
-          pendingAmount_Superior = '0.00';
-          rejectedAmount = '0.00';
-          approveAmount = '0.00';
-          this.PaidClaimAmount = '0.00';
-
-
-          this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount_Finance), parseFloat(pendingAmount_Superior), parseFloat(rejectedAmount), parseFloat(this.PaidClaimAmount)];
-
-          // this.doughnutChartLabels = data.label;
-          // this.claimAmountLabels = data.label;
-
-
-          // For Display Data In Ion-cards
-          this.Rejected_Claim_Count = 0;
-          this.Pending_Claim_Count = 0;
-          this.Approved_Claim_Count = 0;
-          this.PaidReqCount = 0;
-          this.Pending_Claim_Count_Finance = 0;
-          this.Pending_Claim_Count_Superior = 0;
-
-          this.Rejected_Claim_Amount = '0.00';
-          this.Pending_Claim_Amount = '0.00';
-          this.Approved_Claim_Amount = '0.00';
-          this.PaidClaimAmount = '0.00';
-          this.Pending_Claim_Amount_Finance = '0.00';
-          this.Pending_Claim_Amount_Superior = '0.00';
-          //
-        }
+        });
       });
-    });
 
   }
-  
+
   GetInfoForCards() {
     this.baseResourceUrl_Card = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboard_card?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
@@ -1021,18 +1023,18 @@ export class DashboardPage {
             this.PendingClaimCount_year;
           else
             this.PendingClaimCount_year = '0';
-            // Superior
-            this.PendingClaimCount_year_Superior = this.Year_Card[0]["PendingClaimCount_year_superior"];
-            if (this.PendingClaimCount_year_Superior != null && this.PendingClaimCount_year_Superior != undefined)
-              this.PendingClaimCount_year_Superior;
-            else
-              this.PendingClaimCount_year_Superior = '0';
-              // Finance
-              this.PendingClaimCount_year_Finance = this.Year_Card[0]["PendingClaimCount_year_finance"];
-              if (this.PendingClaimCount_year_Finance != null && this.PendingClaimCount_year_Finance != undefined)
-                this.PendingClaimCount_year_Finance;
-              else
-                this.PendingClaimCount_year_Finance = '0';
+          // Superior
+          this.PendingClaimCount_year_Superior = this.Year_Card[0]["PendingClaimCount_year_superior"];
+          if (this.PendingClaimCount_year_Superior != null && this.PendingClaimCount_year_Superior != undefined)
+            this.PendingClaimCount_year_Superior;
+          else
+            this.PendingClaimCount_year_Superior = '0';
+          // Finance
+          this.PendingClaimCount_year_Finance = this.Year_Card[0]["PendingClaimCount_year_finance"];
+          if (this.PendingClaimCount_year_Finance != null && this.PendingClaimCount_year_Finance != undefined)
+            this.PendingClaimCount_year_Finance;
+          else
+            this.PendingClaimCount_year_Finance = '0';
 
           this.ApprovedClaimCount_year = this.Year_Card[0]["ApprovedClaimCount_year"];
           if (this.ApprovedClaimCount_year != null && this.ApprovedClaimCount_year != undefined)
@@ -1058,13 +1060,13 @@ export class DashboardPage {
           else
             this.PendingClaimAmount_year = '0.00';
           // Superior
-            this.PendingClaimAmount_year_Superior = this.Year_Card[0]["PendingClaimAmount_year_superior"];
+          this.PendingClaimAmount_year_Superior = this.Year_Card[0]["PendingClaimAmount_year_superior"];
           if (this.PendingClaimAmount_year_Superior != null && this.PendingClaimAmount_year_Superior != undefined)
             this.PendingClaimAmount_year_Superior = this.numberPipe.transform(this.PendingClaimAmount_year_Superior, '1.2-2');
           else
             this.PendingClaimAmount_year_Superior = '0.00';
-            // Finance
-            this.PendingClaimAmount_year_Finance = this.Year_Card[0]["PendingClaimAmount_year_finance"];
+          // Finance
+          this.PendingClaimAmount_year_Finance = this.Year_Card[0]["PendingClaimAmount_year_finance"];
           if (this.PendingClaimAmount_year_Finance != null && this.PendingClaimAmount_year_Finance != undefined)
             this.PendingClaimAmount_year_Finance = this.numberPipe.transform(this.PendingClaimAmount_year_Finance, '1.2-2');
           else
@@ -1138,7 +1140,7 @@ export class DashboardPage {
           // console.log(this.paid_details);
           if (data["resource"][0] == null) {
             // alert('hi')
-            this.paid_details ={paid:0,PaidReqCount:0};
+            this.paid_details = { paid: 0, PaidReqCount: 0 };
           }
           // if (data["resource"][0] != null) {
           //   var paid = parseInt(this.claimrequestdetails.PaidReqCount);
@@ -1165,7 +1167,7 @@ export class DashboardPage {
           // }
           resolve(this.paid_details);
         });
-       
+
     });
   }
   Rejected_Click() {
@@ -1174,8 +1176,7 @@ export class DashboardPage {
   Pending_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Pending: Settings.StatusConstants.PENDING });
   }
-  Validated_Click()
-  {
+  Validated_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Validated: Settings.StatusConstants.VALIDATED });
   }
   Approved_Click() {

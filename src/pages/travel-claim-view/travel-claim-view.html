@@ -71,11 +71,11 @@
     </ion-item>
     <ion-item>
         <ion-label> {{ "MILEAGE_AMOUNT_LABEL" | translate }} ： </ion-label>
-        <ion-label> {{ claim.MILEAGE_AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+        <ion-label>{{currency}} {{claim.MILEAGE_AMOUNT | number:'1.2-2'}}  </ion-label>
     </ion-item>
     <ion-item>
         <ion-label> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} ： </ion-label>
-        <ion-label> {{ claim.TOTAL_CLAIM_AMOUNT | currency:'MYR':'symbol-narrow':'1.2-2'}} </ion-label>
+        <ion-label>{{currency}} {{claim.TOTAL_CLAIM_AMOUNT | number:'1.2-2'}}  </ion-label>
     </ion-item>
     <ion-item>
         <ion-label> {{ "STATUS_LABEL" | translate }} ：</ion-label>
@@ -166,7 +166,7 @@
                                 <th class="lgl1">Payment Mode</th>
                                 <th class="lgl1">Description</th>
                                 <th class="lgl1">Receipt</th>
-                                <th class="lgl1">Amount(RM)</th>
+                                <th class="lgl1">Amount({{currency }})</th>
                             </tr>
                             <tr class="col7" *ngFor="let item of claimDetailsData; let i=index ">
 
@@ -189,8 +189,8 @@
 
                             <tr class="col7">
 
-                                <td class="lgl11" colspan="5"> {{ "TOTAL_AMOUNT_LABEL" | translate }}(RM) : {{
-                                    tollParkAmount | currency:'MYR':'symbol-narrow':'1.2-2' }}</td>
+                                <td class="lgl11" colspan="5"> {{ "TOTAL_AMOUNT_LABEL" | translate }}({{currency }}) : 
+                                        {{tollParkAmount | number:'1.2-2'}}     </td>
 
                             </tr>
                         </table>

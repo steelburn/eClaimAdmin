@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="primary200">
-    <ion-title>Settings</ion-title>
+    <ion-title>{{ "SETTINGS" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -56,8 +56,8 @@
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW SETTINGS</div>
-        <div class="icHeaderText" *ngIf="Edit_Form">UPDATE SETTINGS</div>
+        <div class="icHeaderText" *ngIf="Add_Form">{{ "REGISTER_NEW_SETTINGS" | translate }}</div>
+        <div class="icHeaderText" *ngIf="Edit_Form">{{ "UPDATE_SETTINGS" | translate }}</div>
 
         <button class="btnR" (click)="CloseSettingssClick()">
           <ion-icon name="md-close"></ion-icon>
@@ -68,17 +68,17 @@
       <ion-list>
         <form [formGroup]="Settingsform">          
           <ion-item>
-            <ion-label stacked>{{ 'Key Name' | translate }}</ion-label>
+            <ion-label stacked>{{ "KEY_NAME" | translate }}</ion-label>
             <ion-input type="text" formControlName="KEY_NAME" [(ngModel)]="KEY_NAME_ngModel_Add" placeholder="{{'Please fill in the key name'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{ 'Key Value' | translate }}</ion-label>
+            <ion-label stacked>{{ "KEY_VALUE" | translate }}</ion-label>
             <ion-input type="text" formControlName="KEY_VALUE" [(ngModel)]="KEY_VALUE_ngModel_Add" placeholder="{{'Please fill in the key value'}}"></ion-input>
           </ion-item>
           <div class="btn">
             <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Settingsform.valid" (click)="Save()">{{"SUBMIT"
-              | translate}}</button>
+              | translate}}</button>  
           </div>
         </form>
       </ion-list>

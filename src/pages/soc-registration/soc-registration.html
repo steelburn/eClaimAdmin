@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar color="primary200">
-    <ion-title>{{ 'SOC_REGISTRATION_HEADING' | translate }}</ion-title>
+    <ion-title>{{ "SOC_REGISTRATION_HEADING" | translate }}</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top color="primary200">
     <ion-searchbar [(ngModel)]="search_ngModel" (ionInput)="search($event)" placeholder='Search'></ion-searchbar>
@@ -80,8 +80,8 @@
     <ion-card class="cm">
       <ion-card-header class="icTitle headerColor-white ">
 
-        <div class="icHeaderText" *ngIf="Add_Form">REGISTER NEW SOC NUMBER</div>
-        <div class="icHeaderText" *ngIf="Edit_Form">UPDATE SOC NUMBER</div>
+        <div class="icHeaderText" *ngIf="Add_Form">{{ "REGISTER_SOC" | translate }}</div>
+        <div class="icHeaderText" *ngIf="Edit_Form">{{ "UPDATE_SOC" | translate }}</div>
 
         <button class="btnR" (click)="CloseSocClick()">
           <ion-icon name="md-close"></ion-icon>
@@ -92,19 +92,19 @@
       <ion-list class="scroll">
         <form [formGroup]="Socform">
           <ion-item *ngIf="AdminLogin">
-            <ion-label stacked>{{"TENANT"}}</ion-label>
+            <ion-label stacked>{{ "TENANT" | translate }}</ion-label>
             <ion-select formControlName="TENANT_NAME" [(ngModel)]="Tenant_Add_ngModel" placeholder="{{'Please fill the Tenant'}}">
               <ion-option *ngFor="let tenant of tenants" value="{{tenant.TENANT_GUID}}">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{ 'SOC_NUMBER' | translate }}</ion-label>
+            <ion-label stacked>{{ "SOC_NUMBER" | translate }}</ion-label>
             <ion-input type="text" formControlName="soc" [(ngModel)]="SOC_NO_ngModel_Add" placeholder="{{'Please fill the soc no'}}"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>{{ 'PROJECT_NAME' | translate }}</ion-label>
+            <ion-label stacked>{{ "PROJECT_NAME" | translate }}</ion-label>
             <ion-input type="text" formControlName="project_name" [(ngModel)]="PROJECT_NAME_ngModel_Add" placeholder="{{'Please fill the project name'}}"></ion-input>
           </ion-item>
 
@@ -179,7 +179,7 @@
           </ion-item>
 
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Socform.valid" (click)="Save()">Submit</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Socform.valid" (click)="Save()">{{ "SUBMIT" | translate }}</button>
           </div>
 
         </form>

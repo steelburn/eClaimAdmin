@@ -10,7 +10,7 @@
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-    <ion-title>Attendance Report</ion-title>
+    <ion-title>{{ "ATTENDANCE_REPORT" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +19,7 @@
 <ion-content padding>
 
   <ion-item class="fuha">
-    <ion-label> Month :</ion-label>
+    <ion-label>{{ "MONTH" | translate }} </ion-label>
     <ion-select interface="popover" #ddlmonth>
       <ion-option [value]="All" [selected]="true">All</ion-option>
       <ion-option value="1">Jan</ion-option>
@@ -39,7 +39,7 @@
 
 
   <ion-item class="fuha">
-    <ion-label>Year:</ion-label>
+    <ion-label>{{ "YEAR" | translate }}</ion-label>
     <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
       <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
     </ion-select>
@@ -47,7 +47,7 @@
 
 
   <ion-item class="fuha1">
-    <ion-label>User Name:</ion-label>
+    <ion-label>{{ "REPORT_USER_NAME" | translate }}</ion-label>
     <ion-select interface="popover" #ddlUserName>
       <ion-option [value]="All" [selected]="true">All</ion-option>
       <ion-option *ngFor="let emp of employeeList" [value]="emp.STAFF_ID">{{emp.FULLNAME}}</ion-option>
@@ -55,7 +55,7 @@
   </ion-item>
 
   <ion-item>
-    <button ion-button item-end [disabled]="!btnSearch" (click)="BindData(ddlUserName.value,ddlmonth.value)">Search</button>
+    <button ion-button item-end [disabled]="!btnSearch" (click)="BindData(ddlUserName.value,ddlmonth.value)">{{ "SEARCH" | translate }}</button>
   </ion-item>
 
   <ion-list>
