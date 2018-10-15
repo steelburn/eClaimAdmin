@@ -7,36 +7,36 @@
 
 		<ion-card-content>
 		
-			<h1 style="margin-left:10pt;">{{ "SIGN_IN_CLAIM" | translate }}</h1>
+			<h1 style="margin-left:10pt;">Sign In to eClaim</h1>
 			<br/>
 
 			<p style="margin-left:10pt;">
-				<b>{{ "ENTER_CREDENTIALS" | translate }}</b>
+				<b>Please enter your login credentials</b>
 			</p>
 			<br/>
 			<form #loginForm="ngForm" novalidate>
 				<ion-list>
 					<ion-item>
 
-						<ion-label floating color="primary">{{ "USER_NAME" | translate }}</ion-label>
+						<ion-label floating color="primary">User Name (Full email address)</ion-label>
 						<ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
 						 required>
 						</ion-input>
 						<!-- <ion-icon name="person" item-end></ion-icon> -->
 					</ion-item>
 					<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
-						{{ "USER_NAME_REQUIRED" | translate }}
+						Username is required
 					</p>
 
 					<ion-item>
-						<ion-label floating color="primary">{{ "ENTER_PASSWORD" | translate }}</ion-label>
+						<ion-label floating color="primary">Enter Your Password</ion-label>
 						<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
 							<!-- <ion-icon item-end name="key"></ion-icon> -->
 						</ion-input>
 
 					</ion-item>
 					<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
-						{{ "PASSWORD_REQUIRED" | translate }}
+						Password is required
 					</p>
 				</ion-list>
 
@@ -77,12 +77,12 @@
 			<ion-list>
 				<form [formGroup]="ForgotPasswordForm">
 					<ion-item>
-						<ion-label stacked>{{ 'Email' | translate }}</ion-label>
+						<ion-label stacked>Email</ion-label>
 						<ion-input type="email" formControlName="Email_ID" [(ngModel)]="email_ngModel" required placeholder="{{'Please fill in the email'}}"></ion-input>
 					</ion-item>
 
 					<div class="btn">
-						<button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!ForgotPasswordForm.valid" (click)="SaveForgotPassword()">{{"SUBMIT" | translate}}</button>
+						<button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!ForgotPasswordForm.valid" (click)="SaveForgotPassword()">Submit</button>
 					</div>
 				</form>
 			</ion-list>
