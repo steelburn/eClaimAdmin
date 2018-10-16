@@ -85,17 +85,22 @@ export class ClaimSummaryPage {
         let fullname: number;
         let month: number;
         let dept: number;
-        let amount: number;
+        let approveamount: number;
+        let rejamount: number;
+
         console.log(item);
         if (item.FULLNAME != null) { fullname = item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) }
         if (item.DEPARTMENT != null) { dept = item.DEPARTMENT.toString().toLowerCase().indexOf(val.toLowerCase()) }
         if (item.MONTH != null) { month = item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) }
-        if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.APPROVEDAMOUNT != null) { approveamount = item.APPROVEDAMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.REJECTEDAMOUNT != null) { rejamount = item.REJECTEDAMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+
         return (
           (fullname > -1)
           || (dept > -1)
           || (month > -1)
-          || (amount > -1)
+          || (approveamount > -1)
+          || (rejamount > -1)
         );
       })
     }
