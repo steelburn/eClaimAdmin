@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { MiscellaneousClaimPage } from '../miscellaneous-claim/miscellaneous-claim';
+import * as Settings from '../../dbSettings/companySettings'; 
+
 
 
 @IonicPage()
@@ -20,7 +22,7 @@ export class MiscellaneousClaimViewPage {
   Remarks_NgModel: any;
   isRemarksAccepted: any;
   isApprover: any;
-  approverDesignation: any;
+  // approverDesignation: any;
   isActionTaken: boolean = false;
   currency = localStorage.getItem("cs_default_currency")
 
@@ -30,7 +32,7 @@ export class MiscellaneousClaimViewPage {
     this.Approver_GUID = this.navParams.get("approver_GUID");
     this.level = navParams.get('level_no');
     this.LoadMainClaim();   
-    this.approverDesignation = this.navParams.get("approverDesignation"); 
+    // this.approverDesignation = this.navParams.get("approverDesignation"); 
   } 
 
   travelDate: any;
@@ -68,6 +70,19 @@ export class MiscellaneousClaimViewPage {
       // element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
       this.travelDate = element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
       element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+
+      if (element.PROFILE_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.PENDING)
+      element.STATUS = Settings.StatusConstants.PENDINGSUPERIOR
+      else if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+      element.STATUS = Settings.StatusConstants.PENDINGFINANCEVALIDATION
+      else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+      element.STATUS = Settings.StatusConstants.PENDINGPAYMENT
+      else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.REJECTED)
+      element.STATUS = Settings.StatusConstants.SUPERIORREJECTED
+      else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.REJECTED)
+      element.STATUS = Settings.StatusConstants.FINANCEREJECTED
+      else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.REJECTED)
+      element.STATUS = Settings.StatusConstants.PAYMENTREJECTED 
    
         this.totalClaimAmount = element.MILEAGE_AMOUNT;
         this.remarks = element.REMARKS;
