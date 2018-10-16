@@ -69,11 +69,11 @@
                     </th>
                     <th style="width:42px;text-align: left;">No.</th>
                     <th *ngIf="!FinanceLogin" style="text-align: left;">Name</th>
-                    <th style="width:135px;text-align: left;">Claim Type</th>
-                    <th style="width:120px; text-align: left;">Date</th>
-                    <th style="width:95px;text-align: left;">Status</th>
-                    <th style="width:150px;text-align: left;">Stage</th>
-                    <th style="width:112px;text-align: right;">Amount({{currency }})</th>
+                    <th style="width:185px;text-align: left;">Claim Type</th>
+                    <th style="width:145px; text-align: left;">Date</th>
+                    <th style="width:150px;text-align: left;">Status</th>
+                    <th style="width:150px;text-align: left;" hidden>Stage</th>
+                    <th style="width:137px;text-align: right;">Amount({{currency }})</th>
                     <th class="tblBrRight" style="width:68px">Action</th>
 
                 </tr>
@@ -90,16 +90,16 @@
                     <td class="lgl1 getHeader" reshead="Claim Type">{{claimrequestdetail.CLAIMTYPE}}</td>
                     <td class="lgl1 getHeader" reshead="Date">{{claimrequestdetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
                     <td class="lgl1 getHeader" reshead="Status">{{claimrequestdetail.STATUS}}</td>
-                    <td class="lgl1 getHeader" reshead="Stage">{{claimrequestdetail.STAGE}}</td>
+                    <td class="lgl1 getHeader" reshead="Stage" hidden>{{claimrequestdetail.STAGE}}</td>
                     <td class="lgl1 getHeader" reshead="Amount" style="text-align: right;">{{claimrequestdetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>
                     <td class="lgl1 getHeader fColor" reshead="Action" style="text-align: right;">
-                        <button ion-button item-end (click)='viewClaim(claimrequestdetail.STAGE_GUID,claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'>
+                        <button ion-button item-end (click)='viewClaim(claimrequestdetail.CLAIM_REQUEST_GUID, claimrequestdetail.PROFILE_LEVEL, claimrequestdetail.CLAIM_TYPE_GUID)'>
                             <ion-icon name="md-eye"></ion-icon>
                         </button>
                     </td>
                 </tr>
                 <tr class="col7">
-                    <td colspan="8" class="lgl11" style="color:#50C878;"> Total Amount({{currency }}) : {{totalClaimAmount | number:'1.2-2'}}</td>
+                    <td colspan="7" class="lgl11" style="color:#50C878;"> Total Amount({{currency }}) : {{totalClaimAmount | number:'1.2-2'}}</td>
                 </tr>
             </table>
             <!-- <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">

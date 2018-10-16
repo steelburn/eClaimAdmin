@@ -40,7 +40,7 @@ export class SocRegistrationPage {
   tenant_entry: Tenant_Main_Model = new Tenant_Main_Model();
   view_entry: View_SOC_Model = new View_SOC_Model();
   Socform: FormGroup;
-  public page:number = 1;
+  public page: number = 1;
   baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/soc_main' + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   baseResource_Url: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/';
 
@@ -892,9 +892,9 @@ export class SocRegistrationPage {
             if (Activation_Flag == true) {
               this.project_entry.ACTIVATION_FLAG = "0";
             }
-            else {              
+            else {
               this.project_entry.ACTIVATION_FLAG = "1";
-            }           
+            }
 
             this.socservice.update_project(this.project_entry)
               .subscribe((response) => {
@@ -909,7 +909,7 @@ export class SocRegistrationPage {
     alert.present();
   }
 
-  GetProjectDetails(PROJECT_GUID: any){
+  GetProjectDetails(PROJECT_GUID: any) {
     let ProjectActivationUrl = this.baseResource_Url + "main_project?filter=(PROJECT_GUID=" + PROJECT_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http.get(ProjectActivationUrl)
       .map(res => res.json())
@@ -920,19 +920,7 @@ export class SocRegistrationPage {
           this.project_entry.NAME = this.soc_details_main[0]["NAME"];
           this.project_entry.CUSTOMER_GUID = this.soc_details_main[0]["CUSTOMER_GUID"];
           this.project_entry.CUSTOMER_LOCATION_GUID = this.soc_details_main[0]["CUSTOMER_LOCATION_GUID"];
-          this.project_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");          
+          this.project_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
         });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

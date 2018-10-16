@@ -47,8 +47,7 @@ export class ClaimhistorydetailPage {
   currency = localStorage.getItem("cs_default_currency")
 
 
-  role: any;
-
+  //role: any;
   deptList: any[];
   employeeList: any[] = [];
   employeeList1: any[] = [];
@@ -61,8 +60,8 @@ export class ClaimhistorydetailPage {
     this.claimrefguid = navParams.get("claimRefGuid");
     this.userguid = navParams.get("userGuid");
     this.month = navParams.get("Month");
-    this.role = navParams.get("role");
-    this.loginUserRole = localStorage.getItem("g_ROLE_NAME");
+    // this.role = navParams.get("role");
+    // this.loginUserRole = localStorage.getItem("g_ROLE_NAME");
     // let ddlDept:any;
     //     alert(ddlDept.value)
     //alert(this.userguid);
@@ -75,12 +74,12 @@ export class ClaimhistorydetailPage {
 
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
       this.FinanceLogin = true;
-      if (this.role == "Payment") {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
-      }
-      else {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;
-      }
+      // if (this.role == "Payment") {
+      //   this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      // }
+      // else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(PROFILE_LEVEL!=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      //}
 
     }
     else {
@@ -122,25 +121,36 @@ export class ClaimhistorydetailPage {
           // if (this.claimhistorydetails.length != 0 && this.loginUserRole === "Finance Admin") {
           //   if (element.STATUS.toString() === "Approved" && element.PROFILE_LEVEL.toString() === "3") { element.STATUS = "Paid"; }
           // }
-          if (this.FinanceLogin) {
-            if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.APPROVED)
-              element.STATUS = Settings.StatusConstants.VALIDATED
+          if (!this.FinanceLogin) {
+            element.PROFILE_LEVEL=element.PROFILE_LEVEL_MAIN;
+            element.STATUS=element.REQ_STATUS;
+          }
+            if (element.PROFILE_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.PENDING)
+              element.STATUS = Settings.StatusConstants.PENDINGSUPERIOR
+            else if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+              element.STATUS = Settings.StatusConstants.PENDINGFINANCEVALIDATION
             else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
-              element.STATUS = Settings.StatusConstants.PAID
-          }
-          if (element.REQ_STATUS === 'Rejected') {
-            element.STAGE_GUID = null;
-          }
-          else {
-            key = element.PROFILE_LEVEL_MAIN;
-          }
+              element.STATUS = Settings.StatusConstants.PENDINGPAYMENT
+            else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.REJECTED)
+              element.STATUS = Settings.StatusConstants.SUPERIORREJECTED
+            else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.REJECTED)
+              element.STATUS = Settings.StatusConstants.FINANCEREJECTED
+            else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.REJECTED)
+              element.STATUS = Settings.StatusConstants.PAYMENTREJECTED
+         
+          // if (element.REQ_STATUS === 'Rejected') {
+          //   element.STAGE_GUID = null;
+          // }
+          // else {
+          //   key = element.PROFILE_LEVEL_MAIN;
+          // }
 
-          switch (key) {
-            case 1: element.STAGE_GUID = 'Superior'; break;
-            case 2: element.STAGE_GUID = 'Finance Executive'; break;
-            case 3:
-            case -1: element.STAGE_GUID = 'Finance & Admin'; break;
-          }
+          // switch (key) {
+          //   case 1: element.STAGE_GUID = 'Superior'; break;
+          //   case 2: element.STAGE_GUID = 'Finance Executive'; break;
+          //   case 3:
+          //   case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+          // }
 
         });
         this.claimhistorydetails1 = this.claimhistorydetails;
@@ -149,7 +159,7 @@ export class ClaimhistorydetailPage {
           if (ddlEmployee.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.USER_GUID.toString() === ddlEmployee.toString()) }
           if (ddlmonth.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
           if (ddlClaimTypes.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
-          if (ddlStatus.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
+          if (ddlStatus.toString() !== "All") { this.claimhistorydetails = this.claimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString().replace("_"," ")) }
 
         }
         // for (var item in data["resource"]) {
@@ -241,12 +251,12 @@ export class ClaimhistorydetailPage {
   SearchClaimsData() {
     this.btnSearch = false;
     if (this.claimrefguid !== null && this.claimrefguid !== undefined) {
-      if (this.role == "Payment") {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
-      }
-      else {
-        this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=2)&api_key=' + constants.DREAMFACTORY_API_KEY;
-      }
+      // if (this.role == "Payment") {
+      //   this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimhistorydetail?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(APPROVER=' + localStorage.getItem("g_USER_GUID") + ')AND(PROFILE_LEVEL=3)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      // }
+      // else {
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(CLAIM_REF_GUID=' + this.claimrefguid + ')AND(PROFILE_LEVEL!=1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      //}
 
     }
     else {

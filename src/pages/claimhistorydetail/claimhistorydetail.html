@@ -10,8 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title *ngIf="FinanceLogin && role=='Payment'">{{ "PAYMENT_HISTORY" | translate }}</ion-title>
-    <ion-title *ngIf="FinanceLogin && role=='Validation'">{{ "VALIDATION_HISTORY" | translate }}</ion-title>
+    <ion-title *ngIf="FinanceLogin">{{ "CLAIM_SUMMARY_DETAILS" | translate }}</ion-title>
     <ion-title *ngIf="!FinanceLogin">{{ "SUPERIOR" | translate }}</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top color="primary200">
@@ -79,9 +78,12 @@
     <ion-select interface="popover" [(ngModel)]="ddlSta" #ddlStatus>
       <ion-option [value]="All" [selected]="true">All</ion-option>
       <ion-option [value]="Paid">Paid</ion-option>
-      <ion-option [value]="Approved">Approved</ion-option>
-      <ion-option [value]="Validated">Validated</ion-option>
-      <ion-option [value]="Rejected">Rejected</ion-option>
+      <ion-option [value]="Pending_Superior">Pending Superior</ion-option>
+      <ion-option [value]="Pending_Finance_Validation">Pending Finance Validation</ion-option>
+      <ion-option [value]="Pending_Payment">Pending Payment</ion-option>
+      <ion-option [value]="Superior_Rejected">Superior Rejected</ion-option>
+      <ion-option [value]="Finance_Rejected">Finance Rejected</ion-option>
+      <ion-option [value]="Payment_Rejected">Payment Rejected</ion-option>
 
     </ion-select>
   </ion-item>
@@ -139,9 +141,10 @@
           <td class="lgl1 getHeader" reshead="Department" *ngIf="!FinanceLogin" text-wrap>{{claimhistorydetail.DEPARTMENT}}</td>
           <td class="lgl1 getHeader" reshead="Month" *ngIf="!FinanceLogin">{{claimhistorydetail.MONTH}}</td>
 
-          <td class="lgl1 getHeader" reshead="Claim Type">{{claimhistorydetail.CLAIM_TYPE}}</td>
+          <td class="lgl1 getHeader" *ngIf="FinanceLogin" reshead="Claim Type">{{claimhistorydetail.CLAIMTYPE}}</td>
+          <td class="lgl1 getHeader" *ngIf="!FinanceLogin" reshead="Claim Type">{{claimhistorydetail.CLAIM_TYPE}}</td>
           <td class="lgl1 getHeader" reshead="Date">{{claimhistorydetail.TRAVEL_DATE | date: 'dd/MM/yyyy'}}</td>
-          <td class="lgl1 getHeader" reshead="Status">{{claimhistorydetail.STATUS}}</td>
+          <td class="lgl1 getHeader" reshead="Status" text-wrap>{{claimhistorydetail.STATUS}}</td>
           <td class="lgl1 getHeader" reshead="Remarks" text-wrap>{{claimhistorydetail.REMARKS}}</td>
           <!-- <td class="lgl1">{{claimhistorydetail.STAGE}}</td> -->
           <td class="lgl1 getHeader" reshead="currency">{{claimhistorydetail.CLAIM_AMOUNT | number:'1.2-2'}}</td>

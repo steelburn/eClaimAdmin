@@ -102,16 +102,13 @@ export class LoginPage {
                     localStorage.setItem("g_KEY_VIEW", "0");
 
                     for (var item in role_result) {
-                      if (role_result[item]["ROLE_NAME"] == "MAIN") {
+                      if (role_result[item]["ROLE_FLAG"] == "MAIN") {
                         localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
                       }
-                      else {
-                        localStorage.setItem("g_ROLE_NAME", "");
-                      }
-                      if (role_result[0]["KEY_ADD"] == "1") { localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]); }
-                      if (role_result[0]["KEY_EDIT"] == "1") { localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]); }
-                      if (role_result[0]["KEY_DELETE"] == "1") { localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]); }
-                      if (role_result[0]["KEY_VIEW"] == "1") { localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]); }
+                      if (role_result[item]["KEY_ADD"] == "1") { localStorage.setItem("g_KEY_ADD", role_result[item]["KEY_ADD"]); }
+                      if (role_result[item]["KEY_EDIT"] == "1") { localStorage.setItem("g_KEY_EDIT", role_result[item]["KEY_EDIT"]); }
+                      if (role_result[item]["KEY_DELETE"] == "1") { localStorage.setItem("g_KEY_DELETE", role_result[item]["KEY_DELETE"]); }
+                      if (role_result[item]["KEY_VIEW"] == "1") { localStorage.setItem("g_KEY_VIEW", role_result[item]["KEY_VIEW"]); }
                     }
 
                     // localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
@@ -524,6 +521,9 @@ export class LoginPage {
     localStorage.removeItem("cs_default_language");
     localStorage.removeItem("cs_email_schedule");
     localStorage.removeItem("cs_email_time");
+    
+    localStorage.removeItem("draft_notification");
+    localStorage.removeItem("profile_guid");
 
     this.KeyNameValue = [];
     let url: string = "";
@@ -566,6 +566,9 @@ export class LoginPage {
           if (this.KeyNameValueList[item]["KEY_NAME"] == "default_language") { localStorage.setItem("cs_default_language", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "email_schedule") { localStorage.setItem("cs_email_schedule", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "email_time") { localStorage.setItem("cs_email_time", this.KeyNameValueList[item]["KEY_VALUE"]); }
+
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "draft_notification") { localStorage.setItem("draft_notification", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "profile_guid") { localStorage.setItem("profile_guid", this.KeyNameValueList[item]["KEY_VALUE"]); }
         }
       });
   }

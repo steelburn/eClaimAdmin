@@ -181,7 +181,7 @@ export class CustomerSetupPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private socservice: SocMain_Service, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe, private alertCtrl: AlertController) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry !! Please Login.');
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.setRoot(LoginPage);
     }
     else {
       this.button_Add_Disable = false; this.button_Edit_Disable = false; this.button_Delete_Disable = false; this.button_View_Disable = false;
@@ -608,7 +608,7 @@ export class CustomerSetupPage {
             this.socservice.update_customer(this.customer_entry)
               .subscribe((response) => {
                 if (response.status == 200) {
-                  this.navCtrl.setRoot(this.navCtrl.getActive().component);                  
+                  this.navCtrl.setRoot(this.navCtrl.getActive().component);
                 }
               });
           }
@@ -618,7 +618,7 @@ export class CustomerSetupPage {
     alert.present();
   }
 
-  GetCustomerDetails(CUSTOMER_GUID: any){
+  GetCustomerDetails(CUSTOMER_GUID: any) {
     let CustomerActivationUrl = this.baseResource_Url + "main_customer?filter=(CUSTOMER_GUID=" + CUSTOMER_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http.get(CustomerActivationUrl)
       .map(res => res.json())
@@ -629,7 +629,7 @@ export class CustomerSetupPage {
           this.customer_entry.NAME = this.customer_details[0]["NAME"];
           this.customer_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
         });
-  } 
+  }
 
   ClearControls() {
     this.Tenant_Add_ngModel = "";
