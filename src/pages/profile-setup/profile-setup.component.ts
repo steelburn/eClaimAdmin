@@ -157,8 +157,8 @@ export class ProfileSetupPage {
                 this.profile_entry.PROFILE_NAME = this.PROFILENAME_ngModel_Add.trim();
                 this.profile_entry.PROFILE_XML = this.XML_ngModel_Add.trim();
                 this.profile_entry.MAIN_PROFILE_GUID = UUID.UUID();
-                this.profile_entry.TENANT_GUID = UUID.UUID();
-                this.profile_entry.TENANT_SITE_GUID = UUID.UUID();
+                this.profile_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
+                this.profile_entry.TENANT_SITE_GUID = localStorage.getItem("g_TENANT_COMPANY_GUID");
                 this.profile_entry.CREATION_TS = new Date().toISOString();
                 this.profile_entry.CREATION_USER_GUID = '1';
                 this.profile_entry.UPDATE_TS = new Date().toISOString();

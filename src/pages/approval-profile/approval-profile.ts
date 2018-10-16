@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import 'rxjs/add/operator/map';
-import { approval_profile_model } from '../../model/approval_profile_model';
-import { main_profile_model } from '../../model/main_profile_model';
+import { approval_profile_model } from '../../models/approval_profile_model';
+import { Main_Profile_Model } from '../../models/main_profile_model';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { OptimizeProvider } from '../../providers/optimize.provider';
 import moment from 'moment';
@@ -33,11 +33,11 @@ export class ApprovalProfilePage {
   Rejected_Level_ngModel: any;
   approver_selected: any; TenantGUID: string;
   users_list: any[] = [];
-  Temp_Data: any[] = [];profile_name_ngmodel;
+  Temp_Data: any[] = []; profile_name_ngmodel: any;
   public Info: any[];
   approvalRef: approval_profile_model = new approval_profile_model();
-  profileRef: main_profile_model = new main_profile_model();
-  constructor(public optimizeProvider: OptimizeProvider, public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public api: ApiManagerProvider) {
+  profileRef: Main_Profile_Model = new Main_Profile_Model();
+  constructor(public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public api: ApiManagerProvider) {
     // this.optimizeProvider.CheckSessionOut();
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.ProfileForm = fb.group({
@@ -48,7 +48,7 @@ export class ApprovalProfilePage {
       'Approved_Level': [],
       'Rejected_Condition': [],
       'Rejected_Level': [],
-      'profile_name':[null, Validators.compose([Validators.required])],
+      'profile_name': [null, Validators.compose([Validators.required])],
     })
     this.LoadUsers();
   }

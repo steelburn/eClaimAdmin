@@ -199,7 +199,7 @@ export class AccountPage {
         ACCOUNT_NUMBER: [null],
 
         //-------------------ROLE DETAILS---------------------------
-        ROLE_NAME: [null], 
+        ROLE_NAME: [null],
         ADDITIONAL_ROLE_NAME: [null],
       });
 
@@ -1157,7 +1157,7 @@ export class AccountPage {
   Update_User_Certification() {
     // debugger;
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_certification")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_certification")
       .subscribe(
         (response) => {
           if (response.status == 200) {
@@ -1195,7 +1195,7 @@ export class AccountPage {
   Update_User_Spouse() {
     // debugger;
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_spouse")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_spouse")
       .subscribe(
         (response) => {
           if (response.status == 200) {
@@ -1231,7 +1231,7 @@ export class AccountPage {
   Update_User_Children() {
     // debugger;
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_children")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_children")
       .subscribe(
         (response) => {
           if (response.status == 200) {
