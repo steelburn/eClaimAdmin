@@ -971,6 +971,15 @@ export class TravelclaimPage {
               this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
             }
 
+            //Added by Bijay on 12/10/2018 for audit_trial-----------------------
+            if(this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != ""){
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME")+ " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+            }
+            else{
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME")+ " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+            }
+            //-------------------------------------------------------------------
+            
             this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
               // if (isClaim && modelJSON.STATUS != 'Draft')
               // if (this.claimRequestData["resource"][0].STATUS != 'Draft') {

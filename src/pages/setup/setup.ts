@@ -17,6 +17,7 @@ import { CountrysetupPage } from '../countrysetup/countrysetup';
 import { StatesetupPage } from '../statesetup/statesetup';
 import { ImportExcelDataPage } from '../import-excel-data/import-excel-data';
 import { DeviceSetupPage } from '../device-setup/device-setup';
+import { RolesetupPage } from '../rolesetup/rolesetup';
 import { RolemodulesetupPage } from '../rolemodulesetup/rolemodulesetup';
 
 import { TenantCompanySetup_Model } from '../../models/tenantcompanysetup_model';
@@ -376,6 +377,10 @@ export class SetupPage {
 
   goToDBMaintenance(){
     this.navCtrl.push(DbmaintenancePage);
+  }
+
+  goToRolesetup() {
+    this.navCtrl.push(RolesetupPage)
   }
 
   goToRoleModulesetup() {

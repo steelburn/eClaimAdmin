@@ -2,13 +2,13 @@ export class MainClaimRequestModel {
   constructor(
     public CLAIM_REQUEST_GUID: string = null,
     public SOC_GUID: string = null,
-    public CUSTOMER_GUID	: number=null,
+    public CUSTOMER_GUID: number = null,
     public TENANT_GUID: string = null,
     public CLAIM_REF_GUID: string = null,
-    public CLAIM_TYPE_GUID: string = null, 
+    public CLAIM_TYPE_GUID: string = null,
     public MILEAGE_GUID: string = null,
-    public ALLOWANCE_GUID: string = null, 
-     public START_TS: string = null,
+    public ALLOWANCE_GUID: string = null,
+    public START_TS: string = null,
     public END_TS: string = null,
     public FROM: string = null,
     public DESTINATION: string = null,
@@ -22,10 +22,10 @@ export class MainClaimRequestModel {
     public STATUS_REMARKS: string = null,
     public STAGE: string = null,
     public STAGE_REMARKS: string = null,
-    public ASSIGNED_TO:string =null,
+    public ASSIGNED_TO: string = null,
     public PROFILE_JSON: string = null,
     public PROFILE_LEVEL: number = null,
-    public PREVIOUS_LEVEL:number = null,
+    public PREVIOUS_LEVEL: number = null,
     public CREATION_TS: string = null,
     public CREATION_USER_GUID: string = null,
     public UPDATE_TS: string = null,
@@ -34,7 +34,8 @@ export class MainClaimRequestModel {
     public TRAVEL_TYPE: string = null,
     public claim_method_guid: string = null,
     public from_place_id: string = null,
-    public to_place_id: string =null
+    public to_place_id: string = null,
+    public AUDIT_TRAIL: string = null
 
   ) { }
 
@@ -44,7 +45,7 @@ export class MainClaimRequestModel {
     return new MainClaimRequestModel(
       json.CLAIM_REQUEST_GUID,
       json.SOC_GUID,
-      json.CUSTOMER_GUID,   json.TENANT_GUID,
+      json.CUSTOMER_GUID, json.TENANT_GUID,
       json.CLAIM_REF_GUID,
       json.CLAIM_TYPE_GUID,
       json.MILEAGE_GUID,
@@ -62,7 +63,7 @@ export class MainClaimRequestModel {
       json.STATUS,
       json.STATUS_REMARKS,
       json.STAGE,
-      json.STAGE_REMARKS,json.ASSIGNED_TO,
+      json.STAGE_REMARKS, json.ASSIGNED_TO,
       json.PROFILE_JSON,
       json.PROFILE_LEVEL,
       json.PREVIOUS_LEVEL,
@@ -74,7 +75,8 @@ export class MainClaimRequestModel {
       json.TRAVEL_TYPE,
       json.claim_method_guid,
       json.from_place_id,
-      json.to_place_id
+      json.to_place_id,
+      json.AUDIT_TRAIL
     );
   }
 
@@ -82,7 +84,7 @@ export class MainClaimRequestModel {
     var doc = {
       CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
       SOC_GUID: this.SOC_GUID,
-      CUSTOMER_GUID: this.CUSTOMER_GUID,  TENANT_GUID: this.TENANT_GUID,
+      CUSTOMER_GUID: this.CUSTOMER_GUID, TENANT_GUID: this.TENANT_GUID,
       CLAIM_REF_GUID: this.CLAIM_REF_GUID,
       CLAIM_TYPE_GUID: this.CLAIM_TYPE_GUID,
       MILEAGE_GUID: this.MILEAGE_GUID,
@@ -100,19 +102,20 @@ export class MainClaimRequestModel {
       STATUS: this.STATUS,
       STATUS_REMARKS: this.STATUS_REMARKS,
       STAGE: this.STAGE,
-      STAGE_REMARKS: this.STAGE_REMARKS,ASSIGNED_TO:this.ASSIGNED_TO,
+      STAGE_REMARKS: this.STAGE_REMARKS, ASSIGNED_TO: this.ASSIGNED_TO,
       CREATION_TS: this.CREATION_TS,
       PROFILE_JSON: this.PROFILE_JSON,
       PROFILE_LEVEL: this.PROFILE_LEVEL,
-      PREVIOUS_LEVEL:this.PREVIOUS_LEVEL,
+      PREVIOUS_LEVEL: this.PREVIOUS_LEVEL,
       ATTACHMENT_ID: this.ATTACHMENT_ID,
       CREATION_USER_GUID: this.CREATION_USER_GUID,
       UPDATE_TS: this.UPDATE_TS,
       UPDATE_USER_GUID: this.UPDATE_USER_GUID,
       TRAVEL_TYPE: this.TRAVEL_TYPE,
-      claim_method_guid:this.claim_method_guid,
+      claim_method_guid: this.claim_method_guid,
       from_place_id: this.from_place_id,
-      to_place_id: this.to_place_id
+      to_place_id: this.to_place_id,
+      AUDIT_TRAIL: this.AUDIT_TRAIL
     };
     return stringify ? JSON.stringify({ resource: [doc] }) : doc;
   }

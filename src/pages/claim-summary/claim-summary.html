@@ -1,0 +1,101 @@
+<!--
+  Generated template for the ClaimSummaryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary200">
+        <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </button>
+    <ion-title> {{ "CLAIM_SUMMARY" | translate }}</ion-title>
+    <!-- <ion-title *ngIf="role=='Validation'">  {{ "COMMON_TASK_VALIDATION" | translate }}</ion-title> -->
+  </ion-navbar>
+  <ion-toolbar no-border-top color="primary200">
+    <ion-searchbar [(ngModel)]="searchboxValue"  (ionChange)="onSearchInput($event)" ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-item class="fuha">
+        <ion-label>{{ "COMMON_TASK_DEPARTMENT" | translate }}</ion-label>
+        <ion-select interface="popover" (ionChange)="BindEmployeesbyDepartment(ddlDept.value)" #ddlDept>
+            <ion-option [value]="All" [selected]="true">All</ion-option>
+            <ion-option *ngFor="let dept of deptList" [value]="dept.DEPARTMENT_GUID">{{dept.NAME}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item class="fuha">
+        <ion-label>{{ "COMMON_TASK_USERNAME" | translate }}</ion-label>
+        <ion-select interface="popover" #ddlEmployee>
+            <ion-option [value]="All" [selected]="true">All</ion-option>
+            <ion-option *ngFor="let emp of employeeList" [value]="emp.USER_GUID">{{emp.FULLNAME}}</ion-option>
+        </ion-select>
+    </ion-item>
+    
+    <ion-item class="fuha">
+        <ion-label>{{ "COMMON_TASK_CLAIM_MONTH" | translate }}</ion-label>
+        <ion-select interface="popover" #ddlmonth>
+            <ion-option [value]="All" [selected]="true">All</ion-option>
+            <ion-option value="Jan">Jan</ion-option>
+            <ion-option value="Feb">Feb</ion-option>
+            <ion-option value="Mar">Mar</ion-option>
+            <ion-option value="Apr">Apr</ion-option>
+            <ion-option value="May">May</ion-option>
+            <ion-option value="Jun">Jun</ion-option>
+            <ion-option value="Jul">Jul</ion-option>
+            <ion-option value="Aug">Aug</ion-option>
+            <ion-option value="Sep">Sep</ion-option>
+            <ion-option value="Oct">Oct</ion-option>
+            <ion-option value="Nov">Nov</ion-option>
+            <ion-option value="Dec">Dec</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item class="fuha">
+        <ion-label>{{ "COMMON_TASK_CLAIM_YEAR" | translate }}</ion-label>
+        <ion-select [(ngModel)]="currentYear" interface="popover" #ddlYear>
+            <ion-option *ngFor="let year of yearsList" [value]="year">{{year}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value,ddlYear.value)">Search</button>
+    </ion-item>
+    
+      <ion-list>
+          <ion-item>
+              <table class="Tabler list">
+                  <tr class="linedsg TColor">
+                      <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
+                      <th class="lgl1">Employee</th>
+                      <th class="lgl1">Department</th>
+                      <th class="lgl1" style="width:80px">Month</th>
+                      <!-- <th class="lgl1">Status</th> -->
+                      <th class="lgl1" style="width:90px">Approved</th>
+                      <th class="lgl1" style="width:90px">Rejected</th>
+                      <th class="lgl1 tblBrRight" style="width:80px">Action</th>
+      
+                  </tr>
+      
+                  <tr class="col7" *ngFor="let claimTaskList of claimTaskLists | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">
+                      <td class="lgl1 getHeader" reshead="No.">{{i+1}}</td>
+                      <td class="lgl1 getHeader"  reshead="Employee" >{{claimTaskList.FULLNAME}}</td>
+                      <td class="lgl1 getHeader"  reshead="Department" >{{claimTaskList.DEPARTMENT}}</td>
+                      <td class="lgl1 getHeader" reshead="Month">{{claimTaskList.MONTH}}</td>
+                      <!-- <td class="lgl1 getHeader" reshead="Status">{{claimTaskList.REF_STATUS}}</td> -->
+                       <!-- <td class="lgl1">{{claimhistory.YEAR}}</td> -->
+                       <td class="lgl1 getHeader" reshead="Approved" >{{claimTaskList.APPROVEDAMOUNT | number:'1.2-2'}}</td>
+                       <td class="lgl1 getHeader" reshead="Rejected" >{{claimTaskList.REJECTEDAMOUNT | number:'1.2-2'}}</td>
+                      <td class="lgl1 getHeader fColor" reshead="Action">
+                          <button ion-button item-end (click)="goToClaimHistoryDetail(claimTaskList.CLAIM_REF_GUID,claimTaskList.USER_GUID,claimTaskList.MONTH)"><ion-icon name="md-eye"></ion-icon></button>
+                          <!-- <button ion-button item-end (click)="DeleteClick(cashcard.CASHCARD_GUID)"><ion-icon name="md-close"></ion-icon></button> -->
+                      </td>
+                  </tr>     
+      
+              </table>
+              <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+            </pagination-controls>
+          </ion-item>
+      </ion-list>
+</ion-content>

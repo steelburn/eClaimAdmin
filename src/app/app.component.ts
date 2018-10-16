@@ -32,6 +32,7 @@ import { FinancePaymentTasklistPage } from '../pages/finance-payment-tasklist/fi
 import { CommonTasklistPage } from '../pages/common-tasklist/common-tasklist';
 import { PaymentHistoryPage } from '../pages/payment-history/payment-history';
 import { CommonHistorylistPage } from '../pages/common-historylist/common-historylist';
+import { ClaimSummaryPage } from '../pages/claim-summary/claim-summary';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -243,19 +244,19 @@ export class ConferenceApp {
   }
 
   enableMenu(loggedIn: boolean) {
-    this.appPages = [];
-    this.appPages_User = [];
-    this.claimPages = [];
-    this.reportPages = [];
-    this.setupsPages = [];
-    this.loggedInPages = [];
-
     this.blnDashboard_loggedInMenu_User = false;
     this.blnTasks_loggedInMenu_User = false;
     this.blnClaims_loggedInMenu_User = false;
     this.blnReport_loggedInMenu_User = false;
     this.blnSetup_loggedInMenu_User = false;
     this.blnAccount_loggedInMenu_User = false;
+
+    this.appPages = [];
+    this.appPages_User = [];
+    this.claimPages = [];
+    this.reportPages = [];
+    this.setupsPages = [];
+    this.loggedInPages = [];
         
     if (localStorage.getItem("g_USER_GUID") != null) {
       loggedIn = true;
@@ -286,6 +287,13 @@ export class ConferenceApp {
         this.menu.enable(!loggedIn, 'loggedOutMenu');
       }
       else {
+        this.appPages = [];
+        this.appPages_User = [];
+        this.claimPages = [];
+        this.reportPages = [];
+        this.setupsPages = [];
+        this.loggedInPages = [];
+        
         //Get all the roles and menus for that particular user.-------------------------------------------------------   
         let url: string; this.Menu_Array = []; let Role_Name: string = "";
         this.Menu_Dashboard_Array = []; this.Menu_Tasks_Array = []; this.Menu_Claims_Array = []; this.Menu_Reports_Array = []; this.Menu_Settings_Array = [];
