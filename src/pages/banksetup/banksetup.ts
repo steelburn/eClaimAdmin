@@ -385,4 +385,115 @@ export class BanksetupPage {
   ExportToExcel(evt: any) {
     this.excelService.exportAsExcelFile(this.banks,'Data');
   }
+  
+  emailUrl: string = 'http://api.zen.com.my/api/v2/zenmail?api_key=' + constants.DREAMFACTORY_API_KEY;
+  EmailTest(evt: any){
+    var queryHeaders = new Headers();
+    queryHeaders.append('Content-Type', 'application/json');
+    queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+    queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+    let options = new RequestOptions({ headers: queryHeaders });
+
+    let body = {
+      "template": "",
+      "template_id": 0,
+      "to": [
+        {
+          "name": name,
+          "email": "tarmimi@zen.com.my"
+        }
+      ],
+      "cc": [
+        {
+          "name": name,
+          "email": "stephen@zen.com.my"
+        }
+      ],
+      "bcc": [
+        {
+          "name": name,
+          "email": "bijay@zen.com.my"
+        }
+      ],
+      "subject": "Test mail.",
+      "body_text": "",
+      "body_html": '<html>' +
+      '<head>' +
+          '<meta name="GENERATOR" content="MSHTML 10.00.9200.17606">'+
+      '</head>'+
+      '<body>'+
+          '<div style="FONT-FAMILY: Century Gothic">'+
+              '<div style="MIN-WIDTH: 500px">'+
+                  '<br>'+
+                  '<div style="PADDING-BOTTOM: 10px; text-align: left; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px"><IMG style="WIDTH: 130px" alt=zen2.png src="http://api.zen.com.my/api/v2/files/eclaim/2018-09-17T13:33:42.429Zzen2.png></div>'+
+                  '<div style="MARGIN: 0 30px;">'+
+                      '<div style="FONT-SIZE: 24px; COLOR: black; PADDING-BOTTOM: 10px; TEXT-ALIGN: left; PADDING-TOP: 10px; PADDING-RIGHT: 20px"><b>Test mail</b></div>'+
+                  '</div>'+
+                  '<div style="FONT-SIZE: 12px; TEXT-ALIGN: left; padding: 11px 30px">'+
+                      '<hr>'+
+                      '<div style="FONT-SIZE: 16px; TEXT-ALIGN: left;"><b>Mail Details :</b></div>'+
+                      '<br />'+
+                      '<table style="FONT-SIZE: 12px; FONT-FAMILY: Century Gothic; MARGIN: 0px auto;">'+
+                          '<tbody>'+
+                              '<tr>'+
+                                  '<td style="TEXT-ALIGN: left">Employee</td>'+
+                                  '<td>:</td>'+
+                                  '<td colspan="2">&nbsp;</td>'+
+                              '</tr>'+
+                              '<tr>'+
+                                  '<td style="TEXT-ALIGN: left">Applied Date</td>'+
+                                  '<td>:</td>'+
+                                  '<td style="TEXT-ALIGN: left" colspan="2">&nbsp;</td>'+
+                              '</tr>'+
+                              '<tr>'+
+                                  '<td style="TEXT-ALIGN: left">Claim Date </td>'+
+                                  '<td>:</td>'+
+                                  '<td style="TEXT-ALIGN: left" colspan="2">&nbsp;</td>'+
+                              '</tr>'+
+                              '<tr>'+
+                                  '<td style="TEXT-ALIGN: left">Claim Type</td>'+
+                                  '<td>: </td>'+
+                                  '<td style="TEXT-ALIGN: left" colspan="2">&nbsp;</td>'+
+                              '</tr>'+
+                              '<tr>'+
+                                  '<td style="TEXT-ALIGN: left">Project / Customer / SOC</td>'+
+                                  '<td>:</td>'+
+                                  '<td style="TEXT-ALIGN: left" colspan="2">&nbsp;</td>'+
+                              '</tr>'+
+                              '<tr>'+
+                                  '<td style="TEXT-ALIGN: left">Claim Amount</td>'+
+                                  '<td>: </td>'+
+                                  '<td style="TEXT-ALIGN: left" colspan="2">&nbsp;</td>'+
+                              '</tr>'+
+                              '<tr>'+
+                                  '<td style="TEXT-ALIGN: left">Description</td>'+
+                                  '<td>: </td>'+
+                                  '<td style="TEXT-ALIGN: left" colspan="2">&nbsp;</td>'+
+                              '</tr>'+
+                              '<tr>'+
+                                  '<td style="TEXT-ALIGN: left"></td>'+
+                                  '<td></td>'+
+                                  '<td style="TEXT-ALIGN: left" colspan="2"><a href="http://autobuild.zeontech.com.my/eclaim/#/ClaimapprovertasklistPage" style="background: #0492C2; padding: 10px; color: white; text-decoration: none; border-radius: 5px; display: inline-block;">Open eClaim</a></td>'+
+                              '</tr>'+
+                          '</tbody>'+
+                      '</table>'+
+                      '<hr>'+
+                      '<div style="TEXT-ALIGN: left; PADDING-TOP: 20px">Thank you.</div>'+
+                  '</div>'+
+              '</div>'+
+          '</div>'+
+      '</body>'+
+      '</html>',
+      "from_name": "eClaim",
+      "from_email": "balasingh73@gmail.com",
+      "reply_to_name": "",
+      "reply_to_email": ""
+    };
+
+    this.http.post(this.emailUrl, body, options)
+      .map(res => res.json())
+      .subscribe(data => {
+        alert('Mail sent sucessfully.'); 
+      });
+  }
 }
