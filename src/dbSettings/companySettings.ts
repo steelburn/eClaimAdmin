@@ -19,7 +19,15 @@ export const StatusConstants = {
     REJECTED: "Rejected",
     PENDING: "Pending",
     VALIDATED: "Validated",
-    DRAFT: "Draft"
+    DRAFT: "Draft",
+
+    PENDINGSUPERIOR:  "Pending Superior",
+    PENDINGFINANCEVALIDATION:  "Pending Finance Validation",
+    PENDINGPAYMENT:  "Pending Payment",
+    SUPERIORREJECTED:  "Superior Rejected",
+    FINANCEREJECTED:  "Finance Rejected",
+    PAYMENTREJECTED:  "Payment Rejected"
+
 }
 
 export const StageConstants = {
@@ -62,7 +70,7 @@ export const ProfileLevels = {
     TWO: '2',
     THREE: '3',
     ZERO: '0',
-    MINUSONE:'-1'
+    MINUSONE: '-1'
 }
 export const ClaimAmountConstants = {
     MIN_CLAIM_AMOUNT: 0,
