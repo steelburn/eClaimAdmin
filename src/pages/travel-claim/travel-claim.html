@@ -104,7 +104,7 @@
 
     <ion-item>
       <ion-label>Roundtrip</ion-label>
-      <ion-checkbox [(ngModel)]="Roundtrip_ngModel" formControlName="Roundtrip" (ionChange)="Roundtrip_Change()"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="Roundtrip_ngModel" formControlName="Roundtrip" (ionChange)="Roundtrip_Change(Travelform.value)"></ion-checkbox>
     </ion-item>
 
     <ion-item class="fuha">

@@ -104,9 +104,10 @@ export class TravelclaimPage {
   claimRequestGUID: any;
   claimRequestData: any;
   rejectedLevel: any;
-
+  caluclationData:any[] = [];
+  One_Way_Distance:any;
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
-
+    
     // Lakshman
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
     this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
@@ -183,30 +184,96 @@ export class TravelclaimPage {
     });
 
   }
+Roundtrip_Caluclation()
+{
+  // this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(data => {
+  //   this.claimRequestData = data["resource"];
 
-  Roundtrip_Change() {
+  // });
+  let url = 'http://api.zen.com.my/api/v2/google/distancematrix/json?destinations=place_id:' + this.OriginPlaceID + '&origins=place_id:' + this.DestinationPlaceID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+  var destination: any;
+  return new Promise((resolve, reject) => {
+  this.http.get(url).map(res => res.json()).subscribe(data => {
+    let temp = data["rows"][0]["elements"][0];
+    // console.table(data)
+    if (temp["distance"] != null) {
+      let DistKm: string = data["rows"][0]["elements"][0]["distance"]["text"];
+      // console.log(DistKm)
+      DistKm = DistKm.replace(',', '')
+      this.Travel_Distance_ngModel = destination = DistKm.substring(0, DistKm.length - 2)
+      this.Travel_Distance_ngModel = this.numberPipe.transform(this.Travel_Distance_ngModel, '1.2-2');
+      // this.Travel_Mode_ngModel = this.vehicleCategory;
+      if (!this.isPublicTransport)
+        //Added by bijay on 24/09/2018
+        this.travelAmount = this.roundNumber(destination * this.VehicleRate, 2);
+      // this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
+      this.travelAmountNgmodel = this.travelAmount;
+      this.travelAmount = this.travelAmount === undefined ? 0 : this.travelAmount;
+      this.tollParkAmount = this.tollParkAmount === undefined ? 0 : this.tollParkAmount;
+      //Added by bijay on 24/09/2018
+      this.totalClaimAmount = this.roundNumber(this.travelAmount + this.tollParkAmount, 2);
+      let temp_data={Return_distance:this.Travel_Distance_ngModel,Return_travelAmount:this.travelAmountNgmodel,
+                      Return_totalAmount:this.totalClaimAmount}
+      
+      this.caluclationData.push(temp_data)
+      resolve(this.caluclationData);
+      console.log(this.caluclationData);
+    } 
+    
+  })
+});
+}
+  Roundtrip_Change(formValues:any) {
 
     if (this.Travel_From_ngModel != null && this.Travel_Destination_ngModel != null && this.travelAmountNgmodel != null && this.travelAmountNgmodel != undefined) {
+  
       let str = new String(this.travelAmountNgmodel)
       var str1 = str.indexOf(",");
       if (str1 > 0) {
         this.travelAmountNgmodel = this.travelAmountNgmodel.split(",").join("");
-      }
+      }      
+
       if (this.Roundtrip_ngModel) {
-        var temp_amount = 2 * Number(this.travelAmountNgmodel);
-        this.travelAmountNgmodel = this.numberPipe.transform(2 * Number(this.travelAmountNgmodel), '1.2-2');
-        this.totalClaimAmount = Number(temp_amount);
+        this.caluclationData=[];
+
+        let val = this.Roundtrip_Caluclation();
+        val.then((cal_data:any) => {
+          console.log(cal_data);
+              var return_distance=cal_data[0]["Return_distance"];
+              var return_totalAmount=cal_data[0]["Return_totalAmount"];
+              var return_travelAmount=cal_data[0]["Return_travelAmount"];
+              console.log(return_distance);
+              console.log(return_totalAmount);
+              console.log(return_travelAmount);
+              let distance=new String(formValues.distance);
+              var distance1 = distance.indexOf(",");
+              if (distance1 > 0) {
+               this.Travel_Distance_ngModel= formValues.distance.split(",").join("");              
+              }             
+          this.One_Way_Distance=this.Travel_Distance_ngModel;
+          
+              let re_distance=new String(return_distance);
+              var re_distance1 = re_distance.indexOf(",");
+              if (re_distance1 > 0) {              
+                return_distance= return_distance.split(",").join("");               
+              }       
+        let Toatal_Distance=Number(this.One_Way_Distance) + Number(return_distance);      
+        this.Travel_Distance_ngModel=this.numberPipe.transform(Toatal_Distance, '1.2-2');        
+
+           let   two_way_amount = Toatal_Distance*this.VehicleRate;        
+        this.travelAmountNgmodel =this.numberPipe.transform(two_way_amount, '1.2-2');
+       
+        this.totalClaimAmount =Number(two_way_amount);
+      });
       }
-      else {
-        // if (this.travelAmountNgmodel != null && this.travelAmountNgmodel != undefined) {
-          // if (this.travelAmountNgmodel.indexOf(",") > 0) {
-          //   this.travelAmountNgmodel = this.travelAmountNgmodel.split(",").join("");
-          // }
-          temp_amount = Number(this.travelAmountNgmodel) / 2;
-          this.travelAmountNgmodel = this.numberPipe.transform(Number(this.travelAmountNgmodel) / 2, '1.2-2');
-          this.totalClaimAmount = Number(temp_amount);
-        }
-      // }
+      else {        
+          let One_Way_Distance_string= this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
+          this.Travel_Distance_ngModel=One_Way_Distance_string;
+          let   one_way_amount = this.One_Way_Distance*this.VehicleRate;
+          this.travelAmountNgmodel = this.numberPipe.transform( one_way_amount  , '1.2-2');
+          this.totalClaimAmount = Number(one_way_amount);
+        }     
+    
     }
   }
   
@@ -458,6 +525,7 @@ export class TravelclaimPage {
         DistKm = DistKm.replace(',', '')
         this.Travel_Distance_ngModel = destination = DistKm.substring(0, DistKm.length - 2)
         this.Travel_Distance_ngModel = this.numberPipe.transform(this.Travel_Distance_ngModel, '1.2-2');
+        // alert(this.Travel_Distance_ngModel);
         // this.Travel_Mode_ngModel = this.vehicleCategory;
         if (!this.isPublicTransport)
           //Added by bijay on 24/09/2018
