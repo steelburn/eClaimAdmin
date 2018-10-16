@@ -54,9 +54,9 @@ export class AdminsetupPage {
     this.navCtrl.push(PermissionPage)
   }
 
-  goToRolesetup() {
-    this.navCtrl.push(RolesetupPage)
-  }
+  // goToRolesetup() {
+  //   this.navCtrl.push(RolesetupPage)
+  // }
 
   // goToRoleModulesetup() {
   //   this.navCtrl.push(RolemodulesetupPage)

@@ -75,6 +75,27 @@ export class ProfileManagerProvider {
 
             this.mainClaimReq = data[0];
 
+            //Added by Bijay on 12/10/2018 for audit_trial--------------------------------------------------------------
+            if (isRemarksAccepted == true) {
+                //Approved
+                if (data[0].AUDIT_TRAIL != null && data[0].AUDIT_TRAIL != "") {
+                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Approved by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+                }
+                else {
+                    data[0].AUDIT_TRAIL = "Approved by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+                }
+            }
+            else {
+                //Rejected
+                if (data[0].AUDIT_TRAIL != null && data[0].AUDIT_TRAIL != "") {
+                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+                }
+                else {
+                    data[0].AUDIT_TRAIL = "Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+                }
+            }
+            //------------------------------------------------------------------------------------------------------------
+
             this.SaveWorkFlow(claimRef, data[0].PROFILE_JSON, level);
             //this.processProfileJSON(data[0].PROFILE_JSON)
         })
@@ -120,7 +141,8 @@ export class ProfileManagerProvider {
     proceedNext() {
         this.isRequester = false;
         let month = new Date(this.formValues.travel_date).getMonth() + 1;
-        let year = new Date(this.formValues.travel_date).getFullYear(); this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
+        let year = new Date(this.formValues.travel_date).getFullYear();
+         this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
             .subscribe(claimRefdata => {
                 if (claimRefdata["resource"][0] == null) {
                     this.saveClaimRef(month, year);
@@ -169,6 +191,7 @@ export class ProfileManagerProvider {
             this.mainClaimReq.PREVIOUS_LEVEL = level;
             this.mainClaimReq.PROFILE_LEVEL = 0;
         }
+
         if (this.checkMultipleLength === 1)
             this.UpdateProfileInfo(this.mainClaimReq);
         else
@@ -189,9 +212,9 @@ export class ProfileManagerProvider {
         //If approver reject applier will get the mail notification Added By bijay on 09/10/2018--------------
         if (this.level === '0' || this.isRemarksAccepted === false) {
             let RejectedByStatus: string = "";
-            if (this.level == '2') { RejectedByStatus = "Superior Rejected."; }
-            if (this.level == '3') { RejectedByStatus = "Finance Rejected."; }
-            if (this.level == '4') { RejectedByStatus = "Payment Rejected."; }
+            if (this.level == '2') { RejectedByStatus = "[eClaim] Sorry your claim has been rejected by Superior."; }
+            if (this.level == '3') { RejectedByStatus = "[eClaim] Sorry your claim has been rejected by Finance."; }
+            if (this.level == '4') { RejectedByStatus = "[eClaim] Sorry your claim has been rejected by Payment."; }
 
             this.api.EmailReject(this.mainClaimReq.CLAIM_REQUEST_GUID, claimRef.REMARKS, this.mainClaimReq.STATUS, RejectedByStatus);
         }
@@ -408,8 +431,9 @@ export class ProfileManagerProvider {
         if (this.profileLevel === 3)
             claimReqMainRef.STATUS = 'Approved';
         else
-            claimReqMainRef.STATUS = 'Pending';        //claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
-        // claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Draft' : 'Pending';
+        claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
+        // claimReqMainRef.STATUS = 'Pending';       
+            // claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Draft' : 'Pending';
         // if (claimReqMainRef.PROFILE_LEVEL === 1) {
         //   claimReqMainRef.STAGE = 'Superior';
         // }
@@ -422,6 +446,9 @@ export class ProfileManagerProvider {
         claimReqMainRef.claim_method_guid = this.formValues.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.formValues.PayType;
         claimReqMainRef.from_place_id = this.formValues.from_id;
         claimReqMainRef.to_place_id = this.formValues.to_id;
+
+        //Added by bijay on 11/10/2018
+        claimReqMainRef.AUDIT_TRAIL = "Created by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
 
 
         if (this.isCustomer) {

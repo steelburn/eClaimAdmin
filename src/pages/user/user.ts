@@ -1890,7 +1890,7 @@ export class UserPage {
 
   Update_User_Certification(imageGUID: string) {
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_certification")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_certification")
       .subscribe(
         (response) => {
           if (response.status == 200) {
@@ -1950,7 +1950,7 @@ export class UserPage {
 
   Update_User_Spouse() {
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_spouse")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_spouse")
       .subscribe(
         (response) => {
           if (response.status == 200) {
@@ -2009,7 +2009,7 @@ export class UserPage {
 
   Update_User_Children() {
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_children")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_children")
       .subscribe(
         (response) => {
           if (response.status == 200) {
@@ -2311,32 +2311,32 @@ export class UserPage {
             this.userservice.update_user_role(this.userrole_entry)
               .subscribe((response) => {
                 if (response.status == 200) {
-                  
+
                 }
               });
 
-              //Insert Record for Additional Role---------------------------------------------------------------------
-              for (var ROLE_GUID of this.ADDITIONAL_ROLE_ngModel_Edit) {
-                if (ROLE_GUID != this.ROLE_ngModel_Edit) {
-                  this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
-                  this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
-                  this.userrole_entry.ROLE_GUID = ROLE_GUID;
-                  this.userrole_entry.ACTIVATION_FLAG = "1";
-                  this.userrole_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
-                  this.userrole_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
-                  this.userrole_entry.UPDATE_TS = new Date().toISOString();
-                  this.userrole_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
-                  this.userrole_entry.ROLE_FLAG = "ADDITIONAL";
+            //Insert Record for Additional Role---------------------------------------------------------------------
+            for (var ROLE_GUID of this.ADDITIONAL_ROLE_ngModel_Edit) {
+              if (ROLE_GUID != this.ROLE_ngModel_Edit) {
+                this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
+                this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+                this.userrole_entry.ROLE_GUID = ROLE_GUID;
+                this.userrole_entry.ACTIVATION_FLAG = "1";
+                this.userrole_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+                this.userrole_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+                this.userrole_entry.UPDATE_TS = new Date().toISOString();
+                this.userrole_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+                this.userrole_entry.ROLE_FLAG = "ADDITIONAL";
 
-                  this.userservice.save_user_role(this.userrole_entry)
-                    .subscribe((response) => {
-                      if (response.status == 200) {
+                this.userservice.save_user_role(this.userrole_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
 
-                      }
-                    });
-                }
+                    }
+                  });
               }
-              //--------------------------------------------------------------------------------------------------------
+            }
+            //--------------------------------------------------------------------------------------------------------
           }
         });
   }
@@ -2473,7 +2473,7 @@ export class UserPage {
     this.ROLE_ngModel_Add = "";
     this.ROLE_ngModel_Edit = "";
 
-    localStorage.setItem("Main_User_Role_Guid_Temp","");
+    localStorage.setItem("Main_User_Role_Guid_Temp", "");
   }
 
   lastImage: string = null;

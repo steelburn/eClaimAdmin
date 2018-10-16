@@ -102,16 +102,13 @@ export class LoginPage {
                     localStorage.setItem("g_KEY_VIEW", "0");
 
                     for (var item in role_result) {
-                      if (role_result[item]["ROLE_NAME"] == "MAIN") {
+                      if (role_result[item]["ROLE_FLAG"] == "MAIN") {
                         localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
                       }
-                      else {
-                        localStorage.setItem("g_ROLE_NAME", "");
-                      }
-                      if (role_result[0]["KEY_ADD"] == "1") { localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]); }
-                      if (role_result[0]["KEY_EDIT"] == "1") { localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]); }
-                      if (role_result[0]["KEY_DELETE"] == "1") { localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]); }
-                      if (role_result[0]["KEY_VIEW"] == "1") { localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]); }
+                      if (role_result[item]["KEY_ADD"] == "1") { localStorage.setItem("g_KEY_ADD", role_result[item]["KEY_ADD"]); }
+                      if (role_result[item]["KEY_EDIT"] == "1") { localStorage.setItem("g_KEY_EDIT", role_result[item]["KEY_EDIT"]); }
+                      if (role_result[item]["KEY_DELETE"] == "1") { localStorage.setItem("g_KEY_DELETE", role_result[item]["KEY_DELETE"]); }
+                      if (role_result[item]["KEY_VIEW"] == "1") { localStorage.setItem("g_KEY_VIEW", role_result[item]["KEY_VIEW"]); }
                     }
 
                     // localStorage.setItem("g_ROLE_NAME", role_result[0]["ROLE_NAME"]);
