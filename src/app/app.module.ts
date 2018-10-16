@@ -113,6 +113,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { SettingsPage } from '../pages/settings/settings';
 import { CompanysettingsPage } from '../pages/companysettings/companysettings';
 import { DbmaintenancePage } from '../pages/dbmaintenance/dbmaintenance';
+import { ApprovalProfilePage } from '../pages/approval-profile/approval-profile';
 
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { ImportExcelDataPage } from '../pages/import-excel-data/import-excel-data';
@@ -197,7 +198,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
     CommonHistorylistPage,
 
     CompanysettingsPage,
-    DbmaintenancePage
+    DbmaintenancePage,
+    ApprovalProfilePage
 
 
   ],
@@ -341,7 +343,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
 
     SettingsPage,
     CompanysettingsPage,
-    DbmaintenancePage
+    DbmaintenancePage,
+    ApprovalProfilePage
 
   ],
   providers: [
