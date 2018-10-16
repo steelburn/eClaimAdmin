@@ -77,7 +77,7 @@ export class TravelClaimViewPage {
       this.api.getApiModel('view_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(res => {
         this.claimRequestData = res['resource'];
         this.claimRequestData.forEach(element => {
-        this.checkbox = element.ROUND_TRIP;
+        this.checkbox_ngModel = element.ROUND_TRIP === 1?true: false;
           // element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
           this.travelDate = element.START_TS = new Date(element.START_TS.replace(/-/g, "/"))
           element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
