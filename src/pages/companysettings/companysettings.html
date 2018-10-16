@@ -125,9 +125,17 @@
               <ion-input type="text" formControlName="Language" [(ngModel)]="Language_ngModel" required placeholder="{{'Please fill language'}}"></ion-input>
             </ion-item>
 
+            <ion-item>
+              <ion-label stacked><span style="color:red">*</span>{{ 'Default Profile' | translate }}</ion-label>
+              <ion-select formControlName="DefaultProfile" [(ngModel)]="Profile_ngModel" placeholder="{{'Please select profile'}}">
+                <ion-option *ngFor="let Profile of Profiles" [value]="Profile.MAIN_PROFILE_GUID">{{Profile.PROFILE_NAME}}</ion-option>
+              </ion-select>
+            </ion-item>
+
             <ion-item class="fuha">
               <ion-label stacked><span style="color:red">*</span>{{ 'Email Schedule' | translate }}</ion-label>
-              <ion-select formControlName="EmailSchedule" [(ngModel)]="Email_Schedule_ngModel" placeholder="{{'Please select'}}" multiple="true">
+              <ion-select formControlName="EmailSchedule" [(ngModel)]="Email_Schedule_ngModel" placeholder="{{'Please select'}}"
+                multiple="true">
                 <!-- <ion-option [value]="Daily">Daily</ion-option>
                 <ion-option [value]="Weekly">Weekly</ion-option>
                 <ion-option [value]="Monthly">Monthly</ion-option> -->
@@ -166,10 +174,15 @@
               </ion-select>
             </ion-item>
 
-            <ion-item class="fuha">
+            <ion-item class="fuha" style="width: 24%">
               <ion-label stacked><span style="color:red">*</span>{{ 'Schedule Time' | translate }}</ion-label>
               <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="EmailTime" [(ngModel)]="Email_Time_ngModel"
                 displayFormat="HH:mm"></ion-datetime>
+            </ion-item>
+
+            <ion-item class="fuha" style="width: 24%">
+              <ion-label stacked>{{ 'Draft Notification' | translate }}</ion-label>
+              <ion-checkbox formControlName="DraftNotification" [(ngModel)]="DraftNotification_ngModel"></ion-checkbox>
             </ion-item>
 
             <ion-item [hidden]="!isVisibleToSVA">

@@ -172,21 +172,21 @@ export class OvertimeclaimPage {
   }
 
   constructor(public numberPipe: DecimalPipe, private apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
-     // Lakshman
-     this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
-     this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    // Lakshman
+    this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
+    this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
     //  this.min_claim_amount =null;
-     if(this.min_claim_amount==null){
-      this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+    if (this.min_claim_amount == null) {
+      this.min_claim_amount = Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
     }
-    this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
-    this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
+    this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
     //  this.max_claim_amount =null;
-     if(this.max_claim_amount==null){
-      this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+    if (this.max_claim_amount == null) {
+      this.max_claim_amount = Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
     }
-     let currency = localStorage.getItem("cs_default_currency");
-     // Lakshman
+    let currency = localStorage.getItem("cs_default_currency");
+    // Lakshman
 
     this.profileMng.CheckSessionOut();
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
@@ -246,7 +246,7 @@ export class OvertimeclaimPage {
 
   LoadProjects() {
     // this.apiMng.getApiModel('soc_registration', 'filter=TENANT_GUID=' + this.TenantGUID)
-    
+
     // Added by Bijay on 25/09/2018
     this.apiMng.getApiModel('soc_registration', 'filter=(TENANT_GUID=' + this.TenantGUID + ')AND(ACTIVATION_FLAG=1)')
       .subscribe(data => {
@@ -383,7 +383,7 @@ export class OvertimeclaimPage {
     let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.OT_Amount_ngModel = null;
-      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " "); 
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " ");
       return;
     }
     else {
@@ -426,6 +426,16 @@ export class OvertimeclaimPage {
               this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
               this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
             }
+
+            //Added by Bijay on 12/10/2018 for audit_trial-----------------------
+            if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+            }
+            else {
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+            }
+            //-------------------------------------------------------------------
+
             //this.claimRequestData[0].STATUS = 'Pending';
             // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
             this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {

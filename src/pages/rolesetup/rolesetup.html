@@ -33,7 +33,7 @@
           <th class="lgl1">Edit</th>
           <th class="lgl1">Delete</th>
           <th class="lgl1">View</th>
-          <th class="lgl1">Active Flag</th>          
+          <th class="lgl1">Active Flag</th>
           <th class="lgl1 tblBrRight" style="width:105px">Action</th>
 
         </tr>
@@ -42,27 +42,37 @@
           <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1">{{role.NAME}}</td>
           <td class="lgl1">{{role.DESCRIPTION}}</td>
-          
+
           <td class="lgl1">
-            <ion-toggle class="yui" *ngIf="role.KEY_ADD==1" checked=true></ion-toggle>
-            <ion-toggle class="yui" *ngIf="role.KEY_ADD==0" checked=false></ion-toggle>
+            <ion-item>
+              <ion-toggle class="yui" *ngIf="role.KEY_ADD==1" checked=true></ion-toggle>
+              <ion-toggle class="yui" *ngIf="role.KEY_ADD==0" checked=false></ion-toggle>
+            </ion-item>
           </td>
           <td class="lgl1">
-            <ion-toggle class="yui" *ngIf="role.KEY_EDIT==1" checked=true></ion-toggle>
-            <ion-toggle class="yui" *ngIf="role.KEY_EDIT==0" checked=false></ion-toggle>
+            <ion-item>
+              <ion-toggle class="yui" *ngIf="role.KEY_EDIT==1" checked=true></ion-toggle>
+              <ion-toggle class="yui" *ngIf="role.KEY_EDIT==0" checked=false></ion-toggle>
+            </ion-item>
           </td>
           <td class="lgl1">
-            <ion-toggle class="yui" *ngIf="role.KEY_DELETE==1" checked=true></ion-toggle>
-            <ion-toggle class="yui" *ngIf="role.KEY_DELETE==0" checked=false></ion-toggle>
+            <ion-item>
+              <ion-toggle class="yui" *ngIf="role.KEY_DELETE==1" checked=true></ion-toggle>
+              <ion-toggle class="yui" *ngIf="role.KEY_DELETE==0" checked=false></ion-toggle>
+            </ion-item>
           </td>
           <td class="lgl1">
-            <ion-toggle class="yui" *ngIf="role.KEY_VIEW==1" checked=true></ion-toggle>
-            <ion-toggle class="yui" *ngIf="role.KEY_VIEW==0" checked=false></ion-toggle>
+            <ion-item>
+              <ion-toggle class="yui" *ngIf="role.KEY_VIEW==1" checked=true></ion-toggle>
+              <ion-toggle class="yui" *ngIf="role.KEY_VIEW==0" checked=false></ion-toggle>
+            </ion-item>
           </td>
-          
+
           <td class="lgl1">
-            <ion-toggle class="yui" *ngIf="role.ACTIVATION_FLAG==1" checked=true></ion-toggle>
-            <ion-toggle class="yui" *ngIf="role.ACTIVATION_FLAG==0" checked=false></ion-toggle>
+            <ion-item>
+              <ion-toggle class="yui" *ngIf="role.ACTIVATION_FLAG==1" checked=true></ion-toggle>
+              <ion-toggle class="yui" *ngIf="role.ACTIVATION_FLAG==0" checked=false></ion-toggle>
+            </ion-item>
           </td>
 
 
@@ -78,7 +88,8 @@
 
 
       </table>
-      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true"
+        autoHide="true">
       </pagination-controls>
     </ion-item>
   </ion-list>
@@ -99,7 +110,7 @@
       </ion-card-header>
       <ion-list>
         <form [formGroup]="Roleform">
-          <ion-item >
+          <ion-item>
             <ion-label stacked>{{ "NAME" | translate }}</ion-label>
             <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Add" placeholder="{{'Please fill in the name of the role'}}"></ion-input>
           </ion-item>
@@ -108,7 +119,7 @@
             <ion-label stacked>{{ "DESCRIPTION" | translate }}</ion-label>
             <ion-input type="text" formControlName="DESCRIPTION" [(ngModel)]="DESCRIPTION_ngModel_Add" placeholder="{{'Please fill in the description'}}"></ion-input>
           </ion-item>
-                    
+
           <ion-item>
             <ion-label stacked>{{ "ADD" | translate }}</ion-label>
             <ion-toggle formControlName="ADD_PERMISSON" [(ngModel)]="ADD_ngModel_Add"></ion-toggle>
@@ -140,7 +151,8 @@
           </ion-item>
 
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Save()">{{"SUBMIT"
+              | translate}}</button>
           </div>
         </form>
       </ion-list>
@@ -166,7 +178,8 @@
           <ion-item>
 
             <ion-label stacked>{{ "NAME" | translate }}</ion-label>
-            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" [value]="NAME_ngModel" placeholder="{{'Please fill in the name in the role'}}"></ion-input>
+            <ion-input type="text" formControlName="NAME" [(ngModel)]="NAME_ngModel_Edit" [value]="NAME_ngModel"
+              placeholder="{{'Please fill in the name in the role'}}"></ion-input>
           </ion-item>
 
           <ion-item>
@@ -176,12 +189,12 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked >{{ "ADD" | translate }}</ion-label>
+            <ion-label stacked>{{ "ADD" | translate }}</ion-label>
             <ion-toggle formControlName="ADD_PERMISSON" [(ngModel)]="ADD_ngModel_Edit"></ion-toggle>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked >{{ "EDIT" | translate }}</ion-label>
+            <ion-label stacked>{{ "EDIT" | translate }}</ion-label>
             <ion-toggle formControlName="EDIT_PERMISSON" [(ngModel)]="EDIT_ngModel_Edit"></ion-toggle>
           </ion-item>
 
@@ -191,12 +204,12 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked >{{ "VIEW" | translate }}</ion-label>
+            <ion-label stacked>{{ "VIEW" | translate }}</ion-label>
             <ion-toggle formControlName="VIEW_PERMISSON" [(ngModel)]="VIEW_ngModel_Edit"></ion-toggle>
           </ion-item>
 
           <ion-item>
-            <ion-label stacked >{{ "ACTIVE_FLAG" | translate }}</ion-label>
+            <ion-label stacked>{{ "ACTIVE_FLAG" | translate }}</ion-label>
 
             <ion-toggle formControlName="ACTIVATION_FLAG" [(ngModel)]="ACTIVATION_FLAG_ngModel_Edit"></ion-toggle>
           </ion-item>
@@ -208,7 +221,8 @@
           </ion-item>
 
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Update(role_details.ROLE_GUID)">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Roleform.valid" (click)="Update(role_details.ROLE_GUID)">{{"SUBMIT"
+              | translate}}</button>
           </div>
         </form>
       </ion-list>

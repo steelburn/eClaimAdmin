@@ -52,7 +52,7 @@ export class CompanysettingsPage {
         if (localStorage.getItem("g_KEY_VIEW") == "0") { this.button_View_Disable = true; }
       }
 
-      this.Bind_Country(); this.Bind_PaymentType(); this.BindControls(); localStorage.removeItem("default_payment_type");
+      this.Bind_Country(); this.Bind_PaymentType(); this.BindControls(); localStorage.removeItem("default_payment_type"); this.BindProfiles()
 
       this.CompanySettingsform = fb.group({
         DateFormat: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
@@ -72,9 +72,11 @@ export class CompanysettingsPage {
         avatar: null,
         EmailSchedule: [null, Validators.required],
         EmailTime: [null, Validators.required],
-        Version: [null]
+        Version: [null],
+        DefaultProfile: [null, Validators.required],
+        DraftNotification: [null],
       });
-      
+
       this.VisibleControls();
     }
   }
@@ -95,14 +97,29 @@ export class CompanysettingsPage {
   Bind_PaymentType() {
     let url: string = "";
     url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_payment_type' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
-    if(localStorage.getItem("g_USER_GUID") == "sva"){
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
       url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_payment_type' + '?order=NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
-    }    
+    }
     this.http
       .get(url)
       .map(res => res.json())
       .subscribe(data => {
         this.PaymentTypes = data.resource;
+      });
+  }
+
+  Profiles: any;
+  BindProfiles() {
+    let url: string = "";
+    url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_profile' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&order=PROFILE_NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
+      url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/main_profile' + '?order=PROFILE_NAME&api_key=' + constants.DREAMFACTORY_API_KEY;
+    }
+    this.http
+      .get(url)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.Profiles = data.resource;
       });
   }
 
@@ -112,20 +129,21 @@ export class CompanysettingsPage {
   MaxClaimAmt_ngModel: any; MinClaimAmt_ngModel: any; ClaimCuttoffDate_ngModel: any; YearStartMonth_ngModel: any;
   YearEndMonth_ngModel: any; ApprovalCutoffDate_ngModel: any; PaymentType_ngModel: any; Language_ngModel: any;
   Email_Schedule_ngModel: any; Email_Time_ngModel: any; Version_ngModel: any;
-  
+  DraftNotification_ngModel: any; Profile_ngModel: any;
+
   isVisibleToSVA: boolean = false; isVisibleToUser: boolean = false;
 
   BindControls() {
     this.Add_Form = true;
     this.KeyNameValue = [];
     let url: string = "";
-    if(localStorage.getItem("g_USER_GUID") == "sva"){
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
       url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/permission_keys' + '?filter=(CREATION_USER_GUID=' + localStorage.getItem('g_USER_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-    else{
+    else {
       url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/permission_keys' + '?filter=(TENANT_GUID=' + localStorage.getItem('g_TENANT_GUID') + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     }
-    
+
     this.http
       .get(url)
       .map(res => res.json())
@@ -162,8 +180,19 @@ export class CompanysettingsPage {
             // this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"]; 
             this.Email_Schedule_ngModel = this.FormControls[item]["KEY_VALUE"].split(",");
           }
-          if (this.FormControls[item]["KEY_NAME"] == "email_time") { this.Email_Time_ngModel = this.FormControls[item]["KEY_VALUE"]; }          
-          if (this.FormControls[item]["KEY_NAME"] == "version") { this.Version_ngModel = this.FormControls[item]["KEY_VALUE"]; }          
+          if (this.FormControls[item]["KEY_NAME"] == "email_time") { this.Email_Time_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "version") { this.Version_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+
+          if (this.FormControls[item]["KEY_NAME"] == "profile_guid") { this.Profile_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          if (this.FormControls[item]["KEY_NAME"] == "draft_notification") {
+            if (this.FormControls[item]["KEY_VALUE"] == "1") {
+              this.DraftNotification_ngModel = true;
+            }
+            else {
+              this.DraftNotification_ngModel = false;
+            }
+            // this.DraftNotification_ngModel = this.FormControls[item]["KEY_VALUE"]; 
+          }
 
           this.Add_Form = false;
         }
@@ -189,6 +218,7 @@ export class CompanysettingsPage {
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "month_start", KEY_VALUE: formValues.YearStartMonth.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "month_end", KEY_VALUE: formValues.YearEndMonth.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "approval_cutoff_date", KEY_VALUE: formValues.ApprovalCutoffDate.trim() });
+
       // this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_payment_type", KEY_VALUE: formValues.PaymentType.trim() });
       for (var item in this.PaymentTypes) {
         if (this.PaymentTypes[item]["PAYMENT_TYPE_GUID"] == formValues.PaymentType.trim()) {
@@ -217,6 +247,14 @@ export class CompanysettingsPage {
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "email_time", KEY_VALUE: formValues.EmailTime.trim() });
       this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "version", KEY_VALUE: formValues.Version.trim() });
 
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "profile_guid", KEY_VALUE: formValues.DefaultProfile.trim() });
+      if (formValues.DraftNotification == true) {
+        this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "draft_notification", KEY_VALUE: "1" });
+      }
+      else {
+        this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "draft_notification", KEY_VALUE: "0" });
+      }
+
       this.Settings_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
       this.Settings_Entry.CREATION_TS = new Date().toISOString();
       this.Settings_Entry.UPDATE_TS = new Date().toISOString();
@@ -224,6 +262,14 @@ export class CompanysettingsPage {
     }
     else {
       // this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "version", KEY_VALUE: formValues.Version.trim() });
+      // this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "profile_guid", KEY_VALUE: formValues.DefaultProfile.trim() });
+      // if(formValues.DraftNotification == true){
+      //   this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "draft_notification", KEY_VALUE: "1" });
+      // }
+      // else{
+      //   this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "draft_notification", KEY_VALUE: "0" });
+      // }
+
       this.KeyNameValue.forEach(element => {
         if (element.KEY_NAME == "date_format") { element.KEY_VALUE = formValues.DateFormat.trim(); }
         if (element.KEY_NAME == "default_currency") { element.KEY_VALUE = formValues.Currency.trim(); }
@@ -282,6 +328,15 @@ export class CompanysettingsPage {
         if (element.KEY_NAME == "email_time") { element.KEY_VALUE = formValues.EmailTime.trim(); }
         if (element.KEY_NAME == "version") { element.KEY_VALUE = formValues.Version.trim(); }
 
+        if (element.KEY_NAME == "profile_guid") { element.KEY_VALUE = formValues.DefaultProfile.trim(); }
+        if (formValues.DraftNotification == true) {
+          if (element.KEY_NAME == "draft_notification") { element.KEY_VALUE = "1"; }
+        }
+        else {
+          if (element.KEY_NAME == "draft_notification") { element.KEY_VALUE = "0"; }
+        }
+
+
         this.Settings_Entry.CREATION_USER_GUID = this.FormControls[0]["CREATION_USER_GUID"];
         this.Settings_Entry.CREATION_TS = this.FormControls[0]["CREATION_TS"];
         this.Settings_Entry.UPDATE_TS = new Date().toISOString();
@@ -319,7 +374,7 @@ export class CompanysettingsPage {
             }
           });
 
-        // if (this.Settings_Entry.KEY_NAME == "version") {
+        // if (this.Settings_Entry.KEY_NAME == "profile_guid") {
         //   this.settingservice.save(this.Settings_Entry, "permission_keys")
         //     .subscribe((response) => {
         //       if (response.status == 200) {
@@ -446,11 +501,11 @@ export class CompanysettingsPage {
     }
   }
 
-  VisibleControls(){
-    if(localStorage.getItem("g_USER_GUID") == "sva"){
+  VisibleControls() {
+    if (localStorage.getItem("g_USER_GUID") == "sva") {
       this.isVisibleToSVA = true;
     }
-    else{
+    else {
       this.isVisibleToSVA = false;
     }
   }
