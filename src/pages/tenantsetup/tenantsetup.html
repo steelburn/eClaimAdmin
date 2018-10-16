@@ -33,7 +33,7 @@
                     <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
                     <th class="lgl1">Tenant Account Name</th>
                     <th class="lgl1">Tenant Company Name</th>
-                    <th class="lgl1">Effective Date</th>
+                    <!-- <th class="lgl1">Effective Date</th> -->
                     <th class="lgl1">Active Flag</th>
                     <th class="lgl1 tblBrRight" style="width:120px">Action</th>
                 </tr>
@@ -42,10 +42,13 @@
                     <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
                     <td class="lgl1">{{tenant.TENANT_ACCOUNT_NAME}}</td>
                     <td class="lgl1">{{tenant.NAME}}</td>
-                    <td class="lgl1">23 - 4- 2222</td>
+                    <!-- <td class="lgl1">23 - 4- 2222</td> -->
+
                     <td class="lgl1">
-                        <ion-toggle *ngIf="tenant.ACTIVATION_FLAG==1" checked=true></ion-toggle>
-                        <ion-toggle *ngIf="tenant.ACTIVATION_FLAG==0" checked=false></ion-toggle>
+                        <ion-item>
+                            <ion-toggle *ngIf="tenant.ACTIVATION_FLAG==1" checked=true></ion-toggle>
+                            <ion-toggle *ngIf="tenant.ACTIVATION_FLAG==0" checked=false></ion-toggle>
+                        </ion-item>
                     </td>
 
                     <td class="lgl1 fColor">
@@ -61,7 +64,8 @@
                     </td>
                 </tr>
             </table>
-            <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+            <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10"
+                directionLinks="true" autoHide="true">
             </pagination-controls>
         </ion-item>
     </ion-list>
@@ -165,8 +169,10 @@
                         <b>{{ "ACCOUNT_DETAILS" | translate }}</b>
                     </div>
                     <ion-item>
+
                         <ion-label stacked>{{ "NAME" | translate }}</ion-label>
                         <ion-input type="text" formControlName="TENANT_NAME" [(ngModel)]="TENANT_NAME_ngModel_Add" placeholder="{{'Please fill in the name of the tenant'}}"></ion-input>
+
                     </ion-item>
 
                     <ion-item>
@@ -175,6 +181,7 @@
                     </ion-item>
 
                     <ion-item>
+
                         <ion-label stacked>{{ "COMPANY_NAME" | translate }}</ion-label>
                         <ion-input type="text" formControlName="TENANT_COMPANY_NAME" [(ngModel)]="TENANT_COMPANY_NAME_ngModel_Add" placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
                     </ion-item>
@@ -207,6 +214,7 @@
                     <ion-item>
                         <ion-label stacked>{{ "CONTACT_NO" | translate }}</ion-label>
                         <ion-input type="number" formControlName="CONTACT_NO" type="number" [(ngModel)]="CONTACTNO_ngModel_Add" placeholder="{{'Please fill contact No'}}"></ion-input>
+
                     </ion-item>
 
                     <ion-item>
@@ -215,6 +223,7 @@
                     </ion-item>
 
                     <ion-item>
+
                         <ion-label stacked>{{ "CONTACT_PERSON" | translate }}</ion-label>
                         <ion-input type="text" formControlName="CONTACT_PERSON" [(ngModel)]="CONTACT_PERSON_ngModel_Add" placeholder="{{'Please fill contact person'}}"></ion-input>
                     </ion-item>
@@ -227,6 +236,7 @@
                     <ion-item>
                         <ion-label stacked>{{ "CONTACT_PERSON_EMAIL" | translate }}</ion-label>
                         <ion-input type="text" formControlName="CONTACT_PERSON_EMAIL" [(ngModel)]="CONTACT_PERSON_EMAIL_ngModel_Add" placeholder="{{'Please fill contact person email'}}"></ion-input>
+
                     </ion-item>
 
                     <ion-item>
@@ -245,7 +255,8 @@
                     </ion-item>
 
                     <div class="btn">
-                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Tenantform.valid" (click)="Save()">{{"SUBMIT" | translate}}</button>
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Tenantform.valid"
+                            (click)="Save()">{{"SUBMIT" | translate}}</button>
                     </div>
 
                 </form>
@@ -274,8 +285,10 @@
 
 
                     <ion-item>
+
                         <ion-label stacked>{{ "NAME" | translate }}</ion-label>
                         <ion-input type="text" formControlName="COMPANY_SITE_NAME" [(ngModel)]="SITE_NAME_ngModel_Edit" placeholder="{{'Please fill in the company name of the tenant'}}"></ion-input>
+
                     </ion-item>
 
                     <ion-item>
@@ -290,7 +303,8 @@
                     </ion-item>
 
                     <div class="btn">
-                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="!Update(tenant_details.TENANT_COMPANY_SITE_GUID)">{{"SUBMIT" | translate}}</button>
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" (click)="!Update(tenant_details.TENANT_COMPANY_SITE_GUID)">{{"SUBMIT"
+                            | translate}}</button>
                     </div>
 
                 </form>
@@ -322,7 +336,9 @@
                     </button>
                 </ion-item>
                 <ion-item>
-
+                    <ion-toolbar no-border-top color="primary200">
+                        <ion-searchbar [(ngModel)]="user_search_ngModel" (ionInput)="searchUser($event)" placeholder='Search'></ion-searchbar>
+                    </ion-toolbar>
                     <table class="Tabler">
                         <tr class="linedsg TColor">
                             <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
@@ -331,6 +347,7 @@
                             <!-- <th class="lgl1">Password</th> -->
                             <!-- <th class="lgl1">Email</th> -->
                             <th class="lgl1">User Role</th>
+                            <th class="lgl1">IsAdmin</th>
                             <th class="lgl1 tblBrRight" style="width:90px">Action</th>
 
                         </tr>
@@ -342,6 +359,12 @@
                             <!-- <td class="lgl1">{{tenantuser.PASSWORD}}</td> -->
                             <!-- <td class="lgl1">{{tenantuser.EMAIL}}</td> -->
                             <td class="lgl1">{{tenantuser.ROLENAME}}</td>
+                            <td class="lgl1">
+                                <ion-item>
+                                    <ion-toggle *ngIf="tenantuser.IS_TENANT_ADMIN=='1'" checked=true (ionChange)="AdminActivation(tenantuser.USER_GUID, true)"></ion-toggle>
+                                    <ion-toggle *ngIf="tenantuser.IS_TENANT_ADMIN=='0'" checked=false (ionChange)="AdminActivation(tenantuser.USER_GUID, false)"></ion-toggle>
+                                </ion-item>
+                            </td>
                             <td class="lgl1 fColor">
                                 <button ion-button item-end (click)="EditUserClick(tenantuser.USER_GUID)">
                                     <ion-icon name="md-create"></ion-icon>
@@ -381,6 +404,7 @@
             <ion-list class="scroll">
                 <form [formGroup]="TenantUSerform">
                     <ion-item style="display: none">
+
                         <ion-label stacked>{{ "USER_LOGIN" | translate }}</ion-label>
                         <ion-input type="text" formControlName="TULOGINID" [(ngModel)]="User_Loginid_ngModel_Add" placeholder="{{'Please fill in the user login ID'}}"></ion-input>
                     </ion-item>
@@ -394,6 +418,7 @@
                         <ion-label stacked>{{ "EMAIL" | translate }}</ion-label>
                         <ion-input type="text" formControlName="TUEMAIL" [(ngModel)]="User_Email_ngModel_Add" placeholder="{{'Please fill in the email of the user'}}"
                             (change)='onChange($event)'></ion-input>
+
 
                     </ion-item>
 
@@ -411,7 +436,8 @@
 
 
                     <div class="btn">
-                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!TenantUSerform.valid" (click)="Save_Tenant_User()">{{"SUBMIT" | translate}}</button>
+                        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!TenantUSerform.valid"
+                            (click)="Save_Tenant_User()">{{"SUBMIT" | translate}}</button>
                     </div>
                 </form>
 

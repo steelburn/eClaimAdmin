@@ -349,8 +349,8 @@ export class UserPage {
           this.GetDesignation('main_designation', 'NAME');
           this.GetDepartment('main_department', 'NAME');
           this.BindBank('main_bank', 'NAME');
-          this.BindApprover1("view_get_tenant_admin"); -
-            this.BindRole();
+          this.BindApprover1("view_get_tenant_admin");
+          this.BindRole();
 
           if (this.view_user_details[0]["DESIGNATION_GUID"] != null) {
             this.User_Designation_Edit_ngModel = this.view_user_details[0]["DESIGNATION_GUID"];
@@ -456,7 +456,7 @@ export class UserPage {
     //     });
 
     //------------------------Role-------------------------------
-    let CheckRole: any = [];
+    let CheckRole: any = []; let CheckAdditionalRole: any = [];
     let User_Role_url = this.baseResourceUrl2_URL + "user_role?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
 
     this.http
@@ -465,9 +465,15 @@ export class UserPage {
       .subscribe(data => {
         this.roles = data.resource;
         for (var itemA in this.roles) {
-          CheckRole.push(this.roles[itemA]["ROLE_GUID"]);
+          if (this.roles[itemA]["ROLE_FLAG"] == "MAIN") {
+            CheckRole.push(this.roles[itemA]["ROLE_GUID"]); localStorage.setItem("Main_User_Role_Guid_Temp", this.roles[itemA]["USER_ROLE_GUID"]);
+          }
+          else {
+            CheckAdditionalRole.push(this.roles[itemA]["ROLE_GUID"]);
+          }
         }
         this.ROLE_ngModel_Edit = CheckRole;
+        this.ADDITIONAL_ROLE_ngModel_Edit = CheckAdditionalRole;
       });
   }
 
@@ -627,6 +633,7 @@ export class UserPage {
 
         //-------------------ROLE DETAILS---------------------------
         ROLE_NAME: [null, Validators.required],
+        ADDITIONAL_ROLE_NAME: [null]
       });
     }
     else {
@@ -1416,6 +1423,7 @@ export class UserPage {
 
       this.usermain_entry.UPDATE_TS = new Date().toISOString();
       this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.usermain_entry.IS_TENANT_ADMIN = this.view_user_details[0]["IS_TENANT_ADMIN"];
       // alert(this.usermain_entry.EMAIL);
       // alert(this.User_Email_ngModel);
 
@@ -1683,7 +1691,7 @@ export class UserPage {
           //alert('5');
           let uploadImage = this.UploadImage_Old('avatar2', this.fileName2);
           uploadImage.then((resJson) => {
-            console.table(resJson)
+            // console.table(resJson)
             let imageResult = this.SaveImageinDB(this.fileName2);
             imageResult.then((objImage: ImageUpload_model) => {
               let result = this.Save_User_Qualification(objImage.Image_Guid);
@@ -1713,7 +1721,7 @@ export class UserPage {
         if (response.status == 200) {
           let uploadImage = this.UploadImage_Old('avatar2', this.fileName2);
           uploadImage.then((resJson) => {
-            console.table(resJson)
+            // console.table(resJson)
             let imageResult = this.SaveImageinDB(this.fileName2);
             imageResult.then((objImage: ImageUpload_model) => {
               let result = this.Update_User_Qualification(objImage.Image_Guid);
@@ -1748,7 +1756,7 @@ export class UserPage {
     this.userqualification_entry.UNIVERSITY = this.User_University_ngModel;
     this.userqualification_entry.YEAR = this.User_EduYear_ngModel;
     this.userqualification_entry.ATTACHMENT = imageGUID;
-    console.log(imageGUID);
+    // console.log(imageGUID);
 
     this.userservice.save_user_qualification(this.userqualification_entry)
       .subscribe(
@@ -1757,7 +1765,7 @@ export class UserPage {
 
             let uploadImage = this.UploadImage_Old('avatar3', this.fileName3);
             uploadImage.then((resJson) => {
-              console.table(resJson)
+              // console.table(resJson)
               let imageResult = this.SaveImageinDB(this.fileName3);
               imageResult.then((objImage: ImageUpload_model) => {
                 let result = this.Save_User_Certification(objImage.Image_Guid);
@@ -1779,7 +1787,7 @@ export class UserPage {
       this.api.postData('user_qualification', userqualification_entry.toJson(true)).subscribe((data) => {
 
         let res = data.json();
-        console.log(res)
+        // console.log(res)
         let ClaimRequestMainIdType2 = res["resource"][0].USER_QUALIFICATION_GUID;
         resolve(ClaimRequestMainIdType2);
       })
@@ -1812,7 +1820,7 @@ export class UserPage {
 
             let uploadImage = this.UploadImage_Old('avatar3', this.fileName3);
             uploadImage.then((resJson) => {
-              console.table(resJson)
+              // console.table(resJson)
               let imageResult = this.SaveImageinDB(this.fileName3);
               imageResult.then((objImage: ImageUpload_model) => {
                 let result = this.Update_User_Certification(objImage.Image_Guid);
@@ -1833,7 +1841,7 @@ export class UserPage {
       this.api.postData('user_qualification', userqualification_entry.toJson(true)).subscribe((data) => {
 
         let res = data.json();
-        console.log(res)
+        // console.log(res)
         let ClaimRequestMainIdType2 = res["resource"][0].USER_QUALIFICATION_GUID;
         resolve(ClaimRequestMainIdType2);
       })
@@ -1850,7 +1858,7 @@ export class UserPage {
       this.UserCertification_Entry.passing_year = this.ProfessionalCertification[item]["YEAR"];
       this.UserCertification_Entry.user_guid = this.usermain_entry.USER_GUID;
       this.UserCertification_Entry.attachment = imageGUID;
-      console.log(imageGUID);
+      // console.log(imageGUID);
 
       this.UserCertification_Entry.creation_ts = new Date().toISOString();
       this.UserCertification_Entry.creation_user_guid = localStorage.getItem("g_USER_GUID");
@@ -1872,7 +1880,7 @@ export class UserPage {
         this.api.postData('user_certification', UserCertification_Entry.toJson(true)).subscribe((data) => {
 
           let res = data.json();
-          console.log(res)
+          // console.log(res)
           let ClaimRequestMainIdType3 = res["resource"][0].certificate_guid;
           resolve(ClaimRequestMainIdType3);
         })
@@ -1882,7 +1890,7 @@ export class UserPage {
 
   Update_User_Certification(imageGUID: string) {
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_certification")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_certification")
       .subscribe(
         (response) => {
           if (response.status == 200) {
@@ -1942,7 +1950,7 @@ export class UserPage {
 
   Update_User_Spouse() {
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_spouse")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_spouse")
       .subscribe(
         (response) => {
           if (response.status == 200) {
@@ -2001,7 +2009,7 @@ export class UserPage {
 
   Update_User_Children() {
     //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_children")
+    this.userservice.remove_multiple_records(this.usermain_entry.USER_GUID, "user_children")
       .subscribe(
         (response) => {
           if (response.status == 200) {
@@ -2223,35 +2231,44 @@ export class UserPage {
     }
   }
 
+  ADDITIONAL_ROLE_ngModel_Add: any;
+  ADDITIONAL_ROLE_ngModel_Edit: any;
   Save_Role() {
-    for (var ROLE_GUID of this.ROLE_ngModel_Add) {
-      this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
-      this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
-      this.userrole_entry.ROLE_GUID = ROLE_GUID;
-      this.userrole_entry.ACTIVATION_FLAG = "1";
-      this.userrole_entry.CREATION_TS = new Date().toISOString();
-      this.userrole_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-      this.userrole_entry.UPDATE_TS = new Date().toISOString();
-      this.userrole_entry.UPDATE_USER_GUID = "";
+    // for (var ROLE_GUID of this.ROLE_ngModel_Add) {
+    //   this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
+    //   this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    //   this.userrole_entry.ROLE_GUID = ROLE_GUID;
+    //   this.userrole_entry.ACTIVATION_FLAG = "1";
+    //   this.userrole_entry.CREATION_TS = new Date().toISOString();
+    //   this.userrole_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+    //   this.userrole_entry.UPDATE_TS = new Date().toISOString();
+    //   this.userrole_entry.UPDATE_USER_GUID = "";
 
-      this.userservice.save_user_role(this.userrole_entry)
-        .subscribe((response) => {
-          if (response.status == 200) {
-            // alert('Tenant User Registered successfully');
-            // this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          }
-        });
-    }
-  }
+    //   this.userservice.save_user_role(this.userrole_entry)
+    //     .subscribe((response) => {
+    //       if (response.status == 200) {
+    //         // alert('Tenant User Registered successfully');
+    //         // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+    //       }
+    //     });
+    // }
 
-  Update_Role() {
-    //first Delete all the records------------------------------------------------------------    
-    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_role")
-      .subscribe(
-        (response) => {
-          if (response.status == 200) {
-            //Insert Record again---------------------------------------------------------------------
-            for (var ROLE_GUID of this.ROLE_ngModel_Edit) {
+    //Insert Main Role------------------------------------------------------------------------- 
+    this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
+    this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+    this.userrole_entry.ROLE_GUID = this.ROLE_ngModel_Add;
+    this.userrole_entry.ACTIVATION_FLAG = "1";
+    this.userrole_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+    this.userrole_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+    this.userrole_entry.UPDATE_TS = new Date().toISOString();
+    this.userrole_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+    this.userrole_entry.ROLE_FLAG = "MAIN";
+    this.userservice.save_user_role(this.userrole_entry)
+      .subscribe((response) => {
+        if (response.status == 200) {
+          //Insert Record for Additional Role---------------------------------------------------------------------
+          for (var ROLE_GUID of this.ADDITIONAL_ROLE_ngModel_Add) {
+            if (ROLE_GUID != this.ROLE_ngModel_Edit) {
               this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
               this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
               this.userrole_entry.ROLE_GUID = ROLE_GUID;
@@ -2260,16 +2277,66 @@ export class UserPage {
               this.userrole_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
               this.userrole_entry.UPDATE_TS = new Date().toISOString();
               this.userrole_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+              this.userrole_entry.ROLE_FLAG = "ADDITIONAL";
 
               this.userservice.save_user_role(this.userrole_entry)
                 .subscribe((response) => {
                   if (response.status == 200) {
-                    // alert('Tenant User Registered successfully');
-                    // this.navCtrl.setRoot(this.navCtrl.getActive().component);
+
                   }
                 });
             }
-            //-----------------------------------------------------------------------------------------
+          }
+          //--------------------------------------------------------------------------------------------------------
+        }
+      });
+  }
+
+  Update_Role() {
+    //first Delete all the records------------------------------------------------------------    
+    this.userservice.remove_multiple(this.usermain_entry.USER_GUID, "user_role")
+      .subscribe(
+        (response) => {
+          if (response.status == 200) {
+            //Update Main Role------------------------------------------------------------------------- 
+            this.userrole_entry.USER_ROLE_GUID = localStorage.getItem("Main_User_Role_Guid_Temp");
+            this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+            this.userrole_entry.ROLE_GUID = this.ROLE_ngModel_Edit;
+            this.userrole_entry.ACTIVATION_FLAG = "1";
+            this.userrole_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+            this.userrole_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+            this.userrole_entry.UPDATE_TS = new Date().toISOString();
+            this.userrole_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+            this.userrole_entry.ROLE_FLAG = "MAIN";
+            this.userservice.update_user_role(this.userrole_entry)
+              .subscribe((response) => {
+                if (response.status == 200) {
+
+                }
+              });
+
+            //Insert Record for Additional Role---------------------------------------------------------------------
+            for (var ROLE_GUID of this.ADDITIONAL_ROLE_ngModel_Edit) {
+              if (ROLE_GUID != this.ROLE_ngModel_Edit) {
+                this.userrole_entry.USER_ROLE_GUID = UUID.UUID();
+                this.userrole_entry.USER_GUID = this.usermain_entry.USER_GUID;
+                this.userrole_entry.ROLE_GUID = ROLE_GUID;
+                this.userrole_entry.ACTIVATION_FLAG = "1";
+                this.userrole_entry.CREATION_TS = this.usermain_entry.CREATION_TS;
+                this.userrole_entry.CREATION_USER_GUID = this.usermain_entry.CREATION_USER_GUID;
+                this.userrole_entry.UPDATE_TS = new Date().toISOString();
+                this.userrole_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+                this.userrole_entry.ROLE_FLAG = "ADDITIONAL";
+
+                this.userservice.save_user_role(this.userrole_entry)
+                  .subscribe((response) => {
+                    if (response.status == 200) {
+
+                    }
+                  });
+              }
+            }
+            //--------------------------------------------------------------------------------------------------------
           }
         });
   }
@@ -2405,6 +2472,8 @@ export class UserPage {
 
     this.ROLE_ngModel_Add = "";
     this.ROLE_ngModel_Edit = "";
+
+    localStorage.setItem("Main_User_Role_Guid_Temp", "");
   }
 
   lastImage: string = null;
@@ -2594,7 +2663,7 @@ export class UserPage {
   UploadImage() {
     this.CloudFilePath = 'eclaim/'
     // this.loading = true;
-    let uniqueName = new Date().toISOString() + this.uploadFileName; console.log(uniqueName); localStorage.setItem("Unique_File_Name", uniqueName);
+    let uniqueName = new Date().toISOString() + this.uploadFileName; localStorage.setItem("Unique_File_Name", uniqueName);
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');

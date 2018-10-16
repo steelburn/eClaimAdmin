@@ -155,7 +155,7 @@
   "REMARK_LABEL": "Remarks",
   "CLAIM_AMOUNT_LABEL": "Claim Amount",
   "ATTACHMENT_LABEL": "Attachment",
-  "CURRENCY_NAME_LABEL": "(RM)",
+ 
   "DISTANCE_LABEL": "Distance in KM",  
   "ADD_TOLL_LABEL": "Add Toll",
   "ADD_PARKING_LABEL": "Add Parking",
@@ -284,7 +284,7 @@
  "DIVISION": "Division",
  "FILTER": "Filter :",
  "COUNT": "My Claim Count",
- "AMOUNT": "My Claim Amount(RM)",
+ 
  "PENDING_APPROVAL": "Pending Your Approval",
  "PENDING_VALIDATION": "Pending Your Validation",
  "CLAIM_REJECTED": "Rejected",
@@ -420,7 +420,9 @@
  "USER_ROLE": "User Role",
  "LANGUAGE": "Language",
  "UPLOAD": "upload",
- "HISTORY": "My Claim History" 
-
+ "HISTORY": "My Claim History",
+ "MENU_ICON": "Menu Icon",
+ "UPDATE_MODULE": "Update_Module"
+ 
  
 } 

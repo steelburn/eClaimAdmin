@@ -8,7 +8,8 @@ export class UserRole_Model {
         public CREATION_TS: string = null,
         public CREATION_USER_GUID: string = null,
         public UPDATE_TS: string = null,
-        public UPDATE_USER_GUID: string = null
+        public UPDATE_USER_GUID: string = null,
+        public ROLE_FLAG: string = null
     ) { }
     static fromJson(json: any) {
         if (!json) return;
@@ -20,7 +21,8 @@ export class UserRole_Model {
             json.CREATION_TS,
             json.CREATION_USER_GUID,
             json.UPDATE_TS,
-            json.UPDATE_USER_GUID
+            json.UPDATE_USER_GUID,
+            json.ROLE_FLAG,
         );
     }
     toJson(stringify?: boolean): any {
@@ -32,7 +34,8 @@ export class UserRole_Model {
             CREATION_TS: this.CREATION_TS,
             CREATION_USER_GUID: this.CREATION_USER_GUID,
             UPDATE_TS: this.UPDATE_TS,
-            UPDATE_USER_GUID: this.UPDATE_USER_GUID
+            UPDATE_USER_GUID: this.UPDATE_USER_GUID,
+            ROLE_FLAG: this.ROLE_FLAG
         };
         return stringify ? JSON.stringify({ resource: [doc] }) : doc;
     }
