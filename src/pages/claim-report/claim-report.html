@@ -81,7 +81,7 @@
   
           <th class="lgl1">From</th>
           <th class="lgl1">To</th>
-
+          <th class="lgl1">Round Trip</th>
 
           <th class="lgl1 tblBrRight" style="width:130px;">Total Amount({{currency }})</th>
         </tr>
@@ -94,7 +94,8 @@
           <td class="lgl1" text-wrap>{{claim.MODE}}</td>
           <td class="lgl1" text-wrap>{{claim.from}}</td>
           <td class="lgl1" text-wrap>{{claim.to}}</td>
-
+          <td class="lgl1" *ngIf="claim.ROUND_TRIP==1" style="text-align: center !important;">Y</td>
+          <td class="lgl1" *ngIf="claim.ROUND_TRIP==0" style="text-align: center !important;">-</td>
           <td class="lgl1" style="text-align: right !important;">{{claim.Total | number:'1.2-2'}}</td>
         </tr>
 

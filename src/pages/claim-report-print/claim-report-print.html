@@ -45,6 +45,7 @@
         <th align="center" bgcolor="#002060" style="width: 3%;">Mode</th>
         <th align="center" bgcolor="#002060" style="width: 20%;">From</th>
         <th align="center" bgcolor="#002060" style="width: 20%;">To</th>
+        <th align="center" bgcolor="#002060" style="width: 4%;">Round Trip</th>
         <th align="center" bgcolor="#002060" style="width: 5%;">Amount ({{currency }})</th>
       </tr>
 
@@ -97,6 +98,16 @@
         <td align="left" valign="top" bgcolor="#ffffff">
           <span *ngIf="claim.RowNum==1">{{claim.to}}</span>
         </td>
+        <td align="left" valign="top" *ngIf="claim.ROUND_TRIP==1" bgcolor="#ffffff">
+            <span *ngIf="claim.RowNum==1">Y</span>
+          <!-- <ion-icon *ngIf="claim.RowNum==1" name="sync"></ion-icon> -->
+          <!-- <img *ngIf="claim.RowNum==1" [src]="assets/img/profile_no_preview.png" alt="avatar"> -->
+        </td>
+        <td align="left" valign="top" *ngIf="claim.ROUND_TRIP==0" bgcolor="#ffffff">
+            <span *ngIf="claim.RowNum==1">-</span>
+          <!-- <ion-icon *ngIf="claim.RowNum==1" name="undo"></ion-icon> -->
+          <!-- <img *ngIf="claim.RowNum==1" [src]="assets/img/profile_no_preview.png" alt="avatar"> -->
+        </td>
         <td align="right" valign="top" bgcolor="#ffffff">
           <span *ngIf="claim.RowNum==1">
             {{claim.MILEAGE_AMOUNT | number:'1.2-2'}}
@@ -148,63 +159,63 @@
 
     <table width="100%">
       <tr>
-      <td width="50%" valign="top">
-        <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
-          <tr style="color:#ffffff;">
-            <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
-            <td align="right" bgcolor="#002060">Amount ({{currency }})</td>
-          </tr>
-          <tr *ngFor="let claim of claimsListSummary">
-            <td align="left" bgcolor="#ffffff">&nbsp;</td>
-            <td align="left" bgcolor="#ffffff">{{claim.TRAVEL}}</td>
-            <td align="left" bgcolor="#ffffff">{{claim.MILEAGE}} </td>
-            <td align="left" colspan="3" bgcolor="#ffffff">{{claim.SHORTFORM}} </td>
-            <td align="right" bgcolor="#ffffff">{{claim.AMOUNT| number:'1.2-2'}}</td>
-          </tr>
-          <tr>
-            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-            <td align="left" bgcolor="#B3CCEC">
-              <em>TOTAL CLAIM AMOUNT</em>
-            </td>
-            <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
-            <td colspan="2" align="left" bgcolor="#B3CCEC">&nbsp;</td>
-            <td align="right" bgcolor="#B3CCEC">
-              <em>{{totalClaimAmount | number:'1.2-2'}}</em>
-            </td>
-          </tr>
-    
-        </table>
-     </td>
-     <td></td>
-     <td width="50%"  valign="top">
-        <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
+        <td width="50%" valign="top">
+          <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
+            <tr style="color:#ffffff;">
+              <td colspan="6" align="center" bgcolor="#002060">CLAIMS SUMMARY</td>
+              <td align="right" bgcolor="#002060">Amount ({{currency }})</td>
+            </tr>
+            <tr *ngFor="let claim of claimsListSummary">
+              <td align="left" bgcolor="#ffffff">&nbsp;</td>
+              <td align="left" bgcolor="#ffffff">{{claim.TRAVEL}}</td>
+              <td align="left" bgcolor="#ffffff">{{claim.MILEAGE}} </td>
+              <td align="left" colspan="3" bgcolor="#ffffff">{{claim.SHORTFORM}} </td>
+              <td align="right" bgcolor="#ffffff">{{claim.AMOUNT| number:'1.2-2'}}</td>
+            </tr>
+            <tr>
+              <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+              <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+              <td align="left" bgcolor="#B3CCEC">
+                <em>TOTAL CLAIM AMOUNT</em>
+              </td>
+              <td align="left" bgcolor="#B3CCEC">&nbsp;</td>
+              <td colspan="2" align="left" bgcolor="#B3CCEC">&nbsp;</td>
+              <td align="right" bgcolor="#B3CCEC">
+                <em>{{totalClaimAmount | number:'1.2-2'}}</em>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+        <td></td>
+        <td width="50%" valign="top">
+          <table border="0" bgcolor="#cccccc" style="font-size: 8pt !important;width:100%;">
 
             <tr style="color:#ffffff;">
-                <td align="center" bgcolor="#002060">SOC / Customer Name</td>
-                <td align="right" bgcolor="#002060">Amount ({{currency }})</td>
-              </tr>
+              <td align="center" bgcolor="#002060">SOC / Customer Name</td>
+              <td align="right" bgcolor="#002060">Amount ({{currency }})</td>
+            </tr>
 
-          <tr *ngFor="let i of claimsSocSummary">
-            <td align="left" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.SOC}}</td>
-            <td align="right" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.AMOUNT | number:'1.2-2'}}</td>
-          </tr>
+            <tr *ngFor="let i of claimsSocSummary">
+              <td align="left" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.SOC}}</td>
+              <td align="right" bgcolor="#ffffff" *ngIf="i.SOC!=null">{{i.AMOUNT | number:'1.2-2'}}</td>
+            </tr>
 
-          <tr>
-       <td align="left" bgcolor="#B3CCEC">
-              <em>TOTAL CLAIM AMOUNT</em>
-            </td>
-        
+            <tr>
+              <td align="left" bgcolor="#B3CCEC">
+                <em>TOTAL CLAIM AMOUNT</em>
+              </td>
 
-            <td align="right" bgcolor="#B3CCEC">
-              <em>{{totalClaimAmount | number:'1.2-2'}}</em>
-            </td>
-          </tr>
-        </table>
 
-   </td>
-   </tr>
-   </table>
+              <td align="right" bgcolor="#B3CCEC">
+                <em>{{totalClaimAmount | number:'1.2-2'}}</em>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+    </table>
 
 
 

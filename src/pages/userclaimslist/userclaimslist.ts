@@ -52,7 +52,7 @@ export class UserclaimslistPage {
   baseResourceUrl: string;
   baseResourceUrl1: string;
   searchboxValue: string;
-  Pending: any; Rejected: any; Approved: any; Paid: any;Validated:any;
+  Pending: any; Rejected: any; Approved: any; Paid: any; Validated: any;
   public page: number = 1;
   btnSearch: boolean = false;
   currency = localStorage.getItem("cs_default_currency")
@@ -71,9 +71,9 @@ export class UserclaimslistPage {
     this.BindClaimTypes();
 
     this.Rejected = navParams.get("Rejected");
-    this.Pending = navParams.get("Pending");
-    this.Approved = navParams.get("Approved");
-    this.Validated = navParams.get("Validated");
+    this.Pending = navParams.get("PENDINGSUPERIOR");
+    this.Approved = navParams.get("PENDINGFINANCEVALIDATION");
+    this.Validated = navParams.get("Approved");
     this.Paid = navParams.get("Paid");
 
     this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid || this.Validated;
@@ -99,32 +99,40 @@ export class UserclaimslistPage {
           element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
 
           // For Status changing
-          if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO)
-            element.STATUS = Settings.StatusConstants.APPROVED
-          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE)
-            element.STATUS = Settings.StatusConstants.VALIDATED
+          if (element.PROFILE_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.PENDING)
+            element.STATUS = Settings.StatusConstants.PENDINGSUPERIOR
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+            element.STATUS = Settings.StatusConstants.PENDINGFINANCEVALIDATION
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+            element.STATUS = Settings.StatusConstants.PENDINGPAYMENT
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.REJECTED)
+            element.STATUS = Settings.StatusConstants.SUPERIORREJECTED
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.REJECTED)
+            element.STATUS = Settings.StatusConstants.FINANCEREJECTED
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.REJECTED)
+            element.STATUS = Settings.StatusConstants.PAYMENTREJECTED
           // if (element.STATUS === 'Rejected') {
-          if (element.STATUS === Settings.StatusConstants.REJECTED) {
-            element.STAGE_GUID = null;
-          }
-          else {
-            key = element.PROFILE_LEVEL;
-          }
+          // if (element.STATUS === Settings.StatusConstants.REJECTED) {
+          //   element.STAGE_GUID = null;
+          // }
+          // else {
+          //   key = element.PROFILE_LEVEL;
+          // }
 
-          switch (key) {
-            // case 1: element.STAGE_GUID = 'Superior'; break;
-            case 1: element.STAGE_GUID = Settings.StageConstants.SUPERIOR; break;
-            // case 2: element.STAGE_GUID = 'Finance Executive'; break;
-            case 2: element.STAGE_GUID = Settings.StageConstants.FINANCE_EXECUTIVE; break;
-            case 3:
-            // case -1: element.STAGE_GUID = 'Finance & Admin'; break;
-            case -1: element.STAGE_GUID = Settings.StageConstants.FINANCE_ADMIN; break;
-          }
+          // switch (key) {
+          //   // case 1: element.STAGE_GUID = 'Superior'; break;
+          //   case 1: element.STAGE_GUID = Settings.StageConstants.SUPERIOR; break;
+          //   // case 2: element.STAGE_GUID = 'Finance Executive'; break;
+          //   case 2: element.STAGE_GUID = Settings.StageConstants.FINANCE_EXECUTIVE; break;
+          //   case 3:
+          //   // case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+          //   case -1: element.STAGE_GUID = Settings.StageConstants.FINANCE_ADMIN; break;
+          // }
         });
         this.userClaimhistorydetails = this.userClaimhistorydetails1;
         if (this.userClaimhistorydetails.length != 0) {
           if (ddlmonth.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
-          if (ddlStatus.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString()) }
+          if (ddlStatus.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.STATUS.toString() === ddlStatus.toString().replace("_"," ")) }
           if (ddlClaimTypes.toString() !== "All") { this.userClaimhistorydetails = this.userClaimhistorydetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
 
         }
@@ -153,22 +161,30 @@ export class UserclaimslistPage {
           this.userClaimhistorydetails1 = data["resource"];
           //this.userClaimhistorydetails1 = this.userClaimhistorydetails;
           this.userClaimhistorydetails1.forEach(element => {
-            if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
-            element.STATUS = Settings.StatusConstants.APPROVED
+            if (element.PROFILE_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.PENDING)
+            element.STATUS = Settings.StatusConstants.PENDINGSUPERIOR
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+            element.STATUS = Settings.StatusConstants.PENDINGFINANCEVALIDATION
           else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
-            element.STATUS = Settings.StatusConstants.VALIDATED
-              
-            switch (element.PROFILE_LEVEL) {
-              // case 1: element.STAGE_GUID = 'Superior'; break;
-              case 1: element.STAGE_GUID = Settings.StageConstants.SUPERIOR; break;
-              // case 2: element.STAGE_GUID = 'Finance Executive'; break;
-              case 2: element.STAGE_GUID = Settings.StageConstants.FINANCE_EXECUTIVE; break;
-              case 3:
-              // case -1: element.STAGE_GUID = 'Finance & Admin'; break;
-              case -1: element.STAGE_GUID = Settings.StageConstants.FINANCE_ADMIN; break;
-              // case 4: element.STAGE_GUID = 'Finance Manager'; break;
-              // case 5: element.STAGE_GUID = 'Finance & Admin'; break;
-            }
+            element.STATUS = Settings.StatusConstants.PENDINGPAYMENT
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.REJECTED)
+            element.STATUS = Settings.StatusConstants.SUPERIORREJECTED
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.REJECTED)
+            element.STATUS = Settings.StatusConstants.FINANCEREJECTED
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.REJECTED)
+            element.STATUS = Settings.StatusConstants.PAYMENTREJECTED
+
+            // switch (element.PROFILE_LEVEL) {
+            //   // case 1: element.STAGE_GUID = 'Superior'; break;
+            //   case 1: element.STAGE_GUID = Settings.StageConstants.SUPERIOR; break;
+            //   // case 2: element.STAGE_GUID = 'Finance Executive'; break;
+            //   case 2: element.STAGE_GUID = Settings.StageConstants.FINANCE_EXECUTIVE; break;
+            //   case 3:
+            //   // case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+            //   case -1: element.STAGE_GUID = Settings.StageConstants.FINANCE_ADMIN; break;
+            //   // case 4: element.STAGE_GUID = 'Finance Manager'; break;
+            //   // case 5: element.STAGE_GUID = 'Finance & Admin'; break;
+            // }
           });
           this.userClaimhistorydetails = this.userClaimhistorydetails1.filter((item) => {
             let claimtype: number;
@@ -273,7 +289,7 @@ export class UserclaimslistPage {
   pushPage(claimType: any) {
     this.navCtrl.push(claimType, {
       isApprover: false,
-      approverDesignation: this.designation,
+     // approverDesignation: this.designation,
       cr_GUID: this.claimRequestGUID,
       level_no: this.level,
       approver_GUID: localStorage.getItem('g_USER_GUID')
@@ -324,7 +340,7 @@ export class UserclaimslistPage {
     this.ExcelColumns.push({ Columns: 'Date' });
     this.ExcelColumns.push({ Columns: 'Status' });
     this.ExcelColumns.push({ Columns: 'Stage' });
-    this.ExcelColumns.push({ Columns: 'Amount('+this.currency+')' });
+    this.ExcelColumns.push({ Columns: 'Amount(' + this.currency + ')' });
   }
 
   CloseExportExcel() {
@@ -420,7 +436,7 @@ export class UserclaimslistPage {
                   }
                 }
                 break;
-              case "Amount("+this.currency+")":
+              case "Amount(" + this.currency + ")":
                 if (jsonStr.length > 0) {
                   if (ctr == this.checked.length) {
                     jsonStr += '"Amount":"' + this.userClaimhistorydetails[item]["CLAIM_AMOUNT"] + '"';
