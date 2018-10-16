@@ -28,6 +28,7 @@ export const StatusConstants = {
     FINANCEREJECTED: "Finance Rejected",
     PAYMENTREJECTED: "Payment Rejected"
 
+
 }
 
 
@@ -71,7 +72,7 @@ export const ProfileLevels = {
     TWO: '2',
     THREE: '3',
     ZERO: '0',
-    MINUSONE:'-1'
+    MINUSONE: '-1'
 }
 export const ClaimAmountConstants = {
     MIN_CLAIM_AMOUNT: 0,

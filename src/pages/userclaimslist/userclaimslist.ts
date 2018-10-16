@@ -71,9 +71,9 @@ export class UserclaimslistPage {
     this.BindClaimTypes();
 
     this.Rejected = navParams.get("Rejected");
-    this.Pending = navParams.get("Pending");
-    this.Approved = navParams.get("Approved");
-    this.Validated = navParams.get("Validated");
+    this.Pending = navParams.get("PENDINGSUPERIOR");
+    this.Approved = navParams.get("PENDINGFINANCEVALIDATION");
+    this.Validated = navParams.get("Approved");
     this.Paid = navParams.get("Paid");
 
     this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid || this.Validated;
