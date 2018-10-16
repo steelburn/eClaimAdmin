@@ -155,7 +155,6 @@ export class ApprovalProfilePage {
       //   postClaimRef["resource"][0].CLAIM_REQUEST_DETAIL_GUID);
 
     })
-    this.navCtrl.push('ApprovalProfilePage');
     alert('Profile successfully created')
   }
   AddLevel() {
