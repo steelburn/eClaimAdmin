@@ -360,6 +360,21 @@ export class UserSetup_Service {
 			});
 	}
 
+	remove_multiple_records(id: string, tablename: string) {
+		let url_multiple = this.baseResource_Url + tablename + "?filter=(USER_GUID=" + id + ")";
+
+		var queryHeaders = new Headers();
+		queryHeaders.append('Content-Type', 'application/json');
+		queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+
+		return this.httpService.http
+			.delete(url_multiple, { headers: queryHeaders })
+			.map((response) => {
+				//return result.PAGE_GUID;
+				return response;
+			});
+	}
+
 	// get_bijay(id: string): Observable<ViewUser_Model> {
 	// 	var queryHeaders = new Headers();
 	// 	queryHeaders.append('Content-Type', 'application/json');

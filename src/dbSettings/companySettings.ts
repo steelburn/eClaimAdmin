@@ -21,14 +21,16 @@ export const StatusConstants = {
     VALIDATED: "Validated",
     DRAFT: "Draft",
 
-    PENDINGSUPERIOR:  "Pending Superior",
-    PENDINGFINANCEVALIDATION:  "Pending Finance Validation",
-    PENDINGPAYMENT:  "Pending Payment",
-    SUPERIORREJECTED:  "Superior Rejected",
-    FINANCEREJECTED:  "Finance Rejected",
-    PAYMENTREJECTED:  "Payment Rejected"
+    PENDINGSUPERIOR: "Pending Superior",
+    PENDINGFINANCEVALIDATION: "Pending Finance Validation",
+    PENDINGPAYMENT: "Pending Payment",
+    SUPERIORREJECTED: "Superior Rejected",
+    FINANCEREJECTED: "Finance Rejected",
+    PAYMENTREJECTED: "Payment Rejected"
+
 
 }
+
 
 export const StageConstants = {
     SUPERIOR: "Superior",

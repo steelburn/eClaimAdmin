@@ -512,6 +512,16 @@ export class GiftclaimPage {
             this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
             this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
           }
+
+          //Added by Bijay on 12/10/2018 for audit_trial-----------------------
+          if(this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != ""){
+            this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME")+ " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+          }
+          else{
+            this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME")+ " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+          }
+          //-------------------------------------------------------------------
+          
           //this.claimRequestData[0].STATUS = 'Pending';
           // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
           this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {

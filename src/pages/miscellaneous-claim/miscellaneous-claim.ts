@@ -66,18 +66,18 @@ export class MiscellaneousClaimPage {
 
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, fb: FormBuilder, private loadingCtrl: LoadingController, private service: Services, public navCtrl: NavController, public http: Http, public navParams: NavParams, public api: ApiManagerProvider) {
     // Lakshman
-    this.min_claim_amount=localStorage.getItem('cs_min_claim_amt');
-    this.min_claim=this.numberPipe.transform(this.min_claim_amount, '1.2-2');
+    this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
+    this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
     // this.min_claim_amount =null;
-    if(this.min_claim_amount==null){
-     this.min_claim_amount=Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
-   }
-   this.max_claim_amount=localStorage.getItem('cs_max_claim_amt');
-   this.max_claim=this.numberPipe.transform(this.max_claim_amount, '1.2-2');
+    if (this.min_claim_amount == null) {
+      this.min_claim_amount = Settings.ClaimAmountConstants.MIN_CLAIM_AMOUNT
+    }
+    this.max_claim_amount = localStorage.getItem('cs_max_claim_amt');
+    this.max_claim = this.numberPipe.transform(this.max_claim_amount, '1.2-2');
     // this.max_claim_amount =null;
-    if(this.max_claim_amount==null){
-     this.max_claim_amount=Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
-   }    
+    if (this.max_claim_amount == null) {
+      this.max_claim_amount = Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
+    }
     let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
     this.profileMng.CheckSessionOut();
@@ -412,13 +412,13 @@ export class MiscellaneousClaimPage {
     let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.Miscellaneous_Amount_ngModel = null;
-      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " "); 
+      alert("Claim amount should be " + this.currency + " " + this.min_claim_amount + " - " + this.max_claim_amount + " ");
       return;
     }
     else {
       this.Miscellaneous_Amount_ngModel = this.Miscellaneous_Amount_ngModel;
     }
-    
+
     if (this.api.isClaimExpired(formValues.travel_date, false))
       return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
@@ -439,9 +439,10 @@ export class MiscellaneousClaimPage {
             this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
             this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
             if (this.rejectedLevel === 3)
-            this.claimRequestData["resource"][0].STATUS = 'Approved';
-          else
-            this.claimRequestData["resource"][0].STATUS = 'Pending';          }
+              this.claimRequestData["resource"][0].STATUS = 'Approved';
+            else
+              this.claimRequestData["resource"][0].STATUS = 'Pending';
+          }
 
           if (this.isCustomer) {
             this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
@@ -451,6 +452,16 @@ export class MiscellaneousClaimPage {
             this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
             this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
           }
+
+          //Added by Bijay on 12/10/2018 for audit_trial-----------------------
+          if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
+            this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+          }
+          else {
+            this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+          }
+          //-------------------------------------------------------------------
+
           this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
             //Send Email------------------------------------------------
             let start_DT: string = "";

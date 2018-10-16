@@ -6,6 +6,7 @@ import { Services } from '../Services';
 import {EntertainmentclaimPage} from '../entertainmentclaim/entertainmentclaim';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import * as Settings from '../../dbSettings/companySettings'; 
 //import { ExcelService } from '../../providers/excel.service';
 
 @IonicPage()
@@ -27,7 +28,7 @@ export class EntertainmentClaimViewPage {
   currency = localStorage.getItem("cs_default_currency")
   isRemarksAccepted: any;
   level: any;
-  approverDesignation: any;
+  // approverDesignation: any;
   isActionTaken: boolean = false;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public api1: Services, public http: Http, public translate: TranslateService, public navCtrl: NavController, public navParams: NavParams) {
@@ -36,7 +37,7 @@ export class EntertainmentClaimViewPage {
     this.claimRequestGUID = this.navParams.get("cr_GUID");
     this.Approver_GUID = this.navParams.get("approver_GUID");
     this.level = navParams.get('level_no');
-    this.approverDesignation = this.navParams.get("approverDesignation");
+    // this.approverDesignation = this.navParams.get("approverDesignation");
 
     this.LoadMainClaim();
   } 
@@ -70,6 +71,23 @@ export class EntertainmentClaimViewPage {
         // element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
         this.travelDate = element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
         element.CREATION_TS = new Date(element.CREATION_TS.replace(/-/g, "/"))
+
+       
+        if (element.PROFILE_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.PENDING)
+        element.STATUS = Settings.StatusConstants.PENDINGSUPERIOR
+        else if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+        element.STATUS = Settings.StatusConstants.PENDINGFINANCEVALIDATION
+        else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+        element.STATUS = Settings.StatusConstants.PENDINGPAYMENT
+        else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.REJECTED)
+        element.STATUS = Settings.StatusConstants.SUPERIORREJECTED
+        else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.REJECTED)
+        element.STATUS = Settings.StatusConstants.FINANCEREJECTED
+        else if (element.PROFILE_LEVEL == Settings.ProfileLevels.ZERO && element.PREVIOUS_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.REJECTED)
+        element.STATUS = Settings.StatusConstants.PAYMENTREJECTED 
+        
+        
+
 
         if (element.ATTACHMENT_ID !== null) { 
           this.imageURL = this.api.getImageUrl(element.ATTACHMENT_ID); 
