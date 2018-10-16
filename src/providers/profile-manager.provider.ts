@@ -120,7 +120,8 @@ export class ProfileManagerProvider {
     proceedNext() {
         this.isRequester = false;
         let month = new Date(this.formValues.travel_date).getMonth() + 1;
-        let year = new Date(this.formValues.travel_date).getFullYear(); this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
+        let year = new Date(this.formValues.travel_date).getFullYear();
+         this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
             .subscribe(claimRefdata => {
                 if (claimRefdata["resource"][0] == null) {
                     this.saveClaimRef(month, year);
@@ -408,8 +409,9 @@ export class ProfileManagerProvider {
         if (this.profileLevel === 3)
             claimReqMainRef.STATUS = 'Approved';
         else
-            claimReqMainRef.STATUS = 'Pending';        //claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
-        // claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Draft' : 'Pending';
+        claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
+        // claimReqMainRef.STATUS = 'Pending';       
+            // claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Draft' : 'Pending';
         // if (claimReqMainRef.PROFILE_LEVEL === 1) {
         //   claimReqMainRef.STAGE = 'Superior';
         // }
