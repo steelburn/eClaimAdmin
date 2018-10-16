@@ -568,7 +568,7 @@ export class LoginPage {
           if (this.KeyNameValueList[item]["KEY_NAME"] == "email_time") { localStorage.setItem("cs_email_time", this.KeyNameValueList[item]["KEY_VALUE"]); }
 
           if (this.KeyNameValueList[item]["KEY_NAME"] == "draft_notification") { localStorage.setItem("draft_notification", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          if (this.KeyNameValueList[item]["KEY_NAME"] == "profile_guid") { localStorage.setItem("profile_guid", this.KeyNameValueList[item]["KEY_VALUE"]); }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "profile_guid") { localStorage.setItem("cs_profile_guid", this.KeyNameValueList[item]["KEY_VALUE"]); }
         }
       });
   }
