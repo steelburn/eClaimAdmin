@@ -80,19 +80,19 @@ export class ProfileManagerProvider {
             if (isRemarksAccepted == true) {
                 //Approved
                 if (data[0].AUDIT_TRAIL != null && data[0].AUDIT_TRAIL != "") {
-                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Approved by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Approved by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
                 }
                 else {
-                    data[0].AUDIT_TRAIL = "Approved by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+                    data[0].AUDIT_TRAIL = "Approved by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
                 }
             }
             else {
                 //Rejected
                 if (data[0].AUDIT_TRAIL != null && data[0].AUDIT_TRAIL != "") {
-                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
                 }
                 else {
-                    data[0].AUDIT_TRAIL = "Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+                    data[0].AUDIT_TRAIL = "Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
                 }
             }
             //------------------------------------------------------------------------------------------------------------
@@ -446,7 +446,7 @@ export class ProfileManagerProvider {
         claimReqMainRef.to_place_id = this.formValues.to_id;
 
         //Added by bijay on 11/10/2018
-        claimReqMainRef.AUDIT_TRAIL = "Created by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")";
+        claimReqMainRef.AUDIT_TRAIL = "Created by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
 
 
         if (this.isCustomer) {
