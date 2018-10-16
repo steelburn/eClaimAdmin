@@ -96,6 +96,7 @@ import { FinancePaymentTasklistPage } from '../pages/finance-payment-tasklist/fi
 import { CommonTasklistPage } from '../pages/common-tasklist/common-tasklist';
 import { PaymentHistoryPage } from '../pages/payment-history/payment-history';
 import { CommonHistorylistPage } from '../pages/common-historylist/common-historylist';
+import { ClaimSummaryPage } from '../pages/claim-summary/claim-summary';
 
 
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
@@ -197,7 +198,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
     CommonHistorylistPage,
 
     CompanysettingsPage,
-    DbmaintenancePage
+    DbmaintenancePage,
+    ClaimSummaryPage
 
 
   ],
@@ -250,8 +252,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
         { component: FinancePaymentTasklistPage, name: 'FinancePaymentTasklistPage', segment: 'FinancePaymentTasklistPage' },
         { component: CommonTasklistPage, name: 'CommonTasklistPage', segment: 'CommonTasklistPage' },
         { component: PaymentHistoryPage, name: 'PaymentHistoryPage', segment: 'PaymentHistoryPage' },
-        { component: CommonHistorylistPage, name: 'CommonHistorylistPage', segment: 'CommonHistorylistPage' }
-        
+        { component: CommonHistorylistPage, name: 'CommonHistorylistPage', segment: 'CommonHistorylistPage' },
+        { component: ClaimSummaryPage, name: 'ClaimSummaryPage', segment: 'ClaimSummaryPage' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -337,7 +339,7 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
    
     PaymentHistoryPage,
     CommonHistorylistPage,
-
+    ClaimSummaryPage,
 
     SettingsPage,
     CompanysettingsPage,
