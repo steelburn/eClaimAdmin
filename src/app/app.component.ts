@@ -150,6 +150,8 @@ export class ConferenceApp {
     // alert(localStorage.getItem("cs_default_language"));
 
     platform.ready().then(() => {
+      //alert(localStorage.getItem("cs_default_language"));
+     
     });
     this.TranslateLanguage();
     // translate.setDefaultLang('en');
@@ -233,6 +235,10 @@ export class ConferenceApp {
     else if (localStorage.getItem("cs_default_language") == 'ms') {
       this.translateToMalay();
       this.translate.setDefaultLang('ms');
+    }
+    else {
+      this.translateToEnglish();
+      this.translate.setDefaultLang('en');
     }
   }
 
