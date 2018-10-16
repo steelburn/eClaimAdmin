@@ -35,12 +35,14 @@ import { LoginPage } from '../login/login';
 import { SettingsPage } from '../settings/settings';
 import { CompanysettingsPage } from '../companysettings/companysettings';
 import { DbmaintenancePage } from '../dbmaintenance/dbmaintenance';
+import { ApprovalProfilePage } from '../approval-profile/approval-profile';
 
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
+import { from } from 'rxjs/observable/from';
 
 
 /**
@@ -385,6 +387,10 @@ export class SetupPage {
 
   goToRoleModulesetup() {
     this.navCtrl.push(RolemodulesetupPage)
+  }
+
+  goToApprovalProfileSetup(){
+    this.navCtrl.push(ApprovalProfilePage);
   }
 
 }

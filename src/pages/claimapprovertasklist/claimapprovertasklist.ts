@@ -113,26 +113,28 @@ export class ClaimapprovertasklistPage {
         this.claimrequestdetails.forEach(element => {
           element.TRAVEL_DATE = new Date(element.TRAVEL_DATE.replace(/-/g, "/"))
 
-          if (this.FinanceLogin) {
-            // For Status changing
-            if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
-              element.STATUS = Settings.StatusConstants.APPROVED
-            else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
-              element.STATUS = Settings.StatusConstants.VALIDATED
-          }
-          if (element.STATUS === 'Rejected') {
-            element.STAGE_GUID = null;
-          }
-          else {
-            key = element.PROFILE_LEVEL;
-          }
+          // if (this.FinanceLogin) {
+          // For Status changing
+          if (element.PROFILE_LEVEL == Settings.ProfileLevels.ONE && element.STATUS == Settings.StatusConstants.PENDING)
+            element.STATUS = Settings.StatusConstants.PENDINGSUPERIOR
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.TWO && element.STATUS == Settings.StatusConstants.PENDING)
+            element.STATUS = Settings.StatusConstants.PENDINGFINANCEVALIDATION
+          else if (element.PROFILE_LEVEL == Settings.ProfileLevels.THREE && element.STATUS == Settings.StatusConstants.APPROVED)
+            element.STATUS = Settings.StatusConstants.PENDINGPAYMENT
+          // }
+          // if (element.STATUS === 'Rejected') {
+          //   element.STAGE_GUID = null;
+          // }
+          // else {
+          //   key = element.PROFILE_LEVEL;
+          // }
 
-          switch (key) {
-            case 1: element.STAGE_GUID = 'Superior'; break;
-            case 2: element.STAGE_GUID = 'Finance Executive'; break;
-            case 3:
-            case -1: element.STAGE_GUID = 'Finance & Admin'; break;
-          }
+          // switch (key) {
+          //   case 1: element.STAGE_GUID = 'Superior'; break;
+          //   case 2: element.STAGE_GUID = 'Finance Executive'; break;
+          //   case 3:
+          //   case -1: element.STAGE_GUID = 'Finance & Admin'; break;
+          // }
         });
         this.claimrequestdetails1 = this.claimrequestdetails;
         if (this.claimrequestdetails.length != 0) {
@@ -315,11 +317,11 @@ export class ClaimapprovertasklistPage {
     console.log('ionViewDidLoad ClaimapprovertasklistPage');
   }
 
-  designation: string;
-  viewClaim(designation: string, claimRequestGUID: string, level: any, claimType: any) {
+  // designation: string;
+  viewClaim(claimRequestGUID: string, level: any, claimType: any) {
     this.claimRequestGUID = claimRequestGUID;
     this.level = level;
-    this.designation = designation;
+    // this.designation = designation;
 
     switch (claimType) {
       case '2d8d7c80-c9ae-9736-b256-4d592e7b7887': this.pushPage(GiftClaimViewPage); break;
@@ -335,7 +337,7 @@ export class ClaimapprovertasklistPage {
   pushPage(claimType: any) {
     this.navCtrl.push(claimType, {
       isApprover: true,
-      approverDesignation: this.designation,
+      // approverDesignation: this.designation,
       cr_GUID: this.claimRequestGUID,
       level_no: this.level,
       approver_GUID: localStorage.getItem('g_USER_GUID')

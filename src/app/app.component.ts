@@ -32,6 +32,7 @@ import { FinancePaymentTasklistPage } from '../pages/finance-payment-tasklist/fi
 import { CommonTasklistPage } from '../pages/common-tasklist/common-tasklist';
 import { PaymentHistoryPage } from '../pages/payment-history/payment-history';
 import { CommonHistorylistPage } from '../pages/common-historylist/common-historylist';
+import { ClaimSummaryPage } from '../pages/claim-summary/claim-summary';
 
 import { TranslateService } from '@ngx-translate/core';
 

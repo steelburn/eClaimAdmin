@@ -20,6 +20,7 @@ export class ProfileManagerProvider {
     levels: any[];
     userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; previousStage: string; level: any;
     mainClaimReq: MainClaimRequestModel; claimRequestGUID: any; isRemarksAccepted: any;
+    selectedProfile = localStorage.getItem("cs_profile_guid")
 
     navCtrl: any;
     constructor(public http: Http, public api: ApiManagerProvider, app: App) {
@@ -141,7 +142,8 @@ export class ProfileManagerProvider {
     proceedNext() {
         this.isRequester = false;
         let month = new Date(this.formValues.travel_date).getMonth() + 1;
-        let year = new Date(this.formValues.travel_date).getFullYear(); this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
+        let year = new Date(this.formValues.travel_date).getFullYear();
+         this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
             .subscribe(claimRefdata => {
                 if (claimRefdata["resource"][0] == null) {
                     this.saveClaimRef(month, year);
@@ -152,9 +154,6 @@ export class ProfileManagerProvider {
                 }
             })
     }
-
-
-
 
     SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any, level: any) {
 
@@ -420,6 +419,7 @@ export class ProfileManagerProvider {
         claimReqMainRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
         claimReqMainRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
         // claimReqMainRef.UPDATE_TS = new Date().toISOString();
+        claimReqMainRef.ROUND_TRIP = this.formValues.Roundtrip;
         claimReqMainRef.FROM = this.formValues.origin;
         claimReqMainRef.DESTINATION = this.formValues.destination;
         claimReqMainRef.DISTANCE_KM = this.formValues.distance;
@@ -430,8 +430,9 @@ export class ProfileManagerProvider {
         if (this.profileLevel === 3)
             claimReqMainRef.STATUS = 'Approved';
         else
-            claimReqMainRef.STATUS = 'Pending';        //claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
-        // claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Draft' : 'Pending';
+        claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Pending' : 'Draft';
+        // claimReqMainRef.STATUS = 'Pending';       
+            // claimReqMainRef.STATUS = this.formValues.uuid === undefined ? 'Draft' : 'Pending';
         // if (claimReqMainRef.PROFILE_LEVEL === 1) {
         //   claimReqMainRef.STAGE = 'Superior';
         // }
@@ -517,28 +518,12 @@ export class ProfileManagerProvider {
 
     }
 
-    // month: any; year: any
     initiateLevels(levelNo: string) {
-
-        this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => {
-            let stringProfileJSON = this.profileJSON = JSON.stringify(data);
-            // let stringProfileJSON = this.profileJSON= data[0].PROFILE_JSON
-            let profileJSON = JSON.parse(stringProfileJSON);
-            let levels = profileJSON.profile.levels.level;
-            this.getInfoLevels(levels, levelNo);
-
-
-            // this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')')
-            //   .subscribe(claimRefdata => {
-            //     if (claimRefdata["resource"][0] == null) {
-            //       this.saveClaimRef(this.month, this.year);
-            //     }
-            //     else {
-            //       let claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
-            //       this.SaveClaim(claimRefGUID);
-            //     }
-            //   })
-
+        this.api.getApiModel('main_profile', 'filter=MAIN_PROFILE_GUID=' + this.selectedProfile).subscribe(res => {
+          this.profileJSON = res["resource"][0].PROFILE_JSON;
+          let profileJSON = JSON.parse(this.profileJSON);
+          let levels = profileJSON.profile.levels.level;
+          this.getInfoLevels(levels, levelNo);
         })
     }
 

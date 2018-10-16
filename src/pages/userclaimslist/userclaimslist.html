@@ -42,12 +42,13 @@
     <ion-label>{{ "LIST_STATUS" | translate }}</ion-label>
     <ion-select interface="popover" #ddlStatus>
       <ion-option [value]="All" [selected]="true">All</ion-option>
-     
-      <ion-option [value]="Pending">Pending</ion-option>
-      <ion-option [value]="Approved">Approved</ion-option>
-      <ion-option [value]="Validated">Validated</ion-option>
       <ion-option [value]="Paid">Paid</ion-option>
-      <ion-option [value]="Rejected">Rejected</ion-option>
+      <ion-option [value]="Pending_Superior">Pending Superior</ion-option>
+      <ion-option [value]="Pending_Finance_Validation">Pending Finance Validation</ion-option>
+      <ion-option [value]="Pending_Payment">Pending Payment</ion-option>
+      <ion-option [value]="Superior_Rejected">Superior Rejected</ion-option>
+      <ion-option [value]="Finance_Rejected">Finance Rejected</ion-option>
+      <ion-option [value]="Payment_Rejected">Payment Rejected</ion-option>
       <!-- <ion-option [value]="Draft">Draft</ion-option> -->
     </ion-select>
   </ion-item>
