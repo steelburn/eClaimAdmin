@@ -20,6 +20,7 @@ export class ProfileManagerProvider {
     levels: any[];
     userGUID: any; TenantGUID: any; previousLevel: number; previousAssignedTo: string; previousStage: string; level: any;
     mainClaimReq: MainClaimRequestModel; claimRequestGUID: any; isRemarksAccepted: any;
+    selectedProfile = localStorage.getItem("cs_profile_guid")
 
     navCtrl: any;
     constructor(public http: Http, public api: ApiManagerProvider, app: App) {
@@ -153,9 +154,6 @@ export class ProfileManagerProvider {
                 }
             })
     }
-
-
-
 
     SaveWorkFlow(claimRef: ClaimWorkFlowHistoryModel, profile_Json: any, level: any) {
 
@@ -519,28 +517,12 @@ export class ProfileManagerProvider {
 
     }
 
-    // month: any; year: any
     initiateLevels(levelNo: string) {
-
-        this.http.get('assets/profile.json').map((response) => response.json()).subscribe(data => {
-            let stringProfileJSON = this.profileJSON = JSON.stringify(data);
-            // let stringProfileJSON = this.profileJSON= data[0].PROFILE_JSON
-            let profileJSON = JSON.parse(stringProfileJSON);
-            let levels = profileJSON.profile.levels.level;
-            this.getInfoLevels(levels, levelNo);
-
-
-            // this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + this.month + ')AND(YEAR=' + this.year + ')')
-            //   .subscribe(claimRefdata => {
-            //     if (claimRefdata["resource"][0] == null) {
-            //       this.saveClaimRef(this.month, this.year);
-            //     }
-            //     else {
-            //       let claimRefGUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
-            //       this.SaveClaim(claimRefGUID);
-            //     }
-            //   })
-
+        this.api.getApiModel('main_profile', 'filter=MAIN_PROFILE_GUID=' + this.selectedProfile).subscribe(res => {
+          this.profileJSON = res["resource"][0].PROFILE_JSON;
+          let profileJSON = JSON.parse(this.profileJSON);
+          let levels = profileJSON.profile.levels.level;
+          this.getInfoLevels(levels, levelNo);
         })
     }
 
