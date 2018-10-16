@@ -199,18 +199,19 @@ export class TravelclaimPage {
       }
       else {
         // if (this.travelAmountNgmodel != null && this.travelAmountNgmodel != undefined) {
-          // if (this.travelAmountNgmodel.indexOf(",") > 0) {
-          //   this.travelAmountNgmodel = this.travelAmountNgmodel.split(",").join("");
-          // }
-          temp_amount = Number(this.travelAmountNgmodel) / 2;
-          this.travelAmountNgmodel = this.numberPipe.transform(Number(this.travelAmountNgmodel) / 2, '1.2-2');
-          this.totalClaimAmount = Number(temp_amount);
-        }
+        // if (this.travelAmountNgmodel.indexOf(",") > 0) {
+        //   this.travelAmountNgmodel = this.travelAmountNgmodel.split(",").join("");
+        // }
+        temp_amount = Number(this.travelAmountNgmodel) / 2;
+        this.travelAmountNgmodel = this.numberPipe.transform(Number(this.travelAmountNgmodel) / 2, '1.2-2');
+        this.totalClaimAmount = Number(temp_amount);
+      }
       // }
     }
   }
-  
-  getCurrency(amount: number) {
+
+  getCurrency(amount: any) {
+    amount = amount.split(",").join("");
     amount = Number(amount);
     if (amount > 99999) {
       // alert('Amount should not exceed RM99999.')
@@ -458,12 +459,15 @@ export class TravelclaimPage {
         DistKm = DistKm.replace(',', '')
         this.Travel_Distance_ngModel = destination = DistKm.substring(0, DistKm.length - 2)
         this.Travel_Distance_ngModel = this.numberPipe.transform(this.Travel_Distance_ngModel, '1.2-2');
+
         // this.Travel_Mode_ngModel = this.vehicleCategory;
-        if (!this.isPublicTransport)
-          //Added by bijay on 24/09/2018
+        if (!this.isPublicTransport) {
           this.travelAmount = this.roundNumber(destination * this.VehicleRate, 2);
-        // this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
-        this.travelAmountNgmodel = this.travelAmount;
+          this.travelAmountNgmodel = this.numberPipe.transform(this.travelAmount, '1.2-2');
+        }
+        else {
+          this.getCurrency('0');
+        }
         this.travelAmount = this.travelAmount === undefined ? 0 : this.travelAmount;
         this.tollParkAmount = this.tollParkAmount === undefined ? 0 : this.tollParkAmount;
         //Added by bijay on 24/09/2018
@@ -924,7 +928,7 @@ export class TravelclaimPage {
 
         formValues.from_id = this.OriginPlaceID;
         formValues.to_id = this.DestinationPlaceID;
-
+        formValues.Roundtrip = this.Roundtrip_ngModel ? 1 : 0;
 
         this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         this.MainClaimSaved = true;
@@ -941,6 +945,7 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
             this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmount;
             this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.totalClaimAmount;
+            this.claimRequestData["resource"][0].ROUND_TRIP = this.Roundtrip_ngModel ? 1 : 0;
             this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
             this.claimRequestData["resource"][0].FROM = formValues.origin;
             this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
