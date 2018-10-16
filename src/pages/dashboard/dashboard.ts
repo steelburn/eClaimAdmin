@@ -640,14 +640,28 @@ export class DashboardPage {
           this.ApproverLevel_PendAmount = this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel, '1.2-2');
           // this.ApproverLevel_PendAmount = this.ApproverLevel_PendAmount.toString()
           // this.ApproverLevel_PendAmount = this.numberPipe.transform(this.ApproverLevel_PendAmount, '1.2-2');
+          if( this.ApproverLevel_PendAmount ==null)
+          {
+            this.ApproverLevel_PendAmount ="0.00";
+          }
           this.ApproverLevel_PendCount = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel;
-
+                          if( this.ApproverLevel_PendCount ==null)
+                          {
+                            this.ApproverLevel_PendCount =0;
+                          }
           // this.FinanceExecLevel_PendAmt = this.roleBasedData.PendingAmount_Fe_FinalLevel;
           // this.FinanceExecLevel_PendCount = this.roleBasedData.PendingCount_Fe_FinalLevel;
 
           this.FinanceMgrLevel_PendAmt = this.numberPipe.transform(this.roleBasedData.PendingAmount_Fm_MgrLevel, '1.2-2');
+          if( this.FinanceMgrLevel_PendAmt ==null)
+          {
+            this.FinanceMgrLevel_PendAmt ="0.00";
+          }
           this.FinanceMgrLevel_PendCount = this.roleBasedData.PendingCount_Fm_MgrLevel;
-
+          if( this.FinanceMgrLevel_PendCount ==null)
+          {
+            this.FinanceMgrLevel_PendCount =0;
+          }
         }
         else {
           this.ApproverLevel_PendAmount = "0.00";
@@ -1174,13 +1188,13 @@ export class DashboardPage {
     this.navCtrl.setRoot('UserclaimslistPage', { Rejected: Settings.StatusConstants.REJECTED });
   }
   Pending_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Pending: Settings.StatusConstants.PENDING });
+    this.navCtrl.setRoot('UserclaimslistPage', { PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR });
   }
   Validated_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Validated: Settings.StatusConstants.VALIDATED });
+    this.navCtrl.setRoot('UserclaimslistPage', { Approved: Settings.StatusConstants.PENDINGPAYMENT });
   }
   Approved_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved: Settings.StatusConstants.APPROVED });
+    this.navCtrl.setRoot('UserclaimslistPage', { PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION });
   }
   Paid_Click() {
     this.navCtrl.setRoot('UserclaimslistPage', { Paid: Settings.StatusConstants.PAID });
