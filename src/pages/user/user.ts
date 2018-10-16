@@ -782,16 +782,16 @@ export class UserPage {
     this.loading.present();
 
     let TableURL_User: string;
-    if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_ROLE_NAME") == "Finance Executive" || localStorage.getItem("g_ROLE_NAME") == "Finance Admin" || localStorage.getItem("g_ROLE_NAME") == "Finance Manager") {
-      TableURL_User = this.BaseTableURL + ViewName + '?' + this.Key_Param;
-    }
-    else if (localStorage.getItem("g_ISHQ") == "1" && localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
-      TableURL_User = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + this.Key_Param;
-    }
-    else {
-      TableURL_User = this.BaseTableURL + ViewName + '?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&' + this.Key_Param;
-    }
-    // console.log(TableURL_User);
+    // if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_ROLE_NAME") == "Finance Executive" || localStorage.getItem("g_ROLE_NAME") == "Finance Admin" || localStorage.getItem("g_ROLE_NAME") == "Finance Manager") {
+    //   TableURL_User = this.BaseTableURL + ViewName + '?' + this.Key_Param;
+    // }
+    // else if (localStorage.getItem("g_ISHQ") == "1" && localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
+    //   TableURL_User = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + this.Key_Param;
+    // }
+    // else {
+    //   TableURL_User = this.BaseTableURL + ViewName + '?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&' + this.Key_Param;
+    // }
+    TableURL_User = this.BaseTableURL + ViewName + '?filter=(TENANT_GUID=' + localStorage.getItem("g_TENANT_GUID") + ')&' + this.Key_Param;
     this.http
       .get(TableURL_User)
       .map(res => res.json())
