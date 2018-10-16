@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-navbar color="primary200">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile Setup</ion-title>
+    <ion-buttons ion-button end>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <button color="primary500" ion-button (click)="CreateProfile()">
+    <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
+    <p> Create Profile</p>
+  </button>
+
+  <div *ngIf="AddProfileClicked">
+    <form [formGroup]="ProfileForm">
+      <ion-item>
+        <ion-label color="primary" fixed>Profile Name: </ion-label>
+        <ion-input formControlName="profile_name" [(ngModel)]="profile_name_ngmodel" type="text" placeholder='Enter Profile Name'></ion-input>
+      </ion-item>
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary" fixed>Level : </ion-label>
+          <ion-input formControlName="Level_Id" [(ngModel)]="Level_Id_ngModel" type="number" placeholder='Enter Level Number'></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Approver :</ion-label>
+
+          <ion-select formControlName="Approver" [(ngModel)]="Approver_name_ngModel" (ionChange)="Approver_Changed(Approver_name_ngModel)"
+            fixed>
+            <ion-option value="directManager" selected="true">Direct Manager </ion-option>
+            <ion-option value="keytype">Specific user</ion-option>
+          </ion-select>
+        </ion-item>
+        <!-- <ion-item *ngIf="!isDirectManager">
+                    <ion-input formControlName="Approver_Value" [(ngModel)]="Approver_Value_ngModel" placeholder="Enter Approver Value"></ion-input>
+                </ion-item> -->
+        <ion-item *ngIf="!isDirectManager">
+          <ion-select formControlName="Approver_Value" [(ngModel)]="Approver_Value_ngModel" placeholder="Please select User.">
+            <ion-option *ngFor="let user of users_list" [value]="user.USER_GUID">{{user.FULLNAME }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Conditions</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Status : Rejected </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Next Level : Final </ion-label>
+          <ion-select formControlName="Rejected_Condition" [(ngModel)]="Rejected_Condition_ngModel" (ionChange)="Rejected_Level_Change(Rejected_Condition_ngModel)">
+            <ion-option value="true">True</ion-option>
+            <ion-option value="false">False</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="rejectedClicked">
+          <ion-label color="primary">Level :</ion-label>
+          <ion-input formControlName="Rejected_Level" [(ngModel)]="Rejected_Level_ngModel" placeholder="Enter Rejected Level"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Status : Approved </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Next Level : Final </ion-label>
+          <ion-select formControlName="Approved_Condition" [(ngModel)]="Approved_Condition_ngModel" (ionChange)="Approved_Level_Change(Approved_Condition_ngModel)">
+            <ion-option value="true">True</ion-option>
+            <ion-option value="false">False</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="approvedClicked">
+          <ion-label color="primary">Level :</ion-label>
+          <ion-input formControlName="Approved_Level" [(ngModel)]="Approved_Level_ngModel" placeholder="Enter Approved Level "></ion-input>
+        </ion-item>
+        <ion-fab right>
+          <a *ngIf="addPlusClicked" (click)="AddLevel()">
+            <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
+            <!-- <ion-icon *ngIf="addMinusClicked" ios="ios-remove-circle" md="md-remove-circle"></ion-icon> -->
+            Add Level
+          </a>
+        </ion-fab>
+      </ion-list>
+    </form>
+    <ion-item *ngIf="SaveButton">
+      <button (click)='save()' ion-button style="width:100px;" color="primary500">SAVE</button>
+      <!-- <button class="formBtnCircle" type="submit" ion-button block>{{ 'SUBMIT_BUTTON' | translate }}</button> -->
+    </ion-item>
+  </div>
+</ion-content>

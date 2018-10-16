@@ -242,6 +242,7 @@
  "BUTTON_TEXT": "buttonText",
  "PAYMENT_HISTORY": "Payment History Details",
  "VALIDATION_HISTORY": "Validation History Details",
+ "CLAIM_SUMMARY_DETAILS": "Claim Summary Details",
  "SUPERIOR": "Superior History",
  "CLAIM_HISTORY_NAME": "Name :",
  "CLAIM_HISTORY_DEPARTMENT": "Department",
@@ -254,6 +255,7 @@
  "HISTORY_CLAIM_MONTH": "Claim Month :",
  "HISTORY_SEARCH": "Search",
  "COMMON_TASK_PAYMENT": "Payment List",
+ "CLAIM_SUMMARY": "Claim Summary",
  "COMMON_TASK_VALIDATION": "Validation List",
  "COMMON_TASK_DEPARTMENT": "Department :",
  "COMMON_TASK_USERNAME": "User Name :",
@@ -288,10 +290,10 @@
  "PENDING_APPROVAL": "Pending Your Approval",
  "PENDING_VALIDATION": "Pending Your Validation",
  "CLAIM_REJECTED": "Rejected",
- "VALIDATED": "Validated",
+ "VALIDATED": "Pending Payment",
  "PAID": "Paid",
- "PENDING": "Pending",
- "CLAIM_APPROVED": "Approved", 
+ "PENDING": "Pending Superior",
+ "CLAIM_APPROVED": "Pending Finance Validation", 
  "PENDING_PAYMENT": "Pending Your Payment",
  "DATABASE_MAINTENANCE": "Database Maintenance",
  "TENANT_NAME": "Tenant Name",
@@ -422,7 +424,7 @@
  "UPLOAD": "upload",
  "HISTORY": "My Claim History",
  "MENU_ICON": "Menu Icon",
- "UPDATE_MODULE": "Update_Module"
- 
+ "UPDATE_MODULE": "Update_Module",
+ "ROUND_TRIP_LABEL": "Round Trip"
  
 } 
