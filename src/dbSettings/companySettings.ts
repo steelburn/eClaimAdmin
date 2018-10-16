@@ -27,6 +27,7 @@ export const StatusConstants = {
     SUPERIORREJECTED: "Superior Rejected",
     FINANCEREJECTED: "Finance Rejected",
     PAYMENTREJECTED: "Payment Rejected"
+
 }
 
 

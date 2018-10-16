@@ -16,6 +16,13 @@
       <ion-icon name="download"></ion-icon>
     </button>
   </ion-fab>
+
+  <ion-content padding>
+    <ion-fab top edge style="left:30px;">
+      <button ion-fab mini (click)="EmailTest($event)">
+        <ion-icon name="ios-mail-outline"></ion-icon>
+      </button>
+    </ion-fab>
   
   <ion-fab top right edge>
     <button ion-fab mini (click)="AddBanksClick()" [disabled]="button_Add_Disable">
