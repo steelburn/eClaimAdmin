@@ -290,10 +290,10 @@
  "PENDING_APPROVAL": "Pending Your Approval",
  "PENDING_VALIDATION": "Pending Your Validation",
  "CLAIM_REJECTED": "Rejected",
- "VALIDATED": "Validated",
+ "VALIDATED": "Pending Payment",
  "PAID": "Paid",
- "PENDING": "Pending",
- "CLAIM_APPROVED": "Approved", 
+ "PENDING": "Pending Superior",
+ "CLAIM_APPROVED": "Pending Finance Validation", 
  "PENDING_PAYMENT": "Pending Your Payment",
  "DATABASE_MAINTENANCE": "Database Maintenance",
  "TENANT_NAME": "Tenant Name",
@@ -424,7 +424,7 @@
  "UPLOAD": "upload",
  "HISTORY": "My Claim History",
  "MENU_ICON": "Menu Icon",
- "UPDATE_MODULE": "Update_Module"
- 
+ "UPDATE_MODULE": "Update_Module",
+ "ROUND_TRIP_LABEL": "Round Trip"
  
 } 
