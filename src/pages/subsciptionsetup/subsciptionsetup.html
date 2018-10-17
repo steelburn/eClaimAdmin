@@ -29,23 +29,26 @@
           <th class="lgl1">Rate</th>
           <th class="lgl1">Effective Date</th>
           <th class="lgl1">Description</th>
-          <th class="lgl1">Active Flag</th>
+          <th class="lgl1" style="width:95px">Active Flag</th>
           <th class="lgl1 tblBrRight" style="width:105px">Action</th>
 
         </tr>
 
         <tr class="col7" *ngFor="let subscription of subscriptions | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' } ; let i=index">
-          <td class="lgl1">{{ 10 * (page - 1) + i+1 }}</td>
-          <td class="lgl1">{{subscription.PLAN_NAME}}</td>
-          <td class="lgl1">{{subscription.DURATION}}</td>
-          <td class="lgl1">{{subscription.RATE}}</td>
-          <td class="lgl1">{{subscription.EFFECTIVE_DATE}}</td>
-          <td class="lgl1">{{subscription.DESCRIPTION}}</td>
-          <td class="lgl1">
-            <ion-toggle class="stog" *ngIf="subscription.ACTIVE_FLAG==1" checked=true></ion-toggle>
-            <ion-toggle class="stog" *ngIf="subscription.ACTIVE_FLAG==0" checked=false></ion-toggle>
+          <td class="lgl1 getHeader" reshead="No.">{{ 10 * (page - 1) + i+1 }}</td>
+          <td class="lgl1 getHeader" reshead="Plan Name">{{subscription.PLAN_NAME}}</td>
+          <td class="lgl1 getHeader" reshead="Duration">{{subscription.DURATION}}</td>
+          <td class="lgl1 getHeader" reshead="Rate">{{subscription.RATE}}</td>
+          <td class="lgl1 getHeader" reshead="Effective Date">{{subscription.EFFECTIVE_DATE}}</td>
+          <td class="lgl1 getHeader" reshead="Description">{{subscription.DESCRIPTION}}</td>
+          <td class="lgl1 getHeader" reshead="Active Flag">
+            <ion-item>
+                <ion-toggle  *ngIf="subscription.ACTIVE_FLAG==1" checked=true></ion-toggle>
+            <ion-toggle  *ngIf="subscription.ACTIVE_FLAG==0" checked=false></ion-toggle>
+            </ion-item>
+          
           </td>
-          <td class="lgl1 fColor">
+          <td class="lgl1 getHeader fColor" reshead="Action">
             <button ion-button item-end (click)="EditClick(subscription.SUBSCRIPTION_GUID)"><ion-icon name="md-create"></ion-icon></button>
             <button ion-button item-end (click)="DeleteClick(subscription.SUBSCRIPTION_GUID)"><ion-icon name="md-close"></ion-icon></button>
           </td>
