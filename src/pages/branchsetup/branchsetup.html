@@ -39,7 +39,7 @@
           <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
           <th class="lgl1">Company Name</th>
           <th class="lgl1">Branch Name</th>
-          <th class="lgl1">Head Quarter</th>
+          <th class="lgl1"  style="width:105px">Head Quarter</th>
           <th class="lgl1 tblBrRight" style="width:105px">Action</th>
         </tr>
 
@@ -48,8 +48,11 @@
           <td class="lgl1 getHeader" reshead="Company Name">{{branch.NAME}}</td>
           <td class="lgl1 getHeader"reshead="Branch Name">{{branch.SITE_NAME}}</td>
           <td class="lgl1 getHeader" reshead="Action">
-            <ion-toggle class="tog" *ngIf="branch.ISHQ==1" checked=true></ion-toggle>
-            <ion-toggle class="tog" *ngIf="branch.ISHQ==0" checked=false></ion-toggle>
+            <ion-item>
+                <ion-toggle class="tog" *ngIf="branch.ISHQ==1" checked=true></ion-toggle>
+                <ion-toggle class="tog" *ngIf="branch.ISHQ==0" checked=false></ion-toggle>
+            </ion-item>
+
           </td>
 
           <td class="lgl1 getHeader fColor">

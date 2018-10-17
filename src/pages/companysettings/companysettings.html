@@ -13,9 +13,8 @@
 
 <ion-content padding>
   <!-- add company settings form start-->
-  <div class="popup" padding>
-    <div style="width:50%" class="popscroll" padding>
-      <ion-card>
+
+
 
         <ion-list>
           <form [formGroup]="CompanySettingsform">
@@ -174,13 +173,13 @@
               </ion-select>
             </ion-item>
 
-            <ion-item class="fuha" style="width: 24%">
+            <ion-item class="fuha2" >
               <ion-label stacked><span style="color:red">*</span>{{ 'Schedule Time' | translate }}</ion-label>
               <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="EmailTime" [(ngModel)]="Email_Time_ngModel"
                 displayFormat="HH:mm"></ion-datetime>
             </ion-item>
 
-            <ion-item class="fuha" style="width: 24%">
+            <ion-item class="fuha2" >
               <ion-label stacked>{{ 'Draft Notification' | translate }}</ion-label>
               <ion-checkbox formControlName="DraftNotification" [(ngModel)]="DraftNotification_ngModel"></ion-checkbox>
             </ion-item>
@@ -192,15 +191,13 @@
 
             <div class="btn">
               <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!CompanySettingsform.valid"
-                (click)="Save(CompanySettingsform.value)">{{"SUBMIT"
-                | translate}}</button>
+                (click)="Save(CompanySettingsform.value)">{{"SUBMIT" | translate}}</button>
             </div>
           </form>
         </ion-list>
 
-      </ion-card>
-    </div>
-  </div>
+   
+   
   <!-- add company settings form end-->
 
 </ion-content>

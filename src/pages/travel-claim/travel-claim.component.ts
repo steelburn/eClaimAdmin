@@ -1004,7 +1004,7 @@ export class TravelclaimPage {
         // formValues.travel_date = formValues.start_DT
         formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
         formValues.meal_allowance = this.allowanceGUID;
-        formValues.distance = this.Travel_Distance_ngModel;
+        formValues.distance = this.Travel_Distance_ngModel.split(",").join("");
         formValues.vehicleType = this.VehicleId;
         formValues.attachment_GUID = this.imageGUID;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
@@ -1033,7 +1033,7 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
             this.claimRequestData["resource"][0].FROM = formValues.origin;
             this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
-            this.claimRequestData["resource"][0].DISTANCE_KM = this.Travel_Distance_ngModel;
+            this.claimRequestData["resource"][0].DISTANCE_KM = this.Travel_Distance_ngModel.split(",").join("");
             this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
             this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
             this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
