@@ -231,7 +231,7 @@ export class SetupguidePage {
       this.DepartmentClicked = true;
     }
     else {
-      alert('Please Register Branch !!');
+      alert('Please Register Branch.');
     }
   }
 
@@ -246,7 +246,7 @@ export class SetupguidePage {
       this.DepartmentClicked = false;
     }
     else {
-      alert('Please Register Department !!');
+      alert('Please Register Department.');
     }
   }
 
@@ -266,7 +266,7 @@ export class SetupguidePage {
       this.Save_User_Main();
     }
     else {
-      alert('Please Register Designation !!');
+      alert('Please Register Designation.');
     }
 
     //Save/Update to User_main---------------------------------------
@@ -373,15 +373,15 @@ export class SetupguidePage {
             this.Branch_ISHQ_FLAG_ngModel = false;
           }
           else {
-            alert('Fill Contact No. !!');
+            alert('Fill in Contact No.');
           }
         }
         else {
-          alert('Fill Email !!');
+          alert('Fill in Email.');
         }
       }
       else {
-        alert('Fill Registration No. !!');
+        alert('Fill in Registration No.');
       }
     }
     else {
@@ -655,7 +655,7 @@ export class SetupguidePage {
       this.userservice.save_user_main(this.usermain_entry)
         .subscribe((response) => {
           if (response.status == 200) {
-            // alert('User main updated sucessfully !!');
+            // alert('User main updated sucessfully.');
             this.Save_User_Info();
 
             // this.Save_Tenant_Main();
@@ -666,7 +666,7 @@ export class SetupguidePage {
       this.userservice.update_user_main(this.usermain_entry)
         .subscribe((response) => {
           if (response.status == 200) {
-            // alert('User main updated sucessfully !!');
+            // alert('User main updated sucessfully.');
             this.Save_User_Info();
           }
         });
@@ -1070,7 +1070,7 @@ export class SetupguidePage {
           });
       }
       // if (SaveDesigFlag == true) {
-      alert('Setup done successfully !!');
+      alert('Setup done successfully.');
       this.loading.dismissAll();
       this.navCtrl.push(SetupPage);
     }
@@ -1100,7 +1100,7 @@ export class SetupguidePage {
                   });
               }
               // if (SaveDesigFlag == true) {
-              alert('Setup done successfully !!');
+              alert('Setup done successfully.');
               this.loading.dismissAll();
               this.navCtrl.push(SetupPage);
               // }                       
