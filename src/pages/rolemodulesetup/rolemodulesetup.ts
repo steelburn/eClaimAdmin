@@ -92,7 +92,7 @@ export class RolemodulesetupPage {
       });
     // }
     // else {
-    //   alert("Sorry !! This is for only Super Admin.");
+    //   alert("Sorry. This is for only Super Admin.");
     //   this.navCtrl.setRoot(LoginPage);
     // }
   }
@@ -285,8 +285,8 @@ export class RolemodulesetupPage {
                 });
             }
             else {
-              console.log("Records Found");
-              alert("This Role Already Exist !!");
+              console.log("Records found");
+              alert("The role already exist.");
               // this.loading.dismissAll();
             }
           },
@@ -345,7 +345,7 @@ export class RolemodulesetupPage {
               else {
                 console.log("Records Found");
                 // this.loading.dismissAll();
-                alert("This Role Already Exist !!");
+                alert("This role already exist.");
               }
             },
             err => {
@@ -425,7 +425,7 @@ export class RolemodulesetupPage {
   DeleteClick(ROLE_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',

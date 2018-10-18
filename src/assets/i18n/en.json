@@ -290,10 +290,10 @@
  "PENDING_APPROVAL": "Pending Your Approval",
  "PENDING_VALIDATION": "Pending Your Validation",
  "CLAIM_REJECTED": "Rejected",
- "VALIDATED": "Validated",
+ "VALIDATED": "Pending Payment",
  "PAID": "Paid",
- "PENDING": "Pending",
- "CLAIM_APPROVED": "Approved", 
+ "PENDING": "Pending Superior",
+ "CLAIM_APPROVED": "Pending Finance Validation", 
  "PENDING_PAYMENT": "Pending Your Payment",
  "DATABASE_MAINTENANCE": "Database Maintenance",
  "TENANT_NAME": "Tenant Name",
@@ -402,11 +402,11 @@
  "RATE": "Rate",
  "EFFECTIVE_DATE": "Effective Date",
  "S_ACTIVE_FLAG": "Active Flag",
- "EDIT_SUBSCRIPTION": "EDIT SUBSCRIPTION",
- "TENANAT_SETUP": "TENANAT SETUP",
- "REGISTER_NEW_TENANT": "REGISTER NEW TENANT",
- "UPDATE_TENANT": "UPDATE TENANT",
- "ACCOUNT_DETAILS": "ACCOUNT DETAILS",
+ "EDIT_SUBSCRIPTION": "Edit Subscription",
+ "TENANT_SETUP": "Tenant Setup",
+ "REGISTER_NEW_TENANT": "Register New Tenant",
+ "UPDATE_TENANT": "Update Tenant",
+ "ACCOUNT_DETAILS": "Account Details",
  "COMPANY_NAME": "Company Name",
  "SITE_NAME": "Site Name",
  "REGISTRATION_NO": "Registration Number",
@@ -424,7 +424,6 @@
  "UPLOAD": "upload",
  "HISTORY": "My Claim History",
  "MENU_ICON": "Menu Icon",
- "UPDATE_MODULE": "Update_Module"
- 
- 
+ "UPDATE_MODULE": "Update_Module",
+ "ROUND_TRIP_LABEL": "Round Trip" 
 } 

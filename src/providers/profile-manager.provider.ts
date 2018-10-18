@@ -419,6 +419,7 @@ export class ProfileManagerProvider {
         claimReqMainRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
         claimReqMainRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
         // claimReqMainRef.UPDATE_TS = new Date().toISOString();
+        claimReqMainRef.ROUND_TRIP = this.formValues.Roundtrip;
         claimReqMainRef.FROM = this.formValues.origin;
         claimReqMainRef.DESTINATION = this.formValues.destination;
         claimReqMainRef.DISTANCE_KM = this.formValues.distance;

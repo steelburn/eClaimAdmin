@@ -85,17 +85,22 @@ export class ClaimSummaryPage {
         let fullname: number;
         let month: number;
         let dept: number;
-        let amount: number;
+        let approveamount: number;
+        let rejamount: number;
+
         console.log(item);
         if (item.FULLNAME != null) { fullname = item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) }
         if (item.DEPARTMENT != null) { dept = item.DEPARTMENT.toString().toLowerCase().indexOf(val.toLowerCase()) }
         if (item.MONTH != null) { month = item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) }
-        if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.APPROVEDAMOUNT != null) { approveamount = item.APPROVEDAMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if (item.REJECTEDAMOUNT != null) { rejamount = item.REJECTEDAMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+
         return (
           (fullname > -1)
           || (dept > -1)
           || (month > -1)
-          || (amount > -1)
+          || (approveamount > -1)
+          || (rejamount > -1)
         );
       })
     }
@@ -156,7 +161,7 @@ export class ClaimSummaryPage {
     //   this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(STATUS=Approved)AND(PROFILE_LEVEL=3)AND(YEAR=' + ddlYear + ')AND(EMAIL=' + localStorage.getItem("g_EMAIL").toString().split('@')[1] + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     // }
     // else {
-      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(STATUS=Pending)AND(PROFILE_LEVEL=2)AND(YEAR=' + ddlYear + ')AND(EMAIL=' + localStorage.getItem("g_EMAIL").toString().split('@')[1] + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_summary?filter=(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
    // }
     this.BindData(ddlDept, ddlEmployee, ddlmonth);
 

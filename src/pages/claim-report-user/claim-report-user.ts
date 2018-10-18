@@ -107,7 +107,7 @@ export class ClaimReportUserPage {
     }
     let alert1 = this.alertCtrl.create({
       title: 'Print Report',
-      message: 'Preparing printing...',
+      message: 'Printable report ready. Please click OK to continue.',
       buttons: [
         {
           text: 'Cancel',

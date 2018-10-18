@@ -11,25 +11,26 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-fab top left edge>
+  <!-- <ion-fab top left edge>
     <button ion-fab mini (click)="ExportToExcel($event)">
       <ion-icon name="download"></ion-icon>
     </button>
   </ion-fab>
 
-  <ion-content padding>
+  
     <ion-fab top edge style="left:30px;">
       <button ion-fab mini (click)="EmailTest($event)">
         <ion-icon name="ios-mail-outline"></ion-icon>
       </button>
-    </ion-fab>
-  
+    </ion-fab> -->
+    <button ion-button  (click)="ExportToExcel($event)" style="left: 960px;"> <ion-icon name="download"></ion-icon></button>
+    <button ion-button  (click)="EmailTest($event)" style="left: 856px;"><ion-icon name="ios-mail-outline"></ion-icon></button>
   <ion-fab top right edge>
     <button ion-fab mini (click)="AddBanksClick()" [disabled]="button_Add_Disable">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-
+ 
   <ion-list>
     <ion-item>
       <table class="Tabler list">
