@@ -214,7 +214,7 @@ export class ProfileManagerProvider {
             if (this.level == '3') { RejectedByStatus = "[eClaim] Sorry your claim has been rejected by Finance."; }
             if (this.level == '4') { RejectedByStatus = "[eClaim] Sorry your claim has been rejected by Payment."; }
 
-            this.api.EmailReject(this.mainClaimReq.CLAIM_REQUEST_GUID, claimRef.REMARKS, this.mainClaimReq.STATUS, RejectedByStatus);
+            this.api.EmailReject(this.mainClaimReq.CLAIM_REQUEST_GUID, claimRef.REMARKS, this.mainClaimReq.STATUS, RejectedByStatus, this.level);
         }
     }
 
