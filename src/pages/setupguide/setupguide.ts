@@ -313,11 +313,11 @@ export class SetupguidePage {
       this.Designation_Desc_ngModel = "";
       // }
       // else {
-      //   alert("Fill Description !!");
+      //   alert("Fill in Description.");
       // }
     }
     else {
-      alert("Fill Designation !!");
+      alert("Fill in Designation.");
     }
   }
 
@@ -341,11 +341,11 @@ export class SetupguidePage {
       this.Department_Desc_ngModel = "";
       //}
       // else {
-      //   alert("Fill Description !!");
+      //   alert("Fill in Description.");
       // }
     }
     else {
-      alert("Fill Department !!");
+      alert("Fill in Department.");
     }
   }
 
@@ -385,7 +385,7 @@ export class SetupguidePage {
       }
     }
     else {
-      alert("Fill Branch Name !!");
+      alert("Fill in Branch Name.");
     }
   }
 
@@ -439,7 +439,7 @@ export class SetupguidePage {
       this.Designation = this.Designation.filter(item => item.DESIGNATION_GUID != DESIGNATION_GUID);
     }
     else {
-      alert('Sorry!! You are in Edit Mode.');
+      alert('Sorry.You are in Edit Mode.');
     }
   }
 
@@ -448,7 +448,7 @@ export class SetupguidePage {
       this.Department = this.Department.filter(item => item.DEPARTMENT_GUID != DEPARTMENT_GUID);
     }
     else {
-      alert('Sorry!! You are in Edit Mode.');
+      alert('Sorry.You are in Edit Mode.');
     }
   }
 
@@ -457,7 +457,7 @@ export class SetupguidePage {
       this.Branches = this.Branches.filter(item => item.BRANCH_GUID != BRANCH_GUID);
     }
     else {
-      alert('Sorry!! You are in Edit Mode.');
+      alert('Sorry.You are in Edit Mode.');
     }
   }
 
