@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar color="primary200">
-        <ion-title>{{ "TENANAT_SETUP" | translate }}</ion-title>
+        <ion-title>{{ "TENANT_SETUP" | translate }}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -34,8 +34,8 @@
                     <th class="lgl1">Tenant Account Name</th>
                     <th class="lgl1">Tenant Company Name</th>
                     <!-- <th class="lgl1">Effective Date</th> -->
-                    <th class="lgl1">Active Flag</th>
-                    <th class="lgl1 tblBrRight" style="width:120px">Action</th>
+                    <th class="lgl1" style="width:95px">Active Flag</th>
+                    <th class="lgl1 tblBrRight" style="width:155px">Action</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let tenant of tenants | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index">

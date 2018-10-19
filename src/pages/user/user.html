@@ -33,9 +33,9 @@
                     <th class="lgl1" style="width:85px">{{ 'Joining Date' | translate }}</th>
                     <th class="lgl1" style="width:85px">{{ 'STATUS' | translate }}</th>
 
-                    <th class="lgl1">{{ 'Activation' | translate }}</th>
+                    <th class="lgl1" style="width:81px">{{ 'Activation' | translate }}</th>
 
-                    <th class="lgl1 tblBrRight" style="width:100px">{{ 'ACTION' | translate }}</th>
+                    <th class="lgl1 tblBrRight" style="width:56px">{{ 'ACTION' | translate }}</th>
                 </tr>
 
                 <tr class="col7" *ngFor="let user of userview | paginate:{itemsPerPage: 10, currentPage:page, id: 'i' }; let i=index"

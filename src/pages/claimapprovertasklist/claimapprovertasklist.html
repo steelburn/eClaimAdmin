@@ -99,7 +99,11 @@
                     </td>
                 </tr>
                 <tr class="col7">
-                    <td colspan="7" class="lgl11" style="color:#50C878;"> Total Amount({{currency }}) : {{totalClaimAmount | number:'1.2-2'}}</td>
+                    <td colspan="7" *ngIf="FinanceLogin"class="lgl11" style="color:#50C878;"> Total Amount({{currency }}) : {{totalClaimAmount | number:'1.2-2'}}</td>
+                </tr>
+
+                <tr class="col7">
+                    <td colspan="8" *ngIf="!FinanceLogin" class="lgl11" style="color:#50C878;"> Total Amount({{currency }}) : {{totalClaimAmount | number:'1.2-2'}}</td>
                 </tr>
             </table>
             <!-- <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">

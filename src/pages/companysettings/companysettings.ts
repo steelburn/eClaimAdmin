@@ -39,7 +39,7 @@ export class CompanysettingsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private settingservice: Settings_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
-      alert('Sorry !! Please Login.');
+      alert('Sorry, you are not logged in. Please login.');
       this.navCtrl.setRoot(LoginPage);
     }
     else {
