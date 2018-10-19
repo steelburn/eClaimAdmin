@@ -524,6 +524,7 @@ export class LoginPage {
     
     localStorage.removeItem("draft_notification");
     localStorage.removeItem("profile_guid");
+    localStorage.removeItem("cs_default_time_zone");
 
     this.KeyNameValue = [];
     let url: string = "";
@@ -569,7 +570,7 @@ export class LoginPage {
 
           if (this.KeyNameValueList[item]["KEY_NAME"] == "draft_notification") { localStorage.setItem("draft_notification", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "profile_guid") { localStorage.setItem("cs_profile_guid", this.KeyNameValueList[item]["KEY_VALUE"]); }
-
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_time_zone") { localStorage.setItem("cs_default_time_zone", this.KeyNameValueList[item]["KEY_VALUE"]); }
         }
       });
   }
