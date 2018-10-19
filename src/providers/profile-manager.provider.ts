@@ -80,19 +80,19 @@ export class ProfileManagerProvider {
             if (isRemarksAccepted == true) {
                 //Approved
                 if (data[0].AUDIT_TRAIL != null && data[0].AUDIT_TRAIL != "") {
-                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Approved by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Approved by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
                 }
                 else {
-                    data[0].AUDIT_TRAIL = "Approved by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+                    data[0].AUDIT_TRAIL = "Approved by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
                 }
             }
             else {
                 //Rejected
                 if (data[0].AUDIT_TRAIL != null && data[0].AUDIT_TRAIL != "") {
-                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+                    data[0].AUDIT_TRAIL = data[0].AUDIT_TRAIL + " \n Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
                 }
                 else {
-                    data[0].AUDIT_TRAIL = "Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+                    data[0].AUDIT_TRAIL = "Rejected by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
                 }
             }
             //------------------------------------------------------------------------------------------------------------
@@ -164,7 +164,7 @@ export class ProfileManagerProvider {
         this.mainClaimReq.STAGE = this.stage;
         this.mainClaimReq.ASSIGNED_TO = this.assignedTo;
         this.mainClaimReq.PROFILE_LEVEL = this.level;
-        this.mainClaimReq.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+        this.mainClaimReq.UPDATE_TS = localStorage.getItem("zone_wise_current_timestamp");
         // if (this.level === '-1')
         //   this.mainClaimReq.STATUS = 'Paid';
         if (this.level === '-1') {
@@ -227,7 +227,7 @@ export class ProfileManagerProvider {
     //   this.mainClaimReq.STAGE = this.stage;
     //   this.mainClaimReq.ASSIGNED_TO = this.assignedTo;
     //   this.mainClaimReq.PROFILE_LEVEL = this.level;
-    //   this.mainClaimReq.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    //   this.mainClaimReq.UPDATE_TS = localStorage.getItem("zone_wise_current_timestamp");
     //   if (this.level === 2)
     //     this.mainClaimReq.STAGE = 'Finance';
     //   if (this.level === '-1') {
@@ -273,8 +273,8 @@ export class ProfileManagerProvider {
         claimHistoryRef.REMARKS = remarks;
         claimHistoryRef.STATUS = isRemarksAccepted ? 'Approved' : 'Rejected';
         claimHistoryRef.USER_GUID = approverGUID;
-        claimHistoryRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
-        claimHistoryRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+        claimHistoryRef.CREATION_TS = localStorage.getItem("zone_wise_current_timestamp");
+        claimHistoryRef.UPDATE_TS = localStorage.getItem("zone_wise_current_timestamp");
 
         this.getMainClaimReqInfo(claimHistoryRef, level, claimRequestGUID, isRemarksAccepted);
         // this.readProfile(level, claimRequestGUID, isRemarksAccepted) ;
@@ -416,8 +416,8 @@ export class ProfileManagerProvider {
         claimReqMainRef.END_TS = this.formValues.end_DT;
         claimReqMainRef.MILEAGE_AMOUNT = this.claimAmount;
         claimReqMainRef.CLAIM_AMOUNT = this.claimAmount;
-        claimReqMainRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
-        claimReqMainRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+        claimReqMainRef.CREATION_TS = localStorage.getItem("zone_wise_current_timestamp");
+        claimReqMainRef.UPDATE_TS = localStorage.getItem("zone_wise_current_timestamp");
         // claimReqMainRef.UPDATE_TS = new Date().toISOString();
         claimReqMainRef.ROUND_TRIP = this.formValues.Roundtrip;
         claimReqMainRef.FROM = this.formValues.origin;
@@ -447,7 +447,7 @@ export class ProfileManagerProvider {
         claimReqMainRef.to_place_id = this.formValues.to_id;
 
         //Added by bijay on 11/10/2018
-        claimReqMainRef.AUDIT_TRAIL = "Created by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+        claimReqMainRef.AUDIT_TRAIL = "Created by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
 
 
         if (this.isCustomer) {
@@ -490,8 +490,8 @@ export class ProfileManagerProvider {
         claimReqRef.MONTH = month;
         claimReqRef.YEAR = year;
         claimReqRef.STATUS = 'Pending';
-        claimReqRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
-        claimReqRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+        claimReqRef.CREATION_TS = localStorage.getItem("zone_wise_current_timestamp");
+        claimReqRef.UPDATE_TS = localStorage.getItem("zone_wise_current_timestamp");
         this.api.postData('main_claim_ref', claimReqRef.toJson(true)).subscribe((response) => {
             var postClaimRef = response.json();
             let claimRefGUID = postClaimRef["resource"][0].CLAIM_REF_GUID;
