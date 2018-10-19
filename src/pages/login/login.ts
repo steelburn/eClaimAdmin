@@ -524,6 +524,7 @@ export class LoginPage {
     localStorage.removeItem("cs_email_time");
     
     localStorage.removeItem("draft_notification");
+    localStorage.removeItem("profile_guid");
     localStorage.removeItem("cs_profile_guid");
     localStorage.removeItem("zone_wise_current_timestamp");
     this.KeyNameValue = [];
@@ -570,6 +571,7 @@ export class LoginPage {
 
           if (this.KeyNameValueList[item]["KEY_NAME"] == "draft_notification") { localStorage.setItem("draft_notification", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "profile_guid") { localStorage.setItem("cs_profile_guid", this.KeyNameValueList[item]["KEY_VALUE"]); }
+
           if (this.KeyNameValueList[item]["KEY_NAME"] == "default_time_zone") {
             localStorage.setItem("zone_wise_current_timestamp", moment.utc(new Date()).zone(this.KeyNameValueList[item]["KEY_VALUE"]).format('YYYY-MM-DDTHH:mm'))
           }
