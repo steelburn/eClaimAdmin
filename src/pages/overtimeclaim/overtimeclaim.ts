@@ -360,7 +360,7 @@ export class OvertimeclaimPage {
 
 
   validateDate(startDate: any, endDate: any) {
-    let today = localStorage.getItem("zone_wise_current_timestamp");
+    let today = this.apiMng.CreateTimestamp()
     let start = startDate;
     let end = endDate;
     // let today = Date.parse(new Date().toISOString())
@@ -429,10 +429,10 @@ export class OvertimeclaimPage {
 
             //Added by Bijay on 12/10/2018 for audit_trial-----------------------
             if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.apiMng.CreateTimestamp() + ")"+ " User From:W";
             }
             else {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.apiMng.CreateTimestamp() + ")"+ " User From:W";
             }
             //-------------------------------------------------------------------
 

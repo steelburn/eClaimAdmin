@@ -144,8 +144,8 @@ export class ApprovalProfilePage {
     this.profileRef.PROFILE_JSON = this.Temp_Data.toString();
     this.profileRef.TENANT_GUID = UUID.UUID();
     this.profileRef.TENANT_SITE_GUID = UUID.UUID();
-    this.profileRef.CREATION_TS = localStorage.getItem("zone_wise_current_timestamp");
-    this.profileRef.UPDATE_TS = localStorage.getItem("zone_wise_current_timestamp");
+    this.profileRef.CREATION_TS = this.api.CreateTimestamp();
+    this.profileRef.UPDATE_TS = this.api.CreateTimestamp();
     this.profileRef.CREATION_USER_GUID = "1";
     this.profileRef.UPDATE_USER_GUID = "1";
 
