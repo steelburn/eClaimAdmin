@@ -570,9 +570,7 @@ export class LoginPage {
 
           if (this.KeyNameValueList[item]["KEY_NAME"] == "draft_notification") { localStorage.setItem("draft_notification", this.KeyNameValueList[item]["KEY_VALUE"]); }
           if (this.KeyNameValueList[item]["KEY_NAME"] == "profile_guid") { localStorage.setItem("cs_profile_guid", this.KeyNameValueList[item]["KEY_VALUE"]); }
-          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_time_zone") {
-            localStorage.setItem("zone_wise_current_timestamp", moment.utc(new Date()).zone(this.KeyNameValueList[item]["KEY_VALUE"]).format('YYYY-MM-DDTHH:mm'))
-          }
+          if (this.KeyNameValueList[item]["KEY_NAME"] == "default_time_zone") { localStorage.setItem("cs_timestamp", this.KeyNameValueList[item]["KEY_VALUE"]); }
         }
       });
   }

@@ -10,6 +10,7 @@ import * as constants from '../../app/config/constants';
 import { ClaimTypeSetup_Model } from '../../models/claimtypesetup_model';
 import { ClaimTypeSetup_Service } from '../../services/claimtypesetup_service';
 import { BaseHttpService } from '../../services/base-http';
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
 
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
@@ -119,7 +120,7 @@ export class ClaimtypePage {
   }
 
   loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private claimtypesetupservice: ClaimTypeSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
+  constructor(public api: ApiManagerProvider,public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private claimtypesetupservice: ClaimTypeSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry, you are not logged in. Please login.');
       this.navCtrl.push(LoginPage);
@@ -237,9 +238,9 @@ export class ClaimtypePage {
     else {
       this.claimtype_entry.TENANT_GUID = localStorage.getItem("g_TENANT_GUID");
     }
-    this.claimtype_entry.CREATION_TS = localStorage.getItem("zone_wise_current_timestamp");
+    this.claimtype_entry.CREATION_TS = this.api.CreateTimestamp();
     this.claimtype_entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-    this.claimtype_entry.UPDATE_TS = localStorage.getItem("zone_wise_current_timestamp");
+    this.claimtype_entry.UPDATE_TS = this.api.CreateTimestamp();
     this.claimtype_entry.UPDATE_USER_GUID = "";
   }
 
@@ -248,7 +249,7 @@ export class ClaimtypePage {
     this.claimtype_entry.TENANT_GUID = this.claimtype_details.TENANT_GUID;
     this.claimtype_entry.CREATION_TS = this.claimtype_details.CREATION_TS;
     this.claimtype_entry.CREATION_USER_GUID = this.claimtype_details.CREATION_USER_GUID;
-    this.claimtype_entry.UPDATE_TS = localStorage.getItem("zone_wise_current_timestamp");
+    this.claimtype_entry.UPDATE_TS = this.api.CreateTimestamp();
     this.claimtype_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
   }
 
