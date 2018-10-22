@@ -97,7 +97,7 @@ export class CashcardsetupPage {
   public DeleteClick(CASHCARD_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',
@@ -175,7 +175,7 @@ export class CashcardsetupPage {
         }
       }
       else {
-        alert('Sorry!! You are not authorized.');
+        alert('Sorry, you are not authorized for the action. authorized.');
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }

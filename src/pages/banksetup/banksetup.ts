@@ -58,7 +58,7 @@ export class BanksetupPage {
       this.ClearControls();
     }
     else {
-      alert('Sorry !! You are in Edit Mode.');
+      alert('Sorry. You are in Edit Mode.');
     }
   }
 
@@ -95,7 +95,7 @@ export class BanksetupPage {
   public DeleteClick(BANK_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',
@@ -125,7 +125,7 @@ export class BanksetupPage {
   loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
   constructor(private excelService: ExcelService, private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private banksetupservice: BankSetup_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
-      alert('Sorry !! Please Login.');
+      alert('Sorry, you are not logged in. Please login.');
       this.navCtrl.push(LoginPage);
     }
     else {
@@ -160,7 +160,7 @@ export class BanksetupPage {
         }
       }
       else {
-        alert('Sorry!! You are not authorized.');
+        alert('Sorry, you are not authorized for the action. authorized.');
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
       this.excelService = excelService;
