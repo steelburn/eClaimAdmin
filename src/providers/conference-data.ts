@@ -69,7 +69,7 @@ export class ConferenceData {
       day.shownSessions = 0;
 
       queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
-      let queryWords = queryText.split(' ').filter(w => !!w.trim().length);
+      let queryWords = queryText.split(' ').filter(w =>!!w.trim().length);
 
       day.groups.forEach((group: any) => {
         group.hide = true;

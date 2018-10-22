@@ -45,7 +45,7 @@ export class MiscellaneousClaimPage {
   public MainClaimSaved: boolean = false;
   TenantGUID: any;
   userGUID: any;
-  Miscellaneous_Date_ngModel: any;
+  Miscellaneous_Date_ngModel: any= this.api.CreateTimestamp();
   Miscellaneous_Description_ngModel: any;
   public assignedTo: any;
   public profileLevel: any;
@@ -455,10 +455,10 @@ export class MiscellaneousClaimPage {
 
           //Added by Bijay on 12/10/2018 for audit_trial-----------------------
           if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
-            this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+            this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
           }
           else {
-            this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+            this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
           }
           //-------------------------------------------------------------------
 

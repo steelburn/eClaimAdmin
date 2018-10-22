@@ -13,57 +13,54 @@
 
 <ion-content padding>
   <!-- add company settings form start-->
-  <div class="popup" padding>
-    <div style="width:50%" class="popscroll" padding>
-      <ion-card>
 
-        <ion-list>
-          <form [formGroup]="CompanySettingsform">
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Date Format' | translate }}</ion-label>
-              <ion-input type="text" formControlName="DateFormat" [(ngModel)]="DateFormat_ngModel" required placeholder="{{'Please fill date format'}}"></ion-input>
-            </ion-item>
 
-            <ion-item class="text">
-              <ion-label stacked>
-                <span style="color:red">*</span>{{ 'Default Country' | translate }}</ion-label>
-              <ion-select formControlName="Country" [(ngModel)]="Country_ngModel" placeholder="{{'Please fill country'}}"
-                (ionChange)="onCountrySelect($event)">
-                <ion-option *ngFor="let Country of Countrys" [value]="Country.COUNTRY_GUID">{{Country.NAME}}</ion-option>
-              </ion-select>
-            </ion-item>
+  <ion-list>
+    <form [formGroup]="CompanySettingsform">
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Default Currency' | translate }}</ion-label>
-              <ion-input type="text" formControlName="Currency" [(ngModel)]="Currency_ngModel" required placeholder="{{'Pleae fill default currency'}}"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Date Format' | translate }}</ion-label>
+        <ion-input type="text" formControlName="DateFormat" [(ngModel)]="DateFormat_ngModel" required placeholder="{{'Please fill date format'}}"></ion-input>
+      </ion-item>
 
-            <ion-item>
-              <ion-label id="email_image" stacked>{{ 'Email Logo' | translate }}</ion-label>
-              <ion-input type="file" id="avatar1" (change)="EmailImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
-            </ion-item>
-            <div *ngIf="isImage">
-              <img src="{{EmailImage}}" style="width: 20%">
-            </div>
+      <ion-item class="text">
+        <ion-label stacked>
+          <span style="color:red">*</span>{{ 'Default Country' | translate }}</ion-label>
+        <ion-select formControlName="Country" [(ngModel)]="Country_ngModel" placeholder="{{'Please fill country'}}"
+          (ionChange)="onCountrySelect($event)">
+          <ion-option *ngFor="let Country of Countrys" [value]="Country.COUNTRY_GUID">{{Country.NAME}}</ion-option>
+        </ion-select>
+      </ion-item>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Max Claim Amount' | translate }}</ion-label>
-              <ion-input type="number" formControlName="MaxClaimAmt" [(ngModel)]="MaxClaimAmt_ngModel" required
-                placeholder="{{'Please fill max claim amount'}}"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Default Currency' | translate }}</ion-label>
+        <ion-input type="text" formControlName="Currency" [(ngModel)]="Currency_ngModel" required placeholder="{{'Pleae fill default currency'}}"></ion-input>
+      </ion-item>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Min Claim Amount' | translate }}</ion-label>
-              <ion-input type="number" formControlName="MinClaimAmt" [(ngModel)]="MinClaimAmt_ngModel" required
-                placeholder="{{'Please fill min claim amount'}}"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label id="email_image" stacked>{{ 'Email Logo' | translate }}</ion-label>
+        <ion-input type="file" id="avatar1" (change)="EmailImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
+      </ion-item>
+      <div *ngIf="isImage">
+        <img src="{{EmailImage}}" style="width: 20%">
+      </div>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Claim Cut-off date' | translate }}</ion-label>
-              <ion-input type="number" formControlName="ClaimCutOffDate" [(ngModel)]="ClaimCuttoffDate_ngModel"
-                required placeholder="{{'Please fill Claim Cutoff date'}}"></ion-input>
-              <!-- <ion-select formControlName="ClaimCutOffDate" [(ngModel)]="ClaimCuttoffDate_ngModel" placeholder="{{'Please select Claim Cutoff date'}}">
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Max Claim Amount' | translate }}</ion-label>
+        <ion-input type="number" formControlName="MaxClaimAmt" [(ngModel)]="MaxClaimAmt_ngModel" required placeholder="{{'Please fill max claim amount'}}"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Min Claim Amount' | translate }}</ion-label>
+        <ion-input type="number" formControlName="MinClaimAmt" [(ngModel)]="MinClaimAmt_ngModel" required placeholder="{{'Please fill min claim amount'}}"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Claim Cut-off date' | translate }}</ion-label>
+        <ion-input type="number" formControlName="ClaimCutOffDate" [(ngModel)]="ClaimCuttoffDate_ngModel" required
+          placeholder="{{'Please fill Claim Cutoff date'}}"></ion-input>
+        <!-- <ion-select formControlName="ClaimCutOffDate" [(ngModel)]="ClaimCuttoffDate_ngModel" placeholder="{{'Please select Claim Cutoff date'}}">
                 <ion-option [value]="0">1</ion-option>
                 <ion-option [value]="1">2</ion-option>
                 <ion-option [value]="2">3</ion-option>
@@ -93,114 +90,116 @@
                 <ion-option [value]="2">27</ion-option>
                 <ion-option [value]="2">28</ion-option>
               </ion-select> -->
-            </ion-item>
+      </ion-item>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Financial Year Start Month' | translate }}</ion-label>
-              <ion-input type="number" formControlName="YearStartMonth" [(ngModel)]="YearStartMonth_ngModel" required
-                placeholder="{{'Please fill financial year start month'}}"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Financial Year Start Month' | translate }}</ion-label>
+        <ion-input type="number" formControlName="YearStartMonth" [(ngModel)]="YearStartMonth_ngModel" required
+          placeholder="{{'Please fill financial year start month'}}"></ion-input>
+      </ion-item>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Financial Year End Month' | translate }}</ion-label>
-              <ion-input type="number" formControlName="YearEndMonth" [(ngModel)]="YearEndMonth_ngModel" required
-                placeholder="{{'Please fill financial year start month'}}"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Financial Year End Month' | translate }}</ion-label>
+        <ion-input type="number" formControlName="YearEndMonth" [(ngModel)]="YearEndMonth_ngModel" required placeholder="{{'Please fill financial year start month'}}"></ion-input>
+      </ion-item>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Approval cut-off date' | translate }}</ion-label>
-              <ion-input type="number" formControlName="ApprovalCutoffDate" [(ngModel)]="ApprovalCutoffDate_ngModel"
-                required placeholder="{{'Approval cut-off date'}}"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Approval cut-off date' | translate }}</ion-label>
+        <ion-input type="number" formControlName="ApprovalCutoffDate" [(ngModel)]="ApprovalCutoffDate_ngModel" required
+          placeholder="{{'Approval cut-off date'}}"></ion-input>
+      </ion-item>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Default Payment Type' | translate }}</ion-label>
-              <ion-select formControlName="PaymentType" [(ngModel)]="PaymentType_ngModel" placeholder="{{'Please select payment type'}}">
-                <ion-option *ngFor="let PaymentType of PaymentTypes" [value]="PaymentType.PAYMENT_TYPE_GUID">{{PaymentType.NAME}}</ion-option>
-              </ion-select>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Default Payment Type' | translate }}</ion-label>
+        <ion-select formControlName="PaymentType" [(ngModel)]="PaymentType_ngModel" placeholder="{{'Please select payment type'}}">
+          <ion-option *ngFor="let PaymentType of PaymentTypes" [value]="PaymentType.PAYMENT_TYPE_GUID">{{PaymentType.NAME}}</ion-option>
+        </ion-select>
+      </ion-item>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Default Language' | translate }}</ion-label>
-              <ion-input type="text" formControlName="Language" [(ngModel)]="Language_ngModel" required placeholder="{{'Please fill language'}}"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Default Language' | translate }}</ion-label>
+        <ion-input type="text" formControlName="Language" [(ngModel)]="Language_ngModel" required placeholder="{{'Please fill language'}}"></ion-input>
+      </ion-item>
 
-            <ion-item>
-              <ion-label stacked><span style="color:red">*</span>{{ 'Default Profile' | translate }}</ion-label>
-              <ion-select formControlName="DefaultProfile" [(ngModel)]="Profile_ngModel" placeholder="{{'Please select profile'}}">
-                <ion-option *ngFor="let Profile of Profiles" [value]="Profile.MAIN_PROFILE_GUID">{{Profile.PROFILE_NAME}}</ion-option>
-              </ion-select>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Default Profile' | translate }}</ion-label>
+        <ion-select formControlName="DefaultProfile" [(ngModel)]="Profile_ngModel" placeholder="{{'Please select profile'}}">
+          <ion-option *ngFor="let Profile of Profiles" [value]="Profile.MAIN_PROFILE_GUID">{{Profile.PROFILE_NAME}}</ion-option>
+        </ion-select>
+      </ion-item>
 
-            <ion-item class="fuha">
-              <ion-label stacked><span style="color:red">*</span>{{ 'Email Schedule' | translate }}</ion-label>
-              <ion-select formControlName="EmailSchedule" [(ngModel)]="Email_Schedule_ngModel" placeholder="{{'Please select'}}"
-                multiple="true">
-                <!-- <ion-option [value]="Daily">Daily</ion-option>
+      <ion-item class="fuha">
+        <ion-label stacked><span style="color:red">*</span>{{ 'Email Schedule' | translate }}</ion-label>
+        <ion-select formControlName="EmailSchedule" [(ngModel)]="Email_Schedule_ngModel" placeholder="{{'Please select'}}"
+          multiple="true">
+          <!-- <ion-option [value]="Daily">Daily</ion-option>
                 <ion-option [value]="Weekly">Weekly</ion-option>
                 <ion-option [value]="Monthly">Monthly</ion-option> -->
 
-                <ion-option [value]="1">1</ion-option>
-                <ion-option [value]="2">2</ion-option>
-                <ion-option [value]="3">3</ion-option>
-                <ion-option [value]="4">4</ion-option>
-                <ion-option [value]="5">5</ion-option>
-                <ion-option [value]="6">6</ion-option>
-                <ion-option [value]="7">7</ion-option>
-                <ion-option [value]="8">8</ion-option>
-                <ion-option [value]="9">9</ion-option>
-                <ion-option [value]="10">10</ion-option>
-                <ion-option [value]="11">11</ion-option>
-                <ion-option [value]="12">12</ion-option>
-                <ion-option [value]="13">13</ion-option>
-                <ion-option [value]="14">14</ion-option>
-                <ion-option [value]="15">15</ion-option>
-                <ion-option [value]="16">16</ion-option>
-                <ion-option [value]="17">17</ion-option>
-                <ion-option [value]="18">18</ion-option>
-                <ion-option [value]="19">19</ion-option>
-                <ion-option [value]="20">20</ion-option>
-                <ion-option [value]="21">21</ion-option>
-                <ion-option [value]="22">22</ion-option>
-                <ion-option [value]="23">23</ion-option>
-                <ion-option [value]="24">24</ion-option>
-                <ion-option [value]="25">25</ion-option>
-                <ion-option [value]="26">26</ion-option>
-                <ion-option [value]="27">27</ion-option>
-                <ion-option [value]="28">28</ion-option>
-                <ion-option [value]="29">29</ion-option>
-                <ion-option [value]="30">30</ion-option>
-                <ion-option [value]="31">31</ion-option>
-              </ion-select>
-            </ion-item>
+          <ion-option [value]="1">1</ion-option>
+          <ion-option [value]="2">2</ion-option>
+          <ion-option [value]="3">3</ion-option>
+          <ion-option [value]="4">4</ion-option>
+          <ion-option [value]="5">5</ion-option>
+          <ion-option [value]="6">6</ion-option>
+          <ion-option [value]="7">7</ion-option>
+          <ion-option [value]="8">8</ion-option>
+          <ion-option [value]="9">9</ion-option>
+          <ion-option [value]="10">10</ion-option>
+          <ion-option [value]="11">11</ion-option>
+          <ion-option [value]="12">12</ion-option>
+          <ion-option [value]="13">13</ion-option>
+          <ion-option [value]="14">14</ion-option>
+          <ion-option [value]="15">15</ion-option>
+          <ion-option [value]="16">16</ion-option>
+          <ion-option [value]="17">17</ion-option>
+          <ion-option [value]="18">18</ion-option>
+          <ion-option [value]="19">19</ion-option>
+          <ion-option [value]="20">20</ion-option>
+          <ion-option [value]="21">21</ion-option>
+          <ion-option [value]="22">22</ion-option>
+          <ion-option [value]="23">23</ion-option>
+          <ion-option [value]="24">24</ion-option>
+          <ion-option [value]="25">25</ion-option>
+          <ion-option [value]="26">26</ion-option>
+          <ion-option [value]="27">27</ion-option>
+          <ion-option [value]="28">28</ion-option>
+          <ion-option [value]="29">29</ion-option>
+          <ion-option [value]="30">30</ion-option>
+          <ion-option [value]="31">31</ion-option>
+        </ion-select>
+      </ion-item>
 
-            <ion-item class="fuha" style="width: 24%">
-              <ion-label stacked><span style="color:red">*</span>{{ 'Schedule Time' | translate }}</ion-label>
-              <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="EmailTime" [(ngModel)]="Email_Time_ngModel"
-                displayFormat="HH:mm"></ion-datetime>
-            </ion-item>
+      <ion-item class="fuha2">
+        <ion-label stacked><span style="color:red">*</span>{{ 'Schedule Time' | translate }}</ion-label>
+        <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" formControlName="EmailTime" [(ngModel)]="Email_Time_ngModel"
+          displayFormat="HH:mm"></ion-datetime>
+      </ion-item>
 
-            <ion-item class="fuha" style="width: 24%">
-              <ion-label stacked>{{ 'Draft Notification' | translate }}</ion-label>
-              <ion-checkbox formControlName="DraftNotification" [(ngModel)]="DraftNotification_ngModel"></ion-checkbox>
-            </ion-item>
+      <ion-item class="fuha2">
+        <ion-label stacked>{{ 'Draft Notification' | translate }}</ion-label>
+        <ion-checkbox formControlName="DraftNotification" [(ngModel)]="DraftNotification_ngModel"></ion-checkbox>
+      </ion-item>
 
-            <ion-item [hidden]="!isVisibleToSVA">
-              <ion-label stacked><span style="color:red">*</span>{{ 'Version' | translate }}</ion-label>
-              <ion-input type="text" formControlName="Version" [(ngModel)]="Version_ngModel" required placeholder="{{'Please fill version'}}"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked><span style="color:red">*</span>{{ 'Time zone' | translate }}</ion-label>
+        <ion-input type="text" formControlName="Timezone" [(ngModel)]="Timezone_ngModel" required placeholder="{{'Please fill timezone'}}"></ion-input>
+      </ion-item>
 
-            <div class="btn">
-              <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!CompanySettingsform.valid"
-                (click)="Save(CompanySettingsform.value)">{{"SUBMIT"
-                | translate}}</button>
-            </div>
-          </form>
-        </ion-list>
+      <ion-item [hidden]="!isVisibleToSVA">
+        <ion-label stacked><span style="color:red">*</span>{{ 'Version' | translate }}</ion-label>
+        <ion-input type="text" formControlName="Version" [(ngModel)]="Version_ngModel" required placeholder="{{'Please fill version'}}"></ion-input>
+      </ion-item>
 
-      </ion-card>
-    </div>
-  </div>
+      <div class="btn">
+        <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!CompanySettingsform.valid"
+          (click)="Save(CompanySettingsform.value)">{{"SUBMIT" | translate}}</button>
+      </div>
+    </form>
+  </ion-list>
+
+
+
   <!-- add company settings form end-->
 
 </ion-content>

@@ -342,7 +342,8 @@ export class DashboardPage {
     console.log('ionViewDidLoad DashboardPage');
   }
   //  ClaimsInfoChart
-  public doughnutChartLabels: Array<string> = ['Validated', 'Approved', 'Pending', 'Rejected', 'Paid'];
+  // public doughnutChartLabels: Array<string> = ['Validated', 'Approved', 'Pending', 'Rejected', 'Paid'];
+  public doughnutChartLabels: Array<string> = ['Pending Payment', 'Pending Finance Validation', 'Pending Superior', 'Rejected', 'Paid'];
   public doughnutChartData: Array<number> = [];
 
   public doughnutChartType: string = 'doughnut';
@@ -410,7 +411,8 @@ export class DashboardPage {
   }
 
   // ClaimAmountChart
-  public claimAmountLabels: Array<string> = ['Validated', 'Approved', 'Pending', 'Rejected', 'Paid'];
+  // public claimAmountLabels: Array<string> = ['Validated', 'Approved', 'Pending', 'Rejected', 'Paid'];
+  public claimAmountLabels: Array<string> = ['Pending Payment', 'Pending Finance Validation', 'Pending Superior', 'Rejected', 'Paid'];
   public claimAmountData: Array<number> = [];
   public claimAmountChartType: string = 'doughnut';
   public claimAmountChartColors: any[] = [{ backgroundColor: ["#008000", "orange", "yellow", "red", "rgb(90, 165, 90)"] }];

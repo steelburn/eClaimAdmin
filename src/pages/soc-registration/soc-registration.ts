@@ -87,7 +87,7 @@ export class SocRegistrationPage {
       this.ClearControls();
     }
     else {
-      alert('Sorry !! You are in Edit Mode.');
+      alert('Sorry. You are in Edit Mode.');
     }
   }
 
@@ -140,7 +140,7 @@ export class SocRegistrationPage {
   public DeleteClick(SOC_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',
@@ -215,7 +215,7 @@ export class SocRegistrationPage {
   loading: Loading; button_Add_Disable: boolean = false; button_Edit_Disable: boolean = false; button_Delete_Disable: boolean = false; button_View_Disable: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private socservice: SocMain_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
-      alert('Sorry !! Please Login.');
+      alert('Sorry, you are not logged in. Please login.');
       this.navCtrl.push(LoginPage);
     }
     else {
@@ -279,7 +279,7 @@ export class SocRegistrationPage {
 
       }
       else {
-        alert('Sorry!! You are not authorized.');
+        alert('Sorry, you are not authorized for the action. authorized.');
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
@@ -451,7 +451,7 @@ export class SocRegistrationPage {
       this.SaveProject();
     }
     else {
-      alert("Sorry!! Please enter valid customer.");
+      alert("Sorry.Please enter valid customer.");
     }
   }
 

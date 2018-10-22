@@ -70,8 +70,8 @@ export class OvertimeclaimPage {
   public AddToLookupClicked: boolean = false;
   currentItems: any;
   public MainClaimSaved: boolean = false;
-  Start_DT_ngModel: any;
-  End_DT_ngModel: any;
+  Start_DT_ngModel: any= this.apiMng.CreateTimestamp();
+  End_DT_ngModel: any= this.apiMng.CreateTimestamp();
   VehicleId: any;
   VehicleRate: any;
   travelAmount: any;
@@ -360,7 +360,7 @@ export class OvertimeclaimPage {
 
 
   validateDate(startDate: any, endDate: any) {
-    let today = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    let today = this.apiMng.CreateTimestamp()
     let start = startDate;
     let end = endDate;
     // let today = Date.parse(new Date().toISOString())
@@ -429,10 +429,10 @@ export class OvertimeclaimPage {
 
             //Added by Bijay on 12/10/2018 for audit_trial-----------------------
             if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.apiMng.CreateTimestamp() + ")"+ " User From:W";
             }
             else {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.apiMng.CreateTimestamp() + ")"+ " User From:W";
             }
             //-------------------------------------------------------------------
 

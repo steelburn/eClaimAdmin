@@ -480,7 +480,7 @@ export class UserPage {
   public DeleteClick(USER_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',
@@ -1038,15 +1038,15 @@ export class UserPage {
           this.User_CertificationAttachment_ngModel = "";
         }
         else {
-          alert("Fill Year !!");
+          alert("Fill in Year.");
         }
       }
       else {
-        alert("Fill Grade !!");
+        alert("Fill in Grade.");
       }
     }
     else {
-      alert("Fill Certificate Name !!");
+      alert("Fill in Certificate Name.");
     }
   }
 
@@ -1073,15 +1073,15 @@ export class UserPage {
           this.User_CertificationAttachment_Edit_ngModel = "";
         }
         else {
-          alert("Fill Year !!");
+          alert("Fill in Year.");
         }
       }
       else {
-        alert("Fill Grade !!");
+        alert("Fill in Grade.");
       }
     }
     else {
-      alert("Fill Certificate Name !!");
+      alert("Fill in Certificate Name.");
     }
   }
 
@@ -1120,7 +1120,7 @@ export class UserPage {
       this.ProfessionalCertification = this.ProfessionalCertification.filter(item => item.CERTIFICATE_GUID != CERTIFICATE_GUID);
     }
     else {
-      alert('Sorry!! You are in Edit Mode.');
+      alert('Sorry.You are in Edit Mode.');
     }
   }
 
@@ -1144,11 +1144,11 @@ export class UserPage {
         this.User_Spouse_IcNumber_ngModel = "";
       }
       else {
-        alert("Fill IC Number !!");
+        alert("Fill in IC Number.");
       }
     }
     else {
-      alert("Fill Spouse Name !!");
+      alert("Fill in Spouse Name.");
     }
   }
 
@@ -1171,11 +1171,11 @@ export class UserPage {
         this.User_Spouse_IcNumber_Edit_ngModel = "";
       }
       else {
-        alert("Fill IC Number !!");
+        alert("Fill in IC Number.");
       }
     }
     else {
-      alert("Fill Spouse Name !!");
+      alert("Fill in Spouse Name.");
     }
   }
 
@@ -1211,7 +1211,7 @@ export class UserPage {
       this.SpouseSaveFlag = false;
     }
     else {
-      alert("Sorry !! You are in Edit Mode.");
+      alert("Sorry. You are in Edit Mode.");
     }
 
   }
@@ -1244,19 +1244,19 @@ export class UserPage {
             this.User_SpouseChild_ngModel = "";
           }
           else {
-            alert("Select Spouse !!");
+            alert("Select Spouse.");
           }
         }
         else {
-          alert("Select Gender !!");
+          alert("Select Gender.");
         }
       }
       else {
-        alert("Fill Child IC Number !!")
+        alert("Fill in Child IC Number.")
       }
     }
     else {
-      alert("Fill Child Name !!");
+      alert("Fill in Child Name.");
     }
   }
 
@@ -1287,19 +1287,19 @@ export class UserPage {
             this.User_SpouseChild_Edit_ngModel = "";
           }
           else {
-            alert("Select Spouse !!");
+            alert("Select Spouse.");
           }
         }
         else {
-          alert("Select Gender !!");
+          alert("Select Gender.");
         }
       }
       else {
-        alert("Fill Child IC Number !!")
+        alert("Fill in Child IC Number.")
       }
     }
     else {
-      alert("Fill Child Name !!");
+      alert("Fill in Child Name.");
     }
   }
 
@@ -1341,7 +1341,7 @@ export class UserPage {
       this.ChildSaveFlag = false;
     }
     else {
-      alert('Sorry!! You are in Edit Mode.');
+      alert('Sorry.You are in Edit Mode.');
     }
   }
 

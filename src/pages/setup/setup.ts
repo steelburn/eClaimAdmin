@@ -116,7 +116,7 @@ export class SetupPage {
   public DeleteClick() {
     // let alert = this.alertCtrl.create({
     //   title: 'Remove Confirmation',
-    //   message: 'Do you want to remove ?',
+    //   message: 'Are you sure to remove?',
     //   buttons: [
     //     {
     //       text: 'Cancel',
