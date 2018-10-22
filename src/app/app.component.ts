@@ -341,7 +341,7 @@ export class ConferenceApp {
                 if (data["resource"][item]["MENU_HEADER"] == "Account") {
                   if (data["resource"][item]["NAME"] == "Sign Out") {
                     this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"], logsOut: true });
-                    this.blnAccount_loggedInMenu_User = true; this.menu_repetition = false;
+                    this.blnAccount_loggedInMenu_User = true; 
                   }
                   else {
                     if (localStorage.getItem("Ad_Authenticaton") == "true") {
