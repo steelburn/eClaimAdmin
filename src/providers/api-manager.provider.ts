@@ -628,7 +628,7 @@ export class ApiManagerProvider {
           };
           
           //Added by bijay on 18/10/2018--------------
-          if(Level == '3' || Level == '4'){
+          if(Level == '3' || Level == '-1'){
             body1 = {
               "template": "",
               "template_id": 0,
