@@ -366,6 +366,7 @@ export class ConferenceApp {
               this.setupsPages = this.Menu_Settings_Array;
               this.loggedInPages = this.Menu_Array;
               //----------------------------------------------------------
+              //---------if duplicate records then remove---------------------------------------------------------------------------------------
               this.appPages = this.Menu_Dashboard_Array.filter((thing: any, index: any, self: any) =>
                 index === self.findIndex((t: any) => (
                   t.name === thing.name
@@ -401,8 +402,8 @@ export class ConferenceApp {
                   t.name === thing.name
                 ))
               )
+              //---------------------------------------------------------------------------------------------------------------------------
             }
-
           });
 
         this.menu.enable(loggedIn, 'loggedInMenu_User');
