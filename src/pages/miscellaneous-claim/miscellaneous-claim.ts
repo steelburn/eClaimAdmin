@@ -45,7 +45,7 @@ export class MiscellaneousClaimPage {
   public MainClaimSaved: boolean = false;
   TenantGUID: any;
   userGUID: any;
-  Miscellaneous_Date_ngModel: any;
+  Miscellaneous_Date_ngModel: any= this.api.CreateTimestamp();
   Miscellaneous_Description_ngModel: any;
   public assignedTo: any;
   public profileLevel: any;

@@ -70,8 +70,8 @@ export class OvertimeclaimPage {
   public AddToLookupClicked: boolean = false;
   currentItems: any;
   public MainClaimSaved: boolean = false;
-  Start_DT_ngModel: any;
-  End_DT_ngModel: any;
+  Start_DT_ngModel: any= this.apiMng.CreateTimestamp();
+  End_DT_ngModel: any= this.apiMng.CreateTimestamp();
   VehicleId: any;
   VehicleRate: any;
   travelAmount: any;

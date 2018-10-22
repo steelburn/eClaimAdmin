@@ -51,8 +51,8 @@ export class TravelclaimPage {
   public Travel_Description_ngModel: any;
   public Travel_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;
-  public Start_DT_ngModel: any;
-  public End_DT_ngModel: any;
+  public Start_DT_ngModel: any = this.api.CreateTimestamp();
+  public End_DT_ngModel: any = this.api.CreateTimestamp();
   public Travel_From_ngModel: any;
   public Travel_Destination_ngModel: any;
   public Travel_Distance_ngModel: any;
@@ -278,14 +278,15 @@ export class TravelclaimPage {
       }
 
       else {
-        if(!this.isFormEdit)
-       { let One_Way_Distance_string = this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
-        this.Travel_Distance_ngModel = One_Way_Distance_string;
-        let one_way_amount = this.One_Way_Distance * this.VehicleRate;
-        this.travelAmountNgmodel = this.numberPipe.transform(one_way_amount, '1.2-2');
-        this.totalClaimAmount = Number(one_way_amount) + this.tollParkAmount;
-        this.travelAmount = Number(one_way_amount);}
-        else{
+        if (!this.isFormEdit) {
+          let One_Way_Distance_string = this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
+          this.Travel_Distance_ngModel = One_Way_Distance_string;
+          let one_way_amount = this.One_Way_Distance * this.VehicleRate;
+          this.travelAmountNgmodel = this.numberPipe.transform(one_way_amount, '1.2-2');
+          this.totalClaimAmount = Number(one_way_amount) + this.tollParkAmount;
+          this.travelAmount = Number(one_way_amount);
+        }
+        else {
           this.GetDistance();
         }
       }
@@ -356,7 +357,7 @@ export class TravelclaimPage {
               this.PublicTransValue = true;
               this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
               this.totalClaimAmount = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-              this.Roundtrip_ngModel = this.claimRequestData[0].ROUND_TRIP === 1?true: false;
+              this.Roundtrip_ngModel = this.claimRequestData[0].ROUND_TRIP === 1 ? true : false;
               if (this.claimRequestData[0].SOC_GUID === null) {
                 this.claimFor = 'seg_customer'
                 this.isCustomer = true;
