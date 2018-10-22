@@ -31,7 +31,7 @@ export class PrintclaimPage {
   @ViewChild('fileInput') fileInput: ElementRef;
 
   public MainClaimSaved: boolean = false;
-  Printing_Date_ngModel: any;
+  Printing_Date_ngModel: any= this.apiMng.CreateTimestamp();
   Printing_Description_ngModel: any;
   Printing_Amount_ngModel: any;
   Customer_GUID: any;

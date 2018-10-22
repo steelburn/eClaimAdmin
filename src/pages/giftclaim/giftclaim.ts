@@ -41,7 +41,7 @@ export class GiftclaimPage {
 
   public Gift_SOC_No_ngModel: any;
   public Gift_ProjectName_ngModel: any;
-  Gift_Date_ngModel: any;
+  Gift_Date_ngModel: any= this.apiMng.CreateTimestamp();
   Gift_Description_ngModel: any;
   Gift_Amount_ngModel: any;
   Project_Lookup_ngModel: any;

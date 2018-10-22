@@ -59,7 +59,7 @@ export class EntertainmentclaimPage {
   Customer_Lookup_ngModel: any;
   Customer_GUID: any;
   Soc_GUID: any;
-  Entertainment_Date_ngModel: any;
+  Entertainment_Date_ngModel: any= this.apiMng.CreateTimestamp();
   Entertainment_Description_ngModel: any;
   claimFor: string = 'seg_project';
 
