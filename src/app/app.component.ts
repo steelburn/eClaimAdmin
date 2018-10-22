@@ -132,8 +132,6 @@ export class ConferenceApp {
   blnAccount_loggedInMenu_User: boolean = true;
   //----------------------------------------------
 
-  menu_repetition: boolean = false;
-
   constructor(
     public events: Events,
     public userData: UserData,
@@ -277,7 +275,7 @@ export class ConferenceApp {
         // ];
 
         this.loggedInPages = [
-          { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }          
+          { title: 'Sign Out', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
         ];
 
         this.setupsPages = [
@@ -295,88 +293,125 @@ export class ConferenceApp {
         // this.reportPages = [];
         // this.setupsPages = [];
         // this.loggedInPages = [];
-        
-        if (this.menu_repetition == false) {
-          //Get all the roles and menus for that particular user.-------------------------------------------------------   
-          let url: string; this.Menu_Array = []; let Role_Name: string = "";
-          this.Menu_Dashboard_Array = []; this.Menu_Tasks_Array = []; this.Menu_Claims_Array = []; this.Menu_Reports_Array = []; this.Menu_Settings_Array = [];
-          url = this.baseResource_Url + "view_user_multi_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-          this.http
-            .get(url)
-            .map(res => res.json())
-            .subscribe(data => {
-              let res = data["resource"];
-              if (res.length > 0) {
-                for (var item in data["resource"]) {
-                  //For Dashboard-------------------------------------------
-                  if (data["resource"][item]["MENU_HEADER"] == "Dashboard") {
-                    this.Menu_Dashboard_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
-                    this.blnDashboard_loggedInMenu_User = true;
-                  }
 
-                  //For Tasks-------------------------------------------
-                  if (data["resource"][item]["MENU_HEADER"] == "Tasks") {
-                    this.Menu_Tasks_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
-                    this.blnTasks_loggedInMenu_User = true;
-                  }
 
-                  //For Claims-------------------------------------------
-                  if (data["resource"][item]["MENU_HEADER"] == "Claims") {
-                    this.Menu_Claims_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
-                    this.blnClaims_loggedInMenu_User = true;
-                  }
+        //Get all the roles and menus for that particular user.-------------------------------------------------------   
+        let url: string; this.Menu_Array = []; let Role_Name: string = "";
+        this.Menu_Dashboard_Array = []; this.Menu_Tasks_Array = []; this.Menu_Claims_Array = []; this.Menu_Reports_Array = []; this.Menu_Settings_Array = [];
+        url = this.baseResource_Url + "view_user_multi_role_menu?filter=USER_GUID=" + localStorage.getItem("g_USER_GUID") + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+        this.http
+          .get(url)
+          .map(res => res.json())
+          .subscribe(data => {
+            let res = data["resource"];
 
-                  //For Reports-------------------------------------------
-                  if (data["resource"][item]["MENU_HEADER"] == "Reports") {
-                    this.Menu_Reports_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
-                    this.blnReport_loggedInMenu_User = true;
-                  }
+            if (res.length > 0) {
+              for (var item in data["resource"]) {
+                //For Dashboard-------------------------------------------
+                if (data["resource"][item]["MENU_HEADER"] == "Dashboard") {
+                  this.Menu_Dashboard_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
+                  this.blnDashboard_loggedInMenu_User = true;
+                }
 
-                  //For Setup-------------------------------------------
-                  if (data["resource"][item]["MENU_HEADER"] == "Settings") {
-                    this.Menu_Settings_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
-                    this.blnSetup_loggedInMenu_User = true;
-                  }
+                //For Tasks-------------------------------------------
+                if (data["resource"][item]["MENU_HEADER"] == "Tasks") {
+                  this.Menu_Tasks_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
+                  this.blnTasks_loggedInMenu_User = true;
+                }
 
-                  //For Accounts-----------------------------------------
-                  if (data["resource"][item]["MENU_HEADER"] == "Account") {
-                    if (data["resource"][item]["NAME"] == "Sign Out") {
-                      this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"], logsOut: true });
-                      this.blnAccount_loggedInMenu_User = true; this.menu_repetition=false;
-                    }
-                    else {
-                      if (localStorage.getItem("Ad_Authenticaton") == "true") {
-                        if (data["resource"][item]["NAME"] == "My Profile") {
-                          this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
-                          this.blnAccount_loggedInMenu_User = true;
-                        }
-                      }
-                      else {
+                //For Claims-------------------------------------------
+                if (data["resource"][item]["MENU_HEADER"] == "Claims") {
+                  this.Menu_Claims_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
+                  this.blnClaims_loggedInMenu_User = true;
+                }
+
+                //For Reports-------------------------------------------
+                if (data["resource"][item]["MENU_HEADER"] == "Reports") {
+                  this.Menu_Reports_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
+                  this.blnReport_loggedInMenu_User = true;
+                }
+
+                //For Setup-------------------------------------------
+                if (data["resource"][item]["MENU_HEADER"] == "Settings") {
+                  this.Menu_Settings_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
+                  this.blnSetup_loggedInMenu_User = true;
+                }
+
+                //For Accounts-----------------------------------------
+                if (data["resource"][item]["MENU_HEADER"] == "Account") {
+                  if (data["resource"][item]["NAME"] == "Sign Out") {
+                    this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"], logsOut: true });
+                    this.blnAccount_loggedInMenu_User = true; 
+                  }
+                  else {
+                    if (localStorage.getItem("Ad_Authenticaton") == "true") {
+                      if (data["resource"][item]["NAME"] == "My Profile") {
                         this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
                         this.blnAccount_loggedInMenu_User = true;
                       }
                     }
+                    else {
+                      this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"] });
+                      this.blnAccount_loggedInMenu_User = true;
+                    }
                   }
                 }
-
-                //Set all menu header---------------------------------------
-                this.appPages = this.Menu_Dashboard_Array;
-                this.appPages_User = this.Menu_Tasks_Array;
-                this.claimPages = this.Menu_Claims_Array;
-                this.reportPages = this.Menu_Reports_Array;
-                this.setupsPages = this.Menu_Settings_Array;
-                this.loggedInPages = this.Menu_Array;
-                //----------------------------------------------------------
-
               }
-            });
 
-          this.menu.enable(loggedIn, 'loggedInMenu_User');
-          this.menu.enable(!loggedIn, 'loggedOutMenu');
+              //Set all menu header---------------------------------------
+              this.appPages = this.Menu_Dashboard_Array;
+              this.appPages_User = this.Menu_Tasks_Array;
+              this.claimPages = this.Menu_Claims_Array;
+              this.reportPages = this.Menu_Reports_Array;
+              this.setupsPages = this.Menu_Settings_Array;
+              this.loggedInPages = this.Menu_Array;
+              //----------------------------------------------------------
+              //---------if duplicate records then remove---------------------------------------------------------------------------------------
+              this.appPages = this.Menu_Dashboard_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
 
-          this.menu_repetition = true;
-          // --------------------------------------------------------------------------------------------------------------------------------- 
-        }
+              this.appPages_User = this.Menu_Tasks_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+
+              this.claimPages = this.Menu_Claims_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+
+              this.reportPages = this.Menu_Reports_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+
+              this.setupsPages = this.Menu_Settings_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+
+              this.loggedInPages = this.Menu_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+              //---------------------------------------------------------------------------------------------------------------------------
+            }
+          });
+
+        this.menu.enable(loggedIn, 'loggedInMenu_User');
+        this.menu.enable(!loggedIn, 'loggedOutMenu');
+
+
+        // --------------------------------------------------------------------------------------------------------------------------------- 
+
       }
     }
     else {
