@@ -39,7 +39,7 @@ export class CompanysettingsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private settingservice: Settings_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
-      alert('Sorry !! Please Login.');
+      alert('Sorry, you are not logged in. Please login.');
       this.navCtrl.setRoot(LoginPage);
     }
     else {
@@ -72,9 +72,10 @@ export class CompanysettingsPage {
         avatar: null,
         EmailSchedule: [null, Validators.required],
         EmailTime: [null, Validators.required],
-        Version: [null],
+        Version: null,
         DefaultProfile: [null, Validators.required],
-        DraftNotification: [null],
+        DraftNotification: null,
+        Timezone: null,
       });
 
       this.VisibleControls();
@@ -129,9 +130,9 @@ export class CompanysettingsPage {
   MaxClaimAmt_ngModel: any; MinClaimAmt_ngModel: any; ClaimCuttoffDate_ngModel: any; YearStartMonth_ngModel: any;
   YearEndMonth_ngModel: any; ApprovalCutoffDate_ngModel: any; PaymentType_ngModel: any; Language_ngModel: any;
   Email_Schedule_ngModel: any; Email_Time_ngModel: any; Version_ngModel: any;
-  DraftNotification_ngModel: any; Profile_ngModel: any;
+  DraftNotification_ngModel: any; Profile_ngModel: any; Timezone_ngModel: any;
 
-  isVisibleToSVA: boolean = false; isVisibleToUser: boolean = false;
+  isVisibleToSVA: boolean = false;
 
   BindControls() {
     this.Add_Form = true;
@@ -191,12 +192,27 @@ export class CompanysettingsPage {
             else {
               this.DraftNotification_ngModel = false;
             }
-            // this.DraftNotification_ngModel = this.FormControls[item]["KEY_VALUE"]; 
           }
+
+          if (this.FormControls[item]["KEY_NAME"] == "default_time_zone") { this.Timezone_ngModel = this.FormControls[item]["KEY_VALUE"]; }
 
           this.Add_Form = false;
         }
       });
+
+    //For Tenant Admin version should display from sva creation_guid
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
+      url = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/permission_keys' + '?filter=(CREATION_USER_GUID=sva)&api_key=' + constants.DREAMFACTORY_API_KEY;
+      this.http
+        .get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.FormControls = data.resource;
+          for (var item in this.FormControls) {
+            if (this.FormControls[item]["KEY_NAME"] == "version") { this.Version_ngModel = this.FormControls[item]["KEY_VALUE"]; }
+          }
+        });
+    }
   }
 
   ionViewDidLoad() {
@@ -255,6 +271,8 @@ export class CompanysettingsPage {
         this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "draft_notification", KEY_VALUE: "0" });
       }
 
+      this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_time_zone", KEY_VALUE: formValues.Timezone.trim() });
+
       this.Settings_Entry.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
       this.Settings_Entry.CREATION_TS = new Date().toISOString();
       this.Settings_Entry.UPDATE_TS = new Date().toISOString();
@@ -269,6 +287,7 @@ export class CompanysettingsPage {
       // else{
       //   this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "draft_notification", KEY_VALUE: "0" });
       // }
+      // this.KeyNameValue.push({ PERMISSION_KEY_GUID: UUID.UUID(), KEY_NAME: "default_time_zone", KEY_VALUE: formValues.Timezone.trim() });
 
       this.KeyNameValue.forEach(element => {
         if (element.KEY_NAME == "date_format") { element.KEY_VALUE = formValues.DateFormat.trim(); }
@@ -335,7 +354,7 @@ export class CompanysettingsPage {
         else {
           if (element.KEY_NAME == "draft_notification") { element.KEY_VALUE = "0"; }
         }
-
+        if (element.KEY_NAME == "default_time_zone") { element.KEY_VALUE = formValues.Timezone.trim(); }
 
         this.Settings_Entry.CREATION_USER_GUID = this.FormControls[0]["CREATION_USER_GUID"];
         this.Settings_Entry.CREATION_TS = this.FormControls[0]["CREATION_TS"];
@@ -374,7 +393,7 @@ export class CompanysettingsPage {
             }
           });
 
-        // if (this.Settings_Entry.KEY_NAME == "profile_guid") {
+        // if (this.Settings_Entry.KEY_NAME == "default_time_zone") {
         //   this.settingservice.save(this.Settings_Entry, "permission_keys")
         //     .subscribe((response) => {
         //       if (response.status == 200) {
@@ -496,6 +515,7 @@ export class CompanysettingsPage {
           .subscribe(data => {
             this.CountryCodes = data;
             this.Currency_ngModel = this.CountryCodes[0]["currencies"][0]["symbol"];
+            this.Timezone_ngModel = this.CountryCodes[0]["timezones"].toString().substr(3, 6);
           });
       }
     }
@@ -509,5 +529,5 @@ export class CompanysettingsPage {
       this.isVisibleToSVA = false;
     }
   }
-
+  
 }

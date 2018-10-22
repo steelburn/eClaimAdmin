@@ -10,7 +10,7 @@ import CryptoJS from 'crypto-js';
 
 import { UserMain_Model } from '../../models/user_main_model';
 import { UserSetup_Service } from '../../services/usersetup_service';
-
+import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { LoginPage } from '../login/login';
 import moment from 'moment';
 
@@ -31,7 +31,7 @@ export class ChangePasswordPage {
   usermain_entry: UserMain_Model = new UserMain_Model();
   
   loading: Loading;
-  constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private userservice: UserSetup_Service, private httpService: BaseHttpService, private loadingCtrl: LoadingController) {
+  constructor(public api: ApiManagerProvider,private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private userservice: UserSetup_Service, private httpService: BaseHttpService, private loadingCtrl: LoadingController) {
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry, please login.');
       this.navCtrl.push(LoginPage);
@@ -102,7 +102,7 @@ export class ChangePasswordPage {
             this.usermain_entry.CREATION_TS = this.user_details[0]["CREATION_TS"];
             this.usermain_entry.CREATION_USER_GUID = this.user_details[0]["CREATION_USER_GUID"];
 
-            this.usermain_entry.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+            this.usermain_entry.UPDATE_TS = this.api.CreateTimestamp();
             this.usermain_entry.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
             this.usermain_entry.IS_TENANT_ADMIN = this.user_details[0]["IS_TENANT_ADMIN"];

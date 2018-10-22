@@ -184,6 +184,7 @@ export class TravelclaimPage {
     });
 
   }
+
   Roundtrip_Caluclation() {
     // this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(data => {
     //   this.claimRequestData = data["resource"];
@@ -270,18 +271,23 @@ export class TravelclaimPage {
           let two_way_amount = Toatal_Distance * this.VehicleRate;
           this.travelAmountNgmodel = this.numberPipe.transform(two_way_amount, '1.2-2');
 
-          this.totalClaimAmount = Number(two_way_amount);
+          this.totalClaimAmount = Number(two_way_amount) + this.tollParkAmount;
+          this.travelAmount = Number(two_way_amount);
+
         });
       }
 
       else {
-        // alert(this.Travel_Distance_ngModel)   
-        let One_Way_Distance_string = this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
+        if(!this.isFormEdit)
+       { let One_Way_Distance_string = this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
         this.Travel_Distance_ngModel = One_Way_Distance_string;
-        // alert(this.Travel_Distance_ngModel)
         let one_way_amount = this.One_Way_Distance * this.VehicleRate;
         this.travelAmountNgmodel = this.numberPipe.transform(one_way_amount, '1.2-2');
-        this.totalClaimAmount = Number(one_way_amount);
+        this.totalClaimAmount = Number(one_way_amount) + this.tollParkAmount;
+        this.travelAmount = Number(one_way_amount);}
+        else{
+          this.GetDistance();
+        }
       }
 
 
@@ -350,7 +356,7 @@ export class TravelclaimPage {
               this.PublicTransValue = true;
               this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
               this.totalClaimAmount = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-
+              this.Roundtrip_ngModel = this.claimRequestData[0].ROUND_TRIP === 1?true: false;
               if (this.claimRequestData[0].SOC_GUID === null) {
                 this.claimFor = 'seg_customer'
                 this.isCustomer = true;
@@ -931,7 +937,7 @@ export class TravelclaimPage {
 
 
   validateDate(startDate: any, endDate: any) {
-    let today = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    let today = this.api.CreateTimestamp();
     let start = startDate;
     let end = endDate;
     if (start > end || today < start) {
@@ -998,7 +1004,7 @@ export class TravelclaimPage {
         // formValues.travel_date = formValues.start_DT
         formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
         formValues.meal_allowance = this.allowanceGUID;
-        formValues.distance = this.Travel_Distance_ngModel;
+        formValues.distance = this.Travel_Distance_ngModel.split(",").join("");
         formValues.vehicleType = this.VehicleId;
         formValues.attachment_GUID = this.imageGUID;
         formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
@@ -1027,7 +1033,7 @@ export class TravelclaimPage {
             this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
             this.claimRequestData["resource"][0].FROM = formValues.origin;
             this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
-            this.claimRequestData["resource"][0].DISTANCE_KM = this.Travel_Distance_ngModel;
+            this.claimRequestData["resource"][0].DISTANCE_KM = this.Travel_Distance_ngModel.split(",").join("");
             this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
             this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
             this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
@@ -1056,10 +1062,10 @@ export class TravelclaimPage {
 
             //Added by Bijay on 12/10/2018 for audit_trial-----------------------
             if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
             }
             else {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
             }
             //-------------------------------------------------------------------
 

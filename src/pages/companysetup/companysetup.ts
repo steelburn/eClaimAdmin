@@ -84,7 +84,7 @@ export class CompanysetupPage {
   public DeleteClick(COMPANY_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',
