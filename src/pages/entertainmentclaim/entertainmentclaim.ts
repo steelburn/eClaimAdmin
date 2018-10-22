@@ -59,7 +59,7 @@ export class EntertainmentclaimPage {
   Customer_Lookup_ngModel: any;
   Customer_GUID: any;
   Soc_GUID: any;
-  Entertainment_Date_ngModel: any;
+  Entertainment_Date_ngModel: any= this.apiMng.CreateTimestamp();
   Entertainment_Description_ngModel: any;
   claimFor: string = 'seg_project';
 
@@ -523,10 +523,10 @@ export class EntertainmentclaimPage {
 
           //Added by Bijay on 12/10/2018 for audit_trial-----------------------
           if(this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != ""){
-            this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME")+ " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+            this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME")+ " at " + this.apiMng.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
           }
           else{
-            this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME")+ " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
+            this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME")+ " at " + this.apiMng.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
           }
           //-------------------------------------------------------------------
           

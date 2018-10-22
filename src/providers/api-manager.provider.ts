@@ -18,6 +18,10 @@ export class ApiManagerProvider {
 
   constructor(public numberPipe: DecimalPipe, public http: Http, public toastCtrl: ToastController, public datepipe: DatePipe) { }
 
+  CreateTimestamp() {
+    return moment.utc(new Date()).zone(localStorage.getItem("cs_timestamp")).format('YYYY-MM-DDTHH:mm');
+  }
+
   LoadMainClaim(claimReqGUID: any) {
     let totalAmount: number;
     return new Promise((resolve) => {

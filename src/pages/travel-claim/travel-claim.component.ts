@@ -51,8 +51,8 @@ export class TravelclaimPage {
   public Travel_Description_ngModel: any;
   public Travel_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;
-  public Start_DT_ngModel: any;
-  public End_DT_ngModel: any;
+  public Start_DT_ngModel: any = this.api.CreateTimestamp();
+  public End_DT_ngModel: any = this.api.CreateTimestamp();
   public Travel_From_ngModel: any;
   public Travel_Destination_ngModel: any;
   public Travel_Distance_ngModel: any;
@@ -104,7 +104,7 @@ export class TravelclaimPage {
   claimRequestGUID: any;
   claimRequestData: any;
   rejectedLevel: any;
-  caluclationData: any[] = [];
+  CalculationData: any[] = [];
   One_Way_Distance: any;
   constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
 
@@ -185,7 +185,7 @@ export class TravelclaimPage {
 
   }
 
-  Roundtrip_Caluclation() {
+  Roundtrip_Calculation() {
     // this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(data => {
     //   this.claimRequestData = data["resource"];
 
@@ -217,9 +217,9 @@ export class TravelclaimPage {
             Return_totalAmount: this.totalClaimAmount
           }
 
-          this.caluclationData.push(temp_data)
-          resolve(this.caluclationData);
-          console.log(this.caluclationData);
+          this.CalculationData.push(temp_data)
+          resolve(this.CalculationData);
+          // console.log(this.CalculationData);
         }
 
       })
@@ -236,17 +236,17 @@ export class TravelclaimPage {
       }
 
       if (this.Roundtrip_ngModel) {
-        this.caluclationData = [];
+        this.CalculationData = [];
 
-        let val = this.Roundtrip_Caluclation();
+        let val = this.Roundtrip_Calculation();
         val.then((cal_data: any) => {
-          console.log(cal_data);
+          // console.log(cal_data);
           var return_distance = cal_data[0]["Return_distance"];
           var return_totalAmount = cal_data[0]["Return_totalAmount"];
           var return_travelAmount = cal_data[0]["Return_travelAmount"];
-          console.log(return_distance);
-          console.log(return_totalAmount);
-          console.log(return_travelAmount);
+          // console.log(return_distance);
+          // console.log(return_totalAmount);
+          // console.log(return_travelAmount);
           let distance = new String(formValues.distance);
           var distance1 = distance.indexOf(",");
           if (distance1 > 0) {
@@ -265,10 +265,10 @@ export class TravelclaimPage {
           else {
             return_distance = return_distance;
           }
-          let Toatal_Distance = Number(this.One_Way_Distance) + Number(return_distance);
-          this.Travel_Distance_ngModel = this.numberPipe.transform(Toatal_Distance, '1.2-2');
+          let Total_Distance = Number(this.One_Way_Distance) + Number(return_distance);
+          this.Travel_Distance_ngModel = this.numberPipe.transform(Total_Distance, '1.2-2');
           // alert(this.Travel_Distance_ngModel)
-          let two_way_amount = Toatal_Distance * this.VehicleRate;
+          let two_way_amount = Total_Distance * this.VehicleRate;
           this.travelAmountNgmodel = this.numberPipe.transform(two_way_amount, '1.2-2');
 
           this.totalClaimAmount = Number(two_way_amount) + this.tollParkAmount;
@@ -278,14 +278,15 @@ export class TravelclaimPage {
       }
 
       else {
-        if(!this.isFormEdit)
-       { let One_Way_Distance_string = this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
-        this.Travel_Distance_ngModel = One_Way_Distance_string;
-        let one_way_amount = this.One_Way_Distance * this.VehicleRate;
-        this.travelAmountNgmodel = this.numberPipe.transform(one_way_amount, '1.2-2');
-        this.totalClaimAmount = Number(one_way_amount) + this.tollParkAmount;
-        this.travelAmount = Number(one_way_amount);}
-        else{
+        if (!this.isFormEdit) {
+          let One_Way_Distance_string = this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
+          this.Travel_Distance_ngModel = One_Way_Distance_string;
+          let one_way_amount = this.One_Way_Distance * this.VehicleRate;
+          this.travelAmountNgmodel = this.numberPipe.transform(one_way_amount, '1.2-2');
+          this.totalClaimAmount = Number(one_way_amount) + this.tollParkAmount;
+          this.travelAmount = Number(one_way_amount);
+        }
+        else {
           this.GetDistance();
         }
       }
@@ -356,7 +357,7 @@ export class TravelclaimPage {
               this.PublicTransValue = true;
               this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
               this.totalClaimAmount = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-              this.Roundtrip_ngModel = this.claimRequestData[0].ROUND_TRIP === 1?true: false;
+              this.Roundtrip_ngModel = this.claimRequestData[0].ROUND_TRIP === 1 ? true : false;
               if (this.claimRequestData[0].SOC_GUID === null) {
                 this.claimFor = 'seg_customer'
                 this.isCustomer = true;
@@ -937,7 +938,7 @@ export class TravelclaimPage {
 
 
   validateDate(startDate: any, endDate: any) {
-    let today = localStorage.getItem("zone_wise_current_timestamp");
+    let today = this.api.CreateTimestamp();
     let start = startDate;
     let end = endDate;
     if (start > end || today < start) {
@@ -1062,10 +1063,10 @@ export class TravelclaimPage {
 
             //Added by Bijay on 12/10/2018 for audit_trial-----------------------
             if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
             }
             else {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + localStorage.getItem("zone_wise_current_timestamp") + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
             }
             //-------------------------------------------------------------------
 
