@@ -299,7 +299,7 @@ export class TravelclaimPage {
     amount = amount.split(",").join("");
     amount = Number(amount);
     if (amount > 99999) {
-   
+
     }
     else {
       this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
@@ -372,7 +372,7 @@ export class TravelclaimPage {
               this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
               this.DestinationPlaceID = this.claimRequestData[0].to_place_id;
               this.OriginPlaceID = this.claimRequestData[0].from_place_id;
-              this.Travel_Distance_ngModel =this.numberPipe.transform(this.claimRequestData[0].DISTANCE_KM, '1.2-2'); 
+              this.Travel_Distance_ngModel = this.numberPipe.transform(this.claimRequestData[0].DISTANCE_KM, '1.2-2');
               this.LoadClaimDetails();
               this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
 
@@ -983,13 +983,16 @@ export class TravelclaimPage {
           if (data["resource"].length <= 0)
             if (this.api.isClaimExpired(formValues.travel_date, true)) { return; }
 
+          let distCalc = this.Travel_Distance_ngModel.split(",");
+          let optDistance = distCalc.length <= 0 ? this.Travel_Distance_ngModel : this.Travel_Distance_ngModel.split(",").join("");
+
           if (!this.isFormSubmitted) {
             this.isFormSubmitted = true;
             formValues.uuid = this.claimRequestGUID = UUID.UUID();
             // formValues.travel_date = formValues.start_DT
             formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
             formValues.meal_allowance = this.allowanceGUID;
-            formValues.distance = this.Travel_Distance_ngModel.split(",").join("");
+            formValues.distance = optDistance;
             formValues.vehicleType = this.VehicleId;
             formValues.attachment_GUID = this.imageGUID;
             formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
@@ -1018,7 +1021,7 @@ export class TravelclaimPage {
                 this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
                 this.claimRequestData["resource"][0].FROM = formValues.origin;
                 this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
-                this.claimRequestData["resource"][0].DISTANCE_KM = this.Travel_Distance_ngModel.split(",").join("");
+                this.claimRequestData["resource"][0].DISTANCE_KM =  optDistance;
                 this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
                 this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
                 this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
