@@ -45,17 +45,17 @@
       </div>
 
     <form [formGroup]="OTform">    
-
+      <!-- minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" -->
     <ion-item  class="fuha">
       <ion-label color="primary500" floating>{{ "START_DT_LABEL" | translate }}</ion-label>
-      <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm" 
+      <ion-datetime  displayFormat="DD/MM/YYYY HH:mm" 
       [(ngModel)]="Start_DT_ngModel" formControlName="start_DT"  ></ion-datetime>
     </ion-item>
     <!-- max={{validDate}} -->
-
+    <!-- minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" -->
     <ion-item  class="fuha">
       <ion-label color="primary500" floating>{{ "END_DT_LABEL" | translate }}</ion-label>
-      <ion-datetime minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" displayFormat="DD/MM/YYYY HH:mm" 
+      <ion-datetime  displayFormat="DD/MM/YYYY HH:mm" 
       [(ngModel)]="End_DT_ngModel" formControlName="end_DT"  ></ion-datetime>
     </ion-item>
 
