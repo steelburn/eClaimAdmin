@@ -733,7 +733,7 @@ export class ApiManagerProvider {
     let options = new RequestOptions({ headers: queryHeaders });
     return this.http.patch(this.postUrl(endPoint), modelJSONData, options)
       .map((response) => {
-        if (isClaim && modelJSON.STATUS != 'Draft')
+        // if (isClaim && modelJSON.STATUS != 'Draft')
           // this.sendEmail(modelJSON.CLAIM_TYPE_GUID, modelJSON.START_TS, modelJSON.END_TS, modelJSON.CREATION_TS, modelJSON.TRAVEL_DATE, modelJSON.CLAIM_REQUEST_GUID);
           return response;
       });

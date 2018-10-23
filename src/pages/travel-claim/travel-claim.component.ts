@@ -299,10 +299,7 @@ export class TravelclaimPage {
     amount = amount.split(",").join("");
     amount = Number(amount);
     if (amount > 99999) {
-      // alert('Amount should not exceed RM99999.')
-      // // this.travelAmountNgmodel = null;
-      // this.travelAmount = 0;
-      // this.totalClaimAmount = 0;
+   
     }
     else {
       this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
@@ -311,24 +308,7 @@ export class TravelclaimPage {
     }
   }
 
-  // Lakshman
-  // getCurrency(amount: number) {
-  //   amount = Number(amount);
-  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
-  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
-  //     // this.travelAmountNgmodel = null
-  //     // this.claimAmount = 0;
-  //         this.travelAmount = 0;
-  //     this.totalClaimAmount = 0;
-  //   } 
-  //   else {
-  //     // this.claimAmount = amount;
-  //     this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
-  //     this.travelAmount = amount;
-  //     this.totalClaimAmount = amount;
-  //   }
-  // } 
-  // Lakshman
+
 
   totalClaimAmount: number;
   ionViewWillEnter() {
@@ -392,7 +372,7 @@ export class TravelclaimPage {
               this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
               this.DestinationPlaceID = this.claimRequestData[0].to_place_id;
               this.OriginPlaceID = this.claimRequestData[0].from_place_id;
-              this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
+              this.Travel_Distance_ngModel =this.numberPipe.transform(this.claimRequestData[0].DISTANCE_KM, '1.2-2'); 
               this.LoadClaimDetails();
               this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
 
