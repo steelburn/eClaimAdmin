@@ -16,6 +16,8 @@ import { LoadingController, ActionSheetController, Loading, ToastController } fr
 import { AddTollPage } from '../add-toll/add-toll.component';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { ConferenceData } from '../../providers/conference-data';
+
 import { DecimalPipe } from '@angular/common';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
@@ -42,7 +44,8 @@ export class TravelclaimPage {
   public profileLevel: any;
   public stage: any;
   public profileJSON: any;
-  currency = localStorage.getItem("cs_default_currency")
+  currency = localStorage.getItem("cs_default_currency");
+  draftStatus: any = '';
 
   public Roundtrip_ngModel: boolean = false;
   public trip_amount: number;
@@ -106,7 +109,7 @@ export class TravelclaimPage {
   rejectedLevel: any;
   CalculationData: any[] = [];
   One_Way_Distance: any;
-  constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+  constructor(public numberPipe: DecimalPipe, public conference: ConferenceData, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
 
     // Lakshman
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
@@ -375,6 +378,7 @@ export class TravelclaimPage {
               this.Travel_Distance_ngModel = this.numberPipe.transform(this.claimRequestData[0].DISTANCE_KM, '1.2-2');
               this.LoadClaimDetails();
               this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
+              if (this.claimRequestData[0].STATUS === "Draft") { this.draftStatus = "Draft" }
 
               this.paymentTypes.forEach(element => {
                 if (this.claimRequestData[0].claim_method_guid === element.PAYMENT_TYPE_GUID) {
@@ -1004,6 +1008,7 @@ export class TravelclaimPage {
 
             this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
             this.MainClaimSaved = true;
+            this.draftStatus = "Draft"
           }
           else {
             this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
@@ -1069,7 +1074,8 @@ export class TravelclaimPage {
                   //}
 
                   alert('Claim details updated successfully.');
-                  this.navCtrl.push(UserclaimslistPage);
+                  // this.navCtrl.push(UserclaimslistPage);
+                  this.conference.pushTravelClaim();
                 })
               })
             // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
@@ -1088,6 +1094,11 @@ export class TravelclaimPage {
     else if (claimMethodGuid === '0ebb7e5f-037a-11e8-a50c-ssh55de7e742') { this.showAddAccommodation(claimDetailId) }
 
   }
+
+  selfRoot(){
+    this.conference.pushTravelClaim();
+   }
+
   DeleteDetail(claimDetailId: string) {
     this.api.deleteApiModel('claim_request_detail', claimDetailId).subscribe(() => {
       this.tollParkAmount = 0;
