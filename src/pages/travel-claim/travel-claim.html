@@ -103,11 +103,11 @@
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary500">Roundtrip</ion-label>
+      <ion-label color="primary500">{{ "ROUND_TRIP_LABEL" | translate }}</ion-label>
       <ion-checkbox [(ngModel)]="Roundtrip_ngModel" formControlName="Roundtrip" (ionChange)="Roundtrip_Change(Travelform.value)"></ion-checkbox>
-
     </ion-item>
-
+    <ion-label style="margin-left: 16px;" color="primary500" text-wrap stacked>
+      {{ "ROUND_TRIP_NOTE" | translate }}</ion-label>
     <ion-item class="fuha">
       <ion-label floating> {{ "DISTANCE_LABEL" | translate }} </ion-label>
       <ion-input [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance"></ion-input>
