@@ -29,7 +29,7 @@
           <th class="lgl1 tblBrLeft" style="width:60px">No.</th>
           <th class="lgl1">Role Name</th>
           <th class="lgl1">Module Name</th>
-          <!-- <th class="lgl1">ACTIVE FLAG</th> -->
+          <th class="lgl1">Sub Module</th>
           <th class="lgl1 tblBrRight" style="width:105px">Action</th>
         </tr>
 
@@ -37,7 +37,7 @@
           <td class="lgl1"> {{ 10 * (page - 1) + i+1 }}</td>
           <td class="lgl1">{{rolemodule.ROLE_NAME}}</td>
           <td class="lgl1" text-wrap>{{rolemodule.MODULE_NAME}}</td>
-          <!-- <td class="lgl1">INACTIVE</td> -->
+          <td class="lgl1" text-wrap>{{rolemodule.SUB_MODULE_NAME}}</td>
 
 
           <td class="lgl1 fColor">
@@ -51,7 +51,8 @@
         </tr>
 
       </table>
-      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true" autoHide="true">
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="10" directionLinks="true"
+        autoHide="true">
       </pagination-controls>
     </ion-item>
   </ion-list>
@@ -80,51 +81,92 @@
               <ion-option *ngFor="let role of roles" [value]="role.ROLE_GUID">{{role.NAME}}</ion-option>
             </ion-select>
           </ion-item>
-     
-            <div style="width: 50%;display:inline-table !important;">
-              <ion-card class="cb5 contentHeight3">
-                <ion-row>
-                  <ion-item class="lgl1">
-                    <ion-label item-start>{{"AVAILABLE_MODULES" | translate}}</ion-label>
-                    <button item-end ion-button color="primary" (click)="SelectAllAvailableModule()">
-                      <ion-icon name="ios-arrow-forward"></ion-icon>
-                    </button>
-                  </ion-item>
-                </ion-row>
-                <div>
-                  <ion-list>
-                    <ion-item *ngFor="let module of modules">
-                      <ion-label>{{module.NAME}}</ion-label>
-                      <ion-checkbox color="secondary" checked="false" (ionChange)="SelectFromAvailbleModule($event, module)" item-end></ion-checkbox>
-                    </ion-item>
-                  </ion-list>
-                </div>
-              </ion-card>
-            </div>
 
-            <div style="width: 49%; display:inline-table !important;">
-              <ion-card>
-                <ion-row>
-                  <ion-item class="lgl1">
-                    <ion-label item-start>{{"ASSIGNED_MODULES" | translate}}</ion-label>
-                    <button item-end ion-button color="primary" (click)="SelectAllAssignedModule()">
-                      <ion-icon name="ios-arrow-back"></ion-icon>
-                    </button>
+          <div style="width: 50%;display:inline-table !important;">
+            <ion-card class="cb5 contentHeight3">
+              <ion-row>
+                <ion-item class="lgl1">
+                  <ion-label item-start>{{"AVAILABLE_MODULES" | translate}}</ion-label>
+                  <button item-end ion-button color="primary" (click)="SelectAllAvailableModule()">
+                    <ion-icon name="ios-arrow-forward"></ion-icon>
+                  </button>
+                </ion-item>
+              </ion-row>
+              <div>
+                <ion-list>
+                  <ion-item *ngFor="let module of modules">
+                    <ion-label>{{module.NAME}}</ion-label>
+                    <ion-checkbox color="secondary" checked="false" (ionChange)="SelectFromAvailbleModule($event, module)"
+                      item-end></ion-checkbox>
                   </ion-item>
-                </ion-row>
-                <div>
-                  <ion-list>
-                    <ion-item *ngFor="let module_assigned of Module_Assign">
-                      <ion-label>{{module_assigned.MODULE_NAME}}</ion-label>
-                      <ion-checkbox color="secondary" checked="false" (ionChange)="RemoveSelectionFromAssignedModule($event,module_assigned)" item-end></ion-checkbox>
-                    </ion-item>
-                  </ion-list>
-                </div>
-                </ion-card>
-            </div>
-  
+                </ion-list>
+              </div>
+            </ion-card>
+          </div>
+
+          <div style="width: 49%; display:inline-table !important;">
+            <ion-card>
+              <ion-row>
+                <ion-item class="lgl1">
+                  <ion-label item-start>{{"ASSIGNED_MODULES" | translate}}</ion-label>
+                  <button item-end ion-button color="primary" (click)="SelectAllAssignedModule()">
+                    <ion-icon name="ios-arrow-back"></ion-icon>
+                  </button>
+                </ion-item>
+              </ion-row>
+              <div>
+                <ion-list>
+                  <ion-item *ngFor="let module_assigned of Module_Assign">
+                    <ion-label>{{module_assigned.MODULE_NAME}}</ion-label>
+                    <ion-checkbox color="secondary" checked="false" (ionChange)="RemoveSelectionFromAssignedModule($event,module_assigned)"
+                      item-end></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </ion-card>
+          </div>
+
+          <div style="width: 100%;display:inline-table !important;">
+            <ion-card class="contentHeight3" *ngIf="SetupDisplay">
+              <ion-row>
+                <ion-item class="lgl1">
+                  <ion-label item-start><b>{{"SETUP SUB MODULES" | translate}}</b></ion-label>
+                </ion-item>
+              </ion-row>
+              <div>
+                <ion-item>
+                  <ion-label stacked>{{ "MODULE" | translate }}</ion-label>
+                  <ion-select formControlName="SETUPSUBMODULE" [(ngModel)]="SETUPSUBMODULE_ngModel_Add" placeholder="{{'Select Module'}}"
+                    multiple="true">
+                    <ion-option *ngFor="let setuppage of setuppages" [value]="setuppage.PAGE_GUID">{{setuppage.NAME}}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </ion-card>
+          </div>
+
+          <!-- <div style="width: 100%;display:inline-table !important;">
+            <ion-card class="contentHeight3" *ngIf="AdminSetupDisplay">
+              <ion-row>
+                <ion-item class="lgl1">
+                  <ion-label item-start>{{"ADMIN SETUP SUB MODULES" | translate}}</ion-label>
+                </ion-item>
+              </ion-row>
+              <div>
+                <ion-item>
+                  <ion-label stacked>{{ "MODULE" | translate }}</ion-label>
+                  <ion-select formControlName="ADMINSETUPSUBMODULE" [(ngModel)]="ADMINSETUPSUBMODULE_ngModel_Add"
+                    placeholder="{{'Select Module'}}" multiple="true">
+                    <ion-option *ngFor="let adminsetuppage of adminsetuppages" [value]="adminsetuppage.PAGE_GUID">{{adminsetuppage.NAME}}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </ion-card>
+          </div> -->
+
           <div class="btn">
-            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Rolemoduleform.valid" (click)="Save_RoleModule()">{{"SUBMIT" | translate}}</button>
+            <button ion-button class="bgColor-grey fontColor-white btnStyle1" [disabled]="!Rolemoduleform.valid"
+              (click)="Save_RoleModule()">{{"SUBMIT" | translate}}</button>
           </div>
         </form>
 
@@ -171,7 +213,8 @@
               <ion-list>
                 <ion-item *ngFor="let module of modules">
                   <ion-label>{{module.NAME}}</ion-label>
-                  <ion-checkbox color="secondary" checked="false" (ionChange)="SelectFromAvailbleModule($event, module)" item-end></ion-checkbox>
+                  <ion-checkbox color="secondary" checked="false" (ionChange)="SelectFromAvailbleModule($event, module)"
+                    item-end></ion-checkbox>
                 </ion-item>
               </ion-list>
 
@@ -192,14 +235,36 @@
               <ion-list>
                 <ion-item *ngFor="let module_assigned of Module_Assign">
                   <ion-label>{{module_assigned.MODULE_NAME}}</ion-label>
-                  <ion-checkbox color="secondary" checked="false" (ionChange)="RemoveSelectionFromAssignedModule($event,module_assigned)" item-end></ion-checkbox>
+                  <ion-checkbox color="secondary" checked="false" (ionChange)="RemoveSelectionFromAssignedModule($event,module_assigned)"
+                    item-end></ion-checkbox>
                 </ion-item>
               </ion-list>
 
             </ion-card>
           </div>
+
+          <div style="width: 100%;display:inline-table !important;">
+            <ion-card class="contentHeight3" *ngIf="SetupDisplay">
+              <ion-row>
+                <ion-item class="lgl1">
+                  <ion-label item-start><b>{{"SETUP SUB MODULES" | translate}}</b></ion-label>
+                </ion-item>
+              </ion-row>
+              <div>
+                <ion-item>
+                  <ion-label stacked>{{ "MODULE" | translate }}</ion-label>
+                  <ion-select formControlName="SETUPSUBMODULE" [(ngModel)]="SETUPSUBMODULE_ngModel_Edit" placeholder="{{'Select Module'}}"
+                    multiple="true">
+                    <ion-option *ngFor="let setuppage of setuppages" [value]="setuppage.PAGE_GUID">{{setuppage.NAME}}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </ion-card>
+          </div>
+
           <div class="btn">
-            <button ion-button [disabled]="!Rolemoduleform.valid" (click)="Update_RoleModule()">{{"SUBMIT" | translate}}</button>
+            <button ion-button [disabled]="!Rolemoduleform.valid" (click)="Update_RoleModule()">{{"SUBMIT" |
+              translate}}</button>
           </div>
         </form>
 
