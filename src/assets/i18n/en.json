@@ -425,7 +425,9 @@
  "HISTORY": "My Claim History",
  "MENU_ICON": "Menu Icon",
  "UPDATE_MODULE": "Update_Module",
- "ROUND_TRIP_LABEL": "Round Trip" ,
- "SAVE_AS_DRAFT": "Save As Draft"
 
+ "ROUND_TRIP_LABEL": "Round Trip",
+ "ROUND_TRIP_NOTE": "Check if you make a round trip, you go on a journey and return to where you started from.",
+
+ "SAVE_AS_DRAFT": "Save As Draft"
 } 

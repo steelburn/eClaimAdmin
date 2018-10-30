@@ -41,8 +41,8 @@ export class DashboardPage {
   Pending_Claim_Count_Finance = 0; Pending_Claim_Amount_Finance = '0.00';
 
 
-  PendingClaimCount_year_Superior: any;PendingClaimAmount_year_Superior: any;
-  PendingClaimCount_year_Finance: any;PendingClaimAmount_year_Finance: any;
+  PendingClaimCount_year_Superior: any; PendingClaimAmount_year_Superior: any;
+  PendingClaimCount_year_Finance: any; PendingClaimAmount_year_Finance: any;
   currency = localStorage.getItem("cs_default_currency")
 
   Approved_Claim_Count = 0; Approved_Claim_Amount = '0.00';
@@ -115,28 +115,57 @@ export class DashboardPage {
     this.GetRoleDashboard();
     this.GetRoleDashboard_Year();
     this.GetData_FeRole();
+    this.GetData_FaRole();
     this.GetData_FeRole_Year();
     let val = this.GetRoleName();
-    val.then((res) => {
-      this.loginUserRole = res.toString();
+    val.then((res: any) => {
+      // this.loginUserRole = res.toString();
+      // console.log(res);
+      // this.loginUserRole = res["ROLE_NAME"];
       // console.log(this.loginUserRole);
+      // console.log(res["ROLE_NAME"]);
+      res.forEach((e: any) => {
+        // alert(e["ROLE_NAME"])
+        if (e["ROLE_NAME"] === Settings.UserRoleConstants.TEAM_LEAD || e["ROLE_NAME"] === Settings.UserRoleConstants.DIVISION_HEAD || e["ROLE_NAME"] === Settings.UserRoleConstants.HOD
+          || e["ROLE_NAME"] === Settings.UserRoleConstants.HR || e["ROLE_NAME"] === Settings.UserRoleConstants.DESK_ADMIN) {
+          this.IsApprover = true;
+        }
 
-      if (this.loginUserRole === Settings.UserRoleConstants.TEAM_LEAD || this.loginUserRole === Settings.UserRoleConstants.DIVISION_HEAD || this.loginUserRole === Settings.UserRoleConstants.HOD) {
-        this.IsApprover = true;
-      }
+        // Finance Executive
+        if (e["ROLE_NAME"] === Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
+          this.IsFinanceExecutive = true;
+          // this.GetData_FeRole();
+          // this.GetData_FeRole_Year();       
+        }
 
-      // Finance Executive
-      if (this.loginUserRole === Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
-        this.IsFinanceExecutive = true;
-        // this.GetData_FeRole();
-        // this.GetData_FeRole_Year();       
-      }
+        if (e["ROLE_NAME"] === Settings.UserRoleConstants.FINANCE_MANAGER || e["ROLE_NAME"] === Settings.UserRoleConstants.FINANCE_ADMIN) {
+          this.IsFinanceManager = true;
+          this.IsApprover = true;
+        }
+      });
 
-      if (this.loginUserRole === Settings.UserRoleConstants.FINANCE_MANAGER || this.loginUserRole === Settings.UserRoleConstants.FINANCE_ADMIN) {
-        this.IsFinanceManager = true;
-        this.IsApprover = true;
-      }
     })
+
+    // val.then((res) => {
+    //   this.loginUserRole = res.toString();
+    //   // console.log(this.loginUserRole);
+
+    //   if (this.loginUserRole === Settings.UserRoleConstants.TEAM_LEAD || this.loginUserRole === Settings.UserRoleConstants.DIVISION_HEAD || this.loginUserRole === Settings.UserRoleConstants.HOD) {
+    //     this.IsApprover = true;
+    //   }
+
+    //   // Finance Executive
+    //   if (this.loginUserRole === Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
+    //     this.IsFinanceExecutive = true;
+    //     // this.GetData_FeRole();
+    //     // this.GetData_FeRole_Year();       
+    //   }
+
+    //   if (this.loginUserRole === Settings.UserRoleConstants.FINANCE_MANAGER || this.loginUserRole === Settings.UserRoleConstants.FINANCE_ADMIN) {
+    //     this.IsFinanceManager = true;
+    //     this.IsApprover = true;
+    //   }
+    // })
   }
   // Unique and Sort years
   sortUnique(arr: any) {
@@ -185,14 +214,14 @@ export class DashboardPage {
   //     return result;
   //   }
   // }
-
   GetRoleName() {
     //Get the role of that particular user----------------------------------------------
     // 
     let role_url: string = "";
     let result: any;
     // let baseResource_Url_role: string = constants.DREAMFACTORY_TABLE_URL;
-    role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')AND(ROLE_FLAG=MAIN)&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')AND(ROLE_FLAG=MAIN)&api_key=' + constants.DREAMFACTORY_API_KEY;
+    role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     // console.log(role_url)
     return new Promise((resolve, reject) => {
       this.http.get(role_url)
@@ -200,21 +229,23 @@ export class DashboardPage {
         .subscribe((response: any) => {
           let role_result = response["resource"];
           // console.log(role_result);
-          this.role_name = role_result[0]["ROLE_NAME"];
-          // if (role_result!=null) {
-          //   this.role_name = role_result[0]["ROLE_NAME"];
-          //   //  localStorage.setItem("g_ROLE_NAME")=role_name;
-          //   localStorage.setItem("g_ROLE_NAME", this.role_name);
-          //   //  localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
-          //   //  localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
-          //   //  localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
-          //   //  localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
-          //   // alert(localStorage.getItem("g_ROLE_NAME"));
-          // }
-          // else {
-          //   //  localStorage.setItem("g_KEY_VIEW", "1");
-          //   //  localStorage.removeItem("g_ROLE_NAME");
-          // }
+          // this.role_name = role_result[0]["ROLE_NAME"];
+          if (role_result != null) {
+            //   this.role_name = role_result[0]["ROLE_NAME"];
+            //   //  localStorage.setItem("g_ROLE_NAME")=role_name;
+            //   localStorage.setItem("g_ROLE_NAME", this.role_name);
+            //   //  localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
+            //   //  localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
+            //   //  localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
+            //   //  localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
+            //   // alert(localStorage.getItem("g_ROLE_NAME"));
+          }
+          else {
+            //   //  localStorage.setItem("g_KEY_VIEW", "1");
+            //   //  localStorage.removeItem("g_ROLE_NAME");
+            // localStorage.getItem("g_ROLE_NAME")=null;
+            role_result = null;
+          }
 
           //     if (localStorage.getItem("g_ROLE_NAME") === "Team Lead" || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD") {
           //       this.IsApprover = true;
@@ -247,10 +278,76 @@ export class DashboardPage {
 
           // localStorage.setItem("g_ROLE_NAME",  this.role_name);
           //----------------------------------------------------------------------------------
-          resolve(this.role_name);
+          // resolve(this.role_name);
+          resolve(role_result);
         })
     });
   }
+  // GetRoleName() {
+  //   //Get the role of that particular user----------------------------------------------
+  //   // 
+  //   let role_url: string = "";
+  //   let result: any;
+  //   // let baseResource_Url_role: string = constants.DREAMFACTORY_TABLE_URL;
+  //   role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')AND(ROLE_FLAG=MAIN)&api_key=' + constants.DREAMFACTORY_API_KEY;
+  //   // console.log(role_url)
+  //   return new Promise((resolve, reject) => {
+  //     this.http.get(role_url)
+  //       .map(res => res.json())
+  //       .subscribe((response: any) => {
+  //         let role_result = response["resource"];
+  //         // console.log(role_result);
+  //         this.role_name = role_result[0]["ROLE_NAME"];
+  //         // if (role_result!=null) {
+  //         //   this.role_name = role_result[0]["ROLE_NAME"];
+  //         //   //  localStorage.setItem("g_ROLE_NAME")=role_name;
+  //         //   localStorage.setItem("g_ROLE_NAME", this.role_name);
+  //         //   //  localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
+  //         //   //  localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
+  //         //   //  localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
+  //         //   //  localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
+  //         //   // alert(localStorage.getItem("g_ROLE_NAME"));
+  //         // }
+  //         // else {
+  //         //   //  localStorage.setItem("g_KEY_VIEW", "1");
+  //         //   //  localStorage.removeItem("g_ROLE_NAME");
+  //         // }
+
+  //         //     if (localStorage.getItem("g_ROLE_NAME") === "Team Lead" || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD") {
+  //         //       this.IsApprover = true;
+  //         //     }
+  //         //     // else
+  //         //     // {
+  //         //     //   this.IsFinanceExecutive=false;
+  //         //     //   this.IsFinanceManager=false;
+  //         //     // }
+  //         //     // Finance Executive
+  //         //     if (localStorage.getItem("g_ROLE_NAME") === "Finance Executive") {
+  //         //       this.IsFinanceExecutive = true;
+  //         //     }
+  //         //     // else
+  //         //     // {
+  //         //     //   this.IsApprover=false;
+  //         //     //   this.IsFinanceManager=false;
+  //         //     // }
+
+  //         //     if (localStorage.getItem("g_ROLE_NAME") === "Finance Manager" || localStorage.getItem("g_ROLE_NAME") === "Finance Admin") {
+  //         //       this.IsFinanceManager = true;
+  //         //       this.IsApprover = true;
+  //         //     }
+  //         //     // else
+  //         //     // {
+  //         //     //   this.IsApprover=false;
+  //         //     //   this.IsFinanceExecutive=false;
+  //         //     // }
+  //         //  //   this.GetData_filter();
+
+  //         // localStorage.setItem("g_ROLE_NAME",  this.role_name);
+  //         //----------------------------------------------------------------------------------
+  //         resolve(this.role_name);
+  //       })
+  //   });
+  // }
 
   ngOnInit() {
     // this.GetRoleName();
@@ -642,28 +739,26 @@ export class DashboardPage {
           this.ApproverLevel_PendAmount = this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel, '1.2-2');
           // this.ApproverLevel_PendAmount = this.ApproverLevel_PendAmount.toString()
           // this.ApproverLevel_PendAmount = this.numberPipe.transform(this.ApproverLevel_PendAmount, '1.2-2');
-          if( this.ApproverLevel_PendAmount ==null)
-          {
-            this.ApproverLevel_PendAmount ="0.00";
+          if (this.ApproverLevel_PendAmount == null) {
+            this.ApproverLevel_PendAmount = "0.00";
           }
           this.ApproverLevel_PendCount = this.roleBasedData.PendingCount_Appr_Fe_Fm_FirstLevel;
-                          if( this.ApproverLevel_PendCount ==null)
-                          {
-                            this.ApproverLevel_PendCount =0;
-                          }
+          if (this.ApproverLevel_PendCount == null) {
+            this.ApproverLevel_PendCount = 0;
+          }
           // this.FinanceExecLevel_PendAmt = this.roleBasedData.PendingAmount_Fe_FinalLevel;
           // this.FinanceExecLevel_PendCount = this.roleBasedData.PendingCount_Fe_FinalLevel;
 
-          this.FinanceMgrLevel_PendAmt = this.numberPipe.transform(this.roleBasedData.PendingAmount_Fm_MgrLevel, '1.2-2');
-          if( this.FinanceMgrLevel_PendAmt ==null)
-          {
-            this.FinanceMgrLevel_PendAmt ="0.00";
-          }
-          this.FinanceMgrLevel_PendCount = this.roleBasedData.PendingCount_Fm_MgrLevel;
-          if( this.FinanceMgrLevel_PendCount ==null)
-          {
-            this.FinanceMgrLevel_PendCount =0;
-          }
+          // this.FinanceMgrLevel_PendAmt = this.numberPipe.transform(this.roleBasedData.PendingAmount_Fm_MgrLevel, '1.2-2');
+          // if( this.FinanceMgrLevel_PendAmt ==null)
+          // {
+          //   this.FinanceMgrLevel_PendAmt ="0.00";
+          // }
+          // this.FinanceMgrLevel_PendCount = this.roleBasedData.PendingCount_Fm_MgrLevel;
+          // if( this.FinanceMgrLevel_PendCount ==null)
+          // {
+          //   this.FinanceMgrLevel_PendCount =0;
+          // }
         }
         else {
           this.ApproverLevel_PendAmount = "0.00";
@@ -672,8 +767,8 @@ export class DashboardPage {
           // this.FinanceExecLevel_PendAmt = "0.00";
           // this.FinanceExecLevel_PendCount = 0;
 
-          this.FinanceMgrLevel_PendAmt = "0.00";
-          this.FinanceMgrLevel_PendCount = 0;
+          // this.FinanceMgrLevel_PendAmt = "0.00";
+          // this.FinanceMgrLevel_PendCount = 0;
 
         }
       });
@@ -712,6 +807,7 @@ export class DashboardPage {
       });
 
   }
+
   GetData_FeRole() {
     let baseResource_Fe_RoleUrl
       = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fe?filter=(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -725,7 +821,14 @@ export class DashboardPage {
 
           // this.numberPipe.transform(this.Rejected_Claim_Amount, '1.2-2');  
           this.FinanceExecLevel_PendAmt = this.numberPipe.transform(FeRoleData.PendingAmount_Fe_FinalLevel, '1.2-2');
+          if (this.FinanceExecLevel_PendAmt == null) {
+            this.FinanceExecLevel_PendAmt = "0.00";
+          }
           this.FinanceExecLevel_PendCount = FeRoleData.PendingCount_Fe_FinalLevel;
+          if (this.FinanceExecLevel_PendCount == null) {
+            this.FinanceExecLevel_PendCount = 0;
+          }
+
 
         }
         else {
@@ -752,6 +855,35 @@ export class DashboardPage {
         else {
           this.FinanceExecLevel_PendAmt_Year = "0.00";
           this.FinanceExecLevel_PendCount_Year = 0;
+        }
+      });
+  }
+
+  GetData_FaRole() {
+    let baseResource_FA_RoleUrl
+      = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fa?filter=(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // console.log("FE_Role " + baseResource_Fe_RoleUrl);
+    this.http
+      .get(baseResource_FA_RoleUrl)
+      .map(res => res.json())
+      .subscribe(data => {
+        let FaRoleData = data["resource"][0];
+        if (data["resource"][0] != null && data["resource"][0] != undefined) {
+
+          // this.numberPipe.transform(this.Rejected_Claim_Amount, '1.2-2');  
+          this.FinanceMgrLevel_PendAmt = this.numberPipe.transform(FaRoleData.PendingAmount_Fm_MgrLevel, '1.2-2');
+          if (this.FinanceMgrLevel_PendAmt == null) {
+            this.FinanceMgrLevel_PendAmt = "0.00";
+          }
+          this.FinanceMgrLevel_PendCount = FaRoleData.PendingCount_Fm_MgrLevel;
+          if (this.FinanceMgrLevel_PendCount == null) {
+            this.FinanceMgrLevel_PendCount = 0;
+          }
+
+        }
+        else {
+          this.FinanceMgrLevel_PendAmt = "0.00";
+          this.FinanceMgrLevel_PendCount = 0;
         }
       });
   }
@@ -817,6 +949,7 @@ export class DashboardPage {
     this.GetInfoForCards();
     this.GetData_FeRole();
     this.GetData_FeRole_Year();
+    this.GetData_FaRole();
     // this.GetPaidData();
   }
   GetDashboardInfo() {
@@ -1187,28 +1320,36 @@ export class DashboardPage {
     });
   }
   Rejected_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Rejected: Settings.StatusConstants.REJECTED });
+    // this.navCtrl.setRoot('UserclaimslistPage', { Rejected: Settings.StatusConstants.REJECTED });
+    this.navCtrl.setRoot('UserclaimslistPage', { Rejected_data: [{ Rejected: Settings.StatusConstants.REJECTED,month:this.Month_Change_ngModel}] });
   }
   Pending_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR });
+    // this.navCtrl.setRoot('UserclaimslistPage', { PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR });
+    this.navCtrl.setRoot('UserclaimslistPage', {Pending_data:[{ PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR,month:this.Month_Change_ngModel}] });
   }
   Validated_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved: Settings.StatusConstants.PENDINGPAYMENT });
+    // this.navCtrl.setRoot('UserclaimslistPage', { Approved: Settings.StatusConstants.PENDINGPAYMENT });
+    this.navCtrl.setRoot('UserclaimslistPage', { Approved_data:[{PENDINGPAYMENT: Settings.StatusConstants.PENDINGPAYMENT,month:this.Month_Change_ngModel}]});
   }
   Approved_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION });
+    // this.navCtrl.setRoot('UserclaimslistPage', { PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION });
+    this.navCtrl.setRoot('UserclaimslistPage', { Validation_data:[{PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION,month:this.Month_Change_ngModel}] });
   }
   Paid_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Paid: Settings.StatusConstants.PAID });
+    // this.navCtrl.setRoot('UserclaimslistPage', { Paid: Settings.StatusConstants.PAID });
+    this.navCtrl.setRoot('UserclaimslistPage', { Paid_data:[{Paid: Settings.StatusConstants.PAID,month:this.Month_Change_ngModel}]});
   }
   Approver_Click() {
-    this.navCtrl.setRoot('ClaimapprovertasklistPage');
+    // this.navCtrl.setRoot('ClaimapprovertasklistPage');
+    this.navCtrl.setRoot('ClaimapprovertasklistPage', {month:this.Month_Change_ngModel});
   }
   Finance_Executive_Click() {
-    this.navCtrl.setRoot('ClaimtasklistPage');
+    // this.navCtrl.setRoot('ClaimtasklistPage');
+    this.navCtrl.setRoot('ClaimtasklistPage', {month:this.Month_Change_ngModel});
   }
   Finance_Manager_Click() {
-    this.navCtrl.setRoot('FinancePaymentTasklistPage');
+    // this.navCtrl.setRoot('FinancePaymentTasklistPage');
+    this.navCtrl.setRoot('FinancePaymentTasklistPage', {month:this.Month_Change_ngModel});
   }
 
 }

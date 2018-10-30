@@ -21,9 +21,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ClaimtasklistPage {
 
-  role: any;
+  role: any; month: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.role = "Validation";
+    this.month = navParams.get("month");
+    if (this.month != undefined) {
+      this.month = this.month.substring(0, 3);
+    }
+    // console.log(this.month)
+
   }
   //ClaimHistory_Model = new ClaimHistory_Model();
   // claimTaskLists: any[];

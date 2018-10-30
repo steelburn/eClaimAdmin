@@ -48,7 +48,7 @@ export class UserclaimslistPage {
   prevYear: number = new Date().getFullYear();
   //claimrefguid:any;
   //userguid:any;
-  //month:any;
+  month:any;
   baseResourceUrl: string;
   baseResourceUrl1: string;
   searchboxValue: string;
@@ -64,17 +64,56 @@ export class UserclaimslistPage {
     //alert(this.userguid);
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')AND(YEAR=' + this.currentYear + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResourceUrl1 = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_getuserdetails?filter=(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log(this.baseResourceUrl);
+    // console.log(this.baseResourceUrl);
 
     // this.onSearchInput();
     this.BindYears();
     this.BindClaimTypes();
 
-    this.Rejected = navParams.get("Rejected");
-    this.Pending = navParams.get("PENDINGSUPERIOR");
-    this.Approved = navParams.get("PENDINGFINANCEVALIDATION");
-    this.Validated = navParams.get("Approved");
-    this.Paid = navParams.get("Paid");
+    // this.Rejected = navParams.get("Rejected");
+    let Rejected_data = navParams.get("Rejected_data");
+    if (Rejected_data != undefined) {
+      this.Rejected = Rejected_data[0]["Rejected"];
+      this.month = Rejected_data[0]["month"];
+      this.month =  this.month.substring(0, 3);
+      // console.log(Rejected_data)    
+      // console.log(this.month)
+    }
+
+    // this.Pending = navParams.get("PENDINGSUPERIOR");
+    let pending_data = navParams.get("Pending_data");
+    if (pending_data != undefined) {
+      this.Pending = pending_data[0]["PENDINGSUPERIOR"];
+      this.month = pending_data[0]["month"];
+      this.month =  this.month.substring(0, 3);
+      // console.log(pending_data)
+    }
+    // this.Approved = navParams.get("PENDINGFINANCEVALIDATION");
+    let Approved_data = navParams.get("Validation_data");
+    if (Approved_data != undefined) {
+      this.Approved = Approved_data[0]["PENDINGFINANCEVALIDATION"];
+      this.month = Approved_data[0]["month"];
+      this.month =  this.month.substring(0, 3);
+      // console.log(Approved_data)
+    }
+
+    // this.Validated = navParams.get("PENDINGPAYMENT");
+    let Validated_data = navParams.get("Approved_data");
+    if (Validated_data != undefined) {
+      this.Validated = Validated_data[0]["PENDINGPAYMENT"];
+      this.month = Validated_data[0]["month"];
+      this.month =  this.month.substring(0, 3);
+      // console.log(Validated_data)
+    }
+
+    // this.Paid = navParams.get("Paid");
+    let Paid_data = navParams.get("Paid_data");
+    if (Paid_data != undefined) {
+      this.Paid = Paid_data[0]["Paid"];
+      this.month = Paid_data[0]["month"];
+      this.month =  this.month.substring(0, 3);
+      // console.log(Paid_data)
+    }
 
     this.searchboxValue = this.Rejected || this.Pending || this.Approved || this.Paid || this.Validated;
     if (this.searchboxValue != undefined) {
@@ -206,6 +245,7 @@ export class UserclaimslistPage {
               || (amount > -1)
             );
           })
+          this.btnSearch = true;
         });
       // Lakshman June-13,2018
 
@@ -233,7 +273,7 @@ export class UserclaimslistPage {
     }
     else {
       this.userClaimhistorydetails = this.userClaimhistorydetails1;
-
+      this.btnSearch = true;
     }
   }
 

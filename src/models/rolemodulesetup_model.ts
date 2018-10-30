@@ -8,6 +8,7 @@ export class RoleModuleSetup_Model {
         public UPDATE_TS: string = null,
         public UPDATE_USER_GUID: string = null,
         public MODULE_SLNO: string = null,
+        public MODULE_FLAG: string = null,
     ) { }
 
 
@@ -20,7 +21,8 @@ export class RoleModuleSetup_Model {
             json.CREATION_USER_GUID,
             json.UPDATE_TS,
             json.UPDATE_USER_GUID,
-            json.MODULE_SLNO
+            json.MODULE_SLNO,
+            json.MODULE_FLAG
         );
     }
 
@@ -32,7 +34,8 @@ export class RoleModuleSetup_Model {
             CREATION_USER_GUID: this.CREATION_USER_GUID,
             UPDATE_TS: this.UPDATE_TS,
             UPDATE_USER_GUID: this.UPDATE_USER_GUID,
-            MODULE_SLNO: this.MODULE_SLNO
+            MODULE_SLNO: this.MODULE_SLNO,
+            MODULE_FLAG: this.MODULE_FLAG
         };
         return stringify ? JSON.stringify({ resource: [doc] }) : doc;
     }
