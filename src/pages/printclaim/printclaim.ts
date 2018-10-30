@@ -31,7 +31,7 @@ export class PrintclaimPage {
   @ViewChild('fileInput') fileInput: ElementRef;
 
   public MainClaimSaved: boolean = false;
-  Printing_Date_ngModel: any= this.apiMng.CreateTimestamp();
+  Printing_Date_ngModel: any = this.apiMng.CreateTimestamp();
   Printing_Description_ngModel: any;
   Printing_Amount_ngModel: any;
   Customer_GUID: any;
@@ -434,76 +434,79 @@ export class PrintclaimPage {
       this.Printing_Amount_ngModel = this.Printing_Amount_ngModel;
     }
 
-    if (this.apiMng.isClaimExpired(formValues.travel_date, false))
-
-      return;
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
     }
-    if (this.isFormEdit) {
-      this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
-        .subscribe(data => {
-          this.claimRequestData = data;
-          this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
-          this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
-          this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
-          this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
-          this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
-          if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-            this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
-            this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
-            this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-            if (this.rejectedLevel === 3)
-              this.claimRequestData["resource"][0].STATUS = 'Approved';
-            else
-              this.claimRequestData["resource"][0].STATUS = 'Pending';
-          }
+    this.apiMng.getApiModel('claim_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS="Rejected")')
+      .subscribe(data => {
+        if (data["resource"].length <= 0)
+          if (this.apiMng.isClaimExpired(formValues.travel_date, true)) { return; }
 
-          //this.claimRequestData[0].claim_amount= formValues.claim_amount;
-          if (this.isCustomer) {
-            // this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
-            this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
-            this.claimRequestData["resource"][0].SOC_GUID = null;
-          }
-          else {
-            // this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
-            this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
-            this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
-          }
+        if (this.isFormEdit) {
+          this.apiMng.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+            .subscribe(data => {
+              this.claimRequestData = data;
+              this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
+              this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.claimAmount;
+              this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.claimAmount;
+              this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.travel_date;
+              this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+              if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+                this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
+                this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+                this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+                if (this.rejectedLevel === 3)
+                  this.claimRequestData["resource"][0].STATUS = 'Approved';
+                else
+                  this.claimRequestData["resource"][0].STATUS = 'Pending';
+              }
 
-          //Added by Bijay on 12/10/2018 for audit_trial-----------------------
-          if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
-            this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.apiMng.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
-          }
-          else {
-            this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.apiMng.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")"+ " User From:W";
-          }
-          //-------------------------------------------------------------------
+              //this.claimRequestData[0].claim_amount= formValues.claim_amount;
+              if (this.isCustomer) {
+                // this.claimRequestData["resource"][0].CUSTOMER_GUID = formValues.soc_no;
+                this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
+                this.claimRequestData["resource"][0].SOC_GUID = null;
+              }
+              else {
+                // this.claimRequestData["resource"][0].SOC_GUID = formValues.soc_no;
+                this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
+                this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
+              }
 
-          //this.claimRequestData[0].STATUS = 'Pending';
-          // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
-          this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
-            //Send Email------------------------------------------------
-            let start_DT: string = "";
-            let end_DT: string = "";
-            // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
-            //Commented By bijay on 24/09/2018 as per scheduler implemented
-            // this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
-            //----------------------------------------------------------
-            alert('Claim details updated successfully.');
-            this.navCtrl.push(UserclaimslistPage);
-          });
-        })
-    }
-    else {
-      formValues.claimTypeGUID = 'd9567482-033a-6d92-3246-f33043155746';
-      formValues.attachment_GUID = this.imageGUID;
-      this.travelAmount = this.claimAmount;
-      formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-      this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+              //Added by Bijay on 12/10/2018 for audit_trial-----------------------
+              if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
+                this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.apiMng.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+              }
+              else {
+                this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.apiMng.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+              }
+              //-------------------------------------------------------------------
 
-    }
+              //this.claimRequestData[0].STATUS = 'Pending';
+              // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
+              this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
+                //Send Email------------------------------------------------
+                let start_DT: string = "";
+                let end_DT: string = "";
+                // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+                //Commented By bijay on 24/09/2018 as per scheduler implemented
+                // this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
+                //----------------------------------------------------------
+                alert('Claim details updated successfully.');
+                this.navCtrl.push(UserclaimslistPage);
+              });
+            })
+        }
+        else {
+          formValues.claimTypeGUID = 'd9567482-033a-6d92-3246-f33043155746';
+          formValues.attachment_GUID = this.imageGUID;
+          this.travelAmount = this.claimAmount;
+          formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+          this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+
+        }
+      })
   }
   NavigateTravelClaim() {
     this.navCtrl.setRoot(TravelclaimPage);

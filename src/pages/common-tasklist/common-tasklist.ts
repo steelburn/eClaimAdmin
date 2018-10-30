@@ -24,6 +24,7 @@ export class CommonTasklistPage implements OnInit {
   
   //ClaimHistory_Model = new ClaimHistory_Model();
   @Input() role:any;
+  @Input() month:any;
   claimTaskLists: any[];
   claimTaskLists1: any[] = [];
   claimTaskListTotal: any[];
@@ -35,6 +36,7 @@ export class CommonTasklistPage implements OnInit {
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
   loginUserRole = localStorage.getItem("g_ROLE_NAME");
+  // month: any;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?filter=(ASSIGNED_TO='+localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
   //baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimreftasklist?api_key=' + constants.DREAMFACTORY_API_KEY;
   public page: number = 1;
@@ -46,7 +48,14 @@ export class CommonTasklistPage implements OnInit {
     // else {
     //   this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(STATUS=Pending)AND(PROFILE_LEVEL=2)AND(YEAR=' + this.currentYear + ')AND(EMAIL=' + localStorage.getItem("g_EMAIL").toString().split('@')[1] + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     // }
-    
+    this.month = navParams.get("month");
+    if (this.month != undefined) {
+      this.month = this.month.substring(0, 3);
+    }
+    // console.log(this.month)
+
+   
+
   }
 
   ngOnInit()
@@ -61,7 +70,7 @@ export class CommonTasklistPage implements OnInit {
     this.BindEmployeesbyDepartment("All");
     this.BindYears();
     this.BindData("All", "All", "All");
-
+   
   }
 
   BindData(ddlDept: string, ddlEmployee: string, ddlmonth: string) {
@@ -86,6 +95,12 @@ export class CommonTasklistPage implements OnInit {
           if (ddlmonth.toString() !== "All") { this.claimTaskLists = this.claimTaskLists.filter(s => s.MONTH.toString() === ddlmonth.toString()) }
 
         }
+         // Lakshman oct-29th
+        this.searchboxValue = this.month;
+        if (this.searchboxValue != undefined) {
+          this.onSearchInput();
+        }
+        // Lakshman oct-29th
         this.btnSearch = true;
       });
   }
@@ -93,7 +108,7 @@ export class CommonTasklistPage implements OnInit {
   onSearchInput() {
     // alert('hi')
     let val = this.searchboxValue;
-    if (val && val.trim() != '') {
+    if (val && val.trim() != '') {    
       this.claimTaskLists = this.claimTaskLists1.filter((item) => {
         let fullname: number;
         let month: number;
@@ -111,10 +126,12 @@ export class CommonTasklistPage implements OnInit {
           || (amount > -1)
         );
       })
+    // });
+    this.btnSearch=true;
     }
     else {
-
       this.claimTaskLists = this.claimTaskLists1;
+      this.btnSearch=true;
     }
   }
   goToClaimApproverTaskList(claimrefguid: any) {
