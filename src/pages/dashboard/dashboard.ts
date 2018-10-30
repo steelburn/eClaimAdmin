@@ -1187,28 +1187,28 @@ export class DashboardPage {
     });
   }
   Rejected_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Rejected: Settings.StatusConstants.REJECTED });
+    this.navCtrl.push('UserclaimslistPage', { Rejected: Settings.StatusConstants.REJECTED });
   }
   Pending_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR });
+    this.navCtrl.push('UserclaimslistPage', { PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR });
   }
   Validated_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved: Settings.StatusConstants.PENDINGPAYMENT });
+    this.navCtrl.push('UserclaimslistPage', { Approved: Settings.StatusConstants.PENDINGPAYMENT });
   }
   Approved_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION });
+    this.navCtrl.push('UserclaimslistPage', { PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION });
   }
   Paid_Click() {
-    this.navCtrl.setRoot('UserclaimslistPage', { Paid: Settings.StatusConstants.PAID });
+    this.navCtrl.push('UserclaimslistPage', { Paid: Settings.StatusConstants.PAID });
   }
   Approver_Click() {
-    this.navCtrl.setRoot('ClaimapprovertasklistPage');
+    this.navCtrl.push('ClaimapprovertasklistPage');
   }
   Finance_Executive_Click() {
-    this.navCtrl.setRoot('ClaimtasklistPage');
+    this.navCtrl.push('ClaimtasklistPage');
   }
   Finance_Manager_Click() {
-    this.navCtrl.setRoot('FinancePaymentTasklistPage');
+    this.navCtrl.push('FinancePaymentTasklistPage');
   }
 
 }
