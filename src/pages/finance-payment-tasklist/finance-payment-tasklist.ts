@@ -14,9 +14,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'finance-payment-tasklist.html',
 })
 export class FinancePaymentTasklistPage {
-  role: any;
+  role: any;month: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.role = "Payment";
+    this.month = navParams.get("month");
+    if (this.month != undefined) {
+      this.month = this.month.substring(0, 3);
+    }
+    // console.log(this.month)
   }
 
   ionViewDidLoad() {

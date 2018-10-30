@@ -56,9 +56,17 @@ export class ClaimapprovertasklistPage {
   yearsList: any[] = [];
   currentYear: number = new Date().getFullYear();
   btnSearch: boolean = false;
-  // Pending: any;
+  month: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+    this.month = navParams.get("month");
+    if (this.month != undefined) {
+      this.month = this.month.substring(0, 3);
+      this.searchboxValue=this.month;
+    }
+    // console.log(this.month)
+
+
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry, Please login.');
       this.navCtrl.push(LoginPage);
@@ -97,6 +105,14 @@ export class ClaimapprovertasklistPage {
       //   this.onSearchInput( this.Pending);
       // }
       // else { this.BindData(); }
+
+      // this.searchboxValue = this.month;
+      // if (this.searchboxValue != undefined) {
+      //   // alert(this.searchboxValue);
+      //   this.onSearchInput();
+      // }
+      // else { this.BindData('All', 'All'); }
+
     }
 
   }
@@ -107,7 +123,9 @@ export class ClaimapprovertasklistPage {
       .map(res => res.json())
       .subscribe(data => {
         this.claimrequestdetails = [];
+       
         this.claimrequestdetails = data["resource"];
+        // console.log( this.claimrequestdetails)
         this.totalClaimAmount = 0;
         let key: any;
         this.claimrequestdetails.forEach(element => {
@@ -142,6 +160,11 @@ export class ClaimapprovertasklistPage {
           if (ddlClaimTypes.toString() !== "All") { this.claimrequestdetails = this.claimrequestdetails.filter(s => s.CLAIM_TYPE_GUID.toString() === ddlClaimTypes.toString()) }
         }
         this.FindTotalAmount();
+        // Lakshman
+        if (this.searchboxValue != undefined) {
+          this.onSearchInput();
+        }
+       // Lakshman
         this.btnSearch = true;
       });
 
@@ -159,6 +182,8 @@ export class ClaimapprovertasklistPage {
     // alert(this.searchboxValue);
     let val = this.searchboxValue;
     if (val && val.trim() != '') {
+      // alert(this.searchboxValue);
+      // alert(val);
       this.claimrequestdetails = this.claimrequestdetails1.filter((item) => {
         let fullname: number;
         let claimtype: number;
@@ -166,6 +191,7 @@ export class ClaimapprovertasklistPage {
         let stage: number;
         let amount: number;
         let date: number;
+        let month: number;
         //console.log(item);
 
         if (item.FULLNAME != null && !this.FinanceLogin) { fullname = item.FULLNAME.toLowerCase().indexOf(val.toLowerCase()) }
@@ -174,6 +200,10 @@ export class ClaimapprovertasklistPage {
         if (item.STATUS != null) { status = item.STATUS.toString().toLowerCase().indexOf(val.toLowerCase()) }
         if (item.STAGE != null) { stage = item.STAGE.toString().toLowerCase().indexOf(val.toLowerCase()) }
         if (item.CLAIM_AMOUNT != null) { amount = item.CLAIM_AMOUNT.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        if(this.month!=undefined){
+         
+        if (item.MONTH != null) { month = item.MONTH.toString().toLowerCase().indexOf(val.toLowerCase()) }
+        }
         return (
           (fullname > -1)
           || (date > -1)
@@ -181,6 +211,7 @@ export class ClaimapprovertasklistPage {
           || (status > -1)
           || (stage > -1)
           || (amount > -1)
+          || (month > -1)
         );
       })
     }
