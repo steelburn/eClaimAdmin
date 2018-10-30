@@ -131,8 +131,10 @@
     <ion-item>
       <ion-label color="primary500" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }}  {{ "TOTAL_CLAIM_AMOUNT_NOTE" | translate }}</ion-label>
       <ion-label color="primary500">{{currency}} {{totalClaimAmount | number:'1.2-2'}} </ion-label>
-      <ion-label style="margin-left: 16px;" color="primary">{{draftStatus}}</ion-label>
+      <!-- <ion-label style="margin-left: 16px;" color="primary">{{draftStatus}}</ion-label> -->
     </ion-item>  
+
+    <ion-label style="margin-left: 16px;" color="primary">{{draftStatus}}</ion-label>
    
     <!-- <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
