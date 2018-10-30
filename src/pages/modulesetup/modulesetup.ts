@@ -134,7 +134,7 @@ export class ModulesetupPage {
   public DeleteClick(MODULE_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',
@@ -223,7 +223,7 @@ export class ModulesetupPage {
       });
     }
     else {
-      alert("Sorry !! This is for only Super Admin.");
+      alert("Sorry. This is for only Super Admin.");
       this.navCtrl.push(LoginPage);
     }
   }

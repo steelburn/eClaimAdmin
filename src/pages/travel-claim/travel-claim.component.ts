@@ -16,6 +16,8 @@ import { LoadingController, ActionSheetController, Loading, ToastController } fr
 import { AddTollPage } from '../add-toll/add-toll.component';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
+import { ConferenceData } from '../../providers/conference-data';
+
 import { DecimalPipe } from '@angular/common';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
@@ -42,7 +44,8 @@ export class TravelclaimPage {
   public profileLevel: any;
   public stage: any;
   public profileJSON: any;
-  currency = localStorage.getItem("cs_default_currency")
+  currency = localStorage.getItem("cs_default_currency");
+  draftStatus: any = '';
 
   public Roundtrip_ngModel: boolean = false;
   public trip_amount: number;
@@ -51,8 +54,8 @@ export class TravelclaimPage {
   public Travel_Description_ngModel: any;
   public Travel_SOC_No_ngModel: any;
   public Travel_ProjectName_ngModel: any;
-  public Start_DT_ngModel: any;
-  public End_DT_ngModel: any;
+  public Start_DT_ngModel: any = this.api.CreateTimestamp();
+  public End_DT_ngModel: any = this.api.CreateTimestamp();
   public Travel_From_ngModel: any;
   public Travel_Destination_ngModel: any;
   public Travel_Distance_ngModel: any;
@@ -104,9 +107,9 @@ export class TravelclaimPage {
   claimRequestGUID: any;
   claimRequestData: any;
   rejectedLevel: any;
-  caluclationData: any[] = [];
+  CalculationData: any[] = [];
   One_Way_Distance: any;
-  constructor(public numberPipe: DecimalPipe, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+  constructor(public numberPipe: DecimalPipe, public conference: ConferenceData, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
 
     // Lakshman
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
@@ -185,7 +188,7 @@ export class TravelclaimPage {
 
   }
 
-  Roundtrip_Caluclation() {
+  Roundtrip_Calculation() {
     // this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID).subscribe(data => {
     //   this.claimRequestData = data["resource"];
 
@@ -217,9 +220,9 @@ export class TravelclaimPage {
             Return_totalAmount: this.totalClaimAmount
           }
 
-          this.caluclationData.push(temp_data)
-          resolve(this.caluclationData);
-          console.log(this.caluclationData);
+          this.CalculationData.push(temp_data)
+          resolve(this.CalculationData);
+          // console.log(this.CalculationData);
         }
 
       })
@@ -236,17 +239,17 @@ export class TravelclaimPage {
       }
 
       if (this.Roundtrip_ngModel) {
-        this.caluclationData = [];
+        this.CalculationData = [];
 
-        let val = this.Roundtrip_Caluclation();
+        let val = this.Roundtrip_Calculation();
         val.then((cal_data: any) => {
-          console.log(cal_data);
+          // console.log(cal_data);
           var return_distance = cal_data[0]["Return_distance"];
           var return_totalAmount = cal_data[0]["Return_totalAmount"];
           var return_travelAmount = cal_data[0]["Return_travelAmount"];
-          console.log(return_distance);
-          console.log(return_totalAmount);
-          console.log(return_travelAmount);
+          // console.log(return_distance);
+          // console.log(return_totalAmount);
+          // console.log(return_travelAmount);
           let distance = new String(formValues.distance);
           var distance1 = distance.indexOf(",");
           if (distance1 > 0) {
@@ -265,10 +268,10 @@ export class TravelclaimPage {
           else {
             return_distance = return_distance;
           }
-          let Toatal_Distance = Number(this.One_Way_Distance) + Number(return_distance);
-          this.Travel_Distance_ngModel = this.numberPipe.transform(Toatal_Distance, '1.2-2');
+          let Total_Distance = Number(this.One_Way_Distance) + Number(return_distance);
+          this.Travel_Distance_ngModel = this.numberPipe.transform(Total_Distance, '1.2-2');
           // alert(this.Travel_Distance_ngModel)
-          let two_way_amount = Toatal_Distance * this.VehicleRate;
+          let two_way_amount = Total_Distance * this.VehicleRate;
           this.travelAmountNgmodel = this.numberPipe.transform(two_way_amount, '1.2-2');
 
           this.totalClaimAmount = Number(two_way_amount) + this.tollParkAmount;
@@ -278,14 +281,15 @@ export class TravelclaimPage {
       }
 
       else {
-        if(!this.isFormEdit)
-       { let One_Way_Distance_string = this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
-        this.Travel_Distance_ngModel = One_Way_Distance_string;
-        let one_way_amount = this.One_Way_Distance * this.VehicleRate;
-        this.travelAmountNgmodel = this.numberPipe.transform(one_way_amount, '1.2-2');
-        this.totalClaimAmount = Number(one_way_amount) + this.tollParkAmount;
-        this.travelAmount = Number(one_way_amount);}
-        else{
+        if (!this.isFormEdit) {
+          let One_Way_Distance_string = this.numberPipe.transform(this.One_Way_Distance, '1.2-2');
+          this.Travel_Distance_ngModel = One_Way_Distance_string;
+          let one_way_amount = this.One_Way_Distance * this.VehicleRate;
+          this.travelAmountNgmodel = this.numberPipe.transform(one_way_amount, '1.2-2');
+          this.totalClaimAmount = Number(one_way_amount) + this.tollParkAmount;
+          this.travelAmount = Number(one_way_amount);
+        }
+        else {
           this.GetDistance();
         }
       }
@@ -298,10 +302,7 @@ export class TravelclaimPage {
     amount = amount.split(",").join("");
     amount = Number(amount);
     if (amount > 99999) {
-      // alert('Amount should not exceed RM99999.')
-      // // this.travelAmountNgmodel = null;
-      // this.travelAmount = 0;
-      // this.totalClaimAmount = 0;
+
     }
     else {
       this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
@@ -310,24 +311,7 @@ export class TravelclaimPage {
     }
   }
 
-  // Lakshman
-  // getCurrency(amount: number) {
-  //   amount = Number(amount);
-  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
-  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
-  //     // this.travelAmountNgmodel = null
-  //     // this.claimAmount = 0;
-  //         this.travelAmount = 0;
-  //     this.totalClaimAmount = 0;
-  //   } 
-  //   else {
-  //     // this.claimAmount = amount;
-  //     this.travelAmountNgmodel = this.numberPipe.transform(amount, '1.2-2');
-  //     this.travelAmount = amount;
-  //     this.totalClaimAmount = amount;
-  //   }
-  // } 
-  // Lakshman
+
 
   totalClaimAmount: number;
   ionViewWillEnter() {
@@ -356,7 +340,7 @@ export class TravelclaimPage {
               this.PublicTransValue = true;
               this.travelAmountNgmodel = this.numberPipe.transform(this.claimRequestData[0].MILEAGE_AMOUNT, '1.2-2');
               this.totalClaimAmount = this.travelAmount = this.claimRequestData[0].MILEAGE_AMOUNT;
-              this.Roundtrip_ngModel = this.claimRequestData[0].ROUND_TRIP === 1?true: false;
+              this.Roundtrip_ngModel = this.claimRequestData[0].ROUND_TRIP === 1 ? true : false;
               if (this.claimRequestData[0].SOC_GUID === null) {
                 this.claimFor = 'seg_customer'
                 this.isCustomer = true;
@@ -391,9 +375,10 @@ export class TravelclaimPage {
               this.Travel_Destination_ngModel = this.claimRequestData[0].DESTINATION;
               this.DestinationPlaceID = this.claimRequestData[0].to_place_id;
               this.OriginPlaceID = this.claimRequestData[0].from_place_id;
-              this.Travel_Distance_ngModel = this.claimRequestData[0].DISTANCE_KM;
+              this.Travel_Distance_ngModel = this.numberPipe.transform(this.claimRequestData[0].DISTANCE_KM, '1.2-2');
               this.LoadClaimDetails();
               this.Travel_Description_ngModel = this.claimRequestData[0].DESCRIPTION
+              if (this.claimRequestData[0].STATUS === "Draft") { this.draftStatus = "Draft" }
 
               this.paymentTypes.forEach(element => {
                 if (this.claimRequestData[0].claim_method_guid === element.PAYMENT_TYPE_GUID) {
@@ -937,7 +922,7 @@ export class TravelclaimPage {
 
 
   validateDate(startDate: any, endDate: any) {
-    let today = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+    let today = this.api.CreateTimestamp();
     let start = startDate;
     let end = endDate;
     if (start > end || today < start) {
@@ -991,102 +976,112 @@ export class TravelclaimPage {
     }
 
     formValues.travel_date = formValues.start_DT;
-    if (this.api.isClaimExpired(formValues.travel_date, false))
-      return;
+
     if (this.Customer_GUID === undefined && this.Soc_GUID === undefined) {
       alert('Please select "project" or "customer" to continue.');
       return;
     }
     if (this.validateDate(this.Start_DT_ngModel, this.End_DT_ngModel)) {
-      if (!this.isFormSubmitted) {
-        this.isFormSubmitted = true;
-        formValues.uuid = this.claimRequestGUID = UUID.UUID();
-        // formValues.travel_date = formValues.start_DT
-        formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
-        formValues.meal_allowance = this.allowanceGUID;
-        formValues.distance = this.Travel_Distance_ngModel.split(",").join("");
-        formValues.vehicleType = this.VehicleId;
-        formValues.attachment_GUID = this.imageGUID;
-        formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
-        formValues.PayType = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
+      this.api.getApiModel('claim_work_flow_history', 'filter=(CLAIM_REQUEST_GUID=' + this.claimRequestGUID + ')AND(STATUS="Rejected")')
+        .subscribe(data => {
+          if (data["resource"].length <= 0)
+            if (this.api.isClaimExpired(formValues.travel_date, true)) { return; }
 
-        formValues.from_id = this.OriginPlaceID;
-        formValues.to_id = this.DestinationPlaceID;
-        formValues.Roundtrip = this.Roundtrip_ngModel ? 1 : 0;
+          let distCalc = this.Travel_Distance_ngModel.split(",");
+          let optDistance = distCalc.length <= 0 ? this.Travel_Distance_ngModel : this.Travel_Distance_ngModel.split(",").join("");
 
-        this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
-        this.MainClaimSaved = true;
-      }
-      else {
-        this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
-          .subscribe(data => {
-            this.claimRequestData = data;
-            // this.claimRequestData["resource"][0].STATUS = 'Pending';
+          if (!this.isFormSubmitted) {
+            this.isFormSubmitted = true;
+            formValues.uuid = this.claimRequestGUID = UUID.UUID();
+            // formValues.travel_date = formValues.start_DT
+            formValues.claimTypeGUID = '58c59b56-289e-31a2-f708-138e81a9c823';
+            formValues.meal_allowance = this.allowanceGUID;
+            formValues.distance = optDistance;
+            formValues.vehicleType = this.VehicleId;
+            formValues.attachment_GUID = this.imageGUID;
+            formValues.soc_no = this.isCustomer ? this.Customer_GUID : this.Soc_GUID;
+            formValues.PayType = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
 
-            this.claimRequestData["resource"][0].MILEAGE_GUID = this.VehicleId;
-            this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.start_DT;
-            this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
-            this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
-            this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmount;
-            this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.totalClaimAmount;
-            this.claimRequestData["resource"][0].ROUND_TRIP = this.Roundtrip_ngModel ? 1 : 0;
-            this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
-            this.claimRequestData["resource"][0].FROM = formValues.origin;
-            this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
-            this.claimRequestData["resource"][0].DISTANCE_KM = this.Travel_Distance_ngModel.split(",").join("");
-            this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
-            this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
-            this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
-            this.claimRequestData["resource"][0].claim_method_guid = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
-            if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
-              this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
-              this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
-              this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
-              if (this.rejectedLevel === 3)
-                this.claimRequestData["resource"][0].STATUS = 'Approved';
-              else
-                this.claimRequestData["resource"][0].STATUS = 'Pending';
-            }
-            else {
-              this.claimRequestData["resource"][0].STATUS = 'Pending';
-            }
+            formValues.from_id = this.OriginPlaceID;
+            formValues.to_id = this.DestinationPlaceID;
+            formValues.Roundtrip = this.Roundtrip_ngModel ? 1 : 0;
 
-            if (this.isCustomer) {
-              this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
-              this.claimRequestData["resource"][0].SOC_GUID = null;
-            }
-            else {
-              this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
-              this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
-            }
+            this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+            this.MainClaimSaved = true;
+            this.draftStatus = "Draft"
+          }
+          else {
+            this.api.getApiModel('main_claim_request', 'filter=CLAIM_REQUEST_GUID=' + this.claimRequestGUID)
+              .subscribe(data => {
+                this.claimRequestData = data;
+                // this.claimRequestData["resource"][0].STATUS = 'Pending';
 
-            //Added by Bijay on 12/10/2018 for audit_trial-----------------------
-            if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
-            }
-            else {
-              this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + moment(new Date()).format('YYYY-MM-DDTHH:mm') + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
-            }
-            //-------------------------------------------------------------------
+                this.claimRequestData["resource"][0].MILEAGE_GUID = this.VehicleId;
+                this.claimRequestData["resource"][0].TRAVEL_DATE = formValues.start_DT;
+                this.claimRequestData["resource"][0].START_TS = formValues.start_DT;
+                this.claimRequestData["resource"][0].END_TS = formValues.end_DT;
+                this.claimRequestData["resource"][0].MILEAGE_AMOUNT = this.travelAmount;
+                this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.totalClaimAmount;
+                this.claimRequestData["resource"][0].ROUND_TRIP = this.Roundtrip_ngModel ? 1 : 0;
+                this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
+                this.claimRequestData["resource"][0].FROM = formValues.origin;
+                this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
+                this.claimRequestData["resource"][0].DISTANCE_KM =  optDistance;
+                this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
+                this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
+                this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
+                this.claimRequestData["resource"][0].claim_method_guid = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
+                if (this.claimRequestData["resource"][0].STATUS === 'Rejected') {
+                  this.claimRequestData["resource"][0].PROFILE_LEVEL = this.rejectedLevel;
+                  this.claimRequestData["resource"][0].STAGE = localStorage.getItem('edit_stage');
+                  this.claimRequestData["resource"][0].ASSIGNED_TO = localStorage.getItem('edit_superior');
+                  if (this.rejectedLevel === 3)
+                    this.claimRequestData["resource"][0].STATUS = 'Approved';
+                  else
+                    this.claimRequestData["resource"][0].STATUS = 'Pending';
+                }
+                else {
+                  this.claimRequestData["resource"][0].STATUS = 'Pending';
+                }
 
-            this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
-              // if (isClaim && modelJSON.STATUS != 'Draft')
-              // if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
+                if (this.isCustomer) {
+                  this.claimRequestData["resource"][0].CUSTOMER_GUID = this.Customer_GUID;
+                  this.claimRequestData["resource"][0].SOC_GUID = null;
+                }
+                else {
+                  this.claimRequestData["resource"][0].SOC_GUID = this.Soc_GUID;
+                  this.claimRequestData["resource"][0].CUSTOMER_GUID = null;
+                }
 
-              // Send Email------------------------------------------------
-              // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
-              //Commented By bijay on 24/09/2018 as per scheduler implemented
-              // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
-              // ----------------------------------------------------------
-              //}
+                //Added by Bijay on 12/10/2018 for audit_trial-----------------------
+                if (this.claimRequestData["resource"][0].AUDIT_TRAIL != null && this.claimRequestData["resource"][0].AUDIT_TRAIL != "") {
+                  this.claimRequestData["resource"][0].AUDIT_TRAIL = this.claimRequestData["resource"][0].AUDIT_TRAIL + " \n Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+                }
+                else {
+                  this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
+                }
+                //-------------------------------------------------------------------
 
-              alert('Claim details updated successfully.');
-              this.navCtrl.push(UserclaimslistPage);
-            })
-          })
-        // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
-        // this.MainClaimSaved = true;
-      }
+                this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
+                  // if (isClaim && modelJSON.STATUS != 'Draft')
+                  // if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
+
+                  // Send Email------------------------------------------------
+                  // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
+                  //Commented By bijay on 24/09/2018 as per scheduler implemented
+                  // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
+                  // ----------------------------------------------------------
+                  //}
+
+                  alert('Claim details updated successfully.');
+                  // this.navCtrl.push(UserclaimslistPage);
+                  this.conference.pushTravelClaim();
+                })
+              })
+            // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
+            // this.MainClaimSaved = true;
+          }
+        })
     }
   }
 
@@ -1099,6 +1094,11 @@ export class TravelclaimPage {
     else if (claimMethodGuid === '0ebb7e5f-037a-11e8-a50c-ssh55de7e742') { this.showAddAccommodation(claimDetailId) }
 
   }
+
+  selfRoot(){
+    this.conference.pushTravelClaim();
+   }
+
   DeleteDetail(claimDetailId: string) {
     this.api.deleteApiModel('claim_request_detail', claimDetailId).subscribe(() => {
       this.tollParkAmount = 0;

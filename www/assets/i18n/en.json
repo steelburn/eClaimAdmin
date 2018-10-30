@@ -402,11 +402,11 @@
  "RATE": "Rate",
  "EFFECTIVE_DATE": "Effective Date",
  "S_ACTIVE_FLAG": "Active Flag",
- "EDIT_SUBSCRIPTION": "EDIT SUBSCRIPTION",
- "TENANAT_SETUP": "TENANAT SETUP",
- "REGISTER_NEW_TENANT": "REGISTER NEW TENANT",
- "UPDATE_TENANT": "UPDATE TENANT",
- "ACCOUNT_DETAILS": "ACCOUNT DETAILS",
+ "EDIT_SUBSCRIPTION": "Edit Subscription",
+ "TENANT_SETUP": "Tenant Setup",
+ "REGISTER_NEW_TENANT": "Register New Tenant",
+ "UPDATE_TENANT": "Update Tenant",
+ "ACCOUNT_DETAILS": "Account Details",
  "COMPANY_NAME": "Company Name",
  "SITE_NAME": "Site Name",
  "REGISTRATION_NO": "Registration Number",
@@ -425,6 +425,7 @@
  "HISTORY": "My Claim History",
  "MENU_ICON": "Menu Icon",
  "UPDATE_MODULE": "Update_Module",
- "ROUND_TRIP_LABEL": "Round Trip"
+ "ROUND_TRIP_LABEL": "Round Trip",
+ "ROUND_TRIP_NOTE": "Check if you make a round trip, you go on a journey and return to where you started from."
  
 } 

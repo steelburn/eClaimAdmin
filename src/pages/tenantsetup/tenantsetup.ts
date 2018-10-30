@@ -253,7 +253,7 @@ export class TenantsetupPage {
   public DeleteClick(TENANT_COMPANY_SITE_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',
@@ -343,7 +343,7 @@ export class TenantsetupPage {
       });
     }
     else {
-      alert("Sorry !! This is for only Super Admin.");
+      alert("Sorry. This is for only Super Admin.");
       this.navCtrl.push(LoginPage);
     }
   }

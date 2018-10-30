@@ -124,8 +124,8 @@ export class AddTollPage {
       // 2a543cd5-0177-a1d0-5482-48b52ec2100f
       claimReqRef.AMOUNT = this.claimAmount + '';
       claimReqRef.DESCRIPTION = this.Description;
-      claimReqRef.CREATION_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
-      claimReqRef.UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+      claimReqRef.CREATION_TS = this.api.CreateTimestamp();
+      claimReqRef.UPDATE_TS = this.api.CreateTimestamp();
       claimReqRef.ATTACHMENT_ID = this.imageGUID;
 
       this.api.postData('claim_request_detail', claimReqRef.toJson(true)).subscribe((response) => {
@@ -140,7 +140,7 @@ export class AddTollPage {
           this.claimDetailsData["resource"][0].PAYMENT_TYPE_GUID = this.PayType === undefined ? 'f74c3366-0437-51ec-91cc-d3fad23b061c' : this.PayType;
           this.claimDetailsData["resource"][0].AMOUNT = this.claimAmount;
           this.claimDetailsData["resource"][0].DESCRIPTION = this.Description;
-          this.claimDetailsData["resource"][0].UPDATE_TS = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+          this.claimDetailsData["resource"][0].UPDATE_TS = this.api.CreateTimestamp();
 
 
           this.claimDetailsData["resource"][0].ATTACHMENT_ID = (this.imageGUID !== undefined || this.imageGUID !== null) ? this.imageGUID : this.claimDetailsData["resource"][0].ATTACHMENT_ID;

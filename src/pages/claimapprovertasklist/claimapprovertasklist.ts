@@ -21,6 +21,7 @@ import { MiscellaneousClaimViewPage } from '../miscellaneous-claim-view/miscella
 import { ClaimtasklistPage } from '../claimtasklist/claimtasklist';
 import { LoginPage } from '../login/login';
 import * as Settings from '../../dbSettings/companySettings'
+import { FinancePaymentTasklistPage } from '../finance-payment-tasklist/finance-payment-tasklist';
 
 
 @IonicPage()
@@ -59,6 +60,8 @@ export class ClaimapprovertasklistPage {
   // Pending: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+   //alert(this.navCtrl.getActive()._state.toFixed);  
+   //this.navCtrl.getActive()._state.toFixed
     if (localStorage.getItem("g_USER_GUID") == null) {
       alert('Sorry, Please login.');
       this.navCtrl.push(LoginPage);
@@ -98,7 +101,7 @@ export class ClaimapprovertasklistPage {
       // }
       // else { this.BindData(); }
     }
-
+// this.navCtrl.getPrevious(FinancePaymentTasklistPage:this.page)
   }
   BindData(ddlEmployee?: string, ddlClaimTypes?: string) {
 

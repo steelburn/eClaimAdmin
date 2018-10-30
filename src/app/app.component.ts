@@ -152,7 +152,7 @@ export class ConferenceApp {
 
     platform.ready().then(() => {
       //alert(localStorage.getItem("cs_default_language"));
-     
+
     });
     this.TranslateLanguage();
     // translate.setDefaultLang('en');
@@ -257,7 +257,7 @@ export class ConferenceApp {
     this.reportPages = [];
     this.setupsPages = [];
     this.loggedInPages = [];
-        
+
     if (localStorage.getItem("g_USER_GUID") != null) {
       loggedIn = true;
     }
@@ -287,13 +287,14 @@ export class ConferenceApp {
         this.menu.enable(!loggedIn, 'loggedOutMenu');
       }
       else {
-        this.appPages = [];
-        this.appPages_User = [];
-        this.claimPages = [];
-        this.reportPages = [];
-        this.setupsPages = [];
-        this.loggedInPages = [];
-        
+        // this.appPages = [];
+        // this.appPages_User = [];
+        // this.claimPages = [];
+        // this.reportPages = [];
+        // this.setupsPages = [];
+        // this.loggedInPages = [];
+
+
         //Get all the roles and menus for that particular user.-------------------------------------------------------   
         let url: string; this.Menu_Array = []; let Role_Name: string = "";
         this.Menu_Dashboard_Array = []; this.Menu_Tasks_Array = []; this.Menu_Claims_Array = []; this.Menu_Reports_Array = []; this.Menu_Settings_Array = [];
@@ -303,6 +304,7 @@ export class ConferenceApp {
           .map(res => res.json())
           .subscribe(data => {
             let res = data["resource"];
+
             if (res.length > 0) {
               for (var item in data["resource"]) {
                 //For Dashboard-------------------------------------------
@@ -339,7 +341,7 @@ export class ConferenceApp {
                 if (data["resource"][item]["MENU_HEADER"] == "Account") {
                   if (data["resource"][item]["NAME"] == "Sign Out") {
                     this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"], logsOut: true });
-                    this.blnAccount_loggedInMenu_User = true;
+                    this.blnAccount_loggedInMenu_User = true; 
                   }
                   else {
                     if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -364,13 +366,53 @@ export class ConferenceApp {
               this.setupsPages = this.Menu_Settings_Array;
               this.loggedInPages = this.Menu_Array;
               //----------------------------------------------------------
+              //---------if duplicate records then remove---------------------------------------------------------------------------------------
+              this.appPages = this.Menu_Dashboard_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
 
+              this.appPages_User = this.Menu_Tasks_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+
+              this.claimPages = this.Menu_Claims_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+
+              this.reportPages = this.Menu_Reports_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+
+              this.setupsPages = this.Menu_Settings_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+
+              this.loggedInPages = this.Menu_Array.filter((thing: any, index: any, self: any) =>
+                index === self.findIndex((t: any) => (
+                  t.name === thing.name
+                ))
+              )
+              
+              //---------------------------------------------------------------------------------------------------------------------------
             }
           });
 
         this.menu.enable(loggedIn, 'loggedInMenu_User');
         this.menu.enable(!loggedIn, 'loggedOutMenu');
+
+
         // --------------------------------------------------------------------------------------------------------------------------------- 
+
       }
     }
     else {

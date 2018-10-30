@@ -44,7 +44,7 @@ export class SettingsPage {
 
   constructor(private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, private httpService: BaseHttpService, private settingservice: Settings_Service, private alertCtrl: AlertController, public GlobalFunction: GlobalFunction, private loadingCtrl: LoadingController, private titlecasePipe: TitleCasePipe) {
     if (localStorage.getItem("g_USER_GUID") == null) {
-      alert('Sorry !! Please Login.');
+      alert('Sorry, you are not logged in. Please login.');
       this.navCtrl.push(LoginPage);
     }
     else {
@@ -73,7 +73,7 @@ export class SettingsPage {
         });
       }
       else {
-        alert('Sorry!! You are not authorized.');
+        alert('Sorry, you are not authorized for the action. authorized.');
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
       }
     }
@@ -85,7 +85,7 @@ export class SettingsPage {
       this.ClearControls();
     }
     else {
-      alert('Sorry !! You are in Edit Mode.');
+      alert('Sorry. You are in Edit Mode.');
     }
   }
 
@@ -122,7 +122,7 @@ export class SettingsPage {
   public DeleteClick(PERMISSION_KEY_GUID: any) {
     let alert = this.alertCtrl.create({
       title: 'Remove Confirmation',
-      message: 'Do you want to remove ?',
+      message: 'Are you sure to remove?',
       buttons: [
         {
           text: 'Cancel',

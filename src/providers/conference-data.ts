@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { UserData } from './user-data';
+import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
+import { App } from 'ionic-angular';
+
+
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -12,8 +16,8 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class ConferenceData {
   data: any;
-
-  constructor(public http: Http, public user: UserData) { }
+  navCtrl: any;
+  constructor(public http: Http, public user: UserData,  app: App) {  this.navCtrl = app.getActiveNav() }
 
   load(): any {
     if (this.data) {
@@ -69,7 +73,7 @@ export class ConferenceData {
       day.shownSessions = 0;
 
       queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
-      let queryWords = queryText.split(' ').filter(w => !!w.trim().length);
+      let queryWords = queryText.split(' ').filter(w =>!!w.trim().length);
 
       day.groups.forEach((group: any) => {
         group.hide = true;
@@ -151,5 +155,9 @@ export class ConferenceData {
       return data.map;
     });
   }
+
+  pushTravelClaim(){
+    this.navCtrl.setRoot(TravelclaimPage);         
+}
 
 }
