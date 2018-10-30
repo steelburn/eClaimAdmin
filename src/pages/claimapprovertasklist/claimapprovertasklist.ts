@@ -21,6 +21,7 @@ import { MiscellaneousClaimViewPage } from '../miscellaneous-claim-view/miscella
 import { ClaimtasklistPage } from '../claimtasklist/claimtasklist';
 import { LoginPage } from '../login/login';
 import * as Settings from '../../dbSettings/companySettings'
+import { FinancePaymentTasklistPage } from '../finance-payment-tasklist/finance-payment-tasklist';
 
 
 @IonicPage()
@@ -59,12 +60,14 @@ export class ClaimapprovertasklistPage {
   month: any;
 
   constructor(public profileMngProvider: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+
     this.month = navParams.get("month");
     if (this.month != undefined) {
       this.month = this.month.substring(0, 3);
       this.searchboxValue=this.month;
     }
     // console.log(this.month)
+
 
 
     if (localStorage.getItem("g_USER_GUID") == null) {
@@ -114,7 +117,7 @@ export class ClaimapprovertasklistPage {
       // else { this.BindData('All', 'All'); }
 
     }
-
+// this.navCtrl.getPrevious(FinancePaymentTasklistPage:this.page)
   }
   BindData(ddlEmployee?: string, ddlClaimTypes?: string) {
 

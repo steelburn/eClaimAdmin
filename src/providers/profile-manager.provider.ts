@@ -480,7 +480,7 @@ export class ProfileManagerProvider {
             else
                 alert('Please click (+) icon to include additional details and submit your claim.')
         })
-    }
+    }    
 
     saveClaimRef(month: any, year: any) {
         let claimReqRef: MainClaimReferanceModel = new MainClaimReferanceModel();
