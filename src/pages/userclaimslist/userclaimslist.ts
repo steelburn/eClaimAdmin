@@ -245,6 +245,7 @@ export class UserclaimslistPage {
               || (amount > -1)
             );
           })
+          this.btnSearch = true;
         });
       // Lakshman June-13,2018
 
@@ -272,7 +273,7 @@ export class UserclaimslistPage {
     }
     else {
       this.userClaimhistorydetails = this.userClaimhistorydetails1;
-
+      this.btnSearch = true;
     }
   }
 
