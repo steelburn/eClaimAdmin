@@ -980,35 +980,36 @@ export class DashboardPage {
   }
   Rejected_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { Rejected: Settings.StatusConstants.REJECTED });
-    this.navCtrl.setRoot('UserclaimslistPage', { Rejected_data: [{ Rejected: Settings.StatusConstants.REJECTED,month:this.Month_Change_ngModel}] });
+    this.navCtrl.push('UserclaimslistPage', { Rejected_data: [{ Rejected: Settings.StatusConstants.REJECTED,month:this.Month_Change_ngModel}] });
   }
   Pending_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR });
-    this.navCtrl.setRoot('UserclaimslistPage', {Pending_data:[{ PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR,month:this.Month_Change_ngModel}] });
+    this.navCtrl.push('UserclaimslistPage', {Pending_data:[{ PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR,month:this.Month_Change_ngModel}] });
   }
   Validated_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { Approved: Settings.StatusConstants.PENDINGPAYMENT });
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved_data:[{PENDINGPAYMENT: Settings.StatusConstants.PENDINGPAYMENT,month:this.Month_Change_ngModel}]});
+    this.navCtrl.push('UserclaimslistPage', { Approved_data:[{PENDINGPAYMENT: Settings.StatusConstants.PENDINGPAYMENT,month:this.Month_Change_ngModel}]});
   }
   Approved_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION });
-    this.navCtrl.setRoot('UserclaimslistPage', { Validation_data:[{PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION,month:this.Month_Change_ngModel}] });
+    this.navCtrl.push('UserclaimslistPage', { Validation_data:[{PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION,month:this.Month_Change_ngModel}] });
   }
   Paid_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { Paid: Settings.StatusConstants.PAID });
-    this.navCtrl.setRoot('UserclaimslistPage', { Paid_data:[{Paid: Settings.StatusConstants.PAID,month:this.Month_Change_ngModel}]});
+    this.navCtrl.push('UserclaimslistPage', { Paid_data:[{Paid: Settings.StatusConstants.PAID,month:this.Month_Change_ngModel}]});
   }
   Approver_Click() {
     // this.navCtrl.setRoot('ClaimapprovertasklistPage');
-    this.navCtrl.setRoot('ClaimapprovertasklistPage', {month:this.Month_Change_ngModel});
+    this.navCtrl.push('ClaimapprovertasklistPage', {month:this.Month_Change_ngModel});
   }
   Finance_Executive_Click() {
     // this.navCtrl.setRoot('ClaimtasklistPage');
-    this.navCtrl.setRoot('ClaimtasklistPage', {month:this.Month_Change_ngModel});
+    this.navCtrl.push('ClaimtasklistPage', {month:this.Month_Change_ngModel});
   }
   Finance_Manager_Click() {
     // this.navCtrl.setRoot('FinancePaymentTasklistPage');
-    this.navCtrl.setRoot('FinancePaymentTasklistPage', {month:this.Month_Change_ngModel});
+    this.navCtrl.push('FinancePaymentTasklistPage', {month:this.Month_Change_ngModel});
+
   }
 
 }

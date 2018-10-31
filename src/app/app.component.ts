@@ -178,7 +178,7 @@ export class ConferenceApp {
     // this.menu.enable(false, 'loggedInMenu');
     this.menu.enable(false, 'loggedInMenu_User');
   }
-
+  pageName: any;
   openPage(page: PageInterface) {
     // debugger;    
     let params = {};
@@ -189,7 +189,8 @@ export class ConferenceApp {
     if (page.index) {
       params = { tabIndex: page.index };
     }
-
+    this.pageName = page.name;
+    //alert(this.pageName);
     // If we are already on tabs just change the selected tab
     // don't setRoot again, this maintains the history stack of the
     // tabs even if changing them from the menu
@@ -341,7 +342,7 @@ export class ConferenceApp {
                 if (data["resource"][item]["MENU_HEADER"] == "Account") {
                   if (data["resource"][item]["NAME"] == "Sign Out") {
                     this.Menu_Array.push({ title: data["resource"][item]["NAME"], name: data["resource"][item]["CODE_PAGE_NAME"], component: data["resource"][item]["CODE_PAGE_NAME"], icon: data["resource"][item]["MENU_ICON"], logsOut: true });
-                    this.blnAccount_loggedInMenu_User = true; 
+                    this.blnAccount_loggedInMenu_User = true;
                   }
                   else {
                     if (localStorage.getItem("Ad_Authenticaton") == "true") {
@@ -402,7 +403,7 @@ export class ConferenceApp {
                   t.name === thing.name
                 ))
               )
-              
+
               //---------------------------------------------------------------------------------------------------------------------------
             }
           });
@@ -814,20 +815,22 @@ export class ConferenceApp {
 
   isActive(page: PageInterface) {
     // debugger;    
-    let childNav = this.nav.getActiveChildNavs()[0];
+    // let childNav = this.nav.getActiveChildNavs()[0];
 
-    // Tabs are a special case because they have their own navigation
-    if (childNav) {
-      if (childNav.getSelected() && childNav.getSelected().root === page.tabComponent) {
-        return 'primary';
-      }
-      return;
-    }
+    // // Tabs are a special case because they have their own navigation
+    // if (childNav) {
+    //   if (childNav.getSelected() && childNav.getSelected().root === page.tabComponent) {
+    //     return 'primary';
+    //   }
+    //   return;
+    // }
 
-    if (this.nav.getActive() && this.nav.getActive().name === page.name) {
+    if ((this.nav.getActive() && this.nav.getActive().name === page.name && this.pageName == page.name) ||
+      (this.nav.getActive() && this.nav.getActive().name === page.name && page.name == "DashboardPage")) {
+      // alert(page.name);
       return 'primary';
     }
-    return;
+    return null;
   }
 
   public translateToMalayClicked: boolean = false;
