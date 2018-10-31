@@ -78,7 +78,7 @@ export class RolemodulesetupPage {
   loading: Loading;
 
   SetupDisplay: boolean = false;
-  AdminSetupDisplay: boolean = false;
+  // AdminSetupDisplay: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, public http: Http, private rolemodulesetupservice: RoleModuleSetup_Service, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     // if (localStorage.getItem("g_USER_GUID") == "sva") {
