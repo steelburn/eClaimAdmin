@@ -98,14 +98,14 @@ export class DashboardPage {
     // let Year_ngModel = this.monthNames(this.Month_Change_ngModel) + " " + this.year_value;   
     let Year_ngModel = this.Month_Change_ngModel + " " + this.year_value;
     this.Year_Change_ngModel = Year_ngModel;
-    //  alert(this.Year_Change_ngModel)
+   
     this.paid_month_model = this.monthNameToNum(this.Month_Change_ngModel);
     // For web
     // this.Year_Change_ngModel = this.year_value;
     // this.MONTH = this.monthNames(this.Month_Change_ngModel);
     this.MONTH = this.Month_Change_ngModel;
     this.YEAR = this.year_value;
-    // console.log(this.baseResourceUrl_New)
+    
     // this.GetRoleName();
     this.GetData_filter();
     this.GetDashboardInfo();
@@ -118,24 +118,15 @@ export class DashboardPage {
     this.GetData_FaRole();
     this.GetData_FeRole_Year();
     let val = this.GetRoleName();
-    val.then((res: any) => {
-      // this.loginUserRole = res.toString();
-      // console.log(res);
-      // this.loginUserRole = res["ROLE_NAME"];
-      // console.log(this.loginUserRole);
-      // console.log(res["ROLE_NAME"]);
-      res.forEach((e: any) => {
-        // alert(e["ROLE_NAME"])
+    val.then((res: any) => {     
+      res.forEach((e: any) => {       
         if (e["ROLE_NAME"] === Settings.UserRoleConstants.TEAM_LEAD || e["ROLE_NAME"] === Settings.UserRoleConstants.DIVISION_HEAD || e["ROLE_NAME"] === Settings.UserRoleConstants.HOD
           || e["ROLE_NAME"] === Settings.UserRoleConstants.HR || e["ROLE_NAME"] === Settings.UserRoleConstants.DESK_ADMIN) {
           this.IsApprover = true;
         }
-
         // Finance Executive
         if (e["ROLE_NAME"] === Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
-          this.IsFinanceExecutive = true;
-          // this.GetData_FeRole();
-          // this.GetData_FeRole_Year();       
+          this.IsFinanceExecutive = true;            
         }
 
         if (e["ROLE_NAME"] === Settings.UserRoleConstants.FINANCE_MANAGER || e["ROLE_NAME"] === Settings.UserRoleConstants.FINANCE_ADMIN) {
@@ -145,27 +136,7 @@ export class DashboardPage {
       });
 
     })
-
-    // val.then((res) => {
-    //   this.loginUserRole = res.toString();
-    //   // console.log(this.loginUserRole);
-
-    //   if (this.loginUserRole === Settings.UserRoleConstants.TEAM_LEAD || this.loginUserRole === Settings.UserRoleConstants.DIVISION_HEAD || this.loginUserRole === Settings.UserRoleConstants.HOD) {
-    //     this.IsApprover = true;
-    //   }
-
-    //   // Finance Executive
-    //   if (this.loginUserRole === Settings.UserRoleConstants.FINANCE_EXECUTIVE) {
-    //     this.IsFinanceExecutive = true;
-    //     // this.GetData_FeRole();
-    //     // this.GetData_FeRole_Year();       
-    //   }
-
-    //   if (this.loginUserRole === Settings.UserRoleConstants.FINANCE_MANAGER || this.loginUserRole === Settings.UserRoleConstants.FINANCE_ADMIN) {
-    //     this.IsFinanceManager = true;
-    //     this.IsApprover = true;
-    //   }
-    // })
+  
   }
   // Unique and Sort years
   sortUnique(arr: any) {
@@ -203,23 +174,11 @@ export class DashboardPage {
       return result;
     }
   }
-  // deduplicate_year(data: any) {
-  //   if (data.length > 0) {
-  //     var result: any[] = [];
-  //     data.forEach(function (elem: any) {
-  //       if (result.indexOf(elem.YEAR) === -1) {
-  //         result.push(elem.YEAR);
-  //       }
-  //     });
-  //     return result;
-  //   }
-  // }
+ 
   GetRoleName() {
     //Get the role of that particular user----------------------------------------------
-    // 
     let role_url: string = "";
     let result: any;
-    // let baseResource_Url_role: string = constants.DREAMFACTORY_TABLE_URL;
     // role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')AND(ROLE_FLAG=MAIN)&api_key=' + constants.DREAMFACTORY_API_KEY;
     role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     // console.log(role_url)
@@ -230,134 +189,21 @@ export class DashboardPage {
           let role_result = response["resource"];
           // console.log(role_result);
           // this.role_name = role_result[0]["ROLE_NAME"];
-          if (role_result != null) {
-            //   this.role_name = role_result[0]["ROLE_NAME"];
-            //   //  localStorage.setItem("g_ROLE_NAME")=role_name;
-            //   localStorage.setItem("g_ROLE_NAME", this.role_name);
-            //   //  localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
-            //   //  localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
-            //   //  localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
-            //   //  localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
-            //   // alert(localStorage.getItem("g_ROLE_NAME"));
+          if (role_result != null) {          
           }
-          else {
-            //   //  localStorage.setItem("g_KEY_VIEW", "1");
-            //   //  localStorage.removeItem("g_ROLE_NAME");
-            // localStorage.getItem("g_ROLE_NAME")=null;
+          else {            
             role_result = null;
-          }
-
-          //     if (localStorage.getItem("g_ROLE_NAME") === "Team Lead" || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD") {
-          //       this.IsApprover = true;
-          //     }
-          //     // else
-          //     // {
-          //     //   this.IsFinanceExecutive=false;
-          //     //   this.IsFinanceManager=false;
-          //     // }
-          //     // Finance Executive
-          //     if (localStorage.getItem("g_ROLE_NAME") === "Finance Executive") {
-          //       this.IsFinanceExecutive = true;
-          //     }
-          //     // else
-          //     // {
-          //     //   this.IsApprover=false;
-          //     //   this.IsFinanceManager=false;
-          //     // }
-
-          //     if (localStorage.getItem("g_ROLE_NAME") === "Finance Manager" || localStorage.getItem("g_ROLE_NAME") === "Finance Admin") {
-          //       this.IsFinanceManager = true;
-          //       this.IsApprover = true;
-          //     }
-          //     // else
-          //     // {
-          //     //   this.IsApprover=false;
-          //     //   this.IsFinanceExecutive=false;
-          //     // }
-          //  //   this.GetData_filter();
-
-          // localStorage.setItem("g_ROLE_NAME",  this.role_name);
-          //----------------------------------------------------------------------------------
-          // resolve(this.role_name);
+          }  
           resolve(role_result);
         })
     });
-  }
-  // GetRoleName() {
-  //   //Get the role of that particular user----------------------------------------------
-  //   // 
-  //   let role_url: string = "";
-  //   let result: any;
-  //   // let baseResource_Url_role: string = constants.DREAMFACTORY_TABLE_URL;
-  //   role_url = constants.DREAMFACTORY_TABLE_URL + "/view_role_display?filter=(USER_GUID=" + localStorage.getItem("g_USER_GUID") + ')AND(ROLE_FLAG=MAIN)&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //   // console.log(role_url)
-  //   return new Promise((resolve, reject) => {
-  //     this.http.get(role_url)
-  //       .map(res => res.json())
-  //       .subscribe((response: any) => {
-  //         let role_result = response["resource"];
-  //         // console.log(role_result);
-  //         this.role_name = role_result[0]["ROLE_NAME"];
-  //         // if (role_result!=null) {
-  //         //   this.role_name = role_result[0]["ROLE_NAME"];
-  //         //   //  localStorage.setItem("g_ROLE_NAME")=role_name;
-  //         //   localStorage.setItem("g_ROLE_NAME", this.role_name);
-  //         //   //  localStorage.setItem("g_KEY_ADD", role_result[0]["KEY_ADD"]);
-  //         //   //  localStorage.setItem("g_KEY_EDIT", role_result[0]["KEY_EDIT"]);
-  //         //   //  localStorage.setItem("g_KEY_DELETE", role_result[0]["KEY_DELETE"]);
-  //         //   //  localStorage.setItem("g_KEY_VIEW", role_result[0]["KEY_VIEW"]);
-  //         //   // alert(localStorage.getItem("g_ROLE_NAME"));
-  //         // }
-  //         // else {
-  //         //   //  localStorage.setItem("g_KEY_VIEW", "1");
-  //         //   //  localStorage.removeItem("g_ROLE_NAME");
-  //         // }
+  }  
 
-  //         //     if (localStorage.getItem("g_ROLE_NAME") === "Team Lead" || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD") {
-  //         //       this.IsApprover = true;
-  //         //     }
-  //         //     // else
-  //         //     // {
-  //         //     //   this.IsFinanceExecutive=false;
-  //         //     //   this.IsFinanceManager=false;
-  //         //     // }
-  //         //     // Finance Executive
-  //         //     if (localStorage.getItem("g_ROLE_NAME") === "Finance Executive") {
-  //         //       this.IsFinanceExecutive = true;
-  //         //     }
-  //         //     // else
-  //         //     // {
-  //         //     //   this.IsApprover=false;
-  //         //     //   this.IsFinanceManager=false;
-  //         //     // }
-
-  //         //     if (localStorage.getItem("g_ROLE_NAME") === "Finance Manager" || localStorage.getItem("g_ROLE_NAME") === "Finance Admin") {
-  //         //       this.IsFinanceManager = true;
-  //         //       this.IsApprover = true;
-  //         //     }
-  //         //     // else
-  //         //     // {
-  //         //     //   this.IsApprover=false;
-  //         //     //   this.IsFinanceExecutive=false;
-  //         //     // }
-  //         //  //   this.GetData_filter();
-
-  //         // localStorage.setItem("g_ROLE_NAME",  this.role_name);
-  //         //----------------------------------------------------------------------------------
-  //         resolve(this.role_name);
-  //       })
-  //   });
-  // }
-
-  ngOnInit() {
-    // this.GetRoleName();
-    // register plugin
-    // var ctx = document.getElementById("myChart");
-    // var myChart = new Chart(ctx);
+  ngOnInit() {   
+    // register plugin    
     Chart.plugins.register({
       beforeDraw: function (chart: any) {
-        if (chart.config.options.plugin_one_attribute === 'chart1') {
-          // alert('hi')
+        if (chart.config.options.plugin_one_attribute === 'chart1') {        
           // Plugin code here...    
           var data = chart.data.datasets[0].data;
           var sum = data.reduce(function (a: any, b: any) {
@@ -393,8 +239,7 @@ export class DashboardPage {
           ctx.save();
         }
 
-        if (chart.config.options.plugin_one_attribute === 'chart2') {
-          // alert('hi1')
+        if (chart.config.options.plugin_one_attribute === 'chart2') {          
           var data = chart.data.datasets[0].data;
           var sum = data.reduce(function (a: any, b: any) {
             var x = a + b;
@@ -577,107 +422,7 @@ export class DashboardPage {
     // Returns Previous Month 
     return month ? month : 0;
   }
-  // GetData_filter() {
-  //   // alert(localStorage.getItem("g_ROLE_NAME"));
-  //   // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //   this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-  //   if (localStorage.getItem("g_ROLE_NAME") === "Finance Executive" || localStorage.getItem("g_ROLE_NAME") === "Team Lead"
-  //     || localStorage.getItem("g_ROLE_NAME") === "Division Head" || localStorage.getItem("g_ROLE_NAME") === "HOD" ||
-  //     localStorage.getItem("g_ROLE_NAME") === "Finance Manager" || localStorage.getItem("g_ROLE_NAME") === "Finance Admin") {
-  //     // console.log(this.baseResource_RoleUrl);
-  //     this.http
-  //       .get(this.baseResource_RoleUrl)
-  //       .map(res => res.json())
-  //       .subscribe(data => {
-  //         this.years_data = data["resource"];
-
-  //         if (this.years_data.length == 0) {
-  //           // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
-  //           this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
-  //           // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
-  //           //return;
-  //           this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
-  //           this.Pending_Claim_Count; this.Pending_Claim_Amount;
-  //           this.Approved_Claim_Count; this.Approved_Claim_Amount;
-  //         }
-  //         else {
-  //           //alert(this.Year_Change_ngModel)
-  //           let tempdata: any; let id: any;
-  //           tempdata = {
-  //             MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
-  //             CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
-  //           };
-
-  //           let item;
-  //           //  let i;
-  //           this.years_data.some((i: any) => {
-  //             if (i.MONTH === this.MONTH) {
-  //               item = i;
-  //               return true;
-  //             }
-  //             return false;
-  //           });
-  //           if (item) {
-  //             this.yeardata = this.years_data;
-  //           }
-  //           else {
-
-  //             this.years_data.push(tempdata);
-  //           }
-  //           this.yeardata = this.years_data;
-  //         }
-
-  //       });
-  //     // console.table(this.yeardata);
-  //   }
-  //   else {
-  //     // console.log(this.baseResourceUrl_New);
-  //     this.http
-  //       .get(this.baseResourceUrl_New)
-  //       .map(res => res.json())
-  //       .subscribe(data => {
-  //         this.years_data = data["resource"];
-
-  //         if (this.years_data.length == 0) {
-  //           // this.Year_Change_ngModel = this.MONTH + " " + this.year_value;
-  //           this.yeardata = [{ MONTH: this.MONTH, YEAR: this.year_value }];
-  //           // this.yeardata=[this.monthNames(this.Month_Change_ngModel) + " " + this.year_value,this.monthNames(this.Month_Change_ngModel) + " " + this.year_value];   
-  //           //return;
-  //           this.Rejected_Claim_Count; this.Rejected_Claim_Amount;
-  //           this.Pending_Claim_Count; this.Pending_Claim_Amount;
-  //           this.Approved_Claim_Count; this.Approved_Claim_Amount;
-  //         }
-  //         else {
-  //           //alert(this.Year_Change_ngModel)
-  //           let tempdata: any; let id: any;
-  //           tempdata = {
-  //             MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
-  //             CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
-  //           };
-
-  //           let item;
-  //           //  let i;
-  //           this.years_data.some((i: any) => {
-  //             if (i.MONTH === this.MONTH) {
-  //               item = i;
-  //               return true;
-  //             }
-  //             return false;
-  //           });
-  //           if (item) {
-  //             this.yeardata = this.years_data;
-  //           }
-  //           else {
-
-  //             this.years_data.push(tempdata);
-  //           }
-  //           this.yeardata = this.years_data;
-  //         }
-
-  //       });
-  //     // console.table(this.yeardata);
-  //   }
-  // }
+  
 
   GetData_filter() {
     this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_filter?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')or(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
@@ -781,8 +526,7 @@ export class DashboardPage {
       .get(this.baseResource_RoleUrl)
       .map(res => res.json())
       .subscribe(data => {
-        this.roleBasedData = data["resource"][0];
-        // console.table( this.roleBasedData);
+        this.roleBasedData = data["resource"][0];       
         // console.log( this.roleBasedData.length);
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
           this.ApproverLevel_PendAmount_Year = this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel_Year, '1.2-2');
@@ -887,55 +631,7 @@ export class DashboardPage {
         }
       });
   }
-  // RoleFIlter()
-  // {
-  //   if ((this.ApproverLevel_PendAmount != "0.00" || this.ApproverLevel_PendAmount !=undefined) &&
-  //   (this.ApproverLevel_PendCount != 0 &&  this.ApproverLevel_PendCount != undefined) &&
-  //    this.ApproverLevel_PendAmount_Year != "0.00" && this.ApproverLevel_PendCount_Year != 0) {
-  //    this.IsApprover = true;
-  //    // alert('hi');
-  //    }
-  //    else
-  //    {
-  //      this.IsApprover=false;
-  //    }
-  //    if (this.FinanceExecLevel_PendAmt != "0.00" && this.FinanceExecLevel_PendAmt !=undefined &&
-  //     this.FinanceExecLevel_PendCount != 0 &&  this.FinanceExecLevel_PendCount !=undefined &&
-  //    this.FinanceExecLevel_PendAmt_Year != "0.00" && this.FinanceExecLevel_PendCount_Year != 0) {
-  //    this.IsFinanceExecutive = true;
-  //    // alert('hi');
-  //    }
-  //    else
-  //    {
-  //      this.IsFinanceExecutive=false;
-  //    }
-  //    if (this.FinanceMgrLevel_PendAmt != "0.00" && this.FinanceMgrLevel_PendAmt !=  undefined &&
-  //     this.FinanceMgrLevel_PendCount != 0 &&  this.FinanceMgrLevel_PendCount != undefined &&
-  //    this.FinanceMgrLevel_PendAmt_Year != "0.00" && this.FinanceMgrLevel_PendCount_Year != 0) {
-  //    this.IsFinanceManager = true;
-  //    // alert('hi');
-  //    }
-  //    else
-  //    {
-  //      this.IsFinanceManager=false;
-  //    }
-  // }
-
-  // Month_Changed(value: any) {
-  //   //alert(value)
-  //   this.month_value = value;
-  //   this.GetDashboardInfo();
-  //   this.GetInfoForCards();
-  //   this.GetRoleDashboard();
-  // }
-  // Year_Changed(value: any) {
-  //   //alert(value)
-  //   this.year_value = value;
-  //   this.GetDashboardInfo();
-  //   this.GetInfoForCards();
-  //   this.GetRoleDashboard();
-  // }
-  // From Mobile
+  
 
   Year_Changed(value: any) {
     let stringToSplit = value;
@@ -953,10 +649,8 @@ export class DashboardPage {
     // this.GetPaidData();
   }
   GetDashboardInfo() {
-
     if (this.month_value != undefined) {
-      // alert('1')
-      this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+            this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       // console.log('hi ' + this.baseResourceUrl)
     }
 
@@ -970,10 +664,7 @@ export class DashboardPage {
         let val = this.GetPaidData();
         val.then((paid_data: any) => {
           // console.log(paid_data);
-          if (data["resource"][0] != null) {
-            // this.chart1 = true;
-            // this.chart2 = true;
-            // alert(this.claimrequestdetails.ApprovedReqCount)
+          if (data["resource"][0] != null) {           
             var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
             // alert(approve)
             // var pending = parseInt(this.claimrequestdetails.PendingReqCount);
@@ -1092,18 +783,13 @@ export class DashboardPage {
             else this.PaidClaimAmount = '0.00';
 
             if (approve == 0 && pending_Finance == 0 && pending_Superior == 0 && rejected == 0 && paid == 0) {
-              // alert('hi1')
+              
               this.chart1 = false;
               this.chart2 = false;
-            } else {
-              // alert('hi')
+            } else {             
               this.chart1 = true;
               this.chart2 = true;
-              // this.doughnutChartLabels = data.label;
-              // this.claimAmountLabels = data.label;
-              // this.doughnutChartData = [approve, pending, rejected, paid];
-              // this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount), parseFloat(rejectedAmount), parseFloat(PaidClaimAmount)];
-            }
+              }
           }
 
           else {
@@ -1157,8 +843,7 @@ export class DashboardPage {
       .map(res => res.json())
       .subscribe(data => {
         this.Year_Card = data["resource"];
-        // console.log('user '+this.baseResourceUrl_Card);
-        // console.table(this.Year_Card);
+        // console.log('user '+this.baseResourceUrl_Card);      
 
         if (this.Year_Card.length != 0) {
           this.RejectedClaimCount_year = this.Year_Card[0]["RejectedClaimCount_year"];
@@ -1275,9 +960,7 @@ export class DashboardPage {
       });
 
   }
-  GetPaidData() {
-    // alert('hi')
-    //  alert( this.paid_month_model)
+  GetPaidData() {   
     let Paid_Url = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.paid_month_model + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     // console.log(Paid_Url);
     return new Promise((resolve, reject) => {
@@ -1287,33 +970,9 @@ export class DashboardPage {
         .subscribe(data => {
           this.paid_details = data["resource"][0];
           // console.log(this.paid_details);
-          if (data["resource"][0] == null) {
-            // alert('hi')
+          if (data["resource"][0] == null) {           
             this.paid_details = { paid: 0, PaidReqCount: 0 };
-          }
-          // if (data["resource"][0] != null) {
-          //   var paid = parseInt(this.claimrequestdetails.PaidReqCount);
-
-          //   // For Display Data In Ion-cards
-          //   this.PaidReqCount = this.claimrequestdetails.PaidReqCount;
-
-          //   if (this.claimrequestdetails.PaidClaimAmount !== null && this.claimrequestdetails.PaidClaimAmount !== undefined) {
-          //     var PaidClaimAmount = parseFloat(this.claimrequestdetails.PaidClaimAmount).toFixed(2);
-          //     // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
-          //   }
-          //   else { PaidClaimAmount = '0.00' }
-
-          //   // For Display Data In Ion-cards
-          //   if (this.claimrequestdetails.PaidClaimAmount != null) {
-          //     this.PaidClaimAmount = this.claimrequestdetails.PaidClaimAmount.toFixed(2).toString();
-          //     this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
-          //   }
-          //   else this.PaidClaimAmount = '0.00';
-          // }
-          // else {
-          //   this.PaidClaimAmount = '0.00';
-          //   this.PaidReqCount = 0;
-          // }
+          }         
           resolve(this.paid_details);
         });
 
@@ -1321,35 +980,36 @@ export class DashboardPage {
   }
   Rejected_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { Rejected: Settings.StatusConstants.REJECTED });
-    this.navCtrl.setRoot('UserclaimslistPage', { Rejected_data: [{ Rejected: Settings.StatusConstants.REJECTED,month:this.Month_Change_ngModel}] });
+    this.navCtrl.push('UserclaimslistPage', { Rejected_data: [{ Rejected: Settings.StatusConstants.REJECTED,month:this.Month_Change_ngModel}] });
   }
   Pending_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR });
-    this.navCtrl.setRoot('UserclaimslistPage', {Pending_data:[{ PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR,month:this.Month_Change_ngModel}] });
+    this.navCtrl.push('UserclaimslistPage', {Pending_data:[{ PENDINGSUPERIOR: Settings.StatusConstants.PENDINGSUPERIOR,month:this.Month_Change_ngModel}] });
   }
   Validated_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { Approved: Settings.StatusConstants.PENDINGPAYMENT });
-    this.navCtrl.setRoot('UserclaimslistPage', { Approved_data:[{PENDINGPAYMENT: Settings.StatusConstants.PENDINGPAYMENT,month:this.Month_Change_ngModel}]});
+    this.navCtrl.push('UserclaimslistPage', { Approved_data:[{PENDINGPAYMENT: Settings.StatusConstants.PENDINGPAYMENT,month:this.Month_Change_ngModel}]});
   }
   Approved_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION });
-    this.navCtrl.setRoot('UserclaimslistPage', { Validation_data:[{PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION,month:this.Month_Change_ngModel}] });
+    this.navCtrl.push('UserclaimslistPage', { Validation_data:[{PENDINGFINANCEVALIDATION: Settings.StatusConstants.PENDINGFINANCEVALIDATION,month:this.Month_Change_ngModel}] });
   }
   Paid_Click() {
     // this.navCtrl.setRoot('UserclaimslistPage', { Paid: Settings.StatusConstants.PAID });
-    this.navCtrl.setRoot('UserclaimslistPage', { Paid_data:[{Paid: Settings.StatusConstants.PAID,month:this.Month_Change_ngModel}]});
+    this.navCtrl.push('UserclaimslistPage', { Paid_data:[{Paid: Settings.StatusConstants.PAID,month:this.Month_Change_ngModel}]});
   }
   Approver_Click() {
     // this.navCtrl.setRoot('ClaimapprovertasklistPage');
-    this.navCtrl.setRoot('ClaimapprovertasklistPage', {month:this.Month_Change_ngModel});
+    this.navCtrl.push('ClaimapprovertasklistPage', {month:this.Month_Change_ngModel});
   }
   Finance_Executive_Click() {
     // this.navCtrl.setRoot('ClaimtasklistPage');
-    this.navCtrl.setRoot('ClaimtasklistPage', {month:this.Month_Change_ngModel});
+    this.navCtrl.push('ClaimtasklistPage', {month:this.Month_Change_ngModel});
   }
   Finance_Manager_Click() {
     // this.navCtrl.setRoot('FinancePaymentTasklistPage');
-    this.navCtrl.setRoot('FinancePaymentTasklistPage', {month:this.Month_Change_ngModel});
+    this.navCtrl.push('FinancePaymentTasklistPage', {month:this.Month_Change_ngModel});
+
   }
 
 }

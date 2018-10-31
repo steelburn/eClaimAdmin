@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { TravelclaimPage } from '../travel-claim/travel-claim.component';
+//import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { OvertimeClaim_Service } from '../../services/overtimeclaim_service';
 import { BaseHttpService } from '../../services/base-http';
 import { DecimalPipe } from '@angular/common';
@@ -463,9 +463,5 @@ export class OvertimeclaimPage {
           }
         })
     }
-  }
-
-  NavigateTravelClaim() {
-    this.navCtrl.setRoot(TravelclaimPage);
-  }
+  } 
 }
