@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
 import { DecimalPipe } from '@angular/common';
 import 'rxjs/add/operator/map';
-import { TravelclaimPage } from '../travel-claim/travel-claim.component';
+//import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import * as constants from '../../app/config/constants';
 import { Services } from '../Services';
@@ -401,11 +401,7 @@ export class MiscellaneousClaimPage {
     this.MiscellaneousForm.get('avatar').setValue(null);
     console.log(this.fileInput);
     this.fileInput.nativeElement.value = '';
-  }
-
-  NavigateTravelClaim() {
-    this.navCtrl.setRoot(TravelclaimPage);
-  }
+  } 
 
   submitAction(formValues: any) {
     let x = this.Miscellaneous_Amount_ngModel.split(",").join("");

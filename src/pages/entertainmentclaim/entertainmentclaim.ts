@@ -15,7 +15,7 @@ import { MainClaimRequestModel } from '../../models/main-claim-request.model';
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
-import { TravelclaimPage } from '../travel-claim/travel-claim.component';
+//import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
 //import { ExcelService } from '../../providers/excel.service';
 import * as Settings from '../../dbSettings/companySettings';
@@ -559,9 +559,6 @@ export class EntertainmentclaimPage {
           this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
         }
       })
-  }
-  NavigateTravelClaim() {
-    this.navCtrl.setRoot(TravelclaimPage);
   }
 
   displayImage: any

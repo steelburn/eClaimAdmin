@@ -14,7 +14,7 @@ import { LoadingController, ActionSheetController, Loading, ToastController } fr
 import { ProfileManagerProvider } from '../../providers/profile-manager.provider';
 import { ApiManagerProvider } from '../../providers/api-manager.provider';
 import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
-import { TravelclaimPage } from '../travel-claim/travel-claim.component';
+//import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import moment from 'moment';
 import * as Settings from '../../dbSettings/companySettings';
 
@@ -459,11 +459,7 @@ export class GiftclaimPage {
   allowanceGUID: any;
   onAllowanceSelect(allowance: any) {
     this.allowanceGUID = allowance.ALLOWANCE_GUID;
-  }
-
-  NavigateTravelClaim() {
-    this.navCtrl.setRoot(TravelclaimPage);
-  }
+  } 
 
   submitAction(formValues: any) {
     let x = this.Gift_Amount_ngModel.split(",").join("");
