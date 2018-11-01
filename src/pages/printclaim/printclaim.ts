@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
 import { PrintingClaim_Service } from '../../services/printingclaim_service';
 import { BaseHttpService } from '../../services/base-http';
-import { TravelclaimPage } from '../travel-claim/travel-claim.component';
+// import { TravelclaimPage } from '../travel-claim/travel-claim.component';
 import { DecimalPipe } from '@angular/common';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
@@ -507,10 +507,7 @@ export class PrintclaimPage {
 
         }
       })
-  }
-  NavigateTravelClaim() {
-    this.navCtrl.setRoot(TravelclaimPage);
-  }
+  }  
 
   displayImage: any
   CloseDisplayImage() {

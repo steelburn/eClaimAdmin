@@ -103,11 +103,11 @@
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary500">Roundtrip</ion-label>
+      <ion-label color="primary500">{{ "ROUND_TRIP_LABEL" | translate }}</ion-label>
       <ion-checkbox [(ngModel)]="Roundtrip_ngModel" formControlName="Roundtrip" (ionChange)="Roundtrip_Change(Travelform.value)"></ion-checkbox>
-
     </ion-item>
-
+    <ion-label style="margin-left: 16px;" color="primary500" text-wrap stacked>
+      {{ "ROUND_TRIP_NOTE" | translate }}</ion-label>
     <ion-item class="fuha">
       <ion-label floating> {{ "DISTANCE_LABEL" | translate }} </ion-label>
       <ion-input [disabled]="true" [(ngModel)]="Travel_Distance_ngModel" formControlName="distance"></ion-input>
@@ -129,9 +129,12 @@
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary500" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }} </ion-label>
+      <ion-label color="primary500" stacked> {{ "TOTAL_CLAIM_AMOUNT_LABEL" | translate }}  {{ "TOTAL_CLAIM_AMOUNT_NOTE" | translate }}</ion-label>
       <ion-label color="primary500">{{currency}} {{totalClaimAmount | number:'1.2-2'}} </ion-label>
+      <!-- <ion-label style="margin-left: 16px;" color="primary">{{draftStatus}}</ion-label> -->
     </ion-item>  
+
+    <ion-label style="margin-left: 16px;" color="primary">{{draftStatus}}</ion-label>
    
     <!-- <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
@@ -340,6 +343,10 @@
       <ion-icon name="add"></ion-icon>
     </button>
     <ion-fab-list side="top">
+        <button ion-fab (click)="selfRoot()"> 
+            <ion-icon name="home"></ion-icon>
+            <ion-label>{{ "SAVE_AS_DRAFT" | translate }}</ion-label>
+          </button>
       <button ion-fab *ngIf="!isPublicTransport" (click)="showAddToll(null)">
         <ion-icon name="easel"></ion-icon>
         <ion-label>{{ "ADD_TOLL_LABEL" | translate }}</ion-label>
