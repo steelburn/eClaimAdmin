@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
-import { DatePipe } from '@angular/common'
+// import { DatePipe } from '@angular/common'
 import { test_model } from '../../models/testmodel';
 import { SocCustomer_Model } from '../../models/soc_customer_model';
 import { SocProject_Model } from '../../models/soc_project_model';
@@ -53,7 +53,8 @@ import { saveAs as importedSaveAs } from "file-saver";
 @Component({
   selector: 'page-import-excel-data',
   templateUrl: 'import-excel-data.html',
-  providers: [DatePipe, DataTransfer]
+  // providers: [DatePipe, DataTransfer]
+  providers: []
 })
 
 export class ImportExcelDataPage {
@@ -82,7 +83,8 @@ export class ImportExcelDataPage {
   main_customer_location_Url: any;
   main_customer_location_data: any[];
 
-  constructor(private apiMng: ApiManagerProvider, public datepipe: DatePipe, public navCtrl: NavController, public navParams: NavParams, public http: Http, private loadingCtrl: LoadingController) {
+  // constructor(private apiMng: ApiManagerProvider, public datepipe: DatePipe, public navCtrl: NavController, public navParams: NavParams, public http: Http, private loadingCtrl: LoadingController) {
+    constructor(private apiMng: ApiManagerProvider, public navCtrl: NavController, public navParams: NavParams, public http: Http, private loadingCtrl: LoadingController) {
     this.Get_Device_GUID();
   }
 
@@ -1490,64 +1492,64 @@ export class ImportExcelDataPage {
 
     console.log(this.User_Attendance_Main_Model_List);
 
-    this.User_Attendance_Main_Model_List.forEach(element => {      
+    this.User_Attendance_Main_Model_List.forEach(element => {
       // let val = this.GetUser_Id(element.USERID);
       this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = UUID.UUID();
       // val.then((res) => {        
       //   this.User_Attendance_Main_Model.USER_GUID = res.toString();
-        this.User_Attendance_Main_Model.USER_GUID = element.USERID;
-        this.User_Attendance_Main_Model.ATTENDANCE_DATE = element.DATE;
-        this.User_Attendance_Main_Model.IN_TS = element.INTIME;
-        this.User_Attendance_Main_Model.OUT_TS = element.OUTTIME;
-        this.User_Attendance_Main_Model.WORKING_HOURS = null;
-        this.User_Attendance_Main_Model.OVERTIME_FLAG = null;
+      this.User_Attendance_Main_Model.USER_GUID = element.USERID;
+      this.User_Attendance_Main_Model.ATTENDANCE_DATE = element.DATE;
+      this.User_Attendance_Main_Model.IN_TS = element.INTIME;
+      this.User_Attendance_Main_Model.OUT_TS = element.OUTTIME;
+      this.User_Attendance_Main_Model.WORKING_HOURS = null;
+      this.User_Attendance_Main_Model.OVERTIME_FLAG = null;
 
-        this.User_Attendance_Main_Model.CREATION_TS = new Date().toISOString();
-        this.User_Attendance_Main_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
-        this.User_Attendance_Main_Model.UPDATE_TS = new Date().toISOString();
-        this.User_Attendance_Main_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.User_Attendance_Main_Model.CREATION_TS = new Date().toISOString();
+      this.User_Attendance_Main_Model.CREATION_USER_GUID = localStorage.getItem("g_USER_GUID");
+      this.User_Attendance_Main_Model.UPDATE_TS = new Date().toISOString();
+      this.User_Attendance_Main_Model.UPDATE_USER_GUID = localStorage.getItem("g_USER_GUID");
 
-        // this.InsertAttRecord();
+      // this.InsertAttRecord();
       // });
-    // this.apiMng.getApiModel('user_attendance_main', 'filter=(USER_GUID=' + this.User_Attendance_Main_Model.USER_GUID.trim() + ') AND (ATTENDANCE_DATE=' + this.User_Attendance_Main_Model.ATTENDANCE_DATE + ') AND (IN_TS=' + this.User_Attendance_Main_Model.IN_TS + ') AND (OUT_TS=' + this.User_Attendance_Main_Model.OUT_TS + ')')
-    //   .subscribe(data => {
-    //     let checkDataFromDB = data["resource"];
-    //     if (checkDataFromDB.length == 0) {
-          var queryHeaders = new Headers();
-          queryHeaders.append('Content-Type', 'application/json');
-          queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-          let options = new RequestOptions({ headers: queryHeaders });
-          return new Promise((resolve, reject) => {
-            this.http.post(this.attendance_main_Url, this.User_Attendance_Main_Model.toJson(true), options)
-              .map((response) => {
-                return response;
-              }).subscribe((response) => {
-                resolve(response.json());
-              });
+      // this.apiMng.getApiModel('user_attendance_main', 'filter=(USER_GUID=' + this.User_Attendance_Main_Model.USER_GUID.trim() + ') AND (ATTENDANCE_DATE=' + this.User_Attendance_Main_Model.ATTENDANCE_DATE + ') AND (IN_TS=' + this.User_Attendance_Main_Model.IN_TS + ') AND (OUT_TS=' + this.User_Attendance_Main_Model.OUT_TS + ')')
+      //   .subscribe(data => {
+      //     let checkDataFromDB = data["resource"];
+      //     if (checkDataFromDB.length == 0) {
+      var queryHeaders = new Headers();
+      queryHeaders.append('Content-Type', 'application/json');
+      queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+      let options = new RequestOptions({ headers: queryHeaders });
+      return new Promise((resolve, reject) => {
+        this.http.post(this.attendance_main_Url, this.User_Attendance_Main_Model.toJson(true), options)
+          .map((response) => {
+            return response;
+          }).subscribe((response) => {
+            resolve(response.json());
           });
-        // }
-        // else
-        // {
-        //   this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = checkDataFromDB[0]["USER_ATTENDANCE_GUID"];
-        //   var queryHeaders = new Headers();
-        //   queryHeaders.append('Content-Type', 'application/json');
-        //   queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-        //   let options = new RequestOptions({ headers: queryHeaders });
-        //   return new Promise((resolve, reject) => {
-        //     this.http.patch(this.attendance_main_Url, this.User_Attendance_Main_Model.toJson(true), options)
-        //       .map((response) => {
-        //         return response;
-        //       }).subscribe((response) => {
-        //         resolve(response.json());
-        //       })
-        //   })
-        // }
+      });
+      // }
+      // else
+      // {
+      //   this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = checkDataFromDB[0]["USER_ATTENDANCE_GUID"];
+      //   var queryHeaders = new Headers();
+      //   queryHeaders.append('Content-Type', 'application/json');
+      //   queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+      //   let options = new RequestOptions({ headers: queryHeaders });
+      //   return new Promise((resolve, reject) => {
+      //     this.http.patch(this.attendance_main_Url, this.User_Attendance_Main_Model.toJson(true), options)
+      //       .map((response) => {
+      //         return response;
+      //       }).subscribe((response) => {
+      //         resolve(response.json());
+      //       })
+      //   })
+      // }
 
       // });
     });
 
 
-    
+
   }
 
   GetUser_Id(STAFF_ID: any) {
@@ -2109,7 +2111,7 @@ export class ImportExcelDataPage {
 
   //duplicate check for user_qualification_template
 
-  duplicateCheck_user_qualification(checkData: any) {   
+  duplicateCheck_user_qualification(checkData: any) {
     this.apiMng.getApiModel('user_qualification', 'filter=MAJOR=' + checkData.MAJOR)
       .subscribe(data => {
         let checkDataFromDB = data["resource"];
@@ -2136,8 +2138,8 @@ export class ImportExcelDataPage {
           console.log(this.Qualification_Template_Model.HIGHEST_QUALIFICATION);
 
 
-        if (checkDataFromDB.length == 0) {
-          alert('qualification inserting record');
+          if (checkDataFromDB.length == 0) {
+            alert('qualification inserting record');
 
 
 
@@ -2163,8 +2165,8 @@ export class ImportExcelDataPage {
           else {
 
 
-          this.Qualification_Template_Model.USER_QUALIFICATION_GUID = checkDataFromDB[0]["USER_QUALIFICATION_GUID"];
-          alert('qualificationupdating  record');
+            this.Qualification_Template_Model.USER_QUALIFICATION_GUID = checkDataFromDB[0]["USER_QUALIFICATION_GUID"];
+            alert('qualificationupdating  record');
 
 
             var queryHeaders = new Headers();
@@ -2212,8 +2214,8 @@ export class ImportExcelDataPage {
           console.log(this.Role_Template_Model.ROLE_GUID);
 
 
-        if (checkDataFromDB.length == 0) {
-          alert('role inserting record');
+          if (checkDataFromDB.length == 0) {
+            alert('role inserting record');
 
 
 
@@ -2235,8 +2237,8 @@ export class ImportExcelDataPage {
           }
           else {
 
-          this.Role_Template_Model.USER_ROLE_GUID = checkDataFromDB[0]["USER_ROLE_GUID"];
-          alert('role updating record');
+            this.Role_Template_Model.USER_ROLE_GUID = checkDataFromDB[0]["USER_ROLE_GUID"];
+            alert('role updating record');
 
 
             var queryHeaders = new Headers();
@@ -2375,7 +2377,7 @@ export class ImportExcelDataPage {
 
       this.customer_template_data.forEach(element => {
         if (element.CustomerName != "*")
-        this.duplicateCheck_customer(element);
+          this.duplicateCheck_customer(element);
         //  this.duplicateCheck_customer_location(element);
         //  this.duplicateCheck_project(element);
         //  this.duplicateCheck_soc(element);       
@@ -2570,10 +2572,10 @@ export class ImportExcelDataPage {
       console.log(this.soc_template_data.length)
 
       this.soc_template_data.forEach(element => {
-        if (element.SOC_NO!= "*")
-        // this.duplicateCheck_customer(element);
-        //  this.duplicateCheck_customer_location(element);
-        this.duplicateCheck_project(element);
+        if (element.SOC_NO != "*")
+          // this.duplicateCheck_customer(element);
+          //  this.duplicateCheck_customer_location(element);
+          this.duplicateCheck_project(element);
         //  this.duplicateCheck_soc(element);       
 
       });
@@ -2747,7 +2749,7 @@ export class ImportExcelDataPage {
       .map(res => res.blob())
   }
 
-  download_customer(customer:any) {
+  download_customer(customer: any) {
     this.downloadFile_service_customer().subscribe(blob => {
       importedSaveAs(blob, customer);
     })
@@ -2768,10 +2770,10 @@ export class ImportExcelDataPage {
       });
   }
 
-  TempArray: any[] = []; AttendanceArray: any[] = [];  
+  TempArray: any[] = []; AttendanceArray: any[] = [];
 
   attendance_main_Url: string = constants.DREAMFACTORY_TABLE_URL + '/user_attendance_main?&api_key=' + constants.DREAMFACTORY_API_KEY;
-  InsertAttRecord() {    
+  InsertAttRecord() {
     console.log(this.User_Attendance_Main_Model_List);
     this.apiMng.getApiModel('user_attendance_main', 'filter=(USER_GUID=' + this.User_Attendance_Main_Model.USER_GUID.trim() + ') AND (ATTENDANCE_DATE=' + this.User_Attendance_Main_Model.ATTENDANCE_DATE + ') AND (IN_TS=' + this.User_Attendance_Main_Model.IN_TS + ') AND (OUT_TS=' + this.User_Attendance_Main_Model.OUT_TS + ')')
       .subscribe(data => {
@@ -2790,8 +2792,7 @@ export class ImportExcelDataPage {
               });
           });
         }
-        else
-        {
+        else {
           this.User_Attendance_Main_Model.USER_ATTENDANCE_GUID = checkDataFromDB[0]["USER_ATTENDANCE_GUID"];
           var queryHeaders = new Headers();
           queryHeaders.append('Content-Type', 'application/json');
@@ -2808,7 +2809,7 @@ export class ImportExcelDataPage {
         }
 
       });
-  }  
+  }
 
   //  For main_attendance
   chooseFile_main_leave: boolean = false;
