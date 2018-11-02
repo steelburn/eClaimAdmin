@@ -425,8 +425,10 @@ export class DashboardPage {
   
 
   GetData_filter() {
-    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_filter?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')or(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    // console.log(this.baseResource_RoleUrl);
+    // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_filter?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')or(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboard_dw?filter=(query_value=' + localStorage.getItem("g_USER_GUID") + ')or(query_value=' + localStorage.getItem("g_USER_GUID") + ')or(query_value>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboard_dw?&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log(this.baseResource_RoleUrl);
     this.http
       .get(this.baseResource_RoleUrl)
       .map(res => res.json())
@@ -471,14 +473,14 @@ export class DashboardPage {
   }
 
   GetRoleDashboard() {
-    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    // console.log("Role " + this.baseResource_RoleUrl);
+    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log("Role " + this.baseResource_RoleUrl);
     this.http
       .get(this.baseResource_RoleUrl)
       .map(res => res.json())
       .subscribe(data => {
         this.roleBasedData = data["resource"][0];
-        // console.table( this.roleBasedData);
+      
         // console.log( this.roleBasedData.length);
         if (data["resource"][0] != null && data["resource"][0] != undefined) {
           this.ApproverLevel_PendAmount = this.numberPipe.transform(this.roleBasedData.PendingAmount_Appr_Fe_Fm_FirstLevel, '1.2-2');
@@ -554,8 +556,8 @@ export class DashboardPage {
 
   GetData_FeRole() {
     let baseResource_Fe_RoleUrl
-      = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fe?filter=(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    // console.log("FE_Role " + baseResource_Fe_RoleUrl);
+      = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fe?filter=(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log("FE_Role " + baseResource_Fe_RoleUrl);
     this.http
       .get(baseResource_Fe_RoleUrl)
       .map(res => res.json())
@@ -604,9 +606,10 @@ export class DashboardPage {
   }
 
   GetData_FaRole() {
+    // this.Month_Change_ngModel= this.month.substring(0, 3);
     let baseResource_FA_RoleUrl
-      = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fa?filter=(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    // console.log("FE_Role " + baseResource_Fe_RoleUrl);
+      = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fa?filter=(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log("FA_Role " + baseResource_FA_RoleUrl);
     this.http
       .get(baseResource_FA_RoleUrl)
       .map(res => res.json())
@@ -650,7 +653,7 @@ export class DashboardPage {
   }
   GetDashboardInfo() {
     if (this.month_value != undefined) {
-            this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+            this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
       // console.log('hi ' + this.baseResourceUrl)
     }
 
