@@ -81,6 +81,8 @@ export class DashboardPage {
 
   paid_month_model: any;
 
+  Domain:any;
+
   constructor(public numberPipe: DecimalPipe, public fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public http: Http, public config: Config) {
     this.DashboardForm = fb.group({
       'Month': [null, Validators.compose([Validators.required])],
@@ -106,6 +108,13 @@ export class DashboardPage {
     this.MONTH = this.Month_Change_ngModel;
     this.YEAR = this.year_value;
     
+    // this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(STATUS=Pending)AND(PROFILE_LEVEL=2)AND(YEAR=' + this.currentYear + ')AND(EMAIL=' + localStorage.getItem("g_EMAIL").toString().split('@')[1] + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.Domain=localStorage.getItem("g_EMAIL").toString();
+    if(this.Domain!=null && this.Domain!=undefined)
+    {      
+      this.Domain= this.Domain.split('@')[1] 
+      // alert(this.Domain)
+    }
     // this.GetRoleName();
     this.GetData_filter();
     this.GetDashboardInfo();
@@ -116,7 +125,7 @@ export class DashboardPage {
     this.GetRoleDashboard_Year();
     this.GetData_FeRole();
     this.GetData_FaRole();
-    this.GetData_FeRole_Year();
+    // this.GetData_FeRole_Year();
     let val = this.GetRoleName();
     val.then((res: any) => {     
       res.forEach((e: any) => {       
@@ -138,6 +147,7 @@ export class DashboardPage {
     })
   
   }
+  
   // Unique and Sort years
   sortUnique(arr: any) {
     arr.sort();
@@ -394,7 +404,7 @@ export class DashboardPage {
     //   fontColor: ['white', 'blue', 'yellow','black'],
     //   // indexLabelPlacement: "outside", 
     // },
-
+    // this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claimrequestlist?filter=(STATUS=Pending)AND(PROFILE_LEVEL=2)AND(YEAR=' + this.currentYear + ')AND(EMAIL=' + localStorage.getItem("g_EMAIL").toString().split('@')[1] + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     tooltips: {
       enabled: true,
       callbacks: {
@@ -422,13 +432,22 @@ export class DashboardPage {
     // Returns Previous Month 
     return month ? month : 0;
   }
+  monthNameToNum_true(monthname: any) {
+    var months = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    var month = months.indexOf(monthname);
+    // Returns Current Month 
+    return month ? month + 1 : 0;
+    // Returns Previous Month 
+    // return month ? month : 0;
+  }
   
 
   GetData_filter() {
     // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_filter?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')or(USER_GUID=' + localStorage.getItem("g_USER_GUID") + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboard_dw?filter=(query_value=' + localStorage.getItem("g_USER_GUID") + ')or(query_value=' + localStorage.getItem("g_USER_GUID") + ')or(query_value>1)&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboard_dw?&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log(this.baseResource_RoleUrl);
+    // console.log("filter "+this.baseResource_RoleUrl);
     this.http
       .get(this.baseResource_RoleUrl)
       .map(res => res.json())
@@ -444,8 +463,8 @@ export class DashboardPage {
         else {
           let tempdata: any; let id: any;
           tempdata = {
-            MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
-            CLAIM_REF_GUID: null, MONTH_NUM: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
+            MONTH_NUM: this.monthNameToNum_true(this.MONTH), MONTH: this.MONTH, YEAR: this.year_value, ApprovedClaimAmount: null, ApprovedReqCount: '0',
+            CLAIM_REF_GUID: null, PendingClaimAmount: null, PendingReqCount: '0', RejectedClaimAmount: null, RejectedReqCount: null, USER_GUID: null
           };
           let item;
           this.years_data.some((i: any) => {
@@ -458,23 +477,26 @@ export class DashboardPage {
 
           if (item) {
             this.yeardata = this.years_data;
+            // console.log(this.yeardata)
           }
           else {
-            this.years_data.push(tempdata);
+            this.years_data.unshift(tempdata);
+            // console.log(this.yeardata)
           }
           this.years_data = this.years_data.filter((thing: any, index: any, self: any) =>
             index === self.findIndex((t: any) => (
               t.MONTH === thing.MONTH && t.YEAR === thing.YEAR
             ))
           )
-          this.yeardata = this.years_data;
+          this.yeardata = this.years_data;         
         }
       });
   }
 
   GetRoleDashboard() {
-    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log("Role " + this.baseResource_RoleUrl);
+    // this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    this.baseResource_RoleUrl = constants.DREAMFACTORY_TABLE_URL + '/new_view_role_dashboard?filter=(ASSIGNED_TO =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // console.log("Role " + this.baseResource_RoleUrl);
     this.http
       .get(this.baseResource_RoleUrl)
       .map(res => res.json())
@@ -555,9 +577,9 @@ export class DashboardPage {
   }
 
   GetData_FeRole() {
-    let baseResource_Fe_RoleUrl
-      = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fe?filter=(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log("FE_Role " + baseResource_Fe_RoleUrl);
+    // let baseResource_Fe_RoleUrl= constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fe?filter=(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let baseResource_Fe_RoleUrl= constants.DREAMFACTORY_TABLE_URL + '/new_view_dashboard_fe?filter=(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')and(EMAIL='+this.Domain+')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // console.log("FE_Role " + baseResource_Fe_RoleUrl);
     this.http
       .get(baseResource_Fe_RoleUrl)
       .map(res => res.json())
@@ -582,34 +604,13 @@ export class DashboardPage {
           this.FinanceExecLevel_PendCount = 0;
         }
       });
-  }
-  GetData_FeRole_Year() {
-    let baseResource_Fe_RoleUrl_year = constants.DREAMFACTORY_TABLE_URL + '/view_dasboard_fe_year?&api_key=' + constants.DREAMFACTORY_API_KEY;
-    // console.log("Fe_Role_year " + baseResource_Fe_RoleUrl_year);
-    this.http
-      .get(baseResource_Fe_RoleUrl_year)
-      .map(res => res.json())
-      .subscribe(data => {
-        let FeRoleData_year = data["resource"][0];
-        // console.table( this.roleBasedData);
-        // console.log( this.roleBasedData.length);
-        if (data["resource"][0] != null && data["resource"][0] != undefined) {
-
-          this.FinanceExecLevel_PendAmt_Year = this.numberPipe.transform(FeRoleData_year.PendingAmount_Fe_FinalLevel_year, '1.2-2');
-          this.FinanceExecLevel_PendCount_Year = FeRoleData_year.PendingCount_Fe_FinalLevel_year;
-        }
-        else {
-          this.FinanceExecLevel_PendAmt_Year = "0.00";
-          this.FinanceExecLevel_PendCount_Year = 0;
-        }
-      });
-  }
+  } 
 
   GetData_FaRole() {
     // this.Month_Change_ngModel= this.month.substring(0, 3);
-    let baseResource_FA_RoleUrl
-      = constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fa?filter=(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    console.log("FA_Role " + baseResource_FA_RoleUrl);
+    // let baseResource_FA_RoleUrl= constants.DREAMFACTORY_TABLE_URL + '/view_dashboard_fa?filter=(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let baseResource_FA_RoleUrl= constants.DREAMFACTORY_TABLE_URL + '/new_view_dashboard_fa?filter=(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')and(EMAIL='+this.Domain+')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // console.log("FA_Role " + baseResource_FA_RoleUrl);
     this.http
       .get(baseResource_FA_RoleUrl)
       .map(res => res.json())
@@ -647,14 +648,15 @@ export class DashboardPage {
     this.GetDashboardInfo();
     this.GetInfoForCards();
     this.GetData_FeRole();
-    this.GetData_FeRole_Year();
+    // this.GetData_FeRole_Year();
     this.GetData_FaRole();
     // this.GetPaidData();
   }
   GetDashboardInfo() {
     if (this.month_value != undefined) {
-            this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel.substring(0, 3) + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-      // console.log('hi ' + this.baseResourceUrl)
+            // this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+            this.baseResourceUrl = constants.DREAMFACTORY_TABLE_URL + '/new_vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH=' + this.Month_Change_ngModel + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+      console.log('hi ' + this.baseResourceUrl)
     }
 
     this.http
@@ -667,6 +669,24 @@ export class DashboardPage {
         let val = this.GetPaidData();
         val.then((paid_data: any) => {
           // console.log(paid_data);
+          var paid = paid_data["PaidReqCount"];
+          paid = parseInt(paid);
+          this.PaidReqCount=paid;
+          this.PaidClaimAmount = paid_data["PaidClaimAmount"];
+          if (this.PaidClaimAmount !== null && this.PaidClaimAmount !== undefined) {
+            this.PaidClaimAmount = parseFloat(this.PaidClaimAmount).toFixed(2);
+            // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
+          }
+          else { this.PaidClaimAmount = '0.00' }
+          this.PaidClaimAmount = paid_data["PaidClaimAmount"];
+          if (this.PaidClaimAmount != null) {
+            // this.PaidClaimAmount = this.PaidClaimAmount.toFixed(2).toString();
+            this.PaidClaimAmount = this.numberPipe.transform(this.PaidClaimAmount, '1.2-2');
+            // this.chart1 = true;
+            //   this.chart2 = true;
+          }
+          else this.PaidClaimAmount = '0.00';
+
           if (data["resource"][0] != null) {           
             var approve = parseInt(this.claimrequestdetails.ApprovedReqCount);
             // alert(approve)
@@ -698,6 +718,7 @@ export class DashboardPage {
 
             // Superior
             if (this.claimrequestdetails.PendingClaimAmount_Superior !== null && this.claimrequestdetails.PendingClaimAmount_Superior !== undefined) {
+              // console.log(  this.claimrequestdetails.PendingClaimAmount_Superior)
               var pendingAmount_Superior = parseFloat(this.claimrequestdetails.PendingClaimAmount_Superior).toFixed(2);
 
             }
@@ -720,12 +741,14 @@ export class DashboardPage {
             //   // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
             // }
             // else { PaidClaimAmount = '0.00' }
+
             this.PaidClaimAmount = paid_data["PaidClaimAmount"];
             if (this.PaidClaimAmount !== null && this.PaidClaimAmount !== undefined) {
               this.PaidClaimAmount = parseFloat(this.PaidClaimAmount).toFixed(2);
               // rejectedAmount = this.numberPipe.transform(rejectedAmount, '1.2-2');
             }
             else { this.PaidClaimAmount = '0.00' }
+
             //var approveAmount=(this.claimrequestdetails.ApprovedClaimAmount);parseFloat
             // var pendingAmount = parseFloat(this.claimrequestdetails.PendingClaimAmount).toFixed(2);
             // var rejectedAmount = parseFloat(this.claimrequestdetails.RejectedClaimAmount).toFixed(2);
@@ -809,7 +832,7 @@ export class DashboardPage {
             pendingAmount_Superior = '0.00';
             rejectedAmount = '0.00';
             approveAmount = '0.00';
-            this.PaidClaimAmount = '0.00';
+            // this.PaidClaimAmount = '0.00';
 
 
             this.claimAmountData = [parseFloat(approveAmount), parseFloat(pendingAmount_Finance), parseFloat(pendingAmount_Superior), parseFloat(rejectedAmount), parseFloat(this.PaidClaimAmount)];
@@ -822,14 +845,14 @@ export class DashboardPage {
             this.Rejected_Claim_Count = 0;
             this.Pending_Claim_Count = 0;
             this.Approved_Claim_Count = 0;
-            this.PaidReqCount = 0;
+            // this.PaidReqCount = 0;
             this.Pending_Claim_Count_Finance = 0;
             this.Pending_Claim_Count_Superior = 0;
 
             this.Rejected_Claim_Amount = '0.00';
             this.Pending_Claim_Amount = '0.00';
             this.Approved_Claim_Amount = '0.00';
-            this.PaidClaimAmount = '0.00';
+            // this.PaidClaimAmount = '0.00';
             this.Pending_Claim_Amount_Finance = '0.00';
             this.Pending_Claim_Amount_Superior = '0.00';
             //
@@ -964,8 +987,10 @@ export class DashboardPage {
 
   }
   GetPaidData() {   
-    let Paid_Url = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.paid_month_model + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    // console.log(Paid_Url);
+    // let Paid_Url = constants.DREAMFACTORY_TABLE_URL + '/vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.paid_month_model + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    // alert(this.paid_month_model)
+    let Paid_Url = constants.DREAMFACTORY_TABLE_URL + '/new_vw_dashboardchart?filter=(USER_GUID =' + localStorage.getItem("g_USER_GUID") + ')and(MONTH_NUM=' + this.paid_month_model + ')and(YEAR=' + this.year_value + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
+    console.log("Paid "+Paid_Url);
     return new Promise((resolve, reject) => {
       this.http
         .get(Paid_Url)
