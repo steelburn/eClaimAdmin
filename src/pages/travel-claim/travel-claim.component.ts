@@ -1062,21 +1062,32 @@ export class TravelclaimPage {
                 }
                 //-------------------------------------------------------------------
 
-                this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
-                  // if (isClaim && modelJSON.STATUS != 'Draft')
-                  // if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
+                let month = new Date(formValues.travel_date).getMonth() + 1;
+                let year = new Date(formValues.travel_date).getFullYear();
+                this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
+                  .subscribe(claimRefdata => {
+                    this.claimRequestData["resource"][0].CLAIM_REF_GUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+                    this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
+                      alert('Claim details updated successfully.')
+                      this.conference.pushTravelClaim();
+                    });
+                  })
 
-                  // Send Email------------------------------------------------
-                  // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
-                  //Commented By bijay on 24/09/2018 as per scheduler implemented
-                  // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
-                  // ----------------------------------------------------------
-                  //}
+                // this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
+                //   // if (isClaim && modelJSON.STATUS != 'Draft')
+                //   // if (this.claimRequestData["resource"][0].STATUS != 'Draft') {
 
-                  alert('Claim details updated successfully.');
-                  // this.navCtrl.push(UserclaimslistPage);
-                  this.conference.pushTravelClaim();
-                })
+                //   // Send Email------------------------------------------------
+                //   // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID);
+                //   //Commented By bijay on 24/09/2018 as per scheduler implemented
+                //   // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, formValues.start_DT, formValues.end_DT, moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.start_DT, this.claimRequestGUID, formValues.origin, formValues.destination, formValues.description, this.Soc_GUID, this.Customer_GUID);
+                //   // ----------------------------------------------------------
+                //   //}
+
+                //   alert('Claim details updated successfully.');
+                //   // this.navCtrl.push(UserclaimslistPage);
+                //   this.conference.pushTravelClaim();
+                // })
               })
             // this.profileMng.save(formValues, this.travelAmount, this.isCustomer)
             // this.MainClaimSaved = true;
