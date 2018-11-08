@@ -51,7 +51,7 @@ import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneo
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
-import { PermissionPage } from '../pages/Permission/Permission';
+import { PermissionPage } from '../pages/permission/permission';
 import { RolemodulesetupPage } from '../pages/rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pages/pagesetup/pagesetup';
 import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
