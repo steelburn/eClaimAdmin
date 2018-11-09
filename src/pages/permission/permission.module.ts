@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { PermissionPage } from './Permission';
+import { PermissionPage } from './permission';
 
 @NgModule({
   declarations: [
