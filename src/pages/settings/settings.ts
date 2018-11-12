@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 
 import * as constants from '../../app/config/constants';
 import { Settings_Model } from '../../models/settings_model';
-import { Settings_Service } from '../../services/Settings_service';
+import { Settings_Service } from '../../services/settings_service';
 import { BaseHttpService } from '../../services/base-http';
 
 import { UUID } from 'angular2-uuid';

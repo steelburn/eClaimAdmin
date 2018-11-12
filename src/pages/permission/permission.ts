@@ -21,7 +21,7 @@ import { BaseHttpService } from '../../services/base-http';
 @IonicPage()
 @Component({
   selector: 'page-Permission',
-  templateUrl: 'Permission.html', providers: [BaseHttpService]
+  templateUrl: 'permission.html', providers: [BaseHttpService]
 })
 export class PermissionPage {
   
