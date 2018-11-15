@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SubsciptionsetupPage } from '../subsciptionsetup/subsciptionsetup';
 import { TenantsetupPage } from '../tenantsetup/tenantsetup';
 import { TranslatePage } from '../translate/translate';
-import { PermissionPage } from '../Permission/Permission';
+import { PermissionPage } from '../permission/permission';
 import { RolesetupPage } from '../rolesetup/rolesetup';
 import { RolemodulesetupPage } from '../rolemodulesetup/rolemodulesetup';
 import { PagesetupPage } from '../pagesetup/pagesetup';

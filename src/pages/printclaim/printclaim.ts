@@ -485,17 +485,27 @@ export class PrintclaimPage {
 
               //this.claimRequestData[0].STATUS = 'Pending';
               // this.apiMng.updateMyClaimRequest(this.claimRequestData[0]).subscribe(res => alert('Claim details are submitted successfully.'))
-              this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
-                //Send Email------------------------------------------------
-                let start_DT: string = "";
-                let end_DT: string = "";
-                // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
-                //Commented By bijay on 24/09/2018 as per scheduler implemented
-                // this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
-                //----------------------------------------------------------
-                alert('Claim details updated successfully.');
-                this.navCtrl.push(UserclaimslistPage);
-              });
+              let month = new Date(formValues.travel_date).getMonth() + 1;
+              let year = new Date(formValues.travel_date).getFullYear();
+              this.apiMng.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
+                .subscribe(claimRefdata => {
+                  this.claimRequestData["resource"][0].CLAIM_REF_GUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+                  this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
+                    alert('Claim details updated successfully.')
+                    this.navCtrl.push(UserclaimslistPage);
+                  });
+                })
+              // this.apiMng.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
+              //   //Send Email------------------------------------------------
+              //   let start_DT: string = "";
+              //   let end_DT: string = "";
+              //   // this.apiMng.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+              //   //Commented By bijay on 24/09/2018 as per scheduler implemented
+              //   // this.apiMng.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
+              //   //----------------------------------------------------------
+              //   alert('Claim details updated successfully.');
+              //   this.navCtrl.push(UserclaimslistPage);
+              // });
             })
         }
         else {

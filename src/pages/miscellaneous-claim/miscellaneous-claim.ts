@@ -461,20 +461,29 @@ export class MiscellaneousClaimPage {
                 this.claimRequestData["resource"][0].AUDIT_TRAIL = "Edited by " + localStorage.getItem("g_FULLNAME") + " at " + this.api.CreateTimestamp() + "(USER_GUID: " + localStorage.getItem("g_USER_GUID") + ")" + " User From:W";
               }
               //-------------------------------------------------------------------
+              let month = new Date(formValues.travel_date).getMonth() + 1;
+              let year = new Date(formValues.travel_date).getFullYear();
+              this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
+                .subscribe(claimRefdata => {
+                  this.claimRequestData["resource"][0].CLAIM_REF_GUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
+                  this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
+                    alert('Claim details updated successfully.')
+                    this.navCtrl.push(UserclaimslistPage);
+                  });
+                })
+              // this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
+              //   //Send Email------------------------------------------------
+              //   let start_DT: string = "";
+              //   let end_DT: string = "";
 
-              this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
-                //Send Email------------------------------------------------
-                let start_DT: string = "";
-                let end_DT: string = "";
+              //   // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
+              //   //Commented By bijay on 24/09/2018 as per scheduler implemented
+              //   // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
+              //   //----------------------------------------------------------
 
-                // this.api.sendEmail(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, start_DT, end_DT, this.claimRequestData["resource"][0].CREATION_TS, formValues.travel_date, this.claimRequestGUID);
-                //Commented By bijay on 24/09/2018 as per scheduler implemented
-                // this.api.sendEmail_New(this.claimRequestData["resource"][0].CLAIM_TYPE_GUID, "", "", moment(this.claimRequestData["resource"][0].CREATION_TS).format('YYYY-MM-DDTHH:mm'), formValues.travel_date, this.claimRequestGUID, "", "", formValues.description, this.Soc_GUID, this.Customer_GUID);
-                //----------------------------------------------------------
-
-                alert('Claim details updated successfully.')
-                this.navCtrl.push(UserclaimslistPage);
-              });
+              //   alert('Claim details updated successfully.')
+              //   this.navCtrl.push(UserclaimslistPage);
+              // });
             })
         }
         else {
