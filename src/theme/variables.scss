@@ -26,15 +26,15 @@ $headings-font-weight: 300;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-$colors: ( 
+$colors: (
 
 
     secondary400:#90EE90,
-    primary: #50C878, 
+    primary: #50C878,
      primary200:#0492C2,
     primary500:#00A86B ,
-    dark: #222, 
-    light: white, 
+    dark: #222,
+    light: white,
     pure: #f3faef,
     danger: red,
     teli: teal,
@@ -133,3 +133,7 @@ $font-size-xxxx-large:	96;
     -moz-hyphens: auto;
     hyphens: auto;
   }
+
+
+// Custom import
+@import '~bulma/css/bulma.css'

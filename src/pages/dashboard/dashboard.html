@@ -20,7 +20,7 @@
 
 <ion-content padding style="background: #eeeeee;">
   <div>
-    
+
   </div>
 
   <div>
@@ -56,7 +56,7 @@
 
   <div class="clear"></div>
   <!-- *ngIf="IsApprover" -->
-  <ion-card class="round30" *ngIf="IsApprover" (click)="Approver_Click()" color="war1">
+  <ion-card class="round2" *ngIf="IsApprover" (click)="Approver_Click()" color="war1">
     <div class="icondash">
 
       <ion-icon name="alert" color="light" style="float: left; "></ion-icon>
@@ -80,7 +80,7 @@
   </ion-card>
 
   <!-- *ngIf="IsFinanceExecutive" -->
-  <ion-card class="round4" *ngIf="IsFinanceExecutive" (click)="Finance_Executive_Click()" color="war3">
+  <ion-card class="round2" *ngIf="IsFinanceExecutive" (click)="Finance_Executive_Click()" color="war3">
     <div class="icondash">
 
       <ion-icon name="eye" color="light" style="float: left; "></ion-icon>
@@ -89,7 +89,7 @@
 
 
 
-        <!--       
+        <!--
           <p>Amount YTD: RM {{FinanceExecLevel_PendAmt_Year}}</p>
           <p># YTD: {{FinanceExecLevel_PendCount_Year}}</p> -->
 
@@ -106,7 +106,7 @@
 
   </ion-card>
   <!-- *ngIf="IsFinanceManager" -->
-  <ion-card class="round30" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war2">
+  <ion-card class="round2" *ngIf="IsFinanceManager" (click)="Finance_Manager_Click()" color="war2">
     <div class="icondash">
 
       <ion-icon name="filing" color="light" style="float: left; "></ion-icon>
@@ -127,7 +127,7 @@
 
   </ion-card>
 
-  <ion-card (click)="Rejected_Click()" class="round33" color="mac">
+  <ion-card (click)="Rejected_Click()" class="round2" color="mac">
 
     <div class="icondash">
       <ion-icon name="close-circle" color="light" style="float: left; "></ion-icon>
@@ -163,7 +163,7 @@
 
 
   <!-- <ion-card (click)="Validated_Click()" class="round33" color="primary500"> -->
-      <ion-card (click)="Validated_Click()" class="round33" color="primary500">
+      <ion-card (click)="Validated_Click()" class="round2" color="primary500">
     <div class="icondash">
       <!-- <h2 class="dashhead">Approved</h2> -->
 
@@ -189,7 +189,7 @@
 
 
 
-  <ion-card class="round33" (click)="Paid_Click()" color="primary200">
+  <ion-card class="round2" (click)="Paid_Click()" color="primary200">
     <div class="icondash">
       <h2 class="dashhead">{{ "PAID" | translate }}</h2>
       <ion-icon name="logo-usd" color="light" style="float: left; "></ion-icon>
@@ -208,7 +208,7 @@
 
     </div>
   </ion-card>
-  <ion-card (click)="Pending_Click()" class="round30" color="war">
+  <ion-card (click)="Pending_Click()" class="round2" color="war">
     <div class="icondash">
 
       <!-- <h2 class="dashhead">Pending Superior Approval</h2> -->
@@ -228,7 +228,7 @@
 
     </div>
   </ion-card>
-  <ion-card (click)="Approved_Click()" class="round30" color="war4">
+  <ion-card (click)="Approved_Click()" class="round2" color="war4">
     <div class="icondash">
       <!-- <h2 class="dashhead">Pending Finance Validation</h2> -->
       <h2 class="dashhead">{{ "CLAIM_APPROVED" | translate }}</h2>
