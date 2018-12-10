@@ -30,6 +30,9 @@ import * as Settings from '../../dbSettings/companySettings';
 })
 export class TravelclaimPage {
   isReadyToSave: boolean;
+  countries: any;
+  search_inputs: any;
+  country_select: any;
 
   vehicles: any[];
   customers: any[];
@@ -68,6 +71,7 @@ export class TravelclaimPage {
   Soc_GUID: any;
   isFormSubmitted = false;
   tollParkLookupClicked = false;
+  public countryRange: any;
 
   //public socGUID : any;
   public AddTravelClicked: boolean = false;
@@ -110,7 +114,9 @@ export class TravelclaimPage {
   CalculationData: any[] = [];
   One_Way_Distance: any;
   constructor(public numberPipe: DecimalPipe, public conference: ConferenceData, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
-
+    this.countries = [{ id: 'IN', name: 'India' }, { id: 'MY', name: 'Malaysia' }];
+    this.country_select = 'Malaysia';
+    this.countryRange = 'my';
     // Lakshman
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
     this.min_claim = this.numberPipe.transform(this.min_claim_amount, '1.2-2');
@@ -577,20 +583,22 @@ export class TravelclaimPage {
   }
 
   public AddLookupClick() {
-    //blm
+    this.search_inputs = '';
     this.Roundtrip_ngModel = false;
-    //blm
     this.AddLookupClicked = true;
-    this.currentItems = null;
+    this.api.getApiModel('view_origin_history', 'filter=USER_GUID=' + localStorage.getItem('g_USER_GUID')).subscribe(res => {
+      this.currentItems = res['resource'];
+    });
+
   }
 
   public AddToLookupClick() {
-    //blm
+    this.search_inputs = '';
     this.Roundtrip_ngModel = false;
-    //blm
-    //this.AddLookupClicked = true;
     this.AddToLookupClicked = true;
-    this.currentItems = null;
+    this.api.getApiModel('view_destination_history', 'filter=USER_GUID=' + localStorage.getItem('g_USER_GUID')).subscribe(res => {
+      this.currentItems = res['resource'];
+    });
   }
 
   public ProjectLookup() {
@@ -615,8 +623,15 @@ export class TravelclaimPage {
     this.CloseLookupClick();
   }
 
-  searchLocation(key: any) {
-    let val = key.target.value;
+  onCountrySelect(id: any) {
+    this.countryRange = id;
+    if (this.search_inputs !== '') {
+      this.searchLocation(this.search_inputs);
+    }
+  }
+
+  searchLocation(val: any) {
+    // let val = key.target.value;
     //val = val.replace(/ /g, '');
     if (!val || !val.trim()) {
       this.currentItems = [];
@@ -1026,7 +1041,7 @@ export class TravelclaimPage {
                 this.claimRequestData["resource"][0].UPDATE_TS = new Date().toISOString();
                 this.claimRequestData["resource"][0].FROM = formValues.origin;
                 this.claimRequestData["resource"][0].DESTINATION = formValues.destination;
-                this.claimRequestData["resource"][0].DISTANCE_KM =  optDistance;
+                this.claimRequestData["resource"][0].DISTANCE_KM = optDistance;
                 this.claimRequestData["resource"][0].DESCRIPTION = formValues.description;
                 this.claimRequestData["resource"][0].ATTACHMENT_ID = this.imageGUID;
                 this.claimRequestData["resource"][0].TRAVEL_TYPE = formValues.travelType === 'Outstation' ? '1' : '0';
@@ -1106,9 +1121,9 @@ export class TravelclaimPage {
 
   }
 
-  selfRoot(){
+  selfRoot() {
     this.conference.pushTravelClaim();
-   }
+  }
 
   DeleteDetail(claimDetailId: string) {
     this.api.deleteApiModel('claim_request_detail', claimDetailId).subscribe(() => {
