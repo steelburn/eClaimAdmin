@@ -200,17 +200,20 @@
   <div class="popup1" padding *ngIf="AddLookupClicked || AddToLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
-
         <div class="icHeaderText">Search Location</div>
         <button class="btnR" (click)="CloseLookupClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
-      <ion-select class="searwid" [(ngModel)]="country_select" placeholder="Select Country">
-        <ion-option *ngFor='let country of countries' (ionSelect)="onCountrySelect(country.id)">{{country.name}}</ion-option>
-      </ion-select>
-      <ion-searchbar class="searwid" [(ngModel)]="search_inputs" (ionInput)="searchLocation($event.target.value)"
-        placeholder='Search Location'></ion-searchbar>
+      <ion-item>
+        <ion-select class="searwid" [(ngModel)]="country_select" placeholder="Select Country">
+          <ion-option *ngFor='let country of countries' (ionSelect)="onCountrySelect(country.id)">{{country.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-searchbar class="searwid" [(ngModel)]="search_inputs" (ionInput)="searchLocation($event.target.value)"
+          placeholder='Search Location'></ion-searchbar>
+      </ion-item>
       <ion-list>
         <ion-item-sliding *ngFor="let item of currentItems">
           <button ion-item (click)="openItem(item)">
