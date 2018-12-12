@@ -143,7 +143,7 @@
 
     <!-- <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
-              <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>             
+              <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>
             </ion-item> -->
 
     <ion-item *ngIf="isPublicTransport">
@@ -214,6 +214,10 @@
         <ion-searchbar class="searwid" [(ngModel)]="search_inputs" (ionInput)="searchLocation($event.target.value)"
           placeholder='Search Location'></ion-searchbar>
       </ion-item>
+      <span *ngFor="let item of currentItems">
+        <ion-chip  (click)="openItem(item)">{{item.description.substring(0,35)}}{{ item.description.length > 35 ? "..." : "" }}</ion-chip>
+    </span>
+      <!--
       <ion-list>
         <ion-item-sliding *ngFor="let item of currentItems">
           <button ion-item (click)="openItem(item)">
@@ -221,6 +225,7 @@
           </button>
         </ion-item-sliding>
       </ion-list>
+      -->
     </ion-card>
   </div>
 

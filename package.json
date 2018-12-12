@@ -67,6 +67,7 @@
   "devDependencies": {
     "@angular/tsc-wrapped": "^4.4.7",
     "@ionic/app-scripts": "^3.2.0",
+    "bulma": "^0.7.2",
     "ionic": "4.0.0",
     "node-sass": "^4.9.4",
     "rebuild-node-sass": "^1.1.0",
