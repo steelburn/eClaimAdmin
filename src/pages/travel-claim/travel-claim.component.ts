@@ -33,6 +33,7 @@ export class TravelclaimPage {
   countries: any;
   search_inputs: any;
   country_select: any;
+  locationHistory: any[] = [];
 
   vehicles: any[];
   customers: any[];
@@ -164,6 +165,7 @@ export class TravelclaimPage {
       this.onTravelTypeSelect('Local');
       this.Travel_Type_ngModel = 'Local';
       this.Travel_Mode_ngModel = 'Car';
+      this.getCountryList();
 
 
     }
@@ -587,17 +589,20 @@ export class TravelclaimPage {
     this.Roundtrip_ngModel = false;
     this.AddLookupClicked = true;
     this.api.getApiModel('view_origin_history', 'filter=USER_GUID=' + localStorage.getItem('g_USER_GUID')).subscribe(res => {
-      this.currentItems = res['resource'];
+      this.currentItems = this.locationHistory = res['resource'];
     });
-
   }
-
+  getCountryList() {
+    this.api.getApiModel('ref_countries').subscribe(res => {
+      this.countries = res.resource;
+    });
+  }
   public AddToLookupClick() {
     this.search_inputs = '';
     this.Roundtrip_ngModel = false;
     this.AddToLookupClicked = true;
     this.api.getApiModel('view_destination_history', 'filter=USER_GUID=' + localStorage.getItem('g_USER_GUID')).subscribe(res => {
-      this.currentItems = res['resource'];
+      this.currentItems = this.locationHistory = res['resource'];
     });
   }
 
@@ -634,14 +639,13 @@ export class TravelclaimPage {
     // let val = key.target.value;
     //val = val.replace(/ /g, '');
     if (!val || !val.trim()) {
-      this.currentItems = [];
+      this.currentItems = this.locationHistory;
       return;
     }
     else {
       val = val.replace(/ /g, '');
     }
-    // var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-    var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=500&components=country:MY&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=500&components=country:' + this.countryRange + '&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http.get(url).map(res => res.json()).subscribe(data => {
       this.currentItems = data["predictions"];
       console.table(this.currentItems);
