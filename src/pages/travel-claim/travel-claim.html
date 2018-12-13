@@ -207,7 +207,7 @@
       </ion-card-header>
       <ion-item>
         <ion-select class="searwid" [(ngModel)]="country_select" placeholder="Select Country">
-          <ion-option *ngFor='let country of countries' (ionSelect)="onCountrySelect(country.id)">{{country.name}}</ion-option>
+          <ion-option *ngFor='let country of countries' (ionSelect)="onCountrySelect(country.code)">{{country.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
@@ -215,8 +215,9 @@
           placeholder='Search Location'></ion-searchbar>
       </ion-item>
       <span *ngFor="let item of currentItems">
-        <ion-chip  (click)="openItem(item)">{{item.description.substring(0,35)}}{{ item.description.length > 35 ? "..." : "" }}</ion-chip>
-    </span>
+        <ion-chip (click)="openItem(item)">{{item.description.substring(0,35)}}{{ item.description.length > 35 ? "...":
+          "" }}</ion-chip>
+      </span>
       <!--
       <ion-list>
         <ion-item-sliding *ngFor="let item of currentItems">
