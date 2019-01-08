@@ -43,7 +43,7 @@ export class ClaimReportPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     // this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(CLAIM_REF_GUID='+this.claimrefguid + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.BindDepartment();
+    this.BindDepartment(); this.BindYear();
     // this.BindClaimTypes();
 
   }
@@ -129,9 +129,21 @@ export class ClaimReportPage {
       });
     //console.log(this.deptList);
   }
+  
+  //Added by bijay on 08/01/2019---------------------
+  yearList: any;
+  BindYear(){
+    this.http
+      .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_claim_ref_year?api_key=' + constants.DREAMFACTORY_API_KEY)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.yearList = data["resource"];
+        this.btnSearch=true;
+      });
+  }
+  //---------------------------------------------------
 
-  BindEmpDetails(user_guid: string) {
-    debugger;
+  BindEmpDetails(user_guid: string) {    
     this.http
       .get(constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_user_display?filter=(USER_GUID=' + user_guid + ')&api_key=' + constants.DREAMFACTORY_API_KEY)
       .map(res => res.json())
@@ -151,6 +163,7 @@ export class ClaimReportPage {
       });
 
   }
+
   GetSocSummaryData() {
     this.http
       .get(this.baseResourceUrlSocSummary)
@@ -171,13 +184,18 @@ export class ClaimReportPage {
   //     });
   // }
 
-  SearchClaimsData(dept: string, emp: string, month: string) {
+  SearchClaimsData(dept: string, emp: string, month: string, year:string) {
     // alert(dept);
     // alert(emp);
     // alert(month);
     // alert(claimType);
-    this.btnSearch=false;
-    this.year = new Date().getFullYear();
+    this.btnSearch=false;    
+    // this.year = new Date().getFullYear();
+
+//Added by bijay on 08/01/2019---------------------
+    this.year = year;
+//-------------------------------------------------
+
     this.month = month;
     this.baseResourceUrl = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report?filter=(DEPT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.baseResourceUrlSummary = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/vw_claim_report_summary?filter=(DEPARTMENT_GUID=' + dept + ')AND(USER_GUID=' + emp + ')AND(MONTH=' + month + ')AND(YEAR=' + this.year + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
