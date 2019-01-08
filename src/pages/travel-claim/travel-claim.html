@@ -143,7 +143,7 @@
 
     <!-- <ion-item *ngIf="isPublicTransport">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
-              <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>             
+              <button ion-button type="primary"  (click)="saveIm()" [disabled]="!ImageUploadValidation">upload image</button>
             </ion-item> -->
 
     <ion-item *ngIf="isPublicTransport">
@@ -200,17 +200,25 @@
   <div class="popup1" padding *ngIf="AddLookupClicked || AddToLookupClicked">
     <ion-card>
       <ion-card-header class="icTitle headerColor-white ">
-
         <div class="icHeaderText">Search Location</div>
         <button class="btnR" (click)="CloseLookupClick()">
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-card-header>
-      <ion-select class="searwid" [(ngModel)]="country_select" placeholder="Select Country">
-        <ion-option *ngFor='let country of countries' (ionSelect)="onCountrySelect(country.id)">{{country.name}}</ion-option>
-      </ion-select>
-      <ion-searchbar class="searwid" [(ngModel)]="search_inputs" (ionInput)="searchLocation($event.target.value)"
-        placeholder='Search Location'></ion-searchbar>
+      <ion-item>
+        <ion-select class="searwid" [(ngModel)]="country_select" placeholder="Select Country">
+          <ion-option *ngFor='let country of countries' (ionSelect)="onCountrySelect(country.code)">{{country.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-searchbar class="searwid" [(ngModel)]="search_inputs" (ionInput)="searchLocation($event.target.value)"
+          placeholder='Search Location'></ion-searchbar>
+      </ion-item>
+      <span *ngFor="let item of currentItems">
+        <ion-chip (click)="openItem(item)">{{item.description.substring(0,35)}}{{ item.description.length > 35 ? "...":
+          "" }}</ion-chip>
+      </span>
+      <!--
       <ion-list>
         <ion-item-sliding *ngFor="let item of currentItems">
           <button ion-item (click)="openItem(item)">
@@ -218,6 +226,7 @@
           </button>
         </ion-item-sliding>
       </ion-list>
+      -->
     </ion-card>
   </div>
 
