@@ -19,11 +19,10 @@ import { Device_Raw_Data_Model } from '../../models/device_raw_data_model';
 import { User_Attendance_Main_Model } from '../../models/user_attendance_main_model';
 import { Leave_Raw_Data_Model } from '../../models/leave_raw_data_model';
 
-import * as constants from '../../config/constants';
+import * as constants from '../../app/config/constants';
 
 import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/http';
 
-// import * as constants from '../../app/config/constants';
 import * as XLSX from 'xlsx';
 import { UUID } from 'angular2-uuid';
 import { Constants } from './../util/constants';

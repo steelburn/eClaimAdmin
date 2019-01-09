@@ -347,6 +347,7 @@ export class UserSetup_Service {
 		// 	});
 
 		let url_multiple = this.baseResource_Url + tablename + "?filter=(USER_GUID=" + id + ")AND(ROLE_FLAG=ADDITIONAL)";
+		console.log(url_multiple);
 
 		var queryHeaders = new Headers();
 		queryHeaders.append('Content-Type', 'application/json');

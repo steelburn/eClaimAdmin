@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import * as constants from '../../config/constants';
+import * as constants from '../../app/config/constants';
 // import { BaseHttpService } from '../../services/base-http';
 import { Checkbox } from 'ionic-angular/components/checkbox/checkbox';
 
