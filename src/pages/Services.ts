@@ -1,4 +1,4 @@
-import * as constants from '../config/constants';
+import * as constants from '../app/config/constants';
 import { Observable } from 'rxjs/Observable';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';

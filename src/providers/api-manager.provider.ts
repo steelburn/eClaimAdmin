@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import * as constants from '../config/constants';
+import * as constants from '../app/config/constants';
 import { MainClaimRequestModel } from '../models/main-claim-request.model';
 import { DatePipe, DecimalPipe } from '@angular/common'
 import moment from 'moment';
@@ -667,7 +667,7 @@ export class ApiManagerProvider {
 
 
   getImageUrl(imageName: string) {
-    return constants.IMAGE_URL + imageName + '?api_key=' + constants.DREAMFACTORY_API_KEY;
+    return constants.DREAMFACTORY_IMAGE_URL + imageName + '?api_key=' + constants.DREAMFACTORY_API_KEY;
   }
 
   getUrl(table: string, args?: string) {

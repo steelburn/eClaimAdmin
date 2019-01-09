@@ -27,6 +27,9 @@ import * as Settings from '../../dbSettings/companySettings';
 })
 export class EntertainmentclaimPage {
 
+  baseResourceUrl: string = constants.DREAMFACTORY_INSTANCE_URL + '/api/v2/zcs/_table/view_xml';
+
+
   Entertainmentform: FormGroup;
   uploadFileName: string;
   loading: Loading;
@@ -86,7 +89,7 @@ export class EntertainmentclaimPage {
   claimRequestData: any;
   // cdRef: any;
 
-  constructor(public numberPipe: DecimalPipe, public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+  constructor( private httpService: BaseHttpService, public numberPipe: DecimalPipe, public apiMng: ApiManagerProvider, public profileMng: ProfileManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
 
     // Lakshman
     this.min_claim_amount = localStorage.getItem('cs_min_claim_amt');
@@ -585,4 +588,37 @@ export class EntertainmentclaimPage {
   //     this.isImage = this.apiMng.isFileImage(val); 
   //   }
   // }  
+
+  claimDetailsData: any;
+
+//   xml() {
+//     console.log(this.baseResourceUrl);
+//     //let bank :any;
+//     var queryHeaders = new Headers();
+//     queryHeaders.append('accept', 'text/xml');
+//     //queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
+//     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+//     return this.httpService.http
+//         .get(this.baseResourceUrl, {  headers: queryHeaders })
+//         //.map(res => res)
+//         .subscribe(res => {
+//           this.claimDetailsData = res['resource'];
+//           console.log(res['resource']);
+//           console.table(res);
+//           // this.claimDetailsData = res['resource'];
+//           // this.claimDetailsData.forEach(element => {
+//           //   // totalAmount += element.AMOUNT;
+//           //   //['resource']
+//           // });
+//           // resolve(totalAmount);
+//         })
+//         // .map(() => {
+//         //         // let banks: Array<UserInfo_Model> = [];
+//         //         // result.resource.forEach((bank) => {
+//         //         // 	banks.push(BankSetup_Model.fromJson(bank));
+//         //         // });  
+//         //         // return banks;
+//         //     })
+           
+// }
 } 
