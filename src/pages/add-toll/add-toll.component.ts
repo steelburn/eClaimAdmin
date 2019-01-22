@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Loading, LoadingController } from 'ionic-angular';
-import * as constants from '../../config/constants';
+import * as constants from '../../app/config/constants';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Http, Headers, RequestOptions } from '@angular/http';

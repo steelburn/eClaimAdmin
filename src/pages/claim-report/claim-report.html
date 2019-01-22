@@ -29,13 +29,12 @@
 
   </ion-item>
 
-  <ion-item style="width: 50%;display:inline-block;">
+  <ion-item style="width: 30%;display:inline-block;">
     <ion-label>{{ "CLAIM_MONTH" | translate }}
 
       </ion-label>
 
     <ion-select interface="popover" #ddlmonth>
-
       <ion-option value="Jan">Jan</ion-option>
       <ion-option value="Feb">Feb</ion-option>
       <ion-option value="Mar">Mar</ion-option>
@@ -48,6 +47,13 @@
       <ion-option value="Oct">Oct</ion-option>
       <ion-option value="Nov">Nov</ion-option>
       <ion-option value="Dec">Dec</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item style="width: 20%;display:inline-block;">
+    <ion-label>{{ "YEAR" | translate }}</ion-label>
+    <ion-select interface="popover" #ddlyear>
+      <ion-option *ngFor="let yr of yearList" [value]="yr.YEAR">{{yr.YEAR}}</ion-option>
     </ion-select>
   </ion-item>
 
@@ -64,7 +70,7 @@
 
 
   <ion-item>
-    <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value,ddlEmployee.value,ddlmonth.value)">{{ "SEARCH" | translate }}</button>
+    <button ion-button item-end [disabled]="!btnSearch" (click)="SearchClaimsData(ddlDept.value, ddlEmployee.value, ddlmonth.value, ddlyear.value)">{{ "SEARCH" | translate }}</button>
     <button ion-button item-end (click)="printToCart('printSectionId')">Print</button>
   </ion-item>
   <ion-list>

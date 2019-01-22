@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Headers,RequestOptions, URLSearchParams} from '@angular/http';
 
 import * as constants from '../app/config/constants';
-import * as constants_home from '../app/config/constants_home';
+//import * as constants_home from '../app/config/constants_home';
 //import {EntertainmentClaim_Model} from '../models/entertainment_model';
 import {TravelClaim_Model} from '../models/travelclaim_model';
 //import {MasterClaim_Model} from '../models/masterclaim_model';
@@ -33,9 +33,9 @@ export class TravelClaim_Service
 
 	static getUrl(table: string, args?: string) {
 		if (args != null) {
-		  return constants_home.DREAMFACTORY_TABLE_URL + '/' + table + '?' + args + '&api_key=' + constants_home.DREAMFACTORY_API_KEY;
+		  return constants.DREAMFACTORY_TABLE_URL + '/' + table + '?' + args + '&api_key=' + constants.DREAMFACTORY_API_KEY;
 		}
-		return constants_home.DREAMFACTORY_TABLE_URL + '/' + table + '?api_key=' + constants_home.DREAMFACTORY_API_KEY;
+		return constants.DREAMFACTORY_TABLE_URL + '/' + table + '?api_key=' + constants.DREAMFACTORY_API_KEY;
 	  }
 	
     private handleError (error: any) {
@@ -94,7 +94,7 @@ export class TravelClaim_Service
 	// }
 
 	postUrl(table: string) {
-		return constants_home.DREAMFACTORY_TABLE_URL + '/' + table;
+		return constants.DREAMFACTORY_TABLE_URL + '/' + table;
 	  }
 	postData(endpoint: string, body: any): Observable<any> {
 		var queryHeaders = new Headers();
