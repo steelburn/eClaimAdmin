@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Chart } from 'chart.js';
 import 'chart.piecelabel.js';
 import 'rxjs/add/operator/map';
-import * as constants from '../../config/constants';
+import * as constants from '../../app/config/constants';
 import { Http } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { InAppBrowser } from '@ionic-native/in-app-browser';
