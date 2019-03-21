@@ -6,10 +6,10 @@
 -->
 <ion-header>
 
-  <ion-navbar  color="primary200">
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
+  <ion-navbar color="primary200">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>{{ "ATTENDANCE_REPORT" | translate }}</ion-title>
   </ion-navbar>
 
@@ -49,13 +49,14 @@
   <ion-item class="fuha1">
     <ion-label>{{ "REPORT_USER_NAME" | translate }}</ion-label>
     <ion-select interface="popover" #ddlUserName>
-      <ion-option [value]="All" [selected]="true">All</ion-option>
-      <ion-option *ngFor="let emp of employeeList" [value]="emp.STAFF_ID">{{emp.FULLNAME}}</ion-option>
+      <ion-option [value]="All" [selected]="true" *ngIf="blnUserDisplay_All">All</ion-option>
+      <ion-option *ngFor="let emp of employeeList; let i = index" [value]="emp.STAFF_ID" [selected]="i===0">{{emp.FULLNAME}}</ion-option>
     </ion-select>
   </ion-item>
 
   <ion-item>
-    <button ion-button item-end [disabled]="!btnSearch" (click)="BindData(ddlUserName.value,ddlmonth.value)">{{ "SEARCH" | translate }}</button>
+    <button ion-button item-end [disabled]="!btnSearch" (click)="BindData(ddlUserName.value,ddlmonth.value)">{{
+      "SEARCH" | translate }}</button>
   </ion-item>
 
   <ion-list>
@@ -67,7 +68,7 @@
           <th class="lgl1" style="width:180px">Date</th>
           <th class="lgl1" style="width:180px">In Time</th>
           <th class="lgl1" style="width:190px">Out Time</th>
-          <th class="lgl1 tblBrRight"  style="width:120px">Hours Logged</th>  
+          <th class="lgl1 tblBrRight" style="width:120px">Hours Logged</th>
         </tr>
 
         <tr class="col7" *ngFor="let item of attendanceData | paginate:{itemsPerPage: 20, currentPage:page, id: 'i' }; let i=index">
@@ -79,7 +80,8 @@
           <td class="lgl1 getHeader" reshead="Hours Logged" *ngIf="item.HALF_DAY_DATE!='NA'">{{item.WORKING_HOURS}}</td>
         </tr>
       </table>
-      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="20" directionLinks="true" autoHide="true">
+      <pagination-controls style=" text-align: center;" (pageChange)="page=$event" id="i" maxSize="20" directionLinks="true"
+        autoHide="true">
       </pagination-controls>
     </ion-item>
   </ion-list>
