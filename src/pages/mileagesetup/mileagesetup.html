@@ -82,7 +82,8 @@
 
       <ion-list>
         <form [formGroup]="Mileageform">
-          <ion-item *ngIf="AdminLogin">
+          <!-- <ion-item *ngIf="AdminLogin"> -->
+          <ion-item>
             <ion-label stacked>{{"TENANT"}}</ion-label>
             <ion-select formControlName="TENANT_NAME" [(ngModel)]="Tenant_Add_ngModel" placeholder="{{'Please fill the Tenant'}}">
               <ion-option *ngFor="let tenant of tenants" value="{{tenant.TENANT_GUID}}">{{tenant.TENANT_ACCOUNT_NAME}}</ion-option>
