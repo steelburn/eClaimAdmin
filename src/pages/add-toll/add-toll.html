@@ -66,11 +66,12 @@
         <ion-item>
           <ion-label fixed>
             <span style="color:red">*</span>
-            {{ 'NO_OF_DAYS' | translate }}{{ currency }}</ion-label
+            {{ 'NO_OF_DAYS' | translate }}</ion-label
           >
           <ion-input
             (change)="getCurrency($event.target.value)"
-            [(ngModel)]="days"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="days" 
             type="text"
             placeholder="1"
           ></ion-input>
