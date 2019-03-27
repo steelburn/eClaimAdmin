@@ -69,7 +69,6 @@
             {{ 'NO_OF_DAYS' | translate }}</ion-label
           >
           <ion-input
-            (change)="getCurrency($event.target.value)"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="days" 
             type="text"
