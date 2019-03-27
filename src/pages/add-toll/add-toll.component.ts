@@ -160,6 +160,7 @@ export class AddTollPage {
           : this.PayType;
       // 2a543cd5-0177-a1d0-5482-48b52ec2100f
       claimReqRef.AMOUNT = this.claimAmount + '';
+      claimReqRef.days = this.days;
       claimReqRef.DESCRIPTION = this.Description;
       claimReqRef.CREATION_TS = this.api.CreateTimestamp();
       claimReqRef.UPDATE_TS = this.api.CreateTimestamp();
@@ -186,6 +187,7 @@ export class AddTollPage {
               ? 'f74c3366-0437-51ec-91cc-d3fad23b061c'
               : this.PayType;
           this.claimDetailsData['resource'][0].AMOUNT = this.claimAmount;
+          this.claimDetailsData['resource'][0].days = this.days;
           this.claimDetailsData['resource'][0].DESCRIPTION = this.Description;
           this.claimDetailsData[
             'resource'
@@ -240,6 +242,7 @@ export class AddTollPage {
   tempUserSplit2: string = '';
   tempUserSplit3: string = '';
   imageURLEdit: any = null;
+  actualAmount: any;
   GetClaimDetailsByGuid() {
     this.api
       .getApiModel(
@@ -248,15 +251,19 @@ export class AddTollPage {
       )
       .subscribe(res => {
         this.claimDetailsData = res['resource'];
+        this.actualAmount =
+          this.claimDetailsData[0].days === null
+            ? this.claimDetailsData[0].AMOUNT
+            : this.claimDetailsData[0].AMOUNT / this.claimDetailsData[0].days;
         this.PayType = this.claimDetailsData[0].PAYMENT_TYPE_GUID;
         this.onPaySelect(this.claimDetailsData[0]);
         if (this.claimDetailsData[0].CLAIM_METHOD === 'MealAllowance') {
           this.LoadAllowanceDetails();
           this.allowanceList.forEach(element => {
-            if (element.ALLOWANCE_AMOUNT === this.claimDetailsData[0].AMOUNT) {
+            if (element.ALLOWANCE_AMOUNT === this.actualAmount) {
               this.MA_SELECT =
                 element.ALLOWANCE_NAME + ' - ' + element.ALLOWANCE_AMOUNT;
-              console.log(this.MA_SELECT);
+              this.days = this.claimDetailsData[0].days;
             }
           });
         }
