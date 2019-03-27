@@ -58,6 +58,8 @@ import { SubmodulesetupPage } from '../pages/submodulesetup/submodulesetup';
 import { ModulesetupPage } from '../pages/modulesetup/modulesetup';
 import { DeviceSetupPage } from '../pages/device-setup/device-setup';
 
+import { OtRateSetupPage } from '../pages/ot-rate-setup/ot-rate-setup';
+
 import { UploadPage } from '../pages/upload/upload';
 import { TranslatePage } from '../pages/translate/translate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -203,7 +205,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
 
     ApprovalProfilePage,
 
-    ClaimSummaryPage
+    ClaimSummaryPage,
+    OtRateSetupPage
 
 
 
@@ -349,7 +352,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
     SettingsPage,
     CompanysettingsPage,
     DbmaintenancePage,
-    ApprovalProfilePage
+    ApprovalProfilePage,
+    OtRateSetupPage
 
   ],
   providers: [
