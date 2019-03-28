@@ -26,6 +26,7 @@ import { SettingsPage } from '../settings/settings';
 import { CompanysettingsPage } from '../companysettings/companysettings';
 import { DbmaintenancePage } from '../dbmaintenance/dbmaintenance';
 import { ApprovalProfilePage } from '../approval-profile/approval-profile';
+import { OtRateSetupPage } from '../ot-rate-setup/ot-rate-setup';
 
 import { TenantCompanySetup_Model } from '../../models/tenantcompanysetup_model';
 import { TenantCompanySiteSetup_Model } from '../../models/tenantcompanysitesetup_model';
@@ -110,6 +111,7 @@ export class SetupPage {
   RoleSetupDisplay: boolean = false;
   RoleModuleDisplay: boolean = false;
   ApprovalProfileDisplay: boolean = false;
+  OtRateDisplay: boolean = false;
 
   public AddBranchsClick() {
     this.AddBranchsClicked = true;
@@ -205,6 +207,7 @@ export class SetupPage {
       this.RoleSetupDisplay = false;
       this.RoleModuleDisplay = false;
       this.ApprovalProfileDisplay = false;
+      this.OtRateDisplay = false;
 
       if (localStorage.getItem("g_USER_GUID") == "sva" || localStorage.getItem("g_IS_TENANT_ADMIN") == "1") {
         this.SetupGuideDisplay = true;
@@ -229,6 +232,7 @@ export class SetupPage {
         this.RoleSetupDisplay = true;
         this.RoleModuleDisplay = true;
         this.ApprovalProfileDisplay = true;
+        this.OtRateDisplay = true;
       }
       else {
         //Get all the setup menu details for that particular role-----------------
@@ -342,6 +346,11 @@ export class SetupPage {
   goToImport_Excel_Data_setup() {
     this.navCtrl.push(ImportExcelDataPage)
   }
+
+  goToOtRateSetup(){
+    this.navCtrl.push(OtRateSetupPage);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetupPage');
   }
