@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { UUID } from 'angular2-uuid';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, CurrencyPipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Services } from '../Services';
 import { ClaimRequestDetailModel } from '../../models/claim-request-detail.model';
@@ -244,6 +244,7 @@ export class AddTollPage {
   imageURLEdit: any = null;
   actualAmount: any;
   GetClaimDetailsByGuid() {
+    this.LoadAllowanceDetails();
     this.api
       .getApiModel(
         'view_claim_details',
@@ -251,6 +252,7 @@ export class AddTollPage {
       )
       .subscribe(res => {
         this.claimDetailsData = res['resource'];
+        console.table(this.claimDetailsData);
         this.actualAmount =
           this.claimDetailsData[0].days === null
             ? this.claimDetailsData[0].AMOUNT
@@ -258,12 +260,13 @@ export class AddTollPage {
         this.PayType = this.claimDetailsData[0].PAYMENT_TYPE_GUID;
         this.onPaySelect(this.claimDetailsData[0]);
         if (this.claimDetailsData[0].CLAIM_METHOD === 'MealAllowance') {
-          this.LoadAllowanceDetails();
           this.allowanceList.forEach(element => {
             if (element.ALLOWANCE_AMOUNT === this.actualAmount) {
               this.MA_SELECT =
                 element.ALLOWANCE_NAME + ' - ' + element.ALLOWANCE_AMOUNT;
               this.days = this.claimDetailsData[0].days;
+              console.log(this.MA_SELECT);
+              console.log(element);
             }
           });
         }
