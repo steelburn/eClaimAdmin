@@ -97,31 +97,6 @@ export class OvertimeclaimPage {
 
   claimAmount: number = 0;
   rate_blocks: any[];
-  getCurrency(amount: number) {
-    amount = Number(amount);
-    if (amount > 99999) {
-      // alert('Amount should not exceed RM 9,9999.00.')
-      // this.OT_Amount_ngModel = null
-      // this.claimAmount = 0;
-    } else {
-      this.claimAmount = amount;
-      this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
-    }
-  }
-  // Lakshman
-  // getCurrency(amount: number) {
-  //   amount = Number(amount);
-  //   let amount_test=this.numberPipe.transform(amount, '1.2-2');
-  //   if (amount <this.min_claim_amount || amount>this.max_claim_amount) {
-  //     this.OT_Amount_ngModel = null
-  //     this.claimAmount = 0;
-  //   }
-  //   else {
-  //     this.claimAmount = amount;
-  //     this.OT_Amount_ngModel = this.numberPipe.transform(amount, '1.2-2');
-  //   }
-  // }
-  // Lakshman
 
   imageURLEdit: any = null;
   GetDataforEdit() {
@@ -144,11 +119,6 @@ export class OvertimeclaimPage {
               )
               .subscribe(data => {
                 this.claimRequestData = data['resource'];
-
-                // if (this.claimRequestData[0].ATTACHMENT_ID !== null)
-                // this.imageURLEdit = this.apiMng.getImageUrl(this.claimRequestData[0].ATTACHMENT_ID);
-                // this.ImageUploadValidation = true;
-                // this.getCurrency(this.claimRequestData[0].MILEAGE_AMOUNT)
 
                 if (this.claimRequestData[0].SOC_GUID === null) {
                   this.claimFor = 'seg_customer';
@@ -225,13 +195,14 @@ export class OvertimeclaimPage {
     }
     let currency = localStorage.getItem('cs_default_currency');
     // Lakshman
-    this.getOTRate();
 
     this.profileMng.CheckSessionOut();
     this.TenantGUID = localStorage.getItem('g_TENANT_GUID');
     this.userGUID = localStorage.getItem('g_USER_GUID');
     this.isFormEdit = this.navParams.get('isFormEdit');
     this.claimRequestGUID = this.navParams.get('cr_GUID'); //dynamic
+    this.getOTRate();
+
     if (this.isFormEdit) {
       this.apiMng
         .getApiModel(
@@ -345,6 +316,7 @@ export class OvertimeclaimPage {
         }
       }
     });
+    console.log(this.OT_Amount_ngModel);
     this.claimAmount = this.OT_Amount_ngModel;
   }
 
@@ -482,7 +454,7 @@ export class OvertimeclaimPage {
   }
 
   submitAction(formValues: any) {
-    let x = this.OT_Amount_ngModel.split(',').join('');
+    let x = this.OT_Amount_ngModel;
     let amount = Number(x);
     if (amount < this.min_claim_amount || amount > this.max_claim_amount) {
       this.OT_Amount_ngModel = null;

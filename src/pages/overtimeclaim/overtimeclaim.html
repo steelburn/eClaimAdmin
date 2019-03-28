@@ -63,7 +63,7 @@
 
     <ion-item>
       <ion-label color="primary500" floating> {{ "CLAIM_AMOUNT_LABEL" | translate }} {{ currency }}</ion-label>
-      <ion-input disabled (change)='getCurrency($event.target.value)' type="text" formControlName="claim_amount" 
+      <ion-input disabled  type="text" formControlName="claim_amount" 
       [(ngModel)]="OT_Amount_ngModel"></ion-input>
     </ion-item>
     <!-- <ion-item *ngIf="!OTform.controls.claim_amount.valid  && (OTform.controls.claim_amount.dirty)">
