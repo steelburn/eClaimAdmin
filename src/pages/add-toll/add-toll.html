@@ -56,9 +56,11 @@
           >
             <ion-option value="NA">NA</ion-option>
             <ion-option
-              *ngFor="let allowance of allowanceList"
+              *ngFor="let allowance of allowanceList; let i = index"
               (ionSelect)="onAllowanceSelect(allowance)"
-              >{{ allowance.ALLOWANCE_NAME }} -{{ currency }}
+              [value]="allowance.ALLOWANCE_NAME"
+              [selected]="i === dropDownIndex"
+              >{{ allowance.ALLOWANCE_NAME }} - {{ currency }}
               {{ allowance.ALLOWANCE_AMOUNT | number: '1.2-2' }}
             </ion-option>
           </ion-select>
