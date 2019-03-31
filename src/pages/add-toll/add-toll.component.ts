@@ -30,6 +30,7 @@ export class AddTollPage {
 
   lastImage: string = null;
   MA_SELECT: any;
+  dropDownIndex: any;
   loading: Loading;
   TenantGUID: any;
   paymentTypes: any[];
@@ -244,7 +245,6 @@ export class AddTollPage {
   imageURLEdit: any = null;
   actualAmount: any;
   GetClaimDetailsByGuid() {
-    this.LoadAllowanceDetails();
     this.api
       .getApiModel(
         'view_claim_details',
@@ -252,7 +252,6 @@ export class AddTollPage {
       )
       .subscribe(res => {
         this.claimDetailsData = res['resource'];
-        console.table(this.claimDetailsData);
         this.actualAmount =
           this.claimDetailsData[0].days === null
             ? this.claimDetailsData[0].AMOUNT
@@ -260,14 +259,16 @@ export class AddTollPage {
         this.PayType = this.claimDetailsData[0].PAYMENT_TYPE_GUID;
         this.onPaySelect(this.claimDetailsData[0]);
         if (this.claimDetailsData[0].CLAIM_METHOD === 'MealAllowance') {
-          this.allowanceList.forEach(element => {
-            if (element.ALLOWANCE_AMOUNT === this.actualAmount) {
-              this.MA_SELECT =
-                element.ALLOWANCE_NAME + ' - ' + element.ALLOWANCE_AMOUNT;
-              this.days = this.claimDetailsData[0].days;
-              console.log(this.MA_SELECT);
-              console.log(element);
-            }
+          this.api.getApiModel('main_allowance').subscribe(res => {
+            this.allowanceList = res['resource'];
+            let index = 0;
+            this.allowanceList.forEach(element => {
+              if (element.ALLOWANCE_AMOUNT === this.actualAmount) {
+                this.dropDownIndex = index;
+                this.days = this.claimDetailsData[0].days;
+              }
+              index++;
+            });
           });
         }
         this.Amount = this.numberPipe.transform(
