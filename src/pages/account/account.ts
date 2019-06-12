@@ -327,7 +327,7 @@ export class AccountPage {
             this.Profile_Image_Display = "assets/img/profile_no_preview.png";
           }
           else {
-            this.Profile_Image_Display = constants.DREAMFACTORY_INSTANCE_URL + "/api/v2/files/eclaim/" + this.view_user_details[0]["ATTACHMENT_ID"] + "?api_key=" + constants.DREAMFACTORY_API_KEY;
+            this.Profile_Image_Display = constants.DREAMFACTORY_IMAGE_URL + this.view_user_details[0]["ATTACHMENT_ID"] + "?api_key=" + constants.DREAMFACTORY_API_KEY;
           }
 
           //------------------------EMPLOYMENT DETAILS----------------------------------
