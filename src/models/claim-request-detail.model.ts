@@ -4,17 +4,16 @@ export class ClaimRequestDetailModel {
     public CLAIM_REQUEST_GUID: string = null,
     public CLAIM_METHOD_GUID: string = null,
     public AMOUNT: string = null,
-
+    public days: string = null,
     public DESCRIPTION: string = null,
     public PAYMENT_TYPE_GUID: string = null,
-
     public ATTACHMENT_ID: string = null,
     public CREATION_TS: string = null,
     public CREATION_USER_GUID: string = null,
     public UPDATE_TS: string = null,
     public UPDATE_USER_GUID: string = null,
     public GST: string = null
-  ) { }
+  ) {}
 
   static fromJson(json: any) {
     if (!json) return;
@@ -23,7 +22,7 @@ export class ClaimRequestDetailModel {
       json.CLAIM_REQUEST_GUID,
       json.CLAIM_METHOD_GUID,
       json.AMOUNT,
-
+      json.days,
       json.DESCRIPTION,
       json.PAYMENT_TYPE_GUID,
 
@@ -42,7 +41,7 @@ export class ClaimRequestDetailModel {
       CLAIM_REQUEST_GUID: this.CLAIM_REQUEST_GUID,
       CLAIM_METHOD_GUID: this.CLAIM_METHOD_GUID,
       AMOUNT: this.AMOUNT,
-
+      days: this.days,
       DESCRIPTION: this.DESCRIPTION,
       PAYMENT_TYPE_GUID: this.PAYMENT_TYPE_GUID,
 

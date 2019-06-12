@@ -1,121 +1,202 @@
 <ion-header>
-    <ion-navbar color="primary200">
-       
-        <ion-title>
-          <div *ngIf="ClaimMethodName == 'Parking'">{{ 'ADD_PARKING_HEADING' | translate }}</div>
-          <div *ngIf="ClaimMethodName == 'Toll'">{{ 'ADD_TOLL_HEADING' | translate }}</div>
-          <div *ngIf="ClaimMethodName == 'Accommodation'">{{ 'ADD_Accommodation_HEADING' | translate }}</div>
-          <div *ngIf="ClaimMethodName == 'Meal Allowance'">{{ 'ADD_MEAL_ALLOWANCE_HEADING' | translate }}</div>
-    
-        </ion-title>
-      </ion-navbar>  
+  <ion-navbar color="primary200">
+    <ion-title>
+      <div *ngIf="ClaimMethodName == 'Parking'">
+        {{ 'ADD_PARKING_HEADING' | translate }}
+      </div>
+      <div *ngIf="ClaimMethodName == 'Toll'">
+        {{ 'ADD_TOLL_HEADING' | translate }}
+      </div>
+      <div *ngIf="ClaimMethodName == 'Accommodation'">
+        {{ 'ADD_Accommodation_HEADING' | translate }}
+      </div>
+      <div *ngIf="ClaimMethodName == 'Meal Allowance'">
+        {{ 'ADD_MEAL_ALLOWANCE_HEADING' | translate }}
+      </div>
+    </ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="login-content" padding>
-    <form [formGroup]="DetailsForm" >
-      
-            <ion-list>
-              <ion-item *ngIf="ClaimMethodName != 'Accommodation' && ClaimMethodName != 'Meal Allowance'"  class="fuha">
-                <ion-label floating color="primary500"> <span style="color:red">*</span> {{ 'PAY_BY_LABEL' | translate }}</ion-label>
-                <ion-select  [ngModelOptions]="{standalone: true}" [(ngModel)]="PayType" placeholder="Cash">
-                   
-                  <ion-option *ngFor="let item of paymentTypes" (ionSelect)="onPaySelect(item)" value={{item.PAYMENT_TYPE_GUID}} >{{ item.NAME}}</ion-option>
-                </ion-select>
-              </ion-item>
+  <form [formGroup]="DetailsForm">
+    <ion-list>
+      <ion-item
+        *ngIf="
+          ClaimMethodName != 'Accommodation' &&
+          ClaimMethodName != 'Meal Allowance'
+        "
+        class="fuha"
+      >
+        <ion-label floating color="primary500">
+          <span style="color:red">*</span>
+          {{ 'PAY_BY_LABEL' | translate }}</ion-label
+        >
+        <ion-select
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="PayType"
+          placeholder="Cash"
+        >
+          <ion-option
+            *ngFor="let item of paymentTypes"
+            (ionSelect)="onPaySelect(item)"
+            value="{{ item.PAYMENT_TYPE_GUID }}"
+            >{{ item.NAME }}</ion-option
+          >
+        </ion-select>
+      </ion-item>
 
-              <ion-item *ngIf="ClaimMethodName === 'Meal Allowance'"  class="fuha">
-                <ion-label floating color="primary500">{{ "MEAL_ALLOWANCE_LABEL" | translate }}</ion-label>
-                <ion-select [ngModelOptions]="{standalone: true}" [(ngModel)]="MA_SELECT">
-                    <ion-option value="NA">NA</ion-option>
-                  <ion-option *ngFor="let allowance of allowanceList" (ionSelect)="onAllowanceSelect(allowance)">{{allowance.ALLOWANCE_NAME}} -{{currency}} {{allowance.ALLOWANCE_AMOUNT | number:'1.2-2'}} </ion-option>
-                </ion-select>
-              </ion-item>           
+      <div *ngIf="ClaimMethodName === 'Meal Allowance'">
+        <ion-item class="fuha">
+          <ion-label floating color="primary500">{{
+            'MEAL_ALLOWANCE_LABEL' | translate
+          }}</ion-label>
+          <ion-select
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="MA_SELECT"
+          >
+            <ion-option value="NA">NA</ion-option>
+            <ion-option
+              *ngFor="let allowance of allowanceList; let i = index"
+              (ionSelect)="onAllowanceSelect(allowance)"
+              [value]="allowance.ALLOWANCE_NAME"
+              [selected]="i === dropDownIndex"
+              >{{ allowance.ALLOWANCE_NAME }} - {{ currency }}
+              {{ allowance.ALLOWANCE_AMOUNT | number: '1.2-2' }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>
+            <span style="color:red">*</span>
+            {{ 'NO_OF_DAYS' | translate }}</ion-label
+          >
+          <ion-input
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="days" 
+            type="text"
+            placeholder="1"
+          ></ion-input>
+        </ion-item>
+      </div>
 
-            <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'" class="fuha">
-              <p>Optional for Touch 'n Go</p>
-              <ion-label floating color="primary500"> <span style="color:red">*</span> {{ 'AMOUNT_LABEL' | translate  }}{{ currency }}</ion-label>
-              <ion-input (change)='getCurrency($event.target.value)' [ngModelOptions]="{standalone: true}" 
-              [(ngModel)]="Amount" type="text"></ion-input>
-            </ion-item>           
+      <ion-item *ngIf="ClaimMethodName !== 'Meal Allowance'" class="fuha">
+        <p>Optional for Touch 'n Go</p>
+        <ion-label floating color="primary500">
+          <span style="color:red">*</span> {{ 'AMOUNT_LABEL' | translate
+          }}{{ currency }}</ion-label
+        >
+        <ion-input
+          (change)="getCurrency($event.target.value)"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="Amount"
+          type="text"
+        ></ion-input>
+      </ion-item>
 
-            <ion-item>
-              <ion-label floating color="primary500">{{ 'DESCRIPTION_LABEL' | translate }}</ion-label>
-              <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="Description"></ion-input>
-            </ion-item>
-           
+      <ion-item>
+        <ion-label floating color="primary500">{{
+          'DESCRIPTION_LABEL' | translate
+        }}</ion-label>
+        <ion-input
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="Description"
+        ></ion-input>
+      </ion-item>
 
-            <!-- <div class="form-group">          
+      <!-- <div class="form-group">          
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
             </div> -->
 
-            <!-- this -->
-            <!-- <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'">
+      <!-- this -->
+      <!-- <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'">
               <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
               <button ion-button type="primary"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>             
             </ion-item> -->
 
-            <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'"> 
+      <ion-item *ngIf="ClaimMethodName != 'Meal Allowance'">
+        <ion-label>Attachment :</ion-label>
+        <!-- <img style="width: 50%" height="100%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">      -->
+        <ion-input
+          type="file"
+          id="avatar1"
+          (change)="ProfileImageDisplay($event, 'avatar1')"
+          #fileInput1
+        ></ion-input>
+        <!-- <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button item-end color="primary500"  (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button> -->
 
-                <ion-label>Attachment :</ion-label> 
-                <!-- <img style="width: 50%" height="100%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">      -->
-              <ion-input type="file" id="avatar1" (change)="ProfileImageDisplay($event, 'avatar1')" #fileInput1></ion-input>
-              <!-- <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button item-end color="primary500"  (click)="saveIm()" [disabled]= "!chooseFile">Upload image</button> -->
-            
-              <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
-              <!-- <button ion-button type="button"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
-              <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
-          </ion-item>
-          <!-- <div *ngIf="newImage  && ClaimMethodName != 'Meal Allowance'">
+        <!-- <button ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
+        <!-- <button ion-button type="button"  (click)="saveIm()" [disabled]= "!chooseFile">upload image</button>    -->
+        <!-- <ion-button ion-button type="button" (click)="clearFile('avatar1')">clear file> </ion-button> -->
+      </ion-item>
+      <!-- <div *ngIf="newImage  && ClaimMethodName != 'Meal Allowance'">
           <img style="width: 25%" height="50%" src={{imageURLEdit}} *ngIf="imageURLEdit!==null">    
           </div> -->
 
-          <div *ngIf= "isImage">
-            <img src="{{ProfileImage}}" style="width: 20%">
-          </div>
+      <div *ngIf="isImage">
+        <img src="{{ ProfileImage }}" style="width: 20%" />
+      </div>
 
-          <div *ngIf="imageURLEdit!==null">
-            <!-- <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" >
+      <div *ngIf="imageURLEdit !== null">
+        <!-- <button ion-button outline item-start icon-left  (click)="DisplayImage(imageURLEdit)" >
                 View Receipt
                 </button> -->
-                <a href={{imageURLEdit}} target='_blank'>View Receipt</a> 
-              </div>
+        <a href="{{ imageURLEdit }}" target="_blank">View Receipt</a>
+      </div>
 
-        <!-- <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
+      <!-- <button *ngIf="ClaimMethodName != 'Meal Allowance'" ion-button type="button" (click)="clearFile('avatar1')">clear file</button> -->
 
-         
-
-          <!-- <ion-item>
+      <!-- <ion-item>
             <button (click)='save()' [disabled]="DetailsForm.invalid || loading" ion-button round style="width:100px;">{{ 'SUBMIT'  }}</button>
           </ion-item> -->
-          <div class="btn" *ngIf="ClaimMethodName != 'Meal Allowance'">
-              <!-- *ngIf="ClaimMethodName === 'Meal Allowance'" -->              
-              <!-- <button ion-button color="primary" (click)='Save(false)'>{{ "SUBMIT_BUTTON" | translate }}</button> -->
-              <button *ngIf="imageOptional" ion-button color="primary" (click)='Save(false)'>{{ "SUBMIT_BUTTON" | translate }}</button>
-              <button *ngIf="!imageOptional" ion-button color="primary" (click)='Save(false)' [disabled]="!ImageUploadValidation">{{ "SUBMIT_BUTTON" | translate }}</button>
-              <!-- [disabled]="!ImageUploadValidation" -->
-            </div>
+      <div class="btn" *ngIf="ClaimMethodName != 'Meal Allowance'">
+        <!-- *ngIf="ClaimMethodName === 'Meal Allowance'" -->
+        <!-- <button ion-button color="primary" (click)='Save(false)'>{{ "SUBMIT_BUTTON" | translate }}</button> -->
+        <button
+          *ngIf="imageOptional"
+          ion-button
+          color="primary"
+          (click)="Save(false)"
+        >
+          {{ 'SUBMIT_BUTTON' | translate }}
+        </button>
+        <button
+          *ngIf="!imageOptional"
+          ion-button
+          color="primary"
+          (click)="Save(false)"
+          [disabled]="!ImageUploadValidation"
+        >
+          {{ 'SUBMIT_BUTTON' | translate }}
+        </button>
+        <!-- [disabled]="!ImageUploadValidation" -->
+      </div>
 
-            <div class="btn" *ngIf="ClaimMethodName === 'Meal Allowance'">
-              <button ion-button color="primary" (click)='Save(true)'>{{ "SUBMIT_BUTTON" | translate }}</button>
-            </div>
+      <div class="btn" *ngIf="ClaimMethodName === 'Meal Allowance'">
+        <button ion-button color="primary" (click)="Save(true)">
+          {{ 'SUBMIT_BUTTON' | translate }}
+        </button>
+      </div>
 
-            <div class="popup2" padding *ngIf="displayImage">
-              <ion-card>
-                <ion-card-header class="icTitle headerColor-white ">
-                  <div class="icHeaderText">Receipt</div>
-                  <button class="btnR" (click)="CloseDisplayImage()">
-                    <ion-icon name="md-close"></ion-icon>
-                  </button>
-                </ion-card-header>
-                <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null  && isImage">
-                <a href={{imageURL}} *ngIf="!isImage" target = _blank>VIEW</a>
-          
-                <!-- <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null"> -->
-              </ion-card>
-            </div>
+      <div class="popup2" padding *ngIf="displayImage">
+        <ion-card>
+          <ion-card-header class="icTitle headerColor-white ">
+            <div class="icHeaderText">Receipt</div>
+            <button class="btnR" (click)="CloseDisplayImage()">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+          </ion-card-header>
+          <img
+            style="width: 50%"
+            height="100%"
+            src="{{ imageURL }}"
+            *ngIf="imageURL !== null && isImage"
+          />
+          <a href="{{ imageURL }}" *ngIf="!isImage" target="_blank">VIEW</a>
 
-        </ion-list>
-            </form>  
-
+          <!-- <img style="width: 50%" height="100%" src={{imageURL}} *ngIf="imageURL!==null"> -->
+        </ion-card>
+      </div>
+    </ion-list>
+  </form>
 </ion-content>

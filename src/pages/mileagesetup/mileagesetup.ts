@@ -56,6 +56,7 @@ export class MileagesetupPage {
   Key_Param: string = 'api_key=' + constants.DREAMFACTORY_API_KEY;
 
   public AddMileageClick() {
+    console.log(this.AdminLogin);
     if (this.Edit_Form == false) {
       this.AddMileageClicked = true; this.Add_Form = true; this.Edit_Form = false;
       this.ClearControls();
@@ -63,6 +64,7 @@ export class MileagesetupPage {
     else {
       alert('Sorry. You are in Edit Mode.');
     }
+    // console.log(localStorage.getItem("g_IS_TENANT_ADMIN"));
   }
 
   public EditClick(MILEAGE_GUID: any) {
@@ -154,7 +156,7 @@ export class MileagesetupPage {
         this.FillTenant();
 
         //Display Grid---------------------------------------------
-        this.DisplayGrid();
+        this.DisplayGrid(); 
       }
       else {
         alert('Sorry, you are not authorized for the action. authorized.');
@@ -164,6 +166,7 @@ export class MileagesetupPage {
 
       if (localStorage.getItem("g_USER_GUID") != "sva") {
         this.Mileageform = fb.group({
+          TENANT_NAME: [null],
           CATEGORY: [null, Validators.compose([Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
           RATE_PER_UNIT: [null, Validators.compose([Validators.pattern('^[0-9!@#%$&()-`.+,/\"\\s]+$'), Validators.required])],
           RATE_DATE: ["", Validators.required],
@@ -209,7 +212,7 @@ export class MileagesetupPage {
 
   FillTenant() {
     //fill all the tenant details----------------------------
-    if (localStorage.getItem("g_USER_GUID") == "sva") {
+    if (localStorage.getItem("g_USER_GUID") != "sva") {
       let tenantUrl: string = this.baseResource_Url + 'tenant_main?order=TENANT_ACCOUNT_NAME&' + this.Key_Param;
       this.http
         .get(tenantUrl)
@@ -221,7 +224,7 @@ export class MileagesetupPage {
     }
     else {
       this.AdminLogin = false;
-    }
+    }    
   }
 
   DisplayGrid() {
