@@ -24,6 +24,7 @@ import { BaseHttpService } from '../../services/base-http';
 import { UserRole_Model } from '../../models/user_role_model'
 import { UUID } from 'angular2-uuid';
 import { LoginPage } from '../login/login';
+import { sanitizeURL } from '../../providers/sanitizer/sanitizer';
 
 @Component({
   selector: 'page-account',
@@ -298,7 +299,7 @@ export class AccountPage {
     let url_user_Children = this.baseResourceUrl2_URL + "user_children?filter=(USER_GUID=" + id + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
     // debugger;
     //----------------Get the Details from Db and bind Controls---------------------------------
-    this.http.get(url_user_edit, options)
+    this.http.get(sanitizeURL(url_user_edit), options)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -401,7 +402,7 @@ export class AccountPage {
         });
 
     //------------------------PROFESSIONAL CERTIFICATIONS--------------------------
-    this.http.get(url_user_Professional_Certification, options)
+    this.http.get(sanitizeURL(url_user_Professional_Certification), options)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -412,7 +413,7 @@ export class AccountPage {
 
     //------------------------FAMILY DETAILS---------------------------------------
     //------------------------SPOUSE--------------------------        
-    this.http.get(url_user_Spouse, options)
+    this.http.get(sanitizeURL(url_user_Spouse), options)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -422,7 +423,7 @@ export class AccountPage {
         });
 
     //------------------------CHILDREN------------------------        
-    this.http.get(url_user_Children, options)
+    this.http.get(sanitizeURL(url_user_Children), options)
       .map(res => res.json())
       .subscribe(
         data => {

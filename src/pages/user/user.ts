@@ -31,6 +31,7 @@ import { UUID } from 'angular2-uuid';
 declare var cordova: any;
 import { LoginPage } from '../login/login';
 import { ImageUpload_model } from '../../models/image-upload.model';
+import { sanitizeURL } from '../../providers/sanitizer/sanitizer';
 
 /**
  * Generated class for the UserPage page.
@@ -278,7 +279,7 @@ export class UserPage {
     let url_user_Children = constants.DREAMFACTORY_TABLE_URL + "user_children?filter=(USER_GUID=" + id + ')&'+this.Key_Param;
 
     //----------------Get the Details from Db and bind Controls---------------------------------
-    this.http.get(url_user_edit, options)
+    this.http.get(sanitizeURL(url_user_edit), options)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -383,7 +384,7 @@ export class UserPage {
         });
 
     //------------------------PROFESSIONAL CERTIFICATIONS--------------------------
-    this.http.get(url_user_Professional_Certification, options)
+    this.http.get(sanitizeURL(url_user_Professional_Certification), options)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -394,7 +395,7 @@ export class UserPage {
 
     //------------------------FAMILY DETAILS---------------------------------------
     //------------------------SPOUSE--------------------------        
-    this.http.get(url_user_Spouse, options)
+    this.http.get(sanitizeURL(url_user_Spouse), options)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -404,7 +405,7 @@ export class UserPage {
         });
 
     //------------------------CHILDREN------------------------        
-    this.http.get(url_user_Children, options)
+    this.http.get(sanitizeURL(url_user_Children), options)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -417,7 +418,7 @@ export class UserPage {
     let User_Role_url = constants.DREAMFACTORY_TABLE_URL + "user_role?filter=(USER_GUID=" + id + ')&'+this.Key_Param;
 
     this.http
-      .get(User_Role_url)
+      .get(sanitizeURL(User_Role_url))
       .map(res => res.json())
       .subscribe(data => {
         this.roles = data.resource;
@@ -1947,7 +1948,7 @@ export class UserPage {
       let url: string;
       url = constants.DREAMFACTORY_TABLE_URL + "user_main?filter=(EMAIL=" + this.User_Email_ngModel.trim() + ')&'+this.Key_Param;
 
-      this.http.get(url, options)
+      this.http.get(sanitizeURL(url), options)
         .map(res => res.json())
         .subscribe(
           data => {
@@ -2592,7 +2593,7 @@ export class UserPage {
 
   GetUserMain(USER_GUID: any) {
     let UserActivationUrl = constants.DREAMFACTORY_TABLE_URL + "user_main?filter=(USER_GUID=" + USER_GUID + ')&'+this.Key_Param;
-    this.http.get(UserActivationUrl)
+    this.http.get(sanitizeURL(UserActivationUrl))
       .map(res => res.json())
       .subscribe(
         data => {

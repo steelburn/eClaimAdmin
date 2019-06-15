@@ -6,6 +6,7 @@ import * as constants from '../app/config/constants';
 import { MainClaimRequestModel } from '../models/main-claim-request.model';
 import { DatePipe, DecimalPipe } from '@angular/common'
 import moment from 'moment';
+import { sanitizeURL } from './sanitizer/sanitizer';
 
 @Injectable()
 
@@ -41,7 +42,7 @@ export class ApiManagerProvider {
     var queryHeaders = new Headers();
     queryHeaders.append('Content-Type', 'application/json');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-    return this.http.get(url, { headers: queryHeaders }).map(res => res.json())
+    return this.http.get(sanitizeURL(url), { headers: queryHeaders }).map(res => res.json())
   }
 
   sendEmail(ClaimType_GUID: string, startDate: string, endDate: string, CreatedDate: string, TravelDate: string, CLAIM_REQUEST_GUID: string) {
@@ -787,7 +788,7 @@ export class ApiManagerProvider {
     // var origin = this.Travel_From_ngModel;
     // var destination;
     // var url = 'http://api.zen.com.my/api/v2/google/distancematrix/json?destinations=place_id:' + this.DestinationPlaceID + '&origins=place_id:' + this.OriginPlaceID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.http.get(url).map(res => res.json()).subscribe(data => {
+    this.http.get(sanitizeURL(url)).map(res => res.json()).subscribe(data => {
       let temp = data["rows"][0]["elements"][0];
       // console.table(data)
       if (temp["distance"] != null) {
@@ -818,7 +819,7 @@ export class ApiManagerProvider {
       return;
     }
     var url = 'http://api.zen.com.my/api/v2/google/place/autocomplete/json?json?radius=50000&input=' + val + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-    this.http.get(url).map(res => res.json()).subscribe(data => {
+    this.http.get(sanitizeURL(url)).map(res => res.json()).subscribe(data => {
       items = data["predictions"];
       return items;
     });
