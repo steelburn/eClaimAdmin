@@ -7,21 +7,20 @@ import { MainClaimRequestModel } from '../models/main-claim-request.model';
 import { DatePipe, DecimalPipe } from '@angular/common'
 import moment from 'moment';
 import { sanitizeURL, getURL } from './sanitizer/sanitizer';
-import { extendedHeaders } from '../models/extended_headers_model';
-
+import { postHeaders } from '../models/extended_headers_model';
 @Injectable()
-
 export class ApiManagerProvider {
   emailUrl: string = getURL("email");
   claimDetailsData: any[];
   result: any[];
   userClaimCutoffDate: number;
   approverCutoffDate: number;
+  queryHeaders: any;
 
   constructor(public numberPipe: DecimalPipe, public http: Http, public toastCtrl: ToastController, public datepipe: DatePipe) { }
 
   CreateTimestamp() {
-    return moment.utc(new Date()).zone(localStorage.getItem("cs_timestamp")).format('YYYY-MM-DDTHH:mm');
+    return moment.utc(new Date()).utcOffset(-localStorage.getItem("cs_timestamp")).format('YYYY-MM-DDTHH:mm');
   }
 
   LoadMainClaim(claimReqGUID: any) {
@@ -39,11 +38,9 @@ export class ApiManagerProvider {
   }
 
   getApiModel(endPoint: string, args?: string) {
-    let url = this.getModelUrl(endPoint, args);
-    var queryHeaders = new extendedHeaders();
-    console.log(queryHeaders);
+    let url = this.getModelUrl(endPoint, args);;
     return this.http
-      .get(sanitizeURL(url), { headers: queryHeaders })
+      .get(sanitizeURL(url)) //, { headers: queryHeaders })
       .map(res => res.json())
   }
 
@@ -74,7 +71,7 @@ export class ApiManagerProvider {
                 ClaimAmt = this.numberPipe.transform(Amt_Status_details[0]["CLAIM_AMOUNT"], '1.2-2');
                 Status = Amt_Status_details[0]["STATUS"];
 
-                var queryHeaders = new extendedHeaders();
+                var queryHeaders = postHeaders;
                 queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
                 console.log(queryHeaders);
                 let options = new RequestOptions({ headers: queryHeaders });
@@ -219,7 +216,7 @@ export class ApiManagerProvider {
                       ClaimAmt = this.numberPipe.transform(Amt_Status_details[0]["CLAIM_AMOUNT"], '1.2-2');
                       Status = Amt_Status_details[0]["STATUS"];
 
-                      var queryHeaders = new extendedHeaders();
+                      var queryHeaders = postHeaders;
                       queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
                       console.log(queryHeaders);
                       let options = new RequestOptions({ headers: queryHeaders });
@@ -328,7 +325,7 @@ export class ApiManagerProvider {
                 // console.log(moment(startDate).format('YYYY-MM-DDTHH:mm'));
                 // console.log(this.datepipe.transform(startDate, 'dd/MM/yyyy HH:mm'));
 
-                var queryHeaders = new extendedHeaders();
+                var queryHeaders = postHeaders;
                 queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
                 console.log(queryHeaders);
                 let options = new RequestOptions({ headers: queryHeaders });
@@ -433,9 +430,9 @@ export class ApiManagerProvider {
   }
 
   EmailNextApprover_New(CLAIM_REQUEST_GUID: string, Remarks: string, ApproverStatus: string) {
-    let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_details_new?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+//    let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_details_new?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     this.http
-      .get(url)
+      .get(getURL("table","view_email_details_new",[`CLAIM_REQUEST_GUID=${CLAIM_REQUEST_GUID}`]))
       .map(res => res.json())
       .subscribe(data => {
         let email_details = data["resource"];
@@ -468,7 +465,7 @@ export class ApiManagerProvider {
           claimType = email_details[0]["CLAIM_TYPE"];
           Description = email_details[0]["DESCRIPTION"];
 
-          var queryHeaders = new extendedHeaders();
+          var queryHeaders = postHeaders;
           queryHeaders.append('X-Dreamfactory-Session-Token', localStorage.getItem('session_token'));
           console.log(queryHeaders);
           let options = new RequestOptions({ headers: queryHeaders });
@@ -663,9 +660,11 @@ export class ApiManagerProvider {
 
   getModelUrl(table: string, args?: string) {
     if (args != null) {
-      return constants.DREAMFACTORY_TABLE_URL + '/' + table + '?' + args;
+      return getURL("table",table)+`&${args}`
+ //     return constants.DREAMFACTORY_TABLE_URL + '/' + table + '?' + args;
     }
-    return constants.DREAMFACTORY_TABLE_URL + '/' + table;
+      return getURL("table",table);
+//    return constants.DREAMFACTORY_TABLE_URL + '/' + table;
   }
 
   postUrl(table: string) {
@@ -692,15 +691,15 @@ export class ApiManagerProvider {
     queryHeaders.append('Content-Type', 'application/json');
     queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     let options = new RequestOptions({ headers: queryHeaders });
-    return this.http.patch(this.getUrl('main_claim_request'), claim_main.toJson(true), options)
+    return this.http.patch(getURL("table",'main_claim_request'), claim_main.toJson(true), options)
       .map((response) => {
         return response;
       });
   }
 
   updateApiModel(endPoint: string, modelJSONData: any, isClaim: boolean) {
-    let modelJSON = modelJSONData["resource"][0];
-    var queryHeaders = new extendedHeaders();
+//    let modelJSON = modelJSONData["resource"][0];
+    var queryHeaders = postHeaders;
     console.log(queryHeaders);
     let options = new RequestOptions({ headers: queryHeaders });
     return this.http.patch(this.postUrl(endPoint), modelJSONData, options)
@@ -725,7 +724,7 @@ export class ApiManagerProvider {
 
 
   getClaimRequestByClaimReqGUID(claimReqGUID: string): Observable<MainClaimRequestModel[]> {
-    var queryHeaders = new extendedHeaders();
+    var queryHeaders = postHeaders;
     console.log(queryHeaders);
     return this.http
       .get(getURL("table", 'main_claim_request', [`CLAIM_REQUEST_GUID=${claimReqGUID}`]))

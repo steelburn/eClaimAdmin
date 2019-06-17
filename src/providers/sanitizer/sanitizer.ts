@@ -40,7 +40,7 @@ export type filterConnectorDef = 'AND' | 'OR'
  * @param {filterConnectorDef} [filterConnector]
  * @returns
  */
-export function getURL(serviceType: keyof serviceTypeDef, resourceName?: string, filters?: string[], filterConnector: filterConnectorDef = "AND") {
+export function getURL(serviceType: keyof serviceTypeDef, resourceName?: string, filters: string[] = [], filterConnector: filterConnectorDef = "AND") {
   var urlstring: string;
 switch (serviceType) {
   case 'file': { urlstring = `${DREAMFACTORY_IMAGE_URL}/${resourceName}?api_key=${DREAMFACTORY_API_KEY}`; break };
