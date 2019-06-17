@@ -7,7 +7,7 @@ import { MainClaimRequestModel } from '../models/main-claim-request.model';
 import { DatePipe, DecimalPipe } from '@angular/common'
 import moment from 'moment';
 import { sanitizeURL, getURL } from './sanitizer/sanitizer';
-import { postHeaders } from '../models/extended_headers_model';
+//import { postHeaders } from '../models/extended_headers_model';
 @Injectable()
 export class ApiManagerProvider {
   emailUrl: string = getURL("email");
@@ -61,9 +61,8 @@ export class ApiManagerProvider {
 
           //Get the Total Claim Amount and Status----------------------
           let ClaimAmt: string = "0.00"; let Status: string = "";
-          let url_Amt_Status = constants.DREAMFACTORY_TABLE_URL + '/main_claim_request?filter=(CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + ')AND(CLAIM_TYPE_GUID = ' + ClaimType_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
           this.http
-            .get(url_Amt_Status)
+            .get(getURL("table","main_claim_request",[`CLAIM_REQUEST_GUID=${CLAIM_REQUEST_GUID}`,`CLAIM_TYPE_GUID=${ClaimType_GUID}`]))
             .map(res => res.json())
             .subscribe(data => {
               let Amt_Status_details = data["resource"];
@@ -79,9 +78,8 @@ export class ApiManagerProvider {
                 let strSubjectApplier: string = ""; let strSubjectApprover: string; let strBody_html: string;
 
                 //For Cliam Type-------------------------------------------------
-                let url_claim_type = constants.DREAMFACTORY_TABLE_URL + "/main_claim_type?filter=(CLAIM_TYPE_GUID=" + ClaimType_GUID + ')&api_key=' + constants.DREAMFACTORY_API_KEY;
                 this.http
-                  .get(url_claim_type)
+                  .get(getURL("table","main_claim_type",[`CLAIM_TYPE_GUID=${ClaimType_GUID}`]))
                   .map(res => res.json())
                   .subscribe(data => {
                     let claimType_details = data["resource"];
@@ -183,14 +181,9 @@ export class ApiManagerProvider {
           let Project_OR_Customer_Name: string = "";
           let Soc_No: string = "";
           let Proj_Cust_url: string = "";
-
-          if (Soc_GUID != null) {
-            Proj_Cust_url = constants.DREAMFACTORY_TABLE_URL + '/view_soc_project?filter=SOC_GUID=' + Soc_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-          }
-          if (Customer_GUID != null) {
-            Proj_Cust_url = constants.DREAMFACTORY_TABLE_URL + '/main_customer?filter=CUSTOMER_GUID=' + Customer_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
-          }
-
+            Proj_Cust_url = (Soc_GUID) 
+              ? getURL("table","view_soc_project",[`SOC_GUID=${Soc_GUID}`])
+              : getURL("table","main_customer",[`CUSTOMER_GUID=${Customer_GUID}`]);
           this.http
             .get(Proj_Cust_url)
             .map(res => res.json())
@@ -535,7 +528,8 @@ export class ApiManagerProvider {
   }
 
   EmailReject(CLAIM_REQUEST_GUID: string, Remarks: string, ApproverStatus: string, RejectedByStatus: string, Level: string) {
-    let url = constants.DREAMFACTORY_TABLE_URL + '/view_email_details_new?filter=CLAIM_REQUEST_GUID=' + CLAIM_REQUEST_GUID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
+    let url = getURL("table","view_email_details_new",[`CLAIM_REQUEST_GUID=${CLAIM_REQUEST_GUID}`]);
+
     this.http
       .get(url)
       .map(res => res.json())
@@ -668,11 +662,11 @@ export class ApiManagerProvider {
   }
 
   postUrl(table: string) {
-    return constants.DREAMFACTORY_TABLE_URL + '/' + table;
+    return sanitizeURL(constants.DREAMFACTORY_TABLE_URL + '/' + table);
   }
 
   deleteUrl(table: string, id: string) {
-    return constants.DREAMFACTORY_TABLE_URL + '/' + table + '/' + id;
+    return sanitizeURL(constants.DREAMFACTORY_TABLE_URL + '/' + table + '/' + id);
   }
 
   postData(endpoint: string, body: any): Observable<any> {
@@ -699,8 +693,10 @@ export class ApiManagerProvider {
 
   updateApiModel(endPoint: string, modelJSONData: any, isClaim: boolean) {
 //    let modelJSON = modelJSONData["resource"][0];
-    var queryHeaders = postHeaders;
-    console.log(queryHeaders);
+var queryHeaders = new Headers();
+queryHeaders.append('Content-Type', 'application/json');
+queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
+console.log(queryHeaders);
     let options = new RequestOptions({ headers: queryHeaders });
     return this.http.patch(this.postUrl(endPoint), modelJSONData, options)
     /*       .map((response) => {
@@ -724,8 +720,6 @@ export class ApiManagerProvider {
 
 
   getClaimRequestByClaimReqGUID(claimReqGUID: string): Observable<MainClaimRequestModel[]> {
-    var queryHeaders = postHeaders;
-    console.log(queryHeaders);
     return this.http
       .get(getURL("table", 'main_claim_request', [`CLAIM_REQUEST_GUID=${claimReqGUID}`]))
       .map((response) => {
