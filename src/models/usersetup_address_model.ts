@@ -14,7 +14,7 @@ export class UserAddress_Model extends Base_Model {
     public COUNTRY_GUID: string = null;
     public STATE_GUID: string = null;
 
-    static fromJson(json: UserAddress_Model) {
+    static fromJson(json: any) {
         if (!json) return;
         return (
             json.USER_ADDRESS_GUID,
