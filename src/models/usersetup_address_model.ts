@@ -29,7 +29,7 @@ export class UserAddress_Model extends Base_Model {
             json.UPDATE_USER_GUID,
             json.POST_CODE,
             json.COUNTRY_GUID,
-            json.STATE_GUID,
+            json.STATE_GUID
 
         );
     }

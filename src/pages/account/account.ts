@@ -317,7 +317,8 @@ export class AccountPage {
           }
           this.User_StaffID_Edit_ngModel = this.view_user_details[0]["PERSONAL_ID_TYPE"];
           this.User_ICNo_Edit_ngModel = this.view_user_details[0]["PERSONAL_ID"];
-          this.User_DOB_Edit_ngModel = this.view_user_details[0]["DOB"];
+//          this.User_DOB_Edit_ngModel = this.view_user_details[0]["DOB"];
+this.userinfo_entry.DOB = this.view_user_details[0]["DOB"]
           this.User_Gender_Edit_ngModel = this.view_user_details[0]["GENDER"];
 
           if (this.view_user_details[0]["ATTACHMENT_ID"] == null || this.view_user_details[0]["ATTACHMENT_ID"] == '') {
@@ -977,7 +978,7 @@ export class AccountPage {
     this.userinfo_entry.MANAGER_USER_GUID = this.User_Approver1_Edit_ngModel;
     this.userinfo_entry.PERSONAL_ID_TYPE = this.User_StaffID_Edit_ngModel;
     this.userinfo_entry.PERSONAL_ID = this.User_ICNo_Edit_ngModel;
-    this.userinfo_entry.DOB = this.User_DOB_Edit_ngModel;
+//    this.userinfo_entry.DOB = this.User_DOB_Edit_ngModel;
     this.userinfo_entry.GENDER = this.User_Gender_Edit_ngModel;
     this.userinfo_entry.JOIN_DATE = this.User_JoinDate_Edit_ngModel;
     this.userinfo_entry.MARITAL_STATUS = this.User_Marital_Edit_ngModel;

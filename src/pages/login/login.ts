@@ -4,7 +4,6 @@ import { NavController, Loading, MenuController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import CryptoJS from 'crypto-js';
-import moment from 'moment';
 
 import { UserData } from '../../providers/user-data';
 // import { SignupPage } from '../signup/signup';
@@ -91,7 +90,7 @@ export class LoginPage {
                 localStorage.setItem("g_IMAGE_URL", "assets/img/profile_no_preview.png");
               }
               else {
-                localStorage.setItem("g_IMAGE_URL", constants.DREAMFACTORY_IMAGE_URL + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
+                localStorage.setItem("g_IMAGE_URL", constants.IMAGE_VIEW_URL + res[0]["IMAGE_URL"]);
               }
 
               //Setup Guide for only Hq Users
@@ -440,7 +439,7 @@ res[0].forEach( (element: any)=> {
                       localStorage.setItem("g_IMAGE_URL", "assets/img/profile_no_preview.png");
                     }
                     else {
-                      localStorage.setItem("g_IMAGE_URL", constants.DREAMFACTORY_IMAGE_URL + res[0]["IMAGE_URL"] + "?api_key=" + constants.DREAMFACTORY_API_KEY);
+                      localStorage.setItem("g_IMAGE_URL", constants.IMAGE_VIEW_URL + res[0]["IMAGE_URL"]);
                     }
 
                     //Setup Guide for only Hq Users
