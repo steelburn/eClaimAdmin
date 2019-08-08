@@ -344,7 +344,7 @@ export class AddTollPage {
   UploadImage() {
     this.CloudFilePath = 'eclaim/';
     // this.loading = true;
-    this.uniqueName = new Date().toISOString() + this.uploadFileName;
+    this.uniqueName = new Date().valueOf() + this.uploadFileName;
     const queryHeaders = new Headers();
     queryHeaders.append('filename', this.uploadFileName);
     queryHeaders.append('Content-Type', 'multipart/form-data');

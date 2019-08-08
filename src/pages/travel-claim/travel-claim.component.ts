@@ -1,12 +1,10 @@
-import { DREAMFACTORY_INSTANCE_URL } from './../../app/config/constants';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as constants from '../../app/config/constants';
-import { ImageUpload_model } from '../../models/image-upload.model';
 //import { TravelClaim_Model } from '../../models/travelclaim_model';
 //import { TravelClaim_Service } from '../../services/travelclaim_service';
 import { Services } from '../Services';
@@ -20,12 +18,10 @@ import { ProfileManagerProvider } from '../../providers/profile-manager.provider
 import { ConferenceData } from '../../providers/conference-data';
 
 import { DecimalPipe } from '@angular/common';
-import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import moment from 'moment';
 import * as Settings from '../../dbSettings/companySettings';
 import { sanitizeURL, getURL } from '../../providers/sanitizer/sanitizer';
 import { UploadImage } from '../../providers/uploader/uploader';
-import { Observable } from 'rxjs';
 
 @IonicPage()
 @Component({
@@ -120,7 +116,7 @@ export class TravelclaimPage {
   rejectedLevel: any;
   CalculationData: any[] = [];
   One_Way_Distance: any;
-  constructor(public numberPipe: DecimalPipe, public conference: ConferenceData, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+  constructor(public numberPipe: DecimalPipe, public conference: ConferenceData, public profileMng: ProfileManagerProvider, public api: ApiManagerProvider, public navCtrl: NavController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams, public translate: TranslateService, fb: FormBuilder, public http: Http, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
     this.countries = [{ id: 'IN', name: 'India' }, { id: 'MY', name: 'Malaysia' }];
     this.country_select = 'Malaysia';
     this.countryRange = 'my';
@@ -137,7 +133,6 @@ export class TravelclaimPage {
     if (this.max_claim_amount == null) {
       this.max_claim_amount = Settings.ClaimAmountConstants.MAX_CLAIM_AMOUNT
     }
-    let currency = localStorage.getItem("cs_default_currency");
     // Lakshman
 
     this.profileMng.CheckSessionOut();
@@ -204,12 +199,10 @@ export class TravelclaimPage {
 
   GetNewDistance(pointA: string, pointB: string, roundtrip: boolean = false): any {
     let url = `${getURL("distance")}&destinations=place_id:${pointB}&origins=place_id:${pointA}`;
-    let distance = 0;
     
     if (roundtrip) {
-      distance = this.GetNewDistance(pointA, pointB) + this.GetNewDistance(pointB, pointA);
     } else {
-      let distancePromise = new Promise(resolve => this.http.get(url).map(res => res.json())
+      let distancePromise = new Promise(() => this.http.get(url).map(res => res.json())
         .subscribe(data => {
           let rawDistance: number = data["rows"][0]["elements"][0]["distance"]["value"];
           console.log("Raw Distance: ", rawDistance);
@@ -271,7 +264,7 @@ export class TravelclaimPage {
     // });
     let url = 'http://api.zen.com.my/api/v2/google/distancematrix/json?destinations=place_id:' + this.OriginPlaceID + '&origins=place_id:' + this.DestinationPlaceID + '&api_key=' + constants.DREAMFACTORY_API_KEY;
     var destination: any;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.http.get(sanitizeURL(url)).map(res => res.json()).subscribe(data => {
         let temp = data["rows"][0]["elements"][0];
         // console.table(data)
@@ -320,8 +313,6 @@ export class TravelclaimPage {
         let val = this.Roundtrip_Calculation();
         val.then((cal_data: any) => {
           var return_distance = cal_data[0]["Return_distance"];
-          var return_totalAmount = cal_data[0]["Return_totalAmount"];
-          var return_travelAmount = cal_data[0]["Return_travelAmount"];
 
           let distance = new String(formValues.distance);
           var distance1 = distance.indexOf(",");
@@ -570,7 +561,7 @@ export class TravelclaimPage {
             .subscribe(data => {
               this.claimRequestData = data;
               this.claimRequestData["resource"][0].CLAIM_AMOUNT = this.totalClaimAmount;
-              this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
+              this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
               })
             })
         }
@@ -886,27 +877,6 @@ export class TravelclaimPage {
   fileName1: string;
   ProfileImage: any;
   newImage: boolean = true;
-  private ProfileImageDisplay(e: any, fileChoose: string): void {
-    let reader = new FileReader();
-    if (e.target.files && e.target.files[0]) {
-
-      const file = e.target.files[0];
-      this.Travelform.get(fileChoose).setValue(file);
-      if (fileChoose === 'avatar1')
-        this.fileName1 = file.name;
-
-      reader.onload = (event: any) => {
-        this.ProfileImage = event.target.result;
-      }
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    this.imageGUID = this.uploadFileName;
-    this.chooseFile = true;
-    this.newImage = false;
-    this.onFileChange(e);
-    this.ImageUploadValidation = true;
-    this.saveIm();
-  }
 
   disableButton: any;
   /*   saveIm() {
@@ -1026,7 +996,7 @@ export class TravelclaimPage {
   }
   // valueChange(value: any) {
   // }
-  valueChange(value: any) {
+  valueChange() {
     //blm
     // if(this.travelAmountNgmodel != null && this.travelAmountNgmodel != undefined){
     // this.trip_amount=this.travelAmountNgmodel;
@@ -1144,7 +1114,7 @@ export class TravelclaimPage {
                 this.api.getApiModel('main_claim_ref', 'filter=(USER_GUID=' + this.userGUID + ')AND(MONTH=' + month + ')AND(YEAR=' + year + ')')
                   .subscribe(claimRefdata => {
                     this.claimRequestData["resource"][0].CLAIM_REF_GUID = claimRefdata["resource"][0].CLAIM_REF_GUID;
-                    this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(res => {
+                    this.api.updateApiModel('main_claim_request', this.claimRequestData, true).subscribe(() => {
                       alert('Claim details updated successfully.')
                       this.conference.pushTravelClaim();
                     });
