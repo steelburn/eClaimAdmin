@@ -65,17 +65,7 @@ export class ClaimReportUserPage {
               element.RowNum = "1";
               this.claimsListPrintTemp.push(element);
               for (let i = 2; i <= 7; i++) {
-                let flag = false;
-                if (i <= 3)
-                  flag = true;
-                else if (i == 4 && element.TollAmount != 0)
-                  flag = true;
-                else if (i == 5 && element.ParkingAmount != 0)
-                  flag = true;
-                else if (i == 6 && element.MealAmount != 0)
-                  flag = true;
-                else if (i == 7 && element.AccAmount != 0)
-                  flag = true;
+                let flag = this.checkFlag(i, element);
                 if (flag) {
                   const myClonedObject = Object.assign({}, element);
                   myClonedObject.RowNum = i.toString();
@@ -126,6 +116,17 @@ export class ClaimReportUserPage {
     })
     alert1.present();
   }
+
+  checkFlag(i: number, element: any):boolean {
+    if ((i <= 3) || (i == 4 && element.TollAmount != 0) 
+      || (i == 5 && element.ParkingAmount != 0)
+      || (i == 6 && element.MealAmount != 0)
+      || (i == 7 && element.AccAmount != 0)
+      )
+    return true;
+  else 
+    return false;
+  } 
   BindEmpDetails() {
     this.http
       .get(getURL("table","view_user_display",[`USER_GUID=${this.loginUserGuid}`]))
