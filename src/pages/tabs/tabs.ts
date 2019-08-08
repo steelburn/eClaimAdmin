@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 
-import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
-import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
+// import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
+// import { UserclaimslistPage } from '../userclaimslist/userclaimslist';
 import { DashboardPage } from '../dashboard/dashboard';
 @Component({
   templateUrl: 'tabs.html'
@@ -26,8 +26,8 @@ export class TabsPage {
       // { title: "APPROVER TASK", root: ClaimapprovertasklistPage, icon: "checkbox-outline" },
 
       { title: "DASHBOARD", root: DashboardPage, icon: "apps" },
-      { title: "MY CLAIM LIST", root: UserclaimslistPage, icon: "settings" },      
-      { title: "APPROVER TASK", root: ClaimapprovertasklistPage, icon: "checkbox-outline" },
+      // { title: "MY CLAIM LIST", root: UserclaimslistPage, icon: "settings" },      
+      // { title: "APPROVER TASK", root: ClaimapprovertasklistPage, icon: "checkbox-outline" },
     ];
 
     // this.tabs = navParams.data;

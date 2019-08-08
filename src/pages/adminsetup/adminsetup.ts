@@ -13,10 +13,10 @@ import { ClaimhistoryPage } from '../claimhistory/claimhistory';
 import { ProfileSetupPage } from '../profile-setup/profile-setup.component';
 import { ApproverTaskListPage } from '../approver-task-list/approver-task-list';
 
-import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
-import { ClaimtasklistPage } from '../claimtasklist/claimtasklist'
-import { UserclaimslistPage } from '../userclaimslist/userclaimslist'
-import { ClaimReportPage } from '../claim-report/claim-report';
+// import { ClaimapprovertasklistPage } from '../claimapprovertasklist/claimapprovertasklist';
+// import { ClaimtasklistPage } from '../claimtasklist/claimtasklist'
+// import { UserclaimslistPage } from '../userclaimslist/userclaimslist'
+// import { ClaimReportPage } from '../claim-report/claim-report';
 
 // import { SettingsPage } from '../settings/settings';
 import { UserPage } from '../user/user';
@@ -77,7 +77,7 @@ export class AdminsetupPage {
   goToSubModulesetup() {
     this.navCtrl.push(SubmodulesetupPage)
   }
-  goToClaimHistory() {
+/*   goToClaimHistory() {
     this.navCtrl.push(ClaimhistoryPage)
   }
 
@@ -97,7 +97,7 @@ export class AdminsetupPage {
   goToUserClaimList() {
     this.navCtrl.push(UserclaimslistPage)
   }
-
+ */
   goToProfile() {
     this.navCtrl.push(ProfileSetupPage)
   }

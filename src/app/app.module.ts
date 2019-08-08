@@ -22,6 +22,7 @@ import { SetupPage } from '../pages/setup/setup';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 // import { MedicalclaimPage } from '../pages/medicalclaim/medicalclaim';
+/*
 import { PrintclaimPage } from '../pages/printclaim/printclaim';
 import { GiftclaimPage } from '../pages/giftclaim/giftclaim';
 import { OvertimeclaimPage } from '../pages/overtimeclaim/overtimeclaim';
@@ -32,6 +33,8 @@ import { AllClaimhistoryPage } from '../pages/allclaimhistory/claimhistory';
 import { EntertainmentclaimPage } from '../pages/entertainmentclaim/entertainmentclaim';
 import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { MiscellaneousClaimPage } from '../pages/miscellaneous-claim/miscellaneous-claim';
+*/
+
 import { UserPage } from '../pages/user/user';
 import { SocRegistrationPage } from '../pages/soc-registration/soc-registration';
 import { AdminsetupPage } from '../pages/adminsetup/adminsetup';
@@ -54,11 +57,12 @@ export function createTranslateLoader(http: HttpClient) {
 
 import { ProfileSetupPage } from '../pages/profile-setup/profile-setup.component';
 
-import { AddTollPage } from '../pages/add-toll/add-toll.component';
 import { Services } from '../pages/Services';
 //import { TravelClaim_Service } from '../services/travelclaim_service';
 import { ClaimhistoryPage } from '../pages/claimhistory/claimhistory';
 
+/*
+import { AddTollPage } from '../pages/add-toll/add-toll.component';
 import { ClaimhistorydetailPage } from '../pages/claimhistorydetail/claimhistorydetail';
 import { ClaimapprovertasklistPage } from '../pages/claimapprovertasklist/claimapprovertasklist'
 import { ClaimtasklistPage } from '../pages/claimtasklist/claimtasklist'
@@ -68,14 +72,15 @@ import { MonthlyClaimReportPage } from '../pages/monthly-claim-report/monthly-cl
 import { ClaimReportUserPage } from '../pages/claim-report-user/claim-report-user';
 import { ClaimReportPrintPage } from '../pages/claim-report-print/claim-report-print';
 import { LeaveReportPage } from '../pages/leave-report/leave-report';
-import { AttendanceReportPage } from '../pages/attendance-report/attendance-report';
 import { FinancePaymentTasklistPage } from '../pages/finance-payment-tasklist/finance-payment-tasklist';
 import { CommonTasklistPage } from '../pages/common-tasklist/common-tasklist';
 import { PaymentHistoryPage } from '../pages/payment-history/payment-history';
 import { CommonHistorylistPage } from '../pages/common-historylist/common-historylist';
 import { ClaimSummaryPage } from '../pages/claim-summary/claim-summary';
+*/
+import { AttendanceReportPage } from '../pages/attendance-report/attendance-report';
 
-
+/*
 import { TravelClaimViewPage } from '../pages/travel-claim-view/travel-claim-view.component';
 import { EntertainmentClaimViewPage } from '../pages/entertainment-claim-view/entertainment-claim-view';
 import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-claim-view';
@@ -83,6 +88,8 @@ import { OvertimeClaimViewPage } from '../pages/overtime-claim-view/overtime-cla
 import { PrintClaimViewPage } from '../pages/print-claim-view/print-claim-view';
 import { GiftClaimViewPage } from '../pages/gift-claim-view/gift-claim-view';
 import { MiscellaneousClaimViewPage } from '../pages/miscellaneous-claim-view/miscellaneous-claim-view';
+*/
+
 import { ApiManagerProvider } from '../providers/api-manager.provider';
 import { ProfileManagerProvider } from '../providers/profile-manager.provider';
 import { CustomerSetupPage } from '../pages/customer-setup/customer-setup';
@@ -138,6 +145,7 @@ import { ApprovalProfilePage } from '../pages/approval-profile/approval-profile'
 DashboardPage, 
 
 /* 3nd level loading, after dashboard */
+/*
     TravelclaimPage,
     // MedicalclaimPage,
     AllClaimhistoryPage,
@@ -147,14 +155,14 @@ DashboardPage,
     EntertainmentclaimPage,
     MiscellaneousClaimPage,
     AllClaimListPage,
-
+*/
     /* Should be loaded only when using setup */
        
     PermissionPage,
     RolemodulesetupPage,
     PagesetupPage,
     CountrysetupPage,
-    TravelclaimPage,
+  //  TravelclaimPage,
     StatesetupPage,
     SetupguidePage,
 
@@ -190,21 +198,23 @@ DashboardPage,
  /* */
 
      /* Should be loaded only when doing travel claims */
-    AddTollPage,
-    TravelClaimViewPage,
+//    AddTollPage,
+//    TravelClaimViewPage,
 
     AccountPage,
     TabsPage,
     UserPage,
-    ApproverTaskListPage,
-    EntertainmentClaimViewPage,
+  //  ApproverTaskListPage,
+  //  EntertainmentClaimViewPage,
     // MedicalClaimViewPage,
-    OvertimeClaimViewPage,
-    PrintClaimViewPage,
-    GiftClaimViewPage,
-    MiscellaneousClaimViewPage,
+  //  OvertimeClaimViewPage,
+  //  PrintClaimViewPage,
+  //  GiftClaimViewPage,
+  //  MiscellaneousClaimViewPage,
     UploadPage,
-
+    ChangePasswordPage,
+    AttendanceReportPage,
+    /*
     ClaimhistoryPage,
     ClaimhistorydetailPage,
     ClaimapprovertasklistPage,
@@ -212,11 +222,9 @@ DashboardPage,
     UserclaimslistPage,
     ClaimReportPage,
     MonthlyClaimReportPage,
-    ChangePasswordPage,
     ClaimReportUserPage,
     ClaimReportPrintPage,
     LeaveReportPage,
-    AttendanceReportPage,
 
 
     FinancePaymentTasklistPage,
@@ -224,7 +232,7 @@ DashboardPage,
     PaymentHistoryPage,
     CommonHistorylistPage,
 
-    ClaimSummaryPage
+    ClaimSummaryPage */
   ],
 
   imports: [
@@ -250,33 +258,33 @@ DashboardPage,
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
         { component: ChangePasswordPage, name: 'ChangePasswordPage', segment: 'changepassword' },
-        { component: AllClaimListPage, name: 'AllClaimListPage', segment: 'AllClaimList' },
+        // { component: AllClaimListPage, name: 'AllClaimListPage', segment: 'AllClaimList' },
 
-        { component: TravelclaimPage, name: 'TravelclaimPage', segment: 'TravelclaimPage' },
-        { component: EntertainmentclaimPage, name: 'EntertainmentclaimPage', segment: 'EntertainmentclaimPage' },
-        { component: GiftclaimPage, name: 'GiftclaimPage', segment: 'GiftclaimPage' },
-        { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
-        { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
-        { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
+        // { component: TravelclaimPage, name: 'TravelclaimPage', segment: 'TravelclaimPage' },
+        // { component: EntertainmentclaimPage, name: 'EntertainmentclaimPage', segment: 'EntertainmentclaimPage' },
+        // { component: GiftclaimPage, name: 'GiftclaimPage', segment: 'GiftclaimPage' },
+        // { component: OvertimeclaimPage, name: 'OvertimeclaimPage', segment: 'OvertimeclaimPage' },
+        // { component: PrintclaimPage, name: 'PrintclaimPage', segment: 'PrintclaimPage' },
+        // { component: MiscellaneousClaimPage, name: 'MiscellaneousClaimPage', segment: 'MiscellaneousClaimPage' },
         { component: CustomerSetupPage, name: 'CustomerSetupPage', segment: 'CustomerSetupPage' },
-        { component: AllClaimhistoryPage, name: 'AllClaimhistoryPage', segment: 'AllClaimhistoryPage' },
+        // { component: AllClaimhistoryPage, name: 'AllClaimhistoryPage', segment: 'AllClaimhistoryPage' },
 
-        { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
-        { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
-        { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
-        { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
-        { component: ClaimhistorydetailPage, name: 'ClaimhistorydetailPage', segment: 'ClaimhistorydetailPage' },
-        { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
-        { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' },
-        { component: ClaimReportUserPage, name: 'ClaimReportUserPage', segment: 'ClaimReportUserPage' },
-        { component: LeaveReportPage, name: 'LeaveReportPage', segment: 'LeaveReportPage' },
+        // { component: ClaimtasklistPage, name: 'ClaimtasklistPage', segment: 'ClaimtasklistPage' },
+        // { component: ClaimapprovertasklistPage, name: 'ClaimapprovertasklistPage', segment: 'ClaimapprovertasklistPage' },
+        // { component: UserclaimslistPage, name: 'UserclaimslistPage', segment: 'UserclaimslistPage' },
+        // { component: ClaimhistoryPage, name: 'ClaimhistoryPage', segment: 'ClaimhistoryPage' },
+        // { component: ClaimhistorydetailPage, name: 'ClaimhistorydetailPage', segment: 'ClaimhistorydetailPage' },
+        // { component: ClaimReportPage, name: 'ClaimReportPage', segment: 'ClaimReportPage' },
+        // { component: MonthlyClaimReportPage, name: 'MonthlyClaimReportPage', segment: 'MonthlyClaimReportPage' },
+        // { component: ClaimReportUserPage, name: 'ClaimReportUserPage', segment: 'ClaimReportUserPage' },
+        // { component: LeaveReportPage, name: 'LeaveReportPage', segment: 'LeaveReportPage' },
         { component: AttendanceReportPage, name: 'AttendanceReportPage', segment: 'AttendanceReportPage' },
-        { component: ClaimReportPrintPage, name: 'ClaimReportPrintPage', segment: 'ClaimReportPrintPage' },
-        { component: FinancePaymentTasklistPage, name: 'FinancePaymentTasklistPage', segment: 'FinancePaymentTasklistPage' },
-        { component: CommonTasklistPage, name: 'CommonTasklistPage', segment: 'CommonTasklistPage' },
-        { component: PaymentHistoryPage, name: 'PaymentHistoryPage', segment: 'PaymentHistoryPage' },
-        { component: CommonHistorylistPage, name: 'CommonHistorylistPage', segment: 'CommonHistorylistPage' },
-        { component: ClaimSummaryPage, name: 'ClaimSummaryPage', segment: 'ClaimSummaryPage' }
+        // { component: ClaimReportPrintPage, name: 'ClaimReportPrintPage', segment: 'ClaimReportPrintPage' },
+        // { component: FinancePaymentTasklistPage, name: 'FinancePaymentTasklistPage', segment: 'FinancePaymentTasklistPage' },
+        // { component: CommonTasklistPage, name: 'CommonTasklistPage', segment: 'CommonTasklistPage' },
+        // { component: PaymentHistoryPage, name: 'PaymentHistoryPage', segment: 'PaymentHistoryPage' },
+        // { component: CommonHistorylistPage, name: 'CommonHistorylistPage', segment: 'CommonHistorylistPage' },
+        // { component: ClaimSummaryPage, name: 'ClaimSummaryPage', segment: 'ClaimSummaryPage' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -296,14 +304,14 @@ DashboardPage,
 
 
     // MedicalclaimPage,
-    TravelclaimPage, 
-    AllClaimhistoryPage,
-    PrintclaimPage,
-    GiftclaimPage,
-    OvertimeclaimPage,
-    EntertainmentclaimPage,
-    MiscellaneousClaimPage,
-    AllClaimListPage, 
+    // TravelclaimPage, 
+    // AllClaimhistoryPage,
+    // PrintclaimPage,
+    // GiftclaimPage,
+    // OvertimeclaimPage,
+    // EntertainmentclaimPage,
+    // MiscellaneousClaimPage,
+    // AllClaimListPage, 
     /* Should be loaded only when using setup */
   
 
@@ -344,42 +352,42 @@ DashboardPage,
     /* */
 
     /* Should be loaded only when doing travel claims */
-    TravelClaimViewPage,
-    AddTollPage,
+    // TravelClaimViewPage,
+    // AddTollPage,
 
     TabsPage,
-    ApproverTaskListPage,
+    // ApproverTaskListPage,
     
-    EntertainmentClaimViewPage,
+    // EntertainmentClaimViewPage,
     // MedicalClaimViewPage,
-    OvertimeClaimViewPage,
-    PrintClaimViewPage,
-    GiftClaimViewPage,
-    MiscellaneousClaimViewPage,
+    // OvertimeClaimViewPage,
+    // PrintClaimViewPage,
+    // GiftClaimViewPage,
+    // MiscellaneousClaimViewPage,
     UserPage,
     SocRegistrationPage,
-    TravelclaimPage,
+    // TravelclaimPage,
     ProfileSetupPage,
  
-    ClaimhistoryPage,
-    ClaimhistorydetailPage,
-    ClaimapprovertasklistPage,
-    ClaimtasklistPage,
-    UserclaimslistPage,
-    ClaimReportPage,
-    MonthlyClaimReportPage,
+    // ClaimhistoryPage,
+    // ClaimhistorydetailPage,
+    // ClaimapprovertasklistPage,
+    // ClaimtasklistPage,
+    // UserclaimslistPage,
+    // ClaimReportPage,
+    // MonthlyClaimReportPage,
     UploadPage,
 
     ChangePasswordPage,
-    ClaimReportUserPage,
-    ClaimReportPrintPage,
-    LeaveReportPage,
+    // ClaimReportUserPage,
+    // ClaimReportPrintPage,
+    // LeaveReportPage,
     AttendanceReportPage,
-    FinancePaymentTasklistPage,
-    CommonTasklistPage,
-    PaymentHistoryPage,
-    CommonHistorylistPage,
-    ClaimSummaryPage,
+    // FinancePaymentTasklistPage,
+    // CommonTasklistPage,
+    // PaymentHistoryPage,
+    // CommonHistorylistPage,
+    // ClaimSummaryPage,
 
     AccountPage
 

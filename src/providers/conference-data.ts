@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { UserData } from './user-data';
-import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
+// import { TravelclaimPage } from '../pages/travel-claim/travel-claim.component';
 import { App } from 'ionic-angular';
 
 
