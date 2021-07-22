@@ -63,7 +63,7 @@
     "sax": "^1.2.4",
     "sw-toolbox": "^3.6.0",
     "uninstall": "^0.0.0",
-    "xlsx": "^0.13.5",
+    "xlsx": "^0.17.0",
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
